@@ -1,6 +1,6 @@
 {
   "name": "utopia-ui",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Reuseable React Components to build mapping apps for all kinds of communities ",
   "main": "dist/index.js",
   "scripts": {

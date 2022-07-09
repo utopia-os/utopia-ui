@@ -15,30 +15,40 @@ Map UI is a JavaScript Map Library to create nice and easy to use Maps
 
 ### Getting Started
 
+
 install via npm
 ```
  npm install utopia-ui
 ```
 
-import in your React App
-
+then import in your React App
 ```
-import Map from 'utopia-ui'
+import UtopiaMap from 'utopia-ui'
 ```
 
-use the Map UI Component
-
+use the [Map UI Component](/docs/utopia-ui/map-components/map)
 ```
-<Map height='100vh' width='100hw'></Map>
+<UtopiaMap>
+   height='360px'
+   width='100vw'
+   center={[51.3, 9.6]}
+   zoom={6}
+   places={places}
+   events={events}
+</UtopiaMap>
 ```
 
 ### Options
 
 
- Option         | Type        | Default      | Description 
- ---            | ---         | ---          | ---         
- height         | string      | -            |  height of the map           
- width          | string      | -            |  width of the map           
+ Option         | Type              | Default      | Required   | Description 
+ ---            | ---               | ---          | ---        | ---    
+ `height`       | `string`          | -            |            | height of the map           
+ `width`        | `string`          | -            |            | width of the map
+ `center`       | `LatLngExpression`| -            |            | initial map position           
+ `zoom`         | `number`          | -            |            | initial zoom level
+ `places`       | [`Item[]`](https://utopia-os.org/docs/utopia-ui/map-components/item)| -            |            | Array with Items           
+ `events`       | [`Item[]`](https://utopia-os.org/docs/utopia-ui/map-components/item)          | -            |            | Array with Items             
 
 
  ## Coming Soon

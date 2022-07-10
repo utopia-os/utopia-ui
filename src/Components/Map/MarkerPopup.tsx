@@ -2,7 +2,8 @@ import * as React from 'react'
 import { Popup } from 'react-leaflet'
 
 export interface IMarkerPopupProps {
-  item: IMapItem;
+  item: IMapItem,
+  tags: ITag[]
 }
 
 export interface IMapItem {
@@ -14,7 +15,7 @@ export interface IMapItem {
   position: IGeometry,
   start?: string,
   end?: string,
-  tags: ITag[],
+  tags?: string[],
   [key: string]:any
 }
 
@@ -24,11 +25,11 @@ export interface IGeometry {
 }
 
 export interface ITag {
-  Tags_id :
-  {
+
     color: string;
     id: string;
-  }
+    name: string;
+  
 }
 
 const MarkerPopup = (props:IMarkerPopupProps) => {
@@ -40,8 +41,9 @@ const MarkerPopup = (props:IMarkerPopupProps) => {
       <p>{item.start || ""} {item.end || ""}</p>
 
       <p>{item.text}</p>
-        {item.tags.map((tag:ITag) => (
-          <span key={tag.Tags_id.id}>#{tag.Tags_id.id} </span>
+        {item.tags&&
+        props.tags.map((tag:ITag) => (
+          <span className="badge" style={{backgroundColor: tag.color,marginLeft: '.2rem'}} key={tag.id}>#{tag.name}</span>
         ))}
     </Popup>
   )

@@ -34,6 +34,8 @@ export interface ITag {
 
 const MarkerPopup = (props:IMarkerPopupProps) => {
   const item:IMapItem = props.item;
+
+
   return (
     <Popup>
       <b style={{ fontSize: '1.0rem' }}>{item.name}</b>
@@ -43,7 +45,7 @@ const MarkerPopup = (props:IMarkerPopupProps) => {
       <p>{item.text}</p>
         {item.tags&&
         props.tags.map((tag:ITag) => (
-          <span className="badge" style={{backgroundColor: tag.color,marginLeft: '.2rem'}} key={tag.id}>#{tag.name}</span>
+          <span className="badge" style={{backgroundColor: tag.color,marginLeft: '.2rem', fontSize: "100%"}} key={tag.id}>#{tag.name}</span>
         ))}
     </Popup>
   )

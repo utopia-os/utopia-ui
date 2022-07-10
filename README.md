@@ -38,7 +38,7 @@ use the [Map UI Component](/docs/utopia-ui/map-components/map)
    tags = {tags}
 </UtopiaMap>
 ```
-You can find some Sample Data for test purpose below
+You can find some Sample Data (places, events, tags) for test purpose below
 
 ### Options
 

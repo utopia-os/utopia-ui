@@ -61,15 +61,9 @@ const places = [{
   "text": "Stadtgemüse Fulda ist eine Gemüsegärtnerei in Maberzell, die es sich zur Aufgabe gemacht hat, die Stadt und seine Bewohner:innen mit regionalem, frischem und natürlich angebautem Gemüse mittels Gemüsekisten zu versorgen. Es gibt also jede Woche, von Frühjahr bis Herbst, angepasst an die Saison eine Kiste mit schmackhaftem und frischem Gemüse für euch, welche ihr direkt vor Ort abholen könnt. \r\n\r\nhttps://stadtgemuese-fulda.de",
   "position": {
     "type": "Point",
-    "coordinates": [
-      9.632435,
-      50.560342
-    ]
+    "coordinates": [9.632435, 50.560342]
   },
-  "tags": [
-    9,
-    13
-  ],
+  "tags": [9,13],
 },
 {
   "id": 166,
@@ -77,47 +71,23 @@ const places = [{
   "text": "free camping",
   "position": {
     "type": "Point",
-    "coordinates": [
-      9.438793,
-      50.560112
-    ]
+    "coordinates": [9.438793, 50.560112]
   },
-  "tags": [
-    10,
-    11
-  ]
+  "tags": [10,11]
 }];
 
 const events = [
   {
     "id": "65bbc003-b6de-4904-b85c-8ab6c92fe0db",
-    "date_created": "2022-03-14T10:20:11.534Z",
-    "date_updated": "2022-04-05T08:58:38.790Z",
     "name": "Hackathon",
     "text": "still in progress",
     "position": {
       "type": "Point",
-      "coordinates": [
-        9.5,
-        50.62
-      ]
+      "coordinates": [9.5, 50.62]
     },
     "start": "2022-03-25T12:00:00",
     "end": "2022-05-12T12:00:00",
-    "tags": [
-      {
-        "Tags_id": {
-          "color": "#75507B",
-          "id": "Docutopia"
-        }
-      },
-      {
-        "Tags_id": {
-          "color": "#3465A4",
-          "id": "Coding"
-        }
-      }
-    ]
+    "tags": [10]
   }
 ]
 

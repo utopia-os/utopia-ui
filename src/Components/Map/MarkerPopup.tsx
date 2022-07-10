@@ -1,39 +1,16 @@
 import * as React from 'react'
 import { Popup } from 'react-leaflet'
+import { Item, Tag } from '../../types'
 
-export interface IMarkerPopupProps {
-  item: IMapItem,
-  tags: ITag[]
+export interface MarkerPopupProps {
+  item: Item,
+  tags: Tag[]
 }
 
-export interface IMapItem {
-  id?: string,
-  date_created?: string,
-  date_updated?: string | null,
-  name: string,
-  text: string,
-  position: IGeometry,
-  start?: string,
-  end?: string,
-  tags?: string[],
-  [key: string]:any
-}
+const MarkerPopup = (props:MarkerPopupProps) => {
+  const item:Item = props.item;
+  const tags:Tag[] = props.tags;
 
-export interface IGeometry {
-  type: string;
-  coordinates: number[];
-}
-
-export interface ITag {
-
-    color: string;
-    id: string;
-    name: string;
-  
-}
-
-const MarkerPopup = (props:IMarkerPopupProps) => {
-  const item:IMapItem = props.item;
 
 
   return (
@@ -44,8 +21,8 @@ const MarkerPopup = (props:IMarkerPopupProps) => {
 
       <p>{item.text}</p>
         {item.tags&&
-        props.tags.map((tag:ITag) => (
-          <span className="badge" style={{backgroundColor: tag.color,marginLeft: '.2rem', fontSize: "100%"}} key={tag.id}>#{tag.name}</span>
+        tags.map((tag:Tag) => (
+          <span className="badge" style={{backgroundColor: tag.color,margin: '.1rem', fontSize: "100%"}} key={tag.id}>#{tag.name}</span>
         ))}
     </Popup>
   )

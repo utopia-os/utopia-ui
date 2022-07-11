@@ -1,4 +1,4 @@
-# Utopia UI
+# Utopia UI [![npm version](https://img.shields.io/npm/v/utopia-ui.svg)](https://www.npmjs.com/package/utopia-ui)
 Reuseable React Components to build mapping apps for all kinds of communities with focus of real life action, local connection and positiv impact.
 
 Check [utopia-os.org](https://utopia-os.org) for more information

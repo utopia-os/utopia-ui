@@ -5,11 +5,13 @@ import MarkerIconFactory from './Utils/MarkerIconFactory';
 import MarkerPopup from "./Components/Map/MarkerPopup";
 import { Item, Tag } from "./types"
 import "./styles.scss"
+import { LatLng } from "leaflet";
+import MarkerClusterGroup from 'react-leaflet-cluster'
 
 export interface MapProps {
     height: string,
     width: string,
-    center: number[],
+    center: LatLng,
     zoom: number,
     places?: Item[],
     events?: Item[],
@@ -18,6 +20,15 @@ export interface MapProps {
 
 
 const UtopiaMap = (props: MapProps) => {
+    let center: LatLng = new LatLng(50.6, 9.5);
+    if (props.center) center = props.center;
+    let zoom: number = 10;
+    if (props.zoom) zoom = props.zoom;
+    let height: string = "400px";
+    if (props.height) height = props.height;
+    let width: string = "100vw";
+    if (props.width) width = props.width;
+
     let tagMap = new Map(props.tags?.map(key => [key.id, key]));
 
     const getTags = (item: Item) => {
@@ -30,10 +41,11 @@ const UtopiaMap = (props: MapProps) => {
 
 
     return (
-        <MapContainer style={{ height: props.height, width: props.width }} center={props.center} zoom={props.zoom} >
+        <MapContainer style={{ height: height, width: width }} center={center} zoom={zoom} >
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+            <MarkerClusterGroup showCoverageOnHover  chunkedLoading maxClusterRadius={50}>
                 {props.places &&
                     props.places.map((place: Item) => {
                         let tags = getTags(place);
@@ -71,6 +83,7 @@ const UtopiaMap = (props: MapProps) => {
                         )
                     })
                 }
+            </MarkerClusterGroup>
         </MapContainer>
 
     );

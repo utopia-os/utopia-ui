@@ -7,25 +7,50 @@ export interface MarkerPopupProps {
   tags: Tag[]
 }
 
-const MarkerPopup = (props:MarkerPopupProps) => {
-  const item:Item = props.item;
-  const tags:Tag[] = props.tags;
-
-
+const MarkerPopup = (props: MarkerPopupProps) => {
+  const item: Item = props.item;
+  const tags: Tag[] = props.tags;
 
   return (
-    <Popup>
+    <Popup maxHeight={377} minWidth={275} maxWidth={275} autoPanPadding={[30,30]}>
       <b style={{ fontSize: '1.0rem' }}>{item.name}</b>
 
-      <p>{item.start || ""} {item.end || ""}</p>
+      {item.start && item.end &&
+        <p>{new Date(item.start).toISOString().substring(0, 10) || ""} - {new Date(item.end).toISOString().substring(0, 10) || ""}</p>
+      }
 
-      <p>{item.text}</p>
-        {item.tags&&
-        tags.map((tag:Tag) => (
-          <span className="badge" style={{backgroundColor: tag.color,margin: '.1rem', fontSize: "100%"}} key={tag.id}>#{tag.name}</span>
-        ))}
+      <p style={{ whiteSpace: "pre-wrap" }} dangerouslySetInnerHTML={{ __html: replaceURLs(item.text) }} />
+      <p>
+
+        {item.tags &&
+          tags.map((tag: Tag) => (
+            <span className="" style={{ fontWeight: "bold", display: "inline-block", color: "#fff", padding: ".2rem", borderRadius: ".2rem", backgroundColor: tag.color, margin: '.2rem', fontSize: "100%" }} key={tag.id}>#{tag.name}</span>
+          ))
+        }
+      </p>
     </Popup>
   )
 }
 
 export default MarkerPopup;
+
+
+function replaceURLs(message: string): string {
+  if (!message) return "";
+
+  var urlRegex = /(^| )(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,10}(:[0-9]{1,10})?(\/.*)?$/gm;
+  message = message.replace(urlRegex, function (url) {
+    var hyperlink = url.replace(' ', '');
+    if (!hyperlink.match('^https?:\/\/')) {
+      hyperlink = 'http://' + hyperlink;
+    }
+    return '<a href="' + hyperlink + '" target="_blank" rel="noopener noreferrer">' + url + '</a>'
+  });
+
+  var mailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi;
+  message = message.replace(mailRegex, function (mail) {
+    return '<a href="mailto:' + mail + '">' + mail + '</a>'
+  });
+
+  return message;
+}

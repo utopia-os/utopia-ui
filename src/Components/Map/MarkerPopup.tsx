@@ -24,7 +24,7 @@ const MarkerPopup = (props: MarkerPopupProps) => {
 
         {item.tags &&
           tags.map((tag: Tag) => (
-            <span className="" style={{ fontWeight: "bold", display: "inline-block", color: "#fff", padding: ".2rem", borderRadius: ".2rem", backgroundColor: tag.color, margin: '.2rem', fontSize: "100%" }} key={tag.id}>#{tag.name}</span>
+            <span className="" style={{ fontWeight: "bold", display: "inline-block", color: "#fff", padding: ".3rem", borderRadius: ".5rem", backgroundColor: tag.color, margin: '.2rem', fontSize: "100%" }} key={tag.id}>#{tag.name}</span>
           ))
         }
       </p>

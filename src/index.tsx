@@ -4,7 +4,7 @@ import * as React from "react";
 import MarkerIconFactory from './Utils/MarkerIconFactory';
 import MarkerPopup from "./Components/Map/MarkerPopup";
 import { Item, Tag } from "./types"
-import "./styles.css"
+import "./index.css"
 import { LatLng } from "leaflet";
 import MarkerClusterGroup from 'react-leaflet-cluster'
 
@@ -17,7 +17,6 @@ export interface MapProps {
     events?: Item[],
     tags?: Tag[],
 }
-
 
 const UtopiaMap = (props: MapProps) => {
     let center: LatLng = new LatLng(50.6, 9.5);

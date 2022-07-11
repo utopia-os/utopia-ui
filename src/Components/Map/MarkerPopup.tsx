@@ -13,7 +13,7 @@ const MarkerPopup = (props: MarkerPopupProps) => {
 
   return (
     <Popup maxHeight={377} minWidth={275} maxWidth={275} autoPanPadding={[30,30]}>
-      <b style={{ fontSize: '1.0rem' }}>{item.name}</b>
+      <b className="text-xl font-bold">{item.name}</b>
 
       {item.start && item.end &&
         <p>{new Date(item.start).toISOString().substring(0, 10) || ""} - {new Date(item.end).toISOString().substring(0, 10) || ""}</p>

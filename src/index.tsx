@@ -4,7 +4,7 @@ import * as React from "react";
 import MarkerIconFactory from './Utils/MarkerIconFactory';
 import MarkerPopup from "./Components/Map/MarkerPopup";
 import { Item, Tag } from "./types"
-import "./styles.scss"
+import "./styles.css"
 import { LatLng } from "leaflet";
 import MarkerClusterGroup from 'react-leaflet-cluster'
 

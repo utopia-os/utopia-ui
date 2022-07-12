@@ -5,13 +5,17 @@ Check [utopia-os.org](https://utopia-os.org) for more information
 
 *This Library is in early alpha stage. You are very welcome to participate in the development*
 
-*A Django-based Proof of Concept can be found @ [new.docutopia.de](https://new.docutopia.de). This map can be edited freely you can register to create an account and place them on the map. The project is no longer maintained.*
+*A Django-based Proof of Concept can be found @ [new.docutopia.de](https://new.docutopia.de). This map can be edited freely you can register to create an account and place them on the map.*
 
-Utopia UI is a fully new approach to create a Open Source Library of JavaScript Components which should fit the needs of many different projects and communities. 
+Utopia UI is the approach to create a Open Source Library of JavaScript Components which should useful maps and apps to all kind of projects and communities.
 
 
 ## Map UI Component
-Map UI is a JavaScript Map Library to create nice and easy to use Maps 
+The Map Component based on [leaflet](https://leafletjs.com) is the crystalisation point of Utopia OS.
+
+The map shows places, events and people at their respective position whith nice and informative Popups. Tags, colors and clusters help to retain the overview.
+
+[Include](/docs/utopia-ui/getting-started) it somewhere in your React Application, pass some data and the required props.
 
 ### Getting Started
 

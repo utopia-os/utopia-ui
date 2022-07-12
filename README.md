@@ -87,10 +87,10 @@ const tags = [
  `width`        | `string`          |`'100vw'`     |    No      | width of the map
  `center`       | `LatLng`          |`[50.6, 9.5]` |    No      | initial map position           
  `zoom`         | `number`          |`10`          |    No      | initial zoom level
- `places`       | [`Item[]`](https://utopia-os.org/docs/utopia-ui/map-components/item)|    `{}`      |  No         | Array with Items           
- `events`       | [`Item[]`](https://utopia-os.org/docs/utopia-ui/map-components/item)|  `{}`        |  No         | Array with Items             
- `tags`       | [`Tag[]`](https://utopia-os.org/docs/utopia-ui/map-components/tag)    |  `{}`       |  No         | Array with Tags  
- 
+ `places`       | [`Item[]`](https://utopia-os.org/docs/utopia-ui/map-components/item)|    `[]`     |  No         | Array with Items           
+ `events`       | [`Item[]`](https://utopia-os.org/docs/utopia-ui/map-components/item)| `[]`        |  No         | Array with Items             
+ `tags`       | [`Tag[]`](https://utopia-os.org/docs/utopia-ui/map-components/tag)    |  `[]`       |  No         | Array with Tags  
+
  ## Coming Soon
 
  * Profile UI Component

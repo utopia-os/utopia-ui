@@ -1,13 +1,11 @@
 # Utopia UI [![npm version](https://img.shields.io/npm/v/utopia-ui.svg)](https://www.npmjs.com/package/utopia-ui)
-Reuseable React Components to build mapping apps for all kinds of communities with focus of real life action, local connection and positiv impact.
+Reuseable React Components to build mapping apps with focus of real life action, local connection and positiv impact.
 
 Check [utopia-os.org](https://utopia-os.org) for more information
 
-*This Library is in early alpha stage. You are very welcome to participate in the development*
+*In early 2021, we developed a Django-based Proof of Concept, which can be found @ [new.docutopia.de](https://new.docutopia.de). This map can be edited freely you can register to create an account and place them on the map.*
 
-*A Django-based Proof of Concept can be found @ [new.docutopia.de](https://new.docutopia.de). This map can be edited freely you can register to create an account and place them on the map.*
-
-Utopia UI is the approach to create a Open Source Library of JavaScript Components which should useful maps and apps to all kind of projects and communities.
+Utopia UI is the approach to create a Open Source Library of JavaScript Components which should bring useful maps and apps to all kind of projects and communities.
 
 
 ## Map UI Component
@@ -91,9 +89,9 @@ const tags = [
  `width`        | `string`          |`'100vw'`     |    No      | width of the map
  `center`       | `LatLng`          |`[50.6, 9.5]` |    No      | initial map position           
  `zoom`         | `number`          |`10`          |    No      | initial zoom level
- `places`       | [`Item[]`](https://utopia-os.org/docs/utopia-ui/map-components/item)|    `[]`     |  No         | Array with Items           
- `events`       | [`Item[]`](https://utopia-os.org/docs/utopia-ui/map-components/item)| `[]`        |  No         | Array with Items             
- `tags`       | [`Tag[]`](https://utopia-os.org/docs/utopia-ui/map-components/tag)    |  `[]`       |  No         | Array with Tags  
+ `places`       | [`Item[]`](https://utopia-os.org/docs/utopia-ui/map-components/item)| `[]` | No | Array with Items           
+ `events`       | [`Item[]`](https://utopia-os.org/docs/utopia-ui/map-components/item)| `[]` | No | Array with Items             
+ `tags`         | [`Tag[]`](https://utopia-os.org/docs/utopia-ui/map-components/tag)  | `[]` | No | Array with Tags  
 
  ## Coming Soon
 
@@ -107,6 +105,8 @@ const tags = [
 
 ## Join the community
 
- *We are looking for Web Developer, UX Designer, Community Manager, Visionaries, Artists, etc. who like to support this Vision.*
+*This Library is in early alpha stage. You are very welcome to participate in the development*
+
+*We are looking for Web Developer, UX Designer, Community Manager, Visionaries, Artists, etc. who like to support this Vision.*
 
 [https://t.me/utopiaOS](https://t.me/utopiaOS)

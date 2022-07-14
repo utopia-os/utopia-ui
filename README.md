@@ -30,14 +30,14 @@ import UtopiaMap from 'utopia-ui'
 
 use the Map UI Component
 ```jsx
-<UtopiaMap>
+<UtopiaMap
    height='360px'
    width='100vw'
    center={[51.3, 9.6]}
    zoom={6}
    places={places}
    events={events}
-   tags = {tags}
+   tags = {tags}>
 </UtopiaMap>
 ```
 You can find some Sample Data (places, events, tags) for test purpose below

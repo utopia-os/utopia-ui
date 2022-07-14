@@ -13,7 +13,7 @@ The Map Component based on [leaflet](https://leafletjs.com) is the crystalisatio
 
 The map shows places, events and people at their respective position whith nice and informative Popups. Tags, colors and clusters help to retain the overview.
 
-[Include](/docs/utopia-ui/getting-started) it somewhere in your React Application, pass some data and the required props.
+Include it somewhere in your React Application, pass some data and the required props.
 
 ### Getting Started
 
@@ -28,7 +28,7 @@ then import in your React App
 import UtopiaMap from 'utopia-ui'
 ```
 
-use the [Map UI Component](/docs/utopia-ui/map-components/map)
+use the Map UI Component
 ```jsx
 <UtopiaMap>
    height='360px'

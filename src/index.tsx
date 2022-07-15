@@ -1,2 +1,3 @@
 import { UtopiaMap, Item, Tag } from './Components/Map/UtopiaMap'
-export { UtopiaMap, Item, Tag };
+import { Layer } from './Components/Map/Layer';
+export { UtopiaMap, Item, Tag, Layer };

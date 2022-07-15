@@ -23,13 +23,13 @@
     "autoprefixer": "^10.4.7",
     "babel-core": "^6.26.3",
     "babel-runtime": "^6.26.0",
+    "daisyui": "^2.19.0",
     "postcss": "^8.4.14",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "rollup": "^2.75.7",
-    "rollup-plugin-sass": "^1.2.12",
-    "rollup-plugin-typescript2": "^0.32.1",
     "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-typescript2": "^0.32.1",
     "tailwindcss": "^3.1.5",
     "typescript": "^4.7.4"
   },
@@ -38,6 +38,7 @@
     "react-dom": "^17.0.2"
   },
   "dependencies": {
+    "@heroicons/react": "^1.0.6",
     "leaflet": "^1.8.0",
     "react-leaflet": "^3.2.5",
     "react-leaflet-cluster": "^1.0.4"

@@ -4,9 +4,15 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      zIndex: {
+        '500': '500',
+      }
+    },
   },
-  plugins: [],
+  plugins: [
+    require("daisyui")
+  ],
   
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   

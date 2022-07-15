@@ -13,7 +13,7 @@ const Popup = (props: UtopiaPopupProps) => {
   const tags: Tag[] = props.tags;
 
   return (
-    <LeafletPopup maxHeight={320} minWidth={275} maxWidth={275} autoPanPadding={[30, 30]}>
+    <LeafletPopup maxHeight={300} minWidth={275} maxWidth={275} autoPanPadding={[20, 5]}>
       <b className="text-xl font-bold">{item.name}</b>
       {item.start && item.end &&
         <div className="flex flex-row">

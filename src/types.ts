@@ -23,3 +23,13 @@ export interface Tag {
   name: string;
 
 }
+
+
+export interface Layer {
+  name : string,
+  menuIcon: string,
+  menuColor: string,
+  menuText: string,
+  markerIcon: string,
+  markerShape: string
+}

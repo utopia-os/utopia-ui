@@ -4,6 +4,7 @@ import DynamicHeroIcon from '../../Utils/DynamicHeroIcon'
 
 export interface AddButtonProps {
     layers: Layer[],
+    setSelectMode: React.Dispatch<React.SetStateAction<any>>
 }
 
 export default function AddButton(props: AddButtonProps) {
@@ -23,8 +24,10 @@ export default function AddButton(props: AddButtonProps) {
                         <li key={layer.name} >
                             <a>
                                 <div className="tooltip tooltip-left" data-tip={layer.menuText}>
-                                    <button tabIndex={0} className="z-500  border-0  p-0 mb-2 mt-2 w-10 h-10 cursor-pointer rounded-full mouse drop-shadow-md transition ease-in duration-200 focus:outline-none"
-                                        style={{ backgroundColor: layer.menuColor }}>
+                                    <button tabIndex={0}
+                                        className="z-500  border-0  p-0 mb-2 mt-2 w-10 h-10 cursor-pointer rounded-full mouse drop-shadow-md transition ease-in duration-200 focus:outline-none"
+                                        style={{ backgroundColor: layer.menuColor }}
+                                        onClick={() => { props.setSelectMode(layer.name ) }}>
                                         <DynamicHeroIcon icon={layer.menuIcon} />
                                     </button>
                                 </div>

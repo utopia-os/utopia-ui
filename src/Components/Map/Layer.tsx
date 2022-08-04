@@ -7,7 +7,7 @@ import { useItems } from './useItems'
 
 
 export interface LayerProps {
-    data: Item[],
+    data?: Item[],
     children?: React.ReactNode
     name: string,
     menuIcon: string,

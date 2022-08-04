@@ -7,7 +7,9 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "rollup -c",
-    "start": "rollup -c -w"
+    "start": "rollup -c -w",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "files": [
     "dist"
@@ -16,12 +18,22 @@
   "author": "Anton Tranelis",
   "license": "MIT",
   "devDependencies": {
+    "@storybook/addon-actions": "^6.5.10",
+    "@storybook/addon-essentials": "^6.5.10",
+    "@storybook/addon-interactions": "^6.5.10",
+    "@storybook/addon-links": "^6.5.10",
+    "@storybook/addon-postcss": "^2.0.0",
+    "@storybook/builder-webpack5": "^6.5.10",
+    "@storybook/manager-webpack5": "^6.5.10",
+    "@storybook/react": "^6.5.10",
+    "@storybook/testing-library": "^0.0.13",
     "@types/leaflet": "^1.7.11",
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.5",
     "@types/react-leaflet": "^2.8.2",
     "autoprefixer": "^10.4.7",
     "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
     "babel-runtime": "^6.26.0",
     "daisyui": "^2.19.0",
     "postcss": "^8.4.14",

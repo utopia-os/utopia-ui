@@ -1,14 +1,15 @@
 import { TileLayer, MapContainer, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import * as React from "react";
-import { Item, Tag } from "../../types"
+import { Item, Tag, API, Geometry } from "../../types"
 import "../../index.css"
 import { LatLng } from "leaflet";
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import AddButton from "./AddButton";
-import { Layer, LayerProps } from "./Layer";
-import { useState } from "react";
+import { LayerProps } from "./Layer";
+import { useCallback, useState } from "react";
 import NewItemPopup, { NewItemPopupProps } from "./NewItemPopup";
+import { ItemsProvider, useAddItem, useItems } from "./useItems";
 
 export interface UtopiaMapProps {
     height?: string,
@@ -18,8 +19,10 @@ export interface UtopiaMapProps {
     places?: Item[],
     events?: Item[],
     tags?: Tag[],
-    children?: React.ReactNode
+    children?: React.ReactNode,
+    api?: API
 }
+
 
 export interface MapEventListenerProps {
     selectMode: string | null,
@@ -32,9 +35,9 @@ function MapEventListener(props: MapEventListenerProps) {
         click: (e) => {
             console.log(e.latlng.lat + ',' + e.latlng.lng);
             console.log(props.selectMode);
-            
+
             if (props.selectMode != null) {
-                props.setNewItemPopup({ itemType: props.selectMode, position: e.latlng })
+                props.setNewItemPopup({ layer: props.selectMode, position: e.latlng })
                 props.setSelectMode(null)
             }
         },
@@ -45,7 +48,7 @@ function MapEventListener(props: MapEventListenerProps) {
     return null
 }
 
-function UtopiaMap(this: any, props: UtopiaMapProps) {
+function UtopiaMap(props: UtopiaMapProps) {
     // init / set default values
     let center: LatLng = new LatLng(50.6, 9.5);
     if (props.center)
@@ -60,51 +63,66 @@ function UtopiaMap(this: any, props: UtopiaMapProps) {
     if (props.width)
         width = props.width;
 
-
     const [selectMode, setSelectMode] = useState<string | null>(null);
-    const [newItemPopup, setNewItemPopup] = useState<NewItemPopupProps | undefined>(undefined);
+    const [newItemPopup, setNewItemPopup] = useState<NewItemPopupProps | null>(null);
+
+    const addItem = useAddItem();
+    const items = useItems();
 
 
 
-    // all the layers
-    const layers: LayerProps[] = [];
-    // put places / events if provided as props
-    if (props.events) layers.push({ name: 'event', menuIcon: 'CalendarIcon', menuText: 'add new  event', menuColor: '#f9a825', markerIcon: 'calendar-days-solid', markerShape: 'square', markerDefaultColor: '#777', data: props.events });
-    if (props.places) layers.push({ name: 'place', menuIcon: 'LocationMarkerIcon', menuText: 'add new place', menuColor: '#2E7D32', markerIcon: 'circle-solid', markerShape: 'circle', markerDefaultColor: '#777', data: props.places });
+    const handleSubmit = useCallback((name: string, text: string, position : LatLng, layer : string) => {
+        addItem(new Item(123,name,text,new Geometry(position.lng,position.lat)));
+        console.log(layer);
+        console.log("Items check in Callback: " + items);
+        
+      }, [addItem]);
+
+
+    let layers:LayerProps[] = [];
+    React.Children.toArray(props.children).map(layer => {
+        console.log(layer);
+        
+        if (React.isValidElement<LayerProps>(layer))
+        layers.push(layer.props)
+    })
+
+    let initial:Item[] = [];
+    if (props.events) initial = props.events; 
+
+    console.log("Items check in Map 1: " + items);
+
 
     return (
+        <ItemsProvider initialItems={initial}>
         <div className={(selectMode != null ? "crosshair-cursor-enabled" : undefined)}>
             <MapContainer style={{ height: height, width: width }} center={center} zoom={zoom}>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 <MarkerClusterGroup showCoverageOnHover chunkedLoading maxClusterRadius={50}>
-                    {layers &&
-                        layers.map(layer => (
-                            <Layer
-                                key={layer.name}
-                                name={layer.name}
-                                menuIcon={layer.menuIcon}
-                                menuText={layer.menuText}
-                                menuColor={layer.menuColor}
-                                markerIcon={layer.markerIcon}
-                                markerShape={layer.markerShape}
-                                markerDefaultColor={layer.markerDefaultColor}
-                                data={layer.data}
-                                tags={props.tags} />
-                        ))
-                    }
-                    {console.log("children of UtopiaMap: " + props.children)}
+                    {props.children}
                 </MarkerClusterGroup>
                 <MapEventListener setSelectMode={setSelectMode} selectMode={selectMode} setNewItemPopup={setNewItemPopup} />
                 {newItemPopup &&
-                    <NewItemPopup position={newItemPopup.position} itemType={newItemPopup.itemType}/>
+                    <NewItemPopup position={newItemPopup.position} layer={newItemPopup.layer} onSubmit={handleSubmit} />
                 }
             </MapContainer>
             <AddButton layers={layers} setSelectMode={setSelectMode}></AddButton>
+            {selectMode != null &&
+                <div className="button z-500 absolute right-5 top-5 drop-shadow-md">
+                    <div className="alert bg-white text-green-900">
+                        <div>
+                            <span>Select {selectMode} position!</span>
+                        </div>
+                    </div>
+                </div>
+            }
+
         </div>
+        </ItemsProvider>
     );
 }
 
-export { UtopiaMap, Item, Tag };
+export { UtopiaMap, Item, Tag, API };
 

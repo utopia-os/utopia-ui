@@ -1,3 +1,2 @@
-import { UtopiaMap, Item, Tag } from './Components/Map/UtopiaMap'
-import { Layer } from './Components/Map/Layer';
-export { UtopiaMap, Item, Tag, Layer };
+export { UtopiaMap, Item, Tag, API } from './Components/Map/index'
+export { Layer } from './Components/Map/Layer';

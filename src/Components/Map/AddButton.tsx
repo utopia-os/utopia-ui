@@ -1,14 +1,15 @@
 import * as React from 'react'
-import { Layer } from '../../types'
 import DynamicHeroIcon from '../../Utils/DynamicHeroIcon'
+import { useLayers } from './useLayers'
+
 
 export interface AddButtonProps {
-    layers: Layer[],
     setSelectMode: React.Dispatch<React.SetStateAction<any>>
 }
 
 export default function AddButton(props: AddButtonProps) {
 
+    const layers = useLayers();
     return (
         <div className="dropdown dropdown-top dropdown-end dropdown-hover z-500 absolute right-5 bottom-5" >
             <button tabIndex={0} className="z-500  border-0 m-0 mt-2 p-0 w-14 h-14 cursor-pointer bg-white rounded-full hover:bg-gray-100 mouse drop-shadow-md transition ease-in duration-200 focus:outline-none">
@@ -18,16 +19,16 @@ export default function AddButton(props: AddButtonProps) {
                 C15.952,9,16,9.447,16,10z" />
                 </svg>
             </button>
-            {props.layers &&
+            {layers &&
                 <ul tabIndex={0} className="dropdown-content pr-2 mb-0 list-none">
-                    {props.layers.map((layer) => (
+                    {Array.from(layers.values()).map((layer) => (
                         <li key={layer.name} >
                             <a>
                                 <div className="tooltip tooltip-left" data-tip={layer.menuText}>
                                     <button tabIndex={0}
                                         className="z-500  border-0  p-0 mb-2 mt-2 w-10 h-10 cursor-pointer rounded-full mouse drop-shadow-md transition ease-in duration-200 focus:outline-none"
                                         style={{ backgroundColor: layer.menuColor }}
-                                        onClick={() => { props.setSelectMode(layer.name ) }}>
+                                        onClick={() => { props.setSelectMode(layer) }}>
                                         <DynamicHeroIcon icon={layer.menuIcon} />
                                     </button>
                                 </div>

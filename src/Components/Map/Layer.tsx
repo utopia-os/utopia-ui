@@ -3,7 +3,7 @@ import { Marker } from 'react-leaflet'
 import { Item, Tag } from '../../types'
 import MarkerIconFactory from '../../Utils/MarkerIconFactory'
 import { Popup } from './Popup'
-import { useItems } from './useItems'
+import { useLayers, useAddLayer } from './useLayers'
 
 
 export interface LayerProps {
@@ -32,13 +32,17 @@ export const Layer = (props: LayerProps) => {
         return tags;
     };
 
-    let items = useItems();
+
+    const addLayer = useAddLayer();
+    addLayer(props);
+    const layers = useLayers();
+    console.log(layers);
+    
+
 
     return (
         <>
-            {
-                items.map((place: Item) => {
-                    console.log("Items check in Layer: " + items);
+            {layers.get(props.name)?.data?.map((place: Item) => {
                     let tags = getTags(place);
                     let color1 = "#666";
                     let color2 = "RGBA(35, 31, 32, 0.2)";

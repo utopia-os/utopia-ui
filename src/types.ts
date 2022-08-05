@@ -34,12 +34,16 @@ export interface Tag {
 
 
 export interface Layer {
-  name : string,
+  data?: Item[],
+  children?: React.ReactNode
+  name: string,
   menuIcon: string,
   menuColor: string,
   menuText: string,
   markerIcon: string,
-  markerShape: string
+  markerShape: string,
+  markerDefaultColor: string,
+  tags?: Tag[]
 }
 
 export interface API {

@@ -3,6 +3,8 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 import { UtopiaMap } from "./UtopiaMap";
 import { Layer } from "./Layer";
+import { tags, places, events } from './data'
+
 
 export default {
     title: "Utopia Map",
@@ -11,7 +13,7 @@ export default {
 
 
 const Template: ComponentStory<typeof UtopiaMap> = (args) => (
-    <UtopiaMap height="600px">
+    <UtopiaMap height={args.height} width={args.width} center={args.center} zoom={args.zoom}>
         <Layer
             name='places'
             menuIcon='LocationMarkerIcon'
@@ -20,6 +22,8 @@ const Template: ComponentStory<typeof UtopiaMap> = (args) => (
             markerIcon='circle-solid'
             markerShape='circle'
             markerDefaultColor='#777'
+            data={places}
+            tags={tags}
         />
         <Layer
             name='events'
@@ -29,6 +33,8 @@ const Template: ComponentStory<typeof UtopiaMap> = (args) => (
             markerIcon='calendar-days-solid'
             markerShape='square'
             markerDefaultColor='#777'
+            data = {events}
+            tags={tags}
         />
     </UtopiaMap>
 );
@@ -41,6 +47,7 @@ Custom.args = {
 
 export const BadSalzschlirf = Template.bind({});
 BadSalzschlirf.args = {
-    center : [9.5061,50.6238],
-    zoom: 15
+    center : [50.6238,9.5061],
+    zoom: 15,
+    height: "500px"
 };

@@ -1,15 +1,12 @@
 import * as React from 'react'
-import DynamicHeroIcon from '../../Utils/DynamicHeroIcon'
-import { useLayers } from './useLayers'
+import DynamicHeroIcon from '../../../Utils/DynamicHeroIcon'
+import { useLayers } from '../hooks/useLayers'
 
 
-export interface AddButtonProps {
-    setSelectMode: React.Dispatch<React.SetStateAction<any>>
-}
-
-export default function AddButton(props: AddButtonProps) {
+export default function AddButton({setSelectMode} : {setSelectMode: React.Dispatch<React.SetStateAction<any>>}) {
 
     const layers = useLayers();
+    
     return (
         <div className="dropdown dropdown-top dropdown-end dropdown-hover z-500 absolute right-5 bottom-5" >
             <button tabIndex={0} className="z-500  border-0 m-0 mt-2 p-0 w-14 h-14 cursor-pointer bg-white rounded-full hover:bg-gray-100 mouse drop-shadow-md transition ease-in duration-200 focus:outline-none">
@@ -28,7 +25,7 @@ export default function AddButton(props: AddButtonProps) {
                                     <button tabIndex={0}
                                         className="z-500  border-0  p-0 mb-2 mt-2 w-10 h-10 cursor-pointer rounded-full mouse drop-shadow-md transition ease-in duration-200 focus:outline-none"
                                         style={{ backgroundColor: layer.menuColor }}
-                                        onClick={() => { props.setSelectMode(layer) }}>
+                                        onClick={() => { setSelectMode(layer) }}>
                                         <DynamicHeroIcon icon={layer.menuIcon} />
                                     </button>
                                 </div>

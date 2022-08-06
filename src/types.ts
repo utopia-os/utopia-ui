@@ -1,3 +1,28 @@
+import { LatLng } from "leaflet";
+
+export interface UtopiaMap {
+  height?: string,
+  width?: string,
+  center?: LatLng,
+  zoom?: number,
+  tags?: Tag[],
+  children?: React.ReactNode,
+  api?: API
+}
+
+export interface Layer {
+  data?: Item[],
+  children?: React.ReactNode
+  name: string,
+  menuIcon: string,
+  menuColor: string,
+  menuText: string,
+  markerIcon: string,
+  markerShape: string,
+  markerDefaultColor: string,
+  tags?: Tag[]
+}
+
 export class Item {
   id: number;
   date_created?: string;
@@ -30,20 +55,6 @@ export interface Tag {
   color: string;
   id: number;
   name: string;
-}
-
-
-export interface Layer {
-  data?: Item[],
-  children?: React.ReactNode
-  name: string,
-  menuIcon: string,
-  menuColor: string,
-  menuText: string,
-  markerIcon: string,
-  markerShape: string,
-  markerDefaultColor: string,
-  tags?: Tag[]
 }
 
 export interface API {

@@ -1,6 +1,6 @@
 import { useCallback, useReducer, createContext, useContext } from "react";
 import * as React from "react";
-import { Item, Layer } from "../../types";
+import { Item, Layer } from "../../../types";
 
 type ActionType =
   | { type: "ADD LAYER"; layer: Layer }

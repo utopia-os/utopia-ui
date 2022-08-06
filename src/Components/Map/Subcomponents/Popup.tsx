@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Popup as LeafletPopup} from 'react-leaflet'
-import { Item, Tag } from '../../types'
-import { replaceURLs } from '../../Utils/ReplaceURLs'
+import { Item, Tag } from '../../../types'
+import { replaceURLs } from '../../../Utils/ReplaceURLs'
 
 export interface UtopiaPopupProps {
   item: Item,

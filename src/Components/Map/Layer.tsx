@@ -1,27 +1,17 @@
 import * as React from 'react'
 import { Marker } from 'react-leaflet'
-import { Item, Tag } from '../../types'
+import { Item, Tag, Layer as LayerProps } from '../../types'
 import MarkerIconFactory from '../../Utils/MarkerIconFactory'
-import { Popup } from './Popup'
-import { useLayers, useAddLayer } from './useLayers'
-
-
-export interface LayerProps {
-    data?: Item[],
-    children?: React.ReactNode
-    name: string,
-    menuIcon: string,
-    menuColor: string,
-    menuText: string,
-    markerIcon: string,
-    markerShape: string,
-    markerDefaultColor: string,
-    tags?: Tag[]
-}
+import { Popup } from './Subcomponents/Popup'
+import { useLayers, useAddLayer } from './hooks/useLayers'
+import { useTags } from './hooks/useTags'
 
 export const Layer = (props: LayerProps) => {
+
+    const tags = useTags();    
+    
     // create a JS-Map with all Tags 
-    let tagMap = new Map(props.tags?.map(key => [key.id, key]));
+    let tagMap = new Map(tags?.map(key => [key.id, key]));
 
     // returns all tags for passed item
     const getTags = (item: Item) => {
@@ -32,14 +22,10 @@ export const Layer = (props: LayerProps) => {
         return tags;
     };
 
-
     const addLayer = useAddLayer();
     addLayer(props);
     const layers = useLayers();
-    console.log(layers);
     
-
-
     return (
         <>
             {layers.get(props.name)?.data?.map((place: Item) => {

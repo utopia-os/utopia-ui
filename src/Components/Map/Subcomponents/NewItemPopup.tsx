@@ -2,9 +2,8 @@ import * as React from 'react'
 import { LatLng } from 'leaflet'
 import { Popup as LeafletPopup, useMap } from 'react-leaflet'
 import { useState } from 'react'
-import { useAddItem } from './useLayers'
-import { Item } from './UtopiaMap'
-import { Geometry, Layer} from '../../types'
+import { useAddItem } from '../hooks/useLayers'
+import { Geometry, Layer, Item} from '../../../types'
 
 export interface NewItemPopupProps {
     position: LatLng,

@@ -5,11 +5,8 @@ import { useAddTag } from './hooks/useTags'
 
 export function Tags({data} : {data: Tag[]}) {
 const addTag = useAddTag();
-
-
 useEffect(() => {
     data.map(tag => {
-        console.log("Tag added: " + tag.name);
         addTag(tag)
     })
 }, [])

@@ -3,13 +3,15 @@ import { Marker } from 'react-leaflet'
 import { Item, Tag, Layer as LayerProps } from '../../types'
 import MarkerIconFactory from '../../Utils/MarkerIconFactory'
 import { Popup } from './Subcomponents/Popup'
-import { useLayers, useAddLayer } from './hooks/useLayers'
 import { useTags } from './hooks/useTags'
+import { useAddItem, useItems } from './hooks/useItems'
+import { useEffect } from 'react'
+import { useAddLayer } from './hooks/useLayers'
 
 export const Layer = (props: LayerProps) => {
 
-    const tags = useTags();    
-    
+    const tags = useTags();
+
     // create a JS-Map with all Tags 
     let tagMap = new Map(tags?.map(key => [key.id, key]));
 
@@ -22,28 +24,36 @@ export const Layer = (props: LayerProps) => {
         return tags;
     };
 
+    const items = useItems();
+    const addItem = useAddItem()
     const addLayer = useAddLayer();
+
+    useEffect(() => {
+        props.data.map(item => {
+            item.layer = props;
+            addItem(item);
+        })
+    }, [])
     addLayer(props);
-    const layers = useLayers();
-    
+
     return (
         <>
-            {layers.get(props.name)?.data?.map((place: Item) => {
-                    let tags = getTags(place);
-                    let color1 = "#666";
-                    let color2 = "RGBA(35, 31, 32, 0.2)";
-                    if (tags[0]) {
-                        color1 = tags[0].color;
-                    }
-                    if (tags[1]) {
-                        color2 = tags[1].color;
-                    }
-                    return (
-                        <Marker icon={MarkerIconFactory(props.markerShape, color1, color2, props.markerIcon)} key={place.id} position={[place.position.coordinates[1], place.position.coordinates[0]]}>
-                            <Popup item={place} tags={tags} />
-                        </Marker>
-                    );
-                })
+            {items.filter(item => item.layer?.name === props.name)?.map((place: Item) => {
+                let tags = getTags(place);
+                let color1 = "#666";
+                let color2 = "RGBA(35, 31, 32, 0.2)";
+                if (tags[0]) {
+                    color1 = tags[0].color;
+                }
+                if (tags[1]) {
+                    color2 = tags[1].color;
+                }
+                return (
+                    <Marker icon={MarkerIconFactory(props.markerShape, color1, color2, props.markerIcon)} key={place.id} position={[place.position.coordinates[1], place.position.coordinates[0]]}>
+                        <Popup item={place} tags={tags} />
+                    </Marker>
+                );
+            })
             }
             {props.children}
         </>

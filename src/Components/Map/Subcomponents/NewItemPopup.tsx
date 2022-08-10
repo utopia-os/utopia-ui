@@ -2,7 +2,7 @@ import * as React from 'react'
 import { LatLng } from 'leaflet'
 import { Popup as LeafletPopup, useMap } from 'react-leaflet'
 import { useState } from 'react'
-import { useAddItem } from '../hooks/useLayers'
+import { useAddItem } from '../hooks/useItems'
 import { Geometry, Layer, Item} from '../../../types'
 
 export interface NewItemPopupProps {
@@ -22,7 +22,7 @@ export default function NewItemPopup(props: NewItemPopupProps) {
         evt.preventDefault()
         console.log("New Item Popup is adding Item ...");
         
-        addItem(new Item(Math.floor(Math.random() * 1000) + 200, name, text, new Geometry(props.position.lng, props.position.lat)), props.layer)
+        addItem(new Item(Math.floor(Math.random() * 1000) + 200, name, text, new Geometry(props.position.lng, props.position.lat), props.layer))
         map.closePopup();
         props.setNewItemPopup(null);
         

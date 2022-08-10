@@ -8,10 +8,9 @@ import MarkerClusterGroup from 'react-leaflet-cluster'
 import AddButton from "./Subcomponents/AddButton";
 import { useState } from "react";
 import NewItemPopup, { NewItemPopupProps } from "./Subcomponents/NewItemPopup";
-import { LayersProvider } from "./hooks/useLayers";
+import { ItemsProvider } from "./hooks/useItems";
 import { TagsProvider } from "./hooks/useTags";
-
-
+import { LayersProvider } from "./hooks/useLayers";
 
 export interface MapEventListenerProps {
     selectMode: Layer | null,
@@ -46,35 +45,38 @@ function UtopiaMap({
     const [newItemPopup, setNewItemPopup] = useState<NewItemPopupProps | null>(null);
 
     return (
-        <TagsProvider initialTags={[]}>
-            <LayersProvider initialLayers={new Map()}>
-                <div className={(selectMode != null ? "crosshair-cursor-enabled" : undefined)}>
-                    <MapContainer style={{ height: height, width: width }} center={center} zoom={zoom}>
-                        <TileLayer
-                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                        <MarkerClusterGroup showCoverageOnHover chunkedLoading maxClusterRadius={50}>
-                            {children}
-                        </MarkerClusterGroup>
-                        <MapEventListener setSelectMode={setSelectMode} selectMode={selectMode} setNewItemPopup={setNewItemPopup} />
-                        {newItemPopup &&
-                            <NewItemPopup position={newItemPopup.position} layer={newItemPopup.layer} setNewItemPopup={setNewItemPopup} />
-                        }
-                        <AddButton setSelectMode={setSelectMode}></AddButton>
-                    </MapContainer>
-                    {selectMode != null &&
-                        <div className="button z-500 absolute right-5 top-5 drop-shadow-md">
-                            <div className="alert bg-white text-green-900">
-                                <div>
-                                    <span>Select {selectMode.name} position!</span>
+        <LayersProvider initialLayers={[]}>
+            <TagsProvider initialTags={[]}>
+                <ItemsProvider initialItems={[]}>
+                    <div className={(selectMode != null ? "crosshair-cursor-enabled" : undefined)}>
+                        <MapContainer style={{ height: height, width: width }} center={center} zoom={zoom}>
+                            <TileLayer
+                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                            <MarkerClusterGroup showCoverageOnHover chunkedLoading maxClusterRadius={50}>
+                                {children}
+                            </MarkerClusterGroup>
+                            <MapEventListener setSelectMode={setSelectMode} selectMode={selectMode} setNewItemPopup={setNewItemPopup} />
+                            {newItemPopup &&
+                                <NewItemPopup position={newItemPopup.position} layer={newItemPopup.layer} setNewItemPopup={setNewItemPopup} />
+                            }
+                            <AddButton setSelectMode={setSelectMode}></AddButton>
+                        </MapContainer>
+                        {selectMode != null &&
+                            <div className="button z-500 absolute right-5 top-5 drop-shadow-md">
+                                <div className="alert bg-white text-green-900">
+                                    <div>
+                                        <span>Select {selectMode.name} position!</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    }
+                        }
 
-                </div>
-            </LayersProvider>
-        </TagsProvider>
+                    </div>
+                </ItemsProvider>
+            </TagsProvider>
+        </LayersProvider>
+
     );
 }
 

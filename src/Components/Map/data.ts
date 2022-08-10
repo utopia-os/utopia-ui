@@ -70,7 +70,24 @@ export const events : Item[] = [
       "end": "2022-10-08T12:00:00",
       "tags": [5,6,11],
       
-  }
+  },
+
+  {
+    "id": 247,
+    "name": "anderes Event",
+    "text": "Zu den Vollmonden vom März bis Oktober treffen sich traditionell Menschen zum gemeinsamen Musizieren, Tanzen, Spielen, Grillen und Entspannen am Gerloser Häuschen im Niesiger Wald.\r\n\r\nUhrzeit: immer ab 17 Uhr\r\n\r\nhttps://trommeln-fulda.de/vollmondtrommeln/",
+    "position": {
+        "type": "Point",
+        "coordinates": [
+            9.67,
+            50.589
+        ]
+    },
+    "start": "2022-03-18T12:00:00",
+    "end": "2022-10-08T12:00:00",
+    "tags": [5,6,11],
+    
+}
 ];
 
 export const places : Item[] = [

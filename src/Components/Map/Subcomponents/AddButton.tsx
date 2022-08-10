@@ -6,6 +6,8 @@ import { useLayers } from '../hooks/useLayers'
 export default function AddButton({setSelectMode} : {setSelectMode: React.Dispatch<React.SetStateAction<any>>}) {
 
     const layers = useLayers();
+    console.log(layers);    
+    console.log(useLayers());    
     
     return (
         <div className="dropdown dropdown-top dropdown-end dropdown-hover z-500 absolute right-5 bottom-5" >
@@ -16,9 +18,8 @@ export default function AddButton({setSelectMode} : {setSelectMode: React.Dispat
                 C15.952,9,16,9.447,16,10z" />
                 </svg>
             </button>
-            {layers &&
                 <ul tabIndex={0} className="dropdown-content pr-2 mb-0 list-none">
-                    {Array.from(layers.values()).map((layer) => (
+                    {layers.map((layer) => (
                         <li key={layer.name} >
                             <a>
                                 <div className="tooltip tooltip-left" data-tip={layer.menuText}>
@@ -33,7 +34,7 @@ export default function AddButton({setSelectMode} : {setSelectMode: React.Dispat
                         </li>
                     ))}
                 </ul>
-            }
+            
         </div>
     )
 }

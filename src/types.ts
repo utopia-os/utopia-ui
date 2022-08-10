@@ -11,7 +11,7 @@ export interface UtopiaMap {
 }
 
 export interface Layer {
-  data?: Item[],
+  data: Item[],
   children?: React.ReactNode
   name: string,
   menuIcon: string,
@@ -20,7 +20,7 @@ export interface Layer {
   markerIcon: string,
   markerShape: string,
   markerDefaultColor: string,
-  tags?: Tag[]
+  tags?: Tag[],
 }
 
 export class Item {
@@ -30,15 +30,16 @@ export class Item {
   name: string;
   text: string;
   position: Geometry;
+  layer?: Layer;
   start?: string;
   end?: string;
   tags?: number[];
-  [key: string]: any;
-  constructor(id:number,name:string,text:string,position:Geometry){
+  constructor(id:number,name:string,text:string,position:Geometry, layer: Layer){
     this.id = id;
     this.name = name;
     this.text = text;
     this.position = position;
+    this.layer = layer;
   }
 }
 
@@ -60,4 +61,6 @@ export interface Tag {
 export interface API {
   getAll(): Promise<void>,
   add(item : Item): Promise<void>,
+  update(item : Item): Promise<void>,
+  remove(id : number): Promise<void>,
 }

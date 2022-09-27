@@ -1,13 +1,14 @@
 import * as React from 'react'
 import { LatLng } from 'leaflet'
 import { Popup as LeafletPopup, useMap } from 'react-leaflet'
-import { useState } from 'react'
-import { useAddItem } from '../hooks/useItems'
+import { useEffect, useState } from 'react'
+import { useAddItem, useUpdateItem } from '../hooks/useItems'
 import { Geometry, Layer, Item} from '../../../types'
 
 export interface NewItemPopupProps {
     position: LatLng,
     layer: Layer,
+    item?: Item,
     setNewItemPopup: React.Dispatch<React.SetStateAction<any>>
 }
 
@@ -17,22 +18,42 @@ export default function NewItemPopup(props: NewItemPopupProps) {
 
     const map = useMap();
     const addItem = useAddItem();
+    const updateItem = useUpdateItem();
 
     const handleSubmit = (evt: any) => {
         evt.preventDefault()
         console.log("New Item Popup is adding Item ...");
-        
-        addItem(new Item(Math.floor(Math.random() * 1000) + 200, name, text, new Geometry(props.position.lng, props.position.lat), props.layer))
+        if(props.item) {
+            updateItem(new Item(props.item.id, name, text, new Geometry(props.position.lng, props.position.lat), props.layer))
+        }
+        else {
+            addItem(new Item(crypto.randomUUID(), name, text, new Geometry(props.position.lng, props.position.lat), props.layer))}
         map.closePopup();
         props.setNewItemPopup(null);
-        
+    } 
+
+    const resetPopup = () => {
+        setName('');
+        setText('');
     }
 
-    console.log("popup opend");
-    
+    const setItemValues = () => {
+        if(props.item) {
+            setName(props.item?.name);
+            setText(props.item?.text);
+            console.log('set name + txt');
+          }
+    }
+
+    useEffect(() => {
+        setItemValues();
+    },[props.item])
 
     return (
         <LeafletPopup maxHeight={300} minWidth={275} maxWidth={275} autoPanPadding={[20, 5]}
+            eventHandlers={{
+                remove: resetPopup
+            }}
             position={props.position}>
             <form onSubmit={handleSubmit}>
                 <div className='flex justify-center'><b className="text-xl font-bold">New {props.layer.name}</b></div>

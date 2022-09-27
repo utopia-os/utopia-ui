@@ -1,4 +1,5 @@
 import { LatLng } from "leaflet";
+import { NewItemPopupProps } from "./Components/Map/Subcomponents/NewItemPopup";
 
 export interface UtopiaMap {
   height?: string,
@@ -21,20 +22,21 @@ export interface Layer {
   markerShape: string,
   markerDefaultColor: string,
   tags?: Tag[],
+  setNewItemPopup?: React.Dispatch<React.SetStateAction<NewItemPopupProps | null>>
 }
 
 export class Item {
-  id: number;
+  id: string | number;
   date_created?: string;
   date_updated?: string | null;
   name: string;
   text: string;
   position: Geometry;
-  layer?: Layer;
+  layer: Layer;
   start?: string;
   end?: string;
   tags?: number[];
-  constructor(id:number,name:string,text:string,position:Geometry, layer: Layer){
+  constructor(id:string|number,name:string,text:string,position:Geometry, layer: Layer){
     this.id = id;
     this.name = name;
     this.text = text;
@@ -54,7 +56,7 @@ export class Geometry {
 
 export interface Tag {
   color: string;
-  id: number;
+  id: string | number;
   name: string;
 }
 

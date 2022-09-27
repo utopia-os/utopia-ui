@@ -12,6 +12,7 @@ import { ItemsProvider } from "./hooks/useItems";
 import { TagsProvider } from "./hooks/useTags";
 import { LayersProvider } from "./hooks/useLayers";
 
+
 export interface MapEventListenerProps {
     selectMode: Layer | null,
     setSelectMode: React.Dispatch<React.SetStateAction<any>>,
@@ -44,6 +45,8 @@ function UtopiaMap({
     const [selectMode, setSelectMode] = useState<Layer | null>(null);
     const [newItemPopup, setNewItemPopup] = useState<NewItemPopupProps | null>(null);
 
+
+
     return (
         <LayersProvider initialLayers={[]}>
             <TagsProvider initialTags={[]}>
@@ -54,11 +57,15 @@ function UtopiaMap({
                                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                             <MarkerClusterGroup showCoverageOnHover chunkedLoading maxClusterRadius={50}>
-                                {children}
+                                {
+                                    React.Children.toArray(children).map((child) =>
+                                        React.isValidElement<{ setNewItemPopup: React.Dispatch<React.SetStateAction<NewItemPopupProps | null>> }>(child) ? React.cloneElement(child, { setNewItemPopup: setNewItemPopup }) : child
+                                    )
+                                }
                             </MarkerClusterGroup>
                             <MapEventListener setSelectMode={setSelectMode} selectMode={selectMode} setNewItemPopup={setNewItemPopup} />
                             {newItemPopup &&
-                                <NewItemPopup position={newItemPopup.position} layer={newItemPopup.layer} setNewItemPopup={setNewItemPopup} />
+                                <NewItemPopup position={newItemPopup.position} layer={newItemPopup.layer} setNewItemPopup={setNewItemPopup} item={newItemPopup.item}/>
                             }
                             <AddButton setSelectMode={setSelectMode}></AddButton>
                         </MapContainer>
@@ -71,12 +78,10 @@ function UtopiaMap({
                                 </div>
                             </div>
                         }
-
                     </div>
                 </ItemsProvider>
             </TagsProvider>
         </LayersProvider>
-
     );
 }
 

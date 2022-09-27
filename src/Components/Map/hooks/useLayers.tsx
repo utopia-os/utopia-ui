@@ -20,17 +20,10 @@ function useLayerManager(initialLayers: Layer[]): {
   const [layers, dispatch] = useReducer((state: Layer[], action: ActionType) => {
     switch (action.type) {
       case "ADD LAYER":
-        {
-          if (!state.includes(action.layer))
-            state.push(action.layer);
-          return state;
-        }
-      case "ADD ITEM":
-        {
-          if(!state.find(layer => layer.name === action.layer.name)?.data.find(item => item.id === action.item.id))
-          state.find(layer => layer.name === action.layer.name)?.data.push(action.item)
-          return state;
-        }
+        return [
+          ...state,
+          action.layer,
+        ];
       default:
         throw new Error();
     }

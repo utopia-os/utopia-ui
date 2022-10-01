@@ -13,13 +13,13 @@ export const Layer = (props: LayerProps) => {
     const tags = useTags();
 
     // create a JS-Map with all Tags 
-    let tagMap = new Map(tags?.map(key => [key.id, key]));
+    const tagMap = new Map(tags?.map(key => [key.id, key]));
 
     // returns all tags for passed item
     const getTags = (item: Item) => {
-        let tags: Tag[] = [];
+        const tags: Tag[] = [];
         item.tags && item.tags.forEach(element => {
-            if (tagMap.has(element)) { tags.push(tagMap.get(element)!); };
+            if (tagMap.has(element)) { tags.push(tagMap.get(element)!)}
         });
         return tags;
     };
@@ -35,13 +35,13 @@ export const Layer = (props: LayerProps) => {
         })
         addLayer(props);
 
-    }, [])
+    }, [addItem, addLayer, props])
 
 
     return (
         <>
             {items.filter(item => item.layer?.name === props.name)?.map((place: Item) => {
-                let tags = getTags(place);
+                const tags = getTags(place);
                 let color1 = "#666";
                 let color2 = "RGBA(35, 31, 32, 0.2)";
                 if (tags[0]) {

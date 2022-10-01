@@ -15,7 +15,7 @@ import { LayersProvider } from "./hooks/useLayers";
 
 export interface MapEventListenerProps {
     selectMode: Layer | null,
-    setSelectMode: React.Dispatch<React.SetStateAction<any>>,
+    setSelectMode: React.Dispatch<any>,
     setNewItemPopup: React.Dispatch<React.SetStateAction<any>>
 }
 
@@ -23,8 +23,6 @@ function MapEventListener(props: MapEventListenerProps) {
     useMapEvents({
         click: (e) => {
             console.log(e.latlng.lat + ',' + e.latlng.lng);
-            console.log(props.selectMode);
-
             if (props.selectMode != null) {
                 props.setNewItemPopup({ layer: props.selectMode, position: e.latlng })
                 props.setSelectMode(null)

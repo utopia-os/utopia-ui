@@ -9,7 +9,7 @@ useEffect(() => {
     data.map(tag => {
         addTag(tag)
     })
-}, [])
+}, [addTag, data])
 
   return (
     <></>

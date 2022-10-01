@@ -20,10 +20,14 @@ function useLayerManager(initialLayers: Layer[]): {
   const [layers, dispatch] = useReducer((state: Layer[], action: ActionType) => {
     switch (action.type) {
       case "ADD LAYER":
-        return [
+        const exist = state.find((layer) =>
+          layer.name === action.layer.name ? true : false
+        );
+        if (!exist) return [
           ...state,
           action.layer,
         ];
+        else return state;
       default:
         throw new Error();
     }
@@ -36,7 +40,7 @@ function useLayerManager(initialLayers: Layer[]): {
     });
   }, []);
 
-  return { layers, addLayer};
+  return { layers, addLayer };
 }
 
 export const LayersProvider: React.FunctionComponent<{

@@ -26,8 +26,8 @@
     "babel-runtime": "^6.26.0",
     "daisyui": "^2.19.0",
     "postcss": "^8.4.14",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "rollup": "^2.75.7",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-typescript2": "^0.32.1",
@@ -35,13 +35,13 @@
     "typescript": "^4.7.4"
   },
   "peerDependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "dependencies": {
     "@heroicons/react": "^1.0.6",
     "leaflet": "^1.8.0",
-    "react-leaflet": "^3.2.5",
-    "react-leaflet-cluster": "^1.0.4"
+    "react-leaflet": "^4.1.0",
+    "react-leaflet-cluster": "^2.0.0"
   }
 }

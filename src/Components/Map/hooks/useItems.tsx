@@ -24,11 +24,15 @@ function useItemsManager (initialItems: Item[]): {
 } {
   const [items, dispatch] = useReducer((state: Item[], action: ActionType) => {
     switch (action.type) {
-        case "ADD":           
-          return [
+        case "ADD":     
+        const exist = state.find((item) =>
+        item.id === action.item.id ? true : false
+      );      
+          if (!exist) return [
             ...state,
             action.item,
           ];
+          else return state;
         case "UPDATE": 
             return state.map((item) => {
               if (item.id === action.item.id) {

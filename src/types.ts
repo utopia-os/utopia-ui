@@ -32,7 +32,7 @@ export class Item {
   name: string;
   text: string;
   position: Geometry;
-  layer: Layer;
+  [key: string]: any;
   start?: string;
   end?: string;
   tags?: number[];

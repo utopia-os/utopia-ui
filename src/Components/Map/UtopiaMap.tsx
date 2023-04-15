@@ -15,7 +15,7 @@ import { LayersProvider } from "./hooks/useLayers";
 
 export interface MapEventListenerProps {
     selectMode: Layer | null,
-    setSelectMode: React.Dispatch<React.SetStateAction<any>>,
+    setSelectMode: React.Dispatch<any>,
     setNewItemPopup: React.Dispatch<React.SetStateAction<any>>
 }
 
@@ -23,8 +23,6 @@ function MapEventListener(props: MapEventListenerProps) {
     useMapEvents({
         click: (e) => {
             console.log(e.latlng.lat + ',' + e.latlng.lng);
-            console.log(props.selectMode);
-
             if (props.selectMode != null) {
                 props.setNewItemPopup({ layer: props.selectMode, position: e.latlng })
                 props.setSelectMode(null)
@@ -55,7 +53,7 @@ function UtopiaMap({
                         <MapContainer style={{ height: height, width: width }} center={center} zoom={zoom}>
                             <TileLayer
                                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                                url="https://tile.osmand.net/hd/{z}/{x}/{y}.png" />
                             <MarkerClusterGroup showCoverageOnHover chunkedLoading maxClusterRadius={50}>
                                 {
                                     React.Children.toArray(children).map((child) =>

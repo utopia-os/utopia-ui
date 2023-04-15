@@ -22,7 +22,7 @@
     "@types/react-leaflet": "^2.8.2",
     "autoprefixer": "^10.4.7",
     "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
+    "babel-loader": "^9.1.2",
     "babel-runtime": "^6.26.0",
     "daisyui": "^2.19.0",
     "postcss": "^8.4.14",

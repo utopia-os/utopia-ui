@@ -53,7 +53,7 @@ function UtopiaMap({
                         <MapContainer style={{ height: height, width: width }} center={center} zoom={zoom}>
                             <TileLayer
                                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                                url="https://tile.osmand.net/hd/{z}/{x}/{y}.png" />
                             <MarkerClusterGroup showCoverageOnHover chunkedLoading maxClusterRadius={50}>
                                 {
                                     React.Children.toArray(children).map((child) =>

@@ -7,8 +7,8 @@ export default {
     input: 'src/index.tsx',
     output: [
       {
-        file: pkg.main,
-        format: 'cjs',
+        file: 'dist/index.js',
+        format: 'es',
         exports: 'named',
         sourcemap: true,
         strict: false

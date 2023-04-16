@@ -4,7 +4,7 @@
   "description": "Reuseable React Components to build mapping apps for all kinds of communities ",
   "repository": "https://github.com/utopia-os/utopia-ui",
   "homepage:": "https://utopia.os/",
-  "main": "dist/index.js",
+  "module": "dist/index.js",
   "scripts": {
     "build": "rollup -c",
     "start": "rollup -c -w"

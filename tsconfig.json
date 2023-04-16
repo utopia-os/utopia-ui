@@ -14,12 +14,12 @@
       "noImplicitReturns": true,
       "noImplicitThis": true,
       "strictNullChecks": true,
-      "noUnusedLocals": true,
+      "noUnusedLocals": false,
       "noUnusedParameters": true,
       
     },
     "include": ["src"],
-    "exclude": ["node_modules", "dist", "example", "rollup.config.js"],
+    "exclude": ["node_modules", "dist", "example", "rollup.config.mjss"],
     "typeRoots": [
         "./types",
         "./node_modules/@types/"

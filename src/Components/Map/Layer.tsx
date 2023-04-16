@@ -4,7 +4,7 @@ import { Item, Tag, Layer as LayerProps } from '../../types'
 import MarkerIconFactory from '../../Utils/MarkerIconFactory'
 import { Popup } from './Subcomponents/Popup'
 import { useTags } from './hooks/useTags'
-import { useAddItem, useItems } from './hooks/useItems'
+import { useAddItem, useItems, useResetItems } from './hooks/useItems'
 import { useEffect } from 'react'
 import { useAddLayer } from './hooks/useLayers'
 
@@ -27,20 +27,27 @@ export const Layer = (props: LayerProps) => {
     const items = useItems();
     const addItem = useAddItem()
     const addLayer = useAddLayer();
+    const resetItems = useResetItems();
 
     useEffect(() => {
+        console.log("props.data changed");
+        
+        resetItems(props);
         props.data.map(item => {
             item.layer = props;
             addItem(item);
         })
         addLayer(props);
+        console.table(items)
+    }, [props.data])
 
-    }, [addItem, addLayer, props])
 
 
     return (
         <>
             {items.filter(item => item.layer?.name === props.name)?.map((place: Item) => {
+                console.log(`layer ${props.name} rendering ....`);
+                
                 const tags = getTags(place);
                 let color1 = "#666";
                 let color2 = "RGBA(35, 31, 32, 0.2)";

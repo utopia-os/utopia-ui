@@ -1,11 +1,12 @@
 import { useCallback, useReducer, createContext, useContext } from "react";
 import * as React from "react";
-import { Item } from "../../../types";
+import { Item, Layer } from "../../../types";
 
 type ActionType =
 | { type: "ADD"; item: Item }
 | { type: "UPDATE"; item: Item }
-| { type: "REMOVE"; item: Item };
+| { type: "REMOVE"; item: Item }
+| { type: "RESET"; layer: Layer };
 
 type UseItemManagerResult = ReturnType<typeof useItemsManager>;
 
@@ -13,7 +14,8 @@ const ItemContext = createContext<UseItemManagerResult>({
     items: [],
     addItem: () => {},
     updateItem: () => {},
-    removeItem: () => {}
+    removeItem: () => {},
+    resetItems: () => {}
 });
 
 function useItemsManager (initialItems: Item[]): {
@@ -21,6 +23,7 @@ function useItemsManager (initialItems: Item[]): {
   addItem: (item: Item) => void;
   updateItem: (item: Item) => void;
   removeItem: (item: Item) => void;
+  resetItems: (layer: Layer) => void;
 } {
   const [items, dispatch] = useReducer((state: Item[], action: ActionType) => {
     switch (action.type) {
@@ -42,6 +45,8 @@ function useItemsManager (initialItems: Item[]): {
             });            
         case "REMOVE":
           return state.filter(item => item !== action.item);
+        case "RESET":
+          return state.filter(item => item.layer.name !== action.layer.name);
         default:
           throw new Error();
       }
@@ -67,7 +72,15 @@ function useItemsManager (initialItems: Item[]): {
       item,
     });
   }, []);
-  return { items, updateItem, addItem, removeItem };
+
+  const resetItems = useCallback((layer: Layer) => {
+    dispatch({
+      type: "RESET",
+      layer
+    });
+  }, []);
+
+  return { items, updateItem, addItem, removeItem, resetItems };
 }
 
 export const ItemsProvider: React.FunctionComponent<{
@@ -96,4 +109,9 @@ export const useUpdateItem = (): UseItemManagerResult["updateItem"] => {
 export const useRemoveItem = (): UseItemManagerResult["removeItem"] => {
   const { removeItem } = useContext(ItemContext);
   return removeItem;
+}; 
+
+export const useResetItems = (): UseItemManagerResult["resetItems"] => {
+  const { resetItems } = useContext(ItemContext);
+  return resetItems;
 }; 

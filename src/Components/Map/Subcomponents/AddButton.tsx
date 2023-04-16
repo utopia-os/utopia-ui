@@ -23,7 +23,7 @@ export default function AddButton({setSelectMode} : {setSelectMode: React.Dispat
                             <a>
                                 <div className="tooltip tooltip-left" data-tip={layer.menuText}>
                                     <button tabIndex={0}
-                                        className="z-500  border-0  p-0 mb-2 mt-2 w-10 h-10 cursor-pointer rounded-full mouse drop-shadow-md transition ease-in duration-200 focus:outline-none"
+                                        className="z-500  border-0 pl-2 p-0 mb-2 mt-2 w-10 h-10 cursor-pointer rounded-full mouse drop-shadow-md transition ease-in duration-200 focus:outline-none"
                                         style={{ backgroundColor: layer.menuColor }}
                                         onClick={() => { setSelectMode(layer) }}>
                                         <DynamicHeroIcon icon={layer.menuIcon} />

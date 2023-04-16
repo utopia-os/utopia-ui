@@ -40,7 +40,7 @@ const Popup = (props: UtopiaPopupProps) => {
         </div>
         <div className='basis-1/6'>
           <div className="dropdown dropdown-right">
-            <label tabIndex={0} className="btn m-1 bg-white hover:bg-white text-gray-500 hover:text-gray-700 leading-3">
+            <label tabIndex={0} className="btn m-1 bg-white hover:bg-white text-gray-500 hover:text-gray-700 leading-3 border-none">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
               </svg>

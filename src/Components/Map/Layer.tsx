@@ -30,7 +30,6 @@ export const Layer = (props: LayerProps) => {
     const resetItems = useResetItems();
 
     useEffect(() => {
-        console.log("props.data changed");
         
         resetItems(props);
         props.data.map(item => {
@@ -38,16 +37,12 @@ export const Layer = (props: LayerProps) => {
             addItem(item);
         })
         addLayer(props);
-        console.table(items)
     }, [props.data])
-
 
 
     return (
         <>
-            {items.filter(item => item.layer?.name === props.name)?.map((place: Item) => {
-                console.log(`layer ${props.name} rendering ....`);
-                
+            {items.filter(item => item.layer?.name === props.name)?.map((place: Item) => {              
                 const tags = getTags(place);
                 let color1 = "#666";
                 let color2 = "RGBA(35, 31, 32, 0.2)";

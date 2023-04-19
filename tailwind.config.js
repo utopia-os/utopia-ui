@@ -13,9 +13,7 @@ module.exports = {
   plugins: [
     require("daisyui")
   ],
-  
+  prefix: 'tw-',
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
-  
-
   darkMode: 'class',
 }

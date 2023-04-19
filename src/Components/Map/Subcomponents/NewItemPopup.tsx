@@ -50,16 +50,16 @@ export default function NewItemPopup(props: NewItemPopupProps) {
     },[props.item])
 
     return (
-        <LeafletPopup maxHeight={300} minWidth={275} maxWidth={275} autoPanPadding={[20, 5]}
+        <LeafletPopup  minWidth={275} maxWidth={275} autoPanPadding={[20, 5]}
             eventHandlers={{
                 remove: resetPopup
             }}
             position={props.position}>
             <form onSubmit={handleSubmit}>
-                <div className='flex justify-center'><b className="text-xl font-bold">New {props.layer.name}</b></div>
-                <input type="text" placeholder="Name" className="input input-bordered w-full max-w-xs mt-5" value={name} onChange={e => setName(e.target.value)} />
-                <textarea className="textarea textarea-bordered w-full mt-5" placeholder="Text" value={text} onChange={e => setText(e.target.value)}></textarea>
-                <div className='flex justify-center'><button className="btn mt-5 place-self-center">Save</button></div>
+                <div className='tw-flex tw-justify-center'><b className="tw-text-xl tw-font-bold">New {props.layer.name}</b></div>
+                <input type="text" placeholder="Name" className="tw-input tw-input-bordered tw-w-full tw-max-w-xs tw-mt-5" value={name} onChange={e => setName(e.target.value)} />
+                <textarea className="tw-textarea tw-textarea-bordered tw-w-full tw-mt-5 tw-leading-5 tw-h-40" placeholder="Text" value={text} onChange={e => setText(e.target.value)}></textarea>
+                <div className='tw-flex tw-justify-center'><button className="tw-btn tw-mt-5 tw-place-self-center">Save</button></div>
             </form>
         </LeafletPopup>
     )

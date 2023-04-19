@@ -22,6 +22,7 @@ export interface MapEventListenerProps {
 function MapEventListener(props: MapEventListenerProps) {
     useMapEvents({
         click: (e) => {
+            console.log(e);
             console.log(e.latlng.lat + ',' + e.latlng.lng);
             if (props.selectMode != null) {
                 props.setNewItemPopup({ layer: props.selectMode, position: e.latlng })
@@ -46,40 +47,40 @@ function UtopiaMap({
 
 
     return (
-        <LayersProvider initialLayers={[]}>
-            <TagsProvider initialTags={[]}>
-                <ItemsProvider initialItems={[]}>
-                    <div className={(selectMode != null ? "crosshair-cursor-enabled" : undefined)}>
-                        <MapContainer style={{ height: height, width: width }} center={center} zoom={zoom}>
-                            <TileLayer
-                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                                url="https://tile.osmand.net/hd/{z}/{x}/{y}.png" />
-                            <MarkerClusterGroup showCoverageOnHover chunkedLoading maxClusterRadius={50}>
-                                {
-                                    React.Children.toArray(children).map((child) =>
-                                        React.isValidElement<{ setNewItemPopup: React.Dispatch<React.SetStateAction<NewItemPopupProps | null>> }>(child) ? React.cloneElement(child, { setNewItemPopup: setNewItemPopup }) : child
-                                    )
+            <LayersProvider initialLayers={[]}>
+                <TagsProvider initialTags={[]}>
+                    <ItemsProvider initialItems={[]}>
+                        <div className={(selectMode != null ? "crosshair-cursor-enabled" : undefined)}>
+                            <MapContainer style={{ height: height, width: width }} center={center} zoom={zoom}>
+                                <TileLayer
+                                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                    url="https://tile.osmand.net/hd/{z}/{x}/{y}.png" />
+                                <MarkerClusterGroup showCoverageOnHover chunkedLoading maxClusterRadius={50}>
+                                    {
+                                        React.Children.toArray(children).map((child) =>
+                                            React.isValidElement<{ setNewItemPopup: React.Dispatch<React.SetStateAction<NewItemPopupProps | null>> }>(child) ? React.cloneElement(child, { setNewItemPopup: setNewItemPopup }) : child
+                                        )
+                                    }
+                                </MarkerClusterGroup>
+                                <MapEventListener setSelectMode={setSelectMode} selectMode={selectMode} setNewItemPopup={setNewItemPopup} />
+                                {newItemPopup &&
+                                    <NewItemPopup position={newItemPopup.position} layer={newItemPopup.layer} setNewItemPopup={setNewItemPopup} item={newItemPopup.item} />
                                 }
-                            </MarkerClusterGroup>
-                            <MapEventListener setSelectMode={setSelectMode} selectMode={selectMode} setNewItemPopup={setNewItemPopup} />
-                            {newItemPopup &&
-                                <NewItemPopup position={newItemPopup.position} layer={newItemPopup.layer} setNewItemPopup={setNewItemPopup} item={newItemPopup.item}/>
-                            }
-                            <AddButton setSelectMode={setSelectMode}></AddButton>
-                        </MapContainer>
-                        {selectMode != null &&
-                            <div className="button z-500 absolute right-5 top-5 drop-shadow-md">
-                                <div className="alert bg-white text-green-900">
-                                    <div>
-                                        <span>Select {selectMode.name} position!</span>
+                                <AddButton setSelectMode={setSelectMode}></AddButton>
+                            </MapContainer>
+                            {selectMode != null &&
+                                <div className="tw-button tw-z-500 tw-absolute tw-right-5 tw-top-20 tw-drop-shadow-md">
+                                    <div className="tw-alert tw-bg-white tw-text-green-900">
+                                        <div>
+                                            <span>Select {selectMode.name} position!</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        }
-                    </div>
-                </ItemsProvider>
-            </TagsProvider>
-        </LayersProvider>
+                            }
+                        </div>
+                    </ItemsProvider>
+                </TagsProvider>
+            </LayersProvider>
     );
 }
 

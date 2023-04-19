@@ -6,6 +6,8 @@
   text-align: left;
 }
 
+
+
 input {
   box-sizing: border-box;
 }
@@ -45,4 +47,8 @@ textarea {
   top: -33px;
   left: 10px;
   width: 13px;
+}
+
+.leaflet-popup-scrolled {
+  overflow-x: hidden;
 }

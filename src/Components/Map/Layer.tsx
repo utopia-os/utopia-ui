@@ -33,8 +33,11 @@ export const Layer = (props: LayerProps) => {
         
         resetItems(props);
         props.data.map(item => {
-            item.layer = props;
-            addItem(item);
+            if(item.position) {
+                item.layer = props;
+                addItem(item);
+            }
+            
         })
         addLayer(props);
     }, [props.data])

@@ -1,0 +1,50 @@
+.leaflet-container {
+    text-align: left;
+  }
+  
+  
+  
+  input {
+    box-sizing: border-box;
+  }
+  
+  textarea {
+    box-sizing: border-box;
+  }
+  
+  .leaflet-control-attribution {
+    display: none;
+   }
+  
+  .leaflet-data-marker {
+  
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAQCAYAAACcN8ZaAAAB3klEQVR42s3U4UdDURzG8czMXJnJ1Vwzc6VJZjaZJdlMlpQsKdmUFNOUspRSSqUolfQfr+fF98Vx5mwv9qbDx7LdznnO7/7Omej3+/+Ga0QMUYkhbvBgmhzCQxwxibIGrGEF8CQhU+LLtKQkQNqScUgjxRxTBIxbgfgD/BgnhM8kM5KTeclLQYqGkkMRBckzR8ic/mAgd5BAZplsUaqyIg2sDtHg2brUZJk5SmwopErJUWE8SpmTMhNvya60Zd/SNrR4bkeaskG4uiwRZk6yrJEYFibGAxn+scECHTmTnuVCzvmty3PHciB7bGKN6lQkzysPqIrHmpFhYbKUtckC1/Ioz4ZHuZdbuSLYiRxRpSZVWXZVxAzC0R4Ik5SQsu6w8yd5l2/5kg95I9SdXMoZQfYIUjeqEUrgOkXGPeN4TYRhxy8E+ZUf+eS7B7miIoeybVSjKDnm8u3+gH3pDTYwu1igATvs/pXqvBKiR4i2bNJfi1ZfUAnjgrOG8wY2quNzBKuU/ZS+uSFEl5O0xRGuUIlZCcw7xG5QPkeHYUSNV5WXGou2sC3rBC0LjenqCXGO0WEiTJa0Lr4KixdHBrDGuGGiRqCUpFk8pGIpQtCU7p4YPwxYxEMCk1aAMQZh8Ac8PfbIzYPJOwAAAABJRU5ErkJggg==') no-repeat;
+    background-position: 6px 32px;
+  }
+  
+  .crosshair-cursor-enabled {
+    cursor: crosshair;
+  }
+  
+  .leaflet-container {
+    cursor: inherit;
+  }
+  
+  .calendar-icon {
+    position: relative;
+    top: -35px;
+    left: 10px;
+    width: 13px;
+  }
+  
+  
+  .circle-icon {
+    position: relative;
+    top: -33px;
+    left: 10px;
+    width: 13px;
+  }
+  
+  .leaflet-popup-scrolled {
+    overflow-x: hidden;
+  }

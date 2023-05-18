@@ -2,7 +2,7 @@ import { TileLayer, MapContainer, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import * as React from "react";
 import { Item, Tag, API, Layer, UtopiaMap as UtopiaMapProps } from "../../types"
-import "../../index.css"
+import "./UtopiaMap.css"
 import { LatLng } from "leaflet";
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import AddButton from "./Subcomponents/AddButton";

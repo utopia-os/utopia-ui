@@ -1,5 +1,4 @@
-// @ts-ignore
-import { AppShell, SideBar, Content, AuthProviderDirectus, useAuthDirectus, Settings, Modal, Quests } from 'utopia-ui'
+import { AppShell, SideBar, Content, AuthProviderDirectus, useAuthDirectus, Settings, Modal } from 'utopia-ui'
 import { routes } from './routes/sidebar'
 import {  Route, Routes } from 'react-router-dom'
 import MapContainer from "./pages/MapContainer"

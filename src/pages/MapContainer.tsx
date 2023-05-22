@@ -1,13 +1,12 @@
-// @ts-ignore
 import { UtopiaMap, Layer, Tags } from 'utopia-ui'
 import { tags, places, events } from './data'
-import { itemsApi } from '../api/itemsApi'
-import { Place } from '../api/directus';
+//import { itemsApi } from '../api/itemsApi'
+//import { Place } from '../api/directus';
 
 function MapContainer() {
 
 
-  const placesApi = new itemsApi<Place>('places');
+  //const placesApi = new itemsApi<Place>('places');
   
   
   return (
@@ -22,7 +21,7 @@ function MapContainer() {
           markerShape='square'
           markerDefaultColor='#777'
           data={events}
-          api={placesApi} />
+ />
         <Layer
           name='places'
           menuIcon='MapPinIcon'

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Marker } from 'react-leaflet'
-import { Item, Tag, Layer as LayerProps } from '../../types'
+import { Item, Tag, LayerProps } from '../../types'
 import MarkerIconFactory from '../../Utils/MarkerIconFactory'
 import { Popup } from './Subcomponents/Popup'
 import { useTags } from './hooks/useTags'

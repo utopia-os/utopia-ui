@@ -1,7 +1,7 @@
 import { TileLayer, MapContainer, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import * as React from "react";
-import { Item, Tag, ItemsApi, Layer, UtopiaMap as UtopiaMapProps } from "../../types"
+import { Item, Tag, ItemsApi, LayerProps, UtopiaMapProps } from "../../types"
 import "./UtopiaMap.css"
 import { LatLng } from "leaflet";
 import MarkerClusterGroup from 'react-leaflet-cluster'
@@ -14,7 +14,7 @@ import { LayersProvider } from "./hooks/useLayers";
 
 
 export interface MapEventListenerProps {
-    selectMode: Layer | null,
+    selectMode: LayerProps | null,
     setSelectMode: React.Dispatch<any>,
     setNewItemPopup: React.Dispatch<React.SetStateAction<any>>
 }
@@ -42,7 +42,7 @@ function UtopiaMap({
     children }
     : UtopiaMapProps) {
 
-    const [selectMode, setSelectMode] = useState<Layer | null>(null);
+    const [selectMode, setSelectMode] = useState<LayerProps | null>(null);
     const [newItemPopup, setNewItemPopup] = useState<NewItemPopupProps | null>(null);
 
 

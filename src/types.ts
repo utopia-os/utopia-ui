@@ -1,7 +1,7 @@
 import { LatLng } from "leaflet";
 import { NewItemPopupProps } from "./Components/Map/Subcomponents/NewItemPopup";
 
-export interface UtopiaMap {
+export interface UtopiaMapProps {
   height?: string,
   width?: string,
   center?: LatLng,
@@ -10,7 +10,7 @@ export interface UtopiaMap {
   children?: React.ReactNode,
 }
 
-export interface Layer {
+export interface LayerProps<T> {
   data?: Item[],
   children?: React.ReactNode
   name: string,
@@ -21,7 +21,7 @@ export interface Layer {
   markerShape: string,
   markerDefaultColor: string,
   tags?: Tag[],
-  api?: ItemsApi,
+  api?: ItemsApi<T>,
   setNewItemPopup?: React.Dispatch<React.SetStateAction<NewItemPopupProps | null>>
 }
 
@@ -36,7 +36,7 @@ export class Item {
   start?: string;
   end?: string;
   tags?: number[];
-  constructor(id:string|number,name:string,text:string,position:Geometry, layer: Layer){
+  constructor(id:string|number,name:string,text:string,position:Geometry, layer: LayerProps){
     this.id = id;
     this.name = name;
     this.text = text;
@@ -60,9 +60,9 @@ export interface Tag {
   name: string;
 }
 
-export interface ItemsApi {
+export interface ItemsApi<T> {
   getItems(): Promise<void>,
-  addItem(item : Item): Promise<void>,
-  updateItem(item : Item): Promise<void>,
+  addItem(item : T): Promise<void>,
+  updateItem(item : T): Promise<void>,
   deleteItem(id : number): Promise<void>,
 }

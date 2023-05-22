@@ -3,11 +3,11 @@ import { LatLng } from 'leaflet'
 import { Popup as LeafletPopup, useMap } from 'react-leaflet'
 import { useEffect, useState } from 'react'
 import { useAddItem, useUpdateItem } from '../hooks/useItems'
-import { Geometry, Layer, Item} from '../../../types'
+import { Geometry, LayerProps, Item} from '../../../types'
 
 export interface NewItemPopupProps {
     position: LatLng,
-    layer: Layer,
+    layer: LayerProps,
     item?: Item,
     setNewItemPopup: React.Dispatch<React.SetStateAction<any>>
 }

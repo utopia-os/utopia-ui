@@ -1,10 +1,10 @@
 import { useCallback, useReducer, createContext, useContext } from "react";
 import * as React from "react";
-import { Item, Layer } from "../../../types";
+import { Item, LayerProps } from "../../../types";
 
 type ActionType =
-  | { type: "ADD LAYER"; layer: Layer }
-  | { type: "ADD ITEM"; item: Item; layer: Layer };
+  | { type: "ADD LAYER"; layer: LayerProps }
+  | { type: "ADD ITEM"; item: Item; layer: LayerProps };
 
 type UseItemManagerResult = ReturnType<typeof useLayerManager>;
 
@@ -13,11 +13,11 @@ const LayerContext = createContext<UseItemManagerResult>({
   addLayer: () => { },
 });
 
-function useLayerManager(initialLayers: Layer[]): {
-  layers: Layer[];
-  addLayer: (layer: Layer) => void;
+function useLayerManager(initialLayers: LayerProps[]): {
+  layers: LayerProps[];
+  addLayer: (layer: LayerProps) => void;
 } {
-  const [layers, dispatch] = useReducer((state: Layer[], action: ActionType) => {
+  const [layers, dispatch] = useReducer((state: LayerProps[], action: ActionType) => {
     switch (action.type) {
       case "ADD LAYER":
         const exist = state.find((layer) =>
@@ -33,7 +33,7 @@ function useLayerManager(initialLayers: Layer[]): {
     }
   }, initialLayers);
 
-  const addLayer = useCallback((layer: Layer) => {
+  const addLayer = useCallback((layer: LayerProps) => {
     dispatch({
       type: "ADD LAYER",
       layer
@@ -44,14 +44,14 @@ function useLayerManager(initialLayers: Layer[]): {
 }
 
 export const LayersProvider: React.FunctionComponent<{
-  initialLayers: Layer[], children?: React.ReactNode
+  initialLayers: LayerProps[], children?: React.ReactNode
 }> = ({ initialLayers, children }) => (
   <LayerContext.Provider value={useLayerManager(initialLayers)}>
     {children}
   </LayerContext.Provider>
 );
 
-export const useLayers = (): Layer[] => {
+export const useLayers = (): LayerProps[] => {
   const { layers } = useContext(LayerContext);
   return layers;
 };

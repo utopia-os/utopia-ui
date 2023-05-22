@@ -10,7 +10,7 @@ export interface UtopiaMapProps {
   children?: React.ReactNode,
 }
 
-export interface LayerProps<T> {
+export interface LayerProps {
   data?: Item[],
   children?: React.ReactNode
   name: string,
@@ -21,7 +21,7 @@ export interface LayerProps<T> {
   markerShape: string,
   markerDefaultColor: string,
   tags?: Tag[],
-  api?: ItemsApi<T>,
+  api?: ItemsApi,
   setNewItemPopup?: React.Dispatch<React.SetStateAction<NewItemPopupProps | null>>
 }
 
@@ -60,9 +60,9 @@ export interface Tag {
   name: string;
 }
 
-export interface ItemsApi<T> {
+export interface ItemsApi {
   getItems(): Promise<void>,
-  addItem(item : T): Promise<void>,
-  updateItem(item : T): Promise<void>,
+  addItem(item : Item): Promise<void>,
+  updateItem(item : Item): Promise<void>,
   deleteItem(id : number): Promise<void>,
 }

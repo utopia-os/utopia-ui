@@ -1,12 +1,12 @@
 import { useCallback, useReducer, createContext, useContext } from "react";
 import * as React from "react";
-import { Item, Layer } from "../../../types";
+import { Item, LayerProps } from "../../../types";
 
 type ActionType =
 | { type: "ADD"; item: Item }
 | { type: "UPDATE"; item: Item }
 | { type: "REMOVE"; item: Item }
-| { type: "RESET"; layer: Layer };
+| { type: "RESET"; layer: LayerProps };
 
 type UseItemManagerResult = ReturnType<typeof useItemsManager>;
 
@@ -23,7 +23,7 @@ function useItemsManager (initialItems: Item[]): {
   addItem: (item: Item) => void;
   updateItem: (item: Item) => void;
   removeItem: (item: Item) => void;
-  resetItems: (layer: Layer) => void;
+  resetItems: (layer: LayerProps) => void;
 } {
   const [items, dispatch] = useReducer((state: Item[], action: ActionType) => {
     switch (action.type) {
@@ -73,7 +73,7 @@ function useItemsManager (initialItems: Item[]): {
     });
   }, []);
 
-  const resetItems = useCallback((layer: Layer) => {
+  const resetItems = useCallback((layer: LayerProps) => {
     dispatch({
       type: "RESET",
       layer

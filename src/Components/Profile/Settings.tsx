@@ -18,6 +18,10 @@ export function Settings({useAuth}) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
+  const [passwordChanged, setPasswordChanged] = useState<boolean>(false);
+
+
+
 
   useEffect(() => {
     setId(user?.id ? user.id : "");
@@ -25,16 +29,23 @@ export function Settings({useAuth}) {
     setText(user?.description ? user.description : "");
     setEmail(user?.email ? user.email : "");
     setPassword(user?.password ? user.password : "");
-
-
   }, [user])
 
   const navigate = useNavigate();
 
 
   const onUpdateUser = () => {
+    let changedUser = {};
+  
+    if(passwordChanged) {
+      changedUser = { id: id, first_name: name, description: text, email: email, password: password };
+    }
+    else {
+      changedUser = { id: id, first_name: name, description: text, email: email };
+    }
     toast.promise(
-      updateUser({ id: id, first_name: name, description: text, email: email, password: password }),
+
+      updateUser(changedUser),
       {
         pending: 'updating Profile  ...',
         success: 'Profile updated',
@@ -65,7 +76,10 @@ export function Settings({useAuth}) {
 
           <div className="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 tw-gap-6">
           <InputText type='email' labelTitle="E-Mail" defaultValue={user?.email ? user.email : ""} updateFormValue={(v) => setEmail(v)} />
-          <InputText type='password' labelTitle="Password" defaultValue={user?.password ? user.password : ""} updateFormValue={(v) => setPassword(v)} />
+          <InputText type='password' labelTitle="Password" defaultValue={user?.password ? user.password : ""} updateFormValue={(v) => {
+            setPassword(v);
+            setPasswordChanged(true);
+          }} />
             {/* <ToogleInput updateType="syncData" labelTitle="Sync Data" defaultValue={true} updateFormValue={updateFormValue}/> */}
           </div>
 

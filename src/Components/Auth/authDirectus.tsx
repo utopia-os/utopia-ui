@@ -21,7 +21,7 @@ export type MyUserItem = {
   first_name: string;
   description: string;
   email: string;
-  password: string;
+  password?: string;
 }
 
 type AuthContextProps = {

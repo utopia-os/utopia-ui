@@ -1,0 +1,12 @@
+.App {
+  width: 100vw;
+  height: 100vh;
+}
+
+#app-content  {
+  height: calc(100vh - 64px);
+}
+
+.Toastify__toast-container--top-right {
+  top: 5em !important;
+}

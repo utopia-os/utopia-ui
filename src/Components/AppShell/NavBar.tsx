@@ -6,8 +6,6 @@ import QuestionMarkIcon from '@heroicons/react/24/outline/QuestionMarkCircleIcon
 import * as React from "react";
 
 
-
-
 export default function NavBar({name, useAuth} : {name: string, useAuth : any}) {
 
   const [email, setEmail] = useState<string>("");

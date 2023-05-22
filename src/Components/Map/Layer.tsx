@@ -30,14 +30,12 @@ export const Layer = (props: LayerProps) => {
     const resetItems = useResetItems();
 
     useEffect(() => {
-        
         resetItems(props);
-        props.data.map(item => {
+        props.data?.map(item => {
             if(item.position) {
                 item.layer = props;
                 addItem(item);
-            }
-            
+            }   
         })
         addLayer(props);
     }, [props.data])

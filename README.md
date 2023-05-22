@@ -8,8 +8,8 @@ Check [utopia-os.org](https://utopia-os.org) for more information
 Utopia UI is the approach to create a Open Source Library of JavaScript Components which should bring useful maps and apps to all kind of projects and communities.
 
 
-## Map UI Component
-The Map Component based on [leaflet](https://leafletjs.com) is the crystalisation point of Utopia OS.
+## Map Component
+The Map Component based on [leaflet](https://leafletjs.com)
 
 The map shows places, events and people at their respective position whith nice and informative Popups. Tags, colors and clusters help to retain the overview.
 
@@ -30,15 +30,27 @@ import UtopiaMap from 'utopia-ui'
 
 use the Map UI Component
 ```jsx
-<UtopiaMap
-   height='360px'
-   width='100vw'
-   center={[51.3, 9.6]}
-   zoom={6}
-   places={places}
-   events={events}
-   tags = {tags}>
-</UtopiaMap>
+      <UtopiaMap zoom={5} height='calc(100vh - 64px)' width="100%">
+        <Layer
+          name='events'
+          menuIcon='CalendarIcon'
+          menuText='add new event'
+          menuColor='#f9a825'
+          markerIcon='calendar-days-solid'
+          markerShape='square'
+          markerDefaultColor='#777'
+          data={events} />
+        <Layer
+          name='places'
+          menuIcon='MapPinIcon'
+          menuText='add new place'
+          menuColor='#2E7D32'
+          markerIcon='circle-solid'
+          markerShape='circle'
+          markerDefaultColor='#777'
+          data={places} />
+        <Tags data={tags}></Tags>
+      </UtopiaMap>
 ```
 You can find some Sample Data (places, events, tags) for test purpose below
 

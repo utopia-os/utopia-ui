@@ -1,7 +1,7 @@
 import { TileLayer, MapContainer, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import * as React from "react";
-import { Item, Tag, API, Layer, UtopiaMap as UtopiaMapProps } from "../../types"
+import { Item, Tag, ItemsApi, Layer, UtopiaMap as UtopiaMapProps } from "../../types"
 import "./UtopiaMap.css"
 import { LatLng } from "leaflet";
 import MarkerClusterGroup from 'react-leaflet-cluster'
@@ -33,6 +33,7 @@ function MapEventListener(props: MapEventListenerProps) {
     return null
 }
 
+/** This is a description of the foo function. */
 function UtopiaMap({
     height = "500px",
     width = "100%",
@@ -84,4 +85,4 @@ function UtopiaMap({
     );
 }
 
-export { UtopiaMap, Item, Tag, API };
+export { UtopiaMap, Item, Tag, ItemsApi };

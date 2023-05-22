@@ -18,5 +18,5 @@ export default {
       }),
       typescript()
     ],
-    external: ['react', 'react-dom', 'leaflet', 'react-leaflet', 'react-leaflet-cluster', 'leaflet/dist/leaflet.css', '@heroicons/react/solid']
+    external: ['react', 'react-dom', 'leaflet', 'react-leaflet', 'react-leaflet-cluster', 'leaflet/dist/leaflet.css', '@heroicons/react/20/solid']
   }

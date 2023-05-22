@@ -1,3 +1,3 @@
-export { UtopiaMap, Item, Tag, API } from './UtopiaMap'
+export { UtopiaMap, Item, Tag, ItemsApi } from './UtopiaMap'
 export { Layer } from './Layer';
 export { Tags } from "./Tags";

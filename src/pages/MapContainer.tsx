@@ -11,7 +11,7 @@ function MapContainer() {
   
   return (
       
-      <UtopiaMap zoom={5} height='calc(100vh - 64px)' width="100%">
+      <UtopiaMap zoom={5} height='calc(100dvh - 64px)' width="100%">
         <Layer
           name='events'
           menuIcon='CalendarIcon'

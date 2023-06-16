@@ -14,7 +14,7 @@ function MapContainer() {
       <UtopiaMap zoom={5} height='calc(100dvh - 64px)' width="100%">
         <Layer
           name='events'
-          menuIcon='CalendarIcon'
+          menuIcon='CalendarDaysIcon'
           menuText='add new event'
           menuColor='#f9a825'
           markerIcon='calendar-days-solid'

@@ -5,14 +5,14 @@ import { useEffect, useState } from 'react'
 import { useAddItem, useUpdateItem } from '../hooks/useItems'
 import { Geometry, LayerProps, Item} from '../../../types'
 
-export interface NewItemPopupProps {
+export interface ItemFormPopupProps {
     position: LatLng,
     layer: LayerProps,
     item?: Item,
-    setNewItemPopup: React.Dispatch<React.SetStateAction<any>>
+    setItemFormPopup: React.Dispatch<React.SetStateAction<any>>
 }
 
-export default function NewItemPopup(props: NewItemPopupProps) {
+export default function ItemFormPopup(props: ItemFormPopupProps) {
     const [name, setName] = useState('')
     const [text, setText] = useState('')
 
@@ -29,7 +29,7 @@ export default function NewItemPopup(props: NewItemPopupProps) {
         else {
             addItem(new Item(crypto.randomUUID(), name, text, new Geometry(props.position.lng, props.position.lat), props.layer))}
         map.closePopup();
-        props.setNewItemPopup(null);
+        props.setItemFormPopup(null);
     } 
 
     const resetPopup = () => {

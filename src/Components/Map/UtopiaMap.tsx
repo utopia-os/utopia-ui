@@ -7,7 +7,7 @@ import { LatLng } from "leaflet";
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import AddButton from "./Subcomponents/AddButton";
 import { useState } from "react";
-import NewItemPopup, { NewItemPopupProps } from "./Subcomponents/NewItemPopup";
+import ItemFormPopup, { ItemFormPopupProps } from "./Subcomponents/ItemFormPopup";
 import { ItemsProvider } from "./hooks/useItems";
 import { TagsProvider } from "./hooks/useTags";
 import { LayersProvider } from "./hooks/useLayers";
@@ -16,7 +16,7 @@ import { LayersProvider } from "./hooks/useLayers";
 export interface MapEventListenerProps {
     selectMode: LayerProps | null,
     setSelectMode: React.Dispatch<any>,
-    setNewItemPopup: React.Dispatch<React.SetStateAction<any>>
+    setItemFormPopup: React.Dispatch<React.SetStateAction<any>>
 }
 
 function MapEventListener(props: MapEventListenerProps) {
@@ -25,7 +25,7 @@ function MapEventListener(props: MapEventListenerProps) {
 
             console.log(e.latlng.lat + ',' + e.latlng.lng);
             if (props.selectMode != null) {
-                props.setNewItemPopup({ layer: props.selectMode, position: e.latlng })
+                props.setItemFormPopup({ layer: props.selectMode, position: e.latlng })
                 props.setSelectMode(null)
             }
         }
@@ -43,7 +43,7 @@ function UtopiaMap({
     : UtopiaMapProps) {
 
     const [selectMode, setSelectMode] = useState<LayerProps | null>(null);
-    const [newItemPopup, setNewItemPopup] = useState<NewItemPopupProps | null>(null);
+    const [newItemPopup, setItemFormPopup] = useState<ItemFormPopupProps | null>(null);
 
 
 
@@ -59,13 +59,13 @@ function UtopiaMap({
                             <MarkerClusterGroup showCoverageOnHover chunkedLoading maxClusterRadius={50}>
                                 {
                                     React.Children.toArray(children).map((child) =>
-                                        React.isValidElement<{ setNewItemPopup: React.Dispatch<React.SetStateAction<NewItemPopupProps | null>> }>(child) ? React.cloneElement(child, { setNewItemPopup: setNewItemPopup }) : child
+                                        React.isValidElement<{ setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>> }>(child) ? React.cloneElement(child, { setItemFormPopup: setItemFormPopup }) : child
                                     )
                                 }
                             </MarkerClusterGroup>
-                            <MapEventListener setSelectMode={setSelectMode} selectMode={selectMode} setNewItemPopup={setNewItemPopup} />
+                            <MapEventListener setSelectMode={setSelectMode} selectMode={selectMode} setItemFormPopup={setItemFormPopup} />
                             {newItemPopup &&
-                                <NewItemPopup position={newItemPopup.position} layer={newItemPopup.layer} setNewItemPopup={setNewItemPopup} item={newItemPopup.item} />
+                                <ItemFormPopup position={newItemPopup.position} layer={newItemPopup.layer} setItemFormPopup={setItemFormPopup} item={newItemPopup.item} />
                             }
                             <AddButton setSelectMode={setSelectMode}></AddButton>
                         </MapContainer>

@@ -4,16 +4,16 @@ import { Popup as LeafletPopup, useMap } from 'react-leaflet'
 import { Item, Tag } from '../../../types'
 import { replaceURLs } from '../../../Utils/ReplaceURLs'
 import { useRemoveItem } from '../hooks/useItems'
-import { NewItemPopupProps } from './NewItemPopup'
+import { ItemFormPopupProps } from './ItemFormPopup'
 
-export interface UtopiaPopupProps {
+export interface ItemViewPopupProps {
   item: Item,
   tags: Tag[],
-  setNewItemPopup?: React.Dispatch<React.SetStateAction<NewItemPopupProps | null>>
+  setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
 }
 
 
-const Popup = (props: UtopiaPopupProps) => {
+const ItemViewPopup = (props: ItemViewPopupProps) => {
   const item: Item = props.item;
   const tags: Tag[] = props.tags;
   const removeItem = useRemoveItem();
@@ -28,8 +28,8 @@ const Popup = (props: UtopiaPopupProps) => {
   const openEditPopup = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
     map.closePopup();
-    if (props.setNewItemPopup)
-      props.setNewItemPopup({ position: new LatLng(item.position.coordinates[1], item.position.coordinates[0]), layer: item.layer, item: item, setNewItemPopup: props.setNewItemPopup })
+    if (props.setItemFormPopup)
+      props.setItemFormPopup({ position: new LatLng(item.position.coordinates[1], item.position.coordinates[0]), layer: item.layer, item: item, setItemFormPopup: props.setItemFormPopup })
   }
 
   return (
@@ -101,6 +101,6 @@ const Popup = (props: UtopiaPopupProps) => {
   )
 }
 
-export { Popup };
+export { ItemViewPopup };
 
 

@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Marker } from 'react-leaflet'
 import { Item, Tag, LayerProps } from '../../types'
 import MarkerIconFactory from '../../Utils/MarkerIconFactory'
-import { Popup } from './Subcomponents/Popup'
+import { ItemViewPopup } from './Subcomponents/ItemViewPopup'
 import { useTags } from './hooks/useTags'
 import { useAddItem, useItems, useResetItems } from './hooks/useItems'
 import { useEffect } from 'react'
@@ -55,7 +55,7 @@ export const Layer = (props: LayerProps) => {
                 }
                 return (
                     <Marker icon={MarkerIconFactory(props.markerShape, color1, color2, props.markerIcon)} key={place.id} position={[place.position.coordinates[1], place.position.coordinates[0]]}>
-                        <Popup item={place} tags={tags} setNewItemPopup={props.setNewItemPopup}/>
+                        <ItemViewPopup item={place} tags={tags} setItemFormPopup={props.setItemFormPopup}/>
                     </Marker>
                 );
             })

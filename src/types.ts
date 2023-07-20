@@ -1,5 +1,5 @@
 import { LatLng } from "leaflet";
-import { NewItemPopupProps } from "./Components/Map/Subcomponents/NewItemPopup";
+import { ItemFormPopupProps } from "./Components/Map/Subcomponents/ItemFormPopup";
 
 export interface UtopiaMapProps {
   height?: string,
@@ -22,7 +22,7 @@ export interface LayerProps {
   markerDefaultColor: string,
   tags?: Tag[],
   api?: ItemsApi,
-  setNewItemPopup?: React.Dispatch<React.SetStateAction<NewItemPopupProps | null>>
+  setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
 }
 
 export class Item {

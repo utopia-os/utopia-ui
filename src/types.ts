@@ -21,8 +21,9 @@ export interface LayerProps {
   markerShape: string,
   markerDefaultColor: string,
   tags?: Tag[],
-  api?: ItemsApi,
-  setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
+  api?: ItemsApi<any>,
+  setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>,
+  itemFormPopup?: ItemFormPopupProps | null
 }
 
 export class Item {
@@ -36,12 +37,14 @@ export class Item {
   start?: string;
   end?: string;
   tags?: number[];
-  constructor(id:string|number,name:string,text:string,position:Geometry, layer: LayerProps){
+  api?: ItemsApi<any>
+  constructor(id:string|number,name:string,text:string,position:Geometry, layer?: LayerProps, api?: ItemsApi<any>){
     this.id = id;
     this.name = name;
     this.text = text;
     this.position = position;
     this.layer = layer;
+    this.api = api;
   }
 }
 
@@ -60,9 +63,9 @@ export interface Tag {
   name: string;
 }
 
-export interface ItemsApi {
-  getItems(): Promise<void>,
-  addItem(item : Item): Promise<void>,
-  updateItem(item : Item): Promise<void>,
-  deleteItem(id : number): Promise<void>,
+export interface ItemsApi<T> {
+  getItems(): Promise<any>, 
+  createItem?(item : T): Promise<any>,
+  updateItem?(item : T): Promise<any>,
+  deleteItem?(id : number | string): Promise<any>,
 }

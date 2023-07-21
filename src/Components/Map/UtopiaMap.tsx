@@ -7,7 +7,7 @@ import { LatLng } from "leaflet";
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import AddButton from "./Subcomponents/AddButton";
 import { useState } from "react";
-import ItemFormPopup, { ItemFormPopupProps } from "./Subcomponents/ItemFormPopup";
+import { ItemFormPopupProps } from "./Subcomponents/ItemFormPopup";
 import { ItemsProvider } from "./hooks/useItems";
 import { TagsProvider } from "./hooks/useTags";
 import { LayersProvider } from "./hooks/useLayers";
@@ -43,7 +43,7 @@ function UtopiaMap({
     : UtopiaMapProps) {
 
     const [selectMode, setSelectMode] = useState<LayerProps | null>(null);
-    const [newItemPopup, setItemFormPopup] = useState<ItemFormPopupProps | null>(null);
+    const [itemFormPopup, setItemFormPopup] = useState<ItemFormPopupProps | null>(null);
 
 
 
@@ -59,14 +59,11 @@ function UtopiaMap({
                             <MarkerClusterGroup showCoverageOnHover chunkedLoading maxClusterRadius={50}>
                                 {
                                     React.Children.toArray(children).map((child) =>
-                                        React.isValidElement<{ setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>> }>(child) ? React.cloneElement(child, { setItemFormPopup: setItemFormPopup }) : child
+                                        React.isValidElement<{ setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps>>, itemFormPopup: ItemFormPopupProps | null }>(child) ? React.cloneElement(child, { setItemFormPopup: setItemFormPopup, itemFormPopup: itemFormPopup }) : child
                                     )
                                 }
                             </MarkerClusterGroup>
                             <MapEventListener setSelectMode={setSelectMode} selectMode={selectMode} setItemFormPopup={setItemFormPopup} />
-                            {newItemPopup &&
-                                <ItemFormPopup position={newItemPopup.position} layer={newItemPopup.layer} setItemFormPopup={setItemFormPopup} item={newItemPopup.item} />
-                            }
                             <AddButton setSelectMode={setSelectMode}></AddButton>
                         </MapContainer>
                         {selectMode != null &&

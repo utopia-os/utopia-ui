@@ -26,8 +26,8 @@ export const places = [{
   ]
   
   export const tags = [
-    {"id": 9, "name": "Gardening", "color": "#008e5b" },
-    {"id": 10, "name": "Art", "color": "#fdc60b" },
-    {"id": 11, "name": "Nature", "color": "#8cbb26"  },
-    {"id": 13, "name": "Market", "color": "#2a71b0" }
+    { "id": "Gardening", "color": "#008e5b" },
+    { "id": "Art", "color": "#fdc60b" },
+    { "id": "Nature", "color": "#8cbb26"  },
+    { "id": "Market", "color": "#2a71b0" }
   ]

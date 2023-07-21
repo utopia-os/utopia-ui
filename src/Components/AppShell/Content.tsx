@@ -6,7 +6,7 @@ type ContentProps = {
 
 export function Content({children} : ContentProps) {
   return (
-    <div className='tw-flex tw-flex-col tw-w-full'>
+    <div className='tw-flex tw-flex-col tw-w-full tw-relative'>
       {children}
     </div>
 

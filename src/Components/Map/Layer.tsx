@@ -15,21 +15,37 @@ export const Layer = (props: LayerProps) => {
 
 
     const tags = useTags();
+    console.log(tags);
+
+
+
+
 
     // create a JS-Map with all Tags 
     const tagMap = new Map(tags?.map(key => [key.id, key]));
+    console.log(tagMap);
+    
+
 
     // returns all tags for passed item
     const getTags = (item: Item) => {
+        console.log(item.text);
+        const regex = /(^|\B)#(?![0-9_]+\b)([a-zA-Z0-9_]{1,30})(\b|\r)/g;
+        const strings = item.text.match(regex);
+        console.log(strings);
         const tags: Tag[] = [];
-        item.tags && item.tags.forEach(element => {
-            if (tagMap.has(element)) { tags.push(tagMap.get(element)!) }
-        });
+        strings?.map(tag => {
+            console.log(tag.slice(1));
+            
+            if (tagMap.has(tag.slice(1))) { tags.push(tagMap.get(tag.slice(1))!) }
+        })
+        console.log(tags);
+
         return tags;
     };
 
 
- 
+
 
     const items = useItems();
     const addItem = useAddItem()
@@ -46,18 +62,18 @@ export const Layer = (props: LayerProps) => {
             }
         })
 
-        props.api?.getItems().then(result => {            
+        props.api?.getItems().then(result => {
             if (result.data) {
                 result.data.map(item => {
                     if (item.position) {
-                        addItem(({layer: props, api: props.api, ...item}));
+                        addItem(({ layer: props, api: props.api, ...item }));
                     }
                 });
             }
         })
-        if(props.api || props.api) {
-            addLayer(props);      
-        }       
+        if (props.api || props.api) {
+            addLayer(props);
+        }
 
     }, [props.data, props.api])
 
@@ -84,7 +100,7 @@ export const Layer = (props: LayerProps) => {
             }
             {props.children}
             {props.itemFormPopup && props.itemFormPopup.layer.name == props.name &&
-                <ItemFormPopup position={props.itemFormPopup.position} layer={props.itemFormPopup.layer} setItemFormPopup={setItemFormPopup} item={props.itemFormPopup.item} api={props.api}/>
+                <ItemFormPopup position={props.itemFormPopup.position} layer={props.itemFormPopup.layer} setItemFormPopup={setItemFormPopup} item={props.itemFormPopup.item} api={props.api} />
             }
         </>
     )

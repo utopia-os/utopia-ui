@@ -6,10 +6,7 @@ import { useLayers } from '../hooks/useLayers'
 export default function AddButton({setSelectMode} : {setSelectMode: React.Dispatch<React.SetStateAction<any>>}) {
 
     const layers = useLayers();
-    console.log(layers);
-    
-    
-    
+  
     return (
         <div className="tw-dropdown tw-dropdown-top tw-dropdown-end tw-dropdown-hover tw-z-500 tw-absolute tw-right-5 tw-bottom-5" >
             <button tabIndex={0} className="tw-z-500  tw-border-0 tw-m-0 tw-mt-2 tw-p-0 tw-w-14 tw-h-14 tw-cursor-pointer tw-bg-white tw-rounded-full hover:tw-bg-gray-100 tw-mouse tw-drop-shadow-md tw-transition tw-ease-in tw-duration-200 focus:tw-outline-none">

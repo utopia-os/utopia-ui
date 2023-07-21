@@ -59,8 +59,7 @@ export class Geometry {
 
 export interface Tag {
   color: string;
-  id: string | number;
-  name: string;
+  id: string;
 }
 
 export interface ItemsApi<T> {

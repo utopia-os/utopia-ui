@@ -1,56 +1,46 @@
 import {Item, Tag} from "utopia-ui"
 
 export const tags : Tag[] = [
-  {
-    "id": 2,
-    "name": "Technology",
-    "color": "#0696bb"
-  },
-  {
-    "id": 4,
-    "name": "Community",
-    "color": "#ea621f"
-  },
-  {
-    "id": 5,
-    "name": "Healing",
-    "color": "#c4037d"
-  },
-  {
-    "id": 6,
-    "name": "Culture",
-    "color": "#f18e1c"
-  },
-  {
-    "id": 8,
-    "name": "Education",
-    "color": "#444e99"
-  },
-  {
-    "id": 9,
-    "name": "Gardening",
-    "color": "#008e5b"
-  },
-  {
-    "id": 10,
-    "name": "Art",
-    "color": "#fdc60b"
-  },
-  {
-    "id": 11,
-    "name": "Nature",
-    "color": "#8cbb26"
-  },
-  {
-    "id": 12,
-    "name": "Activism",
-    "color": "#6d398b"
-  },
-  {
-    "id": 13,
-    "name": "Market",
-    "color": "#2a71b0"
-  }
+	{
+		"id": "Activism",
+		"color": "#6d398b"
+	},
+	{
+		"id": "Art",
+		"color": "#fdc60b"
+	},
+	{
+		"id": "Community",
+		"color": "#FFA439"
+	},
+	{
+		"id": "Culture",
+		"color": "#f18e1c"
+	},
+	{
+		"id": "Education",
+		"color": "#444e99"
+	},
+	{
+		"id": "Gardening",
+		"color": "#008e5b"
+	},
+	{
+		"id": "Healing",
+		"color": "#c4037d"
+	},
+	{
+		"id": "Market",
+		"color": "#2a71b0"
+	},
+	{
+		"id": "Nature",
+		"color": "#8cbb26"
+	},
+	{
+		"id": "Technology",
+		"color": "#0696bb"
+	}
 ]
 
 export const events : Item[] = [

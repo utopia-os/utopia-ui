@@ -1,12 +1,26 @@
-import { UtopiaMap, Layer, Tags } from 'utopia-ui'
-import { tags, places, events } from './data'
-//import { itemsApi } from '../api/itemsApi'
-//import { Place } from '../api/directus';
+import { UtopiaMap, Tags, Layer } from 'utopia-ui'
+import { tags } from './data'
+import { itemsApi } from '../api/itemsApi'
+import { Place, Event } from '../api/directus';
+import { useEffect, useState } from 'react';
 
 function MapContainer() {
 
 
-  //const placesApi = new itemsApi<Place>('places');
+  const [placesApi, setPlacesApi] = useState<itemsApi<Place>>();
+  const [eventsApi, setEventsApi] = useState<itemsApi<Event>>();
+
+
+  useEffect(() => {
+    
+    setPlacesApi(new itemsApi<Place>('places'));
+    setEventsApi(new itemsApi<Event>('events'));
+
+
+  }, []);
+
+
+  
   
   
   return (
@@ -20,7 +34,8 @@ function MapContainer() {
           markerIcon='calendar-days-solid'
           markerShape='square'
           markerDefaultColor='#777'
-          data={events}
+     //     data={events}
+          api={eventsApi}
  />
         <Layer
           name='places'
@@ -30,7 +45,9 @@ function MapContainer() {
           markerIcon='circle-solid'
           markerShape='circle'
           markerDefaultColor='#777'
-          data={places} />
+         // data={places}
+          api={placesApi}
+          />
         <Tags data={tags}></Tags>
       </UtopiaMap>
   )

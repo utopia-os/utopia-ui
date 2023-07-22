@@ -3,7 +3,7 @@ import {  directus } from './directus';
 
 export class itemsApi<T> {
 
-  name ="";
+  name : string;
 
   constructor(name : string) {
     this.name = name;

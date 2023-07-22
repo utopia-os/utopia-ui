@@ -15,7 +15,6 @@ export const Layer = (props: LayerProps) => {
 
 
     const tags = useTags();
-    console.log(tags);
 
 
 
@@ -23,23 +22,17 @@ export const Layer = (props: LayerProps) => {
 
     // create a JS-Map with all Tags 
     const tagMap = new Map(tags?.map(key => [key.id, key]));
-    console.log(tagMap);
     
 
 
     // returns all tags for passed item
     const getTags = (item: Item) => {
-        console.log(item.text);
         const regex = /(^|\B)#(?![0-9_]+\b)([a-zA-Z0-9_]{1,30})(\b|\r)/g;
         const strings = item.text.toLocaleLowerCase().match(regex);
-        console.log(strings);
         const tags: Tag[] = [];
         strings?.map(tag => {
-            console.log(tag.slice(1));
-            
             if (tagMap.has(tag.slice(1))) { tags.push(tagMap.get(tag.slice(1))!) }
         })
-        console.log(tags);
 
         return tags;
     };

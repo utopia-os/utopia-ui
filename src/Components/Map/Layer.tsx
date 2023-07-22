@@ -31,7 +31,7 @@ export const Layer = (props: LayerProps) => {
     const getTags = (item: Item) => {
         console.log(item.text);
         const regex = /(^|\B)#(?![0-9_]+\b)([a-zA-Z0-9_]{1,30})(\b|\r)/g;
-        const strings = item.text.match(regex);
+        const strings = item.text.toLocaleLowerCase().match(regex);
         console.log(strings);
         const tags: Tag[] = [];
         strings?.map(tag => {

@@ -1,14 +1,17 @@
 import * as React from 'react'
 
 export function Quests() {
-    return (
+
+    const [open, setOpen] = React.useState(true);
+
+    if (open) return (
         <>
             <input type="checkbox" id="quests" className="tw-modal-toggle" />
 
             <div className="tw-card tw-w-48 tw-bg-base-100 tw-shadow-xl tw-absolute tw-bottom-4 tw-left-4 tw-z-1000">
                 <div className="tw-card-body tw-p-4 tw-pt-0">
                     <div className="tw-card-actions tw-justify-end">
-                        <label className="tw-btn tw-btn-sm tw-btn-circle tw-btn-ghost tw-absolute tw-right-2 tw-top-2">✕</label>
+                        <label className="tw-btn tw-btn-sm tw-btn-circle tw-btn-ghost tw-absolute tw-right-2 tw-top-2" onClick={()=>setOpen(false)}>✕</label>
                     </div>
                     <h2 className="tw-card-title tw-m-auto ">Level 1</h2>
                     <ul className='tw-flex-row'>
@@ -20,5 +23,9 @@ export function Quests() {
                 </div>
             </div>
         </>
+    )
+
+    else return (
+        <></>
     )
 }

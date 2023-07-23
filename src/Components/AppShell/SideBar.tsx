@@ -61,7 +61,7 @@ export function SideBar({routes} : {routes : route[]}) {
       data-te-sidenav-slim-width ="56"
       data-te-sidenav-width ="160">
         <div className='tw-flex tw-flex-col tw-h-full' style={{height: "calc(100vh - 64px)"}}>
-      <ul className="tw-menu tw-w-full tw-bg-base-100 tw-text-base-content" data-te-sidenav-menu-ref>
+      <ul className="tw-menu tw-w-full tw-bg-base-100 tw-text-base-content tw-p-0" data-te-sidenav-menu-ref>
         {
           routes.map((route, k) => {
             return (
@@ -72,7 +72,7 @@ export function SideBar({routes} : {routes : route[]}) {
                     (<NavLink
                       end
                       to={route.path}
-                      className={({ isActive }) => `${isActive ? 'tw-font-semibold  tw-bg-base-200 ' : 'tw-font-normal'}`} onClick={ () => {if(screen.width < 640 && !slim) instance.toggle();
+                      className={({ isActive }) => `${isActive ? 'tw-font-semibold  tw-bg-base-200 !tw-rounded-none' : 'tw-font-normal !tw-rounded-none'}`} onClick={ () => {if(screen.width < 640 && !slim) instance.toggle();
                       }}>
                       {route.icon}<span className="group-[&[data-te-sidenav-slim-collapsed='true']]:data-[te-sidenav-slim='false']:tw-hidden" data-te-sidenav-slim="false">{route.name}</span>
                       {

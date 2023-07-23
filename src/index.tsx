@@ -4,3 +4,9 @@ export {AuthProviderDirectus, useAuthDirectus} from "./Components/Auth"
 export {Settings} from './Components/Profile'
 export {Quests, Modal} from './Components/Gaming'
 import "./index.css"
+
+declare global {
+    interface Window {
+      my_modal_3: any;
+    }
+  }

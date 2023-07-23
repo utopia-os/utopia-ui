@@ -1,11 +1,12 @@
 import { useState } from "react"
 import * as React from "react"
 
-type ModalProps = {
-    clickAction: () => void
+type ChapterProps = {
+    clickAction?: () => void
 }
 
-export function Welcome1({ clickAction }: ModalProps) {
+
+export function Welcome1({ clickAction }: ChapterProps) {
     return (
         <>
             <h3 className="tw-font-bold tw-text-lg">Herzlich Willkommen, schön dass du da bist! </h3>
@@ -16,13 +17,13 @@ export function Welcome1({ clickAction }: ModalProps) {
                 <br /><br />
                 <b>Hast du Lust mitzumachen?</b></p>
             <div className="tw-modal-action">
-                <label className="tw-btn" onClick={() => clickAction()}>Bin dabei</label>
+                <label className="tw-btn tw-btn-neutral" onClick={() => clickAction!()}>Bin dabei</label>
             </div>
         </>
     )
 }
 
-export function Welcome2({ clickAction }: ModalProps) {
+export function Welcome2({ clickAction }: ChapterProps) {
     return (
         <>
             <h3 className="tw-font-bold tw-text-lg">Veränderung passiert im echten Leben</h3>
@@ -31,13 +32,13 @@ export function Welcome2({ clickAction }: ModalProps) {
                 <br /><br />
                 Darum tauchen wir wieder in das echte Leben ein und nutzen digitale Medien nur dort, wo sie uns wirklich helfen in echt zusammen zu kommen</p>
             <div className="tw-modal-action">
-                <label className="tw-btn" onClick={() => clickAction()}>Alles klar</label>
+                <label className="tw-btn tw-btn-neutral" onClick={() => clickAction!()}>Alles klar</label>
             </div>
         </>
     )
 }
 
-export function Welcome3({ clickAction }: ModalProps) {
+export function Welcome3({ clickAction }: ChapterProps) {
     return (
         <>
             <h3 className="tw-font-bold tw-text-lg"> Gemeinsam erschaffen wir Strukturen </h3>
@@ -49,7 +50,7 @@ export function Welcome3({ clickAction }: ModalProps) {
                 <li>🚐 Mobilität</li>
             </ul>
             <div className="tw-modal-action">
-                <label htmlFor="tw-my-modal" onClick={() => clickAction()} className="tw-btn">Ich mach mit</label>
+                <button className="tw-btn tw-btn-neutral" onClick={() => clickAction!()}>Ich mach mit</button>
             </div>
         </>
     )
@@ -61,10 +62,7 @@ export function Modal() {
     const [chapter, setChapter] = useState<number>(1);
 
     const close = () => {
-        if (document.getElementById('my-modal')) {
-            const el = document.getElementById('my-modal') as HTMLInputElement
-            el.checked = false;
-        }
+        window.my_modal_3.close();
     }
 
     const ActiveChapter = () => {
@@ -72,12 +70,11 @@ export function Modal() {
             case 1:
                 return <Welcome1 clickAction={() => { setChapter(2) }} />
             case 2:
-                return <Welcome2 clickAction={() => setChapter(3)} />
+                return <Welcome2 clickAction={() => { setChapter(3) }} />
             case 3:
                 return <Welcome3 clickAction={() => {
-                    close()
-                    setChapter(1)
-
+                    setChapter(1);
+                    close();
                 }} />
             default: return <></>
         };
@@ -85,14 +82,17 @@ export function Modal() {
 
     return (
         <>
-            {/* Put this part before </body> tag */}
-            <input type="checkbox" id="my-modal" className="tw-modal-toggle" />
-            <div className="tw-modal">
-                <label className="tw-modal-box tw-relative" htmlFor="">
-                <label htmlFor="my-modal" className="tw-btn tw-btn-sm tw-btn-circle tw-btn-ghost tw-absolute tw-right-2 tw-top-2">✕</label>
+
+            {/* You can open the modal using ID.showModal() method */}
+            <dialog id="my_modal_3" className="tw-modal">
+                <form method="dialog" className="tw-modal-box">
+                    <button className="tw-btn tw-btn-sm tw-btn-circle tw-btn-ghost tw-absolute tw-right-2 tw-top-2">✕</button>
                     <ActiveChapter />
-                </label>
-            </div>
+                </form>
+                <form method="dialog" className="tw-modal-backdrop">
+                    <button>close</button>
+                </form>
+            </dialog>
         </>
     )
 }

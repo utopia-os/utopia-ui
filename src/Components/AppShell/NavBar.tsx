@@ -38,9 +38,10 @@ export default function NavBar({name, useAuth} : {name: string, useAuth : any}) 
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="tw-inline-block tw-w-5 tw-h-5 tw-stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
         </button>
         <div className="tw-flex-1 tw-mr-2">
-        <div className="tw-flex-1 tw-truncate  tw-grid tw-grid-flow-col tw-max-w-72">
+        <div className="tw-flex-1 tw-truncate  tw-grid tw-grid-flow-col tw-max-w-52">
           <Link className="tw-btn tw-btn-ghost tw-px-2 tw-normal-case tw-text-xl tw-flex-1 tw-truncate" to={"/"}><p className="tw-truncate">{name}</p></Link>
-          <label htmlFor="my-modal" className="tw-cursor-pointer"><div className="tw-btn tw-px-2  tw-btn-ghost "><QuestionMarkIcon className="tw-h-5 tw-w-5"/></div></label>
+          <button className="tw-btn tw-px-2  tw-btn-ghost" onClick={() => window.my_modal_3.showModal()}><QuestionMarkIcon className="tw-h-5 tw-w-5"/></button>
+
         </div>
         </div>
 

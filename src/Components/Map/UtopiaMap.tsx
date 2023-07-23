@@ -28,10 +28,16 @@ function MapEventListener(props: MapEventListenerProps) {
                 props.setItemFormPopup({ layer: props.selectMode, position: e.latlng })
                 props.setSelectMode(null)
             }
+        },
+        resize: () => {
+            console.log("resize");
+            
         }
     })
     return null
 }
+// for refreshing map on resize (needs to be implemented)
+const mapDivRef = React.createRef();
 
 /** This is a description of the foo function. */
 function UtopiaMap({
@@ -52,7 +58,7 @@ function UtopiaMap({
             <TagsProvider initialTags={[]}>
                 <ItemsProvider initialItems={[]}>
                     <div className={(selectMode != null ? "crosshair-cursor-enabled" : undefined)}>
-                        <MapContainer style={{ height: height, width: width }} center={center} zoom={zoom}>
+                        <MapContainer         ref={mapDivRef} style={{ height: height, width: width }} center={center} zoom={zoom}>
                             <TileLayer
                                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                 url="https://tile.osmand.net/hd/{z}/{x}/{y}.png" />

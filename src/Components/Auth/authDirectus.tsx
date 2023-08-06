@@ -28,6 +28,7 @@ type AuthContextProps = {
   isAuthenticated: Boolean,
   user: MyUserItem | null;
   login: (credentials: AuthCredentials) => Promise<MyUserItem | undefined>,
+  register: (credentials: AuthCredentials, userName: string) => Promise<MyUserItem | undefined>,
   loading: Boolean,
   logout: () => void,
   updateUser: (user: MyUserItem) => any,
@@ -38,6 +39,7 @@ const AuthContext = createContext<AuthContextProps>({
   isAuthenticated: false,
   user: null,
   login: () => Promise.reject(),
+  register: () => Promise.reject(),
   loading: false,
   logout: () => { },
   updateUser: () => Promise.reject(),
@@ -87,6 +89,18 @@ export const AuthProviderDirectus = ({ directus, children }: AuthProviderProps) 
     };
   }
 
+  const register = async (credentials: AuthCredentials, userName): Promise<MyUserItem | undefined> => {
+    setLoading(true);
+    try {
+      const res = await directus.users.createOne({email: credentials.email, password: credentials.password, first_name: userName});
+      return (await login(credentials));
+    } catch (error: any) {
+      setLoading(false);
+      console.log(error);
+
+      return error.response.data.error[0];
+    };
+  }
 
 
   const logout = async () => {
@@ -96,9 +110,10 @@ export const AuthProviderDirectus = ({ directus, children }: AuthProviderProps) 
 
   const updateUser = async (user: MyUserItem) => {
     setLoading(true);
+    const { id, ...userRest } = user;
 
     try {
-      const res = await directus.users.updateOne(user.id!, user)
+      const res = await directus.users.updateOne(user.id!, userRest)
       setUser(res as any);
       setLoading(false);
       return res as any;
@@ -115,7 +130,7 @@ export const AuthProviderDirectus = ({ directus, children }: AuthProviderProps) 
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, user, login, loading, logout, updateUser, token }}
+      value={{ isAuthenticated, user, login, register, loading, logout, updateUser, token }}
     >
       {children}
     </AuthContext.Provider>

@@ -1,4 +1,4 @@
-import Subtitle from "./Typography/Subtitle"
+import Subtitle from "../Typography/Subtitle"
 import * as React from "react"
 
 interface TitleCardProps {
@@ -9,7 +9,7 @@ interface TitleCardProps {
   TopSideButtons?: any
 }
   
-  function TitleCard({title, children, topMargin, TopSideButtons} : TitleCardProps){
+  export function TitleCard({title, children, topMargin, TopSideButtons} : TitleCardProps){
       return(
           <div className={"tw-card tw-w-full tw-p-6 tw-mb-16 tw-bg-base-100 tw-shadow-xl tw-h-fit " + (topMargin || "tw-mt-6")}>
 
@@ -33,6 +33,3 @@ interface TitleCardProps {
           
       )
   }
-  
-  
-  export default TitleCard

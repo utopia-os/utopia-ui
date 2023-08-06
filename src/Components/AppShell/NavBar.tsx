@@ -5,12 +5,28 @@ import { toast } from "react-toastify";
 import QuestionMarkIcon from '@heroicons/react/24/outline/QuestionMarkCircleIcon'
 import * as React from "react";
 
-export default function NavBar({name, useAuth} : {name: string, useAuth : any}) {
+export default function NavBar({appName, useAuth} : {appName: string, useAuth : any}) {
 
   const [email, setEmail] = useState<string>("");
+  const [userName, setUserName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const { isAuthenticated, user, login, loading, logout, token } = useAuth();
+  const { isAuthenticated, user, login, register, loading, logout, token } = useAuth();
+
+  const onRegister = () => {
+    toast.promise(
+      register({ email: email, password: password}, userName),
+      {
+        success: {
+          render({data}){
+            return `Hi ${data?.first_name}`
+          },
+          // other options
+          icon: "✌️",
+        },
+        error: 'Error'
+      });
+  }
 
   const onLogin = () => {
     toast.promise(
@@ -39,7 +55,7 @@ export default function NavBar({name, useAuth} : {name: string, useAuth : any}) 
         </button>
         <div className="tw-flex-1 tw-mr-2">
         <div className="tw-flex-1 tw-truncate  tw-grid tw-grid-flow-col tw-max-w-52">
-          <Link className="tw-btn tw-btn-ghost tw-px-2 tw-normal-case tw-text-xl tw-flex-1 tw-truncate" to={"/"}><p className="tw-truncate">{name}</p></Link>
+          <Link className="tw-btn tw-btn-ghost tw-px-2 tw-normal-case tw-text-xl tw-flex-1 tw-truncate" to={"/"}><p className="tw-truncate">{appName}</p></Link>
           <button className="tw-btn tw-px-2  tw-btn-ghost" onClick={() => window.my_modal_3.showModal()}><QuestionMarkIcon className="tw-h-5 tw-w-5"/></button>
 
         </div>
@@ -49,11 +65,11 @@ export default function NavBar({name, useAuth} : {name: string, useAuth : any}) 
         
         {isAuthenticated && token ?
           <div className="tw-flex-none">
-            <div className="tw-avatar">
+            {user.avatar ? <div className="tw-avatar">
               <div className="tw-w-10 tw-rounded-full">
                 <img src={"https://map.api.free-planet-earth.org/assets/"+user?.avatar+"?access_token="+token} />
-              </div>
-            </div>
+              </div> 
+            </div> : <></>}
             <div className='tw-ml-2 tw-mr-2'>{user?.first_name}</div>
             <div className="tw-dropdown tw-dropdown-end">
               <label tabIndex={0} className="tw-btn tw-btn-ghost tw-btn-square">
@@ -68,16 +84,33 @@ export default function NavBar({name, useAuth} : {name: string, useAuth : any}) 
             </div>
           </div>
           :
-          <div className="tw-dropdown tw-dropdown-end tw-mr-2">
-            <label tabIndex={0} className="tw-btn tw-btn-ghost">
-              Login
-            </label>
-            <div tabIndex={0} className="tw-mt-3 tw-card tw-card-compact tw-dropdown-content tw-w-72 tw-bg-base-100 tw-shadow !tw-z-[1000]">
-              <div className="tw-card-body">
-                <input type="email" placeholder="E-Mail" value={email} onChange={e => setEmail(e.target.value)} className="tw-input tw-input-bordered tw-w-full tw-max-w-xs" />
-                <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} className="tw-input tw-input-bordered tw-w-full tw-max-w-xs" />
-                <div className="tw-card-actions">
-                  <button className={loading ? 'tw-btn tw-loading tw-btn-disabled tw-btn-block tw-btn-primary' : 'tw-btn tw-btn-primary tw-btn-block'} onClick={() => onLogin()}>Login</button>
+          <div>
+              <div className="tw-dropdown tw-dropdown-end tw-mr-2">
+              <label tabIndex={0} className="tw-btn tw-btn-ghost">
+                Login
+              </label>
+              <div tabIndex={0} className="tw-mt-3 tw-card tw-card-compact tw-dropdown-content tw-w-72 tw-bg-base-100 tw-shadow !tw-z-[1000]">
+                <div className="tw-card-body">
+                  <input type="email" placeholder="E-Mail" value={email} onChange={e => setEmail(e.target.value)} className="tw-input tw-input-bordered tw-w-full tw-max-w-xs" />
+                  <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} className="tw-input tw-input-bordered tw-w-full tw-max-w-xs" />
+                  <div className="tw-card-actions">
+                    <button className={loading ? 'tw-btn tw-btn-disabled tw-btn-block tw-btn-primary' : 'tw-btn tw-btn-primary tw-btn-block'} onClick={() => onLogin()}>{loading ?   <span className="tw-loading tw-loading-spinner"></span> : 'Login'}</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+              <div className="tw-dropdown tw-dropdown-end tw-mr-2">
+              <label tabIndex={0} className="tw-btn tw-btn-ghost">
+                Sign Up
+              </label>
+              <div tabIndex={0} className="tw-mt-3 tw-card tw-card-compact tw-dropdown-content tw-w-72 tw-bg-base-100 tw-shadow !tw-z-[1000]">
+                <div className="tw-card-body">
+                  <input type="text" placeholder="Name" value={userName} onChange={e => setUserName(e.target.value)} className="tw-input tw-input-bordered tw-w-full tw-max-w-xs" />
+                  <input type="email" placeholder="E-Mail" value={email} onChange={e => setEmail(e.target.value)} className="tw-input tw-input-bordered tw-w-full tw-max-w-xs" />
+                  <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} className="tw-input tw-input-bordered tw-w-full tw-max-w-xs" />
+                  <div className="tw-card-actions">
+                    <button className={loading ? 'tw-btn tw-btn-disabled tw-btn-block tw-btn-primary' : 'tw-btn tw-btn-primary tw-btn-block'} onClick={() => onRegister()}>{loading ?   <span className="tw-loading tw-loading-spinner"></span> : 'Sign Up'}</button>
+                  </div>
                 </div>
               </div>
             </div>

@@ -39,7 +39,6 @@ function MapEventListener(props: MapEventListenerProps) {
 // for refreshing map on resize (needs to be implemented)
 const mapDivRef = React.createRef();
 
-/** This is a description of the foo function. */
 function UtopiaMap({
     height = "500px",
     width = "100%",

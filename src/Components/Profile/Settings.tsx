@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import TitleCard from '../TitleCard'
+import {TitleCard} from '../Templates/TitleCard'
 import InputText from '../Input/InputText'
 import TextAreaInput from '../Input/TextAreaInput'
 import { toast } from 'react-toastify';

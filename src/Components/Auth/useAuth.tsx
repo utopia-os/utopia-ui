@@ -1,9 +1,10 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import * as React from "react";
+import { UserApi, UserItem } from "../../types";
 
 
 type AuthProviderProps = {
-  directus: any,
+  userApi: UserApi,
   children?: React.ReactNode
 }
 
@@ -15,23 +16,14 @@ type AuthCredentials = {
 
 
 
-export type MyUserItem = {
-  id: string;
-  avatar: string;
-  first_name: string;
-  description: string;
-  email: string;
-  password?: string;
-}
-
 type AuthContextProps = {
   isAuthenticated: Boolean,
-  user: MyUserItem | null;
-  login: (credentials: AuthCredentials) => Promise<MyUserItem | undefined>,
-  register: (credentials: AuthCredentials, userName: string) => Promise<MyUserItem | undefined>,
+  user: UserItem | null;
+  login: (credentials: AuthCredentials) => Promise<UserItem | undefined>,
+  register: (credentials: AuthCredentials, userName: string) => Promise<UserItem | undefined>,
   loading: Boolean,
   logout: () => void,
-  updateUser: (user: MyUserItem) => any,
+  updateUser: (user: UserItem) => any,
   token: String | null
 }
 
@@ -46,82 +38,75 @@ const AuthContext = createContext<AuthContextProps>({
   token: ""
 });
 
-export const AuthProviderDirectus = ({ directus, children }: AuthProviderProps) => {
-  const [user, setUser] = useState<MyUserItem | null>(null);
+export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
+  const [user, setUser] = useState<UserItem | null>(null);
   const [token, setToken] = useState<String | null>(null);
   const [loading, setLoading] = useState<Boolean>(false);
   const isAuthenticated = !!user;
 
   useEffect(() => {
-
     setLoading(true);
-    loadUserFromDirectus();
+    loadUser();
     setLoading(false)
   }, []);
 
-  async function loadUserFromDirectus(): Promise<MyUserItem | undefined> {
+  async function loadUser(): Promise<UserItem | undefined> {
     try {
-      const token = await directus.auth.token
-      if (token) {
-        const me = await directus.users.me.read();
-        setUser(me as MyUserItem);
+        const me = await userApi.getUser();
+        setUser(me as UserItem);
+        const token = await userApi.getToken();       
         setToken(token);
         setLoading(false);
-        return me as MyUserItem;
-      }
-      else return undefined;
+        return me as UserItem;
     } catch (error) {
       setLoading(false)
       return undefined;
     }
   }
 
-  const login = async (credentials: AuthCredentials): Promise<MyUserItem | undefined> => {
+  const login = async (credentials: AuthCredentials): Promise<UserItem | undefined> => {
     setLoading(true);
     try {
-      const res = await directus.auth.login(credentials);
-      return (await loadUserFromDirectus());
+      const res = await userApi.login(credentials.email, credentials.password);
+      setToken(res.access_token);
+      return (await loadUser());
     } catch (error: any) {
       setLoading(false);
       console.log(error.response.data.error[0]);
-
       return error.response.data.error[0];
     };
   }
 
-  const register = async (credentials: AuthCredentials, userName): Promise<MyUserItem | undefined> => {
+  const register = async (credentials: AuthCredentials, userName): Promise<UserItem | undefined> => {
     setLoading(true);
     try {
-      const res = await directus.users.createOne({email: credentials.email, password: credentials.password, first_name: userName});
+      const res = await userApi.register(credentials.email, credentials.password, userName)
       return (await login(credentials));
     } catch (error: any) {
       setLoading(false);
       console.log(error);
-
       return error.response.data.error[0];
     };
   }
 
 
   const logout = async () => {
-    await directus.auth.logout();
+    await userApi.logout();
     setUser(null);
   };
 
-  const updateUser = async (user: MyUserItem) => {
+  const updateUser = async (user: UserItem) => {
     setLoading(true);
     const { id, ...userRest } = user;
 
     try {
-      const res = await directus.users.updateOne(user.id!, userRest)
+      const res = await userApi.updateUser(userRest);
       setUser(res as any);
       setLoading(false);
       return res as any;
 
     } catch (error: any) {
       setLoading(false);
-      console.log(error.response.data.error[0]);
-
       return error.response.data.error[0];
     }
 
@@ -136,4 +121,4 @@ export const AuthProviderDirectus = ({ directus, children }: AuthProviderProps) 
     </AuthContext.Provider>
   );
 };
-export const useAuthDirectus = () => useContext(AuthContext);
+export const useAuth = () => useContext(AuthContext);

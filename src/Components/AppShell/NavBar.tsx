@@ -63,7 +63,7 @@ export default function NavBar({appName, useAuth} : {appName: string, useAuth : 
 
 
         
-        {isAuthenticated && token ?
+        {isAuthenticated ?
           <div className="tw-flex-none">
             {user.avatar ? <div className="tw-avatar">
               <div className="tw-w-10 tw-rounded-full">
@@ -83,8 +83,10 @@ export default function NavBar({appName, useAuth} : {appName: string, useAuth : 
               </ul>
             </div>
           </div>
-          :
+          : 
           <div>
+
+          
               <div className="tw-dropdown tw-dropdown-end tw-mr-2">
               <label tabIndex={0} className="tw-btn tw-btn-ghost">
                 Login
@@ -114,7 +116,8 @@ export default function NavBar({appName, useAuth} : {appName: string, useAuth : 
                 </div>
               </div>
             </div>
-          </div>
+        
+        </div>
         }
       </div>
     </>

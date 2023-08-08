@@ -68,3 +68,21 @@ export interface ItemsApi<T> {
   updateItem?(item : T): Promise<any>,
   deleteItem?(id : number | string): Promise<any>,
 }
+
+export interface UserApi {
+  register(email: string, password: string, userName: string): Promise<void>,
+	login(email: string, password: string): Promise<any>,
+	logout(): Promise<void>,
+  getUser(): Promise<UserItem>,
+  getToken(): Promise<any>,
+	updateUser(user: UserItem): Promise<void>
+}
+
+export type UserItem = {
+  id?: string;
+  avatar: string;
+  first_name: string;
+  description: string;
+  email: string;
+  password?: string;
+}

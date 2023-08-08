@@ -1,1 +1,1 @@
-export {AuthProviderDirectus, useAuthDirectus} from "./authDirectus"
+export {AuthProvider, useAuth} from "./useAuth"

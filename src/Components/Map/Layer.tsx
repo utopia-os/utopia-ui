@@ -56,8 +56,8 @@ export const Layer = (props: LayerProps) => {
         })
 
         props.api?.getItems().then(result => {
-            if (result.data) {
-                result.data.map(item => {
+            if (result) {
+                result.map(item => {
                     if (item.position) {
                         addItem(({ layer: props, api: props.api, ...item }));
                     }

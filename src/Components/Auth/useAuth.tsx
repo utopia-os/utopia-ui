@@ -52,12 +52,16 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
 
   async function loadUser(): Promise<UserItem | undefined> {
     try {
-        const me = await userApi.getUser();
-        setUser(me as UserItem);
-        const token = await userApi.getToken();       
+        const token = await userApi.getToken();      
         setToken(token);
-        setLoading(false);
-        return me as UserItem;
+        if(token){
+          const me = await userApi.getUser();
+          setUser(me as UserItem);
+          setLoading(false);
+          return me as UserItem;
+        }
+        else return undefined;
+
     } catch (error) {
       setLoading(false)
       return undefined;

@@ -15,7 +15,7 @@ export function CardPage({title,children} : {
         <div className="tw-text-sm tw-breadcrumbs">
           <ul>
             <li><Link to={'/'} >Home</Link></li>
-            <li>FAQ</li>
+            <li>{title}</li>
           </ul>
         </div>
         <TitleCard title={title} topMargin="mt-2">

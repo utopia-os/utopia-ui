@@ -49,11 +49,11 @@ const DialogModal = ({
       }
     >
      <div className="tw-card-body tw-p-2">
-     <button className="tw-btn tw-btn-sm tw-btn-circle tw-btn-ghost tw-absolute tw-right-2 tw-top-2" onClick={onClose}>✕</button>
 
      <h2 className='tw-text-2xl tw-font-semibold tw-mb-2 tw-text-center'>{title}</h2>
 
       {children}
+      <button className="tw-btn tw-btn-sm tw-btn-circle tw-btn-ghost tw-absolute tw-right-2 tw-top-2" onClick={onClose}>✕</button>
 
       </div>
     </dialog>

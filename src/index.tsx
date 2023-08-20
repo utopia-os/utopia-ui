@@ -10,6 +10,5 @@ import "./index.css"
 declare global {
     interface Window {
       my_modal_3: any;
-      sign_up_modal: any;
     }
   }

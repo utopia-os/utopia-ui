@@ -86,7 +86,7 @@ export const Layer = (props: LayerProps) => {
                     }
                     return (
                         <Marker icon={MarkerIconFactory(props.markerShape, color1, color2, props.markerIcon)} key={place.id} position={[place.position.coordinates[1], place.position.coordinates[0]]}>
-                            <ItemViewPopup item={place} tags={tags} setItemFormPopup={props.setItemFormPopup} />
+                            <ItemViewPopup item={place} setItemFormPopup={props.setItemFormPopup} />
                         </Marker>
                     );
                 })

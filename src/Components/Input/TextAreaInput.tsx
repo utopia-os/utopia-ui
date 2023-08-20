@@ -3,9 +3,10 @@ import * as React from "react"
 
 
 type TextAreaProps = {
-    labelTitle: string;
+    labelTitle?: string;
     labelStyle?: string;
     containerStyle?: string;
+    inputStyle?: string;
     defaultValue: string;
     placeholder?: string;
     updateFormValue: (value: string ) => void;
@@ -13,7 +14,7 @@ type TextAreaProps = {
 
 
 
-function TextAreaInput({labelTitle, labelStyle, containerStyle, defaultValue, placeholder, updateFormValue} : TextAreaProps){
+function TextAreaInput({labelTitle, labelStyle, containerStyle, inputStyle, defaultValue, placeholder, updateFormValue} : TextAreaProps){
 
     const [value, setValue] = useState<string>(defaultValue)
 
@@ -28,11 +29,11 @@ function TextAreaInput({labelTitle, labelStyle, containerStyle, defaultValue, pl
     }
 
     return(
-        <div className={`tw-form-control tw-w-full ${containerStyle}`}>
-            <label className="tw-label">
+        <div className={`tw-form-control tw-w-full ${containerStyle? containerStyle : ""}`}>
+            {labelTitle ? <label className="tw-label">
                 <span className={"tw-label-text tw-text-base-content " + labelStyle}>{labelTitle}</span>
-            </label>
-            <textarea value={value} className="tw-textarea tw-textarea-bordered tw-w-full tw-min-h-64" placeholder={placeholder || ""} onChange={(e) => updateInputValue(e.target.value)}></textarea>
+            </label> : ""}
+            <textarea value={value} className={`tw-textarea tw-textarea-bordered tw-w-full tw-leading-5 ${inputStyle? inputStyle : ""}`} placeholder={placeholder || ""} onChange={(e) => updateInputValue(e.target.value)}></textarea>
         </div>
     )
 }

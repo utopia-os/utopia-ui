@@ -1,4 +1,4 @@
-export { UtopiaMap, Layer, Tags, Item, Tag } from './Components/Map/index';
+export { UtopiaMap, Layer, Tags } from './Components/Map/index';
 export {AppShell, Content, SideBar} from "./Components/AppShell"
 export {AuthProvider, useAuth, LoginPage, SignupPage} from "./Components/Auth"
 export {Settings} from './Components/Profile'

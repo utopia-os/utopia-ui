@@ -31,16 +31,18 @@ const DialogModal = ({
   useEffect(() => {
     if (isOpened) {
       ref.current?.showModal();
+      ref.current?.classList.remove("tw-hidden");  
       document.body.classList.add("modal-open"); // prevent bg scroll
     } else {
       ref.current?.close();
+      ref.current?.classList.add("tw-hidden");  
       document.body.classList.remove("modal-open");
     }
   }, [isOpened]);
 
 
   return (
-    <dialog id="signup_modal" className='tw-card tw-shadow-xl tw-absolute tw-right-0 tw-top-0 tw-bottom-0 tw-left-0 tw-m-auto tw-transition-opacity tw-duration-300'
+    <dialog className='tw-card tw-shadow-xl tw-absolute tw-right-0 tw-top-0 tw-bottom-0 tw-left-0 tw-m-auto tw-transition-opacity tw-duration-300'
     
       ref={ref}
       onCancel={onClose}

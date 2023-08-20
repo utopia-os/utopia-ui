@@ -4,6 +4,8 @@ import { Popup as LeafletPopup, useMap } from 'react-leaflet'
 import { useEffect, useState } from 'react'
 import { useAddItem, useUpdateItem } from '../hooks/useItems'
 import { Geometry, LayerProps, Item, ItemsApi} from '../../../types'
+import TextAreaInput from '../../Input/TextAreaInput'
+import InputText from '../../Input/InputText'
 
 export interface ItemFormPopupProps {
     position: LatLng,
@@ -68,8 +70,8 @@ export default function ItemFormPopup(props: ItemFormPopupProps) {
             position={props.position}>
             <form onSubmit={handleSubmit}>
                 <div className='tw-flex tw-justify-center'><b className="tw-text-xl tw-font-bold">New {props.layer.name}</b></div>
-                <input type="text" placeholder="Name" className="tw-input tw-input-bordered tw-w-full tw-max-w-xs tw-mt-5" value={name} onChange={e => setName(e.target.value)} />
-                <textarea className="tw-textarea tw-textarea-bordered tw-w-full tw-mt-5 tw-leading-5 tw-h-40" placeholder="Text" value={text} onChange={e => setText(e.target.value)}></textarea>
+                <InputText type="text" placeholder="Name" defaultValue={name} updateFormValue={e => setName(e)} />
+                <TextAreaInput placeholder="Text" defaultValue={text} updateFormValue={e => setText(e)} inputStyle='tw-h-40 tw-mt-5'/>
                 <div className='tw-flex tw-justify-center'><button className={spinner ? 'tw-btn tw-loading tw-mt-5 tw-place-self-center' : 'tw-btn tw-mt-5 tw-place-self-center'}>Save</button></div>
             </form>
         </LeafletPopup>

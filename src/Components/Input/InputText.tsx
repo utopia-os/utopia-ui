@@ -5,14 +5,15 @@ type InputTextProps = {
     labelTitle?: string;
     labelStyle?: string;
     type?: string;
+    dataField?: string;
     containerStyle?: string;
     defaultValue: string;
     placeholder?: string;
-    updateFormValue: (value: string ) => void;
+    updateFormValue?: (value: string ) => void;
 }
 
 
-function InputText({labelTitle, labelStyle, type, containerStyle, defaultValue, placeholder, updateFormValue} : InputTextProps){
+function InputText({labelTitle, labelStyle, type, dataField, containerStyle, defaultValue, placeholder, updateFormValue} : InputTextProps){
 
     const [value, setValue] = useState<string>(defaultValue)
 
@@ -23,7 +24,8 @@ function InputText({labelTitle, labelStyle, type, containerStyle, defaultValue, 
 
     const updateInputValue = (val : string) => {
         setValue(val)
-        updateFormValue(val)
+        if(updateFormValue)
+           updateFormValue(val)
 
     }
 
@@ -33,7 +35,7 @@ function InputText({labelTitle, labelStyle, type, containerStyle, defaultValue, 
                 <span className={"tw-label-text tw-text-base-content " + labelStyle}>{labelTitle}</span>
              </label> 
              : " "} 
-            <input type={type || "text"} value={value} placeholder={placeholder || ""} onChange={(e) => updateInputValue(e.target.value)}className="tw-input  tw-input-bordered tw-w-full " />
+            <input type={type || "text"} name={dataField} value={value} placeholder={placeholder || ""} onChange={(e) => updateInputValue(e.target.value)}className="tw-input  tw-input-bordered tw-w-full " />
         </div>
     )
 }

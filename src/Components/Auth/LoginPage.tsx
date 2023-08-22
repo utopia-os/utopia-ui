@@ -1,7 +1,7 @@
 import {useState, useRef} from 'react'
 import {Link} from 'react-router-dom'
 import ErrorText from '../Typography/ErrorText'
-import InputText from '../Input/InputText'
+import {TextInput} from '../Input/TextInput'
 import * as React from 'react'
 
 export function LoginPage(){
@@ -44,9 +44,9 @@ export function LoginPage(){
 
                         <div className="tw-mb-4">
 
-                            <InputText type="email" defaultValue={loginObj.emailId} containerStyle="tw-mt-4" labelTitle="E-Mail" updateFormValue={(v) => updateFormValue(v)}/>
+                            <TextInput type="email" defaultValue={loginObj.emailId} containerStyle="tw-mt-4" labelTitle="E-Mail" updateFormValue={(v) => updateFormValue(v)}/>
 
-                            <InputText defaultValue={loginObj.password} type="password"  containerStyle="tw-mt-4" labelTitle="Password" updateFormValue={(v) => updateFormValue(v)}/>
+                            <TextInput defaultValue={loginObj.password} type="password"  containerStyle="tw-mt-4" labelTitle="Password" updateFormValue={(v) => updateFormValue(v)}/>
 
                         </div>
 

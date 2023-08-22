@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import ErrorText from '../Typography/ErrorText'
-import InputText from '../Input/InputText'
+import {TextInput} from '../Input/TextInput'
 import * as React from 'react'
 
 export function SignupPage() {
@@ -45,13 +45,9 @@ export function SignupPage() {
                         <form onSubmit={(e) => submitForm(e)}>
 
                             <div className="mb-4">
-
-                                <InputText defaultValue={registerObj.name} containerStyle="tw-mt-4" labelTitle="Name" updateFormValue={updateFormValue} />
-
-                                <InputText defaultValue={registerObj.emailId} containerStyle="tw-mt-4" labelTitle="E-Mail" updateFormValue={updateFormValue} />
-
-                                <InputText defaultValue={registerObj.password} type="password"  containerStyle="tw-mt-4" labelTitle="Password" updateFormValue={updateFormValue} />
-
+                                <TextInput defaultValue={registerObj.name} containerStyle="tw-mt-4" labelTitle="Name" updateFormValue={updateFormValue} />
+                                <TextInput defaultValue={registerObj.emailId} containerStyle="tw-mt-4" labelTitle="E-Mail" updateFormValue={updateFormValue} />
+                                <TextInput defaultValue={registerObj.password} type="password"  containerStyle="tw-mt-4" labelTitle="Password" updateFormValue={updateFormValue} />
                             </div>
 
                             <ErrorText styleClass="tw-mt-8">{errorMessage}</ErrorText>

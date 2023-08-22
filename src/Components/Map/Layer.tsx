@@ -7,7 +7,7 @@ import { useTags } from './hooks/useTags'
 import { useAddItem, useItems, useResetItems } from './hooks/useItems'
 import { useEffect, useState } from 'react'
 import { useAddLayer } from './hooks/useLayers'
-import ItemFormPopup, { ItemFormPopupProps } from './Subcomponents/ItemFormPopup'
+import { ItemFormPopupProps, ItemFormPopup } from './Subcomponents/ItemFormPopup'
 
 export const Layer = (props: LayerProps) => {
 
@@ -22,7 +22,7 @@ export const Layer = (props: LayerProps) => {
 
     // create a JS-Map with all Tags 
     const tagMap = new Map(tags?.map(key => [key.id, key]));
-    
+
 
 
     // returns all tags for passed item
@@ -86,14 +86,38 @@ export const Layer = (props: LayerProps) => {
                     }
                     return (
                         <Marker icon={MarkerIconFactory(props.markerShape, color1, color2, props.markerIcon)} key={place.id} position={[place.position.coordinates[1], place.position.coordinates[0]]}>
-                            <ItemViewPopup item={place} setItemFormPopup={props.setItemFormPopup} />
+
+
+                            
+                            {
+                                (props.children && React.Children.toArray(props.children).some(e => React.isValidElement(e) && typeof e.type !== "string" && e.type.name === "ItemForm") ?
+                                    React.Children.toArray(props.children).map((child) =>
+                                        React.isValidElement(child) && typeof child.type !== "string" && child.type.name === "ItemView" ?
+                                        <ItemViewPopup key={place.id} item={place} setItemFormPopup={props.setItemFormPopup} >{child}</ItemViewPopup>
+                                            : ""
+                                    )
+                                    :
+                                    <>
+                                        <ItemViewPopup item={place} setItemFormPopup={props.setItemFormPopup} />
+                                    </>)
+                            }
+
                         </Marker>
                     );
                 })
             }
             {props.children}
-            {props.itemFormPopup && props.itemFormPopup.layer.name == props.name &&
-                <ItemFormPopup position={props.itemFormPopup.position} layer={props.itemFormPopup.layer} setItemFormPopup={setItemFormPopup} item={props.itemFormPopup.item} api={props.api} />
+            {props.itemFormPopup && props.itemFormPopup.layer!.name == props.name &&
+                (props.children && React.Children.toArray(props.children).some(e => React.isValidElement(e) && typeof e.type !== "string" && e.type.name === "ItemForm") ?
+                    React.Children.toArray(props.children).map((child) =>
+                        React.isValidElement(child) && typeof child.type !== "string" && child.type.name === "ItemForm" ?
+                            <ItemFormPopup key={props.setItemFormPopup?.name} position={props.itemFormPopup!.position} layer={props.itemFormPopup!.layer} setItemFormPopup={setItemFormPopup} item={props.itemFormPopup!.item} api={props.api} >{child}</ItemFormPopup>
+                            : ""
+                    )
+                    :
+                    <>
+                        <ItemFormPopup position={props.itemFormPopup!.position} layer={props.itemFormPopup!.layer} setItemFormPopup={setItemFormPopup} item={props.itemFormPopup!.item} api={props.api} />
+                    </>)
             }
         </>
     )

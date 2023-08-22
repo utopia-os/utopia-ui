@@ -12,7 +12,7 @@ export interface UtopiaMapProps {
 
 export interface LayerProps {
   data?: Item[],
-  children?: React.ReactNode
+  children?: React.ReactNode,
   name: string,
   menuIcon: string,
   menuColor: string,
@@ -28,16 +28,16 @@ export interface LayerProps {
 
 export class Item {
   id: string | number;
-  date_created?: string;
-  date_updated?: string | null;
   name: string;
   text: string;
   position: Geometry;
-  [key: string]: any;
+  date_created?: string;
+  date_updated?: string | null;
   start?: string;
   end?: string;
   tags?: number[];
-  api?: ItemsApi<any>
+  api?: ItemsApi<any>;
+  [key: string]: any;
   constructor(id:string|number,name:string,text:string,position:Geometry, layer?: LayerProps, api?: ItemsApi<any>){
     this.id = id;
     this.name = name;

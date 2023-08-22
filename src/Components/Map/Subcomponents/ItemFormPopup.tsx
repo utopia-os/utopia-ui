@@ -1,21 +1,25 @@
 import * as React from 'react'
 import { LatLng } from 'leaflet'
 import { Popup as LeafletPopup, useMap } from 'react-leaflet'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useAddItem, useUpdateItem } from '../hooks/useItems'
 import { Geometry, LayerProps, Item, ItemsApi } from '../../../types'
-import TextAreaInput from '../../Input/TextAreaInput'
-import InputText from '../../Input/InputText'
+import {TextAreaInput} from '../../Input/TextAreaInput'
+import {TextInput} from '../../Input/TextInput'
 
 export interface ItemFormPopupProps {
     position: LatLng,
     layer: LayerProps,
     item?: Item,
     api?: ItemsApi<any>,
+    children?: React.ReactNode,
     setItemFormPopup: React.Dispatch<React.SetStateAction<any>>
 }
 
-export default function ItemFormPopup(props: ItemFormPopupProps) {
+export function ItemFormPopup(props: ItemFormPopupProps) {
+
+    const formRef = useRef<HTMLFormElement>(null);
+
 
     const [spinner, setSpinner] = useState(false);
 
@@ -25,30 +29,29 @@ export default function ItemFormPopup(props: ItemFormPopupProps) {
 
     const handleSubmit = async (evt: any) => {
         const formItem: Item = {} as Item;
-        Array.from(evt.target).forEach((input: HTMLFormElement) => {
+        Array.from(evt.target).forEach((input: HTMLInputElement) => {
             if (input.name) {
-                console.log(input.name + ": " + input.value);
                 formItem[input.name] = input.value;
             }
         });
-        formItem['position']=new Geometry(props.position.lng, props.position.lat);
+        formItem['position'] = new Geometry(props.position.lng, props.position.lat);
         evt.preventDefault();
         setSpinner(true);
 
         if (props.item) {
-            formItem['id']=props.item.id;
+            formItem['id'] = props.item.id;
             await props.api?.updateItem!(formItem);
-            formItem['api']=props.api;
-            formItem['layer']=props.layer;
+            formItem['api'] = props.api;
+            formItem['layer'] = props.layer;
             await updateItem(formItem);
             setSpinner(false);
             map.closePopup();
         }
         else {
-            formItem['id']=crypto.randomUUID();
+            formItem['id'] = crypto.randomUUID();
             await props.api?.createItem!(formItem);
-            formItem['api']=props.api;
-            formItem['layer']=props.layer;
+            formItem['api'] = props.api;
+            formItem['layer'] = props.layer;
             await addItem(formItem);
             setSpinner(false);
             map.closePopup();
@@ -57,17 +60,41 @@ export default function ItemFormPopup(props: ItemFormPopupProps) {
     }
 
 
+    const resetPopup = () => {
+        if (formRef.current) {
+            formRef.current.reset();
+        }
+    }
+
+
+
+    useEffect(() => {
+        resetPopup();
+    }, [props.position])
+
     return (
         <LeafletPopup minWidth={275} maxWidth={275} autoPanPadding={[20, 5]}
             eventHandlers={{
-              //  remove: resetPopup
+                remove: () => {
+                    setTimeout(function() {
+                        resetPopup()
+            
+                    }, 100); 
+                }
             }}
             position={props.position}>
-            <form onSubmit={e => handleSubmit(e)}>
+            <form ref={formRef} onReset={resetPopup} onSubmit={e => handleSubmit(e)}>
                 <div className='tw-flex tw-justify-center'><b className="tw-text-xl tw-font-bold">New {props.layer.name}</b></div>
-                <InputText type="text" placeholder="Name" dataField="name" defaultValue={props.item? props.item.name : ""}  />
-                <TextAreaInput placeholder="Text" dataField="text" defaultValue={props.item ?  props.item.text : ""}  inputStyle='tw-h-40 tw-mt-5' />
-                <div className='tw-flex tw-justify-center'><button className={spinner ? 'tw-btn tw-loading tw-mt-5 tw-place-self-center' : 'tw-btn tw-mt-5 tw-place-self-center'}>Save</button></div>
+                {props.children ? props.children :
+                    <>
+                        <TextInput type="text" placeholder="Name" dataField="name" defaultValue={props.item ? props.item.name : ""} />
+                        <TextAreaInput placeholder="Text" dataField="text" defaultValue={props.item ? props.item.text : ""} inputStyle='tw-h-40 tw-mt-5' />
+                    </>
+                }
+
+                <div className='tw-flex tw-justify-center'>
+                    <button className={spinner ? 'tw-btn tw-btn-disabled tw-mt-5 tw-place-self-center' : 'tw-btn tw-mt-5 tw-place-self-center'} type='submit'>{spinner ? <span className="tw-loading tw-loading-spinner"></span> : 'Save'}</button>
+                </div>
             </form>
         </LeafletPopup>
     )

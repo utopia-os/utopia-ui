@@ -15,30 +15,20 @@ type TextAreaProps = {
 
 
 
-function TextAreaInput({ labelTitle, dataField, labelStyle, containerStyle, inputStyle, defaultValue, placeholder, updateFormValue }: TextAreaProps) {
-
-    const [value, setValue] = useState<string>(defaultValue)
-
-    useEffect(() => {
-        setValue(defaultValue)
-    }, [defaultValue])
+export function TextAreaInput({ labelTitle, dataField, labelStyle, containerStyle, inputStyle, defaultValue, placeholder, updateFormValue }: TextAreaProps) {
 
 
-    const updateInputValue = (val: string) => {
-        setValue(val)
-        if (updateFormValue)
-            updateFormValue(val)
-    }
+
+
 
     return (
         <div className={`tw-form-control tw-w-full ${containerStyle ? containerStyle : ""}`}>
             {labelTitle ? <label className="tw-label">
                 <span className={"tw-label-text tw-text-base-content " + labelStyle}>{labelTitle}</span>
             </label> : ""}
-            <textarea value={value} name={dataField} className={`tw-textarea tw-textarea-bordered tw-w-full tw-leading-5 ${inputStyle ? inputStyle : ""}`} placeholder={placeholder || ""} onChange={(e) => updateInputValue(e.target.value)}></textarea>
+            <textarea defaultValue={defaultValue} name={dataField} className={`tw-textarea tw-textarea-bordered tw-w-full tw-leading-5 ${inputStyle ? inputStyle : ""}`} placeholder={placeholder || ""} onChange={(e) => updateFormValue&& updateFormValue(e.target.value)}></textarea>
         </div>
     )
 }
 
 
-export default TextAreaInput

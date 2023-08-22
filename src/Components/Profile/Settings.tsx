@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import {TitleCard} from '../Templates/TitleCard'
-import InputText from '../Input/InputText'
-import TextAreaInput from '../Input/TextAreaInput'
+import {TextInput} from '../Input/TextInput'
+import {TextAreaInput} from '../Input/TextAreaInput'
 import { toast } from 'react-toastify';
 import {useNavigate} from 'react-router-dom'
 import * as React from 'react'
@@ -62,7 +62,7 @@ export function Settings({useAuth}) {
 
 
           <div className="tw-grid tw-grid-cols-1 tw-md:grid-cols-2 tw-gap-6">
-            <InputText placeholder="Name" defaultValue={user?.first_name ? user.first_name : ""} updateFormValue={(v) => setName(v)} />
+            <TextInput placeholder="Name" defaultValue={user?.first_name ? user.first_name : ""} updateFormValue={(v) => setName(v)} />
           </div>
           <div className="tw-grid tw-grid-cols-1 tw-md:grid-cols-1 tw-gap-6 tw-pt-6 tw-pb-6">
             <TextAreaInput placeholder="About me, Contact, #Tags, ..." defaultValue={user?.description ? user.description : ""} updateFormValue={(v) => setText(v)} inputStyle='tw-h-64'/>
@@ -71,8 +71,8 @@ export function Settings({useAuth}) {
 
 
           <div className="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 tw-gap-6">
-          <InputText type='email' placeholder="E-Mail" defaultValue={user?.email ? user.email : ""} updateFormValue={(v) => setEmail(v)} />
-          <InputText type='password' placeholder="new Password" defaultValue={user?.password ? user.password : ""} updateFormValue={(v) => {
+          <TextInput type='email' placeholder="E-Mail" defaultValue={user?.email ? user.email : ""} updateFormValue={(v) => setEmail(v)} />
+          <TextInput type='password' placeholder="new Password" defaultValue={user?.password ? user.password : ""} updateFormValue={(v) => {
             setPassword(v);
             setPasswordChanged(true);
           }} />

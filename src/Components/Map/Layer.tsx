@@ -9,15 +9,13 @@ import { useEffect, useState } from 'react'
 import { useAddLayer } from './hooks/useLayers'
 import { ItemFormPopupProps, ItemFormPopup } from './Subcomponents/ItemFormPopup'
 
+
 export const Layer = (props: LayerProps) => {
 
     const [itemFormPopup, setItemFormPopup] = useState<ItemFormPopupProps | null>(null);
 
 
     const tags = useTags();
-
-
-
 
 
     // create a JS-Map with all Tags 
@@ -90,9 +88,9 @@ export const Layer = (props: LayerProps) => {
 
 
                             {
-                                (props.children && React.Children.toArray(props.children).some(e => React.isValidElement(e) && typeof e.type !== "string" && e.type.name === "ItemView") ?
+                                (props.children && React.Children.toArray(props.children).some(child => React.isValidElement(child) && child.props.__TYPE === "ItemView") ?
                                     React.Children.toArray(props.children).map((child) =>
-                                        React.isValidElement(child) && typeof child.type !== "string" && child.type.name === "ItemView" ?
+                                        React.isValidElement(child) && child.props.__TYPE === "ItemView" ?
                                             <ItemViewPopup key={place.id} item={place} setItemFormPopup={props.setItemFormPopup} >{child}</ItemViewPopup>
                                             : ""
                                     )
@@ -109,9 +107,9 @@ export const Layer = (props: LayerProps) => {
             {//{props.children}}
             }
             {props.itemFormPopup && props.itemFormPopup.layer!.name == props.name &&
-                (props.children && React.Children.toArray(props.children).some(e => React.isValidElement(e) && typeof e.type !== "string" && e.type.name === "ItemForm") ?
+                (props.children && React.Children.toArray(props.children).some(child => React.isValidElement(child) && child.props.__TYPE === "ItemForm") ?
                     React.Children.toArray(props.children).map((child) =>
-                        React.isValidElement(child) && typeof child.type !== "string" && child.type.name === "ItemForm" ?
+                        React.isValidElement(child) && child.props.__TYPE === "ItemForm" ?
                             <ItemFormPopup key={props.setItemFormPopup?.name} position={props.itemFormPopup!.position} layer={props.itemFormPopup!.layer} setItemFormPopup={setItemFormPopup} item={props.itemFormPopup!.item} api={props.api} >{child}</ItemFormPopup>
                             : ""
                     )

@@ -1,5 +1,7 @@
 import * as React from 'react'
 import { Item } from '../../types'
+import * as PropTypes from 'prop-types'
+
 
 export const ItemView = ({ children, item }: { children?: React.ReactNode, item?: Item }) => {
   return (
@@ -12,3 +14,12 @@ export const ItemView = ({ children, item }: { children?: React.ReactNode, item?
     </div>
   )
 }
+
+ItemView.propTypes = {
+  children: PropTypes.node,
+  __TYPE: PropTypes.string,
+};
+
+ItemView.defaultProps = {
+  __TYPE: 'ItemView',
+};

@@ -1,5 +1,7 @@
 import * as React from 'react'
 import { Item } from '../../types'
+import * as PropTypes from 'prop-types'
+
 
 export const ItemForm = ({ children, item }: { children?: React.ReactNode, item?: Item }) => {
     return (
@@ -12,3 +14,12 @@ export const ItemForm = ({ children, item }: { children?: React.ReactNode, item?
         }</div>
     )
 }
+
+ItemForm.propTypes = {
+    children: PropTypes.node,
+    __TYPE: PropTypes.string,
+};
+
+ItemForm.defaultProps = {
+    __TYPE: 'ItemForm',
+};

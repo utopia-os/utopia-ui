@@ -64,7 +64,7 @@ function UtopiaMap({
                             <MarkerClusterGroup showCoverageOnHover chunkedLoading maxClusterRadius={50}>
                                 {
                                     React.Children.toArray(children).map((child) =>
-                                        React.isValidElement<{ setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps>>, itemFormPopup: ItemFormPopupProps | null }>(child) && typeof child.type !== "string" && child.type.name === "Layer" ?
+                                        React.isValidElement<{ setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps>>, itemFormPopup: ItemFormPopupProps | null }>(child) ?
                                             React.cloneElement(child, { setItemFormPopup: setItemFormPopup, itemFormPopup: itemFormPopup }) : child
                                     )
                                 }

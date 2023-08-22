@@ -4,8 +4,8 @@ import { Popup as LeafletPopup, useMap } from 'react-leaflet'
 import { useEffect, useRef, useState } from 'react'
 import { useAddItem, useUpdateItem } from '../hooks/useItems'
 import { Geometry, LayerProps, Item, ItemsApi } from '../../../types'
-import {TextAreaInput} from '../../Input/TextAreaInput'
-import {TextInput} from '../../Input/TextInput'
+import { TextAreaInput } from '../../Input/TextAreaInput'
+import { TextInput } from '../../Input/TextInput'
 
 export interface ItemFormPopupProps {
     position: LatLng,
@@ -76,25 +76,28 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
         <LeafletPopup minWidth={275} maxWidth={275} autoPanPadding={[20, 5]}
             eventHandlers={{
                 remove: () => {
-                    setTimeout(function() {
+                    setTimeout(function () {
                         resetPopup()
-            
-                    }, 100); 
+
+                    }, 100);
                 }
             }}
             position={props.position}>
             <form ref={formRef} onReset={resetPopup} onSubmit={e => handleSubmit(e)}>
-                <div className='tw-flex tw-justify-center'><b className="tw-text-xl tw-font-bold">New {props.layer.name}</b></div>
-                <TextInput type="text" placeholder="Name" dataField="name" defaultValue={props.item ? props.item.name : ""} inputStyle=''/>
+                {props.item ? <div className='tw-h-2'></div>
+                :
+                    <div className='tw-flex tw-justify-center'><b className="tw-text-xl tw-font-bold">New {props.layer.name}</b></div>
+                }
+                <TextInput type="text" placeholder="Name" dataField="name" defaultValue={props.item ? props.item.name : ""} inputStyle='' />
 
-                {props.children ? 
+                {props.children ?
 
-                    React.Children.toArray(props.children).map((child) => 
+                    React.Children.toArray(props.children).map((child) =>
                         React.isValidElement<{ item: Item, test: string }>(child) ?
-                            React.cloneElement(child, { item: props.item}) : ""
+                            React.cloneElement(child, { item: props.item }) : ""
                     )
 
-                 :
+                    :
                     <>
                         <TextAreaInput placeholder="Text" dataField="text" defaultValue={props.item ? props.item.text : ""} inputStyle='tw-h-40 tw-mt-5' />
                     </>

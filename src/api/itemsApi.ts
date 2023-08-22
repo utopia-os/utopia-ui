@@ -1,41 +1,44 @@
-import {  directus } from './directus';
+import { createItem, deleteItem, readItems, updateItem } from '@directus/sdk';
+import {  MyCollections, directusClient } from './directus';
+import { ItemsApi } from 'utopia-ui/dist/types';
 
 
-export class itemsApi<T> {
 
-  name : string;
+export class itemsApi<T> implements ItemsApi<T>{
 
-  constructor(name : string) {
-    this.name = name;
+  collectionName : string;
+
+  constructor(collectionName : string) {
+    this.collectionName = collectionName;
   }
 
   async getItems() {
     try {
-      return await directus.items(this.name).readByQuery({limit: -1 });
+      return await directusClient.request(readItems(this.collectionName as never,{limit: 500 }));
     } catch (error) {
       console.log(error);
     }
   }
 
-  async createItem(item: T & { id?: number }) {
+  async createItem(item: T & { id?: string }) {
     try {
-      return await directus.items(this.name).createOne(item)
+      return await directusClient.request(createItem(this.collectionName as keyof MyCollections,item))
     } catch (error) {
       console.log(error);
     }
   }
 
-  async updateItem(item: T & { id?: number }) {
+  async updateItem(item: T & { id?: string }) {
     try {
-      return await directus.items(this.name).updateOne(item.id!, item)
+      return await directusClient.request(updateItem(this.collectionName as keyof MyCollections,item.id!, item))
     } catch (error) {
       console.log(error);
     }
   }
 
-  async deleteItem(id: number ) {
+  async deleteItem(id: string ) {
     try {
-      return await directus.items(this.name).deleteOne(id)
+      return await directusClient.request(deleteItem(this.collectionName as keyof MyCollections,id))
     } catch (error) {
       console.log(error);
     }

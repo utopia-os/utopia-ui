@@ -1,4 +1,4 @@
-import {Item, Tag} from "utopia-ui"
+import { Item, Tag } from "utopia-ui/dist/types";
 
 export const tags : Tag[] = [
 	{

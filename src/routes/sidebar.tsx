@@ -15,9 +15,9 @@ export const routes = [
     name: 'Map',
   },
   {
-    path: '/groups', // url
+    path: '/concept', // url
     icon: <UserGroupIcon style={{width: 24 }}/>, // icon component
-    name: 'Groups', // name that appear in Sidebar
+    name: 'Concept', // name that appear in Sidebar
   },
 
 

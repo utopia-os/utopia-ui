@@ -19,6 +19,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src", "../utopia-ui/src/Components/Templates/CardPage.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

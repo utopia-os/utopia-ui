@@ -1,9 +1,9 @@
 import * as React from "react"
-import { useRemoveItem } from "../hooks/useItems";
+import { useRemoveItem } from "../../hooks/useItems";
 import { useMap } from "react-leaflet";
-import { ItemFormPopupProps } from "./ItemFormPopup";
+import { ItemFormPopupProps } from "../ItemFormPopup";
 import { LatLng } from "leaflet";
-import { Item } from "../../../types";
+import { Item } from "../../../../types";
 
 
 
@@ -33,7 +33,7 @@ export function HeaderView({item, setItemFormPopup}: {
       }
       
   return (
-    <div className='tw-grid tw-grid-cols-6'>
+    <div className='tw-grid tw-grid-cols-6 tw-pb-2'>
     <div className='tw-col-span-5'>
       <b className="tw-text-xl tw-font-bold">{item.name}</b>
     </div>

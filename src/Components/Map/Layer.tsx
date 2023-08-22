@@ -88,12 +88,12 @@ export const Layer = (props: LayerProps) => {
                         <Marker icon={MarkerIconFactory(props.markerShape, color1, color2, props.markerIcon)} key={place.id} position={[place.position.coordinates[1], place.position.coordinates[0]]}>
 
 
-                            
+
                             {
-                                (props.children && React.Children.toArray(props.children).some(e => React.isValidElement(e) && typeof e.type !== "string" && e.type.name === "ItemForm") ?
+                                (props.children && React.Children.toArray(props.children).some(e => React.isValidElement(e) && typeof e.type !== "string" && e.type.name === "ItemView") ?
                                     React.Children.toArray(props.children).map((child) =>
                                         React.isValidElement(child) && typeof child.type !== "string" && child.type.name === "ItemView" ?
-                                        <ItemViewPopup key={place.id} item={place} setItemFormPopup={props.setItemFormPopup} >{child}</ItemViewPopup>
+                                            <ItemViewPopup key={place.id} item={place} setItemFormPopup={props.setItemFormPopup} >{child}</ItemViewPopup>
                                             : ""
                                     )
                                     :
@@ -106,7 +106,8 @@ export const Layer = (props: LayerProps) => {
                     );
                 })
             }
-            {props.children}
+            {//{props.children}}
+            }
             {props.itemFormPopup && props.itemFormPopup.layer!.name == props.name &&
                 (props.children && React.Children.toArray(props.children).some(e => React.isValidElement(e) && typeof e.type !== "string" && e.type.name === "ItemForm") ?
                     React.Children.toArray(props.children).map((child) =>

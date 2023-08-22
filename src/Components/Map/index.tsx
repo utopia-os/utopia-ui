@@ -1,6 +1,9 @@
 export { UtopiaMap } from './UtopiaMap';
 export { Layer } from './Layer';
 export { Tags } from "./Tags";
-export {ItemViewPopup} from './Subcomponents/ItemViewPopup';
 export {ItemForm} from './ItemForm';
 export {ItemView} from './ItemView';
+export {PopupTextAreaInput} from './Subcomponents/ItemPopupComponents/PopupTextAreaInput';
+export {PopupStartEndInput} from './Subcomponents/ItemPopupComponents/PopupStartEndInput';
+export {TextView} from './Subcomponents/ItemPopupComponents/TextView';
+export {StartEndView} from './Subcomponents/ItemPopupComponents/StartEndView'

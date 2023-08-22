@@ -26,6 +26,7 @@ const DialogModal = ({
   onClose,
   children,
 }: Props) => {
+  
   const ref = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {

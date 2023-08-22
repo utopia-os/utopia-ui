@@ -2,9 +2,9 @@ import * as React from 'react'
 import { Popup as LeafletPopup, useMap } from 'react-leaflet'
 import { Item } from '../../../types'
 import { ItemFormPopupProps } from './ItemFormPopup'
-import { HeaderView } from './HeaderView'
-import StartEndView from './StartEndView'
-import { TextView } from './TextView'
+import { HeaderView } from './ItemPopupComponents/HeaderView'
+import { StartEndView } from './ItemPopupComponents/StartEndView'
+import { TextView } from './ItemPopupComponents/TextView'
 
 export interface ItemViewPopupProps {
   item: Item,
@@ -21,13 +21,20 @@ export const ItemViewPopup = (props: ItemViewPopupProps) => {
     <LeafletPopup maxHeight={377} minWidth={275} maxWidth={275} autoPanPadding={[20, 5]}>
       <div>
         <HeaderView item={props.item} setItemFormPopup={props.setItemFormPopup} />
-        {props.children ? props.children :
-          <div className='tw-overflow-y-auto tw-max-h-72'>
-            {item.start && item.end &&
-              <StartEndView item={props.item} />}
+        <div className='tw-overflow-y-auto tw-max-h-72'>
+          {props.children ?
+
+            React.Children.toArray(props.children).map((child) =>
+              React.isValidElement<{ item: Item, test: string }>(child) ?
+                React.cloneElement(child, { item: props.item }) : ""
+            )
+
+            :
+
             <TextView item={props.item} />
-          </div>
-        }
+
+          }
+        </div>
       </div>
     </LeafletPopup>
   )

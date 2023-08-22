@@ -85,9 +85,17 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
             position={props.position}>
             <form ref={formRef} onReset={resetPopup} onSubmit={e => handleSubmit(e)}>
                 <div className='tw-flex tw-justify-center'><b className="tw-text-xl tw-font-bold">New {props.layer.name}</b></div>
-                {props.children ? props.children :
+                <TextInput type="text" placeholder="Name" dataField="name" defaultValue={props.item ? props.item.name : ""} inputStyle=''/>
+
+                {props.children ? 
+
+                    React.Children.toArray(props.children).map((child) => 
+                        React.isValidElement<{ item: Item, test: string }>(child) ?
+                            React.cloneElement(child, { item: props.item}) : ""
+                    )
+
+                 :
                     <>
-                        <TextInput type="text" placeholder="Name" dataField="name" defaultValue={props.item ? props.item.name : ""} />
                         <TextAreaInput placeholder="Text" dataField="text" defaultValue={props.item ? props.item.text : ""} inputStyle='tw-h-40 tw-mt-5' />
                     </>
                 }

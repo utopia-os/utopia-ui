@@ -31,7 +31,7 @@ function MapEventListener(props: MapEventListenerProps) {
         },
         resize: () => {
             console.log("resize");
-            
+
         }
     })
     return null
@@ -57,14 +57,15 @@ function UtopiaMap({
             <TagsProvider initialTags={[]}>
                 <ItemsProvider initialItems={[]}>
                     <div className={(selectMode != null ? "crosshair-cursor-enabled" : undefined)}>
-                        <MapContainer         ref={mapDivRef} style={{ height: height, width: width }} center={center} zoom={zoom}>
+                        <MapContainer ref={mapDivRef} style={{ height: height, width: width }} center={center} zoom={zoom}>
                             <TileLayer
                                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                 url="https://tile.osmand.net/hd/{z}/{x}/{y}.png" />
                             <MarkerClusterGroup showCoverageOnHover chunkedLoading maxClusterRadius={50}>
                                 {
                                     React.Children.toArray(children).map((child) =>
-                                        React.isValidElement<{ setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps>>, itemFormPopup: ItemFormPopupProps | null }>(child) ? React.cloneElement(child, { setItemFormPopup: setItemFormPopup, itemFormPopup: itemFormPopup }) : child
+                                        React.isValidElement<{ setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps>>, itemFormPopup: ItemFormPopupProps | null }>(child) && typeof child.type !== "string" && child.type.name === "Layer" ?
+                                            React.cloneElement(child, { setItemFormPopup: setItemFormPopup, itemFormPopup: itemFormPopup }) : child
                                     )
                                 }
                             </MarkerClusterGroup>

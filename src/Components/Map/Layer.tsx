@@ -8,6 +8,7 @@ import { useAddItem, useItems, useResetItems } from './hooks/useItems'
 import { useEffect, useState } from 'react'
 import { useAddLayer } from './hooks/useLayers'
 import { ItemFormPopupProps, ItemFormPopup } from './Subcomponents/ItemFormPopup'
+import { toast } from 'react-toastify'
 
 
 export const Layer = (props: LayerProps) => {
@@ -43,9 +44,7 @@ export const Layer = (props: LayerProps) => {
     const addLayer = useAddLayer();
     const resetItems = useResetItems();
 
-    useEffect(() => {
-        resetItems(props);
-
+    const loadItems = async () => {
         props.data?.map(item => {
             if (item.position) {
                 item.layer = props;
@@ -53,7 +52,15 @@ export const Layer = (props: LayerProps) => {
             }
         })
 
-        props.api?.getItems().then(result => {
+        if(props.api) {
+            const result = await toast.promise(
+                props.api!.getItems(),
+                {
+                  pending: `loading ${props.name} ...`,
+                  success: `${props.name} loaded` ,
+                  error: `error while loading ${props.name}`
+                }
+            );
             if (result) {
                 result.map(item => {
                     if (item.position) {
@@ -61,10 +68,20 @@ export const Layer = (props: LayerProps) => {
                     }
                 });
             }
-        })
-        if (props.api || props.api) {
+        }
+
+
+
+        if (props.api) {
             addLayer(props);
         }
+    }
+
+    useEffect(() => {
+        resetItems(props);
+        loadItems();
+
+
 
     }, [props.data, props.api])
 
@@ -82,6 +99,7 @@ export const Layer = (props: LayerProps) => {
                     if (tags[1]) {
                         color2 = tags[1].color;
                     }
+
                     return (
                         <Marker icon={MarkerIconFactory(props.markerShape, color1, color2, props.markerIcon)} key={place.id} position={[place.position.coordinates[1], place.position.coordinates[0]]}>
 

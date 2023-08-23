@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react"
 import * as React from "react"
+import { useEffect, useRef } from "react";
+import Tribute from "tributejs";
+import { useTags } from "../Map/hooks/useTags";
 
 
 type TextAreaProps = {
@@ -13,11 +15,41 @@ type TextAreaProps = {
     updateFormValue?: (value: string) => void;
 }
 
+interface KeyValue {
+    [key: string]: string;
+}
 
 
 export function TextAreaInput({ labelTitle, dataField, labelStyle, containerStyle, inputStyle, defaultValue, placeholder, updateFormValue }: TextAreaProps) {
 
+    const ref = useRef<HTMLTextAreaElement>(null);
 
+    // prevent react18 from calling useEffect twice
+    const init = useRef(false)
+
+    const tags = useTags();
+    const values: KeyValue[] = [];
+    tags.map(tag => {
+        values.push({ key: tag.id, value: tag.id, color: tag.color })
+    })
+
+    var tribute = new Tribute({
+        containerClass: 'tw-z-500 tw-bg-gray-200 tw-p-2',
+        selectClass: 'tw-font-bold',
+        trigger: "#",
+        values: values
+    });
+
+
+    useEffect(() => {
+        if (!init.current) {
+            if (ref.current) {
+                console.log("check");
+                tribute.attach(ref.current);
+            }
+            init.current = true;
+        }
+    }, [ref])
 
 
 
@@ -26,7 +58,7 @@ export function TextAreaInput({ labelTitle, dataField, labelStyle, containerStyl
             {labelTitle ? <label className="tw-label">
                 <span className={"tw-label-text tw-text-base-content " + labelStyle}>{labelTitle}</span>
             </label> : ""}
-            <textarea defaultValue={defaultValue} name={dataField} className={`tw-textarea tw-textarea-bordered tw-w-full tw-leading-5 ${inputStyle ? inputStyle : ""}`} placeholder={placeholder || ""} onChange={(e) => updateFormValue&& updateFormValue(e.target.value)}></textarea>
+            <textarea ref={ref} defaultValue={defaultValue} name={dataField} className={`tw-textarea tw-textarea-bordered tw-w-full tw-leading-5 ${inputStyle ? inputStyle : ""}`} placeholder={placeholder || ""} onChange={(e) => updateFormValue && updateFormValue(e.target.value)}></textarea>
         </div>
     )
 }

@@ -50,7 +50,7 @@ export default function NavBar({ appName, useAuth }: { appName: string, useAuth:
           icon: "✌️",
         },
         error: 'Error',
-        pending: '123 ...'
+        pending: 'logging in ...'
       });
     setLoginOpen(false);
   }
@@ -67,7 +67,7 @@ export default function NavBar({ appName, useAuth }: { appName: string, useAuth:
           icon: "👋",
         },
         error: 'Error',
-        pending: '123 ...'
+        pending: 'logging out ..'
       });
   }
 

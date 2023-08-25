@@ -34,10 +34,14 @@ export function TextAreaInput({ labelTitle, dataField, labelStyle, containerStyl
     })
 
     var tribute = new Tribute({
-        containerClass: 'tw-z-500 tw-bg-gray-200 tw-p-2',
+        containerClass: 'tw-z-500 tw-bg-white tw-p-2 tw-rounded',
         selectClass: 'tw-font-bold',
         trigger: "#",
-        values: values
+        values: values,
+        menuItemTemplate: function (item) {
+            console.log(item);
+            return `<span style="color: ${item.original.color}; padding: 5px; boarder-radius: 3px;">#${item.string}</span>`;
+          },
     });
 
 

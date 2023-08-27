@@ -28,34 +28,35 @@ export function TextAreaInput({ labelTitle, dataField, labelStyle, containerStyl
     const init = useRef(false)
 
     const tags = useTags();
-    const values: KeyValue[] = [];
+
+    let values: KeyValue[] = [];
+
     tags.map(tag => {
         values.push({ key: tag.id, value: tag.id, color: tag.color })
     })
 
     var tribute = new Tribute({
-        containerClass: 'tw-z-500 tw-bg-white tw-p-2 tw-rounded',
+        containerClass: 'tw-z-500 tw-bg-white tw-p-2 tw-rounded-lg tw-shadow',
         selectClass: 'tw-font-bold',
         trigger: "#",
         values: values,
+        noMatchTemplate: () => {
+            return ""
+        },
         menuItemTemplate: function (item) {
-            console.log(item);
             return `<span style="color: ${item.original.color}; padding: 5px; boarder-radius: 3px;">#${item.string}</span>`;
-          },
+        }
     });
 
 
     useEffect(() => {
         if (!init.current) {
             if (ref.current) {
-                console.log("check");
                 tribute.attach(ref.current);
             }
             init.current = true;
         }
     }, [ref])
-
-
 
     return (
         <div className={`tw-form-control tw-w-full ${containerStyle ? containerStyle : ""}`}>

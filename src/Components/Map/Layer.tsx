@@ -9,40 +9,28 @@ import { useEffect, useState } from 'react'
 import { useAddLayer } from './hooks/useLayers'
 import { ItemFormPopupProps, ItemFormPopup } from './Subcomponents/ItemFormPopup'
 import { toast } from 'react-toastify'
+import { hashTagRegex } from '../../Utils/HeighlightTags'
 
 
 export const Layer = (props: LayerProps) => {
 
     const [itemFormPopup, setItemFormPopup] = useState<ItemFormPopupProps | null>(null);
 
-
     const tags = useTags();
-
-
-    // create a JS-Map with all Tags 
-    const tagMap = new Map(tags?.map(key => [key.id, key]));
-
-
-
-    // returns all tags for passed item
-    const getTags = (item: Item) => {
-        const regex = /(^|\B)#(?![0-9_]+\b)([a-zA-Z0-9_]{1,30})(\b|\r)/g;
-        const strings = item.text.toLocaleLowerCase().match(regex);
-        const tags: Tag[] = [];
-        strings?.map(tag => {
-            if (tagMap.has(tag.slice(1))) { tags.push(tagMap.get(tag.slice(1))!) }
-        })
-
-        return tags;
-    };
-
-
-
 
     const items = useItems();
     const addItem = useAddItem()
     const addLayer = useAddLayer();
     const resetItems = useResetItems();
+
+    const getItemTags = (item: Item) : Tag[] => {
+        const itemTagStrings = item.text.toLocaleLowerCase().match(hashTagRegex);
+        const itemTags: Tag[] = [];
+        itemTagStrings?.map(tag => {
+            if (tags.find(t => t.id === tag.slice(1))) { itemTags.push(tags.find(t => t.id === tag.slice(1))!) }
+        })
+        return itemTags;
+    };
 
     const loadItems = async () => {
         props.data?.map(item => {
@@ -51,6 +39,10 @@ export const Layer = (props: LayerProps) => {
                 addItem(item);
             }
         })
+        
+        if (props.api) {
+            addLayer(props);
+        }
 
         if(props.api) {
             const result = await toast.promise(
@@ -69,28 +61,18 @@ export const Layer = (props: LayerProps) => {
                 });
             }
         }
-
-
-
-        if (props.api) {
-            addLayer(props);
-        }
     }
 
     useEffect(() => {
         resetItems(props);
         loadItems();
-
-
-
     }, [props.data, props.api])
-
 
     return (
         <>
             {items &&
                 items.filter(item => item.layer?.name === props.name)?.map((place: Item) => {
-                    const tags = getTags(place);
+                    const tags = getItemTags(place);
                     let color1 = "#666";
                     let color2 = "RGBA(35, 31, 32, 0.2)";
                     if (tags[0]) {
@@ -99,12 +81,8 @@ export const Layer = (props: LayerProps) => {
                     if (tags[1]) {
                         color2 = tags[1].color;
                     }
-
                     return (
                         <Marker icon={MarkerIconFactory(props.markerShape, color1, color2, props.markerIcon)} key={place.id} position={[place.position.coordinates[1], place.position.coordinates[0]]}>
-
-
-
                             {
                                 (props.children && React.Children.toArray(props.children).some(child => React.isValidElement(child) && child.props.__TYPE === "ItemView") ?
                                     React.Children.toArray(props.children).map((child) =>

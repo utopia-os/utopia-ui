@@ -1,16 +1,16 @@
 import * as React from 'react'
 import { useEffect } from 'react';
-import { Tag } from '../../types';
-import { useAddTag } from './hooks/useTags'
+import { ItemsApi, Tag } from '../../types';
+import { useAddTag, useSetTagData, useSetTagApi } from './hooks/useTags'
 
-export function Tags({data} : {data: Tag[]}) {
-const addTag = useAddTag();
+export function Tags({data, api} : {data?: Tag[], api?: ItemsApi<Tag>}) {
+const setTagData = useSetTagData();
+const setTagApi = useSetTagApi();
+
 useEffect(() => {
-    data.map(tag => {
-        tag.id = tag.id.toLocaleLowerCase();
-        addTag(tag)
-    })
-}, [addTag, data])
+  data && setTagData(data); 
+  api && setTagApi(api);  
+}, [api, data])
 
   return (
     <></>

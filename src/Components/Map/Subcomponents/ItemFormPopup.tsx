@@ -6,6 +6,9 @@ import { useAddItem, useUpdateItem } from '../hooks/useItems'
 import { Geometry, LayerProps, Item, ItemsApi } from '../../../types'
 import { TextAreaInput } from '../../Input/TextAreaInput'
 import { TextInput } from '../../Input/TextInput'
+import { hashTagRegex } from '../../../Utils/HeighlightTags'
+import { useAddTag } from '../hooks/useTags'
+import { randomColor } from '../../../Utils/RandomColor'
 
 export interface ItemFormPopupProps {
     position: LatLng,
@@ -18,14 +21,16 @@ export interface ItemFormPopupProps {
 
 export function ItemFormPopup(props: ItemFormPopupProps) {
 
-    const formRef = useRef<HTMLFormElement>(null);
-
-
     const [spinner, setSpinner] = useState(false);
 
+    const formRef = useRef<HTMLFormElement>(null);
+
     const map = useMap();
+
     const addItem = useAddItem();
     const updateItem = useUpdateItem();
+
+    const addTag = useAddTag();
 
     const handleSubmit = async (evt: any) => {
         const formItem: Item = {} as Item;
@@ -37,6 +42,11 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
         formItem['position'] = new Geometry(props.position.lng, props.position.lat);
         evt.preventDefault();
         setSpinner(true);
+
+        formItem.text.toLocaleLowerCase().match(hashTagRegex)?.map(tag=> {
+            addTag({id: tag.slice(1), color: randomColor()})
+        });
+
 
         if (props.item) {
             formItem['id'] = props.item.id;
@@ -66,8 +76,6 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
         }
     }
 
-
-
     useEffect(() => {
         resetPopup();
     }, [props.position])
@@ -78,7 +86,6 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
                 remove: () => {
                     setTimeout(function () {
                         resetPopup()
-
                     }, 100);
                 }
             }}
@@ -94,12 +101,12 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
 
                     React.Children.toArray(props.children).map((child) =>
                         React.isValidElement<{ item: Item, test: string }>(child) ?
-                            React.cloneElement(child, { item: props.item }) : ""
+                            React.cloneElement(child, { item: props.item, key: props.position.toString() }) : ""
                     )
 
                     :
                     <>
-                        <TextAreaInput placeholder="Text" dataField="text" defaultValue={props.item ? props.item.text : ""} inputStyle='tw-h-40 tw-mt-5' />
+                        <TextAreaInput key={props.position.toString()} placeholder="Text" dataField="text" defaultValue={props.item ? props.item.text : ""} inputStyle='tw-h-40 tw-mt-5' />
                     </>
                 }
 

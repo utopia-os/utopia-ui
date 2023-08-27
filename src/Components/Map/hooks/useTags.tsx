@@ -1,6 +1,7 @@
 import { useCallback, useReducer, createContext, useContext } from "react";
 import * as React from "react";
-import { Tag } from "../../../types";
+import { ItemsApi, Tag } from "../../../types";
+import { toast } from "react-toastify";
 
 type ActionType =
   | { type: "ADD"; tag: Tag }
@@ -11,13 +12,17 @@ type UseTagManagerResult = ReturnType<typeof useTagsManager>;
 const TagContext = createContext<UseTagManagerResult>({
   tags: [],
   addTag: () => { },
-  removeTag: () => { }
+  removeTag: () => { },
+  setTagApi: () => { },
+  setTagData: () => { }
 });
 
 function useTagsManager(initialTags: Tag[]): {
   tags: Tag[];
   addTag: (tag: Tag) => void;
   removeTag: (id: string) => void;
+  setTagApi: (api: ItemsApi<Tag>) => void;
+  setTagData: (data: Tag[]) => void;
 } {
   const [tags, dispatch] = useReducer((state: Tag[], action: ActionType) => {
     switch (action.type) {
@@ -38,20 +43,47 @@ function useTagsManager(initialTags: Tag[]): {
     }
   }, initialTags);
 
-  const addTag = useCallback((tag: Tag) => {
+  const [api, setApi] = React.useState<ItemsApi<Tag> | undefined>(undefined)
+
+  const setTagApi = useCallback(async (api: ItemsApi<Tag>) => {
+    setApi(api);
+    const result = await api.getItems();
+    if (result) {
+      result.map(tag => {
+        tag.id = tag.id.toLocaleLowerCase();
+        dispatch({ type: "ADD", tag })
+      })
+    }
+  }, [])
+
+  const setTagData = useCallback((data: Tag[]) => {
+    data.map(tag => {
+      tag.id = tag.id.toLocaleLowerCase();
+      dispatch({ type: "ADD", tag })
+    })
+  }, []);
+
+  const addTag = (tag: Tag) => {
     dispatch({
       type: "ADD",
       tag,
     });
-  }, []);
+
+    if (!tags.find((t) => t.id === tag.id)) {
+      api?.createItem && api.createItem(tag);
+    }
+  };
 
   const removeTag = useCallback((id: string) => {
     dispatch({
       type: "REMOVE",
       id,
     });
+    api?.deleteItem && api.deleteItem(id);
   }, []);
-  return { tags, addTag, removeTag };
+
+
+  return { tags, addTag, removeTag, setTagApi, setTagData };
 }
 
 export const TagsProvider: React.FunctionComponent<{
@@ -76,3 +108,13 @@ export const useRemoveTag = (): UseTagManagerResult["removeTag"] => {
   const { removeTag } = useContext(TagContext);
   return removeTag;
 };
+
+export const useSetTagApi = (): UseTagManagerResult["setTagApi"] => {
+  const { setTagApi } = useContext(TagContext);
+  return setTagApi;
+}
+
+export const useSetTagData = (): UseTagManagerResult["setTagData"] => {
+  const { setTagData } = useContext(TagContext);
+  return setTagData;
+}

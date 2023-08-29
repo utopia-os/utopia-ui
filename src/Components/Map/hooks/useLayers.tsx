@@ -1,10 +1,9 @@
 import { useCallback, useReducer, createContext, useContext } from "react";
 import * as React from "react";
-import { Item, LayerProps } from "../../../types";
+import { LayerProps } from "../../../types";
 
 type ActionType =
   | { type: "ADD LAYER"; layer: LayerProps }
-  | { type: "ADD ITEM"; item: Item; layer: LayerProps };
 
 type UseItemManagerResult = ReturnType<typeof useLayerManager>;
 

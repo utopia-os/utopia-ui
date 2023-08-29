@@ -1,7 +1,6 @@
 import { useCallback, useReducer, createContext, useContext } from "react";
 import * as React from "react";
 import { ItemsApi, Tag } from "../../../types";
-import { toast } from "react-toastify";
 
 type ActionType =
   | { type: "ADD"; tag: Tag }
@@ -43,7 +42,7 @@ function useTagsManager(initialTags: Tag[]): {
     }
   }, initialTags);
 
-  const [api, setApi] = React.useState<ItemsApi<Tag> | undefined>(undefined)
+  const [api, setApi] = React.useState<ItemsApi<Tag>>({} as ItemsApi<Tag>)
 
   const setTagApi = useCallback(async (api: ItemsApi<Tag>) => {
     setApi(api);

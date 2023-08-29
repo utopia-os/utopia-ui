@@ -20,7 +20,6 @@ export interface LayerProps {
   markerIcon: string,
   markerShape: string,
   markerDefaultColor: string,
-  tags?: Tag[],
   api?: ItemsApi<any>,
   setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>,
   itemFormPopup?: ItemFormPopupProps | null
@@ -35,8 +34,8 @@ export class Item {
   date_updated?: string | null;
   start?: string;
   end?: string;
-  tags?: number[];
   api?: ItemsApi<any>;
+  tags?: Tag[];
   [key: string]: any;
   constructor(id:string|number,name:string,text:string,position:Geometry, layer?: LayerProps, api?: ItemsApi<any>){
     this.id = id;

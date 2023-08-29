@@ -14,7 +14,6 @@ export interface ItemFormPopupProps {
     position: LatLng,
     layer: LayerProps,
     item?: Item,
-    api?: ItemsApi<any>,
     children?: React.ReactNode,
     setItemFormPopup: React.Dispatch<React.SetStateAction<any>>
 }
@@ -47,22 +46,13 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
             addTag({id: tag.slice(1), color: randomColor()})
         });
 
-
         if (props.item) {
-            formItem['id'] = props.item.id;
-            await props.api?.updateItem!(formItem);
-            formItem['api'] = props.api;
-            formItem['layer'] = props.layer;
-            await updateItem(formItem);
+            await updateItem({...props.item, ...formItem});
             setSpinner(false);
             map.closePopup();
         }
         else {
-            formItem['id'] = crypto.randomUUID();
-            await props.api?.createItem!(formItem);
-            formItem['api'] = props.api;
-            formItem['layer'] = props.layer;
-            await addItem(formItem);
+            await addItem({...formItem, id: crypto.randomUUID(), layer: props.layer});
             setSpinner(false);
             map.closePopup();
         }

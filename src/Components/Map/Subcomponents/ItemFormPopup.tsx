@@ -6,7 +6,7 @@ import { useAddItem, useUpdateItem } from '../hooks/useItems'
 import { Geometry, LayerProps, Item, ItemsApi } from '../../../types'
 import { TextAreaInput } from '../../Input/TextAreaInput'
 import { TextInput } from '../../Input/TextInput'
-import { hashTagRegex } from '../../../Utils/HeighlightTags'
+import { hashTagRegex } from '../../../Utils/HashTagRegex'
 import { useAddTag } from '../hooks/useTags'
 import { randomColor } from '../../../Utils/RandomColor'
 

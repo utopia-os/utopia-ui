@@ -4,7 +4,7 @@ import { Item, ItemsApi, LayerProps, Tag } from "../../../types";
 import { toast } from "react-toastify";
 import { useAddLayer } from "./useLayers";
 import { useTags } from "./useTags";
-import { hashTagRegex } from "../../../Utils/HeighlightTags";
+import { hashTagRegex } from "../../../Utils/HashTagRegex";
 
 
 type ActionType =

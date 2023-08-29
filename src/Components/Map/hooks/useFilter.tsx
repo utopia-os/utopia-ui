@@ -4,7 +4,8 @@ import {Tag} from "../../../types";
 
 type ActionType =
   | { type: "ADD"; tag: Tag }
-  | { type: "REMOVE"; id: string };
+  | { type: "REMOVE"; id: string }
+  | { type: "RESET"};
 
 type UseFilterManagerResult = ReturnType<typeof useFilterManager>;
 
@@ -12,13 +13,14 @@ const FilterContext = createContext<UseFilterManagerResult>({
   filterTags: [],
   addFilterTag: () => { },
   removeFilterTag: () => { },
-
+  resetFilterTags: () => { },
 });
 
 function useFilterManager(initialTags: Tag[]): {
   filterTags: Tag[];
   addFilterTag: (tag: Tag) => void;
   removeFilterTag: (id: string) => void;
+  resetFilterTags: () => void;
 } {
   const [filterTags, dispatch] = useReducer((state: Tag[], action: ActionType) => {
     switch (action.type) {
@@ -31,9 +33,10 @@ function useFilterManager(initialTags: Tag[]): {
           action.tag,
         ];
         else return state;
-
       case "REMOVE":
         return state.filter(({ id }) => id !== action.id);
+      case "RESET": 
+        return initialTags;
       default:
         throw new Error();
     }
@@ -56,8 +59,14 @@ function useFilterManager(initialTags: Tag[]): {
     });
   }, []);
 
+  const resetFilterTags = useCallback(() => {
+    dispatch({
+      type: "RESET",
+    });
+  }, []);
 
-  return { filterTags, addFilterTag, removeFilterTag };
+
+  return { filterTags, addFilterTag, removeFilterTag, resetFilterTags };
 }
 
 export const FilterProvider: React.FunctionComponent<{
@@ -81,4 +90,9 @@ export const useAddFilterTag = (): UseFilterManagerResult["addFilterTag"] => {
 export const useRemoveFilterTag = (): UseFilterManagerResult["removeFilterTag"] => {
   const { removeFilterTag } = useContext(FilterContext);
   return removeFilterTag;
+};
+
+export const useResetFilterTags = (): UseFilterManagerResult["resetFilterTags"] => {
+  const { resetFilterTags } = useContext(FilterContext);
+  return resetFilterTags;
 };

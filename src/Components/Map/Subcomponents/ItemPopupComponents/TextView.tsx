@@ -2,13 +2,39 @@ import * as React from 'react'
 import { Item } from '../../../../types'
 import { useTags } from '../../hooks/useTags';
 import { replaceURLs } from '../../../../Utils/ReplaceURLs';
-import { heighlightTags } from '../../../../Utils/HeighlightTags';
+import reactStringReplace from 'react-string-replace';
+import { useAddFilterTag, useResetFilterTags } from '../../hooks/useFilter';
+import { hashTagRegex } from '../../../../Utils/HashTagRegex';
 
 export const TextView = ({item} : {item?: Item}) => {
-    const all_tags = useTags();
+    const tags = useTags();
 
-  return (
-    <p style={{ whiteSpace: "pre-wrap" }} className="!tw-m-0 !tw-mb-2" dangerouslySetInnerHTML={{ __html: replaceURLs(heighlightTags(item && item.text ? item.text:"", all_tags)) }} />
+    const addFilterTag = useAddFilterTag();
+    const resetFilterTags = useResetFilterTags();
 
-  )
+
+    return(
+      <>
+      {
+            reactStringReplace(item?.text, hashTagRegex, (match, i) => (
+              <>
+              {
+               
+              tags.filter(t => t.id.toLowerCase() == match.slice(1).toLowerCase()).map(tag => 
+                 <a style={{color: tag.color, fontWeight: 'bold', cursor: 'pointer'}} key={tag.id+i+item?.id} onClick={()=>{
+                  resetFilterTags();
+                  addFilterTag(tag);
+                }}>#{tag.id}</a>
+        
+              
+                )
+              }
+              </>
+            ))
+      }
+      </>
+    )
+
+    
+
 }

@@ -39,8 +39,6 @@ export const Layer = (props: LayerProps) => {
                 items.filter(item => item.layer?.name === props.name)?.filter(item => 
                     filterTags.length == 0 ? item : item.tags?.some(tag => filterTags.some(filterTag => filterTag.id === tag.id)))?.map((place: Item) => {
                     const tags = place.tags;
-                    if(place.name === "docutopia")
-                    console.log(tags);
                     
                     let color1 = "#666";
                     let color2 = "RGBA(35, 31, 32, 0.2)";

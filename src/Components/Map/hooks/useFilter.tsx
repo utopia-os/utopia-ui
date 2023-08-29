@@ -6,16 +6,16 @@ type ActionType =
   | { type: "ADD"; tag: Tag }
   | { type: "REMOVE"; id: string };
 
-type UseTagManagerResult = ReturnType<typeof useTagsManager>;
+type UseFilterManagerResult = ReturnType<typeof useFilterManager>;
 
-const TagContext = createContext<UseTagManagerResult>({
+const FilterContext = createContext<UseFilterManagerResult>({
   filterTags: [],
   addFilterTag: () => { },
   removeFilterTag: () => { },
 
 });
 
-function useTagsManager(initialTags: Tag[]): {
+function useFilterManager(initialTags: Tag[]): {
   filterTags: Tag[];
   addFilterTag: (tag: Tag) => void;
   removeFilterTag: (id: string) => void;
@@ -60,25 +60,25 @@ function useTagsManager(initialTags: Tag[]): {
   return { filterTags, addFilterTag, removeFilterTag };
 }
 
-export const TagsProvider: React.FunctionComponent<{
+export const FilterProvider: React.FunctionComponent<{
   initialTags: Tag[], children?: React.ReactNode
 }> = ({ initialTags, children }) => (
-  <TagContext.Provider value={useTagsManager(initialTags)}>
+  <FilterContext.Provider value={useFilterManager(initialTags)}>
     {children}
-  </TagContext.Provider>
+  </FilterContext.Provider>
 );
 
 export const useFilterTags = (): Tag[] => {
-  const { filterTags } = useContext(TagContext);
+  const { filterTags } = useContext(FilterContext);
   return filterTags;
 };
 
-export const useAddFilterTag = (): UseTagManagerResult["addFilterTag"] => {
-  const { addFilterTag } = useContext(TagContext);
+export const useAddFilterTag = (): UseFilterManagerResult["addFilterTag"] => {
+  const { addFilterTag } = useContext(FilterContext);
   return addFilterTag;
 };
 
-export const useRemoveFilterTag = (): UseTagManagerResult["removeFilterTag"] => {
-  const { removeFilterTag } = useContext(TagContext);
+export const useRemoveFilterTag = (): UseFilterManagerResult["removeFilterTag"] => {
+  const { removeFilterTag } = useContext(FilterContext);
   return removeFilterTag;
 };

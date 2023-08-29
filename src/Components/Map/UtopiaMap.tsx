@@ -11,6 +11,7 @@ import { ItemFormPopupProps } from "./Subcomponents/ItemFormPopup";
 import { ItemsProvider } from "./hooks/useItems";
 import { TagsProvider } from "./hooks/useTags";
 import { LayersProvider } from "./hooks/useLayers";
+import { FilterProvider } from "./hooks/useFilter";
 
 
 export interface MapEventListenerProps {
@@ -55,34 +56,36 @@ function UtopiaMap({
     return (
         <LayersProvider initialLayers={[]}>
             <TagsProvider initialTags={[]}>
-                <ItemsProvider initialItems={[]}>
-                    <div className={(selectMode != null ? "crosshair-cursor-enabled" : undefined)}>
-                        <MapContainer ref={mapDivRef} style={{ height: height, width: width }} center={center} zoom={zoom}>
-                            <TileLayer
-                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                                url="https://tile.osmand.net/hd/{z}/{x}/{y}.png" />
-                            <MarkerClusterGroup showCoverageOnHover chunkedLoading maxClusterRadius={50}>
-                                {
-                                    React.Children.toArray(children).map((child) =>
-                                        React.isValidElement<{ setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps>>, itemFormPopup: ItemFormPopupProps | null }>(child) ?
-                                            React.cloneElement(child, { setItemFormPopup: setItemFormPopup, itemFormPopup: itemFormPopup }) : child
-                                    )
-                                }
-                            </MarkerClusterGroup>
-                            <MapEventListener setSelectMode={setSelectMode} selectMode={selectMode} setItemFormPopup={setItemFormPopup} />
-                            <AddButton setSelectMode={setSelectMode}></AddButton>
-                        </MapContainer>
-                        {selectMode != null &&
-                            <div className="tw-button tw-z-500 tw-absolute tw-right-5 tw-top-20 tw-drop-shadow-md">
-                                <div className="tw-alert tw-bg-white tw-text-green-900">
-                                    <div>
-                                        <span>Select {selectMode.name} position!</span>
+                <FilterProvider initialTags={[]}>
+                    <ItemsProvider initialItems={[]}>
+                        <div className={(selectMode != null ? "crosshair-cursor-enabled" : undefined)}>
+                            <MapContainer ref={mapDivRef} style={{ height: height, width: width }} center={center} zoom={zoom}>
+                                <TileLayer
+                                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                    url="https://tile.osmand.net/hd/{z}/{x}/{y}.png" />
+                                <MarkerClusterGroup showCoverageOnHover chunkedLoading maxClusterRadius={50}>
+                                    {
+                                        React.Children.toArray(children).map((child) =>
+                                            React.isValidElement<{ setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps>>, itemFormPopup: ItemFormPopupProps | null }>(child) ?
+                                                React.cloneElement(child, { setItemFormPopup: setItemFormPopup, itemFormPopup: itemFormPopup }) : child
+                                        )
+                                    }
+                                </MarkerClusterGroup>
+                                <MapEventListener setSelectMode={setSelectMode} selectMode={selectMode} setItemFormPopup={setItemFormPopup} />
+                                <AddButton setSelectMode={setSelectMode}></AddButton>
+                            </MapContainer>
+                            {selectMode != null &&
+                                <div className="tw-button tw-z-500 tw-absolute tw-right-5 tw-top-20 tw-drop-shadow-md">
+                                    <div className="tw-alert tw-bg-white tw-text-green-900">
+                                        <div>
+                                            <span>Select {selectMode.name} position!</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        }
-                    </div>
-                </ItemsProvider>
+                            }
+                        </div>
+                    </ItemsProvider>
+                </FilterProvider>
             </TagsProvider>
         </LayersProvider>
     );

@@ -6,7 +6,7 @@ import { ItemViewPopup } from './Subcomponents/ItemViewPopup'
 import { useItems, useResetItems, useSetItemsApi, useSetItemsData } from './hooks/useItems'
 import { useEffect, useState } from 'react'
 import { ItemFormPopupProps, ItemFormPopup } from './Subcomponents/ItemFormPopup'
-import { useFilterTags } from './hooks/useFilter'
+import { useAddFilterTag, useFilterTags } from './hooks/useFilter'
 
 
 export const Layer = (props: LayerProps) => {
@@ -14,6 +14,11 @@ export const Layer = (props: LayerProps) => {
     const [itemFormPopup, setItemFormPopup] = useState<ItemFormPopupProps | null>(null);
 
     const filterTags = useFilterTags();
+    const setFilterTag = useAddFilterTag();
+    
+
+   // setFilterTag({id: "healing", color: "#000"})
+
 
     const items = useItems();
     const setItemsApi = useSetItemsApi();
@@ -31,7 +36,8 @@ export const Layer = (props: LayerProps) => {
     return (
         <>
             {items &&
-                items.filter(item => item.layer?.name === props.name)?.filter(item => item)?.map((place: Item) => {
+                items.filter(item => item.layer?.name === props.name)?.filter(item => 
+                    filterTags.length == 0 ? item : item.tags?.some(tag => filterTags.some(filterTag => filterTag.id === tag.id)))?.map((place: Item) => {
                     const tags = place.tags;
                     if(place.name === "docutopia")
                     console.log(tags);

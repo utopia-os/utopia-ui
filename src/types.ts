@@ -26,7 +26,7 @@ export interface LayerProps {
 }
 
 export class Item {
-  id: string | number;
+  id: string ;
   name: string;
   text: string;
   position: Geometry;
@@ -37,7 +37,7 @@ export class Item {
   api?: ItemsApi<any>;
   tags?: Tag[];
   [key: string]: any;
-  constructor(id:string|number,name:string,text:string,position:Geometry, layer?: LayerProps, api?: ItemsApi<any>){
+  constructor(id:string,name:string,text:string,position:Geometry, layer?: LayerProps, api?: ItemsApi<any>){
     this.id = id;
     this.name = name;
     this.text = text;

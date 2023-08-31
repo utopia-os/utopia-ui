@@ -17,30 +17,34 @@ export class itemsApi<T> implements ItemsApi<T>{
       return await directusClient.request(readItems(this.collectionName as never,{limit: 500 }));
     } catch (error) {
       console.log(error);
+      throw new Error("Failed while loading items");
     }
   }
 
-  async createItem(item: T & { id?: string }) {
+  async createItem(item: T & { id?: string }) {   
     try {
       return await directusClient.request(createItem(this.collectionName as keyof MyCollections,item))
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      throw new Error(error.errors[0].message);
     }
   }
 
   async updateItem(item: T & { id?: string }) {
     try {
       return await directusClient.request(updateItem(this.collectionName as keyof MyCollections,item.id!, item))
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      throw new Error(error.errors[0].message);
     }
   }
 
   async deleteItem(id: string ) {
     try {
       return await directusClient.request(deleteItem(this.collectionName as keyof MyCollections,id))
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      throw new Error(error.errors[0].message);
     }
   }
 }

@@ -9,6 +9,11 @@ export type Place = {
     text: string;
     position?: Point;
   };
+
+  export type Tag = {
+    id: string;
+    color: string;
+  };
   
   export type Event = {
     id: string;

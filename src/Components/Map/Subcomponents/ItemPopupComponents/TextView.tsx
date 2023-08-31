@@ -29,7 +29,6 @@ export const TextView = ({ item }: { item?: Item }) => {
     if (!init.current) {
       item?.text.toLocaleLowerCase().match(hashTagRegex)?.map(tag=> {
         if (!tags.find((t) => t.id === tag.slice(1))) {
-          console.log(tag);
           addTag({id: tag.slice(1), color: randomColor()})
         }
     });

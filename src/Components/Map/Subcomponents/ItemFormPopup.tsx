@@ -6,10 +6,11 @@ import { useAddItem, useUpdateItem } from '../hooks/useItems'
 import { Geometry, LayerProps, Item, ItemsApi } from '../../../types'
 import { TextAreaInput } from '../../Input/TextAreaInput'
 import { TextInput } from '../../Input/TextInput'
-import { hashTagRegex } from '../../../Utils/HashTagRegex'
-import { useAddTag } from '../hooks/useTags'
-import { randomColor } from '../../../Utils/RandomColor'
 import { toast } from 'react-toastify'
+import { useResetFilterTags } from '../hooks/useFilter'
+import { hashTagRegex } from '../../../Utils/HashTagRegex'
+import { randomColor } from '../../../Utils/RandomColor'
+import { useAddTag, useTags } from '../hooks/useTags'
 
 export interface ItemFormPopupProps {
     position: LatLng,
@@ -30,6 +31,11 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
     const addItem = useAddItem();
     const updateItem = useUpdateItem();
 
+    const tags = useTags(); 
+    const addTag = useAddTag();
+
+    const resetFilterTags = useResetFilterTags();
+
 
     const handleSubmit = async (evt: any) => {
         const formItem: Item = {} as Item;
@@ -42,16 +48,28 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
         evt.preventDefault();
         setSpinner(true);
 
+        formItem.text.toLocaleLowerCase().match(hashTagRegex)?.map(tag=> {
+            if (!tags.find((t) => t.id === tag.slice(1))) {
+              console.log(tag);
+              addTag({id: tag.slice(1), color: randomColor()})
+            }
+        });
 
-        if (props.item) {
+
+
+
+        if(props.item) {
             let success = false;
             try {
                 await props.layer.api?.updateItem!({...formItem, id: props.item.id});
                 success = true;
             } catch (error) {
-                console.log();
+                toast.error(error.toString);
             }
-            success&&updateItem({...props.item, ...formItem});
+            if(success) {
+                updateItem({...props.item, ...formItem});
+                toast.success("Item updated");
+            } 
             setSpinner(false);
             map.closePopup();
         }
@@ -64,7 +82,11 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
             } catch (error) {
                 toast.error(error.toString);
             }
-            success&&addItem({...formItem, id: crypto.randomUUID(), layer: props.layer});
+            if(success) {
+                addItem({...formItem, id: crypto.randomUUID(), layer: props.layer});
+                toast.success("New item created");
+                resetFilterTags();
+            } 
             setSpinner(false);
             map.closePopup();
         }

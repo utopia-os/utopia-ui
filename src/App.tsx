@@ -20,7 +20,7 @@ function App() {
         <Modal/>
           <SideBar routes={routes} />
           <Content>
-            <Quests />
+            <Quests /> 
             <Routes>
               <Route path="/" element={<MapContainer />} />
               <Route path="/settings" element={<Settings useAuth={useAuth} />} />

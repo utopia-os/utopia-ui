@@ -1,7 +1,6 @@
 import { UtopiaMap, Tags, Layer, ItemForm, ItemView, PopupTextAreaInput, PopupStartEndInput, TextView, StartEndView } from 'utopia-ui'
-import { tags } from './data'
 import { itemsApi } from '../api/itemsApi'
-import { Place, Event } from '../api/directus';
+import { Place, Event, Tag } from '../api/directus';
 import { useEffect, useState } from 'react';
 
 function MapContainer() {
@@ -9,12 +8,16 @@ function MapContainer() {
 
   const [placesApi, setPlacesApi] = useState<itemsApi<Place>>();
   const [eventsApi, setEventsApi] = useState<itemsApi<Event>>();
+  const [tagsApi, setTagsApi] = useState<itemsApi<Tag>>();
+
 
 
   useEffect(() => {
 
     setPlacesApi(new itemsApi<Place>('places'));
     setEventsApi(new itemsApi<Event>('events'));
+    setTagsApi(new itemsApi<Tag>('tags'));
+
 
 
   }, []);
@@ -58,7 +61,7 @@ function MapContainer() {
         // data={places}
         api={placesApi}
       />
-      <Tags data={tags}></Tags>
+      <Tags api={tagsApi}></Tags>
     </UtopiaMap>
   )
 }

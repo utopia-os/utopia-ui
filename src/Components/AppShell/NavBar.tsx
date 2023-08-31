@@ -131,7 +131,7 @@ export default function NavBar({ appName, useAuth }: { appName: string, useAuth:
 
 
               </label>
-              <ul tabIndex={1} className="tw-menu tw-menu-compact tw-dropdown-content tw-mt-3 tw-p-2 tw-shadow tw-bg-base-100 tw-rounded-box tw-w-52 !tw-z-[1500]">
+              <ul tabIndex={1} className="tw-menu tw-dropdown-content tw-mt-3 tw-p-2 tw-shadow tw-bg-base-100 tw-rounded-box tw-w-52 !tw-z-[1500]">
                 <li><a onClick={() => setLoginOpen(true)}>Login</a></li>
                 <li><a onClick={() => setSignupOpen(true)}>Sign Up</a></li>
               </ul>

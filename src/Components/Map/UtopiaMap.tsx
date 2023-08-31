@@ -74,8 +74,8 @@ function UtopiaMap({
                                     }
                                 </MarkerClusterGroup>
                                 <MapEventListener setSelectMode={setSelectMode} selectMode={selectMode} setItemFormPopup={setItemFormPopup} />
-                                <AddButton setSelectMode={setSelectMode}></AddButton>
                             </MapContainer>
+                            <AddButton setSelectMode={setSelectMode}></AddButton>
                             {selectMode != null &&
                                 <div className="tw-button tw-z-500 tw-absolute tw-right-5 tw-top-20 tw-drop-shadow-md">
                                     <div className="tw-alert tw-bg-white tw-text-green-900">

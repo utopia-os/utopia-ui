@@ -12,6 +12,7 @@ import { ItemsProvider } from "./hooks/useItems";
 import { TagsProvider } from "./hooks/useTags";
 import { LayersProvider } from "./hooks/useLayers";
 import { FilterProvider } from "./hooks/useFilter";
+import { FilterControl } from "./Subcomponents/FilterControl";
 
 
 export interface MapEventListenerProps {
@@ -59,7 +60,8 @@ function UtopiaMap({
                 <FilterProvider initialTags={[]}>
                     <ItemsProvider initialItems={[]}>
                         <div className={(selectMode != null ? "crosshair-cursor-enabled" : undefined)}>
-                            <MapContainer ref={mapDivRef} style={{ height: height, width: width }} center={center} zoom={zoom}>
+                            <MapContainer ref={mapDivRef} style={{ height: height, width: width }} center={center} zoom={zoom} zoomControl={false}>
+                                <FilterControl></FilterControl>
                                 <TileLayer
                                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                     url="https://tile.osmand.net/hd/{z}/{x}/{y}.png" />

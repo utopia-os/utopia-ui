@@ -3,8 +3,9 @@ import * as React from "react";
 import { Item, ItemsApi, LayerProps, Tag } from "../../../types";
 import { toast } from "react-toastify";
 import { useAddLayer } from "./useLayers";
-import { useTags } from "./useTags";
+import { useAddTag, useTags } from "./useTags";
 import { hashTagRegex } from "../../../Utils/HashTagRegex";
+import { randomColor } from "../../../Utils/RandomColor";
 
 
 type ActionType =
@@ -39,6 +40,7 @@ function useItemsManager(initialItems: Item[]): {
 
   const addLayer = useAddLayer();
   const tags = useTags();
+  const addTag = useAddTag();
 
   const [items, dispatch] = useReducer((state: Item[], action: ActionType) => {
     switch (action.type) {
@@ -67,7 +69,9 @@ function useItemsManager(initialItems: Item[]): {
           const itemTagStrings = item.text.toLocaleLowerCase().match(hashTagRegex);
           const itemTags: Tag[] = [];
           itemTagStrings?.map(tag => {
-            if (tags.find(t => t.id === tag.slice(1))) { itemTags.push(tags.find(t => t.id === tag.slice(1))!) }
+            if (tags.find(t => t.id === tag.slice(1))) {
+              itemTags.push(tags.find(t => t.id === tag.slice(1))!)
+            }
           })
           return { ...item, tags: itemTags }
         })
@@ -97,7 +101,7 @@ function useItemsManager(initialItems: Item[]): {
 
   const setItemsData = useCallback((layer: LayerProps) => {
     layer.data?.map(item => {
-      dispatch({ type: "ADD", item: { ...item, layer: layer } })
+      dispatch({ type: "ADD", item: { ...item, layer: layer } });
     })
     dispatch({ type: "ADD_TAGS" })
   }, []);

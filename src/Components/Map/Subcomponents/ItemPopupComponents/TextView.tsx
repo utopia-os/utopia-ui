@@ -1,24 +1,43 @@
 import * as React from 'react'
 import { Item } from '../../../../types'
-import { useTags } from '../../hooks/useTags';
+import { useAddTag, useTags } from '../../hooks/useTags';
 import reactStringReplace from 'react-string-replace';
 import { useAddFilterTag, useResetFilterTags } from '../../hooks/useFilter';
 import { hashTagRegex } from '../../../../Utils/HashTagRegex';
 import { fixUrls, mailRegex, urlRegex } from '../../../../Utils/ReplaceURLs';
+import { useMap } from 'react-leaflet';
+import { randomColor } from '../../../../Utils/RandomColor';
+import { useEffect, useRef } from 'react';
 
 export const TextView = ({ item }: { item?: Item }) => {
   const tags = useTags();
+  const addTag = useAddTag();
 
   const addFilterTag = useAddFilterTag();
   const resetFilterTags = useResetFilterTags();
 
-
+  const map = useMap();
 
   let replacedText;
 
+
+  // use init-Ref to prevent react18 from calling useEffect twice
+  const init = useRef(false)
+  useEffect(() => {
+    if (!init.current) {
+      item?.text.toLocaleLowerCase().match(hashTagRegex)?.map(tag=> {
+        if (!tags.find((t) => t.id === tag.slice(1))) {
+          console.log(tag);
+          addTag({id: tag.slice(1), color: randomColor()})
+        }
+    });
+      init.current = true;
+    }
+  }, [])
+
+
+
   if (item && item.text) replacedText = fixUrls(item.text);
-
-
 
   replacedText = reactStringReplace(replacedText, /(https?:\/\/\S+)/g, (url, i) => {
     let  shortUrl =  url;  
@@ -39,19 +58,15 @@ export const TextView = ({ item }: { item?: Item }) => {
     )
   });
 
-  //ts-ignore
   replacedText = reactStringReplace(replacedText, hashTagRegex, (match, i) => {
 
     const tag = tags.find(t => t.id.toLowerCase() == match.slice(1).toLowerCase())
     return (
       <a style={{ color: tag ? tag.color : '#aaa' , fontWeight: 'bold', cursor: 'pointer' }} key={tag ? tag.id+item!.id+i  : i} onClick={() => {
-        resetFilterTags();
         addFilterTag(tag!);
+        map.closePopup();
       }}>{match}</a>
     )
-
-
-
   })
 
   return (

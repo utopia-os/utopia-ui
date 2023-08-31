@@ -71,7 +71,7 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
     }, [props.position])
 
     return (
-        <LeafletPopup minWidth={275} maxWidth={275} autoPanPadding={[20, 5]}
+        <LeafletPopup minWidth={275} maxWidth={275} autoPanPadding={[20, 80]}
             eventHandlers={{
                 remove: () => {
                     setTimeout(function () {

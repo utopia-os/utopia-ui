@@ -3,28 +3,32 @@ import * as React from "react";
 import {Tag} from "../../../types";
 
 type ActionType =
-  | { type: "ADD"; tag: Tag }
-  | { type: "REMOVE"; id: string }
-  | { type: "RESET"};
+  | { type: "ADD_TAG"; tag: Tag }
+  | { type: "REMOVE_TAG"; id: string }
+  | { type: "RESET_TAGS"};
 
 type UseFilterManagerResult = ReturnType<typeof useFilterManager>;
 
 const FilterContext = createContext<UseFilterManagerResult>({
   filterTags: [],
+  searchPhrase: "",
   addFilterTag: () => { },
   removeFilterTag: () => { },
   resetFilterTags: () => { },
+  setSearchPhrase: () => { },
 });
 
 function useFilterManager(initialTags: Tag[]): {
   filterTags: Tag[];
+  searchPhrase: string;
   addFilterTag: (tag: Tag) => void;
   removeFilterTag: (id: string) => void;
   resetFilterTags: () => void;
+  setSearchPhrase: (phrase: string) => void;
 } {
-  const [filterTags, dispatch] = useReducer((state: Tag[], action: ActionType) => {
+  const [filterTags, dispatchTags] = useReducer((state: Tag[], action: ActionType) => {
     switch (action.type) {
-      case "ADD":
+      case "ADD_TAG":
         const exist = state.find((tag) =>
           tag.id === action.tag.id ? true : false
         );
@@ -33,40 +37,43 @@ function useFilterManager(initialTags: Tag[]): {
           action.tag,
         ];
         else return state;
-      case "REMOVE":
+      case "REMOVE_TAG":
         return state.filter(({ id }) => id !== action.id);
-      case "RESET": 
+      case "RESET_TAGS": 
         return initialTags;
       default:
         throw new Error();
     }
   }, initialTags);
 
-
+  const [searchPhrase, searchPhraseSet] = React.useState<string>("");
 
   const addFilterTag = (tag: Tag) => {
-    dispatch({
-      type: "ADD",
+    dispatchTags({
+      type: "ADD_TAG",
       tag,
     });
 
   };
 
   const removeFilterTag = useCallback((id: string) => {
-    dispatch({
-      type: "REMOVE",
+    dispatchTags({
+      type: "REMOVE_TAG",
       id,
     });
   }, []);
 
   const resetFilterTags = useCallback(() => {
-    dispatch({
-      type: "RESET",
+    dispatchTags({
+      type: "RESET_TAGS",
     });
   }, []);
 
+  const setSearchPhrase = useCallback((phrase:string) => {
+    searchPhraseSet(phrase)
+  }, []);
 
-  return { filterTags, addFilterTag, removeFilterTag, resetFilterTags };
+  return { filterTags, addFilterTag, removeFilterTag, resetFilterTags, setSearchPhrase, searchPhrase };
 }
 
 export const FilterProvider: React.FunctionComponent<{
@@ -95,4 +102,14 @@ export const useRemoveFilterTag = (): UseFilterManagerResult["removeFilterTag"] 
 export const useResetFilterTags = (): UseFilterManagerResult["resetFilterTags"] => {
   const { resetFilterTags } = useContext(FilterContext);
   return resetFilterTags;
+};
+
+export const useSearchPhrase = (): UseFilterManagerResult["searchPhrase"] => {
+  const { searchPhrase } = useContext(FilterContext);
+  return searchPhrase;
+};
+
+export const useSetSearchPhrase = (): UseFilterManagerResult["setSearchPhrase"] => {
+  const { setSearchPhrase } = useContext(FilterContext);
+  return setSearchPhrase;
 };

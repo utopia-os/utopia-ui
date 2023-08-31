@@ -107,8 +107,7 @@ function useItemsManager(initialItems: Item[]): {
   }, []);
 
 
-  const addItem = useCallback(async (item: Item) => {
-    await item.layer.api?.createItem!(item);
+  const addItem = useCallback(async (item: Item) => {   
     dispatch({
       type: "ADD",
       item,
@@ -117,7 +116,6 @@ function useItemsManager(initialItems: Item[]): {
   }, []);
 
   const updateItem = useCallback(async (item: Item) => {
-    await item.layer.api?.updateItem!(item);
     dispatch({
       type: "UPDATE",
       item,

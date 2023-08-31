@@ -13,6 +13,8 @@ export const TextView = ({ item }: { item?: Item }) => {
   const tags = useTags();
   const addTag = useAddTag();
 
+  const groupRef = useRef(null);
+
   const addFilterTag = useAddFilterTag();
   const resetFilterTags = useResetFilterTags();
 
@@ -64,7 +66,8 @@ export const TextView = ({ item }: { item?: Item }) => {
     return (
       <a style={{ color: tag ? tag.color : '#aaa' , fontWeight: 'bold', cursor: 'pointer' }} key={tag ? tag.id+item!.id+i  : i} onClick={() => {
         addFilterTag(tag!);
-        map.closePopup();
+       // map.fitBounds(items)
+       // map.closePopup();
       }}>{match}</a>
     )
   })

@@ -9,6 +9,7 @@ import { TextInput } from '../../Input/TextInput'
 import { hashTagRegex } from '../../../Utils/HashTagRegex'
 import { useAddTag } from '../hooks/useTags'
 import { randomColor } from '../../../Utils/RandomColor'
+import { toast } from 'react-toastify'
 
 export interface ItemFormPopupProps {
     position: LatLng,
@@ -29,7 +30,6 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
     const addItem = useAddItem();
     const updateItem = useUpdateItem();
 
-    const addTag = useAddTag();
 
     const handleSubmit = async (evt: any) => {
         const formItem: Item = {} as Item;
@@ -42,17 +42,29 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
         evt.preventDefault();
         setSpinner(true);
 
-        formItem.text.toLocaleLowerCase().match(hashTagRegex)?.map(tag=> {
-            addTag({id: tag.slice(1), color: randomColor()})
-        });
 
         if (props.item) {
-            await updateItem({...props.item, ...formItem});
+            let success = false;
+            try {
+                await props.layer.api?.updateItem!({...formItem, id: props.item.id});
+                success = true;
+            } catch (error) {
+                console.log();
+            }
+            success&&updateItem({...props.item, ...formItem});
             setSpinner(false);
             map.closePopup();
         }
         else {
-            await addItem({...formItem, id: crypto.randomUUID(), layer: props.layer});
+
+            let success = false;
+            try {
+                await props.layer.api?.createItem!({...formItem, id: crypto.randomUUID()});
+                success = true;
+            } catch (error) {
+                toast.error(error.toString);
+            }
+            success&&addItem({...formItem, id: crypto.randomUUID(), layer: props.layer});
             setSpinner(false);
             map.closePopup();
         }

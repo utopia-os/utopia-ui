@@ -22,7 +22,7 @@ export function TextInput({labelTitle, labelStyle, type, dataField, containerSty
                 <span className={"tw-label-text tw-text-base-content " + labelStyle}>{labelTitle}</span>
              </label> 
              : " "} 
-            <input type={type || "text"} name={dataField} defaultValue={defaultValue} placeholder={placeholder || ""} onChange={(e) => updateFormValue&& updateFormValue(e.target.value)}className={`tw-input  tw-input-bordered tw-w-full ${inputStyle ? inputStyle : ""}`} />
+            <input required type={type || "text"} name={dataField} defaultValue={defaultValue} placeholder={placeholder || ""} onChange={(e) => updateFormValue&& updateFormValue(e.target.value)}className={`tw-input  tw-input-bordered tw-w-full ${inputStyle ? inputStyle : ""}`} />
         </div>
     )
 }

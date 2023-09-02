@@ -15,10 +15,9 @@ export class itemsApi<T> implements ItemsApi<T>{
   async getItems() {
     try {
       return await directusClient.request(readItems(this.collectionName as never,{limit: 500 }));
-    } catch (error) {
-      console.log(error);
-      throw new Error("Failed while loading items");
-    }
+    } catch (error: any) {
+      console.log(error.errors[0].message);
+      throw new Error(error.errors[0].message);    }
   }
 
   async createItem(item: T & { id?: string }) {   

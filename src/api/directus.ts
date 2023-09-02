@@ -54,7 +54,7 @@ export type Place = {
     return auth!.refresh_token;
 }
 
-  export const directusClient = createDirectus<MyCollections>("https://map.api.free-planet-earth.org/")
+  export const directusClient = createDirectus<MyCollections>("https://api.utopia-lab.org/")
   .with(authentication())
   .with(rest())
   .with(authentication('json', { // add this if you want to use authentication, json is important, it's type of your authentication usage, here JWT

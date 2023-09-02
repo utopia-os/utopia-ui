@@ -1,4 +1,4 @@
-import { AppShell, SideBar, Content, AuthProvider, useAuth, Settings, Modal, Quests, LoginPage, SignupPage } from 'utopia-ui'
+import { AppShell, SideBar, Content, AuthProvider, useAuth, Settings, Modal, LoginPage, SignupPage } from 'utopia-ui'
 import { routes } from './routes/sidebar'
 import { Route, Routes } from 'react-router-dom'
 import MapContainer from "./pages/MapContainer"
@@ -20,7 +20,7 @@ function App() {
         <Modal/>
           <SideBar routes={routes} />
           <Content>
-            <Quests /> 
+           {/** <Quests />  */} 
             <Routes>
               <Route path="/" element={<MapContainer />} />
               <Route path="/settings" element={<Settings useAuth={useAuth} />} />

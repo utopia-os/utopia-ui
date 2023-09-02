@@ -67,6 +67,7 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
       return undefined;
     }
   }
+  
 
   const login = async (credentials: AuthCredentials): Promise<UserItem | undefined> => {
     setLoading(true);
@@ -76,8 +77,7 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
       return (await loadUser());
     } catch (error: any) {
       setLoading(false);
-      console.log(error.response.data.error[0]);
-      return error.response.data.error[0];
+      throw error;
     };
   }
 
@@ -88,16 +88,20 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
       return (await login(credentials));
     } catch (error: any) {
       setLoading(false);
-      console.log(error);
-      return error.response.data.error[0];
+      throw error;
     };
   }
 
 
   const logout = async () => {
-    await userApi.logout();
-    setUser(null);
-  };
+    try {
+      await userApi.logout();
+      setUser(null);
+    } catch (error: any) {
+      setLoading(false);
+      throw error;
+    };
+  }
 
   const updateUser = async (user: UserItem) => {
     setLoading(true);
@@ -108,12 +112,10 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
       setUser(res as any);
       setLoading(false);
       return res as any;
-
     } catch (error: any) {
       setLoading(false);
-      return error.response.data.error[0];
-    }
-
+      throw error;
+    };
   }
 
 

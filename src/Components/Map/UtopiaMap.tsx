@@ -77,8 +77,8 @@ function UtopiaMap({
                             </MapContainer>
                             <AddButton setSelectMode={setSelectMode}></AddButton>
                             {selectMode != null &&
-                                <div className="tw-button tw-z-500 tw-absolute tw-right-5 tw-top-20 tw-drop-shadow-md">
-                                    <div className="tw-alert tw-bg-white tw-text-green-900">
+                                <div className="tw-button tw-z-500 tw-absolute tw-right-5 tw-top-4 tw-drop-shadow-md">
+                                    <div className="tw-alert tw-bg-base-100 tw-text-base-content">
                                         <div>
                                             <span>Select {selectMode.name} position!</span>
                                         </div>

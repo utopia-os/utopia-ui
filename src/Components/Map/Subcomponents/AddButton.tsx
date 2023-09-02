@@ -14,7 +14,7 @@ export default function AddButton({ setSelectMode }: { setSelectMode: React.Disp
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
             </label>
-            <ul tabIndex={0} className="tw-dropdown-content tw-pr-2 tw-mb-0 tw-list-none">
+            <ul tabIndex={0} className="tw-dropdown-content tw-pr-1 tw-mb-1 tw-list-none">
                 {layers.map((layer) => (
                     layer.api?.createItem && (
                         <li key={layer.name} >

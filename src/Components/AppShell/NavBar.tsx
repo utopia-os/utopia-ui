@@ -32,8 +32,12 @@ export default function NavBar({ appName, useAuth }: { appName: string, useAuth:
           // other options
           icon: "✌️",
         },
-        error: 'Error',
-        pending: '123 ...'
+        error: {
+          render( {data} ) {        
+            return `${data}`
+          },
+        },
+        pending: 'creating new user ...'
       });
     setSignupOpen(false);
   }
@@ -49,7 +53,11 @@ export default function NavBar({ appName, useAuth }: { appName: string, useAuth:
           // other options
           icon: "✌️",
         },
-        error: 'Error',
+        error: {
+          render( {data} ) {        
+            return `${data}`
+          },
+        },
         pending: 'logging in ...'
       });
     setLoginOpen(false);
@@ -66,7 +74,11 @@ export default function NavBar({ appName, useAuth }: { appName: string, useAuth:
           // other options
           icon: "👋",
         },
-        error: 'Error',
+        error: {
+          render( {data} ) {   
+            return `${data}`
+          },
+        },
         pending: 'logging out ..'
       });
   }

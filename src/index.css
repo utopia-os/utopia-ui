@@ -26,5 +26,17 @@
   margin-left: 1rem;
   margin-right: 1rem;
   margin-bottom: 1rem;
+  background-color: theme('colors.base-100');
+  color: theme('colors.base-content');
+
+
+}
+
+:root {
+
+  --toastify-color-info: theme('colors.info');
+  --toastify-color-success: theme('colors.success');
+  --toastify-color-warning: theme('colors.warning');
+  --toastify-color-error: theme('colors.error');
 
 }

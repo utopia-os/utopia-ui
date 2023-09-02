@@ -95,7 +95,7 @@ export default function NavBar({ appName, useAuth }: { appName: string, useAuth:
           <div className="tw-flex-none">
             {user.avatar ? <div className="tw-avatar">
               <div className="tw-w-10 tw-rounded-full">
-                <img src={"https://map.api.free-planet-earth.org/assets/" + user?.avatar + "?access_token=" + token} />
+                <img src={"https://api.utopia-lab.org/assets/" + user?.avatar + "?access_token=" + token} />
               </div>
             </div> : <></>}
             <div className='tw-ml-2 tw-mr-2'>{user?.first_name}</div>

@@ -16,7 +16,7 @@ export const ItemViewPopup = (props: ItemViewPopupProps) => {
 
   return (
     <LeafletPopup maxHeight={377} minWidth={275} maxWidth={275} autoPanPadding={[20, 80]}>
-      <div>
+      <div className='tw-bg-base-100 tw-text-base-content'>
         <HeaderView item={props.item} setItemFormPopup={props.setItemFormPopup} />
         <div className='tw-overflow-y-auto tw-max-h-72'>
           {props.children ?

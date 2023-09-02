@@ -8,7 +8,7 @@ export const FilterControl = () => {
     const removeFilterTag = useRemoveFilterTag();
     const setSearchPhrase = useSetSearchPhrase();
     return (
-        <div className='tw-flex tw-flex-col tw-absolute tw-top-4 tw-left-4 tw-z-1000 tw-right-4'>
+        <div className='tw-flex tw-flex-col tw-absolute tw-top-4 tw-left-4 tw-z-[699] tw-right-4'>
             <input type="text" placeholder="search ..." className="tw-input tw-input-bordered tw-w-full tw-max-w-sm tw-shadow-xl tw-rounded-2xl" onChange={(e) => setSearchPhrase(e.target.value)} />
             <div className='tw-flex tw-flex-wrap tw-mt-4'>
                 {

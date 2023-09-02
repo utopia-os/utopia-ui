@@ -34,4 +34,7 @@ module.exports = {
   prefix: 'tw-',
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   darkMode: 'class',
+  daisyui: {
+    themes: ["light", "dark", "cupcake", "forest", "cyberpunk"],
+  }
 }

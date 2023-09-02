@@ -43,14 +43,14 @@ export function HeaderView({ item, setItemFormPopup }: {
       <div className='tw-col-span-1'>
         {item.layer.api &&
           <div className="tw-dropdown tw-dropdown-bottom">
-            <label tabIndex={0} className="tw-btn tw-m-1 tw-bg-white hover:tw-bg-white tw-text-gray-500 hover:tw-text-gray-700 tw-leading-3 tw-border-none tw-min-h-0 tw-h-4">
+            <label tabIndex={0} className="tw-bg-base-100 tw-btn tw-m-1 tw-leading-3 tw-border-none tw-min-h-0 tw-h-4">
               <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
               </svg>
             </label>
             <ul tabIndex={0} className="tw-dropdown-content tw-menu tw-p-2 tw-shadow tw-bg-base-100 tw-rounded-box">
               {item.layer.api.updateItem && <li>
-                <a className='tw-bg-white hover:tw-bg-gray-300 !tw-text-blue-800 hover:tw-text-gray-700' onClick={openEditPopup}>
+                <a className="!tw-text-base-content" onClick={openEditPopup}>
                   <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                   </svg>
@@ -58,7 +58,7 @@ export function HeaderView({ item, setItemFormPopup }: {
               </li>}
 
               {item.layer.api.deleteItem && <li>
-                <a className='tw-bg-white hover:tw-bg-gray-300 !tw-text-red-800 hover:tw-text-red-950' onClick={removeItemFromMap}>
+                <a className=' !tw-text-error' onClick={removeItemFromMap}>
                   {loading ? <span className="tw-loading tw-loading-spinner tw-loading-sm"></span>
                     :
                     <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor">

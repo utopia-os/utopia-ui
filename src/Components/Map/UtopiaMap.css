@@ -48,3 +48,9 @@
   .leaflet-popup-scrolled {
     overflow-x: hidden;
   }
+
+  .leaflet-popup-content-wrapper, .leaflet-popup-tip{
+    background-color: theme('colors.base-100');
+    color: theme('colors.base-content');
+
+  }

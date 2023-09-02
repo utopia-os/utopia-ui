@@ -88,7 +88,11 @@ function useItemsManager(initialItems: Item[]): {
       {
         pending: `loading ${layer.name} ...`,
         success: `${layer.name} loaded`,
-        error: `error while loading ${layer.name}`
+        error: {
+          render( {data} ) {        
+            return `${data}`
+          },
+        },
       }
     );
     if (result) {

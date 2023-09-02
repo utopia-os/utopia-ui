@@ -63,7 +63,7 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
                 await props.layer.api?.updateItem!({...formItem, id: props.item.id});
                 success = true;
             } catch (error) {
-                toast.error(error.toString);
+                toast.error(error.toString());
             }
             if(success) {
                 updateItem({...props.item, ...formItem});
@@ -79,7 +79,7 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
                 await props.layer.api?.createItem!({...formItem, id: crypto.randomUUID()});
                 success = true;
             } catch (error) {
-                toast.error(error.toString);
+                toast.error(error.toString());
             }
             if(success) {
                 addItem({...formItem, id: crypto.randomUUID(), layer: props.layer});

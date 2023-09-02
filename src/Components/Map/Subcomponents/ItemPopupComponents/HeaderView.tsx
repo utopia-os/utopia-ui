@@ -4,6 +4,7 @@ import { useMap } from "react-leaflet";
 import { ItemFormPopupProps } from "../ItemFormPopup";
 import { LatLng } from "leaflet";
 import { Item } from "../../../../types";
+import { toast } from "react-toastify";
 
 
 
@@ -17,13 +18,21 @@ export function HeaderView({ item, setItemFormPopup }: {
 
   const map = useMap();
 
-  const removeItemFromMap = (event: React.MouseEvent<HTMLElement>) => {
+  const removeItemFromMap = async (event: React.MouseEvent<HTMLElement>) => {
     setLoading(true);
-    item.layer.api?.deleteItem!(item.id)
-      .then(() => removeItem(item))
-      .then(() => map.closePopup())
-      .then(()=>setLoading(false))
-      .catch(err => console.log(err));
+    let success = false;
+    try {
+        await item.layer.api?.deleteItem!(item.id)
+        success = true;
+    } catch (error) {
+        toast.error(error.toString());
+    }
+    if(success) {
+      removeItem(item);
+        toast.success("Item deleted");
+    } 
+    setLoading(false);
+    map.closePopup();
 
     event.stopPropagation();
   }
@@ -43,7 +52,7 @@ export function HeaderView({ item, setItemFormPopup }: {
       <div className='tw-col-span-1'>
         {item.layer.api &&
           <div className="tw-dropdown tw-dropdown-bottom">
-            <label tabIndex={0} className="tw-bg-base-100 tw-btn tw-m-1 tw-leading-3 tw-border-none tw-min-h-0 tw-h-4">
+            <label tabIndex={0} className="tw-bg-base-100 tw-btn tw-m-1 tw-leading-3 tw-border-none tw-min-h-0 tw-h-6">
               <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
               </svg>

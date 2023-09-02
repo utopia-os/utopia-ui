@@ -1,7 +1,7 @@
 import { TileLayer, MapContainer, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import * as React from "react";
-import { Tag, ItemsApi, LayerProps, UtopiaMapProps } from "../../types"
+import { LayerProps, UtopiaMapProps } from "../../types"
 import "./UtopiaMap.css"
 import { LatLng } from "leaflet";
 import MarkerClusterGroup from 'react-leaflet-cluster'

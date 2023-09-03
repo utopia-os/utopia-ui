@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Marker } from 'react-leaflet'
+import { Marker, Tooltip } from 'react-leaflet'
 import { Item, LayerProps } from '../../types'
 import MarkerIconFactory from '../../Utils/MarkerIconFactory'
 import { ItemViewPopup } from './Subcomponents/ItemViewPopup'
@@ -48,8 +48,8 @@ export const Layer = (props: LayerProps) => {
                             ? item :
                             item.name.toLowerCase().includes(searchPhrase.toLowerCase())
                     }).
-                    map((place: Item) => {
-                        const tags = place.tags;
+                    map((item: Item) => {
+                        const tags = item.tags;
 
                         let color1 = "#666";
                         let color2 = "RGBA(35, 31, 32, 0.2)";
@@ -60,20 +60,20 @@ export const Layer = (props: LayerProps) => {
                             color2 = tags[1].color;
                         }
                         return (
-                            <Marker icon={MarkerIconFactory(props.markerShape, color1, color2, props.markerIcon)} key={place.id} position={[place.position.coordinates[1], place.position.coordinates[0]]}>
+                            <Marker icon={MarkerIconFactory(props.markerShape, color1, color2, props.markerIcon)} key={item.id} position={[item.position.coordinates[1], item.position.coordinates[0]]}>
                                 {
                                     (props.children && React.Children.toArray(props.children).some(child => React.isValidElement(child) && child.props.__TYPE === "ItemView") ?
                                         React.Children.toArray(props.children).map((child) =>
                                             React.isValidElement(child) && child.props.__TYPE === "ItemView" ?
-                                                <ItemViewPopup key={place.id} item={place} setItemFormPopup={props.setItemFormPopup} >{child}</ItemViewPopup>
+                                                <ItemViewPopup key={item.id} item={item} setItemFormPopup={props.setItemFormPopup} >{child}</ItemViewPopup>
                                                 : ""
                                         )
                                         :
                                         <>
-                                            <ItemViewPopup item={place} setItemFormPopup={props.setItemFormPopup} />
+                                            <ItemViewPopup item={item} setItemFormPopup={props.setItemFormPopup} />
                                         </>)
                                 }
-
+                            <Tooltip offset={[0,-38]} direction='top'>{item.name}</Tooltip>
                             </Marker>
                         );
                     })

@@ -1,7 +1,5 @@
 import * as React from 'react'
 import { useFilterTags, useRemoveFilterTag, useSetSearchPhrase } from '../hooks/useFilter'
-import { useMapEvents } from 'react-leaflet';
-import { useState } from 'react';
 import useWindowDimensions from '../hooks/useWindowDimension';
 
 

@@ -6,7 +6,7 @@ import { ItemViewPopup } from './Subcomponents/ItemViewPopup'
 import { useItems, useResetItems, useSetItemsApi, useSetItemsData } from './hooks/useItems'
 import { useEffect, useState } from 'react'
 import { ItemFormPopupProps, ItemFormPopup } from './Subcomponents/ItemFormPopup'
-import { useAddFilterTag, useFilterTags, useSearchPhrase } from './hooks/useFilter'
+import { useFilterTags, useSearchPhrase } from './hooks/useFilter'
 
 
 export const Layer = (props: LayerProps) => {
@@ -14,11 +14,6 @@ export const Layer = (props: LayerProps) => {
     const [itemFormPopup, setItemFormPopup] = useState<ItemFormPopupProps | null>(null);
 
     const filterTags = useFilterTags();
-    const setFilterTag = useAddFilterTag();
-
-
-    // setFilterTag({id: "healing", color: "#000"})
-
 
     const items = useItems();
     const setItemsApi = useSetItemsApi();

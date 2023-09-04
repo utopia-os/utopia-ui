@@ -16,8 +16,8 @@ import { FilterControl } from "./Subcomponents/FilterControl";
 
 
 export interface MapEventListenerProps {
-    selectMode: LayerProps | null,
-    setSelectMode: React.Dispatch<any>,
+    selectNewItemPosition: LayerProps | null,
+    setSelectNewItemPosition: React.Dispatch<any>,
     setItemFormPopup: React.Dispatch<React.SetStateAction<any>>
 }
 
@@ -26,9 +26,9 @@ function MapEventListener(props: MapEventListenerProps) {
         click: (e) => {
 
             console.log(e.latlng.lat + ',' + e.latlng.lng);
-            if (props.selectMode != null) {
-                props.setItemFormPopup({ layer: props.selectMode, position: e.latlng })
-                props.setSelectMode(null)
+            if (props.selectNewItemPosition != null) {
+                props.setItemFormPopup({ layer: props.selectNewItemPosition, position: e.latlng })
+                props.setSelectNewItemPosition(null)
             }
         },
         resize: () => {
@@ -49,7 +49,7 @@ function UtopiaMap({
     children }
     : UtopiaMapProps) {
 
-    const [selectMode, setSelectMode] = useState<LayerProps | null>(null);
+    const [selectNewItemPosition, setSelectNewItemPosition] = useState<LayerProps | null>(null);
     const [itemFormPopup, setItemFormPopup] = useState<ItemFormPopupProps | null>(null);
 
 
@@ -59,7 +59,7 @@ function UtopiaMap({
             <TagsProvider initialTags={[]}>
                 <FilterProvider initialTags={[]}>
                     <ItemsProvider initialItems={[]}>
-                        <div className={(selectMode != null ? "crosshair-cursor-enabled" : undefined)}>
+                        <div className={(selectNewItemPosition != null ? "crosshair-cursor-enabled" : undefined)}>
                             <MapContainer ref={mapDivRef} style={{ height: height, width: width }} center={center} zoom={zoom} zoomControl={false}>
                                 <FilterControl></FilterControl>
                                 <TileLayer
@@ -73,14 +73,14 @@ function UtopiaMap({
                                         )
                                     }
                                 </MarkerClusterGroup>
-                                <MapEventListener setSelectMode={setSelectMode} selectMode={selectMode} setItemFormPopup={setItemFormPopup} />
+                                <MapEventListener setSelectNewItemPosition={setSelectNewItemPosition} selectNewItemPosition={selectNewItemPosition} setItemFormPopup={setItemFormPopup} />
                             </MapContainer>
-                            <AddButton setSelectMode={setSelectMode}></AddButton>
-                            {selectMode != null &&
+                            <AddButton setSelectNewItemPosition={setSelectNewItemPosition}></AddButton>
+                            {selectNewItemPosition != null &&
                                 <div className="tw-button tw-z-500 tw-absolute tw-right-5 tw-top-4 tw-drop-shadow-md">
                                     <div className="tw-alert tw-bg-base-100 tw-text-base-content">
                                         <div>
-                                            <span>Select {selectMode.name} position!</span>
+                                            <span>Select {selectNewItemPosition.name} position!</span>
                                         </div>
                                     </div>
                                 </div>

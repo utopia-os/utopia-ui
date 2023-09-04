@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 //import { useAuth } from "../api/auth";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -21,12 +22,15 @@ export default function NavBar({ appName, useAuth }: { appName: string, useAuth:
 
   const { isAuthenticated, user, login, register, loading, logout, token } = useAuth();
 
+  const navigate = useNavigate();
+
   const onRegister = async () => {
     await toast.promise(
       register({ email: email, password: password }, userName),
       {
         success: {
           render({ data }) {
+            navigate(`/`);
             return `Hi ${data?.first_name}`
           },
           // other options
@@ -48,6 +52,7 @@ export default function NavBar({ appName, useAuth }: { appName: string, useAuth:
       {
         success: {
           render({ data }) {
+            navigate(`/`);
             return `Hi ${data?.first_name}`
           },
           // other options
@@ -144,7 +149,7 @@ export default function NavBar({ appName, useAuth }: { appName: string, useAuth:
 
               </label>
               <ul tabIndex={1} className="tw-menu tw-dropdown-content tw-mt-3 tw-p-2 tw-shadow tw-bg-base-100 tw-rounded-box tw-w-52 !tw-z-[1500]">
-                <li><a onClick={() => setLoginOpen(true)}>Login</a></li>
+                <li><a onClick={() => {setLoginOpen(true)}}>Login</a></li>
                 <li><a onClick={() => setSignupOpen(true)}>Sign Up</a></li>
               </ul>
             </div>

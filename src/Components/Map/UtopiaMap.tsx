@@ -65,7 +65,7 @@ function UtopiaMap({
                                 <TileLayer
                                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                     url="https://tile.osmand.net/hd/{z}/{x}/{y}.png" />
-                                <MarkerClusterGroup showCoverageOnHover chunkedLoading maxClusterRadius={50}>
+                                <MarkerClusterGroup showCoverageOnHover chunkedLoading maxClusterRadius={50} removeOutsideVisibleBounds={false}>
                                     {
                                         React.Children.toArray(children).map((child) =>
                                             React.isValidElement<{ setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps>>, itemFormPopup: ItemFormPopupProps | null }>(child) ?
@@ -77,7 +77,7 @@ function UtopiaMap({
                             </MapContainer>
                             <AddButton setSelectNewItemPosition={setSelectNewItemPosition}></AddButton>
                             {selectNewItemPosition != null &&
-                                <div className="tw-button tw-z-500 tw-absolute tw-right-5 tw-top-4 tw-drop-shadow-md">
+                                <div className="tw-button tw-z-1000 tw-absolute tw-right-5 tw-top-4 tw-drop-shadow-md">
                                     <div className="tw-alert tw-bg-base-100 tw-text-base-content">
                                         <div>
                                             <span>Select {selectNewItemPosition.name} position!</span>

@@ -85,3 +85,10 @@ export type UserItem = {
   email: string;
   password?: string;
 }
+
+export type Permission = {
+  id?: string;
+  role: string;
+  collection: string;
+  action: string;
+}

@@ -22,7 +22,7 @@ type AuthContextProps = {
   login: (credentials: AuthCredentials) => Promise<UserItem | undefined>,
   register: (credentials: AuthCredentials, userName: string) => Promise<UserItem | undefined>,
   loading: Boolean,
-  logout: () => void,
+  logout: () => Promise<any>,
   updateUser: (user: UserItem) => any,
   token: String | null
 }
@@ -33,7 +33,7 @@ const AuthContext = createContext<AuthContextProps>({
   login: () => Promise.reject(),
   register: () => Promise.reject(),
   loading: false,
-  logout: () => { },
+  logout: () => Promise.reject(),
   updateUser: () => Promise.reject(),
   token: ""
 });

@@ -66,6 +66,7 @@ export interface ItemsApi<T> {
   createItem?(item : T): Promise<any>,
   updateItem?(item : T): Promise<any>,
   deleteItem?(id : number | string): Promise<any>,
+  collectionName?: string
 }
 
 export interface UserApi {
@@ -79,7 +80,8 @@ export interface UserApi {
 
 export type UserItem = {
   id?: string;
-  avatar: string;
+  avatar?: string;
+  role?: string;
   first_name: string;
   description: string;
   email: string;
@@ -90,5 +92,8 @@ export type Permission = {
   id?: string;
   role: string;
   collection: string;
-  action: string;
+  action: PermissionAction
 }
+
+
+export type PermissionAction =  "create"|"read"|"update"|"delete";

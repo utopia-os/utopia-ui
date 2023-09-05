@@ -5,6 +5,7 @@ import { ItemFormPopupProps } from "../ItemFormPopup";
 import { LatLng } from "leaflet";
 import { Item } from "../../../../types";
 import { toast } from "react-toastify";
+import { useHasUserPermission, usePermissions } from "../../hooks/usePermissions";
 
 
 
@@ -17,12 +18,15 @@ export function HeaderView({ item, setItemFormPopup }: {
   const removeItem = useRemoveItem();
 
   const map = useMap();
+  const hasUserPermission = useHasUserPermission();
+  const permissions = usePermissions();
+
 
   const removeItemFromMap = async (event: React.MouseEvent<HTMLElement>) => {
     setLoading(true);
     let success = false;
     try {
-        await item.layer.api?.deleteItem!(item.id)
+        await item.layer?.api?.deleteItem!(item.id)
         success = true;
     } catch (error) {
         toast.error(error.toString());
@@ -41,16 +45,22 @@ export function HeaderView({ item, setItemFormPopup }: {
     event.stopPropagation();
     map.closePopup();
     if (setItemFormPopup)
-      setItemFormPopup({ position: new LatLng(item.position.coordinates[1], item.position.coordinates[0]), layer: item.layer, item: item, setItemFormPopup: setItemFormPopup })
+      setItemFormPopup({ position: new LatLng(item.position.coordinates[1], item.position.coordinates[0]), layer: item.layer!, item: item, setItemFormPopup: setItemFormPopup })
   }
 
+  console.log(item.layer.api.collectionName);
+  console.log(permissions);
+  
+console.log( hasUserPermission(item.api?.collectionName!,"update") );
+
+  
   return (
     <div className='tw-grid tw-grid-cols-6 tw-pb-2'>
       <div className='tw-col-span-5'>
         <b className="tw-text-xl tw-font-bold">{item.name}</b>
       </div>
       <div className='tw-col-span-1'>
-        {item.layer.api &&
+        {item.layer?.api &&
           <div className="tw-dropdown tw-dropdown-bottom">
             <label tabIndex={0} className="tw-bg-base-100 tw-btn tw-m-1 tw-leading-3 tw-border-none tw-min-h-0 tw-h-6">
               <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -58,7 +68,7 @@ export function HeaderView({ item, setItemFormPopup }: {
               </svg>
             </label>
             <ul tabIndex={0} className="tw-dropdown-content tw-menu tw-p-2 tw-shadow tw-bg-base-100 tw-rounded-box">
-              {item.layer.api.updateItem && <li>
+              {item.layer.api.updateItem && hasUserPermission(item.layer.api?.collectionName!,"update") && <li>
                 <a className="!tw-text-base-content" onClick={openEditPopup}>
                   <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
@@ -66,7 +76,7 @@ export function HeaderView({ item, setItemFormPopup }: {
                 </a>
               </li>}
 
-              {item.layer.api.deleteItem && <li>
+              {item.layer.api.deleteItem && hasUserPermission(item.layer.api?.collectionName!,"delete") && <li>
                 <a className=' !tw-text-error' onClick={removeItemFromMap}>
                   {loading ? <span className="tw-loading tw-loading-spinner tw-loading-sm"></span>
                     :

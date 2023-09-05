@@ -4,11 +4,13 @@ import {TextInput} from '../Input/TextInput'
 import {TextAreaInput} from '../Input/TextAreaInput'
 import { toast } from 'react-toastify';
 import {useNavigate} from 'react-router-dom'
+import { useAuth } from '../Auth';
 import * as React from 'react'
 
 import 'react-toastify/dist/ReactToastify.css';
+import { UserItem } from '../../types';
 
-export function Settings({useAuth}) {
+export function Settings() {
 
   const { user, updateUser, loading } = useAuth();
 
@@ -35,7 +37,7 @@ export function Settings({useAuth}) {
 
 
   const onUpdateUser = () => {
-    let changedUser = {};
+    let changedUser = {} as UserItem;
   
     if(passwordChanged) {
       changedUser = { id: id, first_name: name, description: text, email: email, password: password };

@@ -1,11 +1,14 @@
 import * as React from 'react'
 import DynamicHeroIcon from '../../../Utils/DynamicHeroIcon'
 import { useLayers } from '../hooks/useLayers'
+import { useHasUserPermission } from '../hooks/usePermissions';
 
 
 export default function AddButton({ setSelectNewItemPosition }: { setSelectNewItemPosition: React.Dispatch<React.SetStateAction<any>> }) {
 
     const layers = useLayers();
+    const hasUserPermission = useHasUserPermission();
+
 
     return (
         <div className="tw-dropdown tw-dropdown-top tw-dropdown-end tw-dropdown-hover tw-z-500 tw-absolute tw-right-5 tw-bottom-5" >
@@ -16,7 +19,7 @@ export default function AddButton({ setSelectNewItemPosition }: { setSelectNewIt
             </label>
             <ul tabIndex={0} className="tw-dropdown-content tw-pr-1 tw-list-none">
                 {layers.map((layer) => (
-                    layer.api?.createItem && (
+                    layer.api?.createItem && hasUserPermission(layer.api.collectionName!,"create") && (
                         <li key={layer.name} >
                             <a>
                                 <div className="tw-tooltip tw-tooltip-left" data-tip={layer.menuText}>

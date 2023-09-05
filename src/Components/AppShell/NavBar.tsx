@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-//import { useAuth } from "../api/auth";
+import { useAuth } from "../Auth"
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import QuestionMarkIcon from '@heroicons/react/24/outline/QuestionMarkCircleIcon'
@@ -8,7 +8,7 @@ import * as React from "react";
 import DialogModal from "./DialogModal";
 
 
-export default function NavBar({ appName, useAuth }: { appName: string, useAuth: any }) {
+export default function NavBar({ appName}: { appName: string }) {
 
 
   const [signupOpen, setSignupOpen] = useState(false);
@@ -110,7 +110,7 @@ export default function NavBar({ appName, useAuth }: { appName: string, useAuth:
 
         {isAuthenticated ?
           <div className="tw-flex-none">
-            {user.avatar ? <div className="tw-avatar">
+            {user?.avatar ? <div className="tw-avatar">
               <div className="tw-w-10 tw-rounded-full">
                 <img src={"https://api.utopia-lab.org/assets/" + user?.avatar + "?access_token=" + token} />
               </div>
@@ -122,7 +122,7 @@ export default function NavBar({ appName, useAuth }: { appName: string, useAuth:
                   <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
                 </svg>
               </label>
-              <ul tabIndex={0} className="tw-menu tw-menu-compact tw-dropdown-content tw-mt-3 tw-p-2 tw-shadow tw-bg-base-100 tw-rounded-box tw-w-52 !tw-z-[1500]">
+              <ul tabIndex={0} className="tw-menu tw-menu-compact tw-dropdown-content tw-mt-3 tw-p-2 tw-shadow tw-bg-base-100 tw-rounded-box tw-w-52 !tw-z-[10000]">
                 <li><Link to={"/settings"}>Settings</Link></li>
                 <li><a onClick={() => { onLogout() }}>Logout</a></li>
               </ul>
@@ -148,7 +148,7 @@ export default function NavBar({ appName, useAuth }: { appName: string, useAuth:
 
 
               </label>
-              <ul tabIndex={1} className="tw-menu tw-dropdown-content tw-mt-3 tw-p-2 tw-shadow tw-bg-base-100 tw-rounded-box tw-w-52 !tw-z-[1500]">
+              <ul tabIndex={1} className="tw-menu tw-dropdown-content tw-mt-3 tw-p-2 tw-shadow tw-bg-base-100 tw-rounded-box tw-w-52 !tw-z-[10000]">
                 <li><a onClick={() => {setLoginOpen(true)}}>Login</a></li>
                 <li><a onClick={() => setSignupOpen(true)}>Sign Up</a></li>
               </ul>

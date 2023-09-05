@@ -13,6 +13,7 @@ import { TagsProvider } from "./hooks/useTags";
 import { LayersProvider } from "./hooks/useLayers";
 import { FilterProvider } from "./hooks/useFilter";
 import { FilterControl } from "./Subcomponents/FilterControl";
+import { PermissionsProvider } from "./hooks/usePermissions";
 
 
 export interface MapEventListenerProps {
@@ -57,37 +58,39 @@ function UtopiaMap({
     return (
         <LayersProvider initialLayers={[]}>
             <TagsProvider initialTags={[]}>
-                <FilterProvider initialTags={[]}>
-                    <ItemsProvider initialItems={[]}>
-                        <div className={(selectNewItemPosition != null ? "crosshair-cursor-enabled" : undefined)}>
-                            <MapContainer ref={mapDivRef} style={{ height: height, width: width }} center={center} zoom={zoom} zoomControl={false}>
-                                <FilterControl></FilterControl>
-                                <TileLayer
-                                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                                    url="https://tile.osmand.net/hd/{z}/{x}/{y}.png" />
-                                <MarkerClusterGroup showCoverageOnHover chunkedLoading maxClusterRadius={50} removeOutsideVisibleBounds={false}>
-                                    {
-                                        React.Children.toArray(children).map((child) =>
-                                            React.isValidElement<{ setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps>>, itemFormPopup: ItemFormPopupProps | null }>(child) ?
-                                                React.cloneElement(child, { setItemFormPopup: setItemFormPopup, itemFormPopup: itemFormPopup }) : child
-                                        )
-                                    }
-                                </MarkerClusterGroup>
-                                <MapEventListener setSelectNewItemPosition={setSelectNewItemPosition} selectNewItemPosition={selectNewItemPosition} setItemFormPopup={setItemFormPopup} />
-                            </MapContainer>
-                            <AddButton setSelectNewItemPosition={setSelectNewItemPosition}></AddButton>
-                            {selectNewItemPosition != null &&
-                                <div className="tw-button tw-z-1000 tw-absolute tw-right-5 tw-top-4 tw-drop-shadow-md">
-                                    <div className="tw-alert tw-bg-base-100 tw-text-base-content">
-                                        <div>
-                                            <span>Select {selectNewItemPosition.name} position!</span>
+                <PermissionsProvider initialPermissions={[]}>
+                    <FilterProvider initialTags={[]}>
+                        <ItemsProvider initialItems={[]}>
+                            <div className={(selectNewItemPosition != null ? "crosshair-cursor-enabled" : undefined)}>
+                                <MapContainer ref={mapDivRef} style={{ height: height, width: width }} center={center} zoom={zoom} zoomControl={false}>
+                                    <FilterControl></FilterControl>
+                                    <TileLayer
+                                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                        url="https://tile.osmand.net/hd/{z}/{x}/{y}.png" />
+                                    <MarkerClusterGroup showCoverageOnHover chunkedLoading maxClusterRadius={50} removeOutsideVisibleBounds={false}>
+                                        {
+                                            React.Children.toArray(children).map((child) =>
+                                                React.isValidElement<{ setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps>>, itemFormPopup: ItemFormPopupProps | null }>(child) ?
+                                                    React.cloneElement(child, { setItemFormPopup: setItemFormPopup, itemFormPopup: itemFormPopup }) : child
+                                            )
+                                        }
+                                    </MarkerClusterGroup>
+                                    <MapEventListener setSelectNewItemPosition={setSelectNewItemPosition} selectNewItemPosition={selectNewItemPosition} setItemFormPopup={setItemFormPopup} />
+                                </MapContainer>
+                                <AddButton setSelectNewItemPosition={setSelectNewItemPosition}></AddButton>
+                                {selectNewItemPosition != null &&
+                                    <div className="tw-button tw-z-1000 tw-absolute tw-right-5 tw-top-4 tw-drop-shadow-md">
+                                        <div className="tw-alert tw-bg-base-100 tw-text-base-content">
+                                            <div>
+                                                <span>Select {selectNewItemPosition.name} position!</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            }
-                        </div>
-                    </ItemsProvider>
-                </FilterProvider>
+                                }
+                            </div>
+                        </ItemsProvider>
+                    </FilterProvider>
+                </PermissionsProvider>
             </TagsProvider>
         </LayersProvider>
     );

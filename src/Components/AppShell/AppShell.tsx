@@ -3,7 +3,7 @@ import NavBar from './NavBar'
 import { BrowserRouter } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 
-export function AppShell({ appName, useAuth, children }) {
+export function AppShell({ appName, children }) {
     return (
         <BrowserRouter>
             <ToastContainer position="top-right"
@@ -16,7 +16,7 @@ export function AppShell({ appName, useAuth, children }) {
                 draggable
                 pauseOnHover
                 theme="light" />
-            <NavBar appName={appName} useAuth={useAuth}></NavBar>
+            <NavBar appName={appName}></NavBar>
             <div id="app-content" className="tw-flex tw-!pl-[77px]">
                 {children}
             </div>

@@ -23,7 +23,6 @@ export const Layer = (props: LayerProps) => {
 
     const searchPhrase = useSearchPhrase();
 
-
     useEffect(() => {
         resetItems(props);
         props.data && setItemsData(props);

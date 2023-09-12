@@ -10,9 +10,7 @@ const setPermissionApi = useSetPermissionApi();
 const setAdminRole = useSetAdminRole();
 const {user} = useAuth();
 
-useEffect(() => {
-  console.log(adminRole);
-  
+useEffect(() => { 
   adminRole && setAdminRole(adminRole);
   data && setPermissionData(data); 
   api && setPermissionApi(api);  

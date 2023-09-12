@@ -47,9 +47,7 @@ function usePermissionsManager(initialPermissions: Permission[]): {
   const { user } = useAuth();
 
 
-  const setPermissionApi = useCallback(async (api: ItemsApi<Permission>) => {
-    console.log("check");
-    
+  const setPermissionApi = useCallback(async (api: ItemsApi<Permission>) => {   
     const result = await api.getItems();
     if (result) {
       result.map(permission => {
@@ -64,9 +62,7 @@ function usePermissionsManager(initialPermissions: Permission[]): {
     })
   }, []);
 
-  const hasUserPermission = useCallback((collectionName: string, action: PermissionAction) => {
-    console.log(permissions);
-    
+  const hasUserPermission = useCallback((collectionName: string, action: PermissionAction) => {  
     if (permissions.length == 0) return true;
     else if (user && user.role == adminRole) return true;
     else return permissions.some(p => p.action === action && p.collection === collectionName && p.role == user?.role)

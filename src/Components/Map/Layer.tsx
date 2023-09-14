@@ -10,7 +10,7 @@ import { useFilterTags, useSearchPhrase } from './hooks/useFilter'
 import { useGetItemTags } from './hooks/useTags'
 import { useAddMarker, useAddPopup, useLeafletRefs } from './hooks/useLeafletRefs'
 import { Popup } from 'leaflet'
-
+import { useLocation } from 'react-router-dom';
 
 export const Layer = (props: LayerProps) => {
 
@@ -26,6 +26,8 @@ export const Layer = (props: LayerProps) => {
     const addPopup = useAddPopup();
     const leafletRefs = useLeafletRefs();
 
+    let location = useLocation();
+
     const searchPhrase = useSearchPhrase();
 
     const map = useMap();
@@ -37,33 +39,47 @@ export const Layer = (props: LayerProps) => {
         props.api && setItemsApi(props);
     }, [props.data, props.api])
 
-    const openPopup = () => {
-        if (window.location.pathname.split("/")[1] == props.name) {
-            const id = window.location.pathname.split("/")[2]
-            const marker = leafletRefs[id]?.marker;
-            if (marker && marker != null) {
-                marker !== null && props.clusterRef?.current?.zoomToShowLayer(marker, () => {
-                    marker.openPopup();
-                });
-            }
-        }
-    }
-
     useMapEvents({
         popupopen: (e) => {
             const item = Object.entries(leafletRefs).find(r => r[1].popup == e.popup)?.[1].item;
-            if(item?.layer?.name == props.name ) {
-                window.history.pushState({},"",`/${props.name}/${item.id}`)
-                document.title = document.title.split("-")[0] + " - " + item.name;                
+            if (item?.layer?.name == props.name) {
+                window.history.pushState({}, "", `/${props.name}/${item.id}`)
+                document.title = document.title.split("-")[0] + " - " + item.name;
                 document.querySelector('meta[property="og:title"]')?.setAttribute("content", item.name);
                 document.querySelector('meta[property="og:description"]')?.setAttribute("content", item.text);
             }
         },
     })
 
+    const openPopup = () => {
+        console.log(window.location);
+
+
+        if (window.location.pathname.split("/").length <= 2) {
+            console.log("close");
+
+            map.closePopup();
+        }
+        else {
+            if (window.location.pathname.split("/")[1] == props.name) {
+
+                if (window.location.pathname.split("/")[2]) {
+                    const id = window.location.pathname.split("/")[2]
+                    const marker = leafletRefs[id]?.marker;
+                    if (marker && marker != null) {
+                        marker !== null && props.clusterRef?.current?.zoomToShowLayer(marker, () => {
+                            marker.openPopup();
+                        });
+                    }
+                }
+            }
+        }
+
+    }
+
     useEffect(() => {
         openPopup();
-    }, [leafletRefs])
+    }, [leafletRefs, location])
 
 
     return (

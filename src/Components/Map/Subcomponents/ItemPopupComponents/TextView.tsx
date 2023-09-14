@@ -12,28 +12,10 @@ import { useEffect, useRef } from 'react';
 export const TextView = ({ item }: { item?: Item }) => {
   const tags = useTags();
   const addTag = useAddTag();
-
-  const groupRef = useRef(null);
-
   const addFilterTag = useAddFilterTag();
-
-  const map = useMap();
 
   let replacedText;
 
-
-  // use init-Ref to prevent react18 from calling useEffect twice
-  const init = useRef(false)
-  useEffect(() => {
-    if (!init.current) {
-      item?.text.toLocaleLowerCase().match(hashTagRegex)?.map(tag=> {
-        if (!tags.find((t) => t.id === tag.slice(1))) {
-          addTag({id: tag.slice(1), color: randomColor()})
-        }
-    });
-      init.current = true;
-    }
-  }, [])
 
 
 

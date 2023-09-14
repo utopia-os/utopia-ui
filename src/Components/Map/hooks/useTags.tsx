@@ -30,11 +30,11 @@ function useTagsManager(initialTags: Tag[]): {
     switch (action.type) {
       case "ADD":
         const exist = state.find((tag) =>
-          tag.id === action.tag.id ? true : false
+          tag.id.toLocaleLowerCase() === action.tag.id.toLocaleLowerCase() ? true : false
         );
         if (!exist) return [
           ...state,
-          {...action.tag, id: action.tag.id}
+          {...action.tag, id: action.tag.id.toLocaleLowerCase()}
         ];
         else return state;
 
@@ -71,7 +71,7 @@ function useTagsManager(initialTags: Tag[]): {
       tag,
     });
 
-    if (!tags.some((t) => t.id === tag.id)) {
+    if (!tags.some((t) => t.id.toLocaleLowerCase() === tag.id.toLocaleLowerCase())) {
       api?.createItem && api.createItem(tag);
     }
   };

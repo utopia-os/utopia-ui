@@ -42,7 +42,7 @@ export const Layer = (props: LayerProps) => {
     useMapEvents({
         popupopen: (e) => {
             const item = Object.entries(leafletRefs).find(r => r[1].popup == e.popup)?.[1].item;
-            if (item?.layer?.name == props.name) {
+            if (item?.layer?.name == props.name && window.location.pathname.split("/")[2] != item.id) {
                 window.history.pushState({}, "", `/${props.name}/${item.id}`)
                 document.title = document.title.split("-")[0] + " - " + item.name;
                 document.querySelector('meta[property="og:title"]')?.setAttribute("content", item.name);

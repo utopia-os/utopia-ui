@@ -70,6 +70,10 @@ export const Layer = (props: LayerProps) => {
                         marker !== null && props.clusterRef?.current?.zoomToShowLayer(marker, () => {
                             marker.openPopup();
                         });
+                        const item = leafletRefs[id]?.item;
+                        document.title = document.title.split("-")[0] + " - " + item.name;
+                        document.querySelector('meta[property="og:title"]')?.setAttribute("content", item.name);
+                        document.querySelector('meta[property="og:description"]')?.setAttribute("content", item.text);
                     }
                 }
             }

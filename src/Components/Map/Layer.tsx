@@ -73,7 +73,6 @@ export const Layer = (props: LayerProps) => {
                         const item = leafletRefs[id]?.item;
                         document.title = document.title.split("-")[0] + " - " + item.name;
                         document.querySelector('meta[property="og:title"]')?.setAttribute("content", item.name);
-                        document.querySelector('meta[property="og:site_name"]')?.setAttribute("content", item.name);
                         document.querySelector('meta[property="og:description"]')?.setAttribute("content", item.text);
                     }
                 }

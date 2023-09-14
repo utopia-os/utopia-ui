@@ -1,9 +1,10 @@
 import * as React from 'react'
-import { Popup as LeafletPopup, useMap } from 'react-leaflet'
+import { Popup as LeafletPopup} from 'react-leaflet'
 import { Item } from '../../../types'
 import { ItemFormPopupProps } from './ItemFormPopup'
 import { HeaderView } from './ItemPopupComponents/HeaderView'
 import { TextView } from './ItemPopupComponents/TextView'
+
 
 export interface ItemViewPopupProps {
   item: Item,
@@ -11,11 +12,10 @@ export interface ItemViewPopupProps {
   setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
 }
 
-export const ItemViewPopup = (props: ItemViewPopupProps) => {
-  const item: Item = props.item;
+export const ItemViewPopup = React.forwardRef((props: ItemViewPopupProps, ref: any) => {
 
   return (
-    <LeafletPopup maxHeight={377} minWidth={275} maxWidth={275} autoPanPadding={[20, 80]}>
+    <LeafletPopup ref={ref} maxHeight={377} minWidth={275} maxWidth={275} autoPanPadding={[20, 80]}>
       <div className='tw-bg-base-100 tw-text-base-content'>
         <HeaderView item={props.item} setItemFormPopup={props.setItemFormPopup} />
         <div className='tw-overflow-y-auto tw-max-h-72'>
@@ -35,5 +35,5 @@ export const ItemViewPopup = (props: ItemViewPopupProps) => {
       </div>
     </LeafletPopup>
   )
-}
+})
 

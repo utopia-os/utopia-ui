@@ -5,7 +5,7 @@ import { ItemFormPopupProps } from "../ItemFormPopup";
 import { LatLng } from "leaflet";
 import { Item } from "../../../../types";
 import { toast } from "react-toastify";
-import { useHasUserPermission, usePermissions } from "../../hooks/usePermissions";
+import { useHasUserPermission } from "../../hooks/usePermissions";
 
 
 
@@ -19,7 +19,6 @@ export function HeaderView({ item, setItemFormPopup }: {
 
   const map = useMap();
   const hasUserPermission = useHasUserPermission();
-  const permissions = usePermissions();
 
 
   const removeItemFromMap = async (event: React.MouseEvent<HTMLElement>) => {
@@ -47,11 +46,6 @@ export function HeaderView({ item, setItemFormPopup }: {
     if (setItemFormPopup)
       setItemFormPopup({ position: new LatLng(item.position.coordinates[1], item.position.coordinates[0]), layer: item.layer!, item: item, setItemFormPopup: setItemFormPopup })
   }
-
-  console.log(item.layer.api.collectionName);
-  console.log(permissions);
-  
-console.log( hasUserPermission(item.api?.collectionName!,"update") );
 
   
   return (

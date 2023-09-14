@@ -1,4 +1,4 @@
-import { LatLng } from "leaflet";
+import { LatLng, LatLngTuple, latLng } from "leaflet";
 import { ItemFormPopupProps } from "./Components/Map/Subcomponents/ItemFormPopup";
 
 export interface UtopiaMapProps {
@@ -22,7 +22,8 @@ export interface LayerProps {
   markerDefaultColor: string,
   api?: ItemsApi<any>,
   setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>,
-  itemFormPopup?: ItemFormPopupProps | null
+  itemFormPopup?: ItemFormPopupProps | null,
+  clusterRef?: React.MutableRefObject<any>
 }
 
 export class Item {
@@ -36,6 +37,7 @@ export class Item {
   end?: string;
   api?: ItemsApi<any>;
   tags?: Tag[];
+  layer?: LayerProps;
   [key: string]: any;
   constructor(id:string,name:string,text:string,position:Geometry, layer?: LayerProps, api?: ItemsApi<any>){
     this.id = id;

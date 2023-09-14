@@ -2,9 +2,9 @@ import * as React from 'react'
 import { Item } from '../../../../types'
 import { useAddTag, useTags } from '../../hooks/useTags';
 import reactStringReplace from 'react-string-replace';
-import { useAddFilterTag, useResetFilterTags } from '../../hooks/useFilter';
+import { useAddFilterTag } from '../../hooks/useFilter';
 import { hashTagRegex } from '../../../../Utils/HashTagRegex';
-import { fixUrls, mailRegex, urlRegex } from '../../../../Utils/ReplaceURLs';
+import { fixUrls, mailRegex } from '../../../../Utils/ReplaceURLs';
 import { useMap } from 'react-leaflet';
 import { randomColor } from '../../../../Utils/RandomColor';
 import { useEffect, useRef } from 'react';
@@ -16,7 +16,6 @@ export const TextView = ({ item }: { item?: Item }) => {
   const groupRef = useRef(null);
 
   const addFilterTag = useAddFilterTag();
-  const resetFilterTags = useResetFilterTags();
 
   const map = useMap();
 

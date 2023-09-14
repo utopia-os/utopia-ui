@@ -11,10 +11,13 @@ import { useGetItemTags } from './hooks/useTags'
 import { useAddMarker, useAddPopup, useLeafletRefs } from './hooks/useLeafletRefs'
 import { Popup } from 'leaflet'
 import { useLocation } from 'react-router-dom';
+import {Helmet} from "react-helmet";
 
 export const Layer = (props: LayerProps) => {
 
     const [itemFormPopup, setItemFormPopup] = useState<ItemFormPopupProps | null>(null);
+    const [ogTitle, setOgTitle] = useState<string>("");
+    const [ogDescription, setOgDescription] = useState<string>("");
 
     const filterTags = useFilterTags();
 
@@ -45,11 +48,10 @@ export const Layer = (props: LayerProps) => {
             if (item?.layer?.name == props.name && window.location.pathname.split("/")[2] != item.id) {
                 window.history.pushState({}, "", `/${props.name}/${item.id}`)
                 document.title = document.title.split("-")[0] + " - " + item.name;
-                document.querySelector('meta[property="og:title"]')?.setAttribute("content", item.name);
-                document.querySelector('meta[property="og:description"]')?.setAttribute("content", item.text);
             }
         },
     })
+
 
     const openPopup = () => {
         console.log(window.location);
@@ -57,7 +59,8 @@ export const Layer = (props: LayerProps) => {
 
         if (window.location.pathname.split("/").length <= 2) {
             console.log("close");
-
+            setOgTitle("");
+            setOgDescription("");
             map.closePopup();
         }
         else {
@@ -71,9 +74,8 @@ export const Layer = (props: LayerProps) => {
                             marker.openPopup();
                         });
                         const item = leafletRefs[id]?.item;
-                        document.title = document.title.split("-")[0] + " - " + item.name;
-                        document.querySelector('meta[property="og:title"]')?.setAttribute("content", item.name);
-                        document.querySelector('meta[property="og:description"]')?.setAttribute("content", item.text);
+                        setOgTitle(item.name);
+                        setOgDescription(item.text);
                     }
                 }
             }
@@ -151,6 +153,10 @@ export const Layer = (props: LayerProps) => {
                         <ItemFormPopup position={props.itemFormPopup!.position} layer={props.itemFormPopup!.layer} setItemFormPopup={setItemFormPopup} item={props.itemFormPopup!.item} />
                     </>)
             }
+            <Helmet>
+                <meta property="og:title" content={ogTitle}/>
+                <meta property="og:description" content={ogDescription} />
+            </Helmet>
         </>
     )
 }

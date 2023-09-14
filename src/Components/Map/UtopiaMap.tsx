@@ -23,23 +23,7 @@ export interface MapEventListenerProps {
     setItemFormPopup: React.Dispatch<React.SetStateAction<any>>
 }
 
-function MapEventListener(props: MapEventListenerProps) {
-    useMapEvents({
-        click: (e) => {
-            window.history.pushState({}, "", "/");
-            console.log(e.latlng.lat + ',' + e.latlng.lng);
-            if (props.selectNewItemPosition != null) {
-                props.setItemFormPopup({ layer: props.selectNewItemPosition, position: e.latlng })
-                props.setSelectNewItemPosition(null)
-            }
-        },
-        resize: () => {
-            console.log("resize");
-        },
 
-    })
-    return null
-}
 // for refreshing map on resize (needs to be implemented)
 const mapDivRef = React.createRef();
 
@@ -50,6 +34,32 @@ function UtopiaMap({
     zoom = 10,
     children }
     : UtopiaMapProps) {
+
+    let meta = document.getElementsByTagName('meta')
+    const [metaTags, setMetaTags] = useState<HTMLCollectionOf<HTMLMetaElement>>(meta);
+
+    function MapEventListener(props: MapEventListenerProps) {
+        useMapEvents({
+            click: (e) => {
+                window.history.pushState({}, "", "/");
+                document.title = document.title.split("-")[0];
+                document.querySelector('meta[property="og:title"]')?.setAttribute("content", document.title);
+                document.querySelector('meta[property="og:description"]')?.setAttribute("content", `${document.querySelector('meta[name="description"]')?.getAttribute("content")}`);
+
+                meta = metaTags;
+                console.log(e.latlng.lat + ',' + e.latlng.lng);
+                if (props.selectNewItemPosition != null) {
+                    props.setItemFormPopup({ layer: props.selectNewItemPosition, position: e.latlng })
+                    props.setSelectNewItemPosition(null)
+                }
+            },
+            resize: () => {
+                console.log("resize");
+            },
+
+        })
+        return null
+    }
 
     const [selectNewItemPosition, setSelectNewItemPosition] = useState<LayerProps | null>(null);
     const [itemFormPopup, setItemFormPopup] = useState<ItemFormPopupProps | null>(null);

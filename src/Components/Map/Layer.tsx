@@ -52,11 +52,13 @@ export const Layer = (props: LayerProps) => {
     useMapEvents({
         popupopen: (e) => {
             const item = Object.entries(leafletRefs).find(r => r[1].popup == e.popup)?.[1].item;
-            if(item?.layer?.name == props.name )
-            window.history.pushState({},"",`/${props.name}/${item.id}`)
+            if(item?.layer?.name == props.name ) {
+                window.history.pushState({},"",`/${props.name}/${item.id}`)
+                document.title = document.title.split("-")[0] + " - " + item.name;                
+                document.querySelector('meta[property="og:title"]')?.setAttribute("content", item.name);
+                document.querySelector('meta[property="og:description"]')?.setAttribute("content", item.text);
+            }
         },
-
-
     })
 
     useEffect(() => {
@@ -74,7 +76,7 @@ export const Layer = (props: LayerProps) => {
                     filter(item => {
                         return searchPhrase === ''
                             ? item :
-                            item.name.toLowerCase().includes(searchPhrase.toLowerCase())
+                            item.name.toLowerCase().includes(searchPhrase.toLowerCase()) || item.text.toLowerCase().includes(searchPhrase.toLowerCase())
                     }).
                     map((item: Item) => {
                         const tags = getItemTags(item);

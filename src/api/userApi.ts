@@ -8,34 +8,46 @@ export class userApi implements UserApi {
   async register(email: string, password: string, userName: string): Promise<any> {
     try {
       return await directusClient.request(createUser({email: email, password: password, first_name: userName}));
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      if (error.errors[0].message)
+        throw error.errors[0].message;
+      else throw error;
     }
   }
 
   async login(email: string, password: string): Promise<any> {
     try {
       return await directusClient.login(email,password,{mode: 'json'});
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-      throw new Error("Failed while logging User in");
+      if (error.errors[0].message)
+        throw error.errors[0].message;
+      else throw error;
     }
   }
+
+
   async logout(): Promise<any> {
     try {
       return await directusClient.logout();
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-      throw new Error("Failed while logging User out");
+      if (error.errors[0].message)
+        throw error.errors[0].message;
+      else throw error;
     }
   }
+
   async getUser(): Promise<any> {
     try {
       let user = await directusClient.request(readMe());
       return user;
-    } catch (error) {    
+    } catch (error: any) {
       console.log(error);
-      throw new Error("Failed while loading User");
+      if (error.errors[0].message)
+        throw error.errors[0].message;
+      else throw error;
     }
   }
 
@@ -43,9 +55,11 @@ export class userApi implements UserApi {
     try {
     const token = await directusClient.getToken();
       return token;
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-      throw new Error("Failed while loading User Token");
+      if (error.errors[0].message)
+        throw error.errors[0].message;
+      else throw error;
     }
   }
 
@@ -56,10 +70,11 @@ export class userApi implements UserApi {
       return res as any;
     } catch (error: any) {
       console.log(error);
-      throw new Error("Failed while updating User Profile");
+      if (error.errors[0].message)
+        throw error.errors[0].message;
+      else throw error;
     }
   }
-
 }
 
 

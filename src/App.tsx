@@ -1,4 +1,4 @@
-import { AppShell, SideBar, Content, AuthProvider, useAuth, Settings, Modal, LoginPage, SignupPage } from 'utopia-ui'
+import { AppShell, SideBar, Content, AuthProvider, Settings, Modal, LoginPage, SignupPage } from 'utopia-ui'
 import { routes } from './routes/sidebar'
 import { Route, Routes } from 'react-router-dom'
 import MapContainer from "./pages/MapContainer"
@@ -7,23 +7,22 @@ import Concept from './pages/Concept'
 import { userApi } from './api/userApi'
 
 
+
 function App() {
-
-
 
   return (
 
     <div className="App overflow-x-hidden">
 
       <AuthProvider userApi={new userApi}>
-        <AppShell appName="Utopia Game" useAuth={useAuth}>
+        <AppShell appName="Utopia Game">
         <Modal/>
           <SideBar routes={routes} />
           <Content>
-           {/** <Quests />  */} 
+           {/** <Quests />  */ }
             <Routes>
-              <Route path="/" element={<MapContainer />} />
-              <Route path="/settings" element={<Settings useAuth={useAuth} />} />
+              <Route path="/*" element={<MapContainer />} />
+              <Route path="/settings" element={<Settings />} />
               <Route path="/concept" element={<Concept/>} />
               <Route path="/login" element={<LoginPage/>} />
               <Route path="/signup" element={<SignupPage/>} />

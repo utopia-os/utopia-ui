@@ -10,17 +10,17 @@ export default defineConfig({
     react(),
     VitePWA({manifest: {
       "short_name": "Utopia Game",
-      "name": "Utopia Game: A Cooperative Real Life Manifestation Game",
+      "name": "Utopia Game: The Real Life Manifestation Game",
       "icons": [
         {
           "src": "3markers.svg",
-          "sizes": "192x192",
-          "type": "image/svg"
+          "sizes": "any",
+          "type": "image/svg+xml"
         }
       ],
-      "start_url": "/index.html",
+      "start_url": "/",
       "display": "fullscreen",
-      "orientation": "portrait"
+      "orientation": "natural"
     }})
   ]
 })

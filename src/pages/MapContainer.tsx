@@ -1,5 +1,6 @@
-import { UtopiaMap, Tags, Layer, ItemForm, ItemView, PopupTextAreaInput, PopupStartEndInput, TextView, StartEndView } from 'utopia-ui'
+import { UtopiaMap, Tags, Layer, ItemForm, ItemView, PopupTextAreaInput, PopupStartEndInput, TextView, StartEndView, Permissions } from 'utopia-ui'
 import { itemsApi } from '../api/itemsApi'
+import { permissionsApi } from '../api/permissionsApi';
 import { Place, Event, Tag } from '../api/directus';
 import { useEffect, useState } from 'react';
 
@@ -9,6 +10,8 @@ function MapContainer() {
   const [placesApi, setPlacesApi] = useState<itemsApi<Place>>();
   const [eventsApi, setEventsApi] = useState<itemsApi<Event>>();
   const [tagsApi, setTagsApi] = useState<itemsApi<Tag>>();
+  const [permissionsApiInstance, setPermissionsApiInstance] = useState<permissionsApi>();
+
 
 
 
@@ -17,6 +20,7 @@ function MapContainer() {
     setPlacesApi(new itemsApi<Place>('places'));
     setEventsApi(new itemsApi<Event>('events'));
     setTagsApi(new itemsApi<Tag>('tags'));
+    setPermissionsApiInstance(new permissionsApi());
 
 
 
@@ -62,6 +66,7 @@ function MapContainer() {
         api={placesApi}
       />
       <Tags api={tagsApi}></Tags>
+      <Permissions api={permissionsApiInstance} adminRole='8ed0b24e-3320-48cd-8444-bc152304e580'></Permissions>
     </UtopiaMap>
   )
 }

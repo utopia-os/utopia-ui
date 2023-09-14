@@ -3,9 +3,6 @@ import * as React from "react";
 import { Item, ItemsApi, LayerProps, Tag } from "../../../types";
 import { toast } from "react-toastify";
 import { useAddLayer } from "./useLayers";
-import { useAddTag, useTags } from "./useTags";
-import { hashTagRegex } from "../../../Utils/HashTagRegex";
-import { randomColor } from "../../../Utils/RandomColor";
 
 
 type ActionType =
@@ -13,7 +10,7 @@ type ActionType =
   | { type: "UPDATE"; item: Item }
   | { type: "REMOVE"; item: Item }
   | { type: "RESET"; layer: LayerProps }
-  | { type: "ADD_TAGS" };
+  ;
 
 
 type UseItemManagerResult = ReturnType<typeof useItemsManager>;
@@ -39,8 +36,6 @@ function useItemsManager(initialItems: Item[]): {
 } {
 
   const addLayer = useAddLayer();
-  const tags = useTags();
-  const addTag = useAddTag();
 
   const [items, dispatch] = useReducer((state: Item[], action: ActionType) => {
     switch (action.type) {
@@ -63,18 +58,7 @@ function useItemsManager(initialItems: Item[]): {
       case "REMOVE":
         return state.filter(item => item !== action.item);
       case "RESET":
-        return state.filter(item => item.layer.name !== action.layer.name);
-      case "ADD_TAGS":
-        return state.map(item => {
-          const itemTagStrings = item.text.toLocaleLowerCase().match(hashTagRegex);
-          const itemTags: Tag[] = [];
-          itemTagStrings?.map(tag => {
-            if (tags.find(t => t.id === tag.slice(1))) {
-              itemTags.push(tags.find(t => t.id === tag.slice(1))!)
-            }
-          })
-          return { ...item, tags: itemTags }
-        })
+        return state.filter(item => item.layer?.name !== action.layer.name);
       default:
         throw new Error();
     }
@@ -100,14 +84,12 @@ function useItemsManager(initialItems: Item[]): {
         dispatch({ type: "ADD", item: { ...item, layer: layer } });
       })
     }
-    dispatch({ type: "ADD_TAGS" })
   }, [])
 
   const setItemsData = useCallback((layer: LayerProps) => {
     layer.data?.map(item => {
       dispatch({ type: "ADD", item: { ...item, layer: layer } });
     })
-    dispatch({ type: "ADD_TAGS" })
   }, []);
 
 
@@ -116,7 +98,6 @@ function useItemsManager(initialItems: Item[]): {
       type: "ADD",
       item,
     });
-    dispatch({ type: "ADD_TAGS" })
   }, []);
 
   const updateItem = useCallback(async (item: Item) => {
@@ -124,7 +105,6 @@ function useItemsManager(initialItems: Item[]): {
       type: "UPDATE",
       item,
     });
-    dispatch({ type: "ADD_TAGS" })
   }, []);
 
   const removeItem = useCallback((item: Item) => {
@@ -141,9 +121,6 @@ function useItemsManager(initialItems: Item[]): {
     });
   }, []);
 
-  useEffect(() => {
-    dispatch({ type: "ADD_TAGS" })
-  }, [tags])
 
 
   return { items, updateItem, addItem, removeItem, resetItems, setItemsApi, setItemsData };

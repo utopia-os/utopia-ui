@@ -1,6 +1,7 @@
 import { useCallback, useReducer, createContext, useContext } from "react";
 import * as React from "react";
-import { ItemsApi, Tag } from "../../../types";
+import { Item, ItemsApi, Tag } from "../../../types";
+import { hashTagRegex } from "../../../Utils/HashTagRegex";
 
 type ActionType =
   | { type: "ADD"; tag: Tag }
@@ -13,7 +14,8 @@ const TagContext = createContext<UseTagManagerResult>({
   addTag: () => { },
   removeTag: () => { },
   setTagApi: () => { },
-  setTagData: () => { }
+  setTagData: () => { },
+  getItemTags: () => []
 });
 
 function useTagsManager(initialTags: Tag[]): {
@@ -22,6 +24,7 @@ function useTagsManager(initialTags: Tag[]): {
   removeTag: (id: string) => void;
   setTagApi: (api: ItemsApi<Tag>) => void;
   setTagData: (data: Tag[]) => void;
+  getItemTags: (item: Item) => Tag[];
 } {
   const [tags, dispatch] = useReducer((state: Tag[], action: ActionType) => {
     switch (action.type) {
@@ -31,12 +34,12 @@ function useTagsManager(initialTags: Tag[]): {
         );
         if (!exist) return [
           ...state,
-          action.tag,
+          {...action.tag, id: action.tag.id}
         ];
         else return state;
 
       case "REMOVE":
-        return state.filter(({ id }) => id !== action.id);
+        return state.filter(({ id }) => id !== action.id.toLocaleLowerCase());
       default:
         throw new Error();
     }
@@ -68,7 +71,7 @@ function useTagsManager(initialTags: Tag[]): {
       tag,
     });
 
-    if (!tags.find((t) => t.id === tag.id)) {
+    if (!tags.some((t) => t.id === tag.id)) {
       api?.createItem && api.createItem(tag);
     }
   };
@@ -81,8 +84,19 @@ function useTagsManager(initialTags: Tag[]): {
     api?.deleteItem && api.deleteItem(id);
   }, []);
 
+  const getItemTags = useCallback((item: Item) => {  
+      const itemTagStrings = item.text.toLocaleLowerCase().match(hashTagRegex);
+      const itemTags: Tag[] = [];
+      itemTagStrings?.map(tag => {
+        if (tags.find(t => t.id === tag.slice(1))) {
+          itemTags.push(tags.find(t => t.id === tag.slice(1))!)
+        }
+      })
+      return itemTags 
+  }, [tags]);
 
-  return { tags, addTag, removeTag, setTagApi, setTagData };
+
+  return { tags, addTag, removeTag, setTagApi, setTagData, getItemTags };
 }
 
 export const TagsProvider: React.FunctionComponent<{
@@ -116,4 +130,10 @@ export const useSetTagApi = (): UseTagManagerResult["setTagApi"] => {
 export const useSetTagData = (): UseTagManagerResult["setTagData"] => {
   const { setTagData } = useContext(TagContext);
   return setTagData;
+}
+
+
+export const useGetItemTags = (): UseTagManagerResult["getItemTags"] => {
+  const { getItemTags } = useContext(TagContext);
+  return getItemTags;
 }

@@ -6,7 +6,7 @@ import { ItemViewPopup } from './Subcomponents/ItemViewPopup'
 import { useItems, useSetItemsApi, useSetItemsData } from './hooks/useItems'
 import { useEffect, useState } from 'react'
 import { ItemFormPopupProps, ItemFormPopup } from './Subcomponents/ItemFormPopup'
-import { useFilterTags, useSearchPhrase } from './hooks/useFilter'
+import { useFilterTags, useIsLayerVisible, useSearchPhrase } from './hooks/useFilter'
 import { useGetItemTags } from './hooks/useTags'
 import { useAddMarker, useAddPopup, useLeafletRefs } from './hooks/useLeafletRefs'
 import { Popup } from 'leaflet'
@@ -31,6 +31,8 @@ export const Layer = (props: LayerProps) => {
     const searchPhrase = useSearchPhrase();
 
     const map = useMap();
+
+    const isLayerVisible = useIsLayerVisible();
 
 
     useEffect(() => {
@@ -91,6 +93,7 @@ export const Layer = (props: LayerProps) => {
                             ? item :
                             item.name.toLowerCase().includes(searchPhrase.toLowerCase()) || item.text.toLowerCase().includes(searchPhrase.toLowerCase())
                     }).
+                    filter(item => item.layer && isLayerVisible(item.layer)).
                     map((item: Item) => {
                         const tags = getItemTags(item);
 

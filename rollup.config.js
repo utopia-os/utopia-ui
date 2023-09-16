@@ -6,7 +6,7 @@ export default {
     output: [
       {
         file: 'dist/index.js',
-        format: 'es',
+        format: 'esm',
         exports: 'named',
         sourcemap: true,
         strict: false
@@ -18,5 +18,5 @@ export default {
       }),
       typescript()
     ],
-    external: ['react', 'react-dom', 'leaflet', 'react-leaflet', 'react-toastify' , 'react-toastify/dist/ReactToastify.css', 'tw-elements' ,'react-router-dom', 'react-leaflet-cluster', '@tanstack/react-query', 'tributejs', 'prop-types',  'leaflet/dist/leaflet.css', '@heroicons/react/20/solid']
+    external: ['react', 'react-dom', 'leaflet', 'react-leaflet', 'react-toastify' , 'react-string-replace', 'react-toastify/dist/ReactToastify.css', 'tw-elements' ,'react-router-dom', 'react-leaflet-cluster', '@tanstack/react-query', 'tributejs', 'prop-types',  'leaflet/dist/leaflet.css', '@heroicons/react/20/solid']
   }

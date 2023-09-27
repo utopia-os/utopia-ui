@@ -43,7 +43,7 @@ const DialogModal = ({
 
 
   return (
-    <dialog className='tw-card tw-shadow-xl tw-absolute tw-right-0 tw-top-0 tw-bottom-0 tw-left-0 tw-m-auto tw-transition-opacity tw-duration-300'
+    <dialog className='tw-card tw-shadow-xl tw-absolute tw-right-0 tw-top-0 tw-bottom-0 tw-left-0 tw-m-auto tw-transition-opacity tw-duration-300 tw-p-4'
     
       ref={ref}
       onCancel={onClose}

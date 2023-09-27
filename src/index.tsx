@@ -4,7 +4,7 @@ export {AuthProvider, useAuth, LoginPage, SignupPage} from "./Components/Auth"
 export {Settings} from './Components/Profile'
 export {Quests, Modal} from './Components/Gaming'
 export {TitleCard, CardPage} from './Components/Templates'
-export {TextInput, TextAreaInput} from './Components/Input'
+export {TextInput, TextAreaInput, SelectBox} from './Components/Input'
 
 import "./index.css"
 

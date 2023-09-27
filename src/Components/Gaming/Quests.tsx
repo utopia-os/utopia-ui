@@ -6,7 +6,7 @@ export function Quests() {
 
     if (open) return (
         <>
-            <div className="tw-card tw-w-48 tw-bg-base-100 tw-shadow-xl tw-absolute tw-bottom-4 tw-left-4 tw-z-1000">
+            <div className="tw-card tw-w-48 tw-bg-base-100 tw-shadow-xl tw-absolute tw-bottom-4 tw-left-4 tw-z-[2000]">
                 <div className="tw-card-body tw-p-4 tw-pt-0">
                     <div className="tw-card-actions tw-justify-end">
                         <label className="tw-btn tw-btn-sm tw-btn-circle tw-btn-ghost tw-absolute tw-right-2 tw-top-2" onClick={()=>setOpen(false)}>✕</label>

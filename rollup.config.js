@@ -5,7 +5,7 @@ export default {
     input: 'src/index.tsx',
     output: [
       {
-        file: 'dist/index.js',
+        dir: 'dist/',
         format: 'esm',
         exports: 'named',
         sourcemap: true,
@@ -16,7 +16,7 @@ export default {
       postcss({
         plugins: []
       }),
-      typescript()
+      typescript(),
     ],
-    external: ['react', 'react-dom', 'leaflet', 'react-leaflet', 'react-toastify' , 'react-string-replace', 'react-toastify/dist/ReactToastify.css', 'tw-elements' ,'react-router-dom', 'react-leaflet-cluster', '@tanstack/react-query', 'tributejs', 'prop-types',  'leaflet/dist/leaflet.css', '@heroicons/react/20/solid']
+    external: ['react', 'react-dom', 'leaflet', 'react-leaflet', 'react-toastify' , 'react-string-replace', 'react-toastify/dist/ReactToastify.css','tw-elements' ,'react-router-dom', 'react-leaflet-cluster', '@tanstack/react-query', 'tributejs', 'prop-types',  'leaflet/dist/leaflet.css', '@heroicons/react/20/solid']
   }

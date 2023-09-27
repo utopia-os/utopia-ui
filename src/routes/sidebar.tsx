@@ -1,8 +1,5 @@
 
-import MapIcon from '@heroicons/react/24/outline/MapIcon'
-import UserGroupIcon from '@heroicons/react/24/outline/UserGroupIcon'
-
-
+import { BookOpenIcon, RectangleGroupIcon, UsersIcon, MapIcon } from '@heroicons/react/24/outline'
 
 //const iconClasses = `h-6 w-6`
 //const submenuIconClasses = `h-5 w-5`
@@ -15,8 +12,19 @@ export const routes = [
     name: 'Map',
   },
   {
+    path: '/projects', // url
+    icon: <RectangleGroupIcon style={{width: 24 }}/>, // icon component
+    name: 'Projects', // name that appear in Sidebar
+  }/**
+  {
+    path: '/people', // url
+    icon: <UsersIcon style={{width: 24 }}/>, // icon component
+    name: 'People', // name that appear in Sidebar
+  }, */,
+
+  {
     path: '/concept', // url
-    icon: <UserGroupIcon style={{width: 24 }}/>, // icon component
+    icon: <BookOpenIcon style={{width: 24 }}/>, // icon component
     name: 'Concept', // name that appear in Sidebar
   },
 

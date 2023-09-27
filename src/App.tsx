@@ -5,6 +5,7 @@ import MapContainer from "./pages/MapContainer"
 import './App.css'
 import Concept from './pages/Concept'
 import { userApi } from './api/userApi'
+import Projects from './pages/Projects'
 
 
 
@@ -24,6 +25,7 @@ function App() {
               <Route path="/*" element={<MapContainer />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/concept" element={<Concept/>} />
+              <Route path="/projects" element={<Projects/>} />
               <Route path="/login" element={<LoginPage/>} />
               <Route path="/signup" element={<SignupPage/>} />
             </Routes>

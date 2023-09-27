@@ -10,6 +10,14 @@ export type Place = {
     position?: Point;
   };
 
+  export type Project = {
+    id: string;
+    name: string;
+    text: string;
+    position?: Point;
+    picture: string;
+  };
+
   export type Tag = {
     id: string;
     color: string;

@@ -1,6 +1,3 @@
-import UsersIcon from '@heroicons/react/24/outline/UsersIcon'
-import MapPinIcon from '@heroicons/react/24/outline/MapPinIcon'
-import CalendarIcon from '@heroicons/react/24/outline/CalendarIcon'
 import { TextInput, TitleCard, SelectBox, useAuth } from 'utopia-ui'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -61,9 +58,10 @@ const {token,isAuthenticated} = useAuth();
               return (
                 <Link key={k} to={'/projects/' + i.id}>
                   <TitleCard className={"!h-96"} title={i.name} topMargin={"mt-2"}>
-                    <p className='font-bold text-sm mb-2'>{i.subname}</p>
                   <img className='h-36' src={`https://api.utopia-lab.org/assets/${i.picture}${isAuthenticated ?  `?access_token=${token}` : ''}`}></img>
-                    {i.text}
+                  <p className='font-bold text-sm mb-2 mt-2'>{i.subname}</p>
+
+                  <p className='text-sm mb-2'>{i.text}</p>
                     {/**
  *                  <div className='flex justify-between text-gray-500 '>
                     <div className='flex'><UsersIcon className=' h-6 w-6' />&nbsp;2</div>

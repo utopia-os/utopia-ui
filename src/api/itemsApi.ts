@@ -1,4 +1,4 @@
-import { createItem, deleteItem, readItems, updateItem } from '@directus/sdk';
+import { createItem, deleteItem, readItem, readItems, updateItem } from '@directus/sdk';
 import { MyCollections, directusClient } from './directus';
 import { ItemsApi } from 'utopia-ui/dist/types';
 
@@ -15,6 +15,17 @@ export class itemsApi<T> implements ItemsApi<T>{
   async getItems() {
     try {
       return await directusClient.request(readItems(this.collectionName as never, { limit: 500 }));
+    } catch (error: any) {
+      console.log(error);
+      if (error.errors[0]?.message)
+        throw error.errors[0].message;
+      else throw error;
+    }
+  }
+
+  async getItem(id : string) {
+    try {
+      return await directusClient.request(readItem(this.collectionName as never, id));
     } catch (error: any) {
       console.log(error);
       if (error.errors[0]?.message)

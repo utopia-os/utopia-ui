@@ -6,6 +6,7 @@ import './App.css'
 import Concept from './pages/Concept'
 import { userApi } from './api/userApi'
 import Projects from './pages/Projects'
+import { ProjectView } from './pages/ProjectView'
 
 
 
@@ -26,6 +27,7 @@ function App() {
               <Route path="/settings" element={<Settings />} />
               <Route path="/concept" element={<Concept/>} />
               <Route path="/projects" element={<Projects/>} />
+              <Route path="/projects/*" element={<ProjectView/>} />
               <Route path="/login" element={<LoginPage/>} />
               <Route path="/signup" element={<SignupPage/>} />
             </Routes>

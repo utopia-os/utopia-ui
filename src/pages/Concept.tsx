@@ -4,185 +4,169 @@ import { CardPage } from "utopia-ui"
 export default function Concept() {
   return (
     <CardPage title="Concept">
+      Utopia is a cooperative Real Life Manifestation Game. While playing, we connect with ourselves, each other and our dreams to manifest them together.<br></br><br></br>
       <div className="collapse collapse-arrow bg-base-200 mb-2">
-        <input type="radio" name="my-accordion-2"  />
+        <input type="radio" name="my-accordion-2" />
         <div className="collapse-title text-xl font-medium">
-          Real-Life-Manifestations-Spiele   </div>
+          Real Life Manifestation Games  </div>
         <div className="collapse-content">
-          <div className="flex flex-row flex-wrap">
-            <div className="basis-full pr-4 pb-4">
-              Ähnlich wie bei einem Rollenspiel kann man sich sein eigenes Profil erstellen, mit dem Unterschied, dass hier echte Fähigkeiten abgebildet, geteilt und trainiert werden können.
-
-            </div>
-            <div className="basis-full  pr-4 pb-4">
-              Die Geschichte und das Storytelling orientiert sich an den realen Zuständen und Herausforderungen auf unserer Erde.
-            </div>
-            <div className="basis-full  pr-4 pb-4">
-              Des weiteren werden reale Ressourcen sichtbar und verfügbar gemacht, verwaltet und eingesetzt, ähnlich wie bei einem Strategie-Spiel.
-            </div>
-            <div className="basis-full  pr-4 pb-4">
-              Die Aufgaben des Projektmanagements können als Quests bzw. Spielaufträge abgebildet werden. Kleine und große Aufgaben werden in Abenteuer und Herausforderungen verwandelt und Probleme in Rätsel.
-            </div>
-          </div>
-          <div className="basis-full  pr-4 pb-4">
-            Ziel des Spiels ist es, WinWinWin Situationen zu erzeugen. Win für Dich, Win für Uns, Win für die Welt.
-          </div>
-
-
+          <ul className="list-disc list-inside pl-4">
+            <li>            
+              Like a role-playing game, you can create your own profile, but here you can map, share and train real skills.
+            </li>
+            <li>            
+              Further, real resources are made visible and available, managed and used, similar to a strategy game.
+            </li>
+            <li>            
+              Project management tasks can be mapped as quests, levels, missions and problems become challenges.
+            </li>
+            <li>            
+              The storytelling is based on the real conditions and challenges on our planet.
+            </li>
+            <li>          
+              The goal of the game is to create win-win-win situations. Win for you, win for us, win for the world.
+            </li>
+          </ul>
         </div>
       </div>
-
       <div className="collapse collapse-arrow bg-base-200 mb-2">
-        <input type="radio" name="my-accordion-2"  />
+        <input type="radio" name="my-accordion-2" />
         <div className="collapse-title text-xl font-medium">
-          Elemente des Spiels    </div>
+          Elements
+        </div>
         <div className="collapse-content">
           <div className="flex flex-row flex-wrap">
             <div className="basis-full md:basis-1/2 pr-4 pb-4">
-              <h3 className="text-base my-3 font-medium"> App</h3>
-
-              Die App bietet eine interaktive geografische Karte als Spielfeld. Außerdem ermöglicht sie das Erstellen und Ansehen von Spieler-Profilen. Der Marktplatz zeigt Angebote und Bedürfnisse
-            </div>
+              <h3 className="text-base my-3 font-medium"> The App</h3>
+              The app provides an interactive geographical map as a playing field. It also allows you to create and view player profiles. The marketplace shows offers and needs.            </div>
             <div className="basis-full md:basis-1/2 pr-4 pb-4">
-
               <h3 className="text-base my-3 font-medium"> Print Material</h3>
+              To complement offline play, there are flyers, stickers, signs and workbooks that invite players to play.
 
-              Als Ergänzung und zum Offline-Spielen gibt es Flyer, Aufkleber, Schilder und Workbooks, welche zum Spielen einladen.
-
-              Spieler erhalten Ausweise und Visitenkarten mit QR-Codes, die zu Vernetzung genutzt werden (später mehr)
+              Players receive or print ID cards with QR codes that are used for networking (more on this later).
             </div>
             <div className="basis-full md:basis-1/2 pr-4 pb-4">
 
-              <h3 className="text-base my-3 font-medium"> Temporäre Events</h3>
+              <h3 className="text-base my-3 font-medium"> Gatherings</h3>
 
-              Wir kommen zusammen bei Workshops, auf Festivals und bei lokalen Treffen um uns zu connecten, Strukturen zu bilden und neue Spieler zu gewinnen.
-            </div>
+              Coming together at workshops, festivals and local meetings to connect, build structures and to engage new players.            </div>
             <div className="basis-full md:basis-1/2 pr-4 pb-4">
 
-              <h3 className="text-base my-3 font-medium">  Dauerhafte Strukturen</h3>
+              <h3 className="text-base my-3 font-medium">  Permanent Structures</h3>
 
-              Beim Spielen erschaffen wir dauerhafte materielle Strukturen wie Orte und Infrastruktur.
+              When we play, we create tangible structures like places and infrastructure.
 
-              Und Immaterielles wie Netzwerke aus Beziehungen, Geschichten, Informationen ...
+              And also intangibles like networks of relationships, stories, information ...
             </div>
           </div>
         </div>
       </div>
 
       <div className="collapse collapse-arrow bg-base-200 mb-2">
-        <input type="radio" name="my-accordion-2"  />
+        <input type="radio" name="my-accordion-2" />
         <div className="collapse-title text-xl font-medium">
-          Ziel des Spiels    </div>
+          Goals  </div>
         <div className="collapse-content">
 
           <ol className="list-decimal list-inside pl-4">
-            <li>Ein dezentrales Netzwerk aufspannen</li>
-            <li>Freie Entfaltung unserer kollektiven und individuellen Potentiale</li>
-            <li>Aufbau kollektiver Strukturen und Co-Kreation</li>
+            <li>To build a decentralised network</li>
+            <li>Free development of our collective and individual potential</li>
+            <li>Start co-creation and build collective structures</li>
           </ol>
         </div>
       </div>
 
       <div className="collapse collapse-arrow bg-base-200 mb-2">
-        <input type="radio" name="my-accordion-2"  />
+        <input type="radio" name="my-accordion-2" />
         <div className="collapse-title text-xl font-medium">
-          Ablauf   </div>
+          Gameplay   </div>
         <div className="collapse-content">
 
-          Durch spielerische Elemente / Gamification wird der Spieler motiviert und angeleitet ...
-          <h3 className="text-base my-3 font-medium">  Spieler Profile</h3>
+          Through playful elements and gamification, the player is motivated and guided through  quests and levels.
 
-          Der Spieler setzt sich mit sich selbst und seinen Fähigkeiten sowie tieferen Wünschen und Visionen auseinander und definiert seinen Charakter bzw. Spieler-Profil
+          <h3 className="text-base my-3 font-medium">  Player Profiles</h3>
 
-          Dabei stehen folgende Fragen im Mittelpunkt:
+          The player examines himself and his abilities as well as deeper desires and visions to define his character or player profile.
+
+          The focus is on the following questions:
           <ul className="list-disc list-inside pl-4 pt-4">
-            <li>Wie und in was für einer Welt möchte ich leben?</li>
-            <li>Wer bin ich und was sind meine besonderen Fähigkeiten oder meine spezielle Aufgabe in diesem Leben?</li>
-            <li>Was habe ich zu geben? Was kann und möchte ich mit anderen und der Welt teilen?</li>
-            <li>Was brauche ich noch um ganz in meine Kraft zu kommen? Wie können mich andere dabei unterstützen?</li>
+            <li>How and in what kind of world do I want to live?</li>
+            <li>Who am I and what are my special abilities or my special task in this life?</li>
+            <li>What do I have to give? What can and do I want to share with others and the world?</li>
+            <li>What do I still need to come fully into my power? How can others support me in this?</li>
           </ul>
 
 
 
 
-          <h3 className="text-base my-3 font-medium"> Ressourcen</h3>
+          <h3 className="text-base my-3 font-medium"> Resources</h3>
+          The player explores and defines his/her offers and needs, shares his/her resources and uses those of the network.
 
-          Der Spieler erforscht und definiert seine Angebote und Bedürfnisse, teilt seine Ressourcen und nutzt die des Netzwerks
+          E.g. tools, machines, electrical appliances, vehicles, food and drink, places to sleep, rides, books, access to the internet, individual skills and help in everyday life
+          <h3 className="text-base my-3 font-medium"> Realising Projects</h3>
 
-          Z.B. Werkzeuge, Maschinen, Elektrogeräte, Fahrzeuge, Essen und Trinken, Schlafplätze, Mitfahrten, Bücher, Zugang zum Internet, individuelle Fähigkeiten sowie Hilfe im Alltag
+          The player joins projects and starts his own.
 
-          <h3 className="text-base my-3 font-medium"> Projekte umsetzen</h3>
+          The game offers support in project management or crowdfunding.
 
-          Der Spieler schließt sich Projekten an und startet selbst welche.
+          In this way, structures, events, permanent places, infrastructure and everything we need to meet our human needs in harmony with Mother Earth can be created.
+          <h3 className="text-base my-3 font-medium"> Making Change visible</h3>
 
-          Das Spiel unterstützt beim Projektmanagement oder beim Crowdfunding
-
-          So entstehen Strukturen, Veranstaltungen, dauerhafte Orte, Infrastruktur und alles was wir brauchen um unsere menschlichen Bedürfnisse im Einklang mit Mutter Erde zu befriedigen.
-
-          <h3 className="text-base my-3 font-medium"> Wandel sichtbar machen</h3>
-
-          Der Spieler wird motiviert die neu entstehende Welt zu kartieren und zu dokumentieren indem er ...
+          The player is motivated to map and document the newly emerging world by ...
           <ul className="list-disc list-inside pl-4 pt-4">
 
-            <li>Orte, Veranstaltungen usw. in der Karte einträgt</li>
+            <li>adding places, events etc. to the map</li>
 
-            <li>Projekte mit Text, Bild und Ton dokumentiert</li>
+            <li>documenting projects with text, images, audio and video</li>
 
-            <li>Geschichten des Wandels erzählt</li>
+            <li>telling stories of change</li>
           </ul>
         </div>
       </div>
 
 
       <div className="collapse collapse-arrow bg-base-200 mb-2">
-        <input type="radio" name="my-accordion-2"  />
+        <input type="radio" name="my-accordion-2" />
         <div className="collapse-title text-xl font-medium">
           Web of Trust   </div>
         <div className="collapse-content">
           <div className="flex flex-row flex-wrap">
 
-            Während wir uns mit anderen Menschen im echten Leben connecten und unser persönliches Netzwerk aufbauen, tauschen wir gleichzeitig kryptografische Schlüssel aus und bauen ein sogenanntes Web of Trust.
-            <div className="basis-full">
-            <div className="divider divider-vertical"></div> 
+            While we connect with other people in real life and build our personal network, we are simultaneously exchanging cryptographic keys and building a "Web of Trust".            <div className="basis-full">
+              <div className="divider divider-vertical"></div>
             </div>
-            <h3 className="text-base basis-full my-3 font-medium"> Dezentrale IDs</h3>
+            <h3 className="text-base basis-full my-3 font-medium"> Decentralised IDs</h3>
 
             <div className="basis-full md:basis-1/2 pr-4 pb-4">
 
-              <img className="float-right h-24 px-4" src="/public-private-key.svg"></img>
+              <img className="float-right h-28 px-4 pb-4" src="/public-private-key.svg"></img>
 
-              <p>Wenn wir unser Profil erstellen wird gleichzeitig ein Schlüsselpaar bestehend aus einem privaten und einem öffentlichen Schlüssel erzeugt.</p>
+              <p>When we create our profile, a key pair consisting of a private key and a public key is generated at the same time.</p>
 
 
 
             </div>
             <div className="basis-full md:basis-1/2 pr-4 pb-4">
 
-              <p className="basis-full pb-4">Den öffentlichen Schlüssel teilen wir mit unseren Freunden und diese können damit Daten für uns verschlüsseln.</p>
-
-
-
-              <p className="basis-full">Den privaten Schlüssel halten wir geheim. Er wird benötigt um Daten die für uns verschlüsselt wurden auf unserem Gerät wieder zu entschlüsselt.</p>
+              <p className="basis-full pb-4">We share the public key with our friends and they can use it to encrypt data for us. We keep the private key secret. It is needed to decrypt data that has been encrypted for us on our device.</p>
 
             </div>
             <div className="basis-full">
-            <div className="divider divider-vertical"></div> 
+              <div className="divider divider-vertical"></div>
             </div>
 
             <div className="basis-full md:basis-1/2 pr-4 pb-4">
 
-              <h3 className="text-base my-3 font-medium"> Schlüsseltausch</h3>
+              <h3 className="text-base my-3 font-medium"> Key Exchange</h3>
               <img className="float-left h-32 px-4" src="/qr-scan.svg"></img>
 
-              Wenn wir Menschen im echten Leben begegnen tauschen wir unsere öffentlichen Schlüssel via QR-Code-Scan oder auf Papier.
-            </div>
+              When we meet people in real life, we can exchange our public keys by scanning each other's QR codes or on paper.            </div>
 
             <div className="basis-full md:basis-1/2 pr-4 pb-4">
-              <h3 className="text-base my-3 font-medium"> Private Daten teilen</h3>
+              <h3 className="text-base my-3 font-medium"> Private data sharing</h3>
               <img className="float-right h-32 px-4" src="/web-of-trust.svg"></img>
 
-              Innerhalb unseres Netzwerkes können wir dann unsere Profile, Angebote, Bedürfnisse, Projekte, Orte und Veranstaltungen ende-zu-ende-verschlüsselt teilen.
-
+              Within our network, we can then share our profiles, offers, needs, projects, locations and events end-to-end encrypted.
             </div>
 
           </div>
@@ -197,30 +181,27 @@ export default function Concept() {
 
 
       <div className="collapse collapse-arrow bg-base-200 mb-2">
-        <input type="radio" name="my-accordion-2"  />
-        <h2 className="collapse-title text-xl font-semibold">
-          Prinzipien   </h2>
+        <input type="radio" name="my-accordion-2" />
+        <h2 className="collapse-title text-xl font-medium">
+          Principles   </h2>
         <div className="collapse-content">
           <div className="flex flex-row flex-wrap">
             <div className="basis-full md:basis-1/2 pr-4 pb-4">
-              <h3 className="text-base my-3 font-medium"> Alles ist nur ein Spiel</h3>
+              <h3 className="text-base my-3 font-medium"> Everything is just a game</h3>
 
-              Alles passiert freiwillig, aus uns selbst heraus im Flow. Jeder ist jederzeit eingeladen mitzumachen.
-
+              Everything happens voluntarily, out of ourselves in the flow. Everyone is invited to join in at any time.
             </div>
             <div className="basis-full md:basis-1/2 pr-4 pb-4">
-              <h3 className="text-base my-3 font-medium"> Kein Geld</h3>
+              <h3 className="text-base my-3 font-medium"> No Money</h3>
 
-              Da beim Geld der Spaß bekanntlich aufhört, bezahlen wir uns beim Spielen gegenseitig kein Geld.
-
+              Since the fun stops with money, we don't pay each other money when we play.
             </div>
             <div className="basis-full md:basis-1/2 pr-4 pb-4">
 
 
-              <h3 className="text-base my-3 font-medium"> Dezentrale Strukturen</h3>
+              <h3 className="text-base my-3 font-medium"> Decentralised Structures</h3>
 
-              Alle Strukturen, die wir erschaffen, gestalten wir dezentral und frei von Hierarchien. Für alle gelten die gleichen Regeln.
-
+              All structures we create are decentralised and free of hierarchies. The same rules apply to everyone.
 
 
             </div>
@@ -228,8 +209,7 @@ export default function Concept() {
 
               <h3 className="text-base my-3 font-medium"> Real Life</h3>
 
-              Veränderung passiert im echten Leben. Wir nutzen das Internet nur wo es direkt hilft echte Begegnungen zu organisieren.
-            </div>
+              Real change happens in real life. We only use the internet where it directly helps to organise real encounters.            </div>
           </div>
 
 

@@ -3,9 +3,10 @@ import * as React from "react"
 import {TitleCard} from "./TitleCard"
 
 
-export function CardPage({title,children} : { 
+export function CardPage({title,children, parent} : { 
   title: string,
   children?: React.ReactNode,
+  parent?: {name: string, url: string}
 }) {
 
 
@@ -15,6 +16,7 @@ export function CardPage({title,children} : {
         <div className="tw-text-sm tw-breadcrumbs">
           <ul>
             <li><Link to={'/'} >Home</Link></li>
+            {parent && <li><Link to={parent?.url ? parent?.url : ""}>{parent?.name}</Link></li>}
             <li>{title}</li>
           </ul>
         </div>

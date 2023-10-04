@@ -27,7 +27,7 @@ interface TitleCardProps {
               <div className="tw-divider tw-mt-2"></div>
           
               {/** Card Body */}
-              <div className='tw-h-full tw-w-full tw-pb-6 tw-bg-base-100'>
+              <div className='tw-h-full tw-bg-transparent tw-w-full tw-pb-6 tw-bg-base-100'>
                   {children}
               </div>
           </div>

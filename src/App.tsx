@@ -1,5 +1,5 @@
 import { AppShell, SideBar, Content, AuthProvider, Settings, Modal, LoginPage, SignupPage } from 'utopia-ui'
-import { routes } from './routes/sidebar'
+import { bottomRoutes, routes } from './routes/sidebar'
 import { Route, Routes } from 'react-router-dom'
 import MapContainer from "./pages/MapContainer"
 import './App.css'
@@ -19,7 +19,7 @@ function App() {
       <AuthProvider userApi={new userApi}>
         <AppShell appName="Utopia Game">
         <Modal/>
-          <SideBar routes={routes} />
+          <SideBar routes={routes} bottomRoutes={bottomRoutes}/>
           <Content>
            {/** <Quests />  */ }
             <Routes>

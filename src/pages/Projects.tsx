@@ -1,4 +1,4 @@
-import { TextInput, TitleCard, SelectBox, useAuth } from 'utopia-ui'
+import { TitleCard, useAuth } from 'utopia-ui'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { itemsApi } from '../api/itemsApi'
@@ -9,8 +9,6 @@ import { Project } from '../api/directus'
 
 export default function Projects() {
 
-
-  const [search, setSearch] = useState<string>("")
 
   const [projectsApi, setProjectsApi] = useState<itemsApi<Project>>();
   const [projects, setProjects] = useState<Project[]>();
@@ -41,20 +39,20 @@ const {token,isAuthenticated} = useAuth();
             <li><Link to={'/projects'} >Projects</Link></li>
           </ul>
         </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4 mt-2 ">
-          <TextInput defaultValue='' placeholder='🔍 Search' containerStyle='lg:col-span-2' updateFormValue={(val) => { setSearch(val) }}></TextInput>
+        {/**
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4 mt-2 ">
+             <TextInput defaultValue='' placeholder='🔍 Search' containerStyle='lg:col-span-2' updateFormValue={(val) => { setSearch(val) }}></TextInput>
           <SelectBox updateFormValue={() => { }} placeholder="Type" containerStyle=' hidden md:grid' defaultValue='PLACEHOLDER' options={[{ name: "local", value: "local" }, { name: "project", value: "project" }]} />
         </div>
-
         <div className="divider" ></div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+         */}
+
+
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
           {
-            projects?.filter(item => {
-              return search === ''
-                ? item :
-                item.name.toLowerCase().includes(search.toLowerCase());
-            }).map((i, k) => {
+            projects?.map((i, k) => {
               return (
                 <Link key={k} to={'/projects/' + i.id}>
                   <TitleCard className={"!h-96"} title={i.name} topMargin={"mt-2"}>

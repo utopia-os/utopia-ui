@@ -113,7 +113,7 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
                 }
             }}
             position={props.position}>
-            <form ref={formRef} onReset={resetPopup} onSubmit={e => handleSubmit(e)}>
+            <form ref={formRef} onReset={resetPopup} autoComplete='off' onSubmit={e => handleSubmit(e)}>
                 {props.item ? <div className='tw-h-3'></div>
                 :
                     <div className='tw-flex tw-justify-center'><b className="tw-text-xl tw-font-bold">New {props.layer.name}</b></div>

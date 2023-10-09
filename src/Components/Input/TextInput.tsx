@@ -10,11 +10,12 @@ type InputTextProps = {
     inputStyle?: string;
     defaultValue?: string;
     placeholder?: string;
+    autocomplete?: string
     updateFormValue?: (value: string ) => void;
 }
 
 
-export function TextInput({labelTitle, labelStyle, type, dataField, containerStyle, inputStyle, defaultValue, placeholder, updateFormValue} : InputTextProps){
+export function TextInput({labelTitle, labelStyle, type, dataField, containerStyle, inputStyle, defaultValue, placeholder, autocomplete, updateFormValue} : InputTextProps){
 
     return(
         <div className={`tw-form-control tw-w-full ${containerStyle}`}>
@@ -22,7 +23,7 @@ export function TextInput({labelTitle, labelStyle, type, dataField, containerSty
                 <span className={"tw-label-text tw-text-base-content " + labelStyle}>{labelTitle}</span>
              </label> 
              : " "} 
-            <input required type={type || "text"} name={dataField} defaultValue={defaultValue} placeholder={placeholder || ""} onChange={(e) => updateFormValue&& updateFormValue(e.target.value)}className={`tw-input  tw-input-bordered tw-w-full ${inputStyle ? inputStyle : ""}`} />
+            <input required type={type || "text"} name={dataField} defaultValue={defaultValue} placeholder={placeholder || ""} autoComplete={autocomplete} onChange={(e) => updateFormValue&& updateFormValue(e.target.value)}className={`tw-input  tw-input-bordered tw-w-full ${inputStyle ? inputStyle : ""}`} />
         </div>
     )
 }

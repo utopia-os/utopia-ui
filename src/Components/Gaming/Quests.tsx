@@ -16,10 +16,10 @@ export function Quests() {
                     </div>
                     <h2 className="tw-card-title tw-m-auto ">Level 1</h2>
                     <ul className='tw-flex-row'>
-                        <li><label className="tw-label tw-justify-normal tw-pt-1 tw-pb-0"><input type="checkbox" readOnly={true} className="tw-checkbox tw-checkbox-xs tw-checkbox-success" checked={isAuthenticated? isAuthenticated : false} /><span className='tw-text-sm tw-label-text tw-mx-2'>Registrieren</span></label></li>
-                        <li><label className="tw-label tw-justify-normal tw-pt-1 tw-pb-0"><input type="checkbox" readOnly={true} className="tw-checkbox tw-checkbox-xs tw-checkbox-success" checked={user?.avatar? true : false} /><span className='tw-text-sm tw-label-text tw-mx-2'>Avatar hochladen</span></label></li>
-                        <li><label className="tw-label tw-justify-normal tw-pt-1 tw-pb-0"><input type="checkbox" readOnly={true} className="tw-checkbox tw-checkbox-xs tw-checkbox-success" checked={user?.description? true : false}  /><span className='tw-text-sm tw-label-text tw-mx-2'>Profil ausfüllen</span></label></li>
-                        <li><label className="tw-label tw-justify-normal tw-pt-1 tw-pb-0"><input type="checkbox" readOnly={true} className="tw-checkbox tw-checkbox-xs tw-checkbox-success"  /><span className='tw-text-sm tw-label-text tw-mx-2'>Gruppe beitreten</span></label></li>
+                        <li><label className="tw-label tw-justify-normal tw-pt-1 tw-pb-0"><input type="checkbox" readOnly={true} className="tw-checkbox tw-checkbox-xs tw-checkbox-success" checked={isAuthenticated? isAuthenticated : false} /><span className='tw-text-sm tw-label-text tw-mx-2'>Sign Up</span></label></li>
+                        <li><label className="tw-label tw-justify-normal tw-pt-1 tw-pb-0"><input type="checkbox" readOnly={true} className="tw-checkbox tw-checkbox-xs tw-checkbox-success" checked={user?.avatar? true : false} /><span className='tw-text-sm tw-label-text tw-mx-2'>Upload Avatar</span></label></li>
+                        <li><label className="tw-label tw-justify-normal tw-pt-1 tw-pb-0"><input type="checkbox" readOnly={true} className="tw-checkbox tw-checkbox-xs tw-checkbox-success" checked={user?.description? true : false}  /><span className='tw-text-sm tw-label-text tw-mx-2'>Fill Profile</span></label></li>
+                        <li><label className="tw-label tw-justify-normal tw-pt-1 tw-pb-0"><input type="checkbox" readOnly={true} className="tw-checkbox tw-checkbox-xs tw-checkbox-success"  /><span className='tw-text-sm tw-label-text tw-mx-2'>Join Group</span></label></li>
                     </ul>
                 </div>
             </div>

@@ -14,6 +14,7 @@ type route = {
   icon: JSX.Element;
   name: string;
   submenu?: route;
+  blank?: boolean
 }
 
 
@@ -102,6 +103,7 @@ export function SideBar({ routes, bottomRoutes }: { routes: route[], bottomRoute
                           <SidebarSubmenu {...route} /> :
                           (<NavLink
                             end
+                            target={route.blank ? "_blank" : "_self"}
                             to={route.path}
                             className={({ isActive }) => `${isActive ? 'tw-font-semibold  tw-bg-base-200 !tw-rounded-none' : 'tw-font-normal !tw-rounded-none'}`} onClick={() => {
                               if (screen.width < 640 && !slim) instance.toggle();

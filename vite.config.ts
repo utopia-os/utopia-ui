@@ -13,7 +13,7 @@ export default defineConfig({
       "name": "Utopia Game: The Real Life Manifestation Game",
       "icons": [
         {
-          "src": "3markers.svg",
+          "src": "3markers-globe.svg",
           "sizes": "any",
           "type": "image/svg+xml"
         }

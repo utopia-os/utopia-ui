@@ -17,7 +17,7 @@ type AuthCredentials = {
 
 
 type AuthContextProps = {
-  isAuthenticated: Boolean,
+  isAuthenticated: boolean,
   user: UserItem | null;
   login: (credentials: AuthCredentials) => Promise<UserItem | undefined>,
   register: (credentials: AuthCredentials, userName: string) => Promise<UserItem | undefined>,
@@ -41,7 +41,7 @@ const AuthContext = createContext<AuthContextProps>({
 export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
   const [user, setUser] = useState<UserItem | null>(null);
   const [token, setToken] = useState<String | null>(null);
-  const [loading, setLoading] = useState<Boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const isAuthenticated = !!user;
 
   useEffect(() => {

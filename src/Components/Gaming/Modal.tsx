@@ -9,15 +9,17 @@ type ChapterProps = {
 export function Welcome1({ clickAction }: ChapterProps) {
     return (
         <>
-            <h3 className="tw-font-bold tw-text-lg">Herzlich Willkommen, schön dass du da bist! </h3>
+            <h3 className="tw-font-bold tw-text-lg">Welcome, glad you are here!</h3>
             <p className="tw-py-4">
-                Wir erschaffen zusammen eine Welt, in der wir frei und menschlich zusammen leben dürfen.
-                Dafür bauen wir ein Netzwerk in dem wir uns im echten Leben begegnen und helfen
-                ... ganz ohne Geld 😉
+                Let's play a game together where we explore ourselves and our dreams and come together to make them come true.
                 <br /><br />
-                <b>Hast du Lust mitzumachen?</b></p>
+                <b>Would you like to join us?</b></p>
             <div className="tw-modal-action">
-                <label className="tw-btn tw-btn-neutral" onClick={() => clickAction!()}>Bin dabei</label>
+                <label className="tw-btn tw-btn-neutral" onClick={() => clickAction!()}>Yes</label>
+
+                <label className="tw-btn tw-btn-neutral" onClick={() => close()}>No</label>
+
+
             </div>
         </>
     )
@@ -26,19 +28,31 @@ export function Welcome1({ clickAction }: ChapterProps) {
 export function Welcome2({ clickAction }: ChapterProps) {
     return (
         <>
-            <h3 className="tw-font-bold tw-text-lg">Veränderung passiert im echten Leben</h3>
+            <h3 className="tw-font-bold tw-text-lg"> Imagine ...</h3>
             <p className="tw-py-4">
-                Mal ganz ehrlich: 99% unser Zeit am Bildschirm ist sinnlose Zeit- und Energie-Verschwendung.
-                <br /><br />
-                Darum tauchen wir wieder in das echte Leben ein und nutzen digitale Medien nur dort, wo sie uns wirklich helfen in echt zusammen zu kommen</p>
+                you wake up sometime in the early twenties of the 21st century on planet Earth from a hypnosis that has somehow kept you and all other people under some kind of external control all your life.
+            </p>
             <div className="tw-modal-action">
-                <label className="tw-btn tw-btn-neutral" onClick={() => clickAction!()}>Alles klar</label>
+                <label className="tw-btn tw-btn-neutral" onClick={() => clickAction!()}>next</label>
             </div>
         </>
     )
 }
 
 export function Welcome3({ clickAction }: ChapterProps) {
+    return (
+        <>
+            <h3 className="tw-font-bold tw-text-lg">Many people  ... </h3>
+            <p className="tw-py-4">
+                are still trapped in old and dysfunctional structures. But magically, a new consciousness is suddenly rising. More and more people are awakening from hypnosis.            </p>
+            <div className="tw-modal-action">
+                <label className="tw-btn tw-btn-neutral" onClick={() => clickAction!()}>next</label>
+            </div>
+        </>
+    )
+}
+
+export function Welcome4({ clickAction }: ChapterProps) {
     return (
         <>
             <h3 className="tw-font-bold tw-text-lg"> Gemeinsam erschaffen wir Strukturen </h3>
@@ -56,14 +70,16 @@ export function Welcome3({ clickAction }: ChapterProps) {
     )
 }
 
+const close = () => {
+    window.my_modal_3.close();
+}
+
 
 export function Modal() {
 
     const [chapter, setChapter] = useState<number>(1);
 
-    const close = () => {
-        window.my_modal_3.close();
-    }
+
 
     const ActiveChapter = () => {
         switch (chapter) {
@@ -96,5 +112,4 @@ export function Modal() {
         </>
     )
 }
-
 

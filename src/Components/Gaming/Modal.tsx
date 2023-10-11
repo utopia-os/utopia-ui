@@ -1,5 +1,6 @@
 import { useState } from "react"
 import * as React from "react"
+import { useSetQuestOpen } from "./hooks/useQuests"
 
 type ChapterProps = {
     clickAction?: () => void
@@ -10,15 +11,17 @@ export function Welcome1({ clickAction }: ChapterProps) {
     return (
         <>
             <h3 className="tw-font-bold tw-text-lg">Welcome, glad you are here!</h3>
-            <p className="tw-py-4">
-                Let's play a game together where we explore ourselves and our dreams and come together to make them come true.
-                <br /><br />
-                <b>Would you like to join us?</b></p>
+            <img className="tw-float-right tw-w-32 tw-m-2" src="earth.svg"></img>
+            <p className="tw-py-3">
+            In the 21st century, humanity is at a special point in its history. 
+            </p>
+            <p className="tw-py-1">
+                On the one hand, the people of Planet Earth are facing a multitude of fundamental crises.
+                </p>
+            <p className="tw-py-1">
+                On the other hand, we have all the knowledge and technology to heal the planet and live in harmony with Mother Earth.                  </p>
             <div className="tw-modal-action">
-                <label className="tw-btn tw-btn-neutral" onClick={() => clickAction!()}>Yes</label>
-
-                <label className="tw-btn tw-btn-neutral" onClick={() => close()}>No</label>
-
+                <label className="tw-btn" onClick={() => clickAction!()}>Next</label>
 
             </div>
         </>
@@ -28,12 +31,21 @@ export function Welcome1({ clickAction }: ChapterProps) {
 export function Welcome2({ clickAction }: ChapterProps) {
     return (
         <>
-            <h3 className="tw-font-bold tw-text-lg"> Imagine ...</h3>
-            <p className="tw-py-4">
-                you wake up sometime in the early twenties of the 21st century on planet Earth from a hypnosis that has somehow kept you and all other people under some kind of external control all your life.
+            <h3 className="tw-font-bold tw-text-lg"> Hypnosis and Disillusion </h3>
+            
+            <p className="tw-py-3">
+            Most people are still stuck in old ways of thinking and living.       </p>
+            <img className="tw-float-right tw-w-32 tw-mx-4 tw-my-2" src="fear2.svg"></img>
+
+            <p className="tw-py-1">
+            Hypnotised, they sit in front of screens in concrete blocks, flooded and disillusioned by irrelevant information.
             </p>
+
+            <p className="tw-py-1">
+                From an early age, they are trained to do alienated work and consume unhealthy and meaningless products.
+             </p>
             <div className="tw-modal-action">
-                <label className="tw-btn tw-btn-neutral" onClick={() => clickAction!()}>next</label>
+                <label className="tw-btn" onClick={() => clickAction!()}>next</label>
             </div>
         </>
     )
@@ -42,11 +54,19 @@ export function Welcome2({ clickAction }: ChapterProps) {
 export function Welcome3({ clickAction }: ChapterProps) {
     return (
         <>
-            <h3 className="tw-font-bold tw-text-lg">Many people  ... </h3>
-            <p className="tw-py-4">
-                are still trapped in old and dysfunctional structures. But magically, a new consciousness is suddenly rising. More and more people are awakening from hypnosis.            </p>
+            <h3 className="tw-font-bold tw-text-lg">But Consciousness is rising </h3>
+            <p className="tw-py-3">
+            More and more people are waking up to what's really happening. </p>
+            <p className="tw-py-1">
+            They are in the process of understanding the potential that is within themselves and within true community.
+            </p>
+                        <img className="tw-float-left tw-w-32 tw-mx-4" src="camp3.svg"></img>
+
+            <p className="tw-py-1">
+                Starting to reconnect with our Mother Earth and beginning to question things that have been taken for granted. 
+             </p>
             <div className="tw-modal-action">
-                <label className="tw-btn tw-btn-neutral" onClick={() => clickAction!()}>next</label>
+                <label className="tw-btn" onClick={() => clickAction!()}>next</label>
             </div>
         </>
     )
@@ -78,6 +98,7 @@ const close = () => {
 export function Modal() {
 
     const [chapter, setChapter] = useState<number>(1);
+    const setQuestsOpen = useSetQuestOpen();
 
 
 
@@ -91,6 +112,10 @@ export function Modal() {
                 return <Welcome3 clickAction={() => {
                     setChapter(1);
                     close();
+                    setTimeout(() => {
+                        setQuestsOpen(true);
+                    }, 1000);
+                    
                 }} />
             default: return <></>
         };

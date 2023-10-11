@@ -16,6 +16,9 @@ import { FilterControl } from "./Subcomponents/FilterControl";
 import { PermissionsProvider } from "./hooks/usePermissions";
 import { LeafletRefsProvider } from "./hooks/useLeafletRefs";
 import { LayerControl } from "./Subcomponents/LayerControl";
+import { QuestControl } from "./Subcomponents/QuestControl";
+import { Quests } from "../Gaming";
+import { Control } from "./Subcomponents/Control";
 
 
 export interface MapEventListenerProps {
@@ -75,35 +78,37 @@ function UtopiaMap({
                     <FilterProvider initialTags={[]}>
                         <ItemsProvider initialItems={[]}>
                             <LeafletRefsProvider initialLeafletRefs={{}}>
-                                <div className={(selectNewItemPosition != null ? "crosshair-cursor-enabled" : undefined)}>
-                                    <MapContainer ref={mapDivRef} style={{ height: height, width: width }} center={center} zoom={zoom} zoomControl={false}>
-                                        <FilterControl></FilterControl>
-                                        <LayerControl></LayerControl>
-
-                                        <TileLayer
-                                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                                            url="https://tile.osmand.net/hd/{z}/{x}/{y}.png" />
-                                        <MarkerClusterGroup ref={clusterRef} showCoverageOnHover chunkedLoading maxClusterRadius={50} removeOutsideVisibleBounds={false}>
-                                            {
-                                                React.Children.toArray(children).map((child) =>
-                                                    React.isValidElement<{ setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps>>, itemFormPopup: ItemFormPopupProps | null, clusterRef: React.MutableRefObject<undefined> }>(child) ?
-                                                        React.cloneElement(child, { setItemFormPopup: setItemFormPopup, itemFormPopup: itemFormPopup, clusterRef: clusterRef }) : child
-                                                )
-                                            }
-                                        </MarkerClusterGroup>
-                                        <MapEventListener setSelectNewItemPosition={setSelectNewItemPosition} selectNewItemPosition={selectNewItemPosition} setItemFormPopup={setItemFormPopup} />
-                                    </MapContainer>
-                                    <AddButton setSelectNewItemPosition={setSelectNewItemPosition}></AddButton>
-                                    {selectNewItemPosition != null &&
-                                        <div className="tw-button tw-z-1000 tw-absolute tw-right-5 tw-top-4 tw-drop-shadow-md">
-                                            <div className="tw-alert tw-bg-base-100 tw-text-base-content">
-                                                <div>
-                                                    <span>Select {selectNewItemPosition.name} position!</span>
+                                    <div className={(selectNewItemPosition != null ? "crosshair-cursor-enabled" : undefined)}>
+                                        <MapContainer ref={mapDivRef} style={{ height: height, width: width }} center={center} zoom={zoom} zoomControl={false}>
+                                            <FilterControl></FilterControl>
+                                            <Control>
+                                                <QuestControl></QuestControl>
+                                                <LayerControl></LayerControl>
+                                            </Control>
+                                            <TileLayer
+                                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                                url="https://tile.osmand.net/hd/{z}/{x}/{y}.png" />
+                                            <MarkerClusterGroup ref={clusterRef} showCoverageOnHover chunkedLoading maxClusterRadius={50} removeOutsideVisibleBounds={false}>
+                                                {
+                                                    React.Children.toArray(children).map((child) =>
+                                                        React.isValidElement<{ setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps>>, itemFormPopup: ItemFormPopupProps | null, clusterRef: React.MutableRefObject<undefined> }>(child) ?
+                                                            React.cloneElement(child, { setItemFormPopup: setItemFormPopup, itemFormPopup: itemFormPopup, clusterRef: clusterRef }) : child
+                                                    )
+                                                }
+                                            </MarkerClusterGroup>
+                                            <MapEventListener setSelectNewItemPosition={setSelectNewItemPosition} selectNewItemPosition={selectNewItemPosition} setItemFormPopup={setItemFormPopup} />
+                                        </MapContainer>
+                                        <AddButton setSelectNewItemPosition={setSelectNewItemPosition}></AddButton>
+                                        {selectNewItemPosition != null &&
+                                            <div className="tw-button tw-z-1000 tw-absolute tw-right-5 tw-top-4 tw-drop-shadow-md">
+                                                <div className="tw-alert tw-bg-base-100 tw-text-base-content">
+                                                    <div>
+                                                        <span>Select {selectNewItemPosition.name} position!</span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    }
-                                </div>
+                                        }
+                                    </div>
                             </LeafletRefsProvider>
                         </ItemsProvider>
                     </FilterProvider>

@@ -58,12 +58,12 @@ export function Welcome3({ clickAction }: ChapterProps) {
             <p className="tw-py-3">
             More and more people are waking up to what's really happening. </p>
             <p className="tw-py-1">
-            They are in the process of understanding the potential that is within themselves and within true community.
+            They are in the process of understanding the potential that is within themselves and within the whole mankind.
             </p>
                         <img className="tw-float-left tw-w-32 tw-mx-4" src="camp3.svg"></img>
 
             <p className="tw-py-1">
-                Starting to reconnect with our Mother Earth and beginning to question things that have been taken for granted. 
+                Starting to reconnect with our Mother Earth and beginning to question things that long times have been taken for granted. 
              </p>
             <div className="tw-modal-action">
                 <label className="tw-btn" onClick={() => clickAction!()}>next</label>
@@ -110,10 +110,11 @@ export function Modal() {
                 return <Welcome2 clickAction={() => { setChapter(3) }} />
             case 3:
                 return <Welcome3 clickAction={() => {
-                    setChapter(1);
+                    
                     close();
                     setTimeout(() => {
                         setQuestsOpen(true);
+                        setChapter(1);
                     }, 1000);
                     
                 }} />
@@ -125,8 +126,8 @@ export function Modal() {
         <>
 
             {/* You can open the modal using ID.showModal() method */}
-            <dialog id="my_modal_3" className="tw-modal">
-                <form method="dialog" className="tw-modal-box">
+            <dialog id="my_modal_3" className="tw-modal tw-transition-all tw-duration-300">
+                <form method="dialog" className="tw-modal-box tw-transition-none">
                     <button className="tw-btn tw-btn-sm tw-btn-circle tw-btn-ghost tw-absolute tw-right-2 tw-top-2">✕</button>
                     <ActiveChapter />
                 </form>

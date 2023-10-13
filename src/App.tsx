@@ -7,6 +7,7 @@ import Concept from './pages/Concept'
 import { userApi } from './api/userApi'
 import Projects from './pages/Projects'
 import { ProjectView } from './pages/ProjectView'
+import { assetsApi } from './api/assetsApi'
 
 
 
@@ -17,7 +18,7 @@ function App() {
     <div className="App overflow-x-hidden">
 
       <AuthProvider userApi={new userApi}>
-        <AppShell appName="Utopia Game">
+        <AppShell assetsApi={new assetsApi("https://api.utopia-lab.org/assets/")} appName="Utopia Game">
         <Modal/>
           <SideBar routes={routes} bottomRoutes={bottomRoutes}/>
           <Content>

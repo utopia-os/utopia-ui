@@ -20,9 +20,7 @@ function useQuestsManager(initialOpen: boolean): {
   const [open, setOpen] = useState<boolean>(initialOpen);
 
   const setQuestsOpen = useCallback((questOpen: boolean) => {
-    setOpen(questOpen);
-    console.log(open);
-    
+    setOpen(questOpen);   
   }, []);
 
   return { open, setQuestsOpen };

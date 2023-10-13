@@ -140,19 +140,20 @@ export function Settings() {
   const onUpdateUser = () => {
     let changedUser = {} as UserItem;
 
-    if (passwordChanged) {
-      changedUser = { id: id, first_name: name, description: text, email: email, avatar: avatar, password: password };
-    }
-    else {
-      changedUser = { id: id, first_name: name, description: text, email: email, avatar: avatar };
-    }
+    changedUser = { id: id, first_name: name, description: text, email: email, ...passwordChanged && { password: password }, ...avatar.length > 10 && { avatar: avatar } };
+
+
     toast.promise(
 
       updateUser(changedUser),
       {
         pending: 'updating Profile  ...',
         success: 'Profile updated',
-        error: 'Error'
+        error: {
+          render({ data }) {
+            return `${data}`
+          },
+        },
       })
       .then(() => navigate("/"));
   }
@@ -164,15 +165,32 @@ export function Settings() {
         <div className='tw-w-full xl:tw-max-w-6xl'>
           <TitleCard title="Profile Settings" topMargin="tw-mt-2" className='tw-mb-6'>
             <div className="tw-flex">
-              {!cropping && avatar ?
-                            <label className="custom-file-upload">
-                            <input type="file" accept="image/*" className="tw-file-input tw-w-full tw-max-w-xs" onChange={onImageChange} />
-
-                <img src={assetsApi.url + avatar + "?access_token=" + token} className='tw-w-20 tw-rounded-full' />
+              {!cropping ?
+                <label className="custom-file-upload">
+                  <input type="file" accept="image/*" className="tw-file-input tw-w-full tw-max-w-xs" onChange={onImageChange} />
+                  <div className='button tw-btn tw-btn-lg tw-btn-circle tw-animate-none'>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="tw-w-6 tw-h-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                    </svg>
+                  </div>
+                  {avatar ?
+                  <div className='tw-h-20 tw-w-20'>
+                    <img src={assetsApi.url + avatar + "?access_token=" + token} className=' tw-rounded-full' />
+                    </div>
+                    :
+                    <div className='tw-h-20 tw-w-20'>
+                      <svg xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="0 0 150 150" className='tw-w-20 tw-h-20 tw-rounded-full' style={{ backgroundColor: "#eee" }}>
+                        <path fill="#ccc" d="M 104.68731,56.689353 C 102.19435,80.640493 93.104981,97.26875 74.372196,97.26875 55.639402,97.26875 46.988823,82.308034 44.057005,57.289941 41.623314,34.938838 55.639402,15.800152 74.372196,15.800152 c 18.732785,0 32.451944,18.493971 30.315114,40.889201 z" />
+                        <path fill="#ccc" d="M 92.5675 89.6048 C 90.79484 93.47893 89.39893 102.4504 94.86478 106.9039 C 103.9375 114.2963 106.7064 116.4723 118.3117 118.9462 C 144.0432 124.4314 141.6492 138.1543 146.5244 149.2206 L 4.268444 149.1023 C 8.472223 138.6518 6.505799 124.7812 32.40051 118.387 C 41.80992 116.0635 45.66513 113.8823 53.58659 107.0158 C 58.52744 102.7329 57.52583 93.99267 56.43084 89.26926 C 52.49275 88.83011 94.1739 88.14054 92.5675 89.6048 z" />
+                      </svg>
+                    </div>
+                  }
                 </label>
 
-                :
-                <span className="tw-loading tw-loading-spinner"></span>
+                : <div className='tw-w-20 tw-flex tw-items-center tw-justify-center'>
+                  <span className="tw-loading tw-loading-spinner"></span>
+                </div>
+
               }
               <TextInput placeholder="Name" defaultValue={user?.first_name ? user.first_name : ""} updateFormValue={(v) => setName(v)} containerStyle='tw-grow tw-ml-6 tw-my-auto ' />
             </div>

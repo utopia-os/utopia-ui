@@ -40,3 +40,11 @@
   --toastify-color-error: theme('colors.error');
 
 }
+
+.custom-file-upload{
+  cursor: pointer;
+}
+
+input[type="file"] {
+  display: none;
+}

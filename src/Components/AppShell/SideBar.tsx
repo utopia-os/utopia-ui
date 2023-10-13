@@ -61,7 +61,7 @@ export function SideBar({ routes, bottomRoutes }: { routes: route[], bottomRoute
       data-te-sidenav-slim-collapsed="true"
       data-te-sidenav-slim-width="56"
       data-te-sidenav-width="160">
-      <div className='tw-flex tw-flex-col tw-h-full' style={{ height: "calc(100vh - 64px)" }}>
+      <div className='tw-flex tw-flex-col tw-h-[calc(100vh-64px)]'>
         <ul className="tw-menu tw-w-full tw-bg-base-100 tw-text-base-content tw-p-0" data-te-sidenav-menu-ref>
           {
             routes.map((route, k) => {

@@ -9,14 +9,6 @@ export function Quests() {
     const setQuestsOpen = useSetQuestOpen();
     const { isAuthenticated, user } = useAuth();
 
-
-    
-    useEffect(() => {
-      console.log(questsOpen);
-      
-    }, [questsOpen])
-    
-
     return (
         <>{questsOpen? 
             <div className="tw-card tw-w-48 tw-bg-base-100 tw-shadow-xl tw-absolute tw-bottom-4 tw-left-4 tw-z-[2000]">

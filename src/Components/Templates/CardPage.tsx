@@ -20,7 +20,7 @@ export function CardPage({title,children, parent} : {
             <li>{title}</li>
           </ul>
         </div>
-        <TitleCard title={title} topMargin="mt-2">
+        <TitleCard title={title} topMargin="tw-my-2" className=" tw-mb-4">
           {children}
         </TitleCard>
       </div>

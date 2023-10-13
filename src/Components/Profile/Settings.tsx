@@ -56,6 +56,7 @@ export function Settings() {
       .then(() => navigate("/"));
   }
 
+  
 
   return (
     <main className="tw-flex-1 tw-overflow-y-auto tw-overflow-x-hidden tw-pt-8 tw-px-6 tw-bg-base-200 tw-min-w-80 tw-flex tw-justify-center" >

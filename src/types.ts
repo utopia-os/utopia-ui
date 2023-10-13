@@ -71,6 +71,11 @@ export interface ItemsApi<T> {
   collectionName?: string
 }
 
+export interface AssetsApi {
+  upload(file: Blob, title: string): any,
+  url: string
+}
+
 export interface UserApi {
   register(email: string, password: string, userName: string): Promise<void>,
 	login(email: string, password: string): Promise<any>,
@@ -92,7 +97,7 @@ export type UserItem = {
 
 export type Permission = {
   id?: string;
-  role: string;
+  role: string;S
   collection: string;
   action: PermissionAction
 }

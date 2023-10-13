@@ -12,7 +12,7 @@ interface TitleCardProps {
   
   export function TitleCard({title, children, topMargin, TopSideButtons, className} : TitleCardProps){
       return(
-          <div className={"tw-card tw-w-full tw-p-6 tw-bg-base-100 tw-shadow-xl tw-h-fit " + className + " " + (topMargin || "tw-mt-6")}>
+          <div className={"tw-card tw-w-full tw-p-6 tw-bg-base-100 tw-shadow-xl tw-h-fit " + (className || "") + " " + (topMargin || "tw-mt-6")}>
 
             {/* Title for Card */}
               <Subtitle styleClass={TopSideButtons ? "tw-inline-block" : ""}>

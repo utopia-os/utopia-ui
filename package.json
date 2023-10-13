@@ -44,8 +44,10 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.17",
+    "@types/offscreencanvas": "^2019.7.1",
     "leaflet": "^1.9.4",
     "prop-types": "^15.8.1",
+    "react-image-crop": "^10.1.8",
     "react-leaflet": "^4.2.1",
     "react-leaflet-cluster": "^2.1.0",
     "react-router-dom": "^6.16.0",

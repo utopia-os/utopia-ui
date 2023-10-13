@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import QuestionMarkIcon from '@heroicons/react/24/outline/QuestionMarkCircleIcon'
 import * as React from "react";
-import DialogModal from "./DialogModal";
+import DialogModal from "../Templates/DialogModal";
 
 
 export default function NavBar({ appName}: { appName: string }) {

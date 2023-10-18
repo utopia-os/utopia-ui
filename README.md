@@ -9,6 +9,9 @@ Since these days we got in contact with many other projects with focus of real l
 
 That's why we want to provide with Utopia UI this functionality (and much more) as easy to adapt building blocks. It is a full rewrite as a React Component Library. 
 
+Utopia Game is the first app made with Utopia UI. It is an attempt to use gamification to get users to take action and make the map even more alive. Check it out at [utopia-game.org](https://utopia-game.org/) or see the code in the [repository](https://github.com/utopia-os/utopia-game)
+
+
 ## Getting Started
 
 

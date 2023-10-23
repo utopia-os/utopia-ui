@@ -21,15 +21,6 @@ Utopia Game is the first app made with Utopia UI. It is an attempt to use gamifi
 * User Profiles
 * App Shell 
 
-
-## Background
-In early 2021, we developed a small Prototyp which can be found @ [new.docutopia.de](https://new.docutopia.de). This map can be edited freely. You can register to create an account and place them on the map. We tested it with a couple of users and got some very positiv feedback. Some of them are still using it. 
-
-Since these days we got in contact with many other projects with focus of real life transformation and mapping for change. But our quick and dirty spaghetti code was hard to adapt to the special requirements of different communities and projects.
-
-That's why we want to provide with Utopia UI this functionality (and much more) as easy to adapt building blocks. It is a full rewrite as a React Component Library. 
-
-
 ## Getting Started
 
 

@@ -3,7 +3,7 @@
 
 *Real change happens in real life when we meet in person and connect as local communities manifesting their ideas with the earth. When we help each other to step out of capitalism and individualism and start building common infrastructure to meet human needs in harmony with Mother Earth.*
 
-*This is why Utopia UI (https://github.com/utopia-os/utopia-ui), a UI kit for minimalistic, fast, intuitive and mobile-first map apps exist as a tools for local connection and decentralized networking. It can work with any backend or p2p database and any kind of data structure.*
+*That is why Utopia UI exists. It is a UI kit for minimalist, fast, intuitive and mobile-first map apps, as a tool for local connection and decentralised networking. It can work with any backend or p2p database and any kind of data structure.*
 
 ## Mission 
 Utopia UIs mission is to provide open source building blocks to create beautiful applications with a focus on real life impact, local communities and gamification. 

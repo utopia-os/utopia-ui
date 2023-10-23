@@ -1,15 +1,21 @@
 # Utopia UI [![npm version](https://img.shields.io/npm/v/utopia-ui.svg)](https://www.npmjs.com/package/utopia-ui)
 *UI Framework for Real-Life-Networking-Apps*
 
-Its mission is to provide open source building blocks to create beautiful applications with a focus on real life impact,  local communities and gamification. 
+Its mission is to provide open source building blocks to create beautiful applications with a focus on real life impact, local communities and gamification. 
 
+The building blocks are designed to allow each network and community to assemble their map and app for their specific purposes.
+
+Utopia Game is the first app made with Utopia UI. It is an attempt to use gamification to get users to take action and make the map even more alive. Check it out at [utopia-game.org](https://utopia-game.org/) or see the code in the [repository](https://github.com/utopia-os/utopia-game)
+
+
+## Background
 In early 2021, we developed a small Prototyp which can be found @ [new.docutopia.de](https://new.docutopia.de). This map can be edited freely. You can register to create an account and place them on the map. We tested it with a couple of users and got some very positiv feedback. Some of them are still using it. 
 
 Since these days we got in contact with many other projects with focus of real life transformation and mapping for change. But our quick and dirty spaghetti code was hard to adapt to the special requirements of different communities and projects.
 
 That's why we want to provide with Utopia UI this functionality (and much more) as easy to adapt building blocks. It is a full rewrite as a React Component Library. 
 
-Utopia Game is the first app made with Utopia UI. It is an attempt to use gamification to get users to take action and make the map even more alive. Check it out at [utopia-game.org](https://utopia-game.org/) or see the code in the [repository](https://github.com/utopia-os/utopia-game)
+
 
 
 ## Getting Started

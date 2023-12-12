@@ -11,7 +11,7 @@ export function Welcome1({ clickAction }: ChapterProps) {
     return (
         <>
             <h3 className="tw-font-bold tw-text-lg">Welcome, glad you are here!</h3>
-            <img className="tw-float-right tw-w-32 tw-m-2" src="earth.svg"></img>
+            <img className="tw-float-right tw-w-32 tw-m-2" src="/earth.svg"></img>
             <p className="tw-py-3">
             In the 21st century, humanity is at a special point in its history. 
             </p>
@@ -35,7 +35,7 @@ export function Welcome2({ clickAction }: ChapterProps) {
             
             <p className="tw-py-3">
             Most people are still stuck in old ways of thinking and living.       </p>
-            <img className="tw-float-right tw-w-32 tw-mx-4 tw-my-2" src="fear2.svg"></img>
+            <img className="tw-float-right tw-w-32 tw-mx-4 tw-my-2" src="/fear2.svg"></img>
 
             <p className="tw-py-1">
             Hypnotised, they sit in front of screens in concrete blocks, flooded and disillusioned by irrelevant information.
@@ -60,7 +60,7 @@ export function Welcome3({ clickAction }: ChapterProps) {
             <p className="tw-py-1">
             They are in the process of understanding the potential that is within themselves and within the whole mankind.
             </p>
-                        <img className="tw-float-left tw-w-32 tw-mx-4" src="camp3.svg"></img>
+                        <img className="tw-float-left tw-w-32 tw-mx-4" src="/camp3.svg"></img>
 
             <p className="tw-py-1">
                 Starting to reconnect with our Mother Earth and beginning to question things that long times have been taken for granted. 

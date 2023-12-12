@@ -17,7 +17,6 @@ import { PermissionsProvider } from "./hooks/usePermissions";
 import { LeafletRefsProvider } from "./hooks/useLeafletRefs";
 import { LayerControl } from "./Subcomponents/LayerControl";
 import { QuestControl } from "./Subcomponents/QuestControl";
-import { Quests } from "../Gaming";
 import { Control } from "./Subcomponents/Control";
 
 

@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { UserItem } from '../../types';
 import DialogModal from '../Templates/DialogModal';
 import { useAssetApi } from '../AppShell/hooks/useAssets';
+import { ColorPicker } from './ColorPicker';
 
 export function Settings() {
   const { user, updateUser, loading, token } = useAuth();
@@ -22,6 +23,8 @@ export function Settings() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [avatar, setAvatar] = useState<string>("");
+  const [color, setColor] = useState<string>("");
+
 
   const [passwordChanged, setPasswordChanged] = useState<boolean>(false);
 
@@ -39,7 +42,8 @@ export function Settings() {
     setText(user?.description ? user.description : "");
     setEmail(user?.email ? user.email : "");
     setPassword(user?.password ? user.password : "");
-    setAvatar(user?.avatar ? user?.avatar : "")
+    setAvatar(user?.avatar ? user?.avatar : ""),
+    setColor(user?.color? user.color : "#aabbcc")
   }, [user])
 
   const imgRef = useRef<HTMLImageElement>(null)
@@ -140,7 +144,7 @@ export function Settings() {
   const onUpdateUser = () => {
     let changedUser = {} as UserItem;
 
-    changedUser = { id: id, first_name: name, description: text, email: email, ...passwordChanged && { password: password }, ...avatar.length > 10 && { avatar: avatar } };
+    changedUser = { id: id, first_name: name, description: text, email: email, color: color, ...passwordChanged && { password: password }, ...avatar.length > 10 && { avatar: avatar } };
 
 
     toast.promise(
@@ -169,8 +173,8 @@ export function Settings() {
                 <label className="custom-file-upload">
                   <input type="file" accept="image/*" className="tw-file-input tw-w-full tw-max-w-xs" onChange={onImageChange} />
                   <div className='button tw-btn tw-btn-lg tw-btn-circle tw-animate-none'>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="tw-w-6 tw-h-6">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="tw-w-6 tw-h-6">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
                     </svg>
                   </div>
                   {avatar ?
@@ -192,6 +196,7 @@ export function Settings() {
                 </div>
 
               }
+               <ColorPicker color={color} onChange={setColor} className={"-tw-left-6 tw-top-14 -tw-mr-6"} />
               <TextInput placeholder="Name" defaultValue={user?.first_name ? user.first_name : ""} updateFormValue={(v) => setName(v)} containerStyle='tw-grow tw-ml-6 tw-my-auto ' />
             </div>
 

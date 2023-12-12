@@ -37,7 +37,13 @@
     width: 13px;
   }
   
-  
+  .user-icon {
+    position: relative;
+    top: -36px;
+    left: 10px;
+    width: 13px;
+  }
+
   .circle-icon {
     position: relative;
     top: -33px;

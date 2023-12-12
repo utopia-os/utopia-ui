@@ -6,5 +6,6 @@ export {ItemForm} from './ItemForm';
 export {ItemView} from './ItemView';
 export {PopupTextAreaInput} from './Subcomponents/ItemPopupComponents/PopupTextAreaInput';
 export {PopupStartEndInput} from './Subcomponents/ItemPopupComponents/PopupStartEndInput';
+export {PopupTextInput} from './Subcomponents/ItemPopupComponents/PopupTextInput';
 export {TextView} from './Subcomponents/ItemPopupComponents/TextView';
 export {StartEndView} from './Subcomponents/ItemPopupComponents/StartEndView'

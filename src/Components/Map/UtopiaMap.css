@@ -50,6 +50,20 @@
     left: 10px;
     width: 13px;
   }
+
+  .fire-icon {
+    position: relative;
+    top: -36px;
+    left: 10px;
+    width: 13px;
+  }
+
+  .tree-icon {
+    position: relative;
+    top: -38px;
+    left: 4px;
+    width: 24px;
+  }
   
   .leaflet-popup-scrolled {
     overflow-x: hidden;

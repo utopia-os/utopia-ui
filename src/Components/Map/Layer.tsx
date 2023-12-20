@@ -85,6 +85,7 @@ export const Layer = (props: LayerProps) => {
         <>
             {items &&
                 items.
+                    filter(item => item.text).
                     filter(item => item.layer?.name === props.name)?.
                     filter(item =>
                         filterTags.length == 0 ? item : filterTags.every(tag => getItemTags(item).some(filterTag => filterTag.id === tag.id)))?.
@@ -117,7 +118,7 @@ export const Layer = (props: LayerProps) => {
                                                 <ItemViewPopup ref={(r) => {
                                                     if (!(item.id in leafletRefs))
                                                         r && addPopup(item, r as Popup);
-                                                }} key={item.id + item.name} item={item} setItemFormPopup={props.setItemFormPopup} >{child}</ItemViewPopup>
+                                                }} key={item.id + item.name} itemTitleField={props.itemTitleField} itemAvatarField={props.itemAvatarField} item={item} setItemFormPopup={props.setItemFormPopup} >{child}</ItemViewPopup>
                                                 : ""
                                         )
                                         :
@@ -125,7 +126,7 @@ export const Layer = (props: LayerProps) => {
                                             <ItemViewPopup key={item.id + item.name} ref={(r) => {
                                                 if (!(item.id in leafletRefs))
                                                     r && addPopup(item, r as Popup);
-                                            }} item={item} setItemFormPopup={props.setItemFormPopup} />
+                                            }} item={item} itemTitleField={props.itemTitleField} itemAvatarField={props.itemAvatarField} setItemFormPopup={props.setItemFormPopup} />
                                         </>)
                                 }
                                 <Tooltip offset={[0, -38]} direction='top'>{item.name}</Tooltip>

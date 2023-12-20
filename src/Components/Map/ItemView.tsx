@@ -8,8 +8,8 @@ export const ItemView = ({ children, item }: { children?: React.ReactNode, item?
     <div>
       {children ?
         React.Children.toArray(children).map((child) =>
-          React.isValidElement<{ item: Item, test: string }>(child) ?
-            React.cloneElement(child, { item: item, test: "test" }) : ""
+          React.isValidElement<{ item: Item }>(child) ?
+            React.cloneElement(child, { item: item }) : ""
         ) : ""}
     </div>
   )

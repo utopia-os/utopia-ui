@@ -21,6 +21,8 @@ export interface LayerProps {
   markerShape: string,
   markerDefaultColor: string,
   api?: ItemsApi<any>,
+  itemTitleField?: string,
+  itemAvatarField?: string,
   setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>,
   itemFormPopup?: ItemFormPopupProps | null,
   clusterRef?: React.MutableRefObject<any>
@@ -67,7 +69,7 @@ export interface ItemsApi<T> {
   getItems(): Promise<any>, 
   createItem?(item : T): Promise<any>,
   updateItem?(item : T): Promise<any>,
-  deleteItem?(id : number | string): Promise<any>,
+  deleteItem?(id : string): Promise<any>,
   collectionName?: string
 }
 
@@ -89,10 +91,12 @@ export type UserItem = {
   id?: string;
   avatar?: string;
   role?: string;
+  color?: string;
   first_name: string;
   description: string;
   email: string;
   password?: string;
+  geoposition?: Geometry
 }
 
 export type Permission = {

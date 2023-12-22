@@ -32,7 +32,7 @@ module.exports = {
     require("tw-elements/dist/plugin.cjs")
   ],
   daisyui: {
-    themes: ["cupcake", "retro", "cyberpunk", "aqua"]
+    themes: ["light", "dark", "cupcake", "retro", "cyberpunk", "aqua"]
   },
   prefix: 'tw-',
   content: ['./src/**/*.{js,jsx,ts,tsx}'],

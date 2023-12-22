@@ -12,6 +12,7 @@
 
 .tw-modal {
   z-index: 1200 !important;
+  max-height: calc(100dvh - 2em);
 }
 
 .tw-modal-box {

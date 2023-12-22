@@ -12,7 +12,7 @@
 
 .tw-modal {
   z-index: 1200 !important;
-  max-height: calc(100dvh - 2em);
+  max-height: 100dvh;
 }
 
 .tw-modal-box {
@@ -29,8 +29,6 @@
   margin-bottom: 1rem;
   background-color: theme('colors.base-100');
   color: theme('colors.base-content');
-
-
 }
 
 :root {

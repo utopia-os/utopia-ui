@@ -92,7 +92,7 @@ export const Layer = (props: LayerProps) => {
                     filter(item => {
                         return searchPhrase === ''
                             ? item :
-                            item.name.toLowerCase().includes(searchPhrase.toLowerCase()) || item.text.toLowerCase().includes(searchPhrase.toLowerCase())
+                            item.name?.toLowerCase().includes(searchPhrase.toLowerCase()) || item.text?.toLowerCase().includes(searchPhrase.toLowerCase())
                     }).
                     filter(item => item.layer && isLayerVisible(item.layer)).
                     map((item: Item) => {

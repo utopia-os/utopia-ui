@@ -4,10 +4,10 @@ import { BrowserRouter } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { QuestsProvider } from '../Gaming/hooks/useQuests'
 import { AssetsProvider, useSetAssetApi } from './hooks/useAssets'
-import { useEffect } from 'react'
 import { SetAssetsApi } from './SetAssetsApi'
+import { AssetsApi } from '../../types'
 
-export function AppShell({ appName, children, assetsApi }) {
+export function AppShell({ appName, nameWidth, children, assetsApi } : {appName: string, nameWidth?: number, children: React.ReactNode, assetsApi: AssetsApi}) {
 
 
     return (
@@ -25,7 +25,7 @@ export function AppShell({ appName, children, assetsApi }) {
                         draggable
                         pauseOnHover
                         theme="light" />
-                    <NavBar appName={appName}></NavBar>
+                    <NavBar appName={appName} nameWidth={nameWidth}></NavBar>
                     <div id="app-content" className="tw-flex tw-!pl-[77px]">
                         {children}
                     </div>

@@ -8,7 +8,7 @@ import * as React from "react";
 import DialogModal from "../Templates/DialogModal";
 
 
-export default function NavBar({ appName}: { appName: string }) {
+export default function NavBar({ appName, nameWidth = 200}: { appName: string, nameWidth?: number }) {
 
 
   const [signupOpen, setSignupOpen] = useState(false);
@@ -99,8 +99,8 @@ export default function NavBar({ appName}: { appName: string }) {
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="tw-inline-block tw-w-5 tw-h-5 tw-stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
         </button>
         <div className="tw-flex-1 tw-mr-2">
-          <div className="tw-flex-1 tw-truncate  tw-grid tw-grid-flow-col tw-max-w-52">
-            <Link className="tw-btn tw-btn-ghost tw-px-2 tw-normal-case tw-text-xl tw-flex-1 tw-truncate" to={"/"}><p className="tw-truncate">{appName}</p></Link>
+          <div className={`tw-flex-1 tw-truncate  tw-grid tw-grid-flow-col`} style={{maxWidth: nameWidth}}>
+            <Link className="tw-btn tw-btn-ghost tw-px-2 tw-normal-case tw-text-xl tw-flex-1 tw-truncate" to={"/"}><h1 className="tw-truncate">{appName}</h1></Link>
             <button className="tw-btn tw-px-2  tw-btn-ghost" onClick={() => window.my_modal_3.showModal()}><QuestionMarkIcon className="tw-h-5 tw-w-5" /></button>
 
           </div>

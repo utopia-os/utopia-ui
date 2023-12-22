@@ -76,6 +76,11 @@
   }
 
   .leaflet-tooltip {
+    background-color: theme('colors.base-100');
+    color: theme('colors.base-content');
+  }
+
+  .leaflet-tooltip {
     border-radius: 1em;
     transition: opacity 500ms;
     transition-delay: 50ms;

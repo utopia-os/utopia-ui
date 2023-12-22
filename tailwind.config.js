@@ -31,10 +31,9 @@ module.exports = {
     require("daisyui"),
     require("tw-elements/dist/plugin.cjs")
   ],
+  daisyui: {
+    themes: ["cupcake", "retro", "cyberpunk", "aqua"]
+  },
   prefix: 'tw-',
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
-  darkMode: 'class',
-  daisyui: {
-    themes: ["light", "dark", "cupcake", "forest", "cyberpunk"],
-  }
 }

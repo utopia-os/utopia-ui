@@ -15,7 +15,7 @@
 }
 
 .tw-modal-box {
-  max-height: calc(100vh - 2em);
+  max-height: calc(100dvh - 2em);
 }
 
 .Toastify__toast {

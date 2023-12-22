@@ -14,7 +14,7 @@ export function AppShell({ appName, children, assetsApi }) {
         <BrowserRouter>
             <AssetsProvider>
                 <SetAssetsApi assetsApi={assetsApi}></SetAssetsApi>
-                <QuestsProvider initialOpen={false}>
+                <QuestsProvider initialOpen={true}>
                     <ToastContainer position="top-right"
                         autoClose={2000}
                         hideProgressBar

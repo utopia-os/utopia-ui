@@ -1,12 +1,18 @@
 import * as React from 'react'
 import { useQuestsOpen, useSetQuestOpen } from './hooks/useQuests';
 import { useAuth } from '../Auth';
+import { useEffect } from 'react';
 
 export function Quests() {
 
     const questsOpen = useQuestsOpen();
     const setQuestsOpen = useSetQuestOpen();
     const { isAuthenticated, user } = useAuth();
+
+    useEffect(() => {
+      setQuestsOpen(false);
+    }, [])
+    
 
     return (
         <>{questsOpen ?
@@ -27,7 +33,7 @@ export function Quests() {
                         <li><label className="tw-label tw-justify-normal tw-pt-1 tw-pb-0"><input type="checkbox" readOnly={true} className="tw-checkbox tw-checkbox-xs tw-checkbox-success" checked={user?.description ? true : false} /><span className='tw-text-sm tw-label-text tw-mx-2'>Fill Profile</span></label></li>
                         <li><label className="tw-label tw-justify-normal tw-pt-1 tw-pb-0"><input type="checkbox" readOnly={true} className="tw-checkbox tw-checkbox-xs tw-checkbox-success" checked={user?.avatar ? true : false} /><span className='tw-text-sm tw-label-text tw-mx-2'>Upload Avatar</span></label></li>
                     </ul>
-                    { /**                   <button className='tw-btn tw-btn-xs tw-btn-neutral tw-w-fit tw-self-center tw-mt-1'>Next &gt;</button> */
+                    { /**                 <button className='tw-btn tw-btn-xs tw-btn-neutral tw-w-fit tw-self-center tw-mt-1'>Next &gt;</button> */
                     }                </div>
             </div>
             : ""

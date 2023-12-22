@@ -9,9 +9,19 @@ export default function AddButton({ setSelectNewItemPosition }: { setSelectNewIt
     const layers = useLayers();
     const hasUserPermission = useHasUserPermission();
 
+    const canAddItems = () => {
+        let canAdd = false;
+        layers.map(layer => {
+            if(layer.api?.createItem && hasUserPermission(layer.api.collectionName!,"create")) canAdd = true;
+        })
+        return canAdd;
+    }
+
 
     return (
-        <div className="tw-dropdown tw-dropdown-top tw-dropdown-end tw-dropdown-hover tw-z-500 tw-absolute tw-right-4 tw-bottom-4" >
+       <>{
+        canAddItems() ? 
+                    <div className="tw-dropdown tw-dropdown-top tw-dropdown-end tw-dropdown-hover tw-z-500 tw-absolute tw-right-4 tw-bottom-4" >
             <label tabIndex={0} className="tw-z-500 tw-btn tw-btn-circle tw-shadow tw-bg-base-100">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="tw-w-5 tw-h-5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -36,7 +46,9 @@ export default function AddButton({ setSelectNewItemPosition }: { setSelectNewIt
 
                 ))}
             </ul>
+        </div> : ""
+        } 
+        </> 
 
-        </div>
     )
 }

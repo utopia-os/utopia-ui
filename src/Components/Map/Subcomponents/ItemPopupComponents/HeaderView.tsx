@@ -22,7 +22,6 @@ export function HeaderView({ item, title, avatar, setItemFormPopup }: {
   const map = useMap();
   const hasUserPermission = useHasUserPermission();
 
-
   const removeItemFromMap = async (event: React.MouseEvent<HTMLElement>) => {
     setLoading(true);
     let success = false;
@@ -49,8 +48,6 @@ export function HeaderView({ item, title, avatar, setItemFormPopup }: {
       setItemFormPopup({ position: new LatLng(item.position.coordinates[1], item.position.coordinates[0]), layer: item.layer!, item: item, setItemFormPopup: setItemFormPopup })
   }
 
-  console.log(title);
-
 
   return (
     <div className='tw-grid tw-grid-cols-6 tw-pb-2'>
@@ -67,7 +64,7 @@ export function HeaderView({ item, title, avatar, setItemFormPopup }: {
         </div>
       </div>
       <div className='tw-col-span-1'>
-        {item.layer?.api &&
+        {(item.layer?.api?.deleteItem || item.layer?.api?.updateItem) && (hasUserPermission(item.layer.api?.collectionName!, "delete") || hasUserPermission(item.layer.api?.collectionName!, "update") ) &&
           <div className="tw-dropdown tw-dropdown-bottom">
             <label tabIndex={0} className="tw-bg-base-100 tw-btn tw-m-1 tw-leading-3 tw-border-none tw-min-h-0 tw-h-6">
               <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor">

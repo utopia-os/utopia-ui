@@ -90,7 +90,7 @@ export default function NavBar({ appName}: { appName: string }) {
 
   return (
     <>
-      <div className="tw-navbar tw-bg-base-100 tw-z-1000">
+      <div className="tw-navbar tw-bg-base-100 tw-z-1000 tw-shadow-xl tw-relative">
         <button className="tw-btn tw-btn-square tw-btn-ghost"
           data-te-sidenav-toggle-ref
           data-te-target="#sidenav"

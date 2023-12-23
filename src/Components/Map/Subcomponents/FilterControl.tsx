@@ -36,7 +36,7 @@ export const FilterControl = () => {
             //popupOpen &&
             windowDimensions.height < 500) &&
             <div className='tw-flex tw-flex-col tw-absolute tw-top-4 tw-left-4 tw-z-[699] tw-w-[calc(100vw-2rem)] tw-max-w-sm'>
-                <input type="text" placeholder="search ..." className="tw-input tw-input-bordered tw-w-full tw-shadow-xl tw-rounded-2xl" onChange={(e) => setSearchPhrase(e.target.value)} />
+                <input type="text" placeholder="search ..." className="tw-input tw-input-bordered tw-w-full tw-shadow-xl tw-rounded-lg" onChange={(e) => setSearchPhrase(e.target.value)} />
                 <div className='tw-flex tw-flex-wrap tw-mt-4'>
                     {
                         filterTags.map(tag =>

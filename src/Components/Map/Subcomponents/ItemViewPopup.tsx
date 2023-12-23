@@ -10,30 +10,20 @@ import { useAssetApi } from '../../AppShell/hooks/useAssets'
 export interface ItemViewPopupProps {
   item: Item,
   children?: React.ReactNode;
-  itemTitleField?: string;
-  itemAvatarField?: string;
+  title?: string;
+  avatar?: string;
   setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
 }
-
-function getValue(obj, path) {
-  if(obj){
-    for (var i=0, path=path.split('.'), len=path.length; i<len; i++){
-      obj = obj[path[i]];
-  };
-  return obj;
-  }
-
-};
 
 
 export const ItemViewPopup = React.forwardRef((props: ItemViewPopupProps, ref: any) => {
 
-  const assetsApi = useAssetApi();
 
+  
   return (
     <LeafletPopup ref={ref} maxHeight={377} minWidth={275} maxWidth={275} autoPanPadding={[20, 80]}>
       <div className='tw-bg-base-100 tw-text-base-content'>
-        <HeaderView item={props.item} title={props.itemTitleField && props.item? getValue(props.item,props.itemTitleField) : undefined} avatar={props.itemAvatarField && props.item? assetsApi.url+getValue(props.item,props.itemAvatarField) : undefined} setItemFormPopup={props.setItemFormPopup} />
+        <HeaderView item={props.item} title={props.title} avatar={props.avatar} setItemFormPopup={props.setItemFormPopup} />
         <div className='tw-overflow-y-auto tw-max-h-72'>
           {props.children ?
 

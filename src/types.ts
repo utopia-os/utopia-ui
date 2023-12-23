@@ -23,6 +23,7 @@ export interface LayerProps {
   api?: ItemsApi<any>,
   itemTitleField?: string,
   itemAvatarField?: string,
+  itemColorField?: string,
   setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>,
   itemFormPopup?: ItemFormPopupProps | null,
   clusterRef?: React.MutableRefObject<any>

@@ -11,6 +11,7 @@ import { useGetItemTags } from './hooks/useTags'
 import { useAddMarker, useAddPopup, useLeafletRefs } from './hooks/useLeafletRefs'
 import { Popup } from 'leaflet'
 import { useLocation } from 'react-router-dom';
+import { useAssetApi } from '../AppShell/hooks/useAssets'
 
 export const Layer = (props: LayerProps) => {
 
@@ -34,6 +35,8 @@ export const Layer = (props: LayerProps) => {
 
     const isLayerVisible = useIsLayerVisible();
 
+    const assetsApi = useAssetApi();
+
 
     useEffect(() => {
 
@@ -52,7 +55,7 @@ export const Layer = (props: LayerProps) => {
     })
 
     const openPopup = () => {
-        if (window.location.pathname.split("/").length <= 2 || window.location.pathname.split("/")[2]==="") {
+        if (window.location.pathname.split("/").length <= 2 || window.location.pathname.split("/")[2] === "") {
             map.closePopup();
         }
         else {
@@ -100,10 +103,12 @@ export const Layer = (props: LayerProps) => {
 
                         let color1 = "#666";
                         let color2 = "RGBA(35, 31, 32, 0.2)";
-                        if (tags && tags[0]) {
+                        if (props.itemColorField) color1 = getValue(item, props.itemColorField);
+                        else if (tags && tags[0]) {
                             color1 = tags[0].color;
                         }
-                        if (tags && tags[1]) {
+                        if (tags && tags[0] && props.itemColorField) color2 = tags[0].color;
+                        else if (tags && tags[1]) {
                             color2 = tags[1].color;
                         }
                         return (
@@ -118,7 +123,13 @@ export const Layer = (props: LayerProps) => {
                                                 <ItemViewPopup ref={(r) => {
                                                     if (!(item.id in leafletRefs))
                                                         r && addPopup(item, r as Popup);
-                                                }} key={item.id + item.name} itemTitleField={props.itemTitleField} itemAvatarField={props.itemAvatarField} item={item} setItemFormPopup={props.setItemFormPopup} >{child}</ItemViewPopup>
+                                                }} key={item.id + item.name}
+                                                    title={props.itemTitleField && item ? getValue(item, props.itemTitleField) : undefined}
+                                                    avatar={props.itemAvatarField && item ? assetsApi.url + getValue(item, props.itemAvatarField) : undefined}
+                                                    item={item}
+                                                    setItemFormPopup={props.setItemFormPopup}>
+                                                    {child}
+                                                </ItemViewPopup>
                                                 : ""
                                         )
                                         :
@@ -126,10 +137,13 @@ export const Layer = (props: LayerProps) => {
                                             <ItemViewPopup key={item.id + item.name} ref={(r) => {
                                                 if (!(item.id in leafletRefs))
                                                     r && addPopup(item, r as Popup);
-                                            }} item={item} itemTitleField={props.itemTitleField} itemAvatarField={props.itemAvatarField} setItemFormPopup={props.setItemFormPopup} />
+                                            }} title={props.itemTitleField && item ? getValue(item, props.itemTitleField) : undefined}
+                                                avatar={props.itemAvatarField && item ? assetsApi.url + getValue(item, props.itemAvatarField) : undefined}
+                                                item={item}
+                                                setItemFormPopup={props.setItemFormPopup} />
                                         </>)
                                 }
-                                <Tooltip offset={[0, -38]} direction='top'>{item.name}</Tooltip>
+                                <Tooltip offset={[0, -38]} direction='top'>{item.name? item.name : getValue(item, props.itemTitleField)}</Tooltip>
                             </Marker>
                         );
                     })
@@ -151,3 +165,13 @@ export const Layer = (props: LayerProps) => {
         </>
     )
 }
+
+function getValue(obj, path) {
+    if (obj) {
+        for (var i = 0, path = path.split('.'), len = path.length; i < len; i++) {
+            obj = obj[path[i]];
+        };
+        return obj;
+    }
+
+};

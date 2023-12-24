@@ -11,6 +11,7 @@ import { useResetFilterTags } from '../hooks/useFilter'
 import { hashTagRegex } from '../../../Utils/HashTagRegex'
 import { randomColor } from '../../../Utils/RandomColor'
 import { useAddTag, useTags } from '../hooks/useTags'
+import { useAuth } from '../../Auth'
 
 export interface ItemFormPopupProps {
     position: LatLng,
@@ -35,6 +36,8 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
     const addTag = useAddTag();
 
     const resetFilterTags = useResetFilterTags();
+
+    const {  user } = useAuth();
 
 
     const handleSubmit = async (evt: any) => {
@@ -76,13 +79,13 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
 
             let success = false;
             try {
-                await props.layer.api?.createItem!({...formItem, id: crypto.randomUUID()});
+                await props.layer.api?.createItem!({...formItem, id: crypto.randomUUID() });
                 success = true;
             } catch (error) {
                 toast.error(error.toString());
             }
             if(success) {
-                addItem({...formItem, id: crypto.randomUUID(), layer: props.layer});
+                addItem({...formItem, id: crypto.randomUUID(), layer: props.layer, user_created: user});
                 toast.success("New item created");
                 resetFilterTags();
             } 
@@ -118,7 +121,6 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
                 :
                     <div className='tw-flex tw-justify-center'><b className="tw-text-xl tw-font-bold">New {props.layer.name}</b></div>
                 }
-                <TextInput type="text" placeholder="Name" dataField="name" defaultValue={props.item ? props.item.name : ""} inputStyle='' />
 
                 {props.children ?
 
@@ -129,6 +131,7 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
 
                     :
                     <>
+                        <TextInput type="text" placeholder="Name" dataField="name" defaultValue={props.item ? props.item.name : ""} inputStyle='' />
                         <TextAreaInput key={props.position.toString()} placeholder="Text" dataField="text" defaultValue={props.item ? props.item.text : ""} inputStyle='tw-h-40 tw-mt-5' />
                     </>
                 }

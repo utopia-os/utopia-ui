@@ -6,6 +6,7 @@ import { LatLng } from "leaflet";
 import { Item } from "../../../../types";
 import { toast } from "react-toastify";
 import { useHasUserPermission } from "../../hooks/usePermissions";
+import { timeAgo } from "../../../../Utils/TimeAgo";
 
 
 
@@ -60,11 +61,12 @@ export function HeaderView({ item, title, avatar, setItemFormPopup }: {
             :
             ""
         }
-          <b className={`tw-text-xl tw-font-bold ${avatar? "tw-ml-2 tw-mt-1" : ""}`}>{title ? title : item.name}</b>
+            <b className={`tw-text-xl tw-font-bold ${avatar ? "tw-ml-2 tw-mt-1" : ""}`}>{title ? title : item.name}</b>
+
         </div>
       </div>
       <div className='tw-col-span-1'>
-        {(item.layer?.api?.deleteItem || item.layer?.api?.updateItem) && (hasUserPermission(item.layer.api?.collectionName!, "delete") || hasUserPermission(item.layer.api?.collectionName!, "update") ) &&
+        {(item.layer?.api?.deleteItem || item.layer?.api?.updateItem) && (hasUserPermission(item.layer.api?.collectionName!, "delete") || hasUserPermission(item.layer.api?.collectionName!, "update")) &&
           <div className="tw-dropdown tw-dropdown-bottom">
             <label tabIndex={0} className="tw-bg-base-100 tw-btn tw-m-1 tw-leading-3 tw-border-none tw-min-h-0 tw-h-6">
               <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor">

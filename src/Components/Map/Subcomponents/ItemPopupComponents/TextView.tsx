@@ -53,7 +53,7 @@ export const TextView = ({ item }: { item?: Item }) => {
   })
 
   return (
-    <p style={{ whiteSpace: "pre-wrap" }} className="!tw-m-0 !tw-mb-2">
+    <p style={{ whiteSpace: "pre-wrap" }} className="!tw-m-0 !tw-mb-2 !tw-mt-2">
       {replacedText}
     </p>
   )

@@ -49,7 +49,10 @@ export const Layer = (props: LayerProps) => {
             const item = Object.entries(leafletRefs).find(r => r[1].popup == e.popup)?.[1].item;
             if (item?.layer?.name == props.name && window.location.pathname.split("/")[2] != item.id) {
                 window.history.pushState({}, "", `/${props.name}/${item.id}`)
-                document.title = document.title.split("-")[0] + " - " + item.name;
+                let title = "";
+                if(item.name) title = item.name;
+                else if (item.layer?.itemTitleField) title = getValue(item, item.layer.itemTitleField);
+                document.title = `${document.title.split("-")[0]} - ${title}`;
             }
         },
     })
@@ -69,7 +72,10 @@ export const Layer = (props: LayerProps) => {
                             marker.openPopup();
                         });
                         const item = leafletRefs[id]?.item;
-                        document.title = document.title.split("-")[0] + " - " + item.name;
+                        let title = "";
+                        if(item.name) title = item.name;
+                        else if (item.layer?.itemTitleField) title = getValue(item, item.layer.itemTitleField);
+                        document.title = `${document.title.split("-")[0]} - ${title}`;
                         document.querySelector('meta[property="og:title"]')?.setAttribute("content", item.name);
                         document.querySelector('meta[property="og:description"]')?.setAttribute("content", item.text);
                     }

@@ -1,4 +1,4 @@
-import { TitleCard, useAuth } from 'utopia-ui'
+import { TitleCard } from 'utopia-ui'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { itemsApi } from '../api/itemsApi'
@@ -16,7 +16,6 @@ export default function Projects() {
   const loadProjects = async () => {
     const projects = await projectsApi?.getItems();
     setProjects(projects as Project[]);
-
   }
 
   useEffect(() => {
@@ -27,8 +26,6 @@ export default function Projects() {
   useEffect(() => {
     loadProjects();
   }, [projectsApi])
-
-const {token,isAuthenticated} = useAuth();
 
   return (
     <main className="flex-1 overflow-y-auto pt-2 px-6  bg-base-200 min-w-80 flex justify-center" >
@@ -56,7 +53,7 @@ const {token,isAuthenticated} = useAuth();
               return (
                 <Link key={k} to={'/projects/' + i.id}>
                   <TitleCard className={"!h-96"} title={i.name} topMargin={"mt-2"}>
-                  <img className='h-36' src={`https://api.utopia-lab.org/assets/${i.picture}${isAuthenticated ?  `?access_token=${token}` : ''}`}></img>
+                  <img className='h-36' src={`https://api.utopia-lab.org/assets/${i.picture}`}></img>
                   <p className='font-bold text-sm mb-2 mt-2'>{i.subname}</p>
 
                   <p className='text-sm mb-2'>{i.text}</p>

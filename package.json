@@ -10,13 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@directus/sdk": "^11.0.3",
+    "@directus/sdk": "^12.0.1",
     "@heroicons/react": "^2.0.17",
     "@types/geojson": "^7946.0.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.2",
-    "utopia-ui": "^3.0.0-alpha.27"
+    "utopia-ui": "^3.0.0-alpha.39"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

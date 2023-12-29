@@ -8,6 +8,7 @@ import { userApi } from './api/userApi'
 import Projects from './pages/Projects'
 import { ProjectView } from './pages/ProjectView'
 import { assetsApi } from './api/assetsApi'
+import { ModalContent } from './ModalContent'
 
 
 
@@ -19,7 +20,9 @@ function App() {
 
       <AuthProvider userApi={new userApi}>
         <AppShell assetsApi={new assetsApi("https://api.utopia-lab.org/assets/")} appName="Utopia Game">
-        <Modal/>
+        <Modal>
+          <ModalContent/>
+        </Modal>
           <SideBar routes={routes} bottomRoutes={bottomRoutes}/>
           <Content>
             <Quests /> 

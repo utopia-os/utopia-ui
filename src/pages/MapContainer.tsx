@@ -1,5 +1,5 @@
-import { UtopiaMap, Tags, Layer, ItemForm, ItemView, PopupTextAreaInput, PopupStartEndInput, TextView, StartEndView, Permissions } from 'utopia-ui'
-import { itemsApi } from '../api/itemsApi'
+import { UtopiaMap, Tags, Layer, ItemForm, ItemView, PopupTextAreaInput, PopupTextInput, PopupStartEndInput, TextView, StartEndView, Permissions } from 'utopia-ui'
+import { itemsApi } from '../api/itemsApi';
 import { permissionsApi } from '../api/permissionsApi';
 import { Place, Event, Tag } from '../api/directus';
 import { useEffect, useState } from 'react';
@@ -11,6 +11,7 @@ function MapContainer() {
   const [eventsApi, setEventsApi] = useState<itemsApi<Event>>();
   const [tagsApi, setTagsApi] = useState<itemsApi<Tag>>();
   const [permissionsApiInstance, setPermissionsApiInstance] = useState<permissionsApi>();
+  const [updatesApiInstance, setUpdatesApiInstance] = useState<itemsApi<Place>>();
 
 
 
@@ -21,14 +22,8 @@ function MapContainer() {
     setEventsApi(new itemsApi<Event>('events'));
     setTagsApi(new itemsApi<Tag>('tags'));
     setPermissionsApiInstance(new permissionsApi());
-
-
-
+    setUpdatesApiInstance(new itemsApi('updates'));
   }, []);
-
-
-
-
 
   return (
 
@@ -42,9 +37,9 @@ function MapContainer() {
         markerShape='square'
         markerDefaultColor='#777'
         //     data={events}
-        api={eventsApi}
-      >
+        api={eventsApi}>
         <ItemForm>
+          <PopupTextInput dataField='name' placeholder='Name'></PopupTextInput>
           <PopupStartEndInput></PopupStartEndInput>
           <PopupTextAreaInput dataField='text' placeholder={'Test'} style="tw-h-40"></PopupTextAreaInput>
         </ItemForm>
@@ -52,7 +47,6 @@ function MapContainer() {
           <StartEndView></StartEndView>
           <TextView></TextView>
         </ItemView>
-
       </Layer>
       <Layer
         name='places'
@@ -63,8 +57,27 @@ function MapContainer() {
         markerShape='circle'
         markerDefaultColor='#777'
         // data={places}
-        api={placesApi}
-      />
+        api={placesApi} />
+      <Layer
+        name='people'
+        menuIcon='UserIcon'
+        menuText='place your profile on the map'
+        menuColor='#C62828'
+        markerIcon='user'
+        markerShape='square'
+        markerDefaultColor='#777'
+        itemTitleField='user_created.first_name'
+        itemAvatarField='user_created.avatar'
+        itemColorField='user_created.color'
+        // data={places}
+        api={updatesApiInstance}>
+        <ItemView>
+          <TextView></TextView>
+        </ItemView>
+        <ItemForm>
+          <PopupTextAreaInput dataField='text' placeholder={'Test'} style="tw-h-40"></PopupTextAreaInput>
+        </ItemForm>
+      </Layer>
       <Tags api={tagsApi}></Tags>
       <Permissions api={permissionsApiInstance} adminRole='8ed0b24e-3320-48cd-8444-bc152304e580'></Permissions>
     </UtopiaMap>

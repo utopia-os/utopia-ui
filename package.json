@@ -15,8 +15,7 @@
     "@types/geojson": "^7946.0.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.11.2",
-    "utopia-ui": "^3.0.0-alpha.39"
+    "react-router-dom": "^6.11.2"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

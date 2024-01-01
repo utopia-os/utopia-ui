@@ -15,7 +15,7 @@ export default function Projects() {
 
   const loadProjects = async () => {
     const projects = await projectsApi?.getItems();
-    setProjects(projects as Project[]);
+    setProjects(projects as any);
   }
 
   useEffect(() => {

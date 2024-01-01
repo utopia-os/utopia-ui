@@ -15,6 +15,7 @@ export type Place = {
     position?: Point;
     picture: string;
     subname: string;
+    [key: string]: any;
   };
 
   export type Tag = {

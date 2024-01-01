@@ -52,7 +52,7 @@ export function SideBar({ routes, bottomRoutes }: { routes: route[], bottomRoute
   return (
     <nav
       id="sidenav"
-      className="group tw-fixed tw-left-0  tw-mt-16 tw-top-0 tw-z-[1035] tw-h-[calc(100dvh-64px)] tw--translate-x-full tw-overflow-hidden tw-shadow-xl data-[te-sidenav-slim='true']:tw-hidden data-[te-sidenav-slim-collapsed='true']:tw-w-[56px] data-[te-sidenav-slim='true']:tw-w-[56px] data-[te-sidenav-hidden='false']:tw-translate-x-0 dark:tw-bg-zinc-800 [&[data-te-sidenav-slim-collapsed='true'][data-te-sidenav-slim='false']]:tw-hidden [&[data-te-sidenav-slim-collapsed='true'][data-te-sidenav-slim='true']]:[display:unset]"
+      className="group tw-fixed tw-left-0 tw-mt-16 tw-top-0 tw-z-[1035] tw-h-[calc(100dvh-64px)] tw--translate-x-full tw-overflow-hidden tw-shadow-xl data-[te-sidenav-slim='true']:tw-hidden data-[te-sidenav-slim-collapsed='true']:tw-w-[56px] data-[te-sidenav-slim='true']:tw-w-[56px] data-[te-sidenav-hidden='false']:tw-translate-x-0 dark:tw-bg-zinc-800 [&[data-te-sidenav-slim-collapsed='true'][data-te-sidenav-slim='false']]:tw-hidden [&[data-te-sidenav-slim-collapsed='true'][data-te-sidenav-slim='true']]:[display:unset]"
       data-te-sidenav-init
       data-te-sidenav-hidden="true"
       data-te-sidenav-mode="side"
@@ -90,7 +90,7 @@ export function SideBar({ routes, bottomRoutes }: { routes: route[], bottomRoute
           }
         </ul>
 
-        <div id="slim-toggler" className='tw-w-full  tw-flex-1 tw-grid tw-place-items-end' aria-haspopup="true" >
+        <div id="slim-toggler" className='tw-w-full tw-bg-base-100  tw-flex-1 tw-grid tw-place-items-end' aria-haspopup="true" >
           <div className='tw-w-full'>
 
             <ul className="tw-menu tw-w-full tw-bg-base-100 tw-text-base-content tw-p-0 tw-mb-0" data-te-sidenav-menu-ref>

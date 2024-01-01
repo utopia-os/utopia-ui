@@ -78,6 +78,7 @@
   .leaflet-tooltip {
     background-color: theme('colors.base-100');
     color: theme('colors.base-content');
+    border-width: 0px;
   }
 
   .leaflet-tooltip {
@@ -85,4 +86,12 @@
     transition: opacity 500ms;
     transition-delay: 50ms;
 
+  }
+
+  .leaflet-tooltip-top::before {
+    border-top-color: theme('colors.base-100');
+  }
+
+  .marker-cluster span {
+    color: #000;
   }

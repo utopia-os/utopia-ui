@@ -90,13 +90,20 @@ export interface UserApi {
 
 export type UserItem = {
   id?: string;
-  avatar?: string;
   role?: string;
-  color?: string;
-  first_name: string;
-  description: string;
-  email: string;
+  email?: string;
   password?: string;
+  profile?: Profile;
+  [key: string]: any;
+
+}
+
+export type Profile = {
+  id?: string;
+  avatar?: string;
+  color?: string;
+  name: string;
+  text: string;
   geoposition?: Geometry
 }
 

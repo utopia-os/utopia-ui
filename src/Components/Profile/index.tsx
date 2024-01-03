@@ -1,1 +1,2 @@
-export {Settings} from './Settings'
+export {UserSettings} from './UserSettings'
+export {ProfileSettings} from './ProfileSettings'

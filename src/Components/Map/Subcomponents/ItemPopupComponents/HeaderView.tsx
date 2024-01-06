@@ -73,7 +73,7 @@ export function HeaderView({ item, title, avatar, setItemFormPopup }: {
                 <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
               </svg>
             </label>
-            <ul tabIndex={0} className="tw-dropdown-content tw-menu tw-p-2 tw-shadow tw-bg-base-100 tw-rounded-box">
+            <ul tabIndex={0} className="tw-dropdown-content tw-menu tw-p-2 tw-shadow tw-bg-base-100 tw-rounded-box tw-z-1000">
               {item.layer.api.updateItem && hasUserPermission(item.layer.api?.collectionName!, "update") && <li>
                 <a className="!tw-text-base-content" onClick={openEditPopup}>
                   <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor">

@@ -7,13 +7,16 @@ import { Item } from "../../../../types";
 import { toast } from "react-toastify";
 import { useHasUserPermission } from "../../hooks/usePermissions";
 import { timeAgo } from "../../../../Utils/TimeAgo";
+import { useAuth } from "../../../Auth";
+import { useEffect } from "react";
 
 
 
-export function HeaderView({ item, title, avatar, setItemFormPopup }: {
+export function HeaderView({ item, title, avatar, owner, setItemFormPopup }: {
   item: Item,
   title?: string,
   avatar?: string,
+  owner?: string,
   setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
 }) {
 
@@ -22,6 +25,9 @@ export function HeaderView({ item, title, avatar, setItemFormPopup }: {
 
   const map = useMap();
   const hasUserPermission = useHasUserPermission();
+
+  const { user } = useAuth();
+
 
   const removeItemFromMap = async (event: React.MouseEvent<HTMLElement>) => {
     setLoading(true);
@@ -66,7 +72,9 @@ export function HeaderView({ item, title, avatar, setItemFormPopup }: {
         </div>
       </div>
       <div className='tw-col-span-1'>
-        {(item.layer?.api?.deleteItem || item.layer?.api?.updateItem) && (hasUserPermission(item.layer.api?.collectionName!, "delete") || hasUserPermission(item.layer.api?.collectionName!, "update")) &&
+        {(item.layer?.api?.deleteItem || item.layer?.api?.updateItem)
+        && ((user && owner === user.id) || owner == undefined)
+        && (hasUserPermission(item.layer.api?.collectionName!, "delete") || hasUserPermission(item.layer.api?.collectionName!, "update")) &&
           <div className="tw-dropdown tw-dropdown-bottom">
             <label tabIndex={0} className="tw-bg-base-100 tw-btn tw-m-1 tw-leading-3 tw-border-none tw-min-h-0 tw-h-6">
               <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor">

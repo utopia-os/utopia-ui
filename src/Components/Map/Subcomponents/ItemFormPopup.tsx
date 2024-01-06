@@ -18,7 +18,7 @@ export interface ItemFormPopupProps {
     layer: LayerProps,
     item?: Item,
     children?: React.ReactNode,
-    setItemFormPopup: React.Dispatch<React.SetStateAction<any>>
+    setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
 }
 
 export function ItemFormPopup(props: ItemFormPopupProps) {
@@ -76,23 +76,23 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
             map.closePopup();
         }
         else {
-
+            const uuid = crypto.randomUUID();
             let success = false;
             try {
-                await props.layer.api?.createItem!({...formItem, id: crypto.randomUUID() });
+                await props.layer.api?.createItem!({...formItem, id: uuid });
                 success = true;
             } catch (error) {
                 toast.error(error.toString());
             }
             if(success) {
-                addItem({...formItem, id: crypto.randomUUID(), layer: props.layer, user_created: user});
+                addItem({...formItem, id: uuid, layer: props.layer, user_created: user});
                 toast.success("New item created");
                 resetFilterTags();
             } 
             setSpinner(false);
             map.closePopup();
         }
-        props.setItemFormPopup(null);
+        props.setItemFormPopup!(null);
     }
 
 

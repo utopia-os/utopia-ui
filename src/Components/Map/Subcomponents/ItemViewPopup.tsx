@@ -14,6 +14,7 @@ export interface ItemViewPopupProps {
   children?: React.ReactNode;
   title?: string;
   avatar?: string;
+  owner?: string,
   setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
 }
 
@@ -25,7 +26,7 @@ export const ItemViewPopup = React.forwardRef((props: ItemViewPopupProps, ref: a
   return (
     <LeafletPopup ref={ref} maxHeight={377} minWidth={275} maxWidth={275} autoPanPadding={[20, 80]}>
       <div className='tw-bg-base-100 tw-text-base-content'>
-        <HeaderView item={props.item} title={props.title} avatar={props.avatar} setItemFormPopup={props.setItemFormPopup} />
+        <HeaderView item={props.item} title={props.title} avatar={props.avatar} owner={props.owner} setItemFormPopup={props.setItemFormPopup} />
         <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64'>
           {props.children ?
 

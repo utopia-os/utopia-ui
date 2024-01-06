@@ -12,6 +12,7 @@ import { useAddMarker, useAddPopup, useLeafletRefs } from './hooks/useLeafletRef
 import { Popup } from 'leaflet'
 import { useLocation } from 'react-router-dom';
 import { useAssetApi } from '../AppShell/hooks/useAssets'
+import { getValue } from '../../Utils/GetValue'
 
 export const Layer = (props: LayerProps) => {
 
@@ -171,13 +172,3 @@ export const Layer = (props: LayerProps) => {
         </>
     )
 }
-
-function getValue(obj, path) {
-    if (obj) {
-        for (var i = 0, path = path.split('.'), len = path.length; i < len; i++) {
-            obj = obj[path[i]];
-        };
-        return obj;
-    }
-
-};

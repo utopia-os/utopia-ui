@@ -1,4 +1,4 @@
-import { UtopiaMap, Tags, Layer, ItemForm, ItemView, PopupTextAreaInput, PopupTextInput, PopupStartEndInput, TextView, StartEndView, Permissions } from 'utopia-ui'
+import { UtopiaMap, Tags, Layer, ItemForm, ItemView, PopupTextAreaInput, PopupTextInput, PopupStartEndInput, TextView, StartEndView, Permissions, PopupButton } from 'utopia-ui'
 import { itemsApi } from '../api/itemsApi';
 import { permissionsApi } from '../api/permissionsApi';
 import { Place, Event, Tag } from '../api/directus';
@@ -69,9 +69,11 @@ function MapContainer() {
         itemTitleField='user_created.first_name'
         itemAvatarField='user_created.avatar'
         itemColorField='user_created.color'
+        itemOwnerField="user_created.id"
         // data={places}
         api={updatesApiInstance}>
         <ItemView>
+          <PopupButton url={'/profile'} parameterField={'user_created.id'} text={'Profile'} colorField={'user_created.color'} />
           <TextView></TextView>
         </ItemView>
         <ItemForm>
@@ -83,6 +85,5 @@ function MapContainer() {
     </UtopiaMap>
   )
 }
-
 
 export default MapContainer

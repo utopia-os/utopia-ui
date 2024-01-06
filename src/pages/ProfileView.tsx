@@ -1,38 +1,41 @@
 import { useState, useEffect } from "react";
-import { itemsApi } from "../api/itemsApi";
-import { Project } from '../api/directus'
 import { useLocation } from "react-router-dom";
 import { CardPage } from "utopia-ui";
+import { readUserApi } from "../api/readUserApi";
+import { UserItem } from "utopia-ui/dist/types";
 
-export const ProjectView = () => {
+export const ProfileView = () => {
 
-  const [projectsApi, setProjectsApi] = useState<itemsApi<Project>>();
-  const [project, setProject] = useState<Project>();
+  const [userApi, setUserApi] = useState<readUserApi>();
+  const [user, setUser] = useState<UserItem>();
 
   let location = useLocation();
 
 
   const loadProject = async () => {
-    const project: unknown = await projectsApi?.getItem(location.pathname.split("/")[2]);
-    setProject(project as Project);
+    const user: unknown = await userApi?.getItem(location.pathname.split("/")[2]);
+    setUser(user as UserItem);
 
   }
 
   useEffect(() => {
-    setProjectsApi(new itemsApi<Project>('projects'));
+    setUserApi(new readUserApi());
   }, [])
 
   useEffect(() => {
     loadProject();
-  }, [projectsApi])
+  }, [userApi])
 
   return (
-    <CardPage title={project?.name || ""} parent={{name: 'Projects',url: "/projects"}}>
-      {project &&
+    <CardPage title={user?.first_name} hideTitle={true} parent={{ name: 'Profiles', url: "/profiles" }}>
+      {user &&
         <>
-          <img className='h-36' src={`https://api.utopia-lab.org/assets/${project?.picture} : ''}`}></img>
-          <p className='font-bold text-sm mb-2 mt-2'>{project?.subname}</p>
-          <p className='text-sm mb-2'>{project?.text}</p>
+          <div className="flex flex-row">
+            
+            <p className="text-4xl"><img className='h-20 rounded-full inline' src={`https://api.utopia-lab.org/assets/${user.avatar} : ''}`}></img> {user?.first_name}</p>
+
+          </div>
+          <p className='text-sm mt-8 mb-2 whitespace-pre-wrap	'>{user?.description}</p>
         </>
 
       }

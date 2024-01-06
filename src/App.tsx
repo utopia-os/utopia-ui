@@ -1,4 +1,4 @@
-import { AppShell, SideBar, Content, AuthProvider, Settings, Modal, LoginPage, SignupPage, Quests } from 'utopia-ui'
+import { AppShell, SideBar, Content, AuthProvider, UserSettings, ProfileSettings, Modal, LoginPage, SignupPage, Quests } from 'utopia-ui'
 import { bottomRoutes, routes } from './routes/sidebar'
 import { Route, Routes } from 'react-router-dom'
 import MapContainer from "./pages/MapContainer"
@@ -9,6 +9,7 @@ import Projects from './pages/Projects'
 import { ProjectView } from './pages/ProjectView'
 import { assetsApi } from './api/assetsApi'
 import { ModalContent } from './ModalContent'
+import { ProfileView } from './pages/ProfileView'
 
 
 
@@ -28,12 +29,14 @@ function App() {
             <Quests /> 
             <Routes>
               <Route path="/*" element={<MapContainer />} />
-              <Route path="/settings" element={<Settings />} />
+              <Route path="/settings" element={<UserSettings />} />
+              <Route path="/profile" element={<ProfileSettings />} />
               <Route path="/concept" element={<Concept/>} />
               <Route path="/projects" element={<Projects/>} />
               <Route path="/projects/*" element={<ProjectView/>} />
               <Route path="/login" element={<LoginPage/>} />
               <Route path="/signup" element={<SignupPage/>} />
+              <Route path="/profile/*" element={<ProfileView/>} />
             </Routes>
           </Content>
         </AppShell>

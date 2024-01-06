@@ -3,8 +3,9 @@ import * as React from "react"
 import {TitleCard} from "./TitleCard"
 
 
-export function CardPage({title,children, parent} : { 
+export function CardPage({title, hideTitle, children, parent} : { 
   title: string,
+  hideTitle?: boolean,
   children?: React.ReactNode,
   parent?: {name: string, url: string}
 }) {
@@ -20,7 +21,7 @@ export function CardPage({title,children, parent} : {
             <li>{title}</li>
           </ul>
         </div>
-        <TitleCard title={title} topMargin="tw-my-2" className=" tw-mb-4">
+        <TitleCard hideTitle={hideTitle} title={title} topMargin="tw-my-2" className=" tw-mb-4">
           {children}
         </TitleCard>
       </div>

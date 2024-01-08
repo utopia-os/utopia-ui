@@ -18,6 +18,7 @@ import { LeafletRefsProvider } from "./hooks/useLeafletRefs";
 import { LayerControl } from "./Subcomponents/LayerControl";
 import { QuestControl } from "./Subcomponents/QuestControl";
 import { Control } from "./Subcomponents/Control";
+import { Outlet } from "react-router-dom";
 
 
 export interface MapEventListenerProps {
@@ -71,6 +72,7 @@ function UtopiaMap({
 
 
     return (
+        <>
         <LayersProvider initialLayers={[]}>
             <TagsProvider initialTags={[]}>
                 <PermissionsProvider initialPermissions={[]}>
@@ -114,6 +116,8 @@ function UtopiaMap({
                 </PermissionsProvider>
             </TagsProvider>
         </LayersProvider>
+            <Outlet></Outlet>
+        </>
     );
 }
 

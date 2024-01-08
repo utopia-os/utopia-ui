@@ -158,8 +158,8 @@ export function ProfileSettings() {
 
 
   return (
-    <>
-      <main className="tw-flex-1 tw-overflow-y-auto tw-overflow-x-hidden tw-pt-8 tw-px-6 tw-bg-base-200 tw-min-w-80 tw-flex tw-justify-center" >
+    <div className='tw-backdrop-contrast-50 tw-h-full tw-w-full'>
+      <main className="tw-flex-1 tw-overflow-y-auto tw-overflow-x-hidden tw-pt-8 tw-px-6 tw-min-w-80 tw-flex tw-justify-center" >
         <div className='tw-w-full xl:tw-max-w-6xl'>
           <TitleCard title="Profile" topMargin="tw-mt-2" className='tw-mb-6'>
             <div className="tw-flex">
@@ -219,6 +219,6 @@ export function ProfileSettings() {
           renderCrop();
         }}>Select</button>
       </DialogModal>
-    </>
+    </div>
   )
 }

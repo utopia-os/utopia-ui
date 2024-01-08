@@ -44,6 +44,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.17",
+    "@tanstack/react-query": "^5.17.8",
     "@types/offscreencanvas": "^2019.7.1",
     "leaflet": "^1.9.4",
     "prop-types": "^15.8.1",

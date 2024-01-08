@@ -24,7 +24,9 @@ type AuthContextProps = {
   loading: Boolean,
   logout: () => Promise<any>,
   updateUser: (user: UserItem) => any,
-  token: String | null
+  token: String | null,
+  requestPasswordReset: (email:string, reset_url: string) => Promise<any>,
+  passwordReset: (token:string, new_password:string) => Promise<any>
 }
 
 const AuthContext = createContext<AuthContextProps>({
@@ -35,7 +37,9 @@ const AuthContext = createContext<AuthContextProps>({
   loading: false,
   logout: () => Promise.reject(),
   updateUser: () => Promise.reject(),
-  token: ""
+  token: "",
+  requestPasswordReset: () => Promise.reject(),
+  passwordReset: () => Promise.reject()
 });
 
 export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
@@ -118,10 +122,34 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
     };
   }
 
+  const requestPasswordReset = async (email: string, reset_url?: string): Promise<any> => {
+    setLoading(true);
+    try {
+      await userApi.requestPasswordReset(email, reset_url);
+      return setLoading(false);
+    } catch (error: any) {
+      setLoading(false);
+      throw error;
+    };
+  }
+
+
+  const passwordReset = async (token: string, new_password:string): Promise<any> => {
+    setLoading(true);
+    try {
+      await userApi.passwordReset(token, new_password);
+      return setLoading(false);
+    } catch (error: any) {
+      setLoading(false);
+      throw error;
+    };
+  }
+
+
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, user, login, register, loading, logout, updateUser, token }}
+      value={{ isAuthenticated, user, login, register, loading, logout, updateUser, token, requestPasswordReset, passwordReset }}
     >
       {children}
     </AuthContext.Provider>

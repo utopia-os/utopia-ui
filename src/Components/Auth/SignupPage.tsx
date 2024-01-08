@@ -1,63 +1,55 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useRef, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import ErrorText from '../Typography/ErrorText'
-import {TextInput} from '../Input/TextInput'
+import { TextInput } from '../Input/TextInput'
 import * as React from 'react'
+import { toast } from 'react-toastify'
+import { useAuth } from './useAuth'
+import { MapOverlayPage } from '../Templates'
 
 export function SignupPage() {
 
-    const INITIAL_REGISTER_OBJ = {
-        name : "",
-        password : "",
-        emailId : ""
+    const [email, setEmail] = useState<string>("");
+    const [userName, setUserName] = useState<string>("");
+
+    const [password, setPassword] = useState<string>("");
+
+    const { register, loading } = useAuth();
+
+    const navigate = useNavigate();
+
+    const onRegister = async () => {
+        await toast.promise(
+            register({ email: email, password: password }, userName),
+            {
+                success: {
+                    render({ data }) {
+                        navigate(`/`);
+                        return `Hi ${data?.first_name}`
+                    },
+                    // other options
+                    icon: "✌️",
+                },
+                error: {
+                    render({ data }) {
+                        return `${data}`
+                    },
+                },
+                pending: 'creating new user ...'
+            });
     }
 
-    const [loading, setLoading] = useState(false)
-    const [errorMessage, setErrorMessage] = useState("")
-    const [registerObj, setRegisterObj] = useState(INITIAL_REGISTER_OBJ)
-
-    const submitForm = (e) =>{
-        e.preventDefault()
-        setErrorMessage("")
-
-        if(registerObj.name.trim() === "")return setErrorMessage("Name is required! (use any value)")
-        if(registerObj.emailId.trim() === "")return setErrorMessage("Email Id is required! (use any value)")
-        if(registerObj.password.trim() === "")return setErrorMessage("Password is required! (use any value)")
-        else{
-            setLoading(true)
-            // Call API to check user credentials and save token in localstorage
-            localStorage.setItem("token", "DumyTokenHere")
-            setLoading(false)
-            window.location.href = '/app/welcome'
-        }
-    }
-
-    const updateFormValue = (val: string) => {
-        console.log(val)
-    }
 
     return (
-        <div className="tw-flex-1 tw-bg-base-200 tw-flex tw-items-center">
-            <div className="tw-card tw-mx-auto tw-w-full tw-max-w-md  tw-shadow-xl">
-                <div className="tw-grid  md:tw-grid-cols-1 tw-grid-cols-1  tw-bg-base-100 tw-rounded-xl">
-                    <div className='tw-py-10 tw-px-10'>
-                        <h2 className='tw-text-2xl tw-font-semibold tw-mb-2 tw-text-center'>Sign Up</h2>
-                        <form onSubmit={(e) => submitForm(e)}>
-
-                            <div className="mb-4">
-                                <TextInput defaultValue={registerObj.name} containerStyle="tw-mt-4" labelTitle="Name" updateFormValue={updateFormValue} />
-                                <TextInput defaultValue={registerObj.emailId} containerStyle="tw-mt-4" labelTitle="E-Mail" updateFormValue={updateFormValue} />
-                                <TextInput defaultValue={registerObj.password} type="password"  containerStyle="tw-mt-4" labelTitle="Password" updateFormValue={updateFormValue} />
-                            </div>
-
-                            <ErrorText styleClass="tw-mt-8">{errorMessage}</ErrorText>
-                            <button type="submit" className={"tw-btn tw-mt-2 tw-w-full tw-btn-primary" + (loading ? " tw-loading" : "")}>Register</button>
-
-                            <div className='tw-text-center tw-mt-4'>Already have an account? <Link to="/login"><span className="  tw-inline-block  hover:tw-text-primary hover:tw-underline hover:tw-cursor-pointer tw-transition tw-duration-200">Login</span></Link></div>
-                        </form>
-                    </div>
-                </div>
+        <MapOverlayPage>
+            <h2 className='tw-text-2xl tw-font-semibold tw-mb-2 tw-text-center'>Sign Up</h2>
+            <input type="text" placeholder="Name" value={userName} onChange={e => setUserName(e.target.value)} className="tw-input tw-input-bordered tw-w-full tw-max-w-xs" />
+            <input type="email" placeholder="E-Mail" value={email} onChange={e => setEmail(e.target.value)} className="tw-input tw-input-bordered tw-w-full tw-max-w-xs" />
+            <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} className="tw-input tw-input-bordered tw-w-full tw-max-w-xs" />
+            <div className="tw-card-actions tw-mt-4">
+                <button className={loading ? 'tw-btn tw-btn-disabled tw-btn-block tw-btn-primary' : 'tw-btn tw-btn-primary tw-btn-block'} onClick={() => onRegister()}>{loading ? <span className="tw-loading tw-loading-spinner"></span> : 'Sign Up'}</button>
             </div>
-        </div>
+        </MapOverlayPage>
     )
 }
+

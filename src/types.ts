@@ -87,7 +87,9 @@ export interface UserApi {
 	logout(): Promise<void>,
   getUser(): Promise<UserItem>,
   getToken(): Promise<any>,
-	updateUser(user: UserItem): Promise<void>
+	updateUser(user: UserItem): Promise<void>,
+  requestPasswordReset(email:string, reset_url?:string),
+  passwordReset(token:string,new_password:string)
 }
 
 export type UserItem = {

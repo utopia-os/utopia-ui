@@ -10,63 +10,11 @@ import DialogModal from "../Templates/DialogModal";
 
 export default function NavBar({ appName, nameWidth = 200}: { appName: string, nameWidth?: number }) {
 
-
-  const [signupOpen, setSignupOpen] = useState(false);
-  const [loginOpen, setLoginOpen] = useState(false);
-
-
-  const [email, setEmail] = useState<string>("");
-  const [userName, setUserName] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-
-
-  const { isAuthenticated, user, login, register, loading, logout, token } = useAuth();
-
   const navigate = useNavigate();
 
-  const onRegister = async () => {
-    await toast.promise(
-      register({ email: email, password: password }, userName),
-      {
-        success: {
-          render({ data }) {
-            navigate(`/`);
-            return `Hi ${data?.first_name}`
-          },
-          // other options
-          icon: "✌️",
-        },
-        error: {
-          render( {data} ) {        
-            return `${data}`
-          },
-        },
-        pending: 'creating new user ...'
-      });
-    setSignupOpen(false);
-  }
 
-  const onLogin = async () => {
-    await toast.promise(
-      login({ email: email, password: password }),
-      {
-        success: {
-          render({ data }) {
-            navigate(`/`);
-            return `Hi ${data?.first_name}`
-          },
-          // other options
-          icon: "✌️",
-        },
-        error: {
-          render( {data} ) {        
-            return `${data}`
-          },
-        },
-        pending: 'logging in ...'
-      });
-    setLoginOpen(false);
-  }
+
+  const { isAuthenticated, user, logout, token } = useAuth();
 
   const onLogout = () => {
     toast.promise(
@@ -133,11 +81,11 @@ export default function NavBar({ appName, nameWidth = 200}: { appName: string, n
           <div>
 
             <div className="tw-hidden md:tw-flex">
-              <div onClick={() => setLoginOpen(true)} className="tw-btn tw-btn-ghost tw-mr-2">
+              <div onClick={() => navigate("/login")} className="tw-btn tw-btn-ghost tw-mr-2">
                 Login
               </div>
 
-              <div onClick={() => setSignupOpen(true)} className="tw-btn tw-btn-ghost tw-mr-2">
+              <div onClick={() => navigate("/signup")} className="tw-btn tw-btn-ghost tw-mr-2">
                 Sign Up
               </div>
             </div>
@@ -150,35 +98,15 @@ export default function NavBar({ appName, nameWidth = 200}: { appName: string, n
 
               </label>
               <ul tabIndex={1} className="tw-menu tw-dropdown-content tw-mt-3 tw-p-2 tw-shadow tw-bg-base-100 tw-rounded-box tw-w-52 !tw-z-[10000]">
-                <li><a onClick={() => {setLoginOpen(true)}}>Login</a></li>
-                <li><a onClick={() => setSignupOpen(true)}>Sign Up</a></li>
+                <li><a onClick={() => {() => navigate("/login")}}>Login</a></li>
+                <li><a onClick={() => () => navigate("/signup")}>Sign Up</a></li>
               </ul>
             </div>
 
           </div>
         }
       </div>
-      <DialogModal
-        title="Login"
-        isOpened={loginOpen}
-        onClose={() => setLoginOpen(false)}>
-        <input type="email" placeholder="E-Mail" value={email} onChange={e => setEmail(e.target.value)} className="tw-input tw-input-bordered tw-w-full tw-max-w-xs" />
-        <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} className="tw-input tw-input-bordered tw-w-full tw-max-w-xs" />
-        <div className="tw-card-actions">
-          <button className={loading ? 'tw-btn tw-btn-disabled tw-btn-block tw-btn-primary' : 'tw-btn tw-btn-primary tw-btn-block'} onClick={() => onLogin()}>{loading ? <span className="tw-loading tw-loading-spinner"></span> : 'Login'}</button>
-        </div>
-      </DialogModal>
-      <DialogModal
-        title="Sign Up"
-        isOpened={signupOpen}
-        onClose={() => setSignupOpen(false)}>
-        <input type="text" placeholder="Name" value={userName} onChange={e => setUserName(e.target.value)} className="tw-input tw-input-bordered tw-w-full tw-max-w-xs" />
-        <input type="email" placeholder="E-Mail" value={email} onChange={e => setEmail(e.target.value)} className="tw-input tw-input-bordered tw-w-full tw-max-w-xs" />
-        <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} className="tw-input tw-input-bordered tw-w-full tw-max-w-xs" />
-        <div className="tw-card-actions">
-          <button className={loading ? 'tw-btn tw-btn-disabled tw-btn-block tw-btn-primary' : 'tw-btn tw-btn-primary tw-btn-block'} onClick={() => onRegister()}>{loading ? <span className="tw-loading tw-loading-spinner"></span> : 'Sign Up'}</button>
-        </div>
-      </DialogModal>
+
     </>
   )
 }

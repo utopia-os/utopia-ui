@@ -51,7 +51,6 @@ export function ProfileSettings() {
 
   function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
     const { width, height } = e.currentTarget
-    console.log(width);
 
     setCrop(centerAspectCrop(width, height, 1))
   }

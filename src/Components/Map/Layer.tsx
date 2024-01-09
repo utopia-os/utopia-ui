@@ -128,6 +128,8 @@ export const Layer = ( {
                         let color1 = markerDefaultColor;
                         let color2 = "RGBA(35, 31, 32, 0.2)";
                         if (itemColorField) color1 = getValue(item, itemColorField);
+                        if(color1 == null) color1 = markerDefaultColor;
+                        
                         else if (tags && tags[0]) {
                             color1 = tags[0].color;
                         }
@@ -149,7 +151,7 @@ export const Layer = ( {
                                                         r && addPopup(item, r as Popup);
                                                 }} key={item.id + item.name}
                                                     title={itemTitleField && item ? getValue(item, itemTitleField) : undefined}
-                                                    avatar={itemAvatarField && item ? assetsApi.url + getValue(item, itemAvatarField) : undefined}
+                                                    avatar={itemAvatarField && item && getValue(item, itemAvatarField)? assetsApi.url + getValue(item, itemAvatarField) : undefined}
                                                     owner={itemOwnerField && item ? getValue(item, itemOwnerField) : undefined}
                                                     item={item}
                                                     setItemFormPopup={setItemFormPopup}>
@@ -163,7 +165,7 @@ export const Layer = ( {
                                                 if (!(item.id in leafletRefs))
                                                     r && addPopup(item, r as Popup);
                                             }} title={itemTitleField && item ? getValue(item, itemTitleField) : undefined}
-                                                avatar={itemAvatarField && item ? assetsApi.url + getValue(item, itemAvatarField) : undefined}
+                                                avatar={itemAvatarField && item  && getValue(item, itemAvatarField)? assetsApi.url + getValue(item, itemAvatarField) : undefined}
                                                 owner={itemOwnerField && item ? getValue(item, itemOwnerField) : undefined}
                                                 item={item}
                                                 setItemFormPopup={setItemFormPopup} />

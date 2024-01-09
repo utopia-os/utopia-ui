@@ -42,7 +42,7 @@ export const ItemViewPopup = React.forwardRef((props: ItemViewPopupProps, ref: a
           }
 
         </div>
-        <div className='tw-flex -tw-mb-1  tw-flex-row'>
+        <div className='tw-flex -tw-mb-1 tw-flex-row-reverse tw-mr-2'>
 
 
           {

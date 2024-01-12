@@ -5,18 +5,17 @@ import { useAddFilterTag } from '../../hooks/useFilter';
 import { hashTagRegex } from '../../../../Utils/HashTagRegex';
 import { fixUrls, mailRegex } from '../../../../Utils/ReplaceURLs';
 import Markdown from 'react-markdown'
+import rehypeVideo from 'rehype-video';
 
 export const TextView = ({ item }: { item?: Item }) => {
   const tags = useTags();
   const addFilterTag = useAddFilterTag();
 
-  let replacedText;
-  console.log(item?.text);
-  
+  let replacedText;  
 
   if (item && item.text) replacedText = fixUrls(item.text);
 
-  replacedText = replacedText.replace(/(?<!\]\()https?:\/\/[^\s\)]+(?!\))/g, (url) => {
+  replacedText = replacedText.replace(/(?<!\]?\()https?:\/\/[^\s\)]+(?!\))/g, (url) => {
     let  shortUrl =  url;  
     if (url.match('^https:\/\/')) {
       shortUrl = url.split('https://')[1];
@@ -25,23 +24,15 @@ export const TextView = ({ item }: { item?: Item }) => {
       shortUrl = url.split('http://')[1];
     }    
     return `[${shortUrl}](${url})`
-  })
-
-  console.log(replacedText);
-  
+  })  
 
 replacedText = replacedText.replace(mailRegex, (url) => {
   return `[${url}](mailto:${url})`
 })
 
-console.log(replacedText);
-
-
 replacedText = replacedText.replace(hashTagRegex, (match) => {
   return `[${match}](${match})`
 })
-
-console.log(replacedText);
 
 
 const CustomH1 = ({ children }) => (
@@ -89,23 +80,25 @@ const CustomExternalLink = ({ href, children }) => (
   </a>
 );
 const CustomHashTagLink = ({ children, tag, item }) => (
-<a style={{ color: tag ? tag.color : '#faa' , fontWeight: 'bold', cursor: 'pointer' }} key={tag ? tag.id+item!.id  : item.id} onClick={() => {
+<a 
+    style={{ color: tag ? tag.color : '#faa' , fontWeight: 'bold', cursor: 'pointer' }}
+    key={tag ? tag.id+item!.id  : item.id}
+    onClick={(e) => {
+      e.stopPropagation(); 
       addFilterTag(tag!);
      // map.fitBounds(items)
      // map.closePopup();
     }}>{children}</a>
 );
 
+
   return (
-    <Markdown   components={{
+    //@ts-ignore
+    <Markdown rehypePlugins={[rehypeVideo]} components={{
       p: CustomParagraph,
       a: ({ href, children }) => {
-        if (href?.startsWith("#")) {
-          console.log(href);
-          
-          const tag = tags.find(t => t.id.toLowerCase() == href.slice(1).toLowerCase())
-          console.log(tag);
-          
+        if (href?.startsWith("#")) {          
+          const tag = tags.find(t => t.id.toLowerCase() == href.slice(1).toLowerCase())          
           return <CustomHashTagLink tag={tag} item={item}>{children}</CustomHashTagLink>;
         } else {
           return (
@@ -130,4 +123,3 @@ const CustomHashTagLink = ({ children, tag, item }) => (
 
 
 }
-

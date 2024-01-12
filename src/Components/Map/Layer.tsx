@@ -64,7 +64,7 @@ export const Layer = ( {
 
     useMapEvents({
         popupopen: (e) => {
-            const item = Object.entries(leafletRefs).find(r => r[1].popup == e.popup)?.[1].item;
+            const item = Object.entries(leafletRefs).find(r => r[1].popup == e.popup)?.[1].item;           
             if (item?.layer?.name == name && window.location.pathname.split("/")[2] != item.id) {
                 window.history.pushState({}, "", `/${name}/${item.id}`)
                 let title = "";

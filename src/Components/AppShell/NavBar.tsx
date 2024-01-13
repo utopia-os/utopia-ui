@@ -81,13 +81,13 @@ export default function NavBar({ appName, nameWidth = 200}: { appName: string, n
           <div>
 
             <div className="tw-hidden md:tw-flex">
-              <div onClick={() => navigate("/login")} className="tw-btn tw-btn-ghost tw-mr-2">
+            <Link to={"/login"}><div className="tw-btn tw-btn-ghost tw-mr-2">
                 Login
-              </div>
+              </div></Link>
 
-              <div onClick={() => navigate("/signup")} className="tw-btn tw-btn-ghost tw-mr-2">
+              <Link to={"/signup"}><div  className="tw-btn tw-btn-ghost tw-mr-2">
                 Sign Up
-              </div>
+              </div></Link>
             </div>
             <div className="tw-dropdown tw-dropdown-end">
               <label tabIndex={1} className="tw-btn tw-btn-ghost md:tw-hidden">
@@ -98,8 +98,8 @@ export default function NavBar({ appName, nameWidth = 200}: { appName: string, n
 
               </label>
               <ul tabIndex={1} className="tw-menu tw-dropdown-content tw-mt-3 tw-p-2 tw-shadow tw-bg-base-100 tw-rounded-box tw-w-52 !tw-z-[10000]">
-                <li><a onClick={() => {() => navigate("/login")}}>Login</a></li>
-                <li><a onClick={() => () => navigate("/signup")}>Sign Up</a></li>
+                <li><Link to={"/login"}>Login</Link></li>
+                <li><Link to={"/signup"}>Sign Up</Link></li>
               </ul>
             </div>
 

@@ -12,13 +12,14 @@ import { ItemsProvider } from "./hooks/useItems";
 import { TagsProvider } from "./hooks/useTags";
 import { LayersProvider } from "./hooks/useLayers";
 import { FilterProvider } from "./hooks/useFilter";
-import { FilterControl } from "./Subcomponents/FilterControl";
+import { SearchControl } from "./Subcomponents/Controls/SearchControl";
 import { PermissionsProvider } from "./hooks/usePermissions";
 import { LeafletRefsProvider } from "./hooks/useLeafletRefs";
-import { LayerControl } from "./Subcomponents/LayerControl";
-import { QuestControl } from "./Subcomponents/QuestControl";
-import { Control } from "./Subcomponents/Control";
+import { LayerControl } from "./Subcomponents/Controls/LayerControl";
+import { QuestControl } from "./Subcomponents/Controls/QuestControl";
+import { Control } from "./Subcomponents/Controls/Control";
 import { Outlet } from "react-router-dom";
+import { TagsControl } from "./Subcomponents/Controls/TagsControl";
 
 
 export interface MapEventListenerProps {
@@ -57,10 +58,6 @@ function UtopiaMap({
                     props.setSelectNewItemPosition(null)
                 }
             },
-            resize: () => {
-                console.log("resize");
-            },
-
         })
         return null
     }
@@ -73,16 +70,19 @@ function UtopiaMap({
 
     return (
         <>
-        <LayersProvider initialLayers={[]}>
-            <TagsProvider initialTags={[]}>
-                <PermissionsProvider initialPermissions={[]}>
-                    <FilterProvider initialTags={[]}>
-                        <ItemsProvider initialItems={[]}>
-                            <LeafletRefsProvider initialLeafletRefs={{}}>
+            <LayersProvider initialLayers={[]}>
+                <TagsProvider initialTags={[]}>
+                    <PermissionsProvider initialPermissions={[]}>
+                        <FilterProvider initialTags={[]}>
+                            <ItemsProvider initialItems={[]}>
+                                <LeafletRefsProvider initialLeafletRefs={{}}>
                                     <div className={(selectNewItemPosition != null ? "crosshair-cursor-enabled" : undefined)}>
                                         <MapContainer ref={mapDivRef} style={{ height: height, width: width }} center={center} zoom={zoom} zoomControl={false}>
-                                            <FilterControl></FilterControl>
-                                            <Control>
+                                            <Control position='topLeft'>
+                                                <SearchControl clusterRef={clusterRef}/>
+                                                <TagsControl/>
+                                            </Control>
+                                            <Control position='bottomLeft'>
                                                 <QuestControl></QuestControl>
                                                 <LayerControl></LayerControl>
                                             </Control>
@@ -110,12 +110,12 @@ function UtopiaMap({
                                             </div>
                                         }
                                     </div>
-                            </LeafletRefsProvider>
-                        </ItemsProvider>
-                    </FilterProvider>
-                </PermissionsProvider>
-            </TagsProvider>
-        </LayersProvider>
+                                </LeafletRefsProvider>
+                            </ItemsProvider>
+                        </FilterProvider>
+                    </PermissionsProvider>
+                </TagsProvider>
+            </LayersProvider>
             <Outlet></Outlet>
         </>
     );

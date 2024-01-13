@@ -6,7 +6,7 @@ import { ItemViewPopup } from './Subcomponents/ItemViewPopup'
 import { useItems, useSetItemsApi, useSetItemsData } from './hooks/useItems'
 import { useEffect } from 'react'
 import { ItemFormPopup } from './Subcomponents/ItemFormPopup'
-import { useFilterTags, useIsLayerVisible, useSearchPhrase } from './hooks/useFilter'
+import { useFilterTags, useIsLayerVisible } from './hooks/useFilter'
 import { useGetItemTags } from './hooks/useTags'
 import { useAddMarker, useAddPopup, useLeafletRefs } from './hooks/useLeafletRefs'
 import { Popup } from 'leaflet'
@@ -47,7 +47,6 @@ export const Layer = ( {
 
     let location = useLocation();
 
-    const searchPhrase = useSearchPhrase();
 
     const map = useMap();
 
@@ -64,7 +63,7 @@ export const Layer = ( {
 
     useMapEvents({
         popupopen: (e) => {
-            const item = Object.entries(leafletRefs).find(r => r[1].popup == e.popup)?.[1].item;           
+            const item = Object.entries(leafletRefs).find(r => r[1].popup == e.popup)?.[1].item;                     
             if (item?.layer?.name == name && window.location.pathname.split("/")[2] != item.id) {
                 window.history.pushState({}, "", `/${name}/${item.id}`)
                 let title = "";
@@ -116,11 +115,6 @@ export const Layer = ( {
                     filter(item => item.layer?.name === name)?.
                     filter(item =>
                         filterTags.length == 0 ? item : filterTags.every(tag => getItemTags(item).some(filterTag => filterTag.id === tag.id)))?.
-                    filter(item => {
-                        return searchPhrase === ''
-                            ? item :
-                            item.name?.toLowerCase().includes(searchPhrase.toLowerCase()) || item.text?.toLowerCase().includes(searchPhrase.toLowerCase())
-                    }).
                     filter(item => item.layer && isLayerVisible(item.layer)).
                     map((item: Item) => {
                         const tags = getItemTags(item);
@@ -139,7 +133,7 @@ export const Layer = ( {
                         }
                         return (
                             <Marker ref={(r) => {
-                                if (!(item.id in leafletRefs))
+                                if (!(item.id in leafletRefs && leafletRefs[item.id].marker == r))
                                     r && addMarker(item, r);
                             }} icon={MarkerIconFactory(markerShape, color1, color2, markerIcon)} key={item.id} position={[item.position.coordinates[1], item.position.coordinates[0]]}>
                                 {
@@ -147,7 +141,7 @@ export const Layer = ( {
                                         React.Children.toArray(children).map((child) =>
                                             React.isValidElement(child) && child.props.__TYPE === "ItemView" ?
                                                 <ItemViewPopup ref={(r) => {
-                                                    if (!(item.id in leafletRefs))
+                                                    if (!(item.id in leafletRefs && leafletRefs[item.id].popup == r))
                                                         r && addPopup(item, r as Popup);
                                                 }} key={item.id + item.name}
                                                     title={itemTitleField && item ? getValue(item, itemTitleField) : undefined}
@@ -162,7 +156,7 @@ export const Layer = ( {
                                         :
                                         <>
                                             <ItemViewPopup key={item.id + item.name} ref={(r) => {
-                                                if (!(item.id in leafletRefs))
+                                                if (!(item.id in leafletRefs  && leafletRefs[item.id].popup == r))
                                                     r && addPopup(item, r as Popup);
                                             }} title={itemTitleField && item ? getValue(item, itemTitleField) : undefined}
                                                 avatar={itemAvatarField && item  && getValue(item, itemAvatarField)? assetsApi.url + getValue(item, itemAvatarField) : undefined}

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as L from 'leaflet'
-import { useLayers } from '../hooks/useLayers';
-import { useAddVisibleLayer, useIsLayerVisible, useToggleVisibleLayer } from '../hooks/useFilter';
+import { useLayers } from '../../hooks/useLayers';
+import { useAddVisibleLayer, useIsLayerVisible, useToggleVisibleLayer } from '../../hooks/useFilter';
 import { useEffect } from 'react';
 
 export function LayerControl() {
@@ -9,14 +9,6 @@ export function LayerControl() {
     const [open, setOpen] = React.useState(false);
 
     const layers = useLayers();
-    const controlContainerRef = React.createRef<HTMLDivElement>()
-
-    React.useEffect(() => {
-        if (controlContainerRef.current !== null) {
-          L.DomEvent.disableClickPropagation(controlContainerRef.current)
-          L.DomEvent.disableScrollPropagation(controlContainerRef.current)
-        }
-      }, [controlContainerRef])
 
     useEffect(() => {
         layers.map(layer =>
@@ -30,7 +22,7 @@ export function LayerControl() {
     const addVisibleLayer = useAddVisibleLayer();
 
     return (
-        <div       ref={controlContainerRef} className="tw-card tw-bg-base-100 tw-shadow-xl " onClick={e => e.stopPropagation()}>
+        <div className="tw-card tw-bg-base-100 tw-shadow-xl " onClick={e => e.stopPropagation()}>
             {
                 open ?
                     <div className="tw-card-body tw-p-2 tw-w-32 tw-transition-all tw-duration-300" onClick={e => e.stopPropagation()}>

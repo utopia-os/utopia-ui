@@ -36,10 +36,11 @@ export function TextAreaInput({ labelTitle, dataField, labelStyle, containerStyl
     })
 
     var tribute = new Tribute({
-        containerClass: 'tw-z-500 tw-bg-white tw-p-2 tw-rounded-lg tw-shadow',
+        containerClass: 'tw-z-500 tw-bg-base-100 tw-p-2 tw-rounded-lg tw-shadow',
         selectClass: 'tw-font-bold',
         trigger: "#",
         values: values,
+        menuShowMinLength: 3,
         noMatchTemplate: () => {
             return ""
         },

@@ -10,6 +10,7 @@ import { useTags } from '../../hooks/useTags';
 import { useItems } from '../../hooks/useItems';
 import { useLeafletRefs } from '../../hooks/useLeafletRefs';
 import { getValue } from '../../../../Utils/GetValue';
+import { LocateControl } from './LocateControl';
 
 
 
@@ -58,16 +59,19 @@ export const SearchControl = ({ clusterRef }) => {
     return (<>
         {!(windowDimensions.height < 500) &&
             <div className='tw-w-[calc(100vw-2rem)] tw-max-w-[22rem] '>
-                <input type="text" placeholder="search ..." autoComplete="off" value={value} className="tw-input tw-input-bordered tw-w-full tw-shadow-xl tw-rounded-lg"
-                    ref={searchInput}
-                    onChange={(e) => setValue(e.target.value)}
-                    onFocus={() => setHideSuggestions(false)}
-                    onBlur={async () => {
-                        setTimeout(() => {
-                            setHideSuggestions(true);
-                        }, 200);
-                    }} />
-                {value.length > 0 && <button className="tw-btn tw-btn-sm tw-btn-circle tw-absolute tw-right-2 tw-top-2" onClick={() => setValue("")}>✕</button>}
+                <div className='flex tw-flex-row'>
+                    <input type="text" placeholder="search ..." autoComplete="off" value={value} className="tw-input tw-input-bordered tw-w-full tw-shadow-xl tw-rounded-lg tw-mr-2"
+                        ref={searchInput}
+                        onChange={(e) => setValue(e.target.value)}
+                        onFocus={() => setHideSuggestions(false)}
+                        onBlur={async () => {
+                            setTimeout(() => {
+                                setHideSuggestions(true);
+                            }, 200);
+                        }} />
+                    <LocateControl />
+                </div>
+                {value.length > 0 && <button className="tw-btn tw-btn-sm tw-btn-circle tw-absolute tw-right-16 tw-top-2" onClick={() => setValue("")}>✕</button>}
                 {hideSuggestions || Array.from(geoResults).length == 0 && itemsResults.length == 0 && tagsResults.length == 0 || value.length == 0 ? "" :
                     <div className='tw-card tw-card-body tw-bg-base-100 tw-p-4 tw-mt-2 tw-shadow-xl'>
                         {tagsResults.length > 0 &&
@@ -110,7 +114,7 @@ export const SearchControl = ({ clusterRef }) => {
                         {Array.from(geoResults).length > 0 && (itemsResults.length > 0 || tagsResults.length > 0) && <hr className='tw-opacity-50'></hr>}
                         {Array.from(geoResults).map((geo) => (
                             <div className='tw-flex tw-flex-row' key={Math.random()}>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="tw-text-current tw-mr-2 tw-mt-0 tw-w-5">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="tw-text-current tw-mr-2 tw-mt-0 tw-w-4">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                 </svg>
 

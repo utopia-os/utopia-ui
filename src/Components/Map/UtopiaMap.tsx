@@ -20,6 +20,7 @@ import { QuestControl } from "./Subcomponents/Controls/QuestControl";
 import { Control } from "./Subcomponents/Controls/Control";
 import { Outlet } from "react-router-dom";
 import { TagsControl } from "./Subcomponents/Controls/TagsControl";
+import { LocateControl } from "./Subcomponents/Controls/LocateControl";
 
 
 export interface MapEventListenerProps {
@@ -39,6 +40,7 @@ function UtopiaMap({
     zoom = 10,
     children }
     : UtopiaMapProps) {
+
 
     let meta = document.getElementsByTagName('meta')
     const [metaTags, setMetaTags] = useState<HTMLCollectionOf<HTMLMetaElement>>(meta);

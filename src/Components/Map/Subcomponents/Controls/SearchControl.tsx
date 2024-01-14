@@ -65,7 +65,6 @@ export const SearchControl = ({ clusterRef }) => {
                     onBlur={async () => {
                         setTimeout(() => {
                             setHideSuggestions(true);
-                            window.history.pushState({}, "", `/`)
                         }, 200);
                     }} />
                 {value.length > 0 && <button className="tw-btn tw-btn-sm tw-btn-circle tw-absolute tw-right-2 tw-top-2" onClick={() => setValue("")}>✕</button>}
@@ -76,6 +75,7 @@ export const SearchControl = ({ clusterRef }) => {
                                 {tagsResults.map(tag => (
                                     <div key={tag.id} className='tw-rounded-2xl tw-text-white tw-p-1 tw-px-4 tw-shadow-md tw-card tw-mr-2 tw-mb-2 tw-cursor-pointer' style={{ backgroundColor: tag.color }} onClick={() => {
                                         addFilterTag(tag)
+                                        window.history.pushState({}, "", `/`)
                                     }}>
                                         <b>#{capitalizeFirstLetter(tag.id)}</b>
                                     </div>

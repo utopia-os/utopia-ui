@@ -70,6 +70,7 @@ function UtopiaMap({
 
     return (
         <>
+            <Outlet></Outlet>
             <LayersProvider initialLayers={[]}>
                 <TagsProvider initialTags={[]}>
                     <PermissionsProvider initialPermissions={[]}>
@@ -78,11 +79,11 @@ function UtopiaMap({
                                 <LeafletRefsProvider initialLeafletRefs={{}}>
                                     <div className={(selectNewItemPosition != null ? "crosshair-cursor-enabled" : undefined)}>
                                         <MapContainer ref={mapDivRef} style={{ height: height, width: width }} center={center} zoom={zoom} zoomControl={false}>
-                                            <Control position='topLeft'>
-                                                <SearchControl clusterRef={clusterRef}/>
-                                                <TagsControl/>
+                                            <Control position='topLeft' zIndex="1000">
+                                                <SearchControl clusterRef={clusterRef} />
+                                                <TagsControl />
                                             </Control>
-                                            <Control position='bottomLeft'>
+                                            <Control position='bottomLeft' zIndex="999">
                                                 <QuestControl></QuestControl>
                                                 <LayerControl></LayerControl>
                                             </Control>
@@ -116,7 +117,6 @@ function UtopiaMap({
                     </PermissionsProvider>
                 </TagsProvider>
             </LayersProvider>
-            <Outlet></Outlet>
         </>
     );
 }

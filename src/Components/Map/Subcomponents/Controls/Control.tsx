@@ -3,7 +3,7 @@ import * as React from 'react'
 
 
 
-export const Control = ({ position, children }: { position: "topLeft" | "topRight" | "bottomLeft" | "bottomRight", children: React.ReactNode }) => {
+export const Control = ({ position, children, zIndex }: { position: "topLeft" | "topRight" | "bottomLeft" | "bottomRight", children: React.ReactNode, zIndex: string }) => {
 
 
   const controlContainerRef = React.createRef<HTMLDivElement>()
@@ -17,7 +17,7 @@ export const Control = ({ position, children }: { position: "topLeft" | "topRigh
   }, [controlContainerRef])
 
   return (
-    <div ref={controlContainerRef} className={`tw-absolute tw-z-[999] tw-flex-col ${position === 'topLeft' && "tw-top-4 tw-left-4"} ${position === 'bottomLeft' && "tw-bottom-4 tw-left-4"} ${position === 'topRight' && "tw-bottom-4 tw-right-4"} ${position === 'bottomRight' && "tw-bottom-4 tw-right-4"}`}>
+    <div ref={controlContainerRef} style={{zIndex: zIndex}} className={`tw-absolute tw-z-[999] tw-flex-col ${position === 'topLeft' && "tw-top-4 tw-left-4"} ${position === 'bottomLeft' && "tw-bottom-4 tw-left-4"} ${position === 'topRight' && "tw-bottom-4 tw-right-4"} ${position === 'bottomRight' && "tw-bottom-4 tw-right-4"}`}>
 
         {children}
     </div>

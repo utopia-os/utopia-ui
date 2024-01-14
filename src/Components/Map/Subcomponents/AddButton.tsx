@@ -1,5 +1,4 @@
 import * as React from 'react'
-import DynamicHeroIcon from '../../../Utils/DynamicHeroIcon'
 import { useLayers } from '../hooks/useLayers'
 import { useHasUserPermission } from '../hooks/usePermissions';
 
@@ -37,7 +36,7 @@ export default function AddButton({ setSelectNewItemPosition }: { setSelectNewIt
                                         className="tw-z-500  tw-border-0 tw-pl-2 tw-p-0 tw-mb-3 tw-w-10 tw-h-10 tw-cursor-pointer tw-rounded-full tw-mouse tw-drop-shadow-md tw-transition tw-ease-in tw-duration-200 focus:tw-outline-none"
                                         style={{ backgroundColor: layer.menuColor }}
                                         onClick={() => { setSelectNewItemPosition(layer) }}>
-                                        <DynamicHeroIcon type='solid' icon={layer.menuIcon} />
+                                        <layer.menuIcon className="tw-h-6 tw-w-6 tw-text-white" ></layer.menuIcon>
                                     </button>
                                 </div>
                             </a>

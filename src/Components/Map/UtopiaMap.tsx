@@ -20,7 +20,6 @@ import { QuestControl } from "./Subcomponents/Controls/QuestControl";
 import { Control } from "./Subcomponents/Controls/Control";
 import { Outlet } from "react-router-dom";
 import { TagsControl } from "./Subcomponents/Controls/TagsControl";
-import { LocateControl } from "./Subcomponents/Controls/LocateControl";
 
 
 export interface MapEventListenerProps {

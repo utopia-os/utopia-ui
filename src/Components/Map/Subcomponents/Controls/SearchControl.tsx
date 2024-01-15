@@ -72,7 +72,7 @@ export const SearchControl = ({ clusterRef }) => {
                     <LocateControl />
                 </div>
                 {value.length > 0 && <button className="tw-btn tw-btn-sm tw-btn-circle tw-absolute tw-right-16 tw-top-2" onClick={() => setValue("")}>✕</button>}
-                {hideSuggestions || Array.from(geoResults).length == 0 && itemsResults.length == 0 && tagsResults.length == 0 || value.length == 0 ? "" :
+                {hideSuggestions || Array.from(geoResults).length == 0 && itemsResults.length == 0 && tagsResults.length == 0 && !isGeoCoordinate(value)|| value.length == 0? "" :
                     <div className='tw-card tw-card-body tw-bg-base-100 tw-p-4 tw-mt-2 tw-shadow-xl'>
                         {tagsResults.length > 0 &&
                             <div className='tw-flex tw-flex-wrap tw-max-h-16 tw-overflow-hidden tw-min-h-[32px]'>
@@ -130,6 +130,21 @@ export const SearchControl = ({ clusterRef }) => {
                             </div>
 
                         ))}
+                        {isGeoCoordinate(value) &&
+                            <div className='tw-flex tw-flex-row'>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="tw-text-current tw-mr-2 tw-mt-0 tw-w-4">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 3v1.5M3 21v-6m0 0 2.77-.693a9 9 0 0 1 6.208.682l.108.054a9 9 0 0 0 6.086.71l3.114-.732a48.524 48.524 0 0 1-.005-10.499l-3.11.732a9 9 0 0 1-6.085-.711l-.108-.054a9 9 0 0 0-6.208-.682L3 4.5M3 15V4.5" />
+                                </svg>
+
+                                <div className='tw-cursor-pointer hover:tw-font-bold'
+                                    onClick={() => {
+                                        map.setView(new LatLng(extractCoordinates(value)![0], extractCoordinates(value)![1]), 15, { duration: 1 })
+                                    }}>
+                                    <div className='tw-text-sm tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>{value}</div>
+                                    <div className='tw-text-xs tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>{"Coordiante"}</div>
+                                </div>
+                            </div>
+                        }
                     </div>}
             </div>
         }
@@ -138,6 +153,32 @@ export const SearchControl = ({ clusterRef }) => {
     )
 }
 
+function isGeoCoordinate(input) {
+    console.log(input);
+    
+    const geokoordinatenRegex = /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/;
+    
+    return geokoordinatenRegex.test(input);
+
+}
+
+function extractCoordinates(input): number[] | null {
+    const result = input.split(",")
+
+    
+
+    if (result) {
+        const latitude = parseFloat(result[0]);
+        const longitude = parseFloat(result[1]);
+        console.log([latitude, longitude])
+
+        if (!isNaN(latitude) && !isNaN(longitude)) {
+            return [latitude, longitude];
+        }
+    }
+
+    return null; // Invalid input or error
+}
 
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);

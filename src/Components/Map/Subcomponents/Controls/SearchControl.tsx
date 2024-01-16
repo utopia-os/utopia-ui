@@ -115,18 +115,17 @@ export const SearchControl = ({ clusterRef }) => {
                         ))}
                         {Array.from(geoResults).length > 0 && (itemsResults.length > 0 || tagsResults.length > 0) && <hr className='tw-opacity-50'></hr>}
                         {Array.from(geoResults).map((geo) => (
-                            <div className='tw-flex tw-flex-row' key={Math.random()}>
+                            <div className='tw-flex tw-flex-row hover:tw-font-bold tw-cursor-pointer' key={Math.random()} onClick={() => {
+                                searchInput.current?.blur();
+                                L.marker(new LatLng(geo.geometry.coordinates[1], geo.geometry.coordinates[0]),{icon: MarkerIconFactory("circle", "#777", "RGBA(35, 31, 32, 0.2)", "circle-solid")}).addTo(map).bindPopup(`<h3 class="tw-text-base tw-font-bold">${geo?.properties.name ? geo?.properties.name : value}<h3>${capitalizeFirstLetter(geo?.properties?.osm_value)}`).openPopup().addEventListener("popupclose", (e) => {console.log(e.target.remove())});
+                                if (geo.properties.extent) map.fitBounds(new LatLngBounds(new LatLng(geo.properties.extent[1], geo.properties.extent[0]), new LatLng(geo.properties.extent[3], geo.properties.extent[2])));
+                                else map.setView(new LatLng(geo.geometry.coordinates[1], geo.geometry.coordinates[0]), 15, { duration: 1 })
+                            }}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="tw-text-current tw-mr-2 tw-mt-0 tw-w-4">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                 </svg>
 
-                                <div className='tw-cursor-pointer hover:tw-font-bold'
-                                    onClick={() => {
-                                        searchInput.current?.blur();
-                                        L.marker(new LatLng(geo.geometry.coordinates[1], geo.geometry.coordinates[0]),{icon: MarkerIconFactory("circle", "#777", "RGBA(35, 31, 32, 0.2)", "circle-solid")}).addTo(map).bindPopup(`<h3 class="tw-text-base tw-font-bold">${value}<h3>${capitalizeFirstLetter(geo?.properties?.osm_value)}`).openPopup().addEventListener("popupclose", (e) => {console.log(e.target.remove())});
-                                        if (geo.properties.extent) map.fitBounds(new LatLngBounds(new LatLng(geo.properties.extent[1], geo.properties.extent[0]), new LatLng(geo.properties.extent[3], geo.properties.extent[2])));
-                                        else map.setView(new LatLng(geo.geometry.coordinates[1], geo.geometry.coordinates[0]), 15, { duration: 1 })
-                                    }}>
+                                <div>
                                     <div className='tw-text-sm tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>{geo?.properties.name ? geo?.properties.name : value}</div>
                                     <div className='tw-text-xs tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>{geo?.properties?.city && `${capitalizeFirstLetter(geo?.properties?.city)}, `} {geo?.properties?.osm_value && geo?.properties?.osm_value !== "primary" && geo?.properties?.osm_value !== "path" && geo?.properties?.osm_value !== "secondary" && geo?.properties?.osm_value !== "residential" && geo?.properties?.osm_value !== "unclassified" && `${capitalizeFirstLetter(geo?.properties?.osm_value)}, `} {geo.properties.state && `${geo.properties.state}, `} {geo.properties.country && geo.properties.country}</div>
                                 </div>
@@ -134,16 +133,15 @@ export const SearchControl = ({ clusterRef }) => {
 
                         ))}
                         {isGeoCoordinate(value) &&
-                            <div className='tw-flex tw-flex-row'>
+                            <div className='tw-flex tw-flex-row hover:tw-font-bold tw-cursor-pointer' onClick={() => {
+                                L.marker(new LatLng(extractCoordinates(value)![0], extractCoordinates(value)![1]),{icon: MarkerIconFactory("circle", "#777", "RGBA(35, 31, 32, 0.2)", "circle-solid")}).addTo(map).bindPopup(`<h3 class="tw-text-base tw-font-bold">${extractCoordinates(value)![0]}, ${extractCoordinates(value)![1]}</h3>`).openPopup().addEventListener("popupclose", (e) => {console.log(e.target.remove())});
+                                map.setView(new LatLng(extractCoordinates(value)![0], extractCoordinates(value)![1]), 15, { duration: 1 })
+                            }}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="tw-text-current tw-mr-2 tw-mt-0 tw-w-4">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M3 3v1.5M3 21v-6m0 0 2.77-.693a9 9 0 0 1 6.208.682l.108.054a9 9 0 0 0 6.086.71l3.114-.732a48.524 48.524 0 0 1-.005-10.499l-3.11.732a9 9 0 0 1-6.085-.711l-.108-.054a9 9 0 0 0-6.208-.682L3 4.5M3 15V4.5" />
                                 </svg>
 
-                                <div className='tw-cursor-pointer hover:tw-font-bold'
-                                    onClick={() => {
-                                        L.marker(new LatLng(extractCoordinates(value)![0], extractCoordinates(value)![1]),{icon: MarkerIconFactory("circle", "#777", "RGBA(35, 31, 32, 0.2)", "circle-solid")}).addTo(map).bindPopup(`<h3 class="tw-text-base tw-font-bold">${extractCoordinates(value)![0]}, ${extractCoordinates(value)![1]}</h3>`).openPopup().addEventListener("popupclose", (e) => {console.log(e.target.remove())});
-                                        map.setView(new LatLng(extractCoordinates(value)![0], extractCoordinates(value)![1]), 15, { duration: 1 })
-                                    }}>
+                                <div>
                                     <div className='tw-text-sm tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>{value}</div>
                                     <div className='tw-text-xs tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>{"Coordiante"}</div>
                                 </div>

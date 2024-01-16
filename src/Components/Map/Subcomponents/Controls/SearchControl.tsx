@@ -11,6 +11,8 @@ import { useItems } from '../../hooks/useItems';
 import { useLeafletRefs } from '../../hooks/useLeafletRefs';
 import { getValue } from '../../../../Utils/GetValue';
 import { LocateControl } from './LocateControl';
+import * as L from 'leaflet';
+import MarkerIconFactory from '../../../../Utils/MarkerIconFactory';
 
 
 
@@ -121,6 +123,7 @@ export const SearchControl = ({ clusterRef }) => {
                                 <div className='tw-cursor-pointer hover:tw-font-bold'
                                     onClick={() => {
                                         searchInput.current?.blur();
+                                        L.marker(new LatLng(geo.geometry.coordinates[1], geo.geometry.coordinates[0]),{icon: MarkerIconFactory("circle", "#777", "RGBA(35, 31, 32, 0.2)", "circle-solid")}).addTo(map).bindPopup(`<h3 class="tw-text-base tw-font-bold">${value}<h3>${capitalizeFirstLetter(geo?.properties?.osm_value)}`).openPopup().addEventListener("popupclose", (e) => {console.log(e.target.remove())});
                                         if (geo.properties.extent) map.fitBounds(new LatLngBounds(new LatLng(geo.properties.extent[1], geo.properties.extent[0]), new LatLng(geo.properties.extent[3], geo.properties.extent[2])));
                                         else map.setView(new LatLng(geo.geometry.coordinates[1], geo.geometry.coordinates[0]), 15, { duration: 1 })
                                     }}>
@@ -138,6 +141,7 @@ export const SearchControl = ({ clusterRef }) => {
 
                                 <div className='tw-cursor-pointer hover:tw-font-bold'
                                     onClick={() => {
+                                        L.marker(new LatLng(extractCoordinates(value)![0], extractCoordinates(value)![1]),{icon: MarkerIconFactory("circle", "#777", "RGBA(35, 31, 32, 0.2)", "circle-solid")}).addTo(map).bindPopup(`<h3 class="tw-text-base tw-font-bold">${extractCoordinates(value)![0]}, ${extractCoordinates(value)![1]}</h3>`).openPopup().addEventListener("popupclose", (e) => {console.log(e.target.remove())});
                                         map.setView(new LatLng(extractCoordinates(value)![0], extractCoordinates(value)![1]), 15, { duration: 1 })
                                     }}>
                                     <div className='tw-text-sm tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>{value}</div>

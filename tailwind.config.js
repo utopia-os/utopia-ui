@@ -25,6 +25,9 @@ module.exports = {
         '64': '240px',
         '56': '224px',
       },
+      fontFamily: {
+        'sans': ["Helvetica", "sans-serif", 'Roboto'],
+      }
     },
   },
   plugins: [

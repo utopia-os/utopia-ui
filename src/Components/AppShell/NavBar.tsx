@@ -1,11 +1,9 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Auth"
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import QuestionMarkIcon from '@heroicons/react/24/outline/QuestionMarkCircleIcon'
 import * as React from "react";
-import DialogModal from "../Templates/DialogModal";
 
 
 export default function NavBar({ appName, nameWidth = 200}: { appName: string, nameWidth?: number }) {
@@ -50,7 +48,6 @@ export default function NavBar({ appName, nameWidth = 200}: { appName: string, n
           <div className={`tw-flex-1 tw-truncate tw-grid tw-grid-flow-col`} style={{maxWidth: nameWidth}}>
             <Link className="tw-btn tw-btn-ghost tw-px-2 tw-normal-case tw-text-xl tw-flex-1 tw-truncate" to={"/"}><h1 className="tw-truncate">{appName}</h1></Link>
             <button className="tw-btn tw-px-2  tw-btn-ghost" onClick={() => window.my_modal_3.showModal()}><QuestionMarkIcon className="tw-h-5 tw-w-5" /></button>
-
           </div>
         </div>
 

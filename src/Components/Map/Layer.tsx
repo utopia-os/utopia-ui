@@ -1,35 +1,38 @@
 import * as React from 'react'
 import { Marker, Tooltip, useMap, useMapEvents } from 'react-leaflet'
-import { Item, LayerProps } from '../../types'
+import { Item, LayerProps, Tag } from '../../types'
 import MarkerIconFactory from '../../Utils/MarkerIconFactory'
 import { ItemViewPopup } from './Subcomponents/ItemViewPopup'
 import { useItems, useSetItemsApi, useSetItemsData } from './hooks/useItems'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { ItemFormPopup } from './Subcomponents/ItemFormPopup'
 import { useFilterTags, useIsLayerVisible } from './hooks/useFilter'
-import { useGetItemTags } from './hooks/useTags'
+import { useAddTag, useAllTagsLoaded, useGetItemTags, useTags } from './hooks/useTags'
 import { useAddMarker, useAddPopup, useLeafletRefs } from './hooks/useLeafletRefs'
 import { Popup } from 'leaflet'
 import { useLocation } from 'react-router-dom';
-import { useAssetApi } from '../AppShell/hooks/useAssets'
 import { getValue } from '../../Utils/GetValue'
+import { hashTagRegex } from '../../Utils/HashTagRegex'
+import { randomColor } from '../../Utils/RandomColor'
 
-export const Layer = ( {
+export const Layer = ({
     data,
     children,
-    name='places',
-    menuIcon='MapPinIcon',
-    menuText='add new place',
-    menuColor='#2E7D32',
-    markerIcon='circle-solid',
-    markerShape='circle',
-    markerDefaultColor='#777',
+    name = 'places',
+    menuIcon = 'MapPinIcon',
+    menuText = 'add new place',
+    menuColor = '#2E7D32',
+    markerIcon = 'circle-solid',
+    markerShape = 'circle',
+    markerDefaultColor = '#777',
     api,
-    itemTitleField='name',
-    itemTextField='text',
+    itemNameField = 'name',
+    itemTextField = 'text',
     itemAvatarField,
     itemColorField,
     itemOwnerField,
+    itemLatitudeField = 'position.coordinates.1',
+    itemLongitudeField = 'position.coordinates.0',
     setItemFormPopup,
     itemFormPopup,
     clusterRef
@@ -47,28 +50,31 @@ export const Layer = ( {
 
     let location = useLocation();
 
+    const allTagsLoaded = useAllTagsLoaded();
+    const tags = useTags();
+    const addTag = useAddTag();
+    const [newTagsToAdd, setNewTagsToAdd] = useState<Tag[]>([]);
+    const [tagsReady, setTagsReady] = useState<boolean>(false);
+
 
     const map = useMap();
 
     const isLayerVisible = useIsLayerVisible();
 
-    const assetsApi = useAssetApi();
-
 
     useEffect(() => {
-
-        data && setItemsData({data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemTitleField, itemTextField, itemAvatarField, itemColorField, setItemFormPopup, itemFormPopup, clusterRef});
-        api && setItemsApi({data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemTitleField, itemTextField, itemAvatarField, itemColorField, setItemFormPopup, itemFormPopup, clusterRef});
+        data && setItemsData({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemNameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, setItemFormPopup, itemFormPopup, clusterRef });
+        api && setItemsApi({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemNameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, setItemFormPopup, itemFormPopup, clusterRef });
     }, [data, api])
 
     useMapEvents({
         popupopen: (e) => {
-            const item = Object.entries(leafletRefs).find(r => r[1].popup == e.popup)?.[1].item;                     
+            const item = Object.entries(leafletRefs).find(r => r[1].popup == e.popup)?.[1].item;
             if (item?.layer?.name == name && window.location.pathname.split("/")[2] != item.id) {
                 window.history.pushState({}, "", `/${name}/${item.id}`)
                 let title = "";
-                if(item.name) title = item.name;
-                else if (item.layer?.itemTitleField) title = getValue(item, item.layer.itemTitleField);
+                if (item.name) title = item.name;
+                else if (item.layer?.itemNameField) title = getValue(item, item.layer.itemNameField);
                 document.title = `${document.title.split("-")[0]} - ${title}`;
             }
         },
@@ -90,8 +96,8 @@ export const Layer = ( {
                         });
                         const item = leafletRefs[id]?.item;
                         let title = "";
-                        if(item.name) title = item.name;
-                        else if (item.layer?.itemTitleField) title = getValue(item, item.layer.itemTitleField);
+                        if (item.name) title = item.name;
+                        else if (item.layer?.itemNameField) title = getValue(item, item.layer.itemNameField);
                         document.title = `${document.title.split("-")[0]} - ${title}`;
                         document.querySelector('meta[property="og:title"]')?.setAttribute("content", item.name);
                         document.querySelector('meta[property="og:description"]')?.setAttribute("content", item.text);
@@ -106,68 +112,102 @@ export const Layer = ( {
         openPopup();
     }, [leafletRefs, location])
 
+    useEffect(() => {
+    }, [allTagsLoaded])
+    
+    useEffect(() => {
+        if(tagsReady){
+            newTagsToAdd.map(newtag => {
+                addTag(newtag);
+                setNewTagsToAdd(current =>
+                    current.filter(tag => {
+                        return tag.id !== newtag.id;
+                      }),
+                )
+            })
+        }
+    }, [tagsReady])
 
     return (
         <>
             {items &&
                 items.
-                    filter(item => item.text).
                     filter(item => item.layer?.name === name)?.
                     filter(item =>
-                        filterTags.length == 0 ? item : filterTags.every(tag => getItemTags(item).some(filterTag => filterTag.id === tag.id)))?.
+                        filterTags.length == 0 ? item : filterTags.every(tag => getItemTags(item).some(filterTag => filterTag.id.toLocaleLowerCase() === tag.id.toLocaleLowerCase())))?.
                     filter(item => item.layer && isLayerVisible(item.layer)).
-                    map((item: Item) => {
-                        const tags = getItemTags(item);
+                    map((item: Item) => {                      
+                        if (getValue(item, itemLongitudeField) && getValue(item, itemLatitudeField)) {
+                            if (item?.tags) {
+                                item[itemTextField] = getValue(item, itemTextField) + '\n\n';
+                                item.tags.map(tag => {
+                                    if(!item[itemTextField].includes(`#${tag}`))
+                                    return (item[itemTextField] = item[itemTextField] + `#${tag} `)
+                                    return item[itemTextField]
+    
+                                });
+                            }
+                            if(allTagsLoaded) {
+                                item[itemTextField].toLocaleLowerCase().match(hashTagRegex)?.map(tag=> {                                        
+                                    if ((!tags.find((t) => t.id.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase()))&& !newTagsToAdd.find((t) => t.id.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
+                                        const newTag = {id: tag.slice(1).toLocaleLowerCase(), color: randomColor()};
+                                      setNewTagsToAdd(current => [...current, newTag]);
+                                    }
+                                });
+                                !tagsReady && setTagsReady(true);
+                            }  
 
-                        let color1 = markerDefaultColor;
-                        let color2 = "RGBA(35, 31, 32, 0.2)";
-                        if (itemColorField) color1 = getValue(item, itemColorField);
-                        if(color1 == null) color1 = markerDefaultColor;
-                        
-                        else if (tags && tags[0]) {
-                            color1 = tags[0].color;
-                        }
-                        if (tags && tags[0] && itemColorField) color2 = tags[0].color;
-                        else if (tags && tags[1]) {
-                            color2 = tags[1].color;
-                        }
-                        return (
-                            <Marker ref={(r) => {
-                                if (!(item.id in leafletRefs && leafletRefs[item.id].marker == r))
-                                    r && addMarker(item, r);
-                            }} icon={MarkerIconFactory(markerShape, color1, color2, markerIcon)} key={item.id} position={[item.position.coordinates[1], item.position.coordinates[0]]}>
-                                {
-                                    (children && React.Children.toArray(children).some(child => React.isValidElement(child) && child.props.__TYPE === "ItemView") ?
-                                        React.Children.toArray(children).map((child) =>
-                                            React.isValidElement(child) && child.props.__TYPE === "ItemView" ?
-                                                <ItemViewPopup ref={(r) => {
+
+                            const itemTtags = getItemTags(item);
+                            
+                            const latitude = itemLatitudeField && item ? getValue(item, itemLatitudeField) : undefined;
+                            const longitude = itemLongitudeField && item ? getValue(item, itemLongitudeField) : undefined;
+
+                            let color1 = markerDefaultColor;
+                            let color2 = "RGBA(35, 31, 32, 0.2)";
+                            if (itemColorField) color1 = getValue(item, itemColorField);
+
+                            else if (itemTtags && itemTtags[0]) {
+                                color1 = itemTtags[0].color;
+                            }
+                            if (itemTtags && itemTtags[0] && itemColorField) color2 = itemTtags[0].color;
+                            else if (itemTtags && itemTtags[1]) {
+                                color2 = itemTtags[1].color;
+                            }
+                            return (
+                                <Marker ref={(r) => {
+                                    if (!(item.id in leafletRefs && leafletRefs[item.id].marker == r))
+                                        r && addMarker(item, r);
+                                }} icon={MarkerIconFactory(markerShape, color1, color2, markerIcon)} key={item.id} position={[latitude, longitude]}>
+                                    {
+                                        (children && React.Children.toArray(children).some(child => React.isValidElement(child) && child.props.__TYPE === "ItemView") ?
+                                            React.Children.toArray(children).map((child) =>
+                                                React.isValidElement(child) && child.props.__TYPE === "ItemView" ?
+                                                    <ItemViewPopup ref={(r) => {
+                                                        if (!(item.id in leafletRefs && leafletRefs[item.id].popup == r))
+                                                            r && addPopup(item, r as Popup);
+                                                    }} key={item.id + item.name}
+                                                        item={item}
+                                                        setItemFormPopup={setItemFormPopup}>
+                                                        {child}
+                                                    </ItemViewPopup>
+                                                    : ""
+                                            )
+                                            :
+                                            <>
+                                                <ItemViewPopup key={item.id + item.name} ref={(r) => {
                                                     if (!(item.id in leafletRefs && leafletRefs[item.id].popup == r))
                                                         r && addPopup(item, r as Popup);
-                                                }} key={item.id + item.name}
-                                                    title={itemTitleField && item ? getValue(item, itemTitleField) : undefined}
-                                                    avatar={itemAvatarField && item && getValue(item, itemAvatarField)? assetsApi.url + getValue(item, itemAvatarField) : undefined}
-                                                    owner={itemOwnerField && item ? getValue(item, itemOwnerField) : undefined}
+                                                }}
                                                     item={item}
-                                                    setItemFormPopup={setItemFormPopup}>
-                                                    {child}
-                                                </ItemViewPopup>
-                                                : ""
-                                        )
-                                        :
-                                        <>
-                                            <ItemViewPopup key={item.id + item.name} ref={(r) => {
-                                                if (!(item.id in leafletRefs  && leafletRefs[item.id].popup == r))
-                                                    r && addPopup(item, r as Popup);
-                                            }} title={itemTitleField && item ? getValue(item, itemTitleField) : undefined}
-                                                avatar={itemAvatarField && item  && getValue(item, itemAvatarField)? assetsApi.url + getValue(item, itemAvatarField) : undefined}
-                                                owner={itemOwnerField && item ? getValue(item, itemOwnerField) : undefined}
-                                                item={item}
-                                                setItemFormPopup={setItemFormPopup} />
-                                        </>)
-                                }
-                                <Tooltip offset={[0, -38]} direction='top'>{item.name? item.name : getValue(item, itemTitleField)}</Tooltip>
-                            </Marker>
-                        );
+                                                    setItemFormPopup={setItemFormPopup} />
+                                            </>)
+                                    }
+                                    <Tooltip offset={[0, -38]} direction='top'>{item.name ? item.name : getValue(item, itemNameField)}</Tooltip>
+                                </Marker>
+                            );
+                        }
+                        else return null;
                     })
             }
             {//{children}}

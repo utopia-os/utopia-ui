@@ -21,11 +21,14 @@ export interface LayerProps {
   markerShape: string,
   markerDefaultColor: string,
   api?: ItemsApi<any>,
-  itemTitleField?: string,
+  itemNameField?: string,
   itemTextField?: string,
   itemAvatarField?: string,
   itemColorField?: string,
   itemOwnerField?: string,
+  itemTagField?: string,
+  itemLatitudeField?: any,
+  itemLongitudeField?: any,
     setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>,
     itemFormPopup?: ItemFormPopupProps | null,
   clusterRef?: React.MutableRefObject<any>
@@ -41,7 +44,7 @@ export class Item {
   start?: string;
   end?: string;
   api?: ItemsApi<any>;
-  tags?: Tag[];
+  tags?: string[];
   layer?: LayerProps;
   [key: string]: any;
   constructor(id:string,name:string,text:string,position:Geometry, layer?: LayerProps, api?: ItemsApi<any>){

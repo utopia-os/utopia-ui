@@ -6,14 +6,17 @@ import { hashTagRegex } from '../../../../Utils/HashTagRegex';
 import { fixUrls, mailRegex } from '../../../../Utils/ReplaceURLs';
 import Markdown from 'react-markdown'
 import rehypeVideo from 'rehype-video';
+import { getValue } from '../../../../Utils/GetValue';
 
 export const TextView = ({ item }: { item?: Item }) => {
   const tags = useTags();
   const addFilterTag = useAddFilterTag();
 
+  const text = item?.layer?.itemTextField && item ? getValue(item, item.layer?.itemTextField) : undefined;
+
   let replacedText;
 
-  if (item && item.text) replacedText = fixUrls(item.text);
+  if (item && text) replacedText = fixUrls(text);
 
   replacedText = replacedText.replace(/(?<!\]?\()https?:\/\/[^\s\)]+(?!\))/g, (url) => {
     let shortUrl = url;
@@ -63,6 +66,9 @@ export const TextView = ({ item }: { item?: Item }) => {
   const CustomOrderdList = ({ children }) => (
     <ol className="tw-list-decimal tw-list-inside">{children}</ol>
   );
+  const CustomHorizontalRow = ({ children }) => (
+    <hr className="tw-border-current">{children}</hr>
+  );
   const CustomImage = ({ alt, src, title }) => (
     <img
       className="max-w-full rounded-lg shadow-md"
@@ -80,22 +86,18 @@ export const TextView = ({ item }: { item?: Item }) => {
       {children}
     </a>
   );
-  const CustomHashTagLink = ({ children, tag, item }) => (
+  const CustomHashTagLink = ({ children, tag, item }) => {    
+    return (
     <a
       style={{ color: tag ? tag.color : '#faa', fontWeight: 'bold', cursor: 'pointer' }}
       key={tag ? tag.id + item!.id : item.id}
-      onClick={(e) => {
+      onClick={(e) => {       
         e.stopPropagation();
         addFilterTag(tag!);
         // map.fitBounds(items)
         // map.closePopup();
       }}>{children}</a>
-  );
-
-  const isSpecialYouTubeLink = (url) => {
-    return /(?<=!\()[^)]+(?=\))/g.test(url);
-  };
-
+  )};
 
   return (
     //@ts-ignore
@@ -111,15 +113,15 @@ export const TextView = ({ item }: { item?: Item }) => {
 
           return (
 
-              <iframe className='tw-w-full'
-                src={youtubeEmbedUrl}
-                allowFullScreen
-              />
+            <iframe className='tw-w-full'
+              src={youtubeEmbedUrl}
+              allowFullScreen
+            />
 
           );
         }
-        if (href?.startsWith("#")) {
-          const tag = tags.find(t => t.id.toLowerCase() == href.slice(1).toLowerCase())
+        if (href?.startsWith("#")) {          
+          const tag = tags.find(t => t.id.toLowerCase() == decodeURI(href).slice(1).toLowerCase())
           return <CustomHashTagLink tag={tag} item={item}>{children}</CustomHashTagLink>;
         } else {
           return (
@@ -130,6 +132,7 @@ export const TextView = ({ item }: { item?: Item }) => {
       ul: CustomUnorderdList,
       ol: CustomOrderdList,
       img: CustomImage,
+      hr: CustomHorizontalRow,
       h1: CustomH1,
       h2: CustomH2,
       h3: CustomH3,

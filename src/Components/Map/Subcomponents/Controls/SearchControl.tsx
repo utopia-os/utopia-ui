@@ -47,7 +47,8 @@ export const SearchControl = ({ clusterRef }) => {
         };
         searchGeo();
         setItemsResults(items.filter(item => {
-            if (item.layer?.itemTitleField) item.name = getValue(item, item.layer.itemTitleField)
+            if (item.layer?.itemNameField) item.name = getValue(item, item.layer.itemNameField)
+            if (item.layer?.itemTextField) item.text = getValue(item, item.layer.itemTextField)
             return item.name?.toLowerCase().includes(value.toLowerCase()) || item.text?.toLowerCase().includes(value.toLowerCase())
         }))
         setTagsResults(tags.filter(tag => tag.id?.toLowerCase().includes(value.toLowerCase())))

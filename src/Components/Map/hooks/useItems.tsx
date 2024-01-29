@@ -66,7 +66,7 @@ function useItemsManager(initialItems: Item[]): {
 
 
   const setItemsApi = useCallback(async (layer: LayerProps) => {
-    layer.api?.createItem && addLayer(layer);
+    addLayer(layer);
     const result = await toast.promise(
       layer.api!.getItems(),
       {
@@ -79,9 +79,9 @@ function useItemsManager(initialItems: Item[]): {
         },
       }
     );
-    if (result) {
-      result.map(item => {
-        dispatch({ type: "ADD", item: { ...item, layer: layer } });
+    if (result) {      
+      result.map(item => {       
+        dispatch({ type: "ADD", item: { ...item, layer: layer } });       
       })
     }
   }, [])

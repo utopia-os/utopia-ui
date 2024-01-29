@@ -1,7 +1,8 @@
-import { useCallback, useReducer, createContext, useContext } from "react";
+import { useCallback, useReducer, createContext, useContext, useState } from "react";
 import * as React from "react";
 import { Item, ItemsApi, Tag } from "../../../types";
 import { hashTagRegex } from "../../../Utils/HashTagRegex";
+import { getValue } from "../../../Utils/GetValue";
 
 type ActionType =
   | { type: "ADD"; tag: Tag }
@@ -15,7 +16,8 @@ const TagContext = createContext<UseTagManagerResult>({
   removeTag: () => { },
   setTagApi: () => { },
   setTagData: () => { },
-  getItemTags: () => []
+  getItemTags: () => [],
+  allTagsLoaded: false
 });
 
 function useTagsManager(initialTags: Tag[]): {
@@ -25,7 +27,11 @@ function useTagsManager(initialTags: Tag[]): {
   setTagApi: (api: ItemsApi<Tag>) => void;
   setTagData: (data: Tag[]) => void;
   getItemTags: (item: Item) => Tag[];
+  allTagsLoaded: boolean
 } {
+
+  const [allTagsLoaded, setallTagsLoaded] = useState<boolean>(false);
+
   const [tags, dispatch] = useReducer((state: Tag[], action: ActionType) => {
     switch (action.type) {
       case "ADD":
@@ -34,7 +40,7 @@ function useTagsManager(initialTags: Tag[]): {
         );
         if (!exist) return [
           ...state,
-          {...action.tag, id: action.tag.id.toLocaleLowerCase()}
+          { ...action.tag, id: action.tag.id.toLocaleLowerCase() }
         ];
         else return state;
 
@@ -55,6 +61,7 @@ function useTagsManager(initialTags: Tag[]): {
         tag.id = tag.id.toLocaleLowerCase();
         dispatch({ type: "ADD", tag })
       })
+      setallTagsLoaded(true);
     }
   }, [])
 
@@ -70,7 +77,6 @@ function useTagsManager(initialTags: Tag[]): {
       type: "ADD",
       tag,
     });
-
     if (!tags.some((t) => t.id.toLocaleLowerCase() === tag.id.toLocaleLowerCase())) {
       api?.createItem && api.createItem(tag);
     }
@@ -84,19 +90,20 @@ function useTagsManager(initialTags: Tag[]): {
     api?.deleteItem && api.deleteItem(id);
   }, []);
 
-  const getItemTags = useCallback((item: Item) => {  
-      const itemTagStrings = item.text.toLocaleLowerCase().match(hashTagRegex);
-      const itemTags: Tag[] = [];
-      itemTagStrings?.map(tag => {
-        if (tags.find(t => t.id === tag.slice(1))) {
-          itemTags.push(tags.find(t => t.id === tag.slice(1))!)
-        }
-      })
-      return itemTags 
+  const getItemTags = useCallback((item: Item) => {
+    const text = item?.layer?.itemTextField && item ? getValue(item, item.layer?.itemTextField) : undefined;
+    const itemTagStrings = text.toLocaleLowerCase().match(hashTagRegex);
+    const itemTags: Tag[] = [];
+    itemTagStrings?.map(tag => {
+      if (tags.find(t => t.id === tag.slice(1))) {
+        itemTags.push(tags.find(t => t.id === tag.slice(1))!)
+      }
+    })   
+    return itemTags
   }, [tags]);
 
 
-  return { tags, addTag, removeTag, setTagApi, setTagData, getItemTags };
+  return { tags, addTag, removeTag, setTagApi, setTagData, getItemTags, allTagsLoaded };
 }
 
 export const TagsProvider: React.FunctionComponent<{
@@ -136,4 +143,9 @@ export const useSetTagData = (): UseTagManagerResult["setTagData"] => {
 export const useGetItemTags = (): UseTagManagerResult["getItemTags"] => {
   const { getItemTags } = useContext(TagContext);
   return getItemTags;
+}
+
+export const useAllTagsLoaded = (): UseTagManagerResult["allTagsLoaded"] => {
+  const { allTagsLoaded } = useContext(TagContext);
+  return allTagsLoaded;
 }

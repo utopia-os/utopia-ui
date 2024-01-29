@@ -7,14 +7,14 @@ import { Item } from "../../../../types";
 import { toast } from "react-toastify";
 import { useHasUserPermission } from "../../hooks/usePermissions";
 import { useAuth } from "../../../Auth";
+import { getValue } from "../../../../Utils/GetValue";
+import { useAssetApi } from '../../../AppShell/hooks/useAssets'
 
 
 
-export function HeaderView({ item, title, avatar, owner, setItemFormPopup }: {
+
+export function HeaderView({ item, setItemFormPopup }: {
   item: Item,
-  title?: string,
-  avatar?: string,
-  owner?: string,
   setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
 }) {
 
@@ -25,6 +25,13 @@ export function HeaderView({ item, title, avatar, owner, setItemFormPopup }: {
   const hasUserPermission = useHasUserPermission();
 
   const { user } = useAuth();
+
+  const assetsApi = useAssetApi();
+
+  const avatar = item.layer?.itemAvatarField && item  && getValue(item, item.layer?.itemAvatarField)? assetsApi.url + getValue(item, item.layer?.itemAvatarField ) : undefined;
+  const title = item.layer?.itemNameField && item ? getValue(item, item.layer?.itemNameField) : undefined;
+  const owner = item.layer?.itemOwnerField && item ? getValue(item, item.layer?.itemOwnerField) : undefined;
+
 
 
   const removeItemFromMap = async (event: React.MouseEvent<HTMLElement>) => {

@@ -4,7 +4,6 @@ import { Item } from '../../../types'
 import { ItemFormPopupProps } from './ItemFormPopup'
 import { HeaderView } from './ItemPopupComponents/HeaderView'
 import { TextView } from './ItemPopupComponents/TextView'
-import { useAssetApi } from '../../AppShell/hooks/useAssets'
 import { timeAgo } from '../../../Utils/TimeAgo'
 import { useState } from 'react'
 
@@ -12,9 +11,6 @@ import { useState } from 'react'
 export interface ItemViewPopupProps {
   item: Item,
   children?: React.ReactNode;
-  title?: string;
-  avatar?: string;
-  owner?: string,
   setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
 }
 
@@ -26,7 +22,7 @@ export const ItemViewPopup = React.forwardRef((props: ItemViewPopupProps, ref: a
   return (
     <LeafletPopup ref={ref} maxHeight={377} minWidth={275} maxWidth={275} autoPanPadding={[20, 80]}>
       <div className='tw-bg-base-100 tw-text-base-content'>
-        <HeaderView item={props.item} title={props.title} avatar={props.avatar} owner={props.owner} setItemFormPopup={props.setItemFormPopup} />
+        <HeaderView item={props.item} setItemFormPopup={props.setItemFormPopup} />
         <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64'>
           {props.children ?
 

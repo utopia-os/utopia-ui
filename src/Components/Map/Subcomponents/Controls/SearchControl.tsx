@@ -18,8 +18,6 @@ import MarkerIconFactory from '../../../../Utils/MarkerIconFactory';
 
 export const SearchControl = ({ clusterRef }) => {
 
-    const windowDimensions = useWindowDimensions();
-    const [popupOpen, setPopupOpen] = useState(false);
 
     const [value, setValue] = useState('');
     const [geoResults, setGeoResults] = useState<Array<any>>([]);
@@ -35,14 +33,6 @@ export const SearchControl = ({ clusterRef }) => {
     const resetFilterTags = useResetFilterTags();
     const filterTags = useFilterTags();
 
-    useMapEvents({
-        popupopen: () => {            
-            setPopupOpen(true);
-        },
-        popupclose: () => {
-            setPopupOpen(false);
-        }
-    })
 
     useDebounce(() => {
         const searchGeo = async () => {
@@ -74,7 +64,6 @@ export const SearchControl = ({ clusterRef }) => {
     const searchInput = useRef<HTMLInputElement>(null);
 
     return (<>
-        {!(windowDimensions.height < 500 && popupOpen && hideSuggestions)   &&
             <div className='tw-w-[calc(100vw-2rem)] tw-max-w-[22rem] '>
                 <div className='flex tw-flex-row'>
                     <input type="text" placeholder="search ..." autoComplete="off" value={value} className="tw-input tw-input-bordered tw-w-full tw-shadow-xl tw-rounded-lg tw-mr-2"
@@ -163,7 +152,7 @@ export const SearchControl = ({ clusterRef }) => {
                         }
                     </div>}
             </div>
-        }
+        
     </>
 
     )

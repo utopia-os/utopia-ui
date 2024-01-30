@@ -92,7 +92,7 @@ function useTagsManager(initialTags: Tag[]): {
 
   const getItemTags = useCallback((item: Item) => {
     const text = item?.layer?.itemTextField && item ? getValue(item, item.layer?.itemTextField) : undefined;
-    const itemTagStrings = text.toLocaleLowerCase().match(hashTagRegex);
+    const itemTagStrings = text?.toLocaleLowerCase().match(hashTagRegex);
     const itemTags: Tag[] = [];
     itemTagStrings?.map(tag => {
       if (tags.find(t => t.id === tag.slice(1))) {

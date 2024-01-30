@@ -133,14 +133,14 @@ export const Layer = ({
         <>
             {items &&
                 items.
-                    filter(item => item[itemTextField]).
                     filter(item => item.layer?.name === name)?.
                     filter(item =>
                         filterTags.length == 0 ? item : filterTags.every(tag => getItemTags(item).some(filterTag => filterTag.id.toLocaleLowerCase() === tag.id.toLocaleLowerCase())))?.
                     filter(item => item.layer && isLayerVisible(item.layer)).
                     map((item: Item) => {                      
                         if (getValue(item, itemLongitudeField) && getValue(item, itemLatitudeField)) {
-                            item[itemTextField] = getValue(item, itemTextField);
+                            if(item[itemTextField]) item[itemTextField] = getValue(item, itemTextField);
+                            else item[itemTextField] = "";
                             if (item?.tags) {
                                 item[itemTextField] = item[itemTextField] + '\n\n';
                                 item.tags.map(tag => {

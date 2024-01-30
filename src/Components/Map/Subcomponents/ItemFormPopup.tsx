@@ -93,11 +93,7 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
                 console.log(props.layer);
                 
                 if(props.layer.onlyOnePerOwner){
-                    console.log(items);
-                    
-                   const item = items.find(item => item.layer == props.layer && item.user_created?.id == user?.id);
-                   console.log(item);
-                   
+                   const item = items.find(item => item.layer == props.layer && item.user_created?.id == user?.id);                   
                    item && removeItem(item);
                 }
                 addItem({...formItem, id: uuid, layer: props.layer, user_created: user});

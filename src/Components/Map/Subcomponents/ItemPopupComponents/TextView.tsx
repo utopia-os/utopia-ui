@@ -8,17 +8,19 @@ import Markdown from 'react-markdown'
 import rehypeVideo from 'rehype-video';
 import { getValue } from '../../../../Utils/GetValue';
 
-export const TextView = ({ item }: { item?: Item }) => {
+export const TextView = ({ item, truncate = false}: { item?: Item, truncate?: boolean }) => {
   const tags = useTags();
   const addFilterTag = useAddFilterTag();
 
-  const text = item?.layer?.itemTextField && item ? getValue(item, item.layer?.itemTextField) : undefined;
+  let text = item?.layer?.itemTextField && item ? getValue(item, item.layer?.itemTextField) : "";
+
+  if(item && text && truncate) text = truncateString(text, 100, true);
 
   let replacedText;
 
-  if (item && text) replacedText = fixUrls(text);
+  item && text ? replacedText = fixUrls(text) : "";
 
-  replacedText = replacedText.replace(/(?<!\]?\()https?:\/\/[^\s\)]+(?!\))/g, (url) => {
+  replacedText ? replacedText = replacedText.replace(/(?<!\]?\()https?:\/\/[^\s\)]+(?!\))/g, (url) => {
     let shortUrl = url;
     if (url.match('^https:\/\/')) {
       shortUrl = url.split('https://')[1];
@@ -27,15 +29,15 @@ export const TextView = ({ item }: { item?: Item }) => {
       shortUrl = url.split('http://')[1];
     }
     return `[${shortUrl}](${url})`
-  })
+  }) : "" ;
 
-  replacedText = replacedText.replace(mailRegex, (url) => {
+  replacedText ? replacedText = replacedText.replace(mailRegex, (url) => {
     return `[${url}](mailto:${url})`
-  })
+  }) : "";
 
-  replacedText = replacedText.replace(hashTagRegex, (match) => {
+  replacedText ? replacedText = replacedText.replace(hashTagRegex, (match) => {
     return `[${match}](${match})`
-  })
+  }) : "";
 
 
 
@@ -147,3 +149,11 @@ export const TextView = ({ item }: { item?: Item }) => {
 
 
 }
+
+function truncateString( str, n, useWordBoundary ){
+  if (str.length <= n) { return str; }
+  const subString = str.slice(0, n-1); // the original check
+  return (useWordBoundary 
+    ? subString.slice(0, subString.lastIndexOf(" ")) 
+    : subString) + "&hellip;";
+};

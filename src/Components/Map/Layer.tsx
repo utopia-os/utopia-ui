@@ -33,6 +33,7 @@ export const Layer = ({
     itemOwnerField,
     itemLatitudeField = 'position.coordinates.1',
     itemLongitudeField = 'position.coordinates.0',
+    onlyOnePerOwner = false,
     setItemFormPopup,
     itemFormPopup,
     clusterRef
@@ -63,8 +64,8 @@ export const Layer = ({
 
 
     useEffect(() => {
-        data && setItemsData({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemNameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, setItemFormPopup, itemFormPopup, clusterRef });
-        api && setItemsApi({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemNameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, setItemFormPopup, itemFormPopup, clusterRef });
+        data && setItemsData({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemNameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, onlyOnePerOwner, setItemFormPopup, itemFormPopup, clusterRef });
+        api && setItemsApi({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemNameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, onlyOnePerOwner, setItemFormPopup, itemFormPopup, clusterRef });
     }, [data, api])
 
     useMapEvents({
@@ -138,8 +139,9 @@ export const Layer = ({
                     filter(item => item.layer && isLayerVisible(item.layer)).
                     map((item: Item) => {                      
                         if (getValue(item, itemLongitudeField) && getValue(item, itemLatitudeField)) {
+                            item[itemTextField] = getValue(item, itemTextField);
                             if (item?.tags) {
-                                item[itemTextField] = getValue(item, itemTextField) + '\n\n';
+                                item[itemTextField] = item[itemTextField] + '\n\n';
                                 item.tags.map(tag => {
                                     if(!item[itemTextField].includes(`#${tag}`))
                                     return (item[itemTextField] = item[itemTextField] + `#${tag} `)

@@ -2,7 +2,7 @@ import * as React from 'react'
 import { LatLng } from 'leaflet'
 import { Popup as LeafletPopup, useMap } from 'react-leaflet'
 import { useEffect, useRef, useState } from 'react'
-import { useAddItem, useUpdateItem } from '../hooks/useItems'
+import { useAddItem, useItems, useRemoveItem, useUpdateItem } from '../hooks/useItems'
 import { Geometry, LayerProps, Item, ItemsApi } from '../../../types'
 import { TextAreaInput } from '../../Input/TextAreaInput'
 import { TextInput } from '../../Input/TextInput'
@@ -25,12 +25,17 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
 
     const [spinner, setSpinner] = useState(false);
 
+    const [popupTitle, setPopupTitle] = useState<string>("");
+
     const formRef = useRef<HTMLFormElement>(null);
 
     const map = useMap();
 
     const addItem = useAddItem();
     const updateItem = useUpdateItem();
+    const items = useItems();
+    const removeItem = useRemoveItem();
+
 
     const tags = useTags(); 
     const addTag = useAddTag();
@@ -51,7 +56,7 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
         evt.preventDefault();
         setSpinner(true);
 
-        formItem.text.toLocaleLowerCase().match(hashTagRegex)?.map(tag=> {
+        formItem.text && formItem.text.toLocaleLowerCase().match(hashTagRegex)?.map(tag=> {
             if (!tags.find((t) => t.id.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
               addTag({id: tag.slice(1).toLocaleLowerCase(), color: randomColor()})
             }
@@ -85,6 +90,16 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
                 toast.error(error.toString());
             }
             if(success) {
+                console.log(props.layer);
+                
+                if(props.layer.onlyOnePerOwner){
+                    console.log(items);
+                    
+                   const item = items.find(item => item.layer == props.layer && item.user_created?.id == user?.id);
+                   console.log(item);
+                   
+                   item && removeItem(item);
+                }
                 addItem({...formItem, id: uuid, layer: props.layer, user_created: user});
                 toast.success("New item created");
                 resetFilterTags();
@@ -119,14 +134,14 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
             <form ref={formRef} onReset={resetPopup} autoComplete='off' onSubmit={e => handleSubmit(e)}>
                 {props.item ? <div className='tw-h-3'></div>
                 :
-                    <div className='tw-flex tw-justify-center'><b className="tw-text-xl tw-font-bold">New {props.layer.name}</b></div>
+                    <div className='tw-flex tw-justify-center'><b className="tw-text-xl tw-font-bold">{ popupTitle? popupTitle : `New ${props.layer.name}`}</b></div>
                 }
 
                 {props.children ?
 
                     React.Children.toArray(props.children).map((child) =>
-                        React.isValidElement<{ item: Item, test: string }>(child) ?
-                            React.cloneElement(child, { item: props.item, key: props.position.toString() }) : ""
+                        React.isValidElement<{ item: Item, test: string, setPopupTitle: React.Dispatch<React.SetStateAction<string>> }>(child) ?
+                            React.cloneElement(child, { item: props.item, key: props.position.toString(), setPopupTitle: setPopupTitle }) : ""
                     )
 
                     :

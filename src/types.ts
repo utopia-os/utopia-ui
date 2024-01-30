@@ -29,6 +29,7 @@ export interface LayerProps {
   itemTagField?: string,
   itemLatitudeField?: any,
   itemLongitudeField?: any,
+  onlyOnePerOwner?: boolean,
     setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>,
     itemFormPopup?: ItemFormPopupProps | null,
   clusterRef?: React.MutableRefObject<any>

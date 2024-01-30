@@ -3,7 +3,7 @@ import { useAddFilterTag, useFilterTags, useResetFilterTags, useSetSearchPhrase 
 import useWindowDimensions from '../../hooks/useWindowDimension';
 import axios from 'axios';
 import { useRef, useState } from 'react';
-import { useMap } from 'react-leaflet';
+import { useMap, useMapEvents } from 'react-leaflet';
 import { LatLng, LatLngBounds } from 'leaflet';
 import { useDebounce } from '../../hooks/useDebounce';
 import { useTags } from '../../hooks/useTags';
@@ -19,6 +19,8 @@ import MarkerIconFactory from '../../../../Utils/MarkerIconFactory';
 export const SearchControl = ({ clusterRef }) => {
 
     const windowDimensions = useWindowDimensions();
+    const [popupOpen, setPopupOpen] = useState(false);
+
     const [value, setValue] = useState('');
     const [geoResults, setGeoResults] = useState<Array<any>>([]);
     const [tagsResults, setTagsResults] = useState<Array<any>>([]);
@@ -33,13 +35,21 @@ export const SearchControl = ({ clusterRef }) => {
     const resetFilterTags = useResetFilterTags();
     const filterTags = useFilterTags();
 
+    useMapEvents({
+        popupopen: () => {
+            setPopupOpen(true);
+        },
+        popupclose: () => {
+            setPopupOpen(false);
+        }
+    })
+
     useDebounce(() => {
         const searchGeo = async () => {
             try {
                 const { data } = await axios.get(
                     `https://photon.komoot.io/api/?q=${value}&limit=5`
                 );
-
                 setGeoResults(data.features);
             } catch (error) {
                 console.log(error);
@@ -60,7 +70,7 @@ export const SearchControl = ({ clusterRef }) => {
     const searchInput = useRef<HTMLInputElement>(null);
 
     return (<>
-        {!(windowDimensions.height < 500) &&
+        {!(windowDimensions.height < 500 && popupOpen)   &&
             <div className='tw-w-[calc(100vw-2rem)] tw-max-w-[22rem] '>
                 <div className='flex tw-flex-row'>
                     <input type="text" placeholder="search ..." autoComplete="off" value={value} className="tw-input tw-input-bordered tw-w-full tw-shadow-xl tw-rounded-lg tw-mr-2"
@@ -156,30 +166,20 @@ export const SearchControl = ({ clusterRef }) => {
     )
 }
 
-function isGeoCoordinate(input) {
-    console.log(input);
-    
+function isGeoCoordinate(input) {    
     const geokoordinatenRegex = /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/;
-    
     return geokoordinatenRegex.test(input);
-
 }
 
 function extractCoordinates(input): number[] | null {
     const result = input.split(",")
-
-    
-
     if (result) {
         const latitude = parseFloat(result[0]);
         const longitude = parseFloat(result[1]);
-        console.log([latitude, longitude])
-
         if (!isNaN(latitude) && !isNaN(longitude)) {
             return [latitude, longitude];
         }
     }
-
     return null; // Invalid input or error
 }
 

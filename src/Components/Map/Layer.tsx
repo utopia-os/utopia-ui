@@ -133,6 +133,7 @@ export const Layer = ({
         <>
             {items &&
                 items.
+                    filter(item => item[itemTextField]).
                     filter(item => item.layer?.name === name)?.
                     filter(item =>
                         filterTags.length == 0 ? item : filterTags.every(tag => getItemTags(item).some(filterTag => filterTag.id.toLocaleLowerCase() === tag.id.toLocaleLowerCase())))?.

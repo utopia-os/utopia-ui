@@ -63,9 +63,13 @@ export const SearchControl = ({ clusterRef }) => {
         }))
         setTagsResults(tags.filter(tag => tag.id?.toLowerCase().includes(value.toLowerCase())))
 
-
-
     }, 500, [value]);
+
+    const hide = async () => {
+        setTimeout(() => {
+            setHideSuggestions(true);
+        }, 200);
+    }
 
     const searchInput = useRef<HTMLInputElement>(null);
 
@@ -77,11 +81,7 @@ export const SearchControl = ({ clusterRef }) => {
                         ref={searchInput}
                         onChange={(e) => setValue(e.target.value)}
                         onFocus={() => setHideSuggestions(false)}
-                        onBlur={async () => {
-                            setTimeout(() => {
-                                setHideSuggestions(true);
-                            }, 200);
-                        }} />
+                        onBlur={() => hide()} />
                     <LocateControl />
                 </div>
                 {value.length > 0 && <button className="tw-btn tw-btn-sm tw-btn-circle tw-absolute tw-right-16 tw-top-2" onClick={() => setValue("")}>✕</button>}
@@ -108,10 +108,12 @@ export const SearchControl = ({ clusterRef }) => {
                                 if (filterTags.length > 0) {
                                     marker !== null && window.history.pushState({}, "", `/${item.layer.name}/${item.id}`)
                                     resetFilterTags();
+                                    hide();
                                 }
                                 else {
                                     marker !== null && clusterRef?.current?.zoomToShowLayer(marker, () => {
                                         marker?.openPopup();
+                                        hide();
                                     });
                                 }
                             }

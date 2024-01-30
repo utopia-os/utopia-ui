@@ -11,7 +11,7 @@ export const ItemForm = ({ children, item, title, setPopupTitle }: { children?: 
     }, [title])
     
     return (
-        <div className='tw-flex tw-justify-center'>{
+        <div>{
             children ?
                 React.Children.toArray(children).map((child) =>
                     React.isValidElement<{ item: Item, test: string }>(child) ?

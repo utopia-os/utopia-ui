@@ -82,6 +82,8 @@ export const SearchControl = ({ clusterRef }) => {
                         onChange={(e) => setValue(e.target.value)}
                         onFocus={() => {
                             setHideSuggestions(false);
+                            console.log(windowDimensions.width);
+                            
                             if(windowDimensions.width < 500) map.closePopup();
                         }}
                         onBlur={() => hide()} />

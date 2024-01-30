@@ -36,7 +36,9 @@ export const SearchControl = ({ clusterRef }) => {
     const filterTags = useFilterTags();
 
     useMapEvents({
-        popupopen: () => {
+        popupopen: (e) => {
+            console.log(e);
+            
             setPopupOpen(true);
         },
         popupclose: () => {
@@ -132,7 +134,8 @@ export const SearchControl = ({ clusterRef }) => {
                                 searchInput.current?.blur();
                                 L.marker(new LatLng(geo.geometry.coordinates[1], geo.geometry.coordinates[0]),{icon: MarkerIconFactory("circle", "#777", "RGBA(35, 31, 32, 0.2)", "circle-solid")}).addTo(map).bindPopup(`<h3 class="tw-text-base tw-font-bold">${geo?.properties.name ? geo?.properties.name : value}<h3>${capitalizeFirstLetter(geo?.properties?.osm_value)}`).openPopup().addEventListener("popupclose", (e) => {console.log(e.target.remove())});
                                 if (geo.properties.extent) map.fitBounds(new LatLngBounds(new LatLng(geo.properties.extent[1], geo.properties.extent[0]), new LatLng(geo.properties.extent[3], geo.properties.extent[2])));
-                                else map.setView(new LatLng(geo.geometry.coordinates[1], geo.geometry.coordinates[0]), 15, { duration: 1 })
+                                else map.setView(new LatLng(geo.geometry.coordinates[1], geo.geometry.coordinates[0]), 15, { duration: 1 });
+                                hide();
                             }}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="tw-text-current tw-mr-2 tw-mt-0 tw-w-4">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />

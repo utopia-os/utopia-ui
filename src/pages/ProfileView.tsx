@@ -32,7 +32,7 @@ export const ProfileView = () => {
         <>
           <div className="flex flex-row">
             
-            <p className="text-4xl"><img className='h-20 rounded-full inline' src={`https://api.utopia-lab.org/assets/${user.avatar} : ''}`}></img> {user?.first_name}</p>
+            <p className="text-4xl">{user.avatar && <img className='h-20 rounded-full inline' src={`https://api.utopia-lab.org/assets/${user.avatar} : ''}`}></img> } {user?.first_name}</p>
 
           </div>
           <p className='text-sm mt-8 mb-2 whitespace-pre-wrap	'>{user?.description}</p>

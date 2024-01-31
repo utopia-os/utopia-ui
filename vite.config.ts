@@ -7,8 +7,12 @@ import { VitePWA } from 'vite-plugin-pwa'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    react(),
-    VitePWA({manifest: {
+    react()
+  ]
+})
+
+{/**
+VitePWA({manifest: {
       "short_name": "Utopia Game",
       "name": "Utopia - A Real Life Manifestation Game",
       "icons": [
@@ -27,5 +31,4 @@ export default defineConfig({
       "display": "fullscreen",
       "orientation": "natural"
     }})
-  ]
-})
+   */}

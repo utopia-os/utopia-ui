@@ -1,4 +1,4 @@
-import { createUser, readMe, updateMe} from '@directus/sdk';
+import { createUser, passwordRequest, passwordReset, readMe, updateMe} from '@directus/sdk';
 import {  directusClient } from './directus';
 import { UserApi, UserItem } from 'utopia-ui/dist/types';
 
@@ -75,6 +75,29 @@ export class userApi implements UserApi {
       else throw error;
     }
   }
+
+  async requestPasswordReset(email:string, reset_url?:string): Promise<any> {
+    try {
+    return await directusClient.request(passwordRequest(email,reset_url));
+    } catch (error: any) {
+      console.log(error);
+      if (error.errors[0].message)
+        throw error.errors[0].message;
+      else throw error;
+    }
+  }
+
+  async passwordReset(reset_token:string, new_password:string): Promise<any> {
+    try {
+    return await directusClient.request(passwordReset(reset_token, new_password));
+    } catch (error: any) {
+      console.log(error);
+      if (error.errors[0].message)
+        throw error.errors[0].message;
+      else throw error;
+    }
+  }
+
 }
 
 

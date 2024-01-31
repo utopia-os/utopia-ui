@@ -3,6 +3,7 @@ import { itemsApi } from '../api/itemsApi';
 import { permissionsApi } from '../api/permissionsApi';
 import { Place, Event, Tag } from '../api/directus';
 import { useEffect, useState } from 'react';
+import {CalendarDaysIcon, MapPinIcon, UserIcon} from '@heroicons/react/20/solid'
 
 function MapContainer() {
 
@@ -22,26 +23,34 @@ function MapContainer() {
     setEventsApi(new itemsApi<Event>('events'));
     setTagsApi(new itemsApi<Tag>('tags'));
     setPermissionsApiInstance(new permissionsApi());
-    setUpdatesApiInstance(new itemsApi('updates'));
+    setUpdatesApiInstance(new itemsApi('updates', {
+      "latest": {
+        "_eq": true
+      }
+    }));
   }, []);
+
+  const icon = CalendarDaysIcon;
+
 
   return (
 
+
     <UtopiaMap zoom={5} height='calc(100dvh - 64px)' width="100%">
       <Layer
-        name='events'
-        menuIcon='CalendarDaysIcon'
+        name='Events'
+        menuIcon={icon}
         menuText='add new event'
         menuColor='#f9a825'
         markerIcon='calendar-days-solid'
         markerShape='square'
-        markerDefaultColor='#777'
+        markerDefaultColor='#818583'
         //     data={events}
         api={eventsApi}>
         <ItemForm>
           <PopupTextInput dataField='name' placeholder='Name'></PopupTextInput>
           <PopupStartEndInput></PopupStartEndInput>
-          <PopupTextAreaInput dataField='text' placeholder={'Test'} style="tw-h-40"></PopupTextAreaInput>
+          <PopupTextAreaInput dataField='text' placeholder={'Text ...'} style="tw-h-40"></PopupTextAreaInput>
         </ItemForm>
         <ItemView>
           <StartEndView></StartEndView>
@@ -49,37 +58,42 @@ function MapContainer() {
         </ItemView>
       </Layer>
       <Layer
-        name='places'
-        menuIcon='MapPinIcon'
+        name='Places'
+        menuIcon={MapPinIcon}
         menuText='add new place'
         menuColor='#2E7D32'
         markerIcon='circle-solid'
         markerShape='circle'
-        markerDefaultColor='#777'
+        markerDefaultColor='#818583'
         // data={places}
         api={placesApi} />
       <Layer
-        name='people'
-        menuIcon='UserIcon'
+        name='People'
+        menuIcon={UserIcon}
         menuText='place your profile on the map'
         menuColor='#C62828'
         markerIcon='user'
         markerShape='square'
-        markerDefaultColor='#777'
-        itemTitleField='user_created.first_name'
+        markerDefaultColor='#818583'
+        itemNameField='user_created.first_name'
+        itemTextField='user_created.description'
         itemAvatarField='user_created.avatar'
         itemColorField='user_created.color'
         itemOwnerField="user_created.id"
+        onlyOnePerOwner={true}
         // data={places}
         api={updatesApiInstance}>
         <ItemView>
           <PopupButton url={'/profile'} parameterField={'user_created.id'} text={'Profile'} colorField={'user_created.color'} />
-          <TextView></TextView>
+          <TextView truncate></TextView>
         </ItemView>
-        <ItemForm>
-          <PopupTextAreaInput dataField='text' placeholder={'Test'} style="tw-h-40"></PopupTextAreaInput>
+        <ItemForm title='Place yor Profile'>
+          <div className='flex justify-center'>
+          <p>Press Save to place your Profile to the Map</p>
+          </div>
         </ItemForm>
       </Layer>
+
       <Tags api={tagsApi}></Tags>
       <Permissions api={permissionsApiInstance} adminRole='8ed0b24e-3320-48cd-8444-bc152304e580'></Permissions>
     </UtopiaMap>

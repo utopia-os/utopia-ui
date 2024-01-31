@@ -11,12 +11,13 @@
   },
   "dependencies": {
     "@directus/sdk": "^12.0.1",
-    "@heroicons/react": "^2.0.17",
+    "@heroicons/react": "^2.1.1",
     "@types/geojson": "^7946.0.10",
+    "axios": "^1.6.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.2",
-    "utopia-ui": "^3.0.0-alpha.41"
+    "utopia-ui": "^3.0.0-alpha.62"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
@@ -25,7 +26,7 @@
     "@typescript-eslint/parser": "^5.57.1",
     "@vitejs/plugin-react": "^4.0.0",
     "autoprefixer": "^10.4.16",
-    "daisyui": "^3.8.0",
+    "daisyui": "^4.6.1",
     "eslint": "^8.38.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",

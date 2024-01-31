@@ -7,14 +7,16 @@ import { ItemsApi } from 'utopia-ui/dist/types';
 export class itemsApi<T> implements ItemsApi<T>{
 
   collectionName: string;
+  filter: any;
 
-  constructor(collectionName: string) {
+  constructor(collectionName: string, filter?: any) {
     this.collectionName = collectionName;
+    this.filter = filter;
   }
 
   async getItems() {
     try {
-      return await directusClient.request(readItems(this.collectionName as never, { fields: ['*', { user_created: ['*'] }], limit: 500 }));
+      return await directusClient.request(readItems(this.collectionName as never, { fields: ['*', { user_created: ['*'] }], filter: this.filter, limit: 500 }));
     } catch (error: any) {
       console.log(error);
       if (error.errors[0]?.message)

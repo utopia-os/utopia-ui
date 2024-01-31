@@ -58,7 +58,7 @@ function UtopiaMap({
                     props.setItemFormPopup({ layer: props.selectNewItemPosition, position: e.latlng })
                     props.setSelectNewItemPosition(null)
                 }
-            },
+            }
         })
         return null
     }

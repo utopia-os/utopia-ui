@@ -212,7 +212,7 @@ export function ProfileSettings() {
         <ReactCrop crop={crop} onChange={(c) => setCrop(c)} aspect={1} >
           <img src={image} ref={imgRef} onLoad={onImageLoad} />
         </ReactCrop>
-        <button className={`tw-btn `} onClick={() => {
+        <button className={`tw-btn tw-btn-primary`} onClick={() => {
           setCropping(true);
           setCropModalOpen(false);
           renderCrop();

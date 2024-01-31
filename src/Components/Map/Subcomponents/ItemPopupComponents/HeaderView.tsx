@@ -9,6 +9,7 @@ import { useHasUserPermission } from "../../hooks/usePermissions";
 import { useAuth } from "../../../Auth";
 import { getValue } from "../../../../Utils/GetValue";
 import { useAssetApi } from '../../../AppShell/hooks/useAssets'
+import DialogModal from "../../../Templates/DialogModal";
 
 
 
@@ -17,6 +18,9 @@ export function HeaderView({ item, setItemFormPopup }: {
   item: Item,
   setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
 }) {
+
+
+  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
 
   const [loading, setLoading] = React.useState<boolean>(false);
   const removeItem = useRemoveItem();
@@ -49,7 +53,12 @@ export function HeaderView({ item, setItemFormPopup }: {
     }
     setLoading(false);
     map.closePopup();
+    window.history.pushState({}, "", "/");
+    event.stopPropagation();
+  }
 
+  const openDeleteModal = async (event: React.MouseEvent<HTMLElement>) => {
+    setModalOpen(true);
     event.stopPropagation();
   }
 
@@ -62,6 +71,7 @@ export function HeaderView({ item, setItemFormPopup }: {
 
 
   return (
+    <>
     <div className='tw-grid tw-grid-cols-6 tw-pb-2'>
       <div className='tw-col-span-5'>
         <div className="tw-flex tw-flex-row">{
@@ -96,7 +106,7 @@ export function HeaderView({ item, setItemFormPopup }: {
               </li>}
 
               {item.layer.api.deleteItem && hasUserPermission(item.layer.api?.collectionName!, "delete") && <li>
-                <a className=' !tw-text-error' onClick={removeItemFromMap}>
+                <a className=' !tw-text-error' onClick={openDeleteModal}>
                   {loading ? <span className="tw-loading tw-loading-spinner tw-loading-sm"></span>
                     :
                     <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -108,5 +118,15 @@ export function HeaderView({ item, setItemFormPopup }: {
           </div>}
       </div>
     </div>
+    <DialogModal isOpened={modalOpen} title="Are you sure?" showCloseButton={false} onClose={ () => (setModalOpen(false)) }>
+      <span>Do you want to delte <b>{item.name}</b>?</span>
+      <div className="tw-grid">
+        <div className="tw-flex tw-justify-between">
+                <label className="tw-btn tw-mt-4 tw-btn-error" onClick={removeItemFromMap}>Yes</label>
+                <label className="tw-btn tw-mt-4" onClick={() => setModalOpen(false)}>No</label>
+                </div>
+            </div>
+    </DialogModal>
+    </>
   )
 }

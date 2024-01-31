@@ -18,6 +18,7 @@ type Props = {
   isOpened: boolean;
   onClose: () => void;
   children: React.ReactNode;
+  showCloseButton?: boolean
 };
 
 const DialogModal = ({
@@ -25,6 +26,7 @@ const DialogModal = ({
   isOpened,
   onClose,
   children,
+  showCloseButton = true
 }: Props) => {
   
   const ref = useRef<HTMLDialogElement>(null);
@@ -43,7 +45,7 @@ const DialogModal = ({
 
 
   return (
-    <dialog className='tw-card tw-shadow-xl tw-absolute tw-right-0 tw-top-0 tw-bottom-0 tw-left-0 tw-m-auto tw-transition-opacity tw-duration-300 tw-p-4 tw-max-w-xl'
+    <dialog className='tw-card tw-shadow-xl tw-absolute tw-right-0 tw-top-0 tw-bottom-0 tw-left-0 tw-m-auto tw-transition-opacity tw-duration-300 tw-p-4 tw-max-w-xl tw-bg-base-100'
     
       ref={ref}
       onCancel={onClose}
@@ -56,7 +58,7 @@ const DialogModal = ({
      <h2 className='tw-text-2xl tw-font-semibold tw-mb-2 tw-text-center'>{title}</h2>
 
       {children}
-      <button className="tw-btn tw-btn-sm tw-btn-circle tw-btn-ghost tw-absolute tw-right-2 tw-top-2" onClick={onClose}>✕</button>
+     {showCloseButton && <button className="tw-btn tw-btn-sm tw-btn-circle tw-btn-ghost tw-absolute tw-right-2 tw-top-2" onClick={onClose}>✕</button>}
 
       </div>
     </dialog>

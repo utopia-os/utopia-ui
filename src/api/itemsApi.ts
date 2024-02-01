@@ -9,6 +9,8 @@ export class itemsApi<T> implements ItemsApi<T>{
   collectionName: string;
   filter: any;
   layerId: string | undefined;
+   mapId: string | undefined;
+
 
   constructor(collectionName: string, layerId?: string | undefined, mapId?: string | undefined, filter?: any, ) {
     this.collectionName = collectionName;
@@ -18,9 +20,10 @@ export class itemsApi<T> implements ItemsApi<T>{
     if(layerId) {
       this.filter = {... filter, ... { "layer" : { "id": { "_eq": layerId }}}}
     }
-    if(mapId) this.filter = {... filter, ... { "map" : { "id": { "_eq": mapId }}}}
-    console.log(this.filter);
-    
+    this.mapId = mapId;
+    if(mapId) {
+      this.filter = {... filter, ... { "map" : { "id": { "_eq": mapId }}}}
+    }   
   }
 
   async getItems() {
@@ -47,7 +50,7 @@ export class itemsApi<T> implements ItemsApi<T>{
 
   async createItem(item: T & { id?: string }) {
     try {
-      return await directusClient.request(createItem(this.collectionName as keyof MyCollections, {...item,  ...(this.layerId && {layer: this.layerId})}))
+      return await directusClient.request(createItem(this.collectionName as keyof MyCollections, {...item,  ...(this.layerId && {layer: this.layerId}), ...(this.layerId && {layer: this.layerId}), ...(this.mapId && {map: this.mapId})}))
     } catch (error: any) {
       console.log(error);
       if (error.errors[0]?.message)

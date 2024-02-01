@@ -23,8 +23,8 @@ function MapContainer() {
 
     setPlacesApi(new itemsApi<Place>('places',"e31de961-6709-4413-a27d-00e59ccfe472"));
     setEventsApi(new itemsApi<Event>('events', "1837e83e-07f1-44c0-88c0-8e9ea8e597db"));
-    setUpdatesApiInstance(new itemsApi('updates',"b4dd8b6b-80e8-4173-9682-4a5755e7b9cb",{"latest":{"_eq": true}}));
-    setTagsApi(new itemsApi<Tag>('tags'));
+    setUpdatesApiInstance(new itemsApi('updates',"b4dd8b6b-80e8-4173-9682-4a5755e7b9cb", undefined, {"latest":{"_eq": true}}));
+    setTagsApi(new itemsApi<Tag>('tags', undefined, "8bf681a4-1b8d-44ba-afba-c6dbf79a769f"));
   //  setRefiApi(new refiBcnApi('refi'));
     setPermissionsApiInstance(new permissionsApi());
 

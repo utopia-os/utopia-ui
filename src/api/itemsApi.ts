@@ -9,11 +9,12 @@ export class itemsApi<T> implements ItemsApi<T>{
   collectionName: string;
   filter: any;
 
-  constructor(collectionName: string, layerId?: string | undefined, filter?: any, ) {
+  constructor(collectionName: string, layerId?: string | undefined, mapId?: string | undefined, filter?: any, ) {
     this.collectionName = collectionName;
     if(filter) this.filter = filter;
     else this.filter = {};
     if(layerId) this.filter = {... filter, ... { "layer" : { "id": { "_eq": layerId }}}}
+    if(mapId) this.filter = {... filter, ... { "map" : { "id": { "_eq": mapId }}}}
     console.log(this.filter);
     
   }

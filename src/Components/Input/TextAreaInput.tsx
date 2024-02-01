@@ -32,7 +32,7 @@ export function TextAreaInput({ labelTitle, dataField, labelStyle, containerStyl
     let values: KeyValue[] = [];
 
     tags.map(tag => {
-        values.push({ key: tag.id, value: tag.id, color: tag.color })
+        values.push({ key: tag.name, value: tag.name, color: tag.color })
     })
 
     var tribute = new Tribute({

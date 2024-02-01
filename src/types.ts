@@ -70,6 +70,7 @@ export class Geometry {
 export interface Tag {
   color: string;
   id: string;
+  name: string;
 }
 
 export interface ItemsApi<T> {

@@ -61,7 +61,7 @@ export const SearchControl = ({ clusterRef }) => {
             if (item.layer?.itemTextField) item.text = getValue(item, item.layer.itemTextField)
             return item.name?.toLowerCase().includes(value.toLowerCase()) || item.text?.toLowerCase().includes(value.toLowerCase())
         }))
-        setTagsResults(tags.filter(tag => tag.id?.toLowerCase().includes(value.toLowerCase())))
+        setTagsResults(tags.filter(tag => tag.name?.toLowerCase().includes(value.toLowerCase())))
 
     }, 500, [value]);
 
@@ -93,11 +93,11 @@ export const SearchControl = ({ clusterRef }) => {
                         {tagsResults.length > 0 &&
                             <div className='tw-flex tw-flex-wrap tw-max-h-16 tw-overflow-hidden tw-min-h-[32px]'>
                                 {tagsResults.map(tag => (
-                                    <div key={tag.id} className='tw-rounded-2xl tw-text-white tw-p-1 tw-px-4 tw-shadow-md tw-card tw-mr-2 tw-mb-2 tw-cursor-pointer' style={{ backgroundColor: tag.color }} onClick={() => {
+                                    <div key={tag.name} className='tw-rounded-2xl tw-text-white tw-p-1 tw-px-4 tw-shadow-md tw-card tw-mr-2 tw-mb-2 tw-cursor-pointer' style={{ backgroundColor: tag.color }} onClick={() => {
                                         addFilterTag(tag)
                                         window.history.pushState({}, "", `/`)
                                     }}>
-                                        <b>#{capitalizeFirstLetter(tag.id)}</b>
+                                        <b>#{capitalizeFirstLetter(tag.name)}</b>
                                     </div>
                                 ))}
                             </div>

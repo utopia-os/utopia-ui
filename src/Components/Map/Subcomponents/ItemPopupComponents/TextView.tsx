@@ -92,7 +92,7 @@ export const TextView = ({ item, truncate = false}: { item?: Item, truncate?: bo
     return (
     <a
       style={{ color: tag ? tag.color : '#faa', fontWeight: 'bold', cursor: 'pointer' }}
-      key={tag ? tag.id + item!.id : item.id}
+      key={tag ? tag.name + item!.id : item.id}
       onClick={(e) => {       
         e.stopPropagation();
         addFilterTag(tag!);
@@ -123,7 +123,7 @@ export const TextView = ({ item, truncate = false}: { item?: Item, truncate?: bo
           );
         }
         if (href?.startsWith("#")) {          
-          const tag = tags.find(t => t.id.toLowerCase() == decodeURI(href).slice(1).toLowerCase())
+          const tag = tags.find(t => t.name.toLowerCase() == decodeURI(href).slice(1).toLowerCase())
           return <CustomHashTagLink tag={tag} item={item}>{children}</CustomHashTagLink>;
         } else {
           return (

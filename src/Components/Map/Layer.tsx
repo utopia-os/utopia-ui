@@ -122,7 +122,7 @@ export const Layer = ({
                 addTag(newtag);
                 setNewTagsToAdd(current =>
                     current.filter(tag => {
-                        return tag.id !== newtag.id;
+                        return tag.name !== newtag.name;
                       }),
                 )
             })
@@ -135,7 +135,7 @@ export const Layer = ({
                 items.
                     filter(item => item.layer?.name === name)?.
                     filter(item =>
-                        filterTags.length == 0 ? item : filterTags.every(tag => getItemTags(item).some(filterTag => filterTag.id.toLocaleLowerCase() === tag.id.toLocaleLowerCase())))?.
+                        filterTags.length == 0 ? item : filterTags.every(tag => getItemTags(item).some(filterTag => filterTag.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())))?.
                     filter(item => item.layer && isLayerVisible(item.layer)).
                     map((item: Item) => {                      
                         if (getValue(item, itemLongitudeField) && getValue(item, itemLatitudeField)) {
@@ -152,8 +152,8 @@ export const Layer = ({
                             }
                             if(allTagsLoaded) {
                                 item[itemTextField].toLocaleLowerCase().match(hashTagRegex)?.map(tag=> {                                        
-                                    if ((!tags.find((t) => t.id.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase()))&& !newTagsToAdd.find((t) => t.id.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
-                                        const newTag = {id: tag.slice(1).toLocaleLowerCase(), color: randomColor()};
+                                    if ((!tags.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase()))&& !newTagsToAdd.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
+                                        const newTag = {id: crypto.randomUUID(), name: tag.slice(1).toLocaleLowerCase(), color: randomColor()};
                                       setNewTagsToAdd(current => [...current, newTag]);
                                     }
                                 });

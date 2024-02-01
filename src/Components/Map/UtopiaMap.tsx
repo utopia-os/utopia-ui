@@ -35,7 +35,7 @@ const mapDivRef = React.createRef();
 function UtopiaMap({
     height = "500px",
     width = "100%",
-    center = new LatLng(50.6, 9.5),
+    center = [50.6, 9.5],
     zoom = 10,
     children }
     : UtopiaMapProps) {
@@ -79,7 +79,7 @@ function UtopiaMap({
                             <ItemsProvider initialItems={[]}>
                                 <LeafletRefsProvider initialLeafletRefs={{}}>
                                     <div className={(selectNewItemPosition != null ? "crosshair-cursor-enabled" : undefined)}>
-                                        <MapContainer ref={mapDivRef} style={{ height: height, width: width }} center={center} zoom={zoom} zoomControl={false}>
+                                        <MapContainer ref={mapDivRef} style={{ height: height, width: width }} center={new LatLng(center[0],center[1])} zoom={zoom} zoomControl={false}>
                                             <Control position='topLeft' zIndex="1000">
                                                 <SearchControl clusterRef={clusterRef} />
                                                 <TagsControl />

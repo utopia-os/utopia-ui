@@ -4,7 +4,7 @@ import { ItemFormPopupProps } from "./Components/Map/Subcomponents/ItemFormPopup
 export interface UtopiaMapProps {
   height?: string,
   width?: string,
-  center?: LatLng,
+  center?: [number,number],
   zoom?: number,
   tags?: Tag[],
   children?: React.ReactNode,

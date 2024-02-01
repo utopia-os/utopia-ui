@@ -8,12 +8,16 @@ export class itemsApi<T> implements ItemsApi<T>{
 
   collectionName: string;
   filter: any;
+  layerId: string | undefined;
 
   constructor(collectionName: string, layerId?: string | undefined, mapId?: string | undefined, filter?: any, ) {
     this.collectionName = collectionName;
     if(filter) this.filter = filter;
     else this.filter = {};
-    if(layerId) this.filter = {... filter, ... { "layer" : { "id": { "_eq": layerId }}}}
+    this.layerId = layerId;
+    if(layerId) {
+      this.filter = {... filter, ... { "layer" : { "id": { "_eq": layerId }}}}
+    }
     if(mapId) this.filter = {... filter, ... { "map" : { "id": { "_eq": mapId }}}}
     console.log(this.filter);
     
@@ -43,7 +47,7 @@ export class itemsApi<T> implements ItemsApi<T>{
 
   async createItem(item: T & { id?: string }) {
     try {
-      return await directusClient.request(createItem(this.collectionName as keyof MyCollections, item))
+      return await directusClient.request(createItem(this.collectionName as keyof MyCollections, {...item,  ...(this.layerId && {layer: this.layerId})}))
     } catch (error: any) {
       console.log(error);
       if (error.errors[0]?.message)

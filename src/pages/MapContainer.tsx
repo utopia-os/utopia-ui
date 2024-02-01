@@ -4,12 +4,14 @@ import { permissionsApi } from '../api/permissionsApi';
 import { Place, Event, Tag } from '../api/directus';
 import { useEffect, useState } from 'react';
 import {CalendarDaysIcon, MapPinIcon, UserIcon} from '@heroicons/react/20/solid'
+// import { refiBcnApi } from '../api/refiBcnApi';
 
 function MapContainer() {
 
 
   const [placesApi, setPlacesApi] = useState<itemsApi<Place>>();
   const [eventsApi, setEventsApi] = useState<itemsApi<Event>>();
+ // const [refiApi, setRefiApi] = useState<refiBcnApi>();
   const [tagsApi, setTagsApi] = useState<itemsApi<Tag>>();
   const [permissionsApiInstance, setPermissionsApiInstance] = useState<permissionsApi>();
   const [updatesApiInstance, setUpdatesApiInstance] = useState<itemsApi<Place>>();
@@ -19,15 +21,13 @@ function MapContainer() {
 
   useEffect(() => {
 
-    setPlacesApi(new itemsApi<Place>('places'));
-    setEventsApi(new itemsApi<Event>('events'));
+    setPlacesApi(new itemsApi<Place>('places',"e31de961-6709-4413-a27d-00e59ccfe472"));
+    setEventsApi(new itemsApi<Event>('events', "1837e83e-07f1-44c0-88c0-8e9ea8e597db"));
+    setUpdatesApiInstance(new itemsApi('updates',"b4dd8b6b-80e8-4173-9682-4a5755e7b9cb",{"latest":{"_eq": true}}));
     setTagsApi(new itemsApi<Tag>('tags'));
+  //  setRefiApi(new refiBcnApi('refi'));
     setPermissionsApiInstance(new permissionsApi());
-    setUpdatesApiInstance(new itemsApi('updates', {
-      "latest": {
-        "_eq": true
-      }
-    }));
+
   }, []);
 
   const icon = CalendarDaysIcon;
@@ -93,7 +93,8 @@ function MapContainer() {
           </div>
         </ItemForm>
       </Layer>
-
+      {/**       <Layer name='ReFi-BCN' menuIcon={MapPinIcon} menuText='add new place' menuColor='#2E7D32' markerIcon='circle-solid' markerShape='circle' markerDefaultColor='#818583' itemTextField='description' itemLatitudeField='geolocation.lat' itemLongitudeField='geolocation.lon' api={refiApi}> </Layer>
+ */}
       <Tags api={tagsApi}></Tags>
       <Permissions api={permissionsApiInstance} adminRole='8ed0b24e-3320-48cd-8444-bc152304e580'></Permissions>
     </UtopiaMap>

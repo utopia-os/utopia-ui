@@ -9,9 +9,13 @@ export class itemsApi<T> implements ItemsApi<T>{
   collectionName: string;
   filter: any;
 
-  constructor(collectionName: string, filter?: any) {
+  constructor(collectionName: string, layerId?: string | undefined, filter?: any, ) {
     this.collectionName = collectionName;
-    this.filter = filter;
+    if(filter) this.filter = filter;
+    else this.filter = {};
+    if(layerId) this.filter = {... filter, ... { "layer" : { "id": { "_eq": layerId }}}}
+    console.log(this.filter);
+    
   }
 
   async getItems() {

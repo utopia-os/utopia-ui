@@ -159,7 +159,7 @@ export const Layer = ({
                             if (allTagsLoaded && allItemsLoaded) {
                                 item[itemTextField].toLocaleLowerCase().match(hashTagRegex)?.map(tag => {
                                     if ((!tags.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) && !newTagsToAdd.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
-                                        const newTag = { name: tag.slice(1).toLocaleLowerCase(), color: randomColor() };
+                                        const newTag = { id: crypto.randomUUID(), name: tag.slice(1).toLocaleLowerCase(), color: randomColor() };
                                         setNewTagsToAdd(current => [...current, newTag]);
                                     }
                                 });

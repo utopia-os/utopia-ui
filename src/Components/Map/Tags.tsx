@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useEffect } from 'react';
 import { ItemsApi, Tag } from '../../types';
-import { useAddTag, useSetTagData, useSetTagApi } from './hooks/useTags'
+import { useSetTagData, useSetTagApi } from './hooks/useTags'
 
 export function Tags({data, api} : {data?: Tag[], api?: ItemsApi<Tag>}) {
 const setTagData = useSetTagData();

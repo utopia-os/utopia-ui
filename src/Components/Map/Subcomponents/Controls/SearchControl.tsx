@@ -89,7 +89,7 @@ export const SearchControl = ({ clusterRef }) => {
                 </div>
                 {value.length > 0 && <button className="tw-btn tw-btn-sm tw-btn-circle tw-absolute tw-right-16 tw-top-2" onClick={() => setValue("")}>✕</button>}
                 {hideSuggestions || Array.from(geoResults).length == 0 && itemsResults.length == 0 && tagsResults.length == 0 && !isGeoCoordinate(value)|| value.length == 0? "" :
-                    <div className='tw-card tw-card-body tw-bg-base-100 tw-p-4 tw-mt-2 tw-shadow-xl tw-overflow-scroll tw-max-h-[calc(100vh-152px)]'>
+                    <div className='tw-card tw-card-body tw-bg-base-100 tw-p-4 tw-mt-2 tw-shadow-xl tw-overflow-scroll tw-max-h-[calc(100dvh-152px)]'>
                         {tagsResults.length > 0 &&
                             <div className='tw-flex tw-flex-wrap tw-max-h-16 tw-overflow-hidden tw-min-h-[32px]'>
                                 {tagsResults.map(tag => (

@@ -29,17 +29,22 @@ function useTagsManager(initialTags: Tag[]): {
 } {
 
   const [allTagsLoaded, setallTagsLoaded] = useState<boolean>(false);
+  const [tagCount, setTagCount] = useState<number>(0);
 
   const [tags, dispatch] = useReducer((state: Tag[], action: ActionType) => {
     switch (action.type) {
       case "ADD":
         const exist = state.find((tag) =>
-          tag.id === action.tag.id ? true : false
+          tag.name.toLocaleLowerCase() === action.tag.name.toLocaleLowerCase() ? true : false
         );
-        if (!exist) return [
-          ...state,
-          { ...action.tag}
-        ];
+        if (!exist) {
+          const newState = [
+            ...state,
+            { ...action.tag}
+          ];
+          if(tagCount == newState.length) setallTagsLoaded(true);
+          return newState;
+        } 
         else return state;
       default:
         throw new Error();
@@ -48,16 +53,20 @@ function useTagsManager(initialTags: Tag[]): {
 
   const [api, setApi] = React.useState<ItemsApi<Tag>>({} as ItemsApi<Tag>)
 
+
   const setTagApi = useCallback(async (api: ItemsApi<Tag>) => {
     setApi(api);
     const result = await api.getItems();
+    setTagCount(result.length);
+    if(tagCount == 0) setallTagsLoaded(true);
     if (result) {
       result.map(tag => {
         tag.name = tag.name.toLocaleLowerCase();
-        dispatch({ type: "ADD", tag })
+        dispatch({ type: "ADD", tag });
       })
-      setallTagsLoaded(true);
     }
+
+    
   }, [])
 
   const setTagData = useCallback((data: Tag[]) => {
@@ -67,14 +76,15 @@ function useTagsManager(initialTags: Tag[]): {
     })
   }, []);
 
-  const addTag = (tag: Tag) => {
-    dispatch({
-      type: "ADD",
-      tag,
-    });
-    if (!tags.some((t) => t.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())) {
-      api?.createItem && api.createItem(tag);
-    }
+  const addTag = (tag: Tag) => {  
+      dispatch({
+        type: "ADD",
+        tag,
+      });
+      if (!tags.some((t) => t.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())) {
+        api?.createItem && api.createItem(tag);
+      }
+    
   };
 
 

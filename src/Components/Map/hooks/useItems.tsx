@@ -1,4 +1,4 @@
-import { useCallback, useReducer, createContext, useContext, useEffect } from "react";
+import { useCallback, useReducer, createContext, useContext, useEffect, useState } from "react";
 import * as React from "react";
 import { Item, ItemsApi, LayerProps, Tag } from "../../../types";
 import { toast } from "react-toastify";
@@ -23,6 +23,7 @@ const ItemContext = createContext<UseItemManagerResult>({
   resetItems: () => { },
   setItemsApi: () => { },
   setItemsData: () => { },
+  allItemsLoaded: false
 });
 
 function useItemsManager(initialItems: Item[]): {
@@ -33,9 +34,16 @@ function useItemsManager(initialItems: Item[]): {
   resetItems: (layer: LayerProps) => void;
   setItemsApi: (layer: LayerProps) => void;
   setItemsData: (layer: LayerProps) => void;
+  allItemsLoaded: boolean;
+
 } {
 
   const addLayer = useAddLayer();
+
+  const [itemsCount, setItemsCount] = useState<number>(0);
+  const [allItemsLoaded, setallItemsLoaded] = useState<boolean>(false);
+
+
 
   const [items, dispatch] = useReducer((state: Item[], action: ActionType) => {
     switch (action.type) {
@@ -83,6 +91,7 @@ function useItemsManager(initialItems: Item[]): {
       result.map(item => {       
         dispatch({ type: "ADD", item: { ...item, layer: layer } });       
       })
+      setallItemsLoaded(true);
     }
   }, [])
 
@@ -123,7 +132,7 @@ function useItemsManager(initialItems: Item[]): {
 
 
 
-  return { items, updateItem, addItem, removeItem, resetItems, setItemsApi, setItemsData };
+  return { items, updateItem, addItem, removeItem, resetItems, setItemsApi, setItemsData, allItemsLoaded };
 }
 
 export const ItemsProvider: React.FunctionComponent<{
@@ -168,3 +177,8 @@ export const useSetItemsData = (): UseItemManagerResult["setItemsData"] => {
   const { setItemsData } = useContext(ItemContext);
   return setItemsData;
 }; 
+
+export const useAllItemsLoaded = (): UseItemManagerResult["allItemsLoaded"] => {
+  const { allItemsLoaded } = useContext(ItemContext);
+  return allItemsLoaded;
+}

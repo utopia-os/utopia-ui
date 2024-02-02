@@ -3,7 +3,7 @@ import { Marker, Tooltip, useMap, useMapEvents } from 'react-leaflet'
 import { Item, LayerProps, Tag } from '../../types'
 import MarkerIconFactory from '../../Utils/MarkerIconFactory'
 import { ItemViewPopup } from './Subcomponents/ItemViewPopup'
-import { useItems, useSetItemsApi, useSetItemsData } from './hooks/useItems'
+import { useAllItemsLoaded, useItems, useSetItemsApi, useSetItemsData } from './hooks/useItems'
 import { useEffect, useState } from 'react'
 import { ItemFormPopup } from './Subcomponents/ItemFormPopup'
 import { useFilterTags, useIsLayerVisible } from './hooks/useFilter'
@@ -52,6 +52,8 @@ export const Layer = ({
     let location = useLocation();
 
     const allTagsLoaded = useAllTagsLoaded();
+    const allItemsLoaded = useAllItemsLoaded();
+
     const tags = useTags();
     const addTag = useAddTag();
     const [newTagsToAdd, setNewTagsToAdd] = useState<Tag[]>([]);
@@ -114,17 +116,17 @@ export const Layer = ({
     }, [leafletRefs, location])
 
     useEffect(() => {
+        console.log(`all tags loaded: ${allTagsLoaded}`);
     }, [allTagsLoaded])
-    
+
     useEffect(() => {
-        if(tagsReady){
+        if (tagsReady) {
+            const processedTags = {};
             newTagsToAdd.map(newtag => {
-                addTag(newtag);
-                setNewTagsToAdd(current =>
-                    current.filter(tag => {
-                        return tag.name !== newtag.name;
-                      }),
-                )
+                if (!processedTags[newtag.name]) {
+                    processedTags[newtag.name] = true;
+                    addTag(newtag);
+                }
             })
         }
     }, [tagsReady])
@@ -137,32 +139,36 @@ export const Layer = ({
                     filter(item =>
                         filterTags.length == 0 ? item : filterTags.every(tag => getItemTags(item).some(filterTag => filterTag.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())))?.
                     filter(item => item.layer && isLayerVisible(item.layer)).
-                    map((item: Item) => {                      
+                    map((item: Item) => {
                         if (getValue(item, itemLongitudeField) && getValue(item, itemLatitudeField)) {
-                            if(item[itemTextField]) item[itemTextField] = getValue(item, itemTextField);
+
+
+                            if (item[itemTextField]) item[itemTextField] = getValue(item, itemTextField);
                             else item[itemTextField] = "";
                             if (item?.tags) {
                                 item[itemTextField] = item[itemTextField] + '\n\n';
                                 item.tags.map(tag => {
-                                    if(!item[itemTextField].includes(`#${tag}`))
-                                    return (item[itemTextField] = item[itemTextField] + `#${tag} `)
+                                    if (!item[itemTextField].includes(`#${tag}`))
+                                        return (item[itemTextField] = item[itemTextField] + `#${tag} `)
                                     return item[itemTextField]
-    
+
                                 });
                             }
-                            if(allTagsLoaded) {
-                                item[itemTextField].toLocaleLowerCase().match(hashTagRegex)?.map(tag=> {                                        
-                                    if ((!tags.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase()))&& !newTagsToAdd.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
-                                        const newTag = {id: crypto.randomUUID(), name: tag.slice(1).toLocaleLowerCase(), color: randomColor()};
-                                      setNewTagsToAdd(current => [...current, newTag]);
+
+
+                            if (allTagsLoaded && allItemsLoaded) {
+                                item[itemTextField].toLocaleLowerCase().match(hashTagRegex)?.map(tag => {
+                                    if ((!tags.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) && !newTagsToAdd.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
+                                        const newTag = { name: tag.slice(1).toLocaleLowerCase(), color: randomColor() };
+                                        setNewTagsToAdd(current => [...current, newTag]);
                                     }
                                 });
                                 !tagsReady && setTagsReady(true);
-                            }  
+                            }
 
 
                             const itemTtags = getItemTags(item);
-                            
+
                             const latitude = itemLatitudeField && item ? getValue(item, itemLatitudeField) : undefined;
                             const longitude = itemLongitudeField && item ? getValue(item, itemLongitudeField) : undefined;
 

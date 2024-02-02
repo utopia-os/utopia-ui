@@ -69,7 +69,7 @@ export class Geometry {
 
 export interface Tag {
   color: string;
-  id: string;
+  id?: string;
   name: string;
 }
 

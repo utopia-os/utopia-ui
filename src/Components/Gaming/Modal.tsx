@@ -1,6 +1,12 @@
 import * as React from "react"
+import { useEffect } from "react"
 
-export function Modal({children}) {
+export function Modal({children, showOnStartup}:{children : React.ReactNode, showOnStartup?: boolean}) {
+
+    useEffect(() => {
+        if(showOnStartup)
+        window.my_modal_3.showModal()
+      }, [])
 
 
     return (

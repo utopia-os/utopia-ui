@@ -78,7 +78,7 @@ export function HeaderView({ item, setItemFormPopup }: {
         <div className="tw-flex tw-flex-row">{
           avatar ?
             <div className="tw-w-10 tw-rounded-full">
-              <img className="tw-rounded-full" src={avatar} />
+              <img className="tw-rounded-full" src={`${avatar}?width=80&height=80`} />
             </div>
             :
             ""

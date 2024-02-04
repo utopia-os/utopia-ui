@@ -6,19 +6,19 @@ import "./UtopiaMap.css"
 import { LatLng } from "leaflet";
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import AddButton from "./Subcomponents/AddButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ItemFormPopupProps } from "./Subcomponents/ItemFormPopup";
 import { ItemsProvider } from "./hooks/useItems";
-import { TagsProvider } from "./hooks/useTags";
+import { TagsProvider, useAllTagsLoaded, useTags } from "./hooks/useTags";
 import { LayersProvider } from "./hooks/useLayers";
-import { FilterProvider } from "./hooks/useFilter";
+import { FilterProvider, useAddFilterTag } from "./hooks/useFilter";
 import { SearchControl } from "./Subcomponents/Controls/SearchControl";
 import { PermissionsProvider } from "./hooks/usePermissions";
 import { LeafletRefsProvider } from "./hooks/useLeafletRefs";
 import { LayerControl } from "./Subcomponents/Controls/LayerControl";
 import { QuestControl } from "./Subcomponents/Controls/QuestControl";
 import { Control } from "./Subcomponents/Controls/Control";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { TagsControl } from "./Subcomponents/Controls/TagsControl";
 
 
@@ -40,25 +40,28 @@ function UtopiaMap({
     children }
     : UtopiaMapProps) {
 
-
-    let meta = document.getElementsByTagName('meta')
-    const [metaTags, setMetaTags] = useState<HTMLCollectionOf<HTMLMetaElement>>(meta);
-
     function MapEventListener(props: MapEventListenerProps) {
         useMapEvents({
             click: (e) => {
-                window.history.pushState({}, "", "/");
+                let params = new URLSearchParams(window.location.search);
+                window.history.pushState({}, "", `/`+ `${params.toString() !== "" ? `?${params}` : ""}`)
                 document.title = document.title.split("-")[0];
                 document.querySelector('meta[property="og:title"]')?.setAttribute("content", document.title);
                 document.querySelector('meta[property="og:description"]')?.setAttribute("content", `${document.querySelector('meta[name="description"]')?.getAttribute("content")}`);
 
-                meta = metaTags;
                 console.log(e.latlng.lat + ',' + e.latlng.lng);
                 if (props.selectNewItemPosition != null) {
                     props.setItemFormPopup({ layer: props.selectNewItemPosition, position: e.latlng })
                     props.setSelectNewItemPosition(null)
                 }
+            },
+            moveend: (e) => {
+                console.log(e);
+                
+                
             }
+            
+            
         })
         return null
     }
@@ -67,6 +70,15 @@ function UtopiaMap({
     const [itemFormPopup, setItemFormPopup] = useState<ItemFormPopupProps | null>(null);
 
     const clusterRef = React.useRef();
+
+    const location = useLocation();
+
+    useEffect(() => {
+        let params = new URLSearchParams(location.search);
+        let urlPosition = params.get("position");
+
+
+    }, [location]);
 
 
     return (
@@ -79,7 +91,7 @@ function UtopiaMap({
                             <ItemsProvider initialItems={[]}>
                                 <LeafletRefsProvider initialLeafletRefs={{}}>
                                     <div className={(selectNewItemPosition != null ? "crosshair-cursor-enabled" : undefined)}>
-                                        <MapContainer ref={mapDivRef} style={{ height: height, width: width }} center={new LatLng(center[0],center[1])} zoom={zoom} zoomControl={false}>
+                                        <MapContainer ref={mapDivRef} style={{ height: height, width: width }} center={new LatLng(center[0], center[1])} zoom={zoom} zoomControl={false}>
                                             <Control position='topLeft' zIndex="1000">
                                                 <SearchControl clusterRef={clusterRef} />
                                                 <TagsControl />

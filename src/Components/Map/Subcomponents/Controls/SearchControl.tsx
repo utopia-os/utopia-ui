@@ -61,7 +61,9 @@ export const SearchControl = ({ clusterRef }) => {
             if (item.layer?.itemTextField) item.text = getValue(item, item.layer.itemTextField)
             return item.name?.toLowerCase().includes(value.toLowerCase()) || item.text?.toLowerCase().includes(value.toLowerCase())
         }))
-        setTagsResults(tags.filter(tag => tag.name?.toLowerCase().includes(value.toLowerCase())))
+        let phrase = value;
+        if(value.startsWith("#")) phrase = value.substring(1);
+        setTagsResults(tags.filter(tag => tag.name?.toLowerCase().includes(phrase.toLowerCase())))
 
     }, 500, [value]);
 
@@ -89,13 +91,14 @@ export const SearchControl = ({ clusterRef }) => {
                 </div>
                 {value.length > 0 && <button className="tw-btn tw-btn-sm tw-btn-circle tw-absolute tw-right-16 tw-top-2" onClick={() => setValue("")}>✕</button>}
                 {hideSuggestions || Array.from(geoResults).length == 0 && itemsResults.length == 0 && tagsResults.length == 0 && !isGeoCoordinate(value)|| value.length == 0? "" :
-                    <div className='tw-card tw-card-body tw-bg-base-100 tw-p-4 tw-mt-2 tw-shadow-xl tw-overflow-scroll tw-max-h-[calc(100dvh-152px)]'>
+                    <div className='tw-card tw-card-body tw-bg-base-100 tw-p-4 tw-mt-2 tw-shadow-xl tw-overflow-y-auto tw-max-h-[calc(100dvh-152px)]'>
                         {tagsResults.length > 0 &&
                             <div className='tw-flex tw-flex-wrap tw-max-h-16 tw-overflow-hidden tw-min-h-[32px]'>
                                 {tagsResults.map(tag => (
                                     <div key={tag.name} className='tw-rounded-2xl tw-text-white tw-p-1 tw-px-4 tw-shadow-md tw-card tw-mr-2 tw-mb-2 tw-cursor-pointer' style={{ backgroundColor: tag.color }} onClick={() => {
                                         addFilterTag(tag)
-                                        window.history.pushState({}, "", `/`)
+                                        let params = new URLSearchParams(window.location.search);
+                                        window.history.pushState({}, "", "/" + `${params? `?${params}` : ""}`);
                                     }}>
                                         <b>#{capitalizeFirstLetter(tag.name)}</b>
                                     </div>
@@ -144,7 +147,7 @@ export const SearchControl = ({ clusterRef }) => {
 
                                 <div>
                                     <div className='tw-text-sm tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>{geo?.properties.name ? geo?.properties.name : value}</div>
-                                    <div className='tw-text-xs tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>{geo?.properties?.city && `${capitalizeFirstLetter(geo?.properties?.city)}, `} {geo?.properties?.osm_value && geo?.properties?.osm_value !== "primary" && geo?.properties?.osm_value !== "path" && geo?.properties?.osm_value !== "secondary" && geo?.properties?.osm_value !== "residential" && geo?.properties?.osm_value !== "unclassified" && `${capitalizeFirstLetter(geo?.properties?.osm_value)}, `} {geo.properties.state && `${geo.properties.state}, `} {geo.properties.country && geo.properties.country}</div>
+                                    <div className='tw-text-xs tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>{geo?.properties?.city && `${capitalizeFirstLetter(geo?.properties?.city)}, `} {geo?.properties?.osm_value  && geo?.properties?.osm_value !== "yes" && geo?.properties?.osm_value !== "primary" && geo?.properties?.osm_value !== "path" && geo?.properties?.osm_value !== "secondary" && geo?.properties?.osm_value !== "residential" && geo?.properties?.osm_value !== "unclassified" && `${capitalizeFirstLetter(geo?.properties?.osm_value)}, `} {geo.properties.state && `${geo.properties.state}, `} {geo.properties.country && geo.properties.country}</div>
                                 </div>
                             </div>
 

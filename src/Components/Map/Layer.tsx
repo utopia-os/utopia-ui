@@ -74,7 +74,8 @@ export const Layer = ({
         popupopen: (e) => {
             const item = Object.entries(leafletRefs).find(r => r[1].popup == e.popup)?.[1].item;
             if (item?.layer?.name == name && window.location.pathname.split("/")[2] != item.id) {
-                window.history.pushState({}, "", `/${name}/${item.id}`)
+                let params = new URLSearchParams(window.location.search);                                              
+                window.history.pushState({}, "", `/${name}/${item.id}`+ `${params.toString() !== "" ? `?${params}` : ""}`)
                 let title = "";
                 if (item.name) title = item.name;
                 else if (item.layer?.itemNameField) title = getValue(item, item.layer.itemNameField);
@@ -116,10 +117,6 @@ export const Layer = ({
     }, [leafletRefs, location])
 
     useEffect(() => {
-        console.log(`all tags loaded: ${allTagsLoaded}`);
-    }, [allTagsLoaded])
-
-    useEffect(() => {
         if (tagsReady) {
             const processedTags = {};
             newTagsToAdd.map(newtag => {
@@ -143,7 +140,7 @@ export const Layer = ({
                         if (getValue(item, itemLongitudeField) && getValue(item, itemLatitudeField)) {
 
 
-                            if (item[itemTextField]) item[itemTextField] = getValue(item, itemTextField);
+                            if (getValue(item, itemTextField)) item[itemTextField] = getValue(item, itemTextField);
                             else item[itemTextField] = "";
                             if (item?.tags) {
                                 item[itemTextField] = item[itemTextField] + '\n\n';
@@ -156,7 +153,7 @@ export const Layer = ({
                             }
 
 
-                            if (allTagsLoaded && allItemsLoaded) {
+                            if (allTagsLoaded && allItemsLoaded) {                                
                                 item[itemTextField].toLocaleLowerCase().match(hashTagRegex)?.map(tag => {
                                     if ((!tags.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) && !newTagsToAdd.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
                                         const newTag = { id: crypto.randomUUID(), name: tag.slice(1).toLocaleLowerCase(), color: randomColor() };

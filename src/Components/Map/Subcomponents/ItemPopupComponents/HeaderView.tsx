@@ -53,7 +53,8 @@ export function HeaderView({ item, setItemFormPopup }: {
     }
     setLoading(false);
     map.closePopup();
-    window.history.pushState({}, "", "/");
+    let params = new URLSearchParams(window.location.search);
+    window.history.pushState({}, "", "/" + `${params? `?${params}` : ""}`);
     event.stopPropagation();
   }
 

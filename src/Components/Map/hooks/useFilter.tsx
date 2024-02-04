@@ -2,10 +2,11 @@ import { useCallback, useReducer, createContext, useContext } from "react";
 import * as React from "react";
 import { LayerProps, Tag } from "../../../types";
 import { useLayers } from "./useLayers";
+import { useLocation } from "react-router-dom";
 
 type ActionType =
   | { type: "ADD_TAG"; tag: Tag }
-  | { type: "REMOVE_TAG"; id: string }
+  | { type: "REMOVE_TAG"; name: string }
   | { type: "RESET_TAGS" }
   | { type: "TOGGLE_LAYER"; layer: LayerProps }
   | { type: "ADD_LAYER"; layer: LayerProps }
@@ -33,7 +34,7 @@ function useFilterManager(initialTags: Tag[]): {
   searchPhrase: string;
   visibleLayers: LayerProps[];
   addFilterTag: (tag: Tag) => void;
-  removeFilterTag: (id: string) => void;
+  removeFilterTag: (name: string) => void;
   resetFilterTags: () => void;
   setSearchPhrase: (phrase: string) => void;
   addVisibleLayer: (layer: LayerProps) => void;
@@ -53,7 +54,7 @@ function useFilterManager(initialTags: Tag[]): {
         ];
         else return state;
       case "REMOVE_TAG":
-        return state.filter(({ id }) => id !== action.id);
+        return state.filter(({ name }) => name !== action.name);
       case "RESET_TAGS":
         return initialTags;
       default:
@@ -89,6 +90,13 @@ function useFilterManager(initialTags: Tag[]): {
   const [searchPhrase, searchPhraseSet] = React.useState<string>("");
 
   const addFilterTag = (tag: Tag) => {
+
+    let params = new URLSearchParams(window.location.search);
+    let urlTags = params.get("tags");
+    if(!urlTags?.includes(tag.name))
+    params.set("tags", `${urlTags ? urlTags : ""}${urlTags? ',' : ''}${tag.name}`)
+    window.history.pushState('','', "?" +params.toString());
+
     dispatchTags({
       type: "ADD_TAG",
       tag,
@@ -96,10 +104,29 @@ function useFilterManager(initialTags: Tag[]): {
 
   };
 
-  const removeFilterTag = useCallback((id: string) => {
+  const removeFilterTag = useCallback((name: string) => {
+
+    let params = new URLSearchParams(window.location.search);
+    let urlTags = params.get("tags");
+    let newUrlTags = "";
+    let tags = urlTags?.split(",");
+    if(tags?.length==0 && urlTags?.length && urlTags?.length > 0) tags[0]=urlTags;
+      tags?.map(urlTag => {
+        if(!(urlTag.toLocaleLowerCase() === name.toLocaleLowerCase()))
+          newUrlTags = newUrlTags + `${newUrlTags===""? urlTag : `,${urlTag}`}`
+    });    
+    if(newUrlTags !== "") {
+      params.set("tags", `${newUrlTags}`)
+      window.history.pushState('','', "?" +params.toString());
+    }
+    else {
+
+      window.history.pushState('','', window.location.pathname);
+    }
+
     dispatchTags({
       type: "REMOVE_TAG",
-      id,
+      name,
     });
   }, []);
 

@@ -68,8 +68,8 @@ export default function NavBar({ appName, nameWidth = 200}: { appName: string, n
                 </svg>
               </label>
               <ul tabIndex={0} className="tw-menu tw-menu-compact tw-dropdown-content tw-mt-3 tw-p-2 tw-shadow tw-bg-base-100 tw-rounded-box tw-w-52 !tw-z-[10000]">
-                <li><Link to={"/profile"}>Profile</Link></li>
-                <li><Link to={"/settings"}>Settings</Link></li>
+                <li><Link to={"/profile-settings"}>Profile</Link></li>
+                <li><Link to={"/user-settings"}>Settings</Link></li>
                 <li><a onClick={() => { onLogout() }}>Logout</a></li>
               </ul>
             </div>

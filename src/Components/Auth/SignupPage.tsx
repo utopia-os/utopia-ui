@@ -41,7 +41,7 @@ export function SignupPage() {
 
 
     return (
-        <MapOverlayPage>
+        <MapOverlayPage backdrop className='tw-max-w-xs  tw-h-fit'>
             <h2 className='tw-text-2xl tw-font-semibold tw-mb-2 tw-text-center'>Sign Up</h2>
             <input type="text" placeholder="Name" value={userName} onChange={e => setUserName(e.target.value)} className="tw-input tw-input-bordered tw-w-full tw-max-w-xs" />
             <input type="email" placeholder="E-Mail" value={email} onChange={e => setEmail(e.target.value)} className="tw-input tw-input-bordered tw-w-full tw-max-w-xs" />

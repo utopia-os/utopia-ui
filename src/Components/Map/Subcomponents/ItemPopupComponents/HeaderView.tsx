@@ -89,7 +89,7 @@ export function HeaderView({ item, setItemFormPopup }: {
       </div>
       <div className='tw-col-span-1'>
         {(item.layer?.api?.deleteItem || item.layer?.api?.updateItem)
-        && ((user && owner === user.id) || owner == undefined)
+        && ((user && owner?.id === user.id) || owner == undefined)
         && (hasUserPermission(item.layer.api?.collectionName!, "delete") || hasUserPermission(item.layer.api?.collectionName!, "update")) &&
           <div className="tw-dropdown tw-dropdown-bottom">
             <label tabIndex={0} className="tw-bg-base-100 tw-btn tw-m-1 tw-leading-3 tw-border-none tw-min-h-0 tw-h-6">

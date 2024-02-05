@@ -1,2 +1,5 @@
 export {UserSettings} from './UserSettings'
 export {ProfileSettings} from './ProfileSettings'
+export {OverlayProfile} from './OverlayProfile'
+export {OverlayProfileSettings} from './OverlayProfileSettings'
+export {OverlayUserSettings} from './OverlayUserSettings'

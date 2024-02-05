@@ -5,8 +5,8 @@ import { useAddFilterTag } from '../../hooks/useFilter';
 import { hashTagRegex } from '../../../../Utils/HashTagRegex';
 import { fixUrls, mailRegex } from '../../../../Utils/ReplaceURLs';
 import Markdown from 'react-markdown'
-import rehypeVideo from 'rehype-video';
 import { getValue } from '../../../../Utils/GetValue';
+import remarkBreaks from 'remark-breaks'
 
 export const TextView = ({ item, truncate = false}: { item?: Item, truncate?: boolean }) => {
   const tags = useTags();
@@ -60,7 +60,7 @@ export const TextView = ({ item, truncate = false}: { item?: Item, truncate?: bo
     <h6 className="tw-text-sm tw-font-bold">{children}</h6>
   );
   const CustomParagraph = ({ children }) => (
-    <p className="!tw-my-1">{children}</p>
+    <p className="!tw-my-2">{children}</p>
   );
   const CustomUnorderdList = ({ children }) => (
     <ul className="tw-list-disc tw-list-inside">{children}</ul>
@@ -80,13 +80,10 @@ export const TextView = ({ item, truncate = false}: { item?: Item, truncate?: bo
     />
   );
   const CustomExternalLink = ({ href, children }) => (
-    <a
+    <a className='tw-font-bold'
       href={href}
       target="_blank"
-      rel="noopener noreferrer"
-    >
-      {children}
-    </a>
+    > {children}</a>
   );
   const CustomHashTagLink = ({ children, tag, item }) => {    
     return (
@@ -101,9 +98,10 @@ export const TextView = ({ item, truncate = false}: { item?: Item, truncate?: bo
       }}>{children}</a>
   )};
 
+
   return (
     //@ts-ignore
-    <Markdown rehypePlugins={[rehypeVideo]} components={{
+    <Markdown className={`tw-text-map tw-leading-map `} remarkPlugins={[remarkBreaks]} components={{
       p: CustomParagraph,
       a: ({ href, children }) => {
         // Prüft, ob der Link ein YouTube-Video ist

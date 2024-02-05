@@ -23,7 +23,7 @@ export const ItemViewPopup = React.forwardRef((props: ItemViewPopupProps, ref: a
     <LeafletPopup ref={ref} maxHeight={377} minWidth={275} maxWidth={275} autoPanPadding={[20, 80]}>
       <div className='tw-bg-base-100 tw-text-base-content'>
         <HeaderView item={props.item} setItemFormPopup={props.setItemFormPopup} />
-        <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64'>
+        <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
           {props.children ?
 
             React.Children.toArray(props.children).map((child) =>
@@ -38,7 +38,7 @@ export const ItemViewPopup = React.forwardRef((props: ItemViewPopupProps, ref: a
           }
 
         </div>
-        <div className='tw-flex -tw-mb-1 tw-flex-row tw-mr-2'>
+        <div className='tw-flex -tw-mb-1 tw-flex-row tw-mr-2 tw-mt-1'>
 
 
           {

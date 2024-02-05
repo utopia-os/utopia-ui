@@ -36,7 +36,7 @@ export function RequestPasswordPage({reset_url}) {
     }
 
     return (
-        <MapOverlayPage>
+        <MapOverlayPage backdrop className='tw-max-w-xs  tw-h-fit'>
             <h2 className='tw-text-2xl tw-font-semibold tw-mb-2 tw-text-center'>Reset Password</h2>
             <input type="email" placeholder="E-Mail" value={email} onChange={e => setEmail(e.target.value)} className="tw-input tw-input-bordered tw-w-full tw-max-w-xs" />
             <div className="tw-card-actions tw-mt-4">

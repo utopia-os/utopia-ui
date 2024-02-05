@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import * as React from "react";
 import { HexColorPicker } from "react-colorful";
 import "./ColorPicker.css"
@@ -11,8 +11,27 @@ export const ColorPicker = ({ color, onChange, className }) => {
   const close = useCallback(() => toggle(false), []);
   useClickOutside(popover, close);
 
+  const colorPickerRef = React.useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+        // Füge dem Color-Picker explizit Event-Listener hinzu
+        const colorPickerElement = colorPickerRef.current;
+        if (colorPickerElement) {
+          const enablePropagation = (event) => {
+            // Verhindere, dass Leaflet die Propagation stoppt
+            event.stopPropagation = () => {};
+          };
+  
+          // Event-Listener für den Color-Picker
+          ['click', 'dblclick', 'mousedown', 'touchstart'].forEach(eventType => {
+            colorPickerElement.addEventListener(eventType, enablePropagation, true);
+          });
+        }
+      
+    }, []); 
+
   return (
-    <div className={`picker ${className}`}>
+    <div ref={colorPickerRef} className={`picker ${className}`}>
       <div
         className="swatch"
         style={{ backgroundColor: color }}

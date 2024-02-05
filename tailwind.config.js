@@ -27,6 +27,12 @@ module.exports = {
       },
       fontFamily: {
         'sans': ["Helvetica", "sans-serif", 'Roboto'],
+      },
+      fontSize: {
+        'map':  "13px"
+      },
+      lineHeight: {
+        'map': "1.4em"
       }
     },
   },

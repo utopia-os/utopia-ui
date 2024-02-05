@@ -38,7 +38,7 @@ export function SetNewPasswordPage() {
     }
 
     return (
-        <MapOverlayPage>
+        <MapOverlayPage backdrop className='tw-max-w-xs  tw-h-fit'>
             <h2 className='tw-text-2xl tw-font-semibold tw-mb-2 tw-text-center'>Set new Password</h2>
             <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} className="tw-input tw-input-bordered tw-w-full tw-max-w-xs" />
             <div className="tw-card-actions tw-mt-4">

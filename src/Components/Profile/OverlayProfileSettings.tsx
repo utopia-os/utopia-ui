@@ -15,6 +15,8 @@ import { randomColor } from '../../Utils/RandomColor';
 import { useNavigate } from 'react-router-dom';
 import { UserItem } from '../../types';
 import { MapOverlayPage } from '../Templates';
+import {TextEditor} from './Editor';
+
 
 export function OverlayProfileSettings() {
 
@@ -25,6 +27,8 @@ export function OverlayProfileSettings() {
     const [text, setText] = useState<string>("");
     const [avatar, setAvatar] = useState<string>("");
     const [color, setColor] = useState<string>("");
+
+    const [activeTab, setActiveTab] = useState<number>(1);
 
 
     const [crop, setCrop] = useState<Crop>();
@@ -45,7 +49,7 @@ export function OverlayProfileSettings() {
         setName(user?.first_name ? user.first_name : "");
         setText(user?.description ? user.description : "");
         setAvatar(user?.avatar ? user?.avatar : ""),
-        setColor(user?.color ? user.color : "#aabbcc")
+            setColor(user?.color ? user.color : "#aabbcc")
     }, [user])
 
     const imgRef = React.useRef<HTMLImageElement>(null)
@@ -208,9 +212,33 @@ export function OverlayProfileSettings() {
                         <TextInput placeholder="Name" defaultValue={user?.first_name ? user.first_name : ""} updateFormValue={(v) => setName(v)} containerStyle='tw-grow tw-ml-6 tw-my-auto ' />
                     </div>
 
-                    <div className="tw-grid tw-grid-cols-1 tw-md:grid-cols-1 tw-gap-6 tw-pt-6 tw-pb-6 tw-grow">
-                        <TextAreaInput placeholder="About me, Contact, #Tags, ..." defaultValue={user?.description ? user.description : ""} updateFormValue={(v) => setText(v)} containerStyle='tw-h-full' inputStyle='tw-h-full'/>
+
+                    <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-4">
+                        <input type="radio" name="my_tabs_2" role="tab" className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`} aria-label="Text" checked={activeTab == 1 && true} onChange={() => setActiveTab(1)} />
+                        <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-border-[var(--fallback-bc,oklch(var(--bc)/0.2))] tw-rounded-box tw-h-[calc(100dvh-332px)]">
+                            <TextEditor value={text} updateFormValue={(v) => setText(v)} ></TextEditor>
+                        </div>
+
+                        <input type="radio" name="my_tabs_2" role="tab" className="tw-tab tw-min-w-[10em] [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Offers & Needs" checked={activeTab == 2 && true} onChange={() => setActiveTab(2)} />
+                        <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-pt-6 tw-h-[calc(100dvh-332px)]">
+                            <textarea className="tw-textarea tw-textarea-bordered tw-w-full tw-mb-4 tw-h-32 " placeholder="Offers"></textarea>
+                            <textarea className="tw-textarea tw-textarea-bordered tw-w-full  tw-h-32 " placeholder="Needs"></textarea>
+
+                        </div>
+
+                        <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Contact" checked={activeTab == 3 && true} onChange={() => setActiveTab(3)} />
+                        <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-pt-6 tw-h-[calc(100dvh-332px)] tw-overflow-y-auto">
+                            <input className='tw-input tw-mb-2 tw-input-bordered  tw-w-full' placeholder='E-Mail ...'></input>
+                            <input className='tw-input tw-mb-2 tw-input-bordered  tw-w-full' placeholder='Telefon ...'></input>
+                            <input className='tw-input tw-mb-2 tw-input-bordered  tw-w-full' placeholder='Webpage ...'></input>
+                            <input className='tw-input tw-mb-2 tw-input-bordered  tw-w-full' placeholder='Matrix ... '></input>
+                            <input className='tw-input tw-mb-2 tw-input-bordered  tw-w-full' placeholder='Telegram ...'></input>
+                            <input className='tw-input tw-mb-2 tw-input-bordered  tw-w-full' placeholder='Instagram ...'></input>
+                            <input className='tw-input tw-mb-2 tw-input-bordered  tw-w-full' placeholder='Twitter ...'></input>
+                        </div>
                     </div>
+
+
                 </div>
 
                 <div className="tw-mt-2"><button className={loading ? " tw-loading tw-btn-disabled tw-btn tw-btn-primary tw-float-right" : "tw-btn tw-btn-primary tw-float-right"} onClick={() => onUpdateUser()}>Update</button></div>

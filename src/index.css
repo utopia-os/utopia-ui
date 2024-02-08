@@ -63,3 +63,15 @@ input[type="file"] {
   transform: translate(8px, 8px);
 
 }
+
+.tw-tab-content .container {
+  height: 100%;
+}
+
+.w-md-editor-text {
+  height: 100%;
+}
+
+.w-md-editor-text-input {
+  min-height: 100%;
+}

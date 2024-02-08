@@ -13,7 +13,7 @@ export const TagsControl = () => {
             <div key={tag.id} className='tw-rounded-2xl tw-text-white tw-p-2 tw-px-4 tw-shadow-xl tw-card tw-mr-2 tw-mb-2' style={{ backgroundColor: tag.color }}>
                 <div className="tw-card-actions tw-justify-end">
                     <label className="tw-btn tw-btn-xs tw-btn-circle tw-absolute tw--right-2 tw--top-2 tw-bg-white tw-text-gray-600" onClick={() => (removeFilterTag(tag.name!))}>✕</label>
-                </div><b>#{capitalizeFirstLetter(tag.name)}</b>
+                </div><b>#{formatTag(tag.name)}</b>
             </div>
         )
     }
@@ -21,6 +21,11 @@ export const TagsControl = () => {
 }
 
 
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+function formatTag(string : string) {
+    console.log(string);
+    
+     let formatedTag = string.replace(/_/g, " ");
+     console.log(formatedTag);
+     
+     return formatedTag = formatedTag.charAt(0).toUpperCase() + formatedTag.slice(1);
 }

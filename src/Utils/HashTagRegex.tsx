@@ -1,1 +1,1 @@
-export const hashTagRegex = /(#+[a-zA-Z0-9A-Za-zÀ-ÖØ-öø-ʸ(_)]{1,})/g;
+export const hashTagRegex = /(#+[a-zA-Z0-9À-ÖØ-öø-ʸ_-]{1,})/g;

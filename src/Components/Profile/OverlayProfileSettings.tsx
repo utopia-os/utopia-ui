@@ -214,7 +214,7 @@ export function OverlayProfileSettings() {
 
                     <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-4">
                         <input type="radio" name="my_tabs_2" role="tab" className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`} aria-label="Text" checked={activeTab == 1 && true} onChange={() => setActiveTab(1)} />
-                        <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-border-[var(--fallback-bc,oklch(var(--bc)/0.2))] tw-rounded-box tw-h-[calc(100dvh-332px)]">
+                        <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-border-[var(--fallback-bc,oklch(var(--bc)/0.2))] tw-rounded-box tw-h-[calc(100dvh-332px)] tw-min-h-56">
                         <TextAreaInput placeholder="About me, Contact, #Tags, ..." defaultValue={user?.description ? user.description : ""} updateFormValue={(v) => setText(v)} containerStyle='tw-h-full' inputStyle='tw-h-full'/>
                         </div>
 

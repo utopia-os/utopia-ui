@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useItems, useUpdateItem } from '../Map/hooks/useItems'
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import { getValue } from '../../Utils/GetValue';
 import ReactCrop, { Crop, centerCrop, makeAspectCrop } from 'react-image-crop';
 import { toast } from 'react-toastify';
@@ -15,7 +15,6 @@ import { randomColor } from '../../Utils/RandomColor';
 import { useNavigate } from 'react-router-dom';
 import { UserItem } from '../../types';
 import { MapOverlayPage } from '../Templates';
-import {TextEditor} from './Editor';
 
 
 export function OverlayProfileSettings() {
@@ -216,7 +215,7 @@ export function OverlayProfileSettings() {
                     <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-4">
                         <input type="radio" name="my_tabs_2" role="tab" className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`} aria-label="Text" checked={activeTab == 1 && true} onChange={() => setActiveTab(1)} />
                         <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-border-[var(--fallback-bc,oklch(var(--bc)/0.2))] tw-rounded-box tw-h-[calc(100dvh-332px)]">
-                            <TextEditor value={text} updateFormValue={(v) => setText(v)} ></TextEditor>
+                        <TextAreaInput placeholder="About me, Contact, #Tags, ..." defaultValue={user?.description ? user.description : ""} updateFormValue={(v) => setText(v)} containerStyle='tw-h-full' inputStyle='tw-h-full'/>
                         </div>
 
                         <input type="radio" name="my_tabs_2" role="tab" className="tw-tab tw-min-w-[10em] [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Offers & Needs" checked={activeTab == 2 && true} onChange={() => setActiveTab(2)} />

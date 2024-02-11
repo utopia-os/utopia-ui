@@ -21,11 +21,7 @@ export const TagsControl = () => {
 }
 
 
-function formatTag(string : string) {
-    console.log(string);
-    
-     let formatedTag = string.replace(/_/g, " ");
-     console.log(formatedTag);
-     
+function formatTag(string : string) {   
+     let formatedTag = string.replace(/_/g, " ");    
      return formatedTag = formatedTag.charAt(0).toUpperCase() + formatedTag.slice(1);
 }

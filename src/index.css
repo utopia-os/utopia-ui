@@ -35,6 +35,14 @@
   color: theme('colors.base-content');
 }
 
+.Toastify__toast-container {
+  z-index: 1999 !important;
+}
+
+.Toastify__toast-container--top-right {
+  top: 4.75em !important;
+}
+
 :root {
 
   --toastify-color-info: theme('colors.info');
@@ -66,12 +74,4 @@ input[type="file"] {
 
 .tw-tab-content .container {
   height: 100%;
-}
-
-.w-md-editor-text {
-  height: 100%;
-}
-
-.w-md-editor-text-input {
-  min-height: 100%;
 }

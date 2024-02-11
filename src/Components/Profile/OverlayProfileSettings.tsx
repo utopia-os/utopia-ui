@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useItems, useUpdateItem } from '../Map/hooks/useItems'
-import {  useState } from 'react';
+import { useState } from 'react';
 import { getValue } from '../../Utils/GetValue';
 import ReactCrop, { Crop, centerCrop, makeAspectCrop } from 'react-image-crop';
 import { toast } from 'react-toastify';
@@ -15,6 +15,7 @@ import { randomColor } from '../../Utils/RandomColor';
 import { useNavigate } from 'react-router-dom';
 import { UserItem } from '../../types';
 import { MapOverlayPage } from '../Templates';
+import { TagsWidget } from './TagsWidget';
 
 
 export function OverlayProfileSettings() {
@@ -215,18 +216,24 @@ export function OverlayProfileSettings() {
                     <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-4">
                         <input type="radio" name="my_tabs_2" role="tab" className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`} aria-label="Text" checked={activeTab == 1 && true} onChange={() => setActiveTab(1)} />
                         <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-border-[var(--fallback-bc,oklch(var(--bc)/0.2))] tw-rounded-box tw-h-[calc(100dvh-332px)] tw-min-h-56">
-                        <TextAreaInput placeholder="About me, Contact, #Tags, ..." defaultValue={user?.description ? user.description : ""} updateFormValue={(v) => setText(v)} containerStyle='tw-h-full' inputStyle='tw-h-full'/>
+                            <TextAreaInput placeholder="About me, Contact, #Tags, ..." defaultValue={user?.description ? user.description : ""} updateFormValue={(v) => setText(v)} containerStyle='tw-h-full' inputStyle='tw-h-full tw-border-t-0' />
                         </div>
 
                         <input type="radio" name="my_tabs_2" role="tab" className="tw-tab tw-min-w-[10em] [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Offers & Needs" checked={activeTab == 2 && true} onChange={() => setActiveTab(2)} />
-                        <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-pt-6 tw-h-[calc(100dvh-332px)]">
-                            <textarea className="tw-textarea tw-textarea-bordered tw-w-full tw-mb-4 tw-h-32 " placeholder="Offers"></textarea>
-                            <textarea className="tw-textarea tw-textarea-bordered tw-w-full  tw-h-32 " placeholder="Needs"></textarea>
-
+                        <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-pt-4 tw-h-[calc(100dvh-332px)] tw-min-h-56">
+                            <div className='tw-h-full'>
+                                <div className='tw-w-full tw-h-[calc(50%-0.75em)] tw-mb-4'>
+                                    <TagsWidget placeholder="enter your offers" containerStyle='tw-bg-transparent tw-w-full tw-h-full tw-mt-3 tw-text-xs tw-h-[calc(100%-1rem)] tw-min-h-[5em] tw-pb-2'/>
+                                </div>
+                                <div className='tw-w-full tw-h-[calc(50%-0.75em)] '>
+                                    <TagsWidget placeholder="enter your needs" containerStyle='tw-bg-transparent tw-w-full tw-h-full tw-mt-3 tw-text-xs tw-h-[calc(100%-1rem)] tw-min-h-[5em] tw-pb-2'/>
+                                </div>
+                            </div>
                         </div>
 
                         <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Contact" checked={activeTab == 3 && true} onChange={() => setActiveTab(3)} />
-                        <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-pt-6 tw-h-[calc(100dvh-332px)] tw-overflow-y-auto">
+                        <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-pt-4 tw-h-[calc(100dvh-332px)] tw-min-h-56">
+                            <div className='tw-overflow-y-auto tw-h-full tw-min-h-56"'>
                             <input className='tw-input tw-mb-2 tw-input-bordered  tw-w-full' placeholder='E-Mail ...'></input>
                             <input className='tw-input tw-mb-2 tw-input-bordered  tw-w-full' placeholder='Telefon ...'></input>
                             <input className='tw-input tw-mb-2 tw-input-bordered  tw-w-full' placeholder='Webpage ...'></input>
@@ -234,13 +241,14 @@ export function OverlayProfileSettings() {
                             <input className='tw-input tw-mb-2 tw-input-bordered  tw-w-full' placeholder='Telegram ...'></input>
                             <input className='tw-input tw-mb-2 tw-input-bordered  tw-w-full' placeholder='Instagram ...'></input>
                             <input className='tw-input tw-mb-2 tw-input-bordered  tw-w-full' placeholder='Twitter ...'></input>
+                            </div>
                         </div>
                     </div>
 
+                    <div className="tw-mt-4 tw-mb-4"><button className={loading ? " tw-loading tw-btn-disabled tw-btn tw-btn-primary tw-float-right" : "tw-btn tw-btn-primary tw-float-right"} onClick={() => onUpdateUser()}>Update</button></div>
 
                 </div>
 
-                <div className="tw-mt-2"><button className={loading ? " tw-loading tw-btn-disabled tw-btn tw-btn-primary tw-float-right" : "tw-btn tw-btn-primary tw-float-right"} onClick={() => onUpdateUser()}>Update</button></div>
             </MapOverlayPage>
             <DialogModal
                 title=""

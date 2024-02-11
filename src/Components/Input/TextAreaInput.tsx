@@ -41,8 +41,6 @@ export function TextAreaInput({ labelTitle, dataField, labelStyle, containerStyl
         trigger: "#",
         values: values,
         menuShowMinLength: 3,
-        
-        
         noMatchTemplate: () => {
             return ""
         },
@@ -58,9 +56,7 @@ export function TextAreaInput({ labelTitle, dataField, labelStyle, containerStyl
                 tribute.attach(ref.current);
             }
             init.current = true;
-        }
-        console.log(ref.current);
-        
+        }    
     }, [ref])
 
     return (

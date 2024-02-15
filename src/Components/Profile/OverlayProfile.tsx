@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { CardPage, MapOverlayPage } from '../Templates'
+import { MapOverlayPage } from '../Templates'
 import { useItems } from '../Map/hooks/useItems'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useState } from 'react';
-import { Item } from '../../types';
+import { Item, UserItem } from '../../types';
 import { getValue } from '../../Utils/GetValue';
 import { useMap } from 'react-leaflet';
 import { LatLng } from 'leaflet';
@@ -11,6 +11,8 @@ import { TextView } from '../Map';
 import useWindowDimensions from '../Map/hooks/useWindowDimension';
 import { TagView } from '../Templates/TagView';
 import { useTags } from '../Map/hooks/useTags';
+import { useAuth } from '../Auth';
+import { useAddFilterTag } from '../Map/hooks/useFilter';
 
 export function OverlayProfile() {
 
@@ -21,8 +23,13 @@ export function OverlayProfile() {
     const windowDimension = useWindowDimensions();
 
     const tags = useTags();
+    const { user } = useAuth();
 
-    console.log(item);
+    const navigate = useNavigate();
+
+    const [owner, setOwner] = useState<UserItem>();
+
+    const addFilterTag = useAddFilterTag();
 
 
 
@@ -30,6 +37,10 @@ export function OverlayProfile() {
         const itemId = location.pathname.split("/")[2];
         const item = items.find(i => i.id === itemId);
         item && setItem(item);
+        console.log(item);
+        console.log(user);
+
+        item?.layer?.itemOwnerField && setOwner(getValue(item, item.layer?.itemOwnerField));
         const bounds = map.getBounds();
         const x = bounds.getEast() - bounds.getWest()
         if (windowDimension.width > 768)
@@ -39,41 +50,53 @@ export function OverlayProfile() {
 
 
     return (
-        <MapOverlayPage className='tw-mx-4 tw-mt-4 tw-max-h-[calc(100dvh-96px)] tw-h-[calc(100dvh-96px)] md:tw-w-[calc(50%-32px)] tw-w-[calc(100%-32px)] tw-max-w-2xl !tw-left-auto tw-top-0 tw-bottom-0'>
+        <MapOverlayPage className='tw-mx-4 tw-mt-4 tw-max-h-[calc(100dvh-96px)] tw-h-[calc(100dvh-96px)] md:tw-w-[calc(50%-32px)] tw-w-[calc(100%-32px)] tw-max-w-3xl !tw-left-auto tw-top-0 tw-bottom-0'>
             {item &&
                 <>
-                    <div className="flex flex-row tw-w-full">
-                        <p className="text-4xl">{item.layer?.itemAvatarField && getValue(item, item.layer.itemAvatarField) && <img className='h-20 rounded-full inline' src={`https://api.utopia-lab.org/assets/${getValue(item, item.layer.itemAvatarField)}?width=160&heigth=160`}></img>} {item.layer?.itemNameField && getValue(item, item.layer.itemNameField)}</p>
+                    <div className='tw-flex tw-flex-row'>
+                        <div className="tw-grow">
+                            <p className="text-4xl">{item.layer?.itemAvatarField && getValue(item, item.layer.itemAvatarField) && <img className='h-20 rounded-full inline' src={`https://api.utopia-lab.org/assets/${getValue(item, item.layer.itemAvatarField)}?width=160&heigth=160`}></img>} {item.layer?.itemNameField && getValue(item, item.layer.itemNameField)}</p>
+                        </div>
+                        {owner?.id === user?.id ?
+                            <a className='tw-self-center tw-btn tw-btn-sm tw-mr-4 tw-cursor-pointer' onClick={() => navigate("/profile-settings")}>
+                                <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                </svg>
+                            </a> : ""
+                        }
                     </div>
-                    <div className='tw-overflow-y-auto tw-h-full tw-pt-4 fade tw-pb-4'>
-                    {
-                        item.layer?.itemOffersField && getValue(item, item.layer.itemOffersField).length > 0 ?
-                        <>
-                            <h3 className='-tw-mb-2'>Offers</h3>
-                            < div className='tw-flex tw-flex-wrap tw-mb-2'>
-                                {
-                                    item.layer?.itemOffersField && getValue(item, item.layer.itemOffersField).map(o => {
-                                        const tag = tags.find(t => t.id === o.tags_id);
-                                        return (tag ? <TagView key={tag?.id} tag={tag} /> : "")
-                                    })
-                                }
-                            </div>
-                        </> : ""
-                    }
-                    {
-                        item.layer?.itemNeedsField && getValue(item, item.layer.itemNeedsField).length > 0 ?
-                        <>
-                            <h3 className='-tw-mb-2'>Needs</h3>
-                            < div className='tw-flex tw-flex-wrap  tw-mb-4'>
-                                {
-                                    item.layer?.itemNeedsField && getValue(item, item.layer.itemNeedsField).map(o => {
-                                        const tag = tags.find(t => t.id === o.tags_id);
-                                        return (tag ? <TagView key={tag?.id} tag={tag} /> : "")
-                                    })
-                                }
-                            </div>
-                        </> : ""
-                    }
+
+                    <div className='tw-overflow-y-auto tw-h-full tw-pt-4 fade'>
+                        <div className='tw-grid tw-grid-cols-1 xl:tw-grid-cols-2'>
+                            {
+                                item.layer?.itemOffersField && getValue(item, item.layer.itemOffersField).length > 0 ?
+                                    <div className='tw-col-span-1'>
+                                        <h3 className='-tw-mb-2'>Offers</h3>
+                                        < div className='tw-flex tw-flex-wrap tw-mb-2'>
+                                            {
+                                                item.layer?.itemOffersField && getValue(item, item.layer.itemOffersField).map(o => {
+                                                    const tag = tags.find(t => t.id === o.tags_id);
+                                                    return (tag ? <TagView key={tag?.id} tag={tag} onClick={() => addFilterTag(tag)}/> : "")
+                                                })
+                                            }
+                                        </div>
+                                    </div> : ""
+                            }
+                            {
+                                item.layer?.itemNeedsField && getValue(item, item.layer.itemNeedsField).length > 0 ?
+                                    <div className='tw-col-span-1'>
+                                        <h3 className='-tw-mb-2 tw-col-span-1'>Needs</h3>
+                                        < div className='tw-flex tw-flex-wrap  tw-mb-4'>
+                                            {
+                                                item.layer?.itemNeedsField && getValue(item, item.layer.itemNeedsField).map(o => {
+                                                    const tag = tags.find(t => t.id === o.tags_id);
+                                                    return (tag ? <TagView key={tag?.id} tag={tag} onClick={() => addFilterTag(tag)}/> : "")
+                                                })
+                                            }
+                                        </div>
+                                    </div> : ""
+                            }
+                        </div>
                         <TextView item={item} />
                     </div>
                 </>

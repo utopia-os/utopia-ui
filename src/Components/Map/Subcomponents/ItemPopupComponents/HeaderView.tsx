@@ -10,6 +10,7 @@ import { useAuth } from "../../../Auth";
 import { getValue } from "../../../../Utils/GetValue";
 import { useAssetApi } from '../../../AppShell/hooks/useAssets'
 import DialogModal from "../../../Templates/DialogModal";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -31,6 +32,7 @@ export function HeaderView({ item, setItemFormPopup }: {
   const { user } = useAuth();
 
   const assetsApi = useAssetApi();
+  const navigate = useNavigate();
 
   const avatar = item.layer?.itemAvatarField && item  && getValue(item, item.layer?.itemAvatarField)? assetsApi.url + getValue(item, item.layer?.itemAvatarField ) : undefined;
   const title = item.layer?.itemNameField && item ? getValue(item, item.layer?.itemNameField) : undefined;
@@ -98,8 +100,11 @@ export function HeaderView({ item, setItemFormPopup }: {
               </svg>
             </label>
             <ul tabIndex={0} className="tw-dropdown-content tw-menu tw-p-2 tw-shadow tw-bg-base-100 tw-rounded-box tw-z-1000">
-              {item.layer.api.updateItem && hasUserPermission(item.layer.api?.collectionName!, "update") && <li>
-                <a className="!tw-text-base-content" onClick={openEditPopup}>
+              {((item.layer.api.updateItem && hasUserPermission(item.layer.api?.collectionName!, "update")) || item.layer.customEditLink) && <li>
+                <a className="!tw-text-base-content tw-cursor-pointer" onClick={(e) => {
+                  item.layer?.customEditLink && navigate(item.layer.customEditLink);
+                  !item.layer?.customEditLink && openEditPopup(e);
+                  }}>
                   <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                   </svg>
@@ -107,7 +112,7 @@ export function HeaderView({ item, setItemFormPopup }: {
               </li>}
 
               {item.layer.api.deleteItem && hasUserPermission(item.layer.api?.collectionName!, "delete") && <li>
-                <a className=' !tw-text-error' onClick={openDeleteModal}>
+                <a className='tw-cursor-pointer !tw-text-error' onClick={openDeleteModal}>
                   {loading ? <span className="tw-loading tw-loading-spinner tw-loading-sm"></span>
                     :
                     <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor">

@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Auth"
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -7,9 +6,6 @@ import * as React from "react";
 
 
 export default function NavBar({ appName, nameWidth = 200}: { appName: string, nameWidth?: number }) {
-
-  const navigate = useNavigate();
-
 
 
   const { isAuthenticated, user, logout, token } = useAuth();

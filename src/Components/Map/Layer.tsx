@@ -33,7 +33,11 @@ export const Layer = ({
     itemOwnerField,
     itemLatitudeField = 'position.coordinates.1',
     itemLongitudeField = 'position.coordinates.0',
+    itemTagsField,
+    itemOffersField,
+    itemNeedsField,
     onlyOnePerOwner = false,
+    customEditLink,
     setItemFormPopup,
     itemFormPopup,
     clusterRef
@@ -66,8 +70,8 @@ export const Layer = ({
 
 
     useEffect(() => {
-        data && setItemsData({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemNameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, onlyOnePerOwner, setItemFormPopup, itemFormPopup, clusterRef });
-        api && setItemsApi({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemNameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, onlyOnePerOwner, setItemFormPopup, itemFormPopup, clusterRef });
+        data && setItemsData({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemNameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, setItemFormPopup, itemFormPopup, clusterRef });
+        api && setItemsApi({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemNameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, setItemFormPopup, itemFormPopup, clusterRef });
     }, [data, api])
 
     useMapEvents({
@@ -139,9 +143,9 @@ export const Layer = ({
                     map((item: Item) => {
                         if (getValue(item, itemLongitudeField) && getValue(item, itemLatitudeField)) {
 
-
                             if (getValue(item, itemTextField)) item[itemTextField] = getValue(item, itemTextField);
                             else item[itemTextField] = "";
+
                             if (item?.tags) {
                                 item[itemTextField] = item[itemTextField] + '\n\n';
                                 item.tags.map(tag => {
@@ -154,9 +158,9 @@ export const Layer = ({
 
 
                             if (allTagsLoaded && allItemsLoaded) {                                
-                                item[itemTextField].toLocaleLowerCase().match(hashTagRegex)?.map(tag => {
+                                item[itemTextField].match(hashTagRegex)?.map(tag => {
                                     if ((!tags.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) && !newTagsToAdd.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
-                                        const newTag = { id: crypto.randomUUID(), name: tag.slice(1).toLocaleLowerCase(), color: randomColor() };
+                                        const newTag = { id: crypto.randomUUID(), name: tag.slice(1), color: randomColor() };
                                         setNewTagsToAdd(current => [...current, newTag]);
                                     }
                                 });

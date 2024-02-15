@@ -9,6 +9,8 @@ import { useMap } from 'react-leaflet';
 import { LatLng } from 'leaflet';
 import { TextView } from '../Map';
 import useWindowDimensions from '../Map/hooks/useWindowDimension';
+import { TagView } from '../Templates/TagView';
+import { useTags } from '../Map/hooks/useTags';
 
 export function OverlayProfile() {
 
@@ -17,6 +19,11 @@ export function OverlayProfile() {
     const [item, setItem] = useState<Item>({} as Item)
     const map = useMap();
     const windowDimension = useWindowDimensions();
+
+    const tags = useTags();
+
+    console.log(item);
+
 
 
     React.useEffect(() => {
@@ -32,18 +39,46 @@ export function OverlayProfile() {
 
 
     return (
-        <MapOverlayPage className='tw-mx-4 tw-mt-4 tw-max-h-[calc(100dvh-96px)] tw-h-[calc(100dvh-96px)] md:tw-w-[calc(50%-32px)] tw-w-[calc(100%-32px)] tw-max-w-xl !tw-left-auto tw-top-0 tw-bottom-0'>
+        <MapOverlayPage className='tw-mx-4 tw-mt-4 tw-max-h-[calc(100dvh-96px)] tw-h-[calc(100dvh-96px)] md:tw-w-[calc(50%-32px)] tw-w-[calc(100%-32px)] tw-max-w-2xl !tw-left-auto tw-top-0 tw-bottom-0'>
             {item &&
                 <>
                     <div className="flex flex-row tw-w-full">
                         <p className="text-4xl">{item.layer?.itemAvatarField && getValue(item, item.layer.itemAvatarField) && <img className='h-20 rounded-full inline' src={`https://api.utopia-lab.org/assets/${getValue(item, item.layer.itemAvatarField)}?width=160&heigth=160`}></img>} {item.layer?.itemNameField && getValue(item, item.layer.itemNameField)}</p>
                     </div>
-                    <div className='tw-overflow-y-auto tw-h-full tw-pt-4 fade'>
+                    <div className='tw-overflow-y-auto tw-h-full tw-pt-4 fade tw-pb-4'>
+                    {
+                        item.layer?.itemOffersField && getValue(item, item.layer.itemOffersField).length > 0 ?
+                        <>
+                            <h3 className='-tw-mb-2'>Offers</h3>
+                            < div className='tw-flex tw-flex-wrap tw-mb-2'>
+                                {
+                                    item.layer?.itemOffersField && getValue(item, item.layer.itemOffersField).map(o => {
+                                        const tag = tags.find(t => t.id === o.tags_id);
+                                        return (tag ? <TagView key={tag?.id} tag={tag} /> : "")
+                                    })
+                                }
+                            </div>
+                        </> : ""
+                    }
+                    {
+                        item.layer?.itemNeedsField && getValue(item, item.layer.itemNeedsField).length > 0 ?
+                        <>
+                            <h3 className='-tw-mb-2'>Needs</h3>
+                            < div className='tw-flex tw-flex-wrap  tw-mb-4'>
+                                {
+                                    item.layer?.itemNeedsField && getValue(item, item.layer.itemNeedsField).map(o => {
+                                        const tag = tags.find(t => t.id === o.tags_id);
+                                        return (tag ? <TagView key={tag?.id} tag={tag} /> : "")
+                                    })
+                                }
+                            </div>
+                        </> : ""
+                    }
                         <TextView item={item} />
                     </div>
                 </>
             }
-        </MapOverlayPage>
+        </MapOverlayPage >
     )
 }
 

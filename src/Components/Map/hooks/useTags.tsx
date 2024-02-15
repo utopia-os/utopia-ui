@@ -61,7 +61,7 @@ function useTagsManager(initialTags: Tag[]): {
     if(tagCount == 0) setallTagsLoaded(true);
     if (result) {
       result.map(tag => {
-        tag.name = tag.name.toLocaleLowerCase();
+        //tag.name = tag.name.toLocaleLowerCase();
         dispatch({ type: "ADD", tag });
       })
     }
@@ -71,7 +71,7 @@ function useTagsManager(initialTags: Tag[]): {
 
   const setTagData = useCallback((data: Tag[]) => {
     data.map(tag => {
-      tag.name = tag.name.toLocaleLowerCase();
+      //tag.name = tag.name.toLocaleLowerCase();
       dispatch({ type: "ADD", tag })
     })
   }, []);
@@ -90,11 +90,11 @@ function useTagsManager(initialTags: Tag[]): {
 
   const getItemTags = useCallback((item: Item) => {
     const text = item?.layer?.itemTextField && item ? getValue(item, item.layer?.itemTextField) : undefined;
-    const itemTagStrings = text?.toLocaleLowerCase().match(hashTagRegex);
+    const itemTagStrings = text?.match(hashTagRegex);
     const itemTags: Tag[] = [];
     itemTagStrings?.map(tag => {
       if (tags.find(t => t.name === tag.slice(1))) {
-        itemTags.push(tags.find(t => t.name === tag.slice(1))!)
+        itemTags.push(tags.find(t => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())!)
       }
     })   
     return itemTags

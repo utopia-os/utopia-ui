@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { useFilterTags, useRemoveFilterTag } from '../../hooks/useFilter';
+import { decodeTag } from '../../../../Utils/FormatTags';
 
 export const TagsControl = () => {
 
@@ -13,7 +14,7 @@ export const TagsControl = () => {
             <div key={tag.id} className='tw-rounded-2xl tw-text-white tw-p-2 tw-px-4 tw-shadow-xl tw-card tw-mr-2 tw-mb-2' style={{ backgroundColor: tag.color }}>
                 <div className="tw-card-actions tw-justify-end">
                     <label className="tw-btn tw-btn-xs tw-btn-circle tw-absolute tw--right-2 tw--top-2 tw-bg-white tw-text-gray-600" onClick={() => (removeFilterTag(tag.name!))}>✕</label>
-                </div><b>#{formatTag(tag.name)}</b>
+                </div><b>#{decodeTag(tag.name)}</b>
             </div>
         )
     }
@@ -21,7 +22,3 @@ export const TagsControl = () => {
 }
 
 
-function formatTag(string : string) {   
-     let formatedTag = string.replace(/_/g, " ");    
-     return formatedTag = formatedTag.charAt(0).toUpperCase() + formatedTag.slice(1);
-}

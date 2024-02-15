@@ -7,6 +7,7 @@ import { fixUrls, mailRegex } from '../../../../Utils/ReplaceURLs';
 import Markdown from 'react-markdown'
 import { getValue } from '../../../../Utils/GetValue';
 import remarkBreaks from 'remark-breaks'
+import { decodeTag } from '../../../../Utils/FormatTags';
 
 export const TextView = ({ item, truncate = false}: { item?: Item, truncate?: boolean }) => {
   const tags = useTags();
@@ -95,7 +96,7 @@ export const TextView = ({ item, truncate = false}: { item?: Item, truncate?: bo
         addFilterTag(tag!);
         // map.fitBounds(items)
         // map.closePopup();
-      }}>{children}</a>
+      }}>{decodeTag(children)}</a>
   )};
 
 

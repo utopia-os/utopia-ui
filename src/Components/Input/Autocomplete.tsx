@@ -1,5 +1,7 @@
 import * as React from 'react'
 import { useEffect } from 'react';
+import { decodeTag } from '../../Utils/FormatTags';
+import { TagView } from '../Templates/TagView';
 
 export const Autocomplete = ({ inputProps, suggestions, onSelected, pushFilteredSuggestions, setFocus }: { inputProps: any, suggestions: Array<any>, onSelected: (suggestion) => void, pushFilteredSuggestions?: Array<any>, setFocus?: boolean }) => {
 
@@ -19,14 +21,6 @@ export const Autocomplete = ({ inputProps, suggestions, onSelected, pushFiltered
 
 
   const getSuggestionValue = suggestion => suggestion.name;
-
-  // Use your imagination to render suggestions.
-  const renderSuggestion = suggestion => (
-    <div key={suggestion.name} className='tw-rounded-2xl tw-text-white tw-p-2 tw-px-4 tw-shadow-xl tw-card tw-h-[2.75em] tw-mt-3 tw-mr-4 tw-cursor-pointer tw-w-fit' style={{ backgroundColor: suggestion.color ? suggestion.color : "#666" }}>
-      <div className="tw-card-actions tw-justify-end">
-      </div><b>#{suggestion.name}</b>
-    </div>
-  );
 
   const getSuggestions = value => {
     const inputValue = value.trim().toLowerCase();
@@ -51,9 +45,7 @@ export const Autocomplete = ({ inputProps, suggestions, onSelected, pushFiltered
     onSelected(suggestion)
   }
 
-  const handleKeyDown = (event) => {
-    console.log(filteredSuggestions);
-    
+  const handleKeyDown = (event) => {    
     switch (event.key) {
       case 'ArrowDown':
         heighlightedSuggestion < filteredSuggestions.length-1 && setHeighlightedSuggestion(current => current +1)
@@ -72,7 +64,6 @@ export const Autocomplete = ({ inputProps, suggestions, onSelected, pushFiltered
         inputProps.onKeyDown(event);
         break;
     }
-
   }
 
   return (
@@ -80,7 +71,7 @@ export const Autocomplete = ({ inputProps, suggestions, onSelected, pushFiltered
       <input ref={inputRef} {...inputProps} type="text" onChange={(e) => handleChange(e)} onKeyDown={handleKeyDown}/>
       <ul className='tw-absolute tw-z-[4000]'>
         {filteredSuggestions.map((suggestion, index) => (
-          <li key={index} onClick={() => handleSuggestionClick(suggestion)}>{renderSuggestion(suggestion)}{index == heighlightedSuggestion && "+"}</li>
+          <li key={index} onClick={() => handleSuggestionClick(suggestion)}><TagView tag={suggestion}></TagView>{index == heighlightedSuggestion && "+"}</li>
         ))}
       </ul>
     </div>

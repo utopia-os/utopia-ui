@@ -58,7 +58,7 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
 
         formItem.text && formItem.text.toLocaleLowerCase().match(hashTagRegex)?.map(tag=> {
             if (!tags.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
-              addTag({id: crypto.randomUUID(), name: tag.slice(1).toLocaleLowerCase(), color: randomColor()})
+              addTag({id: crypto.randomUUID(), name: tag.slice(1), color: randomColor()})
             }
         });
 

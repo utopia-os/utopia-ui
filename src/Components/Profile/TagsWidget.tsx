@@ -4,11 +4,11 @@ import { useTags } from '../Map/hooks/useTags';
 import { Tag } from '../../types';
 import { Autocomplete } from '../Input/Autocomplete';
 import { randomColor } from '../../Utils/RandomColor';
+import { decodeTag, encodeTag } from '../../Utils/FormatTags';
 
-export const TagsWidget = ({placeholder, containerStyle}) => {
+export const TagsWidget = ({placeholder, containerStyle, defaultTags, onUpdate}) => {
 
   const [input, setInput] = useState('');
-  const [localTags, setLocalTags] = useState<Array<Tag>>([]);
   const [isKeyReleased, setIsKeyReleased] = useState(false);
   const tags = useTags();
   const [pushFilteredSuggestions, setPushFilteredSuggestions] = useState<Array<any>>([]);
@@ -25,20 +25,20 @@ export const TagsWidget = ({placeholder, containerStyle}) => {
     const { key } = e;
     const trimmedInput = input.trim();
 
-    if ((key === 'Enter' || key === ',' ) && trimmedInput.length && !localTags.some(tag => tag.name.toLocaleLowerCase() === trimmedInput.toLocaleLowerCase())) {
+    if ((key === 'Enter' || key === ',' ) && trimmedInput.length && !defaultTags.some(tag => tag.name.toLocaleLowerCase() === trimmedInput.toLocaleLowerCase())) {
       e.preventDefault();
       const newTag = tags.find(t => t.name === trimmedInput.toLocaleLowerCase())
-      newTag && setLocalTags(prevState => [...prevState, newTag]);
-      !newTag && setLocalTags(prevState => [...prevState,  { id: crypto.randomUUID(), name: trimmedInput.toLocaleLowerCase(), color: randomColor() }]);
+      newTag && onUpdate(prevState => [...prevState, newTag]);
+      !newTag && onUpdate(prevState => [...prevState,  { id: crypto.randomUUID(), name: encodeTag(trimmedInput), color: randomColor() }]);
       setInput('');
       setPushFilteredSuggestions([]);
     }
 
-    if (key === "Backspace" && !input.length && localTags.length && isKeyReleased) {
-      const localTagsCopy = [...localTags];
-      const poppedTag = localTagsCopy.pop();
+    if (key === "Backspace" && !input.length && defaultTags.length && isKeyReleased) {
+      const defaultTagsCopy = [...defaultTags];
+      const poppedTag = defaultTagsCopy.pop();
       e.preventDefault();
-      setLocalTags(localTagsCopy);
+      onUpdate(defaultTagsCopy);
       poppedTag && setInput(poppedTag.name);
     }
 
@@ -50,15 +50,15 @@ export const TagsWidget = ({placeholder, containerStyle}) => {
   }
 
   const deleteTag = (tag) => {
-    setLocalTags(prevState => prevState.filter((t) => t !== tag))
+    onUpdate(prevState => prevState.filter((t) => t !== tag))
   }
 
 
   const onSelected = (tag) => {
-    if(!localTags.some(t => t.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())) {
-      const newTag = tags.find(t => t.name === tag.name.toLocaleLowerCase())
-      newTag && setLocalTags(prevState => [...prevState, newTag]);
-      !newTag && setLocalTags(prevState => [...prevState,  { id: crypto.randomUUID(), name: tag.name.toLocaleLowerCase(), color: randomColor() }]);
+    if(!defaultTags.some(t => t.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())) {
+      const newTag = tags.find(t => t.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())
+      newTag && onUpdate(prevState => [...prevState, newTag]);
+      !newTag && onUpdate(prevState => [...prevState,  { id: crypto.randomUUID(), name: tag.name.toLocaleLowerCase(), color: randomColor() }]);
       setInput('');
       setPushFilteredSuggestions([]);
     }
@@ -81,11 +81,11 @@ export const TagsWidget = ({placeholder, containerStyle}) => {
       }, 200)
     }} className={`tw-input tw-input-bordered tw-cursor-text ${containerStyle}`}>
       <div className='tw-flex tw-flex-wrap tw-h-fit'>
-      {localTags.map((tag) => (
+      {defaultTags.map((tag) => (
         <div key={tag.name} className='tw-rounded-2xl tw-text-white tw-p-2 tw-px-4 tw-shadow-xl tw-card tw-h-[2.75em] tw-mt-3 tw-mr-4' style={{ backgroundColor: tag.color ? tag.color : "#666" }}>
           <div className="tw-card-actions tw-justify-end">
             <label className="tw-btn tw-btn-xs tw-btn-circle tw-absolute tw--right-2 tw--top-2 tw-bg-white tw-text-gray-600" onClick={() => (deleteTag(tag))}>✕</label>
-          </div><b>#{tag.name}</b>
+          </div><b>#{decodeTag(tag.name)}</b>
         </div>
 
       ))}

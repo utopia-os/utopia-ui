@@ -26,10 +26,13 @@ export interface LayerProps {
   itemAvatarField?: string,
   itemColorField?: string,
   itemOwnerField?: string,
-  itemTagField?: string,
+  itemTagsField?: string,
   itemLatitudeField?: any,
   itemLongitudeField?: any,
+  itemOffersField?: string,
+  itemNeedsField?: string,
   onlyOnePerOwner?: boolean,
+  customEditLink?: string,
     setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>,
     itemFormPopup?: ItemFormPopupProps | null,
   clusterRef?: React.MutableRefObject<any>
@@ -71,6 +74,7 @@ export interface Tag {
   color: string;
   id: string;
   name: string;
+  offer_or_need?: boolean
 }
 
 export interface ItemsApi<T> {

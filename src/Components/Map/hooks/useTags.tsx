@@ -93,7 +93,7 @@ function useTagsManager(initialTags: Tag[]): {
     const itemTagStrings = text?.match(hashTagRegex);
     const itemTags: Tag[] = [];
     itemTagStrings?.map(tag => {
-      if (tags.find(t => t.name === tag.slice(1))) {
+      if (tags.find(t => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
         itemTags.push(tags.find(t => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())!)
       }
     })   

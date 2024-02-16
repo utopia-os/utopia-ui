@@ -17,7 +17,7 @@ function App() {
     <div className="App overflow-x-hidden">
 
       <AuthProvider userApi={new userApi}>
-        <AppShell assetsApi={new assetsApi("https://api.utopia-lab.org/assets/")} appName="Utopia Game" nameWidth={180}>
+        <AppShell assetsApi={new assetsApi("https://api.utopia-lab.org/assets/")} appName="Development" nameWidth={220}>
         <Modal>
           <ModalContent/>
         </Modal>
@@ -28,7 +28,7 @@ function App() {
               <Route path="/*" element={<MapContainer />}>
                 <Route path='login' element={<LoginPage />}/>
                 <Route path='signup' element={<SignupPage />}/>
-                <Route path='reset-password' element={<RequestPasswordPage reset_url="https://utopia-game.org/set-new-password/"/>}/>
+                <Route path='reset-password' element={<RequestPasswordPage reset_url="https://dev.utopia-lab.org/set-new-password/"/>}/>
                 <Route path='set-new-password' element={<SetNewPasswordPage />}/>
                 <Route path="profile/*" element={<OverlayProfile/>} />
                 <Route path="profile-settings" element={<OverlayProfileSettings/>} />

@@ -41,7 +41,7 @@ export class userApi implements UserApi {
 
   async getUser(): Promise<any> {
     try {
-      let user = await directusClient.request(readMe());
+      let user = await directusClient.request(readMe({ fields: ['*', { offers: ['*'], needs: ['*'] }] }));
       return user;
     } catch (error: any) {
       console.log(error);
@@ -66,7 +66,7 @@ export class userApi implements UserApi {
   async updateUser(user: UserItem): Promise<any> {
     const { id, ...userRest } = user;
     try {
-      const res = await directusClient.request(updateMe(userRest))
+      const res = await directusClient.request(updateMe(userRest,{ fields: ['*', { offers: ['*'], needs: ['*'] }] }))
       return res as any;
     } catch (error: any) {
       console.log(error);

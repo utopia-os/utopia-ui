@@ -1,4 +1,4 @@
-import { AppShell, SideBar, Content, AuthProvider, UserSettings, ProfileSettings, Modal, LoginPage, SignupPage, Quests, RequestPasswordPage, SetNewPasswordPage } from 'utopia-ui'
+import { AppShell, SideBar, Content, AuthProvider, Modal, LoginPage, SignupPage, Quests, RequestPasswordPage, SetNewPasswordPage, OverlayProfile, OverlayProfileSettings, OverlayUserSettings } from 'utopia-ui'
 import { bottomRoutes, routes } from './routes/sidebar'
 import { Route, Routes } from 'react-router-dom'
 import MapContainer from "./pages/MapContainer"
@@ -9,7 +9,6 @@ import Projects from './pages/Projects'
 import { ProjectView } from './pages/ProjectView'
 import { assetsApi } from './api/assetsApi'
 import { ModalContent } from './ModalContent'
-import { ProfileView } from './pages/ProfileView'
 
 function App() {
 
@@ -31,13 +30,13 @@ function App() {
                 <Route path='signup' element={<SignupPage />}/>
                 <Route path='reset-password' element={<RequestPasswordPage reset_url="https://utopia-game.org/set-new-password/"/>}/>
                 <Route path='set-new-password' element={<SetNewPasswordPage />}/>
+                <Route path="profile/*" element={<OverlayProfile/>} />
+                <Route path="profile-settings" element={<OverlayProfileSettings/>} />
+                <Route path="user-settings" element={<OverlayUserSettings />} />
               </Route>
-              <Route path="/settings" element={<UserSettings />} />
-              <Route path="/profile" element={<ProfileSettings />} />
               <Route path="/concept" element={<Concept/>} />
               <Route path="/projects" element={<Projects/>} />
               <Route path="/projects/*" element={<ProjectView/>} />
-              <Route path="/profile/*" element={<ProfileView/>} />
             </Routes>
           </Content>
         </AppShell>

@@ -2,43 +2,53 @@ import { Item, Tag } from "utopia-ui/dist/types";
 
 export const tags : Tag[] = [
 	{
-		"id": "Activism",
+    "id": "423423423423",
+		"name": "Activism",
 		"color": "#6d398b"
 	},
 	{
-		"id": "Art",
+    "id": "4234423",
+		"name": "Art",
 		"color": "#fdc60b"
 	},
 	{
-		"id": "Community",
+      "id": "4231223423",
+		"name": "Community",
 		"color": "#FFA439"
 	},
-	{
-		"id": "Culture",
+	{ 
+     "id": "429803423423",
+		"name": "Culture",
 		"color": "#f18e1c"
 	},
 	{
-		"id": "Education",
+    "id": "42423423",
+		"name": "Education",
 		"color": "#444e99"
 	},
 	{
-		"id": "Gardening",
+    "id": "4565654423",
+		"name": "Gardening",
 		"color": "#008e5b"
 	},
 	{
-		"id": "Healing",
+    "id": "4234gfh423",
+		"name": "Healing",
 		"color": "#c4037d"
 	},
 	{
-		"id": "Market",
+    "id": "4223423",
+		"name": "Market",
 		"color": "#2a71b0"
 	},
 	{
-		"id": "Nature",
+    "id": "42342gd3423",
+		"name": "Nature",
 		"color": "#8cbb26"
 	},
 	{
-		"id": "Technology",
+    "id": "423123423",
+		"name": "Technology",
 		"color": "#0696bb"
 	}
 ]

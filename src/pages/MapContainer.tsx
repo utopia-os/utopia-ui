@@ -79,12 +79,15 @@ function MapContainer() {
         itemTextField='user_created.description'
         itemAvatarField='user_created.avatar'
         itemColorField='user_created.color'
-        itemOwnerField="user_created.id"
+        itemOwnerField="user_created"
+        itemOffersField='user_created.offers'
+        itemNeedsField='user_created.needs'
+        customEditLink='/profile-settings'
         onlyOnePerOwner={true}
         // data={places}
         api={updatesApiInstance}>
         <ItemView>
-          <PopupButton url={'/profile'} parameterField={'user_created.id'} text={'Profile'} colorField={'user_created.color'} />
+          <PopupButton url={'/profile'} parameterField={'id'} text={'Profile'} colorField={'user_created.color'} />
           <TextView truncate></TextView>
         </ItemView>
         <ItemForm title='Place yor Profile'>

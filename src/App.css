@@ -7,6 +7,3 @@
   height: calc(100dvh - 64px);
 }
 
-.Toastify__toast-container--top-right {
-  top: 5em !important;
-}

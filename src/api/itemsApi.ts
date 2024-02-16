@@ -28,7 +28,7 @@ export class itemsApi<T> implements ItemsApi<T>{
 
   async getItems() {
     try {
-      return await directusClient.request(readItems(this.collectionName as never, { fields: ['*', { user_created: ['*'] }], filter: this.filter, limit: 500 }));
+      return await directusClient.request(readItems(this.collectionName as never, { fields: ['*', { user_created: ['*', {offers: ['*'], needs: ['*']}] }], filter: this.filter, limit: 500 }));
     } catch (error: any) {
       console.log(error);
       if (error.errors[0]?.message)

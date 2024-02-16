@@ -2,8 +2,8 @@ import * as React from 'react'
 import { MapOverlayPage } from '../Templates'
 import { useItems } from '../Map/hooks/useItems'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useState } from 'react';
-import { Item, UserItem } from '../../types';
+import { useEffect, useState } from 'react';
+import { Item, Tag, UserItem } from '../../types';
 import { getValue } from '../../Utils/GetValue';
 import { useMap } from 'react-leaflet';
 import { LatLng } from 'leaflet';
@@ -28,25 +28,40 @@ export function OverlayProfile() {
     const navigate = useNavigate();
 
     const [owner, setOwner] = useState<UserItem>();
+    const [offers, setOffers] = useState<Array<Tag>>([]);
+    const [needs, setNeeds] = useState<Array<Tag>>([]);
+
 
     const addFilterTag = useAddFilterTag();
 
 
 
-    React.useEffect(() => {
+    useEffect(() => {
         const itemId = location.pathname.split("/")[2];
         const item = items.find(i => i.id === itemId);
         item && setItem(item);
-        console.log(item);
-        console.log(user);
 
-        item?.layer?.itemOwnerField && setOwner(getValue(item, item.layer?.itemOwnerField));
         const bounds = map.getBounds();
         const x = bounds.getEast() - bounds.getWest()
         if (windowDimension.width > 768)
             if (item?.position.coordinates[0])
                 map.setView(new LatLng(item?.position.coordinates[1]!, item?.position.coordinates[0]! + x / 4))
     }, [location, items])
+
+
+    useEffect(() => {
+        item?.layer?.itemOwnerField && setOwner(getValue(item, item.layer?.itemOwnerField));
+        item.layer?.itemOffersField && getValue(item, item.layer.itemOffersField).map(o => {
+            const tag = tags.find(t => t.id === o.tags_id);
+            tag && setOffers(current => [...current, tag])
+        })
+        item.layer?.itemNeedsField && getValue(item, item.layer.itemNeedsField).map(n => {
+            const tag = tags.find(t => t.id === n.tags_id);
+            tag && setNeeds(current => [...current, tag])
+        })
+
+    }, [item])
+
 
 
     return (
@@ -69,29 +84,23 @@ export function OverlayProfile() {
                     <div className='tw-overflow-y-auto tw-h-full tw-pt-4 fade'>
                         <div className='tw-grid tw-grid-cols-1 xl:tw-grid-cols-2'>
                             {
-                                item.layer?.itemOffersField && getValue(item, item.layer.itemOffersField).length > 0 ?
+                                offers.length > 0 ?
                                     <div className='tw-col-span-1'>
                                         <h3 className='-tw-mb-2'>Offers</h3>
                                         < div className='tw-flex tw-flex-wrap tw-mb-2'>
                                             {
-                                                item.layer?.itemOffersField && getValue(item, item.layer.itemOffersField).map(o => {
-                                                    const tag = tags.find(t => t.id === o.tags_id);
-                                                    return (tag ? <TagView key={tag?.id} tag={tag} onClick={() => addFilterTag(tag)}/> : "")
-                                                })
+                                                offers.map(o => <TagView key={o?.id} tag={o} onClick={() => addFilterTag(o)} />)
                                             }
                                         </div>
                                     </div> : ""
                             }
                             {
-                                item.layer?.itemNeedsField && getValue(item, item.layer.itemNeedsField).length > 0 ?
+                                needs.length > 0 ?
                                     <div className='tw-col-span-1'>
                                         <h3 className='-tw-mb-2 tw-col-span-1'>Needs</h3>
                                         < div className='tw-flex tw-flex-wrap  tw-mb-4'>
                                             {
-                                                item.layer?.itemNeedsField && getValue(item, item.layer.itemNeedsField).map(o => {
-                                                    const tag = tags.find(t => t.id === o.tags_id);
-                                                    return (tag ? <TagView key={tag?.id} tag={tag} onClick={() => addFilterTag(tag)}/> : "")
-                                                })
+                                                needs.map(n => <TagView key={n?.id} tag={n} onClick={() => addFilterTag(n)} />)
                                             }
                                         </div>
                                     </div> : ""

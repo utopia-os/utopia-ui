@@ -62,6 +62,10 @@ export function OverlayProfile() {
 
     }, [item])
 
+    useEffect(()=> {
+
+    }, [offers,needs])
+
 
 
     return (

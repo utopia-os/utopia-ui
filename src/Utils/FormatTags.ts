@@ -4,5 +4,5 @@ export function decodeTag(string : string) {
 }
 
 export function encodeTag(string : string) {   
-    return string.replace(/\s+/, "_");    
+    return string.replace(/\s+/g, "_");    
 }

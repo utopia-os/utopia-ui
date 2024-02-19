@@ -187,11 +187,11 @@ export function OverlayProfileSettings() {
         let offer_state : Array<any> = [];
         let needs_state : Array<any> = [];
 
-        offers.map(o => {
+        await offers.map(o => {
             offer_state.push({directus_user_id: user?.id, tags_id: o.id})
         });
 
-        needs.map(n => {
+        await needs.map(n => {
             needs_state.push({directus_user_id: user?.id, tags_id: n.id})
         });
 

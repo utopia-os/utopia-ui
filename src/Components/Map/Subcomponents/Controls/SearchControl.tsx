@@ -13,6 +13,7 @@ import { getValue } from '../../../../Utils/GetValue';
 import { LocateControl } from './LocateControl';
 import * as L from 'leaflet';
 import MarkerIconFactory from '../../../../Utils/MarkerIconFactory';
+import { decodeTag } from '../../../../Utils/FormatTags';
 
 
 
@@ -100,7 +101,7 @@ export const SearchControl = ({ clusterRef }) => {
                                         let params = new URLSearchParams(window.location.search);
                                         window.history.pushState({}, "", "/" + `${params? `?${params}` : ""}`);
                                     }}>
-                                        <b>#{capitalizeFirstLetter(tag.name)}</b>
+                                        <b>#{decodeTag(tag.name)}</b>
                                     </div>
                                 ))}
                             </div>

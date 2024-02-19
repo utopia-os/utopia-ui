@@ -20,10 +20,10 @@ function MapContainer() {
 
   useEffect(() => {
 
-    setPlacesApi(new itemsApi<Place>('places',"04c243f6-7924-49ad-9867-2dfea5109d38"));
-    setEventsApi(new itemsApi<Event>('events', "8c2e474d-eb9a-4f48-8d5e-88f9605065f2"));
-    setUpdatesApiInstance(new itemsApi('updates',"95271bf2-d3d2-4309-91d9-f255f07ac88f", undefined, {"latest":{"_eq": true}}));
-    setTagsApi(new itemsApi<Tag>('tags', undefined, "8dcb29a4-c455-4e69-8b04-203a627f974b"));
+    setPlacesApi(new itemsApi<Place>('places',"e31de961-6709-4413-a27d-00e59ccfe472"));
+    setEventsApi(new itemsApi<Event>('events', "1837e83e-07f1-44c0-88c0-8e9ea8e597db"));
+    setUpdatesApiInstance(new itemsApi('updates',"b4dd8b6b-80e8-4173-9682-4a5755e7b9cb", undefined, {"latest":{"_eq": true}}));
+    setTagsApi(new itemsApi<Tag>('tags', undefined, "8bf681a4-1b8d-44ba-afba-c6dbf79a769f"));
     setPermissionsApiInstance(new permissionsApi());
 
   }, []);

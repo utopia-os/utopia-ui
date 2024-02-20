@@ -14,7 +14,6 @@ export function LayerControl() {
         layers.map(layer =>
             addVisibleLayer(layer)
         )
-
     }, [layers])
 
     const isLayerVisible = useIsLayerVisible();
@@ -22,26 +21,24 @@ export function LayerControl() {
     const addVisibleLayer = useAddVisibleLayer();
 
     return (
-        <div className="tw-card tw-bg-base-100 tw-shadow-xl " onClick={e => e.stopPropagation()}>
+        <div className="tw-card tw-bg-base-100 tw-shadow-xl ">
             {
                 open ?
-                    <div className="tw-card-body tw-p-2 tw-w-32 tw-transition-all tw-duration-300" onClick={e => e.stopPropagation()}>
-                        <label className="tw-btn tw-btn-sm tw-rounded-2xl tw-btn-circle tw-btn-ghost hover:tw-bg-transparent tw-absolute tw-right-0 tw-top-0 tw-text-gray-600" onClick={(e) => {
-                            e.stopPropagation();
+                    <div className="tw-card-body tw-p-2 tw-w-32 tw-transition-all tw-duration-300">
+                        <label className="tw-btn tw-btn-sm tw-rounded-2xl tw-btn-circle tw-btn-ghost hover:tw-bg-transparent tw-absolute tw-right-0 tw-top-0 tw-text-gray-600" onClick={() => {
                             setOpen(false)
                         }}>
                             <p className='tw-text-center '>✕</p></label>
                         <ul className='tw-flex-row'>
                             {
                                 layers.map(layer =>
-                                    <li key={layer.name}><label className="tw-label tw-justify-normal tw-pt-1 tw-pb-1"><input type="checkbox" className="tw-checkbox tw-checkbox-xs tw-checkbox-success" checked={isLayerVisible(layer)} onChange={() => toggleVisibleLayer(layer)} /><span className='tw-text-sm tw-label-text tw-mx-2 tw-cursor-pointer'>{layer.name}</span></label></li>
+                                    <li key={layer.name}><label htmlFor={layer.name} className="tw-label tw-justify-normal tw-pt-1 tw-pb-1"><input id={layer.name} onChange={() => toggleVisibleLayer(layer)} type="checkbox" className="tw-checkbox tw-checkbox-xs tw-checkbox-success" checked={isLayerVisible(layer)} /><span className='tw-text-sm tw-label-text tw-mx-2 tw-cursor-pointer'>{layer.name}</span></label></li>
                                 )
                             }
                         </ul>
                     </div>
                     :
-                    <div className="tw-card-body hover:tw-bg-slate-300 tw-card tw-p-2 tw-h-10 tw-w-10 tw-transition-all tw-duration-300 hover:tw-cursor-pointer" onClick={(e) => {
-                        e.stopPropagation()
+                    <div className="tw-card-body hover:tw-bg-slate-300 tw-card tw-p-2 tw-h-10 tw-w-10 tw-transition-all tw-duration-300 hover:tw-cursor-pointer" onClick={() => {
                         setOpen(true)
                     }}>
                         <svg version="1.1" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">

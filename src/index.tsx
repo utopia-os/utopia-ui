@@ -3,7 +3,7 @@ export {AppShell, Content, SideBar} from "./Components/AppShell"
 export {AuthProvider, useAuth, LoginPage, SignupPage, RequestPasswordPage, SetNewPasswordPage} from "./Components/Auth"
 export {UserSettings, ProfileSettings, OverlayProfile, OverlayProfileSettings, OverlayUserSettings} from './Components/Profile'
 export {Quests, Modal} from './Components/Gaming'
-export {TitleCard, CardPage} from './Components/Templates'
+export {TitleCard, CardPage, MapOverlayPage} from './Components/Templates'
 export {TextInput, TextAreaInput, SelectBox} from './Components/Input'
 
 import "./index.css"

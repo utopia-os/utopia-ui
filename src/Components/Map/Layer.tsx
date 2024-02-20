@@ -14,6 +14,7 @@ import { useLocation } from 'react-router-dom';
 import { getValue } from '../../Utils/GetValue'
 import { hashTagRegex } from '../../Utils/HashTagRegex'
 import { randomColor } from '../../Utils/RandomColor'
+import { encodeTag } from '../../Utils/FormatTags'
 
 export const Layer = ({
     data,
@@ -149,8 +150,8 @@ export const Layer = ({
                             if (item?.tags) {
                                 item[itemTextField] = item[itemTextField] + '\n\n';
                                 item.tags.map(tag => {
-                                    if (!item[itemTextField].includes(`#${tag}`))
-                                        return (item[itemTextField] = item[itemTextField] + `#${tag} `)
+                                    if (!item[itemTextField].includes(`#${encodeTag(tag)}`))
+                                        return (item[itemTextField] = item[itemTextField] + `#${encodeTag(tag)} `)
                                     return item[itemTextField]
 
                                 });

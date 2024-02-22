@@ -48,7 +48,7 @@ export function OverlayProfile() {
         if (windowDimension.width > 768)
             if (item?.position.coordinates[0])
                 map.setView(new LatLng(item?.position.coordinates[1]!, item?.position.coordinates[0]! + x / 4))
-    }, [location, items])
+    }, [location, items, activeTab])
 
 
     useEffect(() => {
@@ -64,9 +64,6 @@ export function OverlayProfile() {
 
     }, [item])
 
-    useEffect(()=> {
-
-    }, [offers,needs])
 
 
 
@@ -78,7 +75,7 @@ export function OverlayProfile() {
                         <div className="tw-grow">
                             <p className="text-4xl">{item.layer?.itemAvatarField && getValue(item, item.layer.itemAvatarField) && <img className='h-20 rounded-full inline' src={`https://api.utopia-lab.org/assets/${getValue(item, item.layer.itemAvatarField)}?width=160&heigth=160`}></img>} {item.layer?.itemNameField && getValue(item, item.layer.itemNameField)}</p>
                         </div>
-                        {owner?.id === user?.id ?
+                        {owner?.id === user?.id  && owner?.id ?
                             <a className='tw-self-center tw-btn tw-btn-sm tw-mr-4 tw-cursor-pointer' onClick={() => navigate("/profile-settings")}>
                                 <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor">
                                     <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
@@ -99,14 +96,14 @@ export function OverlayProfile() {
                         </div>
 
                         <input type="radio" name="my_tabs_2" role="tab" className="tw-tab tw-min-w-[10em] [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Offers & Needs" checked={activeTab == 2 && true} onChange={() => setActiveTab(2)} />
-                        <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-pt-4 tw-h-[calc(100dvh-268px)] tw-min-h-56 tw-overflow-y-auto fade tw-pb-1" >
+                        <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-pt-2 tw-h-[calc(100dvh-268px)] tw-min-h-56 tw-overflow-y-auto fade tw-pb-1" >
                             <div className='tw-h-full tw-overflow-y-auto'>
                             <div className='tw-grid tw-grid-cols-1'>
                             {
                                 offers.length > 0 ?
                                     <div className='tw-col-span-1'>
                                         <h3 className='-tw-mb-2'>Offers</h3>
-                                        < div className='tw-flex tw-flex-wrap tw-mb-2'>
+                                        < div className='tw-flex tw-flex-wrap tw-mb-4'>
                                             {
                                                 offers.map(o => <TagView key={o?.id} tag={o} onClick={() => addFilterTag(o)} />)
                                             }

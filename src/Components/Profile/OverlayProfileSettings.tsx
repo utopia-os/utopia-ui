@@ -280,7 +280,7 @@ export function OverlayProfileSettings() {
 
                         <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Contact" checked={activeTab == 3 && true} onChange={() => setActiveTab(3)} />
                         <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-border-[var(--fallback-bc,oklch(var(--bc)/0.2))] tw-rounded-box tw-h-[calc(100dvh-332px)] tw-min-h-56">
-                            <TextAreaInput placeholder="Contact ..." defaultValue={user?.contact ? user.contact : ""} updateFormValue={(v) => setContact(v)} containerStyle='tw-h-full' inputStyle='tw-h-full tw-border-t-0 tw-rounded-tl-none' />
+                            <TextAreaInput placeholder="Contact ..." defaultValue={user?.contact ? user.contact : ""} updateFormValue={(v) => setContact(v)} containerStyle='tw-h-full' inputStyle='tw-h-full tw-border-t-0 ' />
                         </div>
                     </div>
 

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .fade {
-  mask-image: linear-gradient(180deg,transparent, #000 3%, #000 97%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 3%, #000 97%, transparent);
 }
 
 .tw-modal {
@@ -52,7 +52,7 @@
 
 }
 
-.custom-file-upload{
+.custom-file-upload {
   cursor: pointer;
 }
 
@@ -60,11 +60,11 @@ input[type="file"] {
   display: none;
 }
 
-.custom-file-upload:hover .button{
+.custom-file-upload:hover .button {
   opacity: 0.8;
 }
 
-.custom-file-upload .button{
+.custom-file-upload .button {
   transition: .5s ease;
   opacity: 0;
   position: absolute;

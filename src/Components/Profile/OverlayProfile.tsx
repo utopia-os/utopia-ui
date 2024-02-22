@@ -31,6 +31,8 @@ export function OverlayProfile() {
     const [offers, setOffers] = useState<Array<Tag>>([]);
     const [needs, setNeeds] = useState<Array<Tag>>([]);
 
+    const [activeTab, setActiveTab] = useState<number>(1);
+
 
     const addFilterTag = useAddFilterTag();
 
@@ -85,8 +87,21 @@ export function OverlayProfile() {
                         }
                     </div>
 
-                    <div className='tw-overflow-y-auto tw-h-full tw-pt-4 fade'>
-                        <div className='tw-grid tw-grid-cols-1'>
+
+
+
+                    <div className='tw-h-full'>
+
+                    <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-2">
+                        <input type="radio" name="my_tabs_2" role="tab" className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`} aria-label="Vision" checked={activeTab == 1 && true} onChange={() => setActiveTab(1)} />
+                        <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-268px)] tw-min-h-56 tw-overflow-y-auto fade tw-pt-2">
+                            <TextView item={item} />
+                        </div>
+
+                        <input type="radio" name="my_tabs_2" role="tab" className="tw-tab tw-min-w-[10em] [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Offers & Needs" checked={activeTab == 2 && true} onChange={() => setActiveTab(2)} />
+                        <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-pt-4 tw-h-[calc(100dvh-332px)] tw-min-h-56">
+                            <div className='tw-h-full'>
+                            <div className='tw-grid tw-grid-cols-1'>
                             {
                                 offers.length > 0 ?
                                     <div className='tw-col-span-1'>
@@ -110,7 +125,18 @@ export function OverlayProfile() {
                                     </div> : ""
                             }
                         </div>
-                        <TextView item={item} />
+                            </div>
+                        </div>
+
+                        <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Contact" checked={activeTab == 3 && true} onChange={() => setActiveTab(3)} />
+                        <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-268px)] tw-min-h-56 tw-overflow-y-auto fade tw-pt-2">
+                            <TextView item={item} itemTextField='user_created.contact' />
+                        </div>
+                    </div>
+
+
+
+
                     </div>
                 </>
             }

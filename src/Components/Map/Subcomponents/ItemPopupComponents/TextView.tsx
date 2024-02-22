@@ -9,11 +9,17 @@ import { getValue } from '../../../../Utils/GetValue';
 import remarkBreaks from 'remark-breaks'
 import { decodeTag } from '../../../../Utils/FormatTags';
 
-export const TextView = ({ item, truncate = false}: { item?: Item, truncate?: boolean }) => {
+export const TextView = ({ item, truncate = false, itemTextField}: { item?: Item, truncate?: boolean,itemTextField?: string }) => {
   const tags = useTags();
   const addFilterTag = useAddFilterTag();
 
-  let text = item?.layer?.itemTextField && item ? getValue(item, item.layer?.itemTextField) : "";
+  console.log(item);
+  
+
+  let text = "";
+
+  if(itemTextField && item) text = getValue(item, itemTextField);
+  else text = item?.layer?.itemTextField && item ? getValue(item, item.layer?.itemTextField) : ""
 
   if(item && text && truncate) text = truncateString(text, 100, true);
 

@@ -85,7 +85,7 @@ export const TagsWidget = ({placeholder, containerStyle, defaultTags, onUpdate})
         <div key={tag.name} className='tw-rounded-2xl tw-text-white tw-p-2 tw-px-4 tw-shadow-xl tw-card tw-h-[2.75em] tw-mt-3 tw-mr-4' style={{ backgroundColor: tag.color ? tag.color : "#666" }}>
           <div className="tw-card-actions tw-justify-end">
             <label className="tw-btn tw-btn-xs tw-btn-circle tw-absolute tw--right-2 tw--top-2 tw-bg-white tw-text-gray-600" onClick={() => (deleteTag(tag))}>✕</label>
-          </div><b>#{decodeTag(tag.name)}</b>
+          </div><b>{decodeTag(tag.name)}</b>
         </div>
 
       ))}

@@ -62,7 +62,3 @@ export const MoonCalendar = () => {
     </MapOverlayPage>
   );
 }
-
-const capitalizeFirstLetter = (string: string) => {
-  return string
-}

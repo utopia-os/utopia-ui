@@ -1,22 +1,22 @@
 export const LUNAR_MONTH: number = 29.530588853;
 
-const getJulianDate = (date: Date = new Date()): number => {
+export const getJulianDate = (date: Date = new Date()): number => {
   const time: number = date.getTime();
   const tzoffset: number = date.getTimezoneOffset();
   return (time / 86400000) - (tzoffset / 1440) + 2440587.5;
 };
 
-const normalize = (value: number): number => {
+export const normalize = (value: number): number => {
   value = value - Math.floor(value);
   if (value < 0) value += 1;
   return value;
 };
 
-const getLunarAgePercent = (date: Date = new Date()): number => {
+export const getLunarAgePercent = (date: Date = new Date()): number => {
   return normalize((getJulianDate(date) - 2451550.1) / LUNAR_MONTH);
 };
 
-const getLunarAge = (date: Date = new Date()): number => {
+export const getLunarAge = (date: Date = new Date()): number => {
   const percent: number = getLunarAgePercent(date);
   return percent * LUNAR_MONTH;
 };

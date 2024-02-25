@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect, useRef } from 'react';
 
-export const CircleLayout = ({ items,radius, fontSize }) => {
+export const CircleLayout = ({ items,radius, fontSize } : {items: any, radius: number, fontSize: any}) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -22,8 +22,8 @@ export const CircleLayout = ({ items,radius, fontSize }) => {
 
   return (
     <div className="tw-absolute tw-mx-auto tw-flex tw-justify-center tw-items-center tw-h-full tw-w-full" ref={containerRef}>
-      {items.map((item, index) => (
-        <div key={index} className="tw-absolute" style={{fontSize: fontSize}}>
+      {items.map((item: any) => (
+        <div key={item} className="tw-absolute" style={{fontSize: fontSize}}>
           {item}
         </div>
       ))}

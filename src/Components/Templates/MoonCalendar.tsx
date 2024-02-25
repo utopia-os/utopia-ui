@@ -2,17 +2,9 @@ import * as React from 'react'
 import { useState } from 'react'
 import {
   add,
-  addDays,
-  eachDayOfInterval,
-  endOfMonth,
-  endOfWeek,
   format,
-  getDay,
-  isSameMonth,
-  isToday,
   parse,
   startOfToday,
-  startOfWeek,
   sub,
 } from "date-fns";
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
@@ -23,29 +15,10 @@ import { LUNAR_MONTH, getLastNewMoon, getNextNewMoon } from '../../Utils/Moon';
 
 export const MoonCalendar = () => {
   const today = startOfToday();
-  const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
-  const colStartClasses = [
-    "",
-    "col-start-2",
-    "col-start-3",
-    "col-start-4",
-    "col-start-5",
-    "col-start-6",
-    "col-start-7",
-  ];
+
 
   const [currMonth, setCurrMonth] = useState(() => format(today, "MMM-yyyy"));
   let firstDayOfMonth = parse(currMonth, "MMM-yyyy", new Date());
-
-  const daysInMonth = eachDayOfInterval({
-    start: firstDayOfMonth,
-    end: endOfMonth(firstDayOfMonth),
-  });
-
-  const currentMoonCycle = eachDayOfInterval({
-    start: getLastNewMoon(),
-    end: getNextNewMoon()
-  });
 
 
   const getPrevMonth = (event: React.MouseEvent<SVGSVGElement>) => {

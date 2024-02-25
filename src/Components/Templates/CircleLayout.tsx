@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useEffect, useRef } from 'react';
 
 export const CircleLayout = ({ items,radius, fontSize } : {items: any, radius: number, fontSize: any}) => {

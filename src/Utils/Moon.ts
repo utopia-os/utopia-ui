@@ -21,8 +21,7 @@ export const getLunarAge = (date: Date = new Date()): number => {
   return percent * LUNAR_MONTH;
 };
 
-export const getNextNewMoon = (date: Date = new Date()): Date => {
-    const lunarAge: number = getLunarAge(date);
+export const getNextNewMoon = (): Date => {
     return new Date(getLastNewMoon().getTime() + LUNAR_MONTH * 86400000);
 }
 

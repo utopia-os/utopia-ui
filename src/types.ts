@@ -79,7 +79,7 @@ export interface Tag {
 
 export interface ItemsApi<T> {
   getItems(): Promise<any>, 
-  getItem?(item: T): Promise<any>,
+  getItem?(id: string): Promise<any>,
   createItem?(item : T): Promise<any>,
   updateItem?(item : T): Promise<any>,
   deleteItem?(id : string): Promise<any>,

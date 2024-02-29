@@ -11,7 +11,7 @@ type breadcrumb = {
 }
 
 
-export const ItemsIndexPage = ({ api, url, parameterField, breadcrumbs, itemNameField, itemTextField, itemImageField }: { api: ItemsApi<any>, url: string, parameterField: string, breadcrumbs: Array<breadcrumb>, itemNameField: string, itemTextField: string, itemImageField: string }) => {
+export const ItemsIndexPage = ({ api, url, parameterField, breadcrumbs, itemNameField, itemTextField, itemImageField, itemSymbolField }: { api: ItemsApi<any>, url: string, parameterField: string, breadcrumbs: Array<breadcrumb>, itemNameField: string, itemTextField: string, itemImageField: string, itemSymbolField: string }) => {
 
 
   const [items, setItems] = useState<any[]>();
@@ -32,7 +32,7 @@ export const ItemsIndexPage = ({ api, url, parameterField, breadcrumbs, itemName
         {breadcrumbs &&
           <div className="tw-text-sm tw-breadcrumbs">
             <ul>
-              {breadcrumbs.map(b => <li><Link to={b.path} >{b.name}</Link></li>)}
+              {breadcrumbs.map((b,i) => <li key={i}><Link to={b.path} >{b.name}</Link></li>)}
             </ul>
           </div>}
         {/**
@@ -51,12 +51,19 @@ export const ItemsIndexPage = ({ api, url, parameterField, breadcrumbs, itemName
             items?.map((i, k) => {
               return (
                 <Link key={k} to={url + getValue(i, parameterField)}>
-                  <TitleCard className={"!tw-h-96"} title={getValue(i,itemNameField)} topMargin={"tw-mt-2"}>
-                    <img className='tw-h-36' src={`https://api.utopia-lab.org/assets/${getValue(i,itemImageField)}`}></img>
+                  <TitleCard className={"!tw-h-96 "} title={getValue(i, itemNameField)} topMargin={"tw-mt-2"}>
+                    {getValue(i,itemImageField) ?
+                      <div className=' tw-h-36 flex items-center justify-center '>
+                      <img className='tw-h-24' src={`https://api.utopia-lab.org/assets/${getValue(i, itemImageField)}`}></img> 
+                      </div> :
+                      <div className="tw-h-36 !bg-transparent tw-flex tw-items-center tw-justify-center tw-text-7xl">
+                        {getValue(i,itemSymbolField)}
+                      </div>
+                    }
                     <p className='tw-font-bold tw-text-sm tw-mt-2'>{i.subname}</p>
 
 
-                    <p className='tw-text-sm tw-mt-2 tw-mb-2'>{getValue(i,itemTextField)}</p>
+                    <p className='tw-text-sm tw-mt-2 tw-mb-2'>{getValue(i, itemTextField)}</p>
                     {/**
  *                  <div className='flex justify-between text-gray-500 '>
                     <div className='flex'><UsersIcon className=' h-6 w-6' />&nbsp;2</div>

@@ -1,5 +1,5 @@
 export function getValue(obj, path) {
-    if (!obj) return undefined; // Return early if obj is falsy
+    if (!obj || typeof path !== 'string') return undefined;
 
     var pathArray = path.split('.'); // Use a different variable for the split path
     for (var i = 0, len = pathArray.length; i < len; i++) {

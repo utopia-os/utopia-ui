@@ -3,11 +3,11 @@ import * as React from "react"
 import {TitleCard} from "./TitleCard"
 
 
-export function CardPage({title, hideTitle, children, parent} : { 
+export function CardPage({title, hideTitle, children, parents} : { 
   title: string,
   hideTitle?: boolean,
   children?: React.ReactNode,
-  parent?: {name: string, url: string}
+  parents?: Array<{name: string, path: string}>
 }) {
 
 
@@ -17,7 +17,7 @@ export function CardPage({title, hideTitle, children, parent} : {
         <div className="tw-text-sm tw-breadcrumbs">
           <ul>
             <li><Link to={'/'} >Home</Link></li>
-            {parent && <li><Link to={parent?.url ? parent?.url : ""}>{parent?.name}</Link></li>}
+            {parents?.map((b,i) => <li key={i}><Link to={b.path} >{b.name}</Link></li>)}
             <li>{title}</li>
           </ul>
         </div>

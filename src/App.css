@@ -7,3 +7,25 @@
   height: calc(100dvh - 64px);
 }
 
+.fadeable-div {
+  transition: opacity 1000ms ease;
+  opacity: 1;
+}
+
+.div-hidden {
+  opacity: 0;
+}
+
+.movable-div {
+  transition: transform 600ms ease;
+  transform: translateX(0);
+}
+
+.move-out-right {
+  transform: translateX(100vw); /* Verschiebt das Div um die Breite des Viewports */
+}
+
+
+.move-out-left {
+  transform: translateX(-100vw); /* Verschiebt das Div um die Breite des Viewports */
+}

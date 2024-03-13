@@ -4,7 +4,7 @@ import { permissionsApi } from '../api/permissionsApi';
 import { Place, Event, Tag } from '../api/directus';
 import { useEffect, useState } from 'react';
 import {CalendarDaysIcon, MapPinIcon, UserIcon} from '@heroicons/react/20/solid'
-// import { refiBcnApi } from '../api/refiBcnApi';
+ import { refiBcnApi } from '../api/refiBcnApi';
 
 function MapContainer() {
 
@@ -14,6 +14,7 @@ function MapContainer() {
   const [tagsApi, setTagsApi] = useState<itemsApi<Tag>>();
   const [permissionsApiInstance, setPermissionsApiInstance] = useState<permissionsApi>();
   const [updatesApiInstance, setUpdatesApiInstance] = useState<itemsApi<Place>>();
+  const [refiApi, setRefiApi] = useState<refiBcnApi>();
 
 
 
@@ -25,6 +26,7 @@ function MapContainer() {
     setUpdatesApiInstance(new itemsApi('updates',"b4dd8b6b-80e8-4173-9682-4a5755e7b9cb", undefined, {"latest":{"_eq": true}}));
     setTagsApi(new itemsApi<Tag>('tags', undefined, "8bf681a4-1b8d-44ba-afba-c6dbf79a769f"));
     setPermissionsApiInstance(new permissionsApi());
+    setRefiApi(new refiBcnApi('refi'));
 
   }, []);
 
@@ -94,8 +96,8 @@ function MapContainer() {
           </div>
         </ItemForm>
       </Layer>
-      {/**       <Layer name='ReFi-BCN' menuIcon={MapPinIcon} menuText='add new place' menuColor='#2E7D32' markerIcon='circle-solid' markerShape='circle' markerDefaultColor='#818583' itemTextField='description' itemLatitudeField='geolocation.lat' itemLongitudeField='geolocation.lon' api={refiApi}> </Layer>
- */}
+      <Layer name='ReFi-BCN' menuIcon={MapPinIcon} menuText='add new place' menuColor='#2E7D32' markerIcon='circle-solid' markerShape='circle' markerDefaultColor='#818583' itemTextField='description' itemLatitudeField='geolocation.lat' itemLongitudeField='geolocation.lon' api={refiApi}> </Layer>
+
       <Tags api={tagsApi}></Tags>
       <Permissions api={permissionsApiInstance} adminRole='8ed0b24e-3320-48cd-8444-bc152304e580'></Permissions>
     </UtopiaMap>

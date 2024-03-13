@@ -1,16 +1,28 @@
-import { AppShell, SideBar, Content, AuthProvider, Modal, LoginPage, SignupPage, Quests, RequestPasswordPage, SetNewPasswordPage, OverlayProfile, OverlayProfileSettings, OverlayUserSettings } from 'utopia-ui'
+import { AppShell, SideBar, Content, AuthProvider, Modal, LoginPage, SignupPage, Quests, RequestPasswordPage, SetNewPasswordPage, OverlayProfile, OverlayProfileSettings, OverlayUserSettings, ItemsIndexPage, ItemViewPage } from 'utopia-ui'
 import { bottomRoutes, routes } from './routes/sidebar'
 import { Route, Routes } from 'react-router-dom'
 import MapContainer from "./pages/MapContainer"
 import './App.css'
 import Concept from './pages/Concept'
 import { userApi } from './api/userApi'
-import Projects from './pages/Projects'
-import { ProjectView } from './pages/ProjectView'
 import { assetsApi } from './api/assetsApi'
 import { ModalContent } from './ModalContent'
+import { Calendar } from './pages/Calendar'
+import { MoonCalendar } from 'utopia-ui'
+import { Landingpage } from './pages/Landingpage'
+import { useEffect, useState } from 'react'
+import { Project } from './api/directus'
+import { itemsApi } from './api/itemsApi'
 
 function App() {
+
+  const [questsApi, setQuestsApi] = useState<itemsApi<Project>>();
+
+
+  useEffect(() => {
+    setQuestsApi(new itemsApi<Project>('quests',undefined, undefined, {"status":{"_eq": "published"}}));
+  }, [])
+
 
   return (
 
@@ -33,10 +45,13 @@ function App() {
                 <Route path="profile/*" element={<OverlayProfile/>} />
                 <Route path="profile-settings" element={<OverlayProfileSettings/>} />
                 <Route path="user-settings" element={<OverlayUserSettings />} />
+                <Route path="calendar" element={<Calendar/>} />
+                <Route path="moon-calendar" element={<MoonCalendar/>} />
+                <Route path="landingpage" element={<Landingpage/>} />
               </Route>
               <Route path="/concept" element={<Concept/>} />
-              <Route path="/projects" element={<Projects/>} />
-              <Route path="/projects/*" element={<ProjectView/>} />
+              <Route path="/quests" element={<ItemsIndexPage api={questsApi!} breadcrumbs={[{ name: "Home", path: "/" }, { name: "Quests", path: "/quests/" }]} itemNameField={'name'} itemTextField={'text'} itemImageField={'image'} url={'/quests/'} parameterField={'id'} itemSymbolField={'symbol'}/>} />
+              <Route path="/quests/*" element={<ItemViewPage api={questsApi!} parents={[{ name: "Quests", path: "/quests/" }]} itemNameField={'name'} itemTextField={'text'} itemImageField={'image'} itemSymbolField={'symbol'}/>} />
             </Routes>
           </Content>
         </AppShell>

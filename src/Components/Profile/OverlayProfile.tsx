@@ -73,7 +73,7 @@ export function OverlayProfile() {
                 <>
                     <div className='tw-flex tw-flex-row'>
                         <div className="tw-grow">
-                            <p className="text-4xl">{item.layer?.itemAvatarField && getValue(item, item.layer.itemAvatarField) && <img className='h-20 rounded-full inline' src={`https://api.utopia-lab.org/assets/${getValue(item, item.layer.itemAvatarField)}?width=160&heigth=160`}></img>} {item.layer?.itemNameField && getValue(item, item.layer.itemNameField)}</p>
+                            <p className="tw-text-4xl">{item.layer?.itemAvatarField && getValue(item, item.layer.itemAvatarField) && <img className='tw-h-20 tw-rounded-full tw-inline' src={`https://api.utopia-lab.org/assets/${getValue(item, item.layer.itemAvatarField)}?width=160&heigth=160`}></img>} {item.layer?.itemNameField && getValue(item, item.layer.itemNameField)}</p>
                         </div>
                         {owner?.id === user?.id  && owner?.id ?
                             <a className='tw-self-center tw-btn tw-btn-sm tw-mr-4 tw-cursor-pointer' onClick={() => navigate("/profile-settings")}>

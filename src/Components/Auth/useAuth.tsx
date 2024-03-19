@@ -114,6 +114,7 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
     try {
       const res = await userApi.updateUser(userRest);
       setUser(res as any);
+      loadUser();
       setLoading(false);
       return res as any;
     } catch (error: any) {

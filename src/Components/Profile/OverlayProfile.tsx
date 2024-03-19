@@ -52,6 +52,9 @@ export function OverlayProfile() {
 
 
     useEffect(() => {
+        setOffers([]);
+        setNeeds([]);
+        setOwner(undefined);
         item?.layer?.itemOwnerField && setOwner(getValue(item, item.layer?.itemOwnerField));
         item.layer?.itemOffersField && getValue(item, item.layer.itemOffersField).map(o => {
             const tag = tags.find(t => t.id === o.tags_id);
@@ -61,7 +64,6 @@ export function OverlayProfile() {
             const tag = tags.find(t => t.id === n.tags_id);
             tag && setNeeds(current => [...current, tag])
         })
-
     }, [item])
 
 

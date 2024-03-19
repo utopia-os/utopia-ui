@@ -72,6 +72,20 @@
     left: 4px;
     width: 24px;
   }
+
+  .music-icon {
+    position: relative;
+    top: -35px;
+    left: 4px;
+    width: 24px;
+  }
+
+  .drum-icon {
+    position: relative;
+    top: -38px;
+    left: 4px;
+    width: 24px;
+  }
   
   .leaflet-popup-scrolled {
     overflow-x: hidden;

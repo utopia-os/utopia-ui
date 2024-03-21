@@ -1,6 +1,6 @@
 import { useCallback, useReducer, createContext, useContext } from "react";
 import * as React from "react";
-import { ItemsApi, LayerProps, Permission, PermissionAction } from "../../../types";
+import { Item, ItemsApi, Permission, PermissionAction } from "../../../types";
 import { useAuth } from "../../Auth";
 
 type ActionType =
@@ -22,7 +22,7 @@ function usePermissionsManager(initialPermissions: Permission[]): {
   setPermissionApi: (api: ItemsApi<any>) => void;
   setPermissionData: (data: Permission[]) => void;
   setAdminRole: (adminRole: string) => void;
-  hasUserPermission: (collectionName: string, action: PermissionAction) => boolean;
+  hasUserPermission: (collectionName: string, action: PermissionAction, item?: Item) => boolean;
 } {
   const [permissions, dispatch] = useReducer((state: Permission[], action: ActionType) => {
     switch (action.type) {
@@ -62,11 +62,30 @@ function usePermissionsManager(initialPermissions: Permission[]): {
     })
   }, []);
 
-  const hasUserPermission = useCallback((collectionName: string, action: PermissionAction) => {  
-    if (permissions.length == 0) return true;
-    else if (user && user.role == adminRole) return true;
-    else return permissions.some(p => p.action === action && p.collection === collectionName && p.role == user?.role)
-  }, [permissions, user]);
+  const hasUserPermission = useCallback(
+    (collectionName: string, action: PermissionAction, item?: Item) => {           
+      if (permissions.length === 0) return true;
+      else if (user && user.role === adminRole) return true;
+      else {
+        return permissions.some(p =>
+          p.action === action &&
+          p.collection === collectionName &&
+          p.role === user?.role &&
+          (
+            // Wenn 'item' nicht gesetzt ist, ignorieren wir die Überprüfung von 'user_created'
+            !item || !p.permissions || !p.permissions._and ||
+            p.permissions._and.some(condition => 
+              condition.user_created &&
+              condition.user_created._eq === "$CURRENT_USER" &&
+              item.user_created.id === user?.id
+            )
+          )
+        );
+      }
+    },
+    [permissions, user]
+  );
+  
 
 
 

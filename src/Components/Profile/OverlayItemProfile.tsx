@@ -10,7 +10,7 @@ import { LatLng } from 'leaflet';
 import { PopupStartEndInput, StartEndView, TextView } from '../Map';
 import useWindowDimensions from '../Map/hooks/useWindowDimension';
 import { useAddTag, useTags } from '../Map/hooks/useTags';
-import { useAddFilterTag, useResetFilterTags } from '../Map/hooks/useFilter';
+import { useResetFilterTags } from '../Map/hooks/useFilter';
 import { HeaderView } from '../Map/Subcomponents/ItemPopupComponents/HeaderView';
 import { useHasUserPermission } from '../Map/hooks/usePermissions';
 import {PlusButton} from './PlusButton';
@@ -19,7 +19,6 @@ import { hashTagRegex } from '../../Utils/HashTagRegex';
 import { randomColor } from '../../Utils/RandomColor';
 import { toast } from 'react-toastify';
 import { useAuth } from '../Auth';
-import { useLayers } from '../Map/hooks/useLayers';
 
 export function OverlayItemProfile() {
 
@@ -30,16 +29,13 @@ export function OverlayItemProfile() {
     const map = useMap();
     const windowDimension = useWindowDimensions();
 
-    const layers = useLayers();
+    const [addButton, setAddButton] = useState<boolean>(false);
 
 
     const tags = useTags();
 
     const navigate = useNavigate();
 
-    const [owner, setOwner] = useState<UserItem>();
-    const [offers, setOffers] = useState<Array<Tag>>([]);
-    const [needs, setNeeds] = useState<Array<Tag>>([]);
     const [relations, setRelations] = useState<Array<Item>>([]);
 
     const [activeTab, setActiveTab] = useState<number>(1);
@@ -66,11 +62,13 @@ export function OverlayItemProfile() {
       scroll();
     }, [addItemPopupType])
 
+
     useEffect(() => {
 
         const itemId = location.pathname.split("/")[2];
         const item = items.find(i => i.id === itemId);
         item && setItem(item);
+        hasUserPermission("items", "update", item) && setAddButton(true);
         const bounds = map.getBounds();
         const x = bounds.getEast() - bounds.getWest()
         if (windowDimension.width > 768)
@@ -82,25 +80,15 @@ export function OverlayItemProfile() {
         setActiveTab(1);
     }, [location])
 
-    useEffect(() => {
-        setOffers([]);
-        setNeeds([]);
+    useEffect(() => {      
+  
         setRelations([]);
-        setOwner(undefined);
-        item?.layer?.itemOwnerField && setOwner(getValue(item, item.layer?.itemOwnerField));
-        item.layer?.itemOffersField && getValue(item, item.layer.itemOffersField).map(o => {
-            const tag = tags.find(t => t.id === o.tags_id);
-            tag && setOffers(current => [...current, tag])
-        })
-        item.layer?.itemNeedsField && getValue(item, item.layer.itemNeedsField).map(n => {
-            const tag = tags.find(t => t.id === n.tags_id);
-            tag && setNeeds(current => [...current, tag])
-        })
         item.relations?.map(r => {
             const item = items.find(i => i.id == r.related_items_id)
             item && setRelations(current => [...current, item])
         })
-    }, [item])
+
+    }, [item, items])
 
     const submitNewItem = async (evt: any, type: string) => {
         evt.preventDefault();
@@ -135,7 +123,7 @@ export function OverlayItemProfile() {
     }
 
     const linkItem = async (id: string) => {
-        let new_relations = item.relations;
+        let new_relations = item.relations|| [] ;
         new_relations?.push({ items_id: item.id, related_items_id: id })
 
         const updatedItem = { id: item.id, relations: new_relations }
@@ -146,14 +134,14 @@ export function OverlayItemProfile() {
     }
 
     return (
-        <MapOverlayPage className='tw-mx-4 tw-mt-4 tw-max-h-[calc(100dvh-96px)] tw-h-[calc(100dvh-96px)] md:tw-w-[calc(50%-32px)] tw-w-[calc(100%-32px)] tw-max-w-3xl !tw-left-auto tw-top-0 tw-bottom-0'>
+        <MapOverlayPage className='tw-mx-4 tw-mt-4 tw-max-h-[calc(100dvh-96px)] tw-h-[calc(100dvh-96px)] md:tw-w-[calc(50%-32px)] tw-w-[calc(100%-32px)] tw-min-w-80 tw-max-w-3xl !tw-left-auto tw-top-0 tw-bottom-0'>
             {item &&
                 <>
                     <div className='tw-flex tw-flex-row'>
                         <div className="tw-grow">
                             <p className="tw-text-3xl tw-font-semibold">{item.layer?.itemAvatarField && getValue(item, item.layer.itemAvatarField) && <img className='tw-w-20 tw-h-20 tw-rounded-full tw-inline' src={`https://api.utopia-lab.org/assets/${getValue(item, item.layer.itemAvatarField)}?width=160&heigth=160`}></img>} {item.layer?.itemNameField && getValue(item, item.layer.itemNameField)}</p>
                         </div>
-                        {(item.layer?.api?.updateItem && hasUserPermission(item.layer.api?.collectionName!, "update")) ?
+                        {(item.layer?.api?.updateItem && hasUserPermission(item.layer.api?.collectionName!, "update", item)) ?
                             <a className='tw-self-center tw-btn tw-btn-sm tw-mr-4 tw-cursor-pointer' onClick={() => navigate("/edit-item/" + item.id)}>
                                 <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor">
                                     <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
@@ -206,7 +194,7 @@ export function OverlayItemProfile() {
                                                 </div>
                                             </form> : <></>
                                         }
-                                        <PlusButton triggerAction={() => { setAddItemPopupType("project"); scroll() }} color={item.color}></PlusButton>
+                                        { addButton && <PlusButton triggerAction={() => { setAddItemPopupType("project"); scroll() }} color={item.color}></PlusButton>}
 
                                     </div>
                                 </div>

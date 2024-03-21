@@ -1,11 +1,8 @@
-import { useHasUserPermission } from "../Map/hooks/usePermissions";
+import { useHasUserPermission, usePermissions } from "../Map/hooks/usePermissions";
+import { useAuth } from "../Auth";
 
 export function PlusButton({ triggerAction, color, collection="items" }: { triggerAction: any, color: string, collection?:string }) {
-
-    const hasUserPermission = useHasUserPermission();
-
-
-
+    const hasUserPermission = useHasUserPermission();     
     return (
         <>{hasUserPermission(collection, "create") &&
                 <div className="tw-dropdown tw-dropdown-top tw-dropdown-end tw-dropdown-hover tw-z-500 tw-absolute tw-right-4 tw-bottom-4" >

@@ -122,12 +122,22 @@ export type Profile = {
   geoposition?: Geometry
 }
 
+export type PermissionCondition = {
+  user_created?: {
+    _eq: string; // Erwartet den speziellen Wert "$CURRENT_USER" oder eine spezifische UUID
+  };
+  // Hier können weitere Bedingungen nach Bedarf hinzugefügt werden
+};
+
 export type Permission = {
   id?: string;
   role: string;
   collection: string;
-  action: PermissionAction
-}
+  action: PermissionAction;
+  permissions?: { // Optional, für spezifische Bedingungen wie `user_created`
+    _and: PermissionCondition[];
+  };
+};
 
 
 export type PermissionAction =  "create"|"read"|"update"|"delete";

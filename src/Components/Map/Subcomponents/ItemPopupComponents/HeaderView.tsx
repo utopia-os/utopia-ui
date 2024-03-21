@@ -42,6 +42,7 @@ export function HeaderView({ item, setItemFormPopup, hideMenu=false }: {
 
 
   const removeItemFromMap = async (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
     setLoading(true);
     let success = false;
     try {
@@ -58,7 +59,10 @@ export function HeaderView({ item, setItemFormPopup, hideMenu=false }: {
     map.closePopup();
     let params = new URLSearchParams(window.location.search);
     window.history.pushState({}, "", "/" + `${params? `?${params}` : ""}`);
-    event.stopPropagation();
+    setModalOpen(false);
+    navigate("/");
+
+
   }
 
   const openDeleteModal = async (event: React.MouseEvent<HTMLElement>) => {
@@ -90,10 +94,9 @@ export function HeaderView({ item, setItemFormPopup, hideMenu=false }: {
 
         </div>
       </div>
-      <div className='tw-col-span-1'>
+      <div className='tw-col-span-1' onClick={(e)=>e.stopPropagation()}>
         {(item.layer?.api?.deleteItem || item.layer?.api?.updateItem)
-        && ((user && owner?.id === user.id) || owner == undefined)
-        && (hasUserPermission(item.layer.api?.collectionName!, "delete") || hasUserPermission(item.layer.api?.collectionName!, "update"))
+        && (hasUserPermission(item.layer.api?.collectionName!, "delete", item) || hasUserPermission(item.layer.api?.collectionName!, "update", item))
         && !hideMenu &&
           <div className="tw-dropdown tw-dropdown-bottom">
             <label tabIndex={0} className="tw-bg-base-100 tw-btn tw-m-1 tw-leading-3 tw-border-none tw-min-h-0 tw-h-6">
@@ -102,7 +105,7 @@ export function HeaderView({ item, setItemFormPopup, hideMenu=false }: {
               </svg>
             </label>
             <ul tabIndex={0} className="tw-dropdown-content tw-menu tw-p-2 tw-shadow tw-bg-base-100 tw-rounded-box tw-z-1000">
-              {((item.layer.api.updateItem && hasUserPermission(item.layer.api?.collectionName!, "update")) || item.layer.customEditLink) && <li>
+              {((item.layer.api.updateItem && hasUserPermission(item.layer.api?.collectionName!, "update", item)) || item.layer.customEditLink) && <li>
                 <a className="!tw-text-base-content tw-cursor-pointer" onClick={(e) => {
                   item.layer?.customEditLink && navigate(item.layer.customEditLink);
                   !item.layer?.customEditLink && openEditPopup(e);
@@ -113,7 +116,7 @@ export function HeaderView({ item, setItemFormPopup, hideMenu=false }: {
                 </a>
               </li>}
 
-              {item.layer.api.deleteItem && hasUserPermission(item.layer.api?.collectionName!, "delete") && <li>
+              {item.layer.api.deleteItem && hasUserPermission(item.layer.api?.collectionName!, "delete", item) && <li>
                 <a className='tw-cursor-pointer !tw-text-error' onClick={openDeleteModal}>
                   {loading ? <span className="tw-loading tw-loading-spinner tw-loading-sm"></span>
                     :

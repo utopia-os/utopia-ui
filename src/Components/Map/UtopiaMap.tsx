@@ -9,11 +9,9 @@ import AddButton from "./Subcomponents/AddButton";
 import { useEffect, useState } from "react";
 import { ItemFormPopupProps } from "./Subcomponents/ItemFormPopup";
 import { ItemsProvider } from "./hooks/useItems";
-import { TagsProvider } from "./hooks/useTags";
 import { LayersProvider } from "./hooks/useLayers";
 import { FilterProvider } from "./hooks/useFilter";
 import { SearchControl } from "./Subcomponents/Controls/SearchControl";
-import { PermissionsProvider } from "./hooks/usePermissions";
 import { LeafletRefsProvider } from "./hooks/useLeafletRefs";
 import { LayerControl } from "./Subcomponents/Controls/LayerControl";
 import { QuestControl } from "./Subcomponents/Controls/QuestControl";
@@ -83,8 +81,6 @@ function UtopiaMap({
         <>
             
             <LayersProvider initialLayers={[]}>
-                <TagsProvider initialTags={[]}>
-                    <PermissionsProvider initialPermissions={[]}>
                         <FilterProvider initialTags={[]}>
                             <ItemsProvider initialItems={[]}>
                                 <LeafletRefsProvider initialLeafletRefs={{}}>
@@ -127,8 +123,6 @@ function UtopiaMap({
                                 </LeafletRefsProvider>
                             </ItemsProvider>
                         </FilterProvider>
-                    </PermissionsProvider>
-                </TagsProvider>
             </LayersProvider>
         </>
     );

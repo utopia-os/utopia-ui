@@ -4,7 +4,7 @@ import { Item, ItemsApi } from '../../types';
 import { getValue } from '../../Utils/GetValue';
 import { TextView } from '../Map';
 import { useAssetApi } from '../AppShell/hooks/useAssets';
-import { PlusButton } from '../Profile';
+import { PlusButton } from '../Profile/PlusButton';
 import { TextInput, TextAreaInput } from '../Input';
 import { useAddTag, useTags } from '../Map/hooks/useTags';
 import { useAddItem } from '../Map/hooks/useItems';
@@ -14,6 +14,7 @@ import { hashTagRegex } from '../../Utils/HashTagRegex';
 import { randomColor } from '../../Utils/RandomColor';
 import { useAuth } from '../Auth';
 import { useLayers } from '../Map/hooks/useLayers';
+import { PermissionsProvider } from '../Map/hooks/usePermissions';
 
 
 type breadcrumb = {
@@ -22,7 +23,7 @@ type breadcrumb = {
 }
 
 
-export const ItemsIndexPage = ({ api, url, parameterField, breadcrumbs, itemNameField, itemTextField, itemImageField, itemSymbolField }: { api: ItemsApi<any>, url: string, parameterField: string, breadcrumbs: Array<breadcrumb>, itemNameField: string, itemTextField: string, itemImageField: string, itemSymbolField: string }) => {
+export const ItemsIndexPage = ({ api, url, parameterField, breadcrumbs, itemNameField, itemTextField, itemImageField, itemSymbolField, children }: { api: ItemsApi<any>, url: string, parameterField: string, breadcrumbs: Array<breadcrumb>, itemNameField: string, itemTextField: string, itemImageField: string, itemSymbolField: string, children?: ReactNode }) => {
 
   console.log(itemSymbolField);
 
@@ -62,8 +63,6 @@ export const ItemsIndexPage = ({ api, url, parameterField, breadcrumbs, itemName
 
   const layers = useLayers();
 
-
-
   const submitNewItem = async (evt: any, type: string) => {
     evt.preventDefault();
     const formItem: Item = {} as Item;
@@ -98,6 +97,7 @@ export const ItemsIndexPage = ({ api, url, parameterField, breadcrumbs, itemName
 
 
   return (
+
     <main className="tw-flex-1 tw-overflow-y-auto tw-pt-2 tw-px-6  tw-bg-base-200 tw-min-w-80 tw-flex tw-justify-center" >
       <div className=' tw-w-full xl:tw-max-w-6xl'>
         {breadcrumbs &&
@@ -121,10 +121,9 @@ export const ItemsIndexPage = ({ api, url, parameterField, breadcrumbs, itemName
           {
             items?.map((i, k) => {
               return (
-                <Link key={k} to={url + getValue(i, parameterField)}>
 
 
-                  <div key={i.id} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-p-4 tw-mb-4 tw-h-fit' onClick={() => navigate('/item/' + i.id)}>
+                  <div key={k} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-p-4 tw-mb-4 tw-h-fit' onClick={() => navigate(url + getValue(i,parameterField))}>
 
                     <div className='tw-grid tw-grid-cols-6 tw-pb-2'>
                       <div className='tw-col-span-5'>
@@ -149,7 +148,6 @@ export const ItemsIndexPage = ({ api, url, parameterField, breadcrumbs, itemName
                     </div>
                   </div>
 
-                </Link>
               )
 
             })
@@ -173,7 +171,8 @@ export const ItemsIndexPage = ({ api, url, parameterField, breadcrumbs, itemName
           }
         </div>
       </div>
-      <PlusButton triggerAction={() => {setAddItemPopupType("project"); scroll();}} color={'#777'} />
+      <PlusButton triggerAction={() => {setAddItemPopupType("project"); scroll();}} color={'#777'} collection='items'/>
+      {children}
     </main>
 
 

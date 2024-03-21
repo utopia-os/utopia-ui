@@ -13,7 +13,7 @@ import { useAddTag, useTags } from '../Map/hooks/useTags';
 import { useAddFilterTag, useResetFilterTags } from '../Map/hooks/useFilter';
 import { HeaderView } from '../Map/Subcomponents/ItemPopupComponents/HeaderView';
 import { useHasUserPermission } from '../Map/hooks/usePermissions';
-import PlusButton from './PlusButton';
+import {PlusButton} from './PlusButton';
 import { TextAreaInput, TextInput } from '../Input';
 import { hashTagRegex } from '../../Utils/HashTagRegex';
 import { randomColor } from '../../Utils/RandomColor';
@@ -56,11 +56,15 @@ export function OverlayItemProfile() {
 
     const hasUserPermission = useHasUserPermission();
 
-    const tabRef = useRef<HTMLDivElement>(null);
+    const tabRef = useRef<HTMLFormElement>(null);
 
     function scroll() {
-        tabRef.current?.scrollTo(0, 800);
+        tabRef.current?.scrollIntoView();
     }
+    
+    useEffect(() => {
+      scroll();
+    }, [addItemPopupType])
 
     useEffect(() => {
 
@@ -170,7 +174,7 @@ export function OverlayItemProfile() {
                             </div>
 
                             <input type="radio" name="my_tabs_2" role="tab" className="tw-tab [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Projects" checked={activeTab == 2 && true} onChange={() => setActiveTab(2)} />
-                            <div ref={tabRef} role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-268px)] tw-overflow-y-auto tw-pt-4 tw-pb-1 -tw-mx-4" >
+                            <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-268px)] tw-overflow-y-auto tw-pt-4 tw-pb-1 -tw-mx-4" >
                                 <div className='tw-h-full'>
                                     <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-2'>
                                         {relations && relations.map(i => {
@@ -187,7 +191,7 @@ export function OverlayItemProfile() {
                                             else return null
                                         })}
                                         {addItemPopupType == "project" ?
-                                            <form autoComplete='off' onSubmit={e => submitNewItem(e, addItemPopupType)} >
+                                            <form ref={tabRef} autoComplete='off' onSubmit={e => submitNewItem(e, addItemPopupType)} >
 
                                                 <div className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-6 tw-mb-4'>
                                                 <label className="tw-btn tw-btn-sm tw-rounded-2xl tw-btn-circle tw-btn-ghost hover:tw-bg-transparent tw-absolute tw-right-0 tw-top-0 tw-text-gray-600" onClick={() => {

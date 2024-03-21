@@ -65,8 +65,6 @@ export function OverlayItemProfileSettings() {
 
     const onUpdateItem = async () => {
         let changedItem = {} as Item;
-
-        console.log(item.position);
         
 
 

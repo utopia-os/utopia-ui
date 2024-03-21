@@ -1,8 +1,19 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
-import { ItemsApi } from '../../types';
+import { ReactNode, useEffect, useRef, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
+import { Item, ItemsApi } from '../../types';
 import { getValue } from '../../Utils/GetValue';
-import { TitleCard } from './TitleCard';
+import { TextView } from '../Map';
+import { useAssetApi } from '../AppShell/hooks/useAssets';
+import { PlusButton } from '../Profile';
+import { TextInput, TextAreaInput } from '../Input';
+import { useAddTag, useTags } from '../Map/hooks/useTags';
+import { useAddItem } from '../Map/hooks/useItems';
+import { useResetFilterTags } from '../Map/hooks/useFilter';
+import { toast } from 'react-toastify';
+import { hashTagRegex } from '../../Utils/HashTagRegex';
+import { randomColor } from '../../Utils/RandomColor';
+import { useAuth } from '../Auth';
+import { useLayers } from '../Map/hooks/useLayers';
 
 
 type breadcrumb = {
@@ -13,18 +24,78 @@ type breadcrumb = {
 
 export const ItemsIndexPage = ({ api, url, parameterField, breadcrumbs, itemNameField, itemTextField, itemImageField, itemSymbolField }: { api: ItemsApi<any>, url: string, parameterField: string, breadcrumbs: Array<breadcrumb>, itemNameField: string, itemTextField: string, itemImageField: string, itemSymbolField: string }) => {
 
+  console.log(itemSymbolField);
 
-  const [items, setItems] = useState<any[]>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [addItemPopupType, setAddItemPopupType] = useState<string>("");
+
+  const tabRef = useRef<HTMLFormElement>(null);
+
+  function scroll() {
+      tabRef.current?.scrollIntoView();
+  }
+
+  useEffect(() => {
+    scroll();
+  }, [addItemPopupType])
+
+  const [items, setItems] = useState<any[]>([]);
 
   const loadProjects = async () => {
     const items = await api?.getItems();
     setItems(items as any);
   }
 
+  const assetsApi = useAssetApi();
+  const navigate = useNavigate();
+
+  const tags = useTags();
+  const addTag = useAddTag();
+  const addItem = useAddItem();
+  const resetFilterTags = useResetFilterTags();
+  const { user } = useAuth();
+
 
   useEffect(() => {
     loadProjects();
   }, [api])
+
+  const layers = useLayers();
+
+
+
+  const submitNewItem = async (evt: any, type: string) => {
+    evt.preventDefault();
+    const formItem: Item = {} as Item;
+    Array.from(evt.target).forEach((input: HTMLInputElement) => {
+        if (input.name) {
+            formItem[input.name] = input.value;
+        }
+    });
+    setLoading(true);
+    formItem.text && formItem.text.toLocaleLowerCase().match(hashTagRegex)?.map(tag => {
+        if (!tags.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
+            addTag({ id: crypto.randomUUID(), name: tag.slice(1), color: randomColor() })
+        }
+    });
+    const uuid = crypto.randomUUID();
+    let success = false;
+    try {
+        await api?.createItem!({ ...formItem, id: uuid, type: type });
+        success = true;
+    } catch (error) {
+        toast.error(error.toString());
+    }
+    if (success) {
+        addItem({ ...formItem, id: uuid, type: type, layer: layers.find(l => l.name == addItemPopupType), user_created: user });
+        toast.success("New item created");
+        resetFilterTags();
+    }
+    setLoading(false);
+    setAddItemPopupType("");
+    setItems(current => [...current,{ ...formItem, id: uuid, type: type, layer: layers.find(l => l.name == addItemPopupType), user_created: user } ])
+}
+
 
   return (
     <main className="tw-flex-1 tw-overflow-y-auto tw-pt-2 tw-px-6  tw-bg-base-200 tw-min-w-80 tw-flex tw-justify-center" >
@@ -32,7 +103,7 @@ export const ItemsIndexPage = ({ api, url, parameterField, breadcrumbs, itemName
         {breadcrumbs &&
           <div className="tw-text-sm tw-breadcrumbs">
             <ul>
-              {breadcrumbs.map((b,i) => <li key={i}><Link to={b.path} >{b.name}</Link></li>)}
+              {breadcrumbs.map((b, i) => <li key={i}><Link to={b.path} >{b.name}</Link></li>)}
             </ul>
           </div>}
         {/**
@@ -46,42 +117,63 @@ export const ItemsIndexPage = ({ api, url, parameterField, breadcrumbs, itemName
 
 
 
-        <div className="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-3 tw-gap-6 ">
+        <div className="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-3 tw-gap-6 tw-pt-8">
           {
             items?.map((i, k) => {
               return (
                 <Link key={k} to={url + getValue(i, parameterField)}>
-                  <TitleCard className={"!tw-h-96 "} title={getValue(i, itemNameField)} topMargin={"tw-mt-2"}>
-                    {getValue(i,itemImageField) ?
-                      <div className=' tw-h-36 flex items-center justify-center '>
-                      <img className='tw-h-24' src={`https://api.utopia-lab.org/assets/${getValue(i, itemImageField)}`}></img> 
-                      </div> :
-                      <div className="tw-h-36 !bg-transparent tw-flex tw-items-center tw-justify-center tw-text-7xl">
-                        {getValue(i,itemSymbolField)}
+
+
+                  <div key={i.id} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-p-4 tw-mb-4 tw-h-fit' onClick={() => navigate('/item/' + i.id)}>
+
+                    <div className='tw-grid tw-grid-cols-6 tw-pb-2'>
+                      <div className='tw-col-span-5'>
+                        <div className="tw-flex tw-flex-row">{
+                          getValue(i, itemImageField) ?
+                            <div className="tw-w-10 tw-min-w-[2.5em] tw-rounded-full">
+                              <img className="tw-rounded-full" src={`${assetsApi.url}${getValue(i, itemImageField)}?width=80&height=80`} />
+                            </div>
+                            :
+                            ""
+                        }
+                          <b className={`tw-text-xl tw-font-bold ${getValue(i, itemImageField) ? "tw-ml-2 tw-mt-1" : ""}`}>{getValue(i, itemNameField)}</b>
+
+                        </div>
                       </div>
-                    }
-                    <p className='tw-font-bold tw-text-sm tw-mt-2'>{i.subname}</p>
+                      <div className='tw-col-span-1'>
 
-
-                    <p className='tw-text-sm tw-mt-2 tw-mb-2'>{getValue(i, itemTextField)}</p>
-                    {/**
- *                  <div className='flex justify-between text-gray-500 '>
-                    <div className='flex'><UsersIcon className=' h-6 w-6' />&nbsp;2</div>
-                    <div className='flex'><MapPinIcon className='h-6 w-6' />&nbsp;5</div>
-                    <div className='flex'><CalendarIcon className='h-6 w-6' />&nbsp;9</div>
+                      </div>
+                    </div>
+                    <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
+                      <TextView truncate item={i} itemTextField={itemTextField} />
+                    </div>
                   </div>
- 
- */}
 
-
-                  </TitleCard>
                 </Link>
               )
 
             })
           }
+          {addItemPopupType == "project" ?
+
+            <form  ref={tabRef} autoComplete='off' onSubmit={e => submitNewItem(e, addItemPopupType)}  >
+
+              <div className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-p-6 tw-mb-10'>
+                <label className="tw-btn tw-btn-sm tw-rounded-2xl tw-btn-circle tw-btn-ghost hover:tw-bg-transparent tw-absolute tw-right-0 tw-top-0 tw-text-gray-600" onClick={() => {
+                  setAddItemPopupType("")
+                }}>
+                  <p className='tw-text-center '>✕</p></label>
+                <TextInput type="text" placeholder="Name" dataField="name" defaultValue={""} inputStyle='' />
+                <TextAreaInput placeholder="Text" dataField="text" defaultValue={""} inputStyle='tw-h-40 tw-mt-5' />
+                <div className='tw-flex tw-justify-center'>
+                  <button className={loading ? 'tw-btn tw-btn-disabled tw-mt-5 tw-place-self-center' : 'tw-btn tw-mt-5 tw-place-self-center'} type='submit'>{loading ? <span className="tw-loading tw-loading-spinner"></span> : 'Save'}</button>
+                </div>
+              </div>
+            </form> : <></>
+          }
         </div>
       </div>
+      <PlusButton triggerAction={() => {setAddItemPopupType("project"); scroll();}} color={'#777'} />
     </main>
 
 

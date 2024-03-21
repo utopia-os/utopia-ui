@@ -46,7 +46,7 @@ export function OverlayProfile() {
         const bounds = map.getBounds();
         const x = bounds.getEast() - bounds.getWest()
         if (windowDimension.width > 768)
-            if (item?.position.coordinates[0])
+            if (item?.position?.coordinates[0])
                 map.setView(new LatLng(item?.position.coordinates[1]!, item?.position.coordinates[0]! + x / 4))
     }, [location, items, activeTab])
 
@@ -75,7 +75,7 @@ export function OverlayProfile() {
                 <>
                     <div className='tw-flex tw-flex-row'>
                         <div className="tw-grow">
-                            <p className="tw-text-4xl">{item.layer?.itemAvatarField && getValue(item, item.layer.itemAvatarField) && <img className='tw-h-20 tw-rounded-full tw-inline' src={`https://api.utopia-lab.org/assets/${getValue(item, item.layer.itemAvatarField)}?width=160&heigth=160`}></img>} {item.layer?.itemNameField && getValue(item, item.layer.itemNameField)}</p>
+                            <p className="tw-text-3xl tw-font-semibold">{item.layer?.itemAvatarField && getValue(item, item.layer.itemAvatarField) && <img className='tw-h-20 tw-rounded-full tw-inline' src={`https://api.utopia-lab.org/assets/${getValue(item, item.layer.itemAvatarField)}?width=160&heigth=160`}></img>} {item.layer?.itemNameField && getValue(item, item.layer.itemNameField)}</p>
                         </div>
                         {owner?.id === user?.id  && owner?.id ?
                             <a className='tw-self-center tw-btn tw-btn-sm tw-mr-4 tw-cursor-pointer' onClick={() => navigate("/profile-settings")}>

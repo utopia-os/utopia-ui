@@ -3,7 +3,7 @@ import { useLayers } from '../hooks/useLayers'
 import { useHasUserPermission } from '../hooks/usePermissions';
 
 
-export default function AddButton({ setSelectNewItemPosition }: { setSelectNewItemPosition: React.Dispatch<React.SetStateAction<any>> }) {
+export default function AddButton({ triggerAction }: { triggerAction: React.Dispatch<React.SetStateAction<any>> }) {
 
     const layers = useLayers();
     const hasUserPermission = useHasUserPermission();
@@ -35,7 +35,7 @@ export default function AddButton({ setSelectNewItemPosition }: { setSelectNewIt
                                     <button tabIndex={0}
                                         className="tw-z-500  tw-border-0 tw-pl-2 tw-p-0 tw-mb-3 tw-w-10 tw-h-10 tw-cursor-pointer tw-rounded-full tw-mouse tw-drop-shadow-md tw-transition tw-ease-in tw-duration-200 focus:tw-outline-none"
                                         style={{ backgroundColor: layer.menuColor }}
-                                        onClick={() => { setSelectNewItemPosition(layer) }}>
+                                        onClick={() => { triggerAction(layer) }}>
                                         <layer.menuIcon className="tw-h-6 tw-w-6 tw-text-white" ></layer.menuIcon>
                                     </button>
                                 </div>

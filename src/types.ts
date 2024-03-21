@@ -42,7 +42,7 @@ export class Item {
   id: string ;
   name: string;
   text: string;
-  position: Geometry;
+  position?: Geometry;
   date_created?: string;
   date_updated?: string | null;
   start?: string;
@@ -50,6 +50,7 @@ export class Item {
   api?: ItemsApi<any>;
   tags?: string[];
   layer?: LayerProps;
+  relations?: Relation[];
   [key: string]: any;
   constructor(id:string,name:string,text:string,position:Geometry, layer?: LayerProps, api?: ItemsApi<any>){
     this.id = id;
@@ -123,10 +124,15 @@ export type Profile = {
 
 export type Permission = {
   id?: string;
-  role: string;S
+  role: string;
   collection: string;
   action: PermissionAction
 }
 
 
 export type PermissionAction =  "create"|"read"|"update"|"delete";
+
+export type Relation = {
+  related_items_id: string;
+  [key: string]: any;
+}

@@ -11,10 +11,7 @@ import { decodeTag } from '../../../../Utils/FormatTags';
 
 export const TextView = ({ item, truncate = false, itemTextField}: { item?: Item, truncate?: boolean,itemTextField?: string }) => {
   const tags = useTags();
-  const addFilterTag = useAddFilterTag();
-
-  console.log(item);
-  
+  const addFilterTag = useAddFilterTag();  
 
   let text = "";
 

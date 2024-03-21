@@ -89,7 +89,7 @@ function UtopiaMap({
                             <ItemsProvider initialItems={[]}>
                                 <LeafletRefsProvider initialLeafletRefs={{}}>
                                     <div className={(selectNewItemPosition != null ? "crosshair-cursor-enabled" : undefined)}>
-                                        <MapContainer ref={mapDivRef} style={{ height: height, width: width }} center={new LatLng(center[0], center[1])} zoom={zoom} zoomControl={false}>
+                                        <MapContainer ref={mapDivRef} style={{ height: height, width: width }} center={new LatLng(center[0], center[1])} zoom={zoom} zoomControl={false} maxZoom={19}>
                                         <Outlet></Outlet>
                                             <Control position='topLeft' zIndex="1000">
                                                 <SearchControl clusterRef={clusterRef} />
@@ -100,6 +100,7 @@ function UtopiaMap({
                                                 <LayerControl></LayerControl>
                                             </Control>
                                             <TileLayer
+                                                maxZoom={19}
                                                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                                 url="https://tile.osmand.net/hd/{z}/{x}/{y}.png" />
                                             <MarkerClusterGroup ref={clusterRef} showCoverageOnHover chunkedLoading maxClusterRadius={50} removeOutsideVisibleBounds={false}>
@@ -112,7 +113,7 @@ function UtopiaMap({
                                             </MarkerClusterGroup>
                                             <MapEventListener setSelectNewItemPosition={setSelectNewItemPosition} selectNewItemPosition={selectNewItemPosition} setItemFormPopup={setItemFormPopup} />
                                         </MapContainer>
-                                        <AddButton setSelectNewItemPosition={setSelectNewItemPosition}></AddButton>
+                                        <AddButton triggerAction={setSelectNewItemPosition}></AddButton>
                                         {selectNewItemPosition != null &&
                                             <div className="tw-button tw-z-1000 tw-absolute tw-right-5 tw-top-4 tw-drop-shadow-md">
                                                 <div className="tw-alert tw-bg-base-100 tw-text-base-content">

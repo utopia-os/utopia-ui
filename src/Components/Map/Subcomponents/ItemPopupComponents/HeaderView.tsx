@@ -15,9 +15,10 @@ import { useNavigate } from "react-router-dom";
 
 
 
-export function HeaderView({ item, setItemFormPopup }: {
+export function HeaderView({ item, setItemFormPopup, hideMenu=false }: {
   item: Item,
-  setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
+  setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>,
+  hideMenu?: boolean
 }) {
 
 
@@ -68,7 +69,7 @@ export function HeaderView({ item, setItemFormPopup }: {
   const openEditPopup = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
     map.closePopup();
-    if (setItemFormPopup)
+    if (setItemFormPopup && item.position)
       setItemFormPopup({ position: new LatLng(item.position.coordinates[1], item.position.coordinates[0]), layer: item.layer!, item: item, setItemFormPopup: setItemFormPopup })
   }
 
@@ -79,7 +80,7 @@ export function HeaderView({ item, setItemFormPopup }: {
       <div className='tw-col-span-5'>
         <div className="tw-flex tw-flex-row">{
           avatar ?
-            <div className="tw-w-10 tw-rounded-full">
+            <div className="tw-w-10 tw-min-w-[2.5em] tw-rounded-full">
               <img className="tw-rounded-full" src={`${avatar}?width=80&height=80`} />
             </div>
             :
@@ -92,7 +93,8 @@ export function HeaderView({ item, setItemFormPopup }: {
       <div className='tw-col-span-1'>
         {(item.layer?.api?.deleteItem || item.layer?.api?.updateItem)
         && ((user && owner?.id === user.id) || owner == undefined)
-        && (hasUserPermission(item.layer.api?.collectionName!, "delete") || hasUserPermission(item.layer.api?.collectionName!, "update")) &&
+        && (hasUserPermission(item.layer.api?.collectionName!, "delete") || hasUserPermission(item.layer.api?.collectionName!, "update"))
+        && !hideMenu &&
           <div className="tw-dropdown tw-dropdown-bottom">
             <label tabIndex={0} className="tw-bg-base-100 tw-btn tw-m-1 tw-leading-3 tw-border-none tw-min-h-0 tw-h-6">
               <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -125,7 +127,7 @@ export function HeaderView({ item, setItemFormPopup }: {
       </div>
     </div>
     <DialogModal isOpened={modalOpen} title="Are you sure?" showCloseButton={false} onClose={ () => (setModalOpen(false)) }>
-      <span>Do you want to delte <b>{item.name}</b>?</span>
+      <span>Do you want to delete <b>{item.name}</b>?</span>
       <div className="tw-grid">
         <div className="tw-flex tw-justify-between">
                 <label className="tw-btn tw-mt-4 tw-btn-error" onClick={removeItemFromMap}>Yes</label>

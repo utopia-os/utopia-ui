@@ -5,7 +5,7 @@ import { ItemFormPopupProps } from './ItemFormPopup'
 import { HeaderView } from './ItemPopupComponents/HeaderView'
 import { TextView } from './ItemPopupComponents/TextView'
 import { timeAgo } from '../../../Utils/TimeAgo'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { LatLng } from 'leaflet'
 import { useNavigate } from 'react-router-dom'
 import { useRemoveItem } from '../hooks/useItems'
@@ -19,8 +19,9 @@ export interface ItemViewPopupProps {
 }
 
 
-export const ItemViewPopup = React.forwardRef((props: ItemViewPopupProps, ref: any) => {
 
+
+export const ItemViewPopup = React.forwardRef((props: ItemViewPopupProps, ref: any) => {
   const map = useMap();
   const [loading, setLoading] = React.useState<boolean>(false);
   const removeItem = useRemoveItem();
@@ -60,7 +61,7 @@ export const ItemViewPopup = React.forwardRef((props: ItemViewPopupProps, ref: a
   return (
     <LeafletPopup ref={ref} maxHeight={377} minWidth={275} maxWidth={275} autoPanPadding={[20, 80]}>
       <div className='tw-bg-base-100 tw-text-base-content'>
-        <HeaderView api={props.item.api} item={props.item} editCallback={handleEdit} deleteCallback={handleDelete} />
+        <HeaderView api={props.item.layer?.api} item={props.item} editCallback={handleEdit} deleteCallback={handleDelete} />
         <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
           {props.children ?
 

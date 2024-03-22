@@ -1,5 +1,4 @@
-import { useHasUserPermission, usePermissions } from "../Map/hooks/usePermissions";
-import { useAuth } from "../Auth";
+import { useHasUserPermission } from "../Map/hooks/usePermissions";
 
 export function PlusButton({ triggerAction, color, collection="items" }: { triggerAction: any, color: string, collection?:string }) {
     const hasUserPermission = useHasUserPermission();     

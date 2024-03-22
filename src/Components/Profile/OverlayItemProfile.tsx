@@ -1,9 +1,8 @@
-import * as React from 'react'
-import { MapOverlayPage, TitleCard } from '../Templates'
-import { useAddItem, useItems, useRemoveItem, useUpdateItem } from '../Map/hooks/useItems'
+import { MapOverlayPage } from '../Templates'
+import { useAddItem, useItems, useUpdateItem } from '../Map/hooks/useItems'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react';
-import { Item} from '../../types';
+import { Item } from '../../types';
 import { getValue } from '../../Utils/GetValue';
 import { useMap } from 'react-leaflet';
 import { LatLng } from 'leaflet';
@@ -11,15 +10,15 @@ import { PopupStartEndInput, StartEndView, TextView } from '../Map';
 import useWindowDimensions from '../Map/hooks/useWindowDimension';
 import { useAddTag, useTags } from '../Map/hooks/useTags';
 import { useResetFilterTags } from '../Map/hooks/useFilter';
-import { HeaderView } from '../Map/Subcomponents/ItemPopupComponents/HeaderView';
 import { useHasUserPermission } from '../Map/hooks/usePermissions';
-import {PlusButton} from './PlusButton';
 import { TextAreaInput, TextInput } from '../Input';
 import { hashTagRegex } from '../../Utils/HashTagRegex';
 import { randomColor } from '../../Utils/RandomColor';
 import { toast } from 'react-toastify';
 import { useAuth } from '../Auth';
 import { useLayers } from '../Map/hooks/useLayers';
+import { ActionButton } from './ActionsButton';
+import { LinkedItemsHeaderView } from './LinkedItemsHeaderView';
 
 export function OverlayItemProfile() {
 
@@ -60,23 +59,22 @@ export function OverlayItemProfile() {
     function scroll() {
         tabRef.current?.scrollIntoView();
     }
-    
+
     useEffect(() => {
-      scroll();
+        scroll();
     }, [addItemPopupType])
 
     useEffect(() => {
-      console.log(addItemPopupType);
-      
+        console.log(addItemPopupType);
+
     }, [addItemPopupType])
-    
+
 
     useEffect(() => {
 
         const itemId = location.pathname.split("/")[2];
         const item = items.find(i => i.id === itemId);
         item && setItem(item);
-        hasUserPermission("items", "update", item) && setAddButton(true);
         const bounds = map.getBounds();
         const x = bounds.getEast() - bounds.getWest()
         if (windowDimension.width > 768)
@@ -88,15 +86,19 @@ export function OverlayItemProfile() {
         setActiveTab(1);
     }, [location])
 
-    useEffect(() => {      
-  
+    useEffect(() => {
+
         setRelations([]);
         item.relations?.map(r => {
             const item = items.find(i => i.id == r.related_items_id)
             item && setRelations(current => [...current, item])
         })
-
     }, [item, items])
+
+    useEffect(() => {
+        item && item.user_created && hasUserPermission("items", "update", item) && setAddButton(true);
+    }, [item])
+
 
     const submitNewItem = async (evt: any, type: string) => {
         evt.preventDefault();
@@ -114,11 +116,11 @@ export function OverlayItemProfile() {
         });
         const uuid = crypto.randomUUID();
         console.log(layers);
-        
-        const layer = layers.find(l => l.name.toLocaleLowerCase().replace("s","") == addItemPopupType.toLocaleLowerCase())
+
+        const layer = layers.find(l => l.name.toLocaleLowerCase().replace("s", "") == addItemPopupType.toLocaleLowerCase())
 
         console.log(layer);
-        
+
         let success = false;
         try {
             await layer?.api?.createItem!({ ...formItem, id: uuid, type: type });
@@ -137,13 +139,21 @@ export function OverlayItemProfile() {
     }
 
     const linkItem = async (id: string) => {
-        let new_relations = item.relations|| [] ;
+        let new_relations = item.relations || [];
         new_relations?.push({ items_id: item.id, related_items_id: id })
+        const updatedItem = { id: item.id, relations: new_relations }
+        await item?.layer?.api?.updateItem!(updatedItem)
+        updateItem({ ...item, relations: new_relations })
+    }
+
+    const unlinkItem = async (id: string) => {
+        console.log(id);
+
+        let new_relations = item.relations?.filter(r => r.related_items_id !== id)
+        console.log(new_relations);
 
         const updatedItem = { id: item.id, relations: new_relations }
-
         await item?.layer?.api?.updateItem!(updatedItem)
-
         updateItem({ ...item, relations: new_relations })
     }
 
@@ -183,7 +193,7 @@ export function OverlayItemProfile() {
                                             if (i.type == 'project') return (
 
                                                 <div key={i.id} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-4 tw-mb-4 tw-h-fit' onClick={() => navigate('/item/' + i.id)}>
-                                                    <HeaderView loading={loading} item={i} api={i.layer?.api} editCallback={() => navigate("/edit-item/"+i.id)}></HeaderView>
+                                                    <LinkedItemsHeaderView loading={loading} item={i} unlinkCallback={unlinkItem} />
 
                                                     <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
                                                         <TextView truncate item={i} />
@@ -197,7 +207,7 @@ export function OverlayItemProfile() {
                                             <form ref={tabRef} autoComplete='off' onSubmit={e => submitNewItem(e, addItemPopupType)} >
 
                                                 <div className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-6 tw-mb-4'>
-                                                <label className="tw-btn tw-btn-sm tw-rounded-2xl tw-btn-circle tw-btn-ghost hover:tw-bg-transparent tw-absolute tw-right-0 tw-top-0 tw-text-gray-600" onClick={() => {
+                                                    <label className="tw-btn tw-btn-sm tw-rounded-2xl tw-btn-circle tw-btn-ghost hover:tw-bg-transparent tw-absolute tw-right-0 tw-top-0 tw-text-gray-600" onClick={() => {
                                                         setAddItemPopupType("")
                                                     }}>
                                                         <p className='tw-text-center '>✕</p></label>
@@ -209,7 +219,7 @@ export function OverlayItemProfile() {
                                                 </div>
                                             </form> : <></>
                                         }
-                                        { addButton && <PlusButton triggerAction={() => { setAddItemPopupType("project"); scroll() }} color={item.color}></PlusButton>}
+                                        {addButton && <ActionButton item={item} existingRelations={relations} itemType={"project"} triggerItemSelected={linkItem} triggerAddButton={() => { setAddItemPopupType("project"); scroll() }} color={item.color}></ActionButton>}
 
                                     </div>
                                 </div>
@@ -223,7 +233,7 @@ export function OverlayItemProfile() {
                                             if (i.type == 'event') return (
 
                                                 <div key={i.id} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-6 tw-mb-4' onClick={() => navigate('/item/' + i.id)}>
-                                                    <HeaderView item={i} hideMenu />
+                                                    <LinkedItemsHeaderView item={i} unlinkCallback={unlinkItem} loading={loading} />
                                                     <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
                                                         <StartEndView item={i}></StartEndView>
                                                         <TextView truncate item={i} />
@@ -250,7 +260,7 @@ export function OverlayItemProfile() {
                                                 </div>
                                             </form> : <></>
                                         }
-                                        { addButton && <PlusButton triggerAction={() => { setAddItemPopupType("event"); scroll() }} color={item.color}></PlusButton>}
+                                        {addButton && <ActionButton item={item} existingRelations={relations} itemType={"event"} triggerItemSelected={linkItem} triggerAddButton={() => { setAddItemPopupType("event"); scroll() }} color={item.color}></ActionButton>}
 
                                     </div>
                                 </div>
@@ -259,10 +269,6 @@ export function OverlayItemProfile() {
                             <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-1">
                             </div>
                         </div>
-
-
-
-
                     </div>
                 </>
             }

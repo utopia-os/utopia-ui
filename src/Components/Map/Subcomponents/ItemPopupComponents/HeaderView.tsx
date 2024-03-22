@@ -1,12 +1,10 @@
 import * as React from "react"
-import { useRemoveItem } from "../../hooks/useItems";
 import { Item, ItemsApi } from "../../../../types";
-import { toast } from "react-toastify";
 import { useHasUserPermission } from "../../hooks/usePermissions";
 import { getValue } from "../../../../Utils/GetValue";
 import { useAssetApi } from '../../../AppShell/hooks/useAssets'
 import DialogModal from "../../../Templates/DialogModal";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 
 

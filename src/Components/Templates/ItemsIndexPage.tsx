@@ -15,6 +15,7 @@ import { randomColor } from '../../Utils/RandomColor';
 import { useAuth } from '../Auth';
 import { useLayers } from '../Map/hooks/useLayers';
 import { PermissionsProvider } from '../Map/hooks/usePermissions';
+import { HeaderView } from '../Map/Subcomponents/ItemPopupComponents/HeaderView';
 
 
 type breadcrumb = {
@@ -33,7 +34,7 @@ export const ItemsIndexPage = ({ api, url, parameterField, breadcrumbs, itemName
   const tabRef = useRef<HTMLFormElement>(null);
 
   function scroll() {
-      tabRef.current?.scrollIntoView();
+    tabRef.current?.scrollIntoView();
   }
 
   useEffect(() => {
@@ -67,33 +68,51 @@ export const ItemsIndexPage = ({ api, url, parameterField, breadcrumbs, itemName
     evt.preventDefault();
     const formItem: Item = {} as Item;
     Array.from(evt.target).forEach((input: HTMLInputElement) => {
-        if (input.name) {
-            formItem[input.name] = input.value;
-        }
+      if (input.name) {
+        formItem[input.name] = input.value;
+      }
     });
     setLoading(true);
     formItem.text && formItem.text.toLocaleLowerCase().match(hashTagRegex)?.map(tag => {
-        if (!tags.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
-            addTag({ id: crypto.randomUUID(), name: tag.slice(1), color: randomColor() })
-        }
+      if (!tags.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
+        addTag({ id: crypto.randomUUID(), name: tag.slice(1), color: randomColor() })
+      }
     });
     const uuid = crypto.randomUUID();
     let success = false;
     try {
-        await api?.createItem!({ ...formItem, id: uuid, type: type });
-        success = true;
+      await api?.createItem!({ ...formItem, id: uuid, type: type });
+      success = true;
     } catch (error) {
-        toast.error(error.toString());
+      toast.error(error.toString());
     }
     if (success) {
-        addItem({ ...formItem, id: uuid, type: type, layer: layers.find(l => l.name == addItemPopupType), user_created: user });
-        toast.success("New item created");
-        resetFilterTags();
+      addItem({ ...formItem, id: uuid, type: type, layer: layers.find(l => l.name == addItemPopupType), user_created: user });
+      toast.success("New item created");
+      resetFilterTags();
     }
     setLoading(false);
     setAddItemPopupType("");
-    setItems(current => [...current,{ ...formItem, id: uuid, type: type, layer: layers.find(l => l.name == addItemPopupType), user_created: user } ])
-}
+    setItems(current => [...current, { ...formItem, id: uuid, type: type, layer: layers.find(l => l.name == addItemPopupType), user_created: user }])
+  }
+
+  const deleteItem = async (item) => {
+    setLoading(true);
+    let success = false;
+    try {
+      await api?.deleteItem!(item.id)
+      success = true;
+    } catch (error) {
+      toast.error(error.toString());
+    }
+    if (success) {
+      toast.success("Item deleted");
+    }
+    setLoading(false);
+    setItems(items.filter(i=>i.id !=item.id))
+    console.log("chaka");
+    
+  }
 
 
   return (
@@ -121,32 +140,12 @@ export const ItemsIndexPage = ({ api, url, parameterField, breadcrumbs, itemName
           {
             items?.map((i, k) => {
               return (
-
-
-                  <div key={k} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-p-4 tw-mb-4 tw-h-fit' onClick={() => navigate(url + getValue(i,parameterField))}>
-
-                    <div className='tw-grid tw-grid-cols-6 tw-pb-2'>
-                      <div className='tw-col-span-5'>
-                        <div className="tw-flex tw-flex-row">{
-                          getValue(i, itemImageField) ?
-                            <div className="tw-w-10 tw-min-w-[2.5em] tw-rounded-full">
-                              <img className="tw-rounded-full" src={`${assetsApi.url}${getValue(i, itemImageField)}?width=80&height=80`} />
-                            </div>
-                            :
-                            ""
-                        }
-                          <b className={`tw-text-xl tw-font-bold ${getValue(i, itemImageField) ? "tw-ml-2 tw-mt-1" : ""}`}>{getValue(i, itemNameField)}</b>
-
-                        </div>
-                      </div>
-                      <div className='tw-col-span-1'>
-
-                      </div>
-                    </div>
-                    <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
-                      <TextView truncate item={i} itemTextField={itemTextField} />
-                    </div>
+                <div key={k} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-p-4 tw-mb-4 tw-h-fit' onClick={() => navigate(url + getValue(i, parameterField))}>
+                  <HeaderView loading={loading} item={i} api={api} itemAvatarField={itemImageField} itemNameField={itemNameField} editCallback={() => navigate("/edit-item/"+i.id)} deleteCallback={()=>deleteItem(i)}></HeaderView>
+                  <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
+                    <TextView truncate item={i} itemTextField={itemTextField} />
                   </div>
+                </div>
 
               )
 
@@ -154,7 +153,7 @@ export const ItemsIndexPage = ({ api, url, parameterField, breadcrumbs, itemName
           }
           {addItemPopupType == "project" ?
 
-            <form  ref={tabRef} autoComplete='off' onSubmit={e => submitNewItem(e, addItemPopupType)}  >
+            <form ref={tabRef} autoComplete='off' onSubmit={e => submitNewItem(e, addItemPopupType)}  >
 
               <div className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-p-6 tw-mb-10'>
                 <label className="tw-btn tw-btn-sm tw-rounded-2xl tw-btn-circle tw-btn-ghost hover:tw-bg-transparent tw-absolute tw-right-0 tw-top-0 tw-text-gray-600" onClick={() => {
@@ -171,7 +170,7 @@ export const ItemsIndexPage = ({ api, url, parameterField, breadcrumbs, itemName
           }
         </div>
       </div>
-      <PlusButton triggerAction={() => {setAddItemPopupType("project"); scroll();}} color={'#777'} collection='items'/>
+      <PlusButton triggerAction={() => { setAddItemPopupType("project"); scroll(); }} color={'#777'} collection='items' />
       {children}
     </main>
 

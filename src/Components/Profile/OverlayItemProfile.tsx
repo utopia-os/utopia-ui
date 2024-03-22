@@ -65,6 +65,11 @@ export function OverlayItemProfile() {
       scroll();
     }, [addItemPopupType])
 
+    useEffect(() => {
+      console.log(addItemPopupType);
+      
+    }, [addItemPopupType])
+    
 
     useEffect(() => {
 
@@ -108,8 +113,12 @@ export function OverlayItemProfile() {
             }
         });
         const uuid = crypto.randomUUID();
-        const layer = layers.find(l => l.name = addItemPopupType)
+        console.log(layers);
+        
+        const layer = layers.find(l => l.name.toLocaleLowerCase().replace("s","") == addItemPopupType.toLocaleLowerCase())
 
+        console.log(layer);
+        
         let success = false;
         try {
             await layer?.api?.createItem!({ ...formItem, id: uuid, type: type });
@@ -169,12 +178,13 @@ export function OverlayItemProfile() {
                             <input type="radio" name="my_tabs_2" role="tab" className="tw-tab [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Projects" checked={activeTab == 2 && true} onChange={() => setActiveTab(2)} />
                             <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto tw-pt-4 tw-pb-1 -tw-mx-4" >
                                 <div className='tw-h-full'>
-                                    <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-2'>
+                                    <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-2 tw-pb-5'>
                                         {relations && relations.map(i => {
                                             if (i.type == 'project') return (
 
                                                 <div key={i.id} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-4 tw-mb-4 tw-h-fit' onClick={() => navigate('/item/' + i.id)}>
-                                                    <HeaderView item={i} />
+                                                    <HeaderView loading={loading} item={i} api={i.layer?.api} editCallback={() => navigate("/edit-item/"+i.id)}></HeaderView>
+
                                                     <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
                                                         <TextView truncate item={i} />
                                                     </div>
@@ -206,7 +216,7 @@ export function OverlayItemProfile() {
                             </div>
 
                             <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Events" checked={activeTab == 3 && true} onChange={() => setActiveTab(3)} />
-                            <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto tw-pt-4 tw-pb-1">
+                            <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto tw-pt-4 tw-pb-1  -tw-mx-4">
                                 <div className='tw-h-full'>
                                     <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-2'>
                                         {relations && relations.map(i => {

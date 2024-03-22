@@ -14,6 +14,7 @@ import { LocateControl } from './LocateControl';
 import * as L from 'leaflet';
 import MarkerIconFactory from '../../../../Utils/MarkerIconFactory';
 import { decodeTag } from '../../../../Utils/FormatTags';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -44,6 +45,8 @@ export const SearchControl = ({ clusterRef }) => {
             setPopupOpen(false);
         }
     })
+
+    const navigate = useNavigate();
 
     useDebounce(() => {
         const searchGeo = async () => {
@@ -111,18 +114,23 @@ export const SearchControl = ({ clusterRef }) => {
                         {itemsResults.slice(0, 5).map(item => (
                             <div key={item.id} className='tw-cursor-pointer hover:tw-font-bold' onClick={() => {
                                 const marker = Object.entries(leafletRefs).find(r => r[1].item == item)?.[1].marker;
-
-                                if (filterTags.length > 0) {
-                                    marker !== null && window.history.pushState({}, "", `/${item.layer.name}/${item.id}`)
-                                    resetFilterTags();
-                                    hide();
+                                if(marker){
+                                    if (filterTags.length > 0) {
+                                        marker !== null && window.history.pushState({}, "", `/${item.layer.name}/${item.id}`)
+                                        resetFilterTags();
+                                        hide();
+                                    }
+                                    else {
+                                        marker !== null && clusterRef?.current?.zoomToShowLayer(marker, () => {
+                                            marker?.openPopup();
+                                            hide();
+                                        });
+                                    }
                                 }
                                 else {
-                                    marker !== null && clusterRef?.current?.zoomToShowLayer(marker, () => {
-                                        marker?.openPopup();
-                                        hide();
-                                    });
+                                    navigate("item/"+item.id)
                                 }
+
                             }
                             }><div className='tw-flex tw-flex-row'>
                                     <item.layer.menuIcon className="tw-text-current tw-w-5 tw-mr-2 tw-mt-0" />

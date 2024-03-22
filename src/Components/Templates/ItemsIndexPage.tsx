@@ -117,7 +117,7 @@ export const ItemsIndexPage = ({ api, url, parameterField, breadcrumbs, itemName
 
 
 
-        <div className="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-3 tw-gap-6 tw-pt-8">
+        <div className="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-3 tw-gap-6 tw-pt-4">
           {
             items?.map((i, k) => {
               return (

@@ -6,7 +6,7 @@ import { TextView } from "../Map";
 import { HeaderView } from "../Map/Subcomponents/ItemPopupComponents/HeaderView";
 import { Item } from "../../types";
 
-export function ActionButton({ item, triggerAddButton, triggerItemSelected, existingRelations, itemType, color, collection = "items" }: {
+export function ActionButton({ item, triggerAddButton, triggerItemSelected, existingRelations, itemType, color="#3D3846", collection = "items" }: {
     triggerAddButton: any,
     triggerItemSelected: any,
     existingRelations: Item[],

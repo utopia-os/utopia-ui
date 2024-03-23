@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { ItemsApi, Tag } from '../../types';
 import { useSetTagData, useSetTagApi, useTags } from './hooks/useTags'
 import { useLocation } from 'react-router-dom';
-import { useAddFilterTag } from './hooks/useFilter';
+import { useAddFilterTag, useResetFilterTags } from './hooks/useFilter';
 
 export function Tags({data, api} : {data?: Tag[], api?: ItemsApi<Tag>}) {
 const setTagData = useSetTagData();
@@ -17,12 +17,14 @@ useEffect(() => {
 
 const location = useLocation();
 const addFilterTag = useAddFilterTag();
+const resetFilterTags = useResetFilterTags();
 const tags = useTags();
 
 
 useEffect(() => {
   let params = new URLSearchParams(location.search);
   let urlTags = params.get("tags");
+  resetFilterTags()
   urlTags?.split(",").map(urlTag => {
       const tag = tags.find(t => t.name.toLocaleLowerCase() === urlTag.toLocaleLowerCase())     
       tag && addFilterTag(tag)

@@ -107,7 +107,8 @@ export function OverlayProfile() {
                                         <h3 className='-tw-mb-2'>Offers</h3>
                                         < div className='tw-flex tw-flex-wrap tw-mb-4'>
                                             {
-                                                offers.map(o => <TagView key={o?.id} tag={o} onClick={() => addFilterTag(o)} />)
+                                                offers.map(o => <TagView key={o?.id} tag={o} onClick={() => {console.log(o);
+                                                 addFilterTag(o)}} />)
                                             }
                                         </div>
                                     </div> : ""

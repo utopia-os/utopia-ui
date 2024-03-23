@@ -107,7 +107,7 @@ export function OverlayItemProfileSettings() {
                 <div className='tw-flex tw-flex-col tw-h-full'>
                     <div className="tw-flex">
                         <AvatarWidget avatar={image} setAvatar={setImage}/>
-                        <ColorPicker color={color} onChange={setColor} className={"-tw-left-6 tw-top-14 -tw-mr-6"} />
+                        <ColorPicker color={color? color : "#3D3846"} onChange={setColor} className={"-tw-left-6 tw-top-14 -tw-mr-6"} />
                         <TextInput placeholder="Name" defaultValue={item?.name ? item.name : ""} updateFormValue={(v) => setName(v)} containerStyle='tw-grow tw-ml-6 tw-my-auto ' />
                     </div>
 

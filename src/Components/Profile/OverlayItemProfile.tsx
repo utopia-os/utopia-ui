@@ -70,6 +70,16 @@ export function OverlayItemProfile() {
     }, [addItemPopupType])
 
 
+    const updateActiveTab = (id: number) => {
+        setActiveTab(id);
+
+        let params = new URLSearchParams(window.location.search);
+        let urlTab = params.get("tab");
+        if (!urlTab?.includes(id.toString()))
+            params.set("tab", `${id ? id : ""}`)
+        window.history.pushState('', '', "?" + params.toString());
+    }
+
     useEffect(() => {
 
         const itemId = location.pathname.split("/")[2];
@@ -80,11 +90,18 @@ export function OverlayItemProfile() {
         if (windowDimension.width > 768)
             if (item?.position && item?.position.coordinates[0])
                 map.setView(new LatLng(item?.position.coordinates[1]!, item?.position.coordinates[0]! + x / 4))
+
+
     }, [location, items, activeTab])
 
-    useEffect(() => {
-        setActiveTab(1);
+
+    useEffect(() => {       
+        let params = new URLSearchParams(location.search);
+        let urlTab = params.get("tab");        
+        urlTab ? setActiveTab(Number(urlTab)) : setActiveTab(1);
     }, [location])
+
+
 
     useEffect(() => {
 
@@ -142,8 +159,18 @@ export function OverlayItemProfile() {
         let new_relations = item.relations || [];
         new_relations?.push({ items_id: item.id, related_items_id: id })
         const updatedItem = { id: item.id, relations: new_relations }
-        await item?.layer?.api?.updateItem!(updatedItem)
-        updateItem({ ...item, relations: new_relations })
+
+        let success = false;
+        try {
+            await item?.layer?.api?.updateItem!(updatedItem)
+            success = true;
+        } catch (error) {
+            toast.error(error.toString());
+        }
+        if (success) {
+            updateItem({ ...item, relations: new_relations })
+            toast.success("Item linked");
+        }
     }
 
     const unlinkItem = async (id: string) => {
@@ -153,8 +180,20 @@ export function OverlayItemProfile() {
         console.log(new_relations);
 
         const updatedItem = { id: item.id, relations: new_relations }
-        await item?.layer?.api?.updateItem!(updatedItem)
-        updateItem({ ...item, relations: new_relations })
+
+
+        let success = false;
+        try {
+            await item?.layer?.api?.updateItem!(updatedItem)
+            success = true;
+        } catch (error) {
+            toast.error(error.toString());
+        }
+        if (success) {
+            updateItem({ ...item, relations: new_relations })
+            toast.success("Item unlinked");
+        }
+
     }
 
     return (
@@ -180,13 +219,13 @@ export function OverlayItemProfile() {
                     <div className='tw-h-full'>
 
                         <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-2 tw-mb-2">
-                            <input type="radio" name="my_tabs_2" role="tab" className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`} aria-label="Info" checked={activeTab == 1 && true} onChange={() => setActiveTab(1)} />
-                            <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-4 tw-mb-4">
+                            <input type="radio" name="my_tabs_2" role="tab" className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`} aria-label="Info" checked={activeTab == 1 && true} onChange={() => updateActiveTab(1)} />
+                            <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-4 tw-mb-4 tw-overflow-x-hidden">
                                 <TextView item={item} />
                             </div>
 
-                            <input type="radio" name="my_tabs_2" role="tab" className="tw-tab [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Projects" checked={activeTab == 2 && true} onChange={() => setActiveTab(2)} />
-                            <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto tw-pt-4 tw-pb-1 -tw-mx-4" >
+                            <input type="radio" name="my_tabs_2" role="tab" className="tw-tab [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Projects" checked={activeTab == 2 && true} onChange={() => updateActiveTab(2)} />
+                            <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto tw-pt-4 tw-pb-1 -tw-mx-4 tw-overflow-x-hidden" >
                                 <div className='tw-h-full'>
                                     <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-2 tw-pb-5'>
                                         {relations && relations.map(i => {
@@ -219,14 +258,14 @@ export function OverlayItemProfile() {
                                                 </div>
                                             </form> : <></>
                                         }
-                                        {addButton && <ActionButton item={item} existingRelations={relations} itemType={"project"} triggerItemSelected={linkItem} triggerAddButton={() => { setAddItemPopupType("project"); scroll() }} color={item.color}></ActionButton>}
+                                        {addButton && <ActionButton collection="items" item={item} existingRelations={relations} itemType={"project"} triggerItemSelected={linkItem} triggerAddButton={() => { setAddItemPopupType("project"); scroll() }} color={item.color}></ActionButton>}
 
                                     </div>
                                 </div>
                             </div>
 
-                            <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Events" checked={activeTab == 3 && true} onChange={() => setActiveTab(3)} />
-                            <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto tw-pt-4 tw-pb-1  -tw-mx-4">
+                            <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Events" checked={activeTab == 3 && true} onChange={() => updateActiveTab(3)} />
+                            <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto tw-pt-4 tw-pb-1  -tw-mx-4 tw-overflow-x-hidden">
                                 <div className='tw-h-full'>
                                     <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-2'>
                                         {relations && relations.map(i => {
@@ -260,13 +299,13 @@ export function OverlayItemProfile() {
                                                 </div>
                                             </form> : <></>
                                         }
-                                        {addButton && <ActionButton item={item} existingRelations={relations} itemType={"event"} triggerItemSelected={linkItem} triggerAddButton={() => { setAddItemPopupType("event"); scroll() }} color={item.color}></ActionButton>}
+                                        {addButton && <ActionButton collection="items" item={item} existingRelations={relations} itemType={"event"} triggerItemSelected={linkItem} triggerAddButton={() => { setAddItemPopupType("event"); scroll() }} color={item.color}></ActionButton>}
 
                                     </div>
                                 </div>
                             </div>
-                            <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Friends" checked={activeTab == 4 && true} onChange={() => setActiveTab(4)} />
-                            <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-1">
+                            <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Friends" checked={activeTab == 4 && true} onChange={() => updateActiveTab(4)} />
+                            <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-1 tw-overflow-x-hidden">
                             </div>
                         </div>
                     </div>

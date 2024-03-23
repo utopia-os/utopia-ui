@@ -36,7 +36,7 @@
 }
 
 .Toastify__toast-container {
-  z-index: 1999 !important;
+  z-index: 2001 !important;
 }
 
 .Toastify__toast-container--top-right {

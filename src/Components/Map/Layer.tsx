@@ -95,7 +95,6 @@ export const Layer = ({
         }
         else {
             if (window.location.pathname.split("/")[1] == name) {
-
                 if (window.location.pathname.split("/")[2]) {
                     const id = window.location.pathname.split("/")[2]
                     const marker = leafletRefs[id]?.marker;

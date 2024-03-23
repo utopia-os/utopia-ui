@@ -1,18 +1,18 @@
-import * as React from "react"
+import { useEffect } from "react";
 import { getValue } from "../../Utils/GetValue";
-import { Item, ItemsApi } from "../../types";
+import { Item } from "../../types";
 import { useAssetApi } from "../AppShell/hooks/useAssets";
-import { useHasUserPermission } from "../Map/hooks/usePermissions";
 
 
 
 
-export function LinkedItemsHeaderView({ item, unlinkCallback, itemNameField, itemAvatarField, loading }: {
+export function LinkedItemsHeaderView({ item, unlinkCallback, itemNameField, itemAvatarField, loading, unlinkPermission }: {
   item: Item,
   unlinkCallback?: any,
   itemNameField?: string,
   itemAvatarField?: string,
   loading?: boolean,
+  unlinkPermission: boolean
 }) {
 
   const assetsApi = useAssetApi();
@@ -22,7 +22,11 @@ export function LinkedItemsHeaderView({ item, unlinkCallback, itemNameField, ite
   const title = itemNameField ? getValue(item, itemNameField) : item.layer?.itemNameField && item && getValue(item, item.layer?.itemNameField);
 
 
-
+  
+  useEffect(() => {
+    
+  }, [item])
+  
 
   return (
     <>
@@ -41,6 +45,7 @@ export function LinkedItemsHeaderView({ item, unlinkCallback, itemNameField, ite
           </div>
         </div>
         <div className='tw-col-span-1' onClick={(e) => e.stopPropagation()}>
+          { unlinkPermission &&
             <div className="tw-dropdown tw-dropdown-bottom">
               <label tabIndex={0} className="tw-bg-base-100 tw-btn tw-m-1 tw-leading-3 tw-border-none tw-min-h-0 tw-h-6">
                 <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -56,7 +61,7 @@ export function LinkedItemsHeaderView({ item, unlinkCallback, itemNameField, ite
                   </a>
                 </li>}
               </ul>
-            </div>
+            </div>}
         </div>
       </div>
     </>

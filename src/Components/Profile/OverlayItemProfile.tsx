@@ -30,7 +30,7 @@ export function OverlayItemProfile() {
     const map = useMap();
     const windowDimension = useWindowDimensions();
 
-    const [addButton, setAddButton] = useState<boolean>(false);
+    const [updatePermission, setUpdatePermission] = useState<boolean>(false);
 
     const layers = useLayers();
 
@@ -115,7 +115,7 @@ export function OverlayItemProfile() {
     }, [item, items])
 
     useEffect(() => {
-        item && item.user_created && hasUserPermission("items", "update", item) && setAddButton(true);
+        item && item.user_created && hasUserPermission("items", "update", item) && setUpdatePermission(true);
     }, [item])
 
 
@@ -246,7 +246,7 @@ export function OverlayItemProfile() {
                                             if (i.type == 'project') return (
 
                                                 <div key={i.id} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-4 tw-mb-4 tw-h-fit' onClick={() => navigate('/item/' + i.id)}>
-                                                    <LinkedItemsHeaderView loading={loading} item={i} unlinkCallback={unlinkItem} />
+                                                    <LinkedItemsHeaderView unlinkPermission={updatePermission} loading={loading} item={i} unlinkCallback={unlinkItem} />
 
                                                     <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
                                                         <TextView truncate item={i} />
@@ -272,7 +272,7 @@ export function OverlayItemProfile() {
                                                 </div>
                                             </form> : <></>
                                         }
-                                        {addButton && <ActionButton collection="items" item={item} existingRelations={relations} itemType={"project"} triggerItemSelected={linkItem} triggerAddButton={() => { setAddItemPopupType("project"); scroll() }} color={item.color}></ActionButton>}
+                                        {updatePermission && <ActionButton collection="items" item={item} existingRelations={relations} itemType={"project"} triggerItemSelected={linkItem} triggerAddButton={() => { setAddItemPopupType("project"); scroll() }} color={item.color}></ActionButton>}
 
                                     </div>
                                 </div>
@@ -286,7 +286,7 @@ export function OverlayItemProfile() {
                                             if (i.type == 'event') return (
 
                                                 <div key={i.id} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-6 tw-mb-4' onClick={() => navigate('/item/' + i.id)}>
-                                                    <LinkedItemsHeaderView item={i} unlinkCallback={unlinkItem} loading={loading} />
+                                                    <LinkedItemsHeaderView unlinkPermission={updatePermission} item={i} unlinkCallback={unlinkItem} loading={loading} />
                                                     <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
                                                         <StartEndView item={i}></StartEndView>
                                                         <TextView truncate item={i} />
@@ -313,7 +313,7 @@ export function OverlayItemProfile() {
                                                 </div>
                                             </form> : <></>
                                         }
-                                        {addButton && <ActionButton collection="items" item={item} existingRelations={relations} itemType={"event"} triggerItemSelected={linkItem} triggerAddButton={() => { setAddItemPopupType("event"); scroll() }} color={item.color}></ActionButton>}
+                                        {updatePermission && <ActionButton collection="items" item={item} existingRelations={relations} itemType={"event"} triggerItemSelected={linkItem} triggerAddButton={() => { setAddItemPopupType("event"); scroll() }} color={item.color}></ActionButton>}
 
                                     </div>
                                 </div>

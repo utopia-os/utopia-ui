@@ -87,9 +87,7 @@ export const ItemsIndexPage = ({ api, url, parameterField, breadcrumbs, itemName
       toast.error(error.toString());
     }
     if (success) {
-      addItem({ ...formItem, id: uuid, type: type, layer: layers.find(l => l.name == addItemPopupType), user_created: user });
       toast.success("New item created");
-      resetFilterTags();
     }
     setLoading(false);
     setAddItemPopupType("");
@@ -111,10 +109,10 @@ export const ItemsIndexPage = ({ api, url, parameterField, breadcrumbs, itemName
     setLoading(false);
     setItems(items.filter(i=>i.id !=item.id))
     console.log("chaka");
-    
   }
 
 
+  
   return (
 
     <main className="tw-flex-1 tw-overflow-y-auto tw-pt-2 tw-px-6  tw-bg-base-200 tw-min-w-80 tw-flex tw-justify-center" >

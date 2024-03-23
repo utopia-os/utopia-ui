@@ -9,10 +9,11 @@ export class itemsApi<T> implements ItemsApi<T>{
   collectionName: string;
   filter: any;
   layerId: string | undefined;
-   mapId: string | undefined;
+  mapId: string | undefined;
+  customParameter: any
 
 
-  constructor(collectionName: string, layerId?: string | undefined, mapId?: string | undefined, filter?: any, ) {
+  constructor(collectionName: string, layerId?: string | undefined, mapId?: string | undefined, filter?: any, customParameter?:any ) {
     this.collectionName = collectionName;
     if(filter) this.filter = filter;
     else this.filter = {};
@@ -23,12 +24,13 @@ export class itemsApi<T> implements ItemsApi<T>{
     this.mapId = mapId;
     if(mapId) {
       this.filter = {... filter, ... { "map" : { "id": { "_eq": mapId }}}}
-    }   
+    }
+    if(customParameter) this.customParameter = customParameter;
   }
 
   async getItems() {
     try {
-      return await directusClient.request(readItems(this.collectionName as never, { fields: ['*', { user_created: ['*', {offers: ['*'], needs: ['*']}] }], filter: this.filter, limit: 500 }));
+      return await directusClient.request(readItems(this.collectionName as never, { fields: ['*', "relations.*", { user_created: ['*', {offers: ['*'], needs: ['*']}] }], filter: this.filter, limit: 500 }));
     } catch (error: any) {
       console.log(error);
       if (error.errors[0]?.message)
@@ -50,7 +52,7 @@ export class itemsApi<T> implements ItemsApi<T>{
 
   async createItem(item: T & { id?: string }) {
     try {
-      return await directusClient.request(createItem(this.collectionName as keyof MyCollections, {...item,  ...(this.layerId && {layer: this.layerId}), ...(this.layerId && {layer: this.layerId}), ...(this.mapId && {map: this.mapId})}))
+      return await directusClient.request(createItem(this.collectionName as keyof MyCollections, {...item,  ...(this.customParameter && this.customParameter), ...(this.layerId && {layer: this.layerId}), ...(this.layerId && {layer: this.layerId}), ...(this.mapId && {map: this.mapId})}))
     } catch (error: any) {
       console.log(error);
       if (error.errors[0]?.message)

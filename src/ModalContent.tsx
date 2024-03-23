@@ -8,18 +8,20 @@ type ChapterProps = {
 export function Welcome1({ clickAction }: ChapterProps) {
     return (
         <>
-            <h3 className="font-bold text-lg">Welcome, glad you are here!</h3>
-            <img className="float-right w-32 m-2" src="/earth.svg"></img>
+            <h3 className="font-bold text-lg">Welcome to the Collaboative Finance Map</h3>
+            <img className="float-right w-32 m-2" src="/cofi1.png"></img>
             <p className="py-3">
-                In the 21st century, humanity is at a special point in its history.
+                This map is a tool for connecting the movement and making projects, local initiatives, people and events visible.
             </p>
             <p className="py-1">
-                On the one hand, the people of Planet Earth are facing a multitude of fundamental crises.
+                Help fill this map by adding projects and events to the map.
             </p>
             <p className="py-1">
-                On the other hand, we have all the knowledge and technology to heal the planet and live in harmony with Mother Earth.                  </p>
+
+                Sign up to create your personal profile and add it to the map.
+            </p>
             <div className="grid">
-                <label className="btn place-self-end mt-4" onClick={() => clickAction!()}>Next</label>
+                <label className="btn place-self-end mt-4" onClick={() => clickAction!()}>Close</label>
             </div>
         </>
     )
@@ -101,7 +103,7 @@ export const ModalContent = () => {
     const ActiveChapter = () => {
         switch (chapter) {
             case 1:
-                return <Welcome1 clickAction={() => { setChapter(2) }} />
+                return <Welcome1 clickAction={() => { close(); }} />
             case 2:
                 return <Welcome2 clickAction={() => { setChapter(3) }} />
             case 3:

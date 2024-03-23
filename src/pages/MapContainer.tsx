@@ -1,32 +1,25 @@
-import { UtopiaMap, Tags, Layer, ItemForm, ItemView, PopupTextAreaInput, PopupTextInput, PopupStartEndInput, TextView, StartEndView, Permissions, PopupButton } from 'utopia-ui'
+import { UtopiaMap, Layer, ItemForm, ItemView, PopupTextAreaInput, PopupTextInput, PopupStartEndInput, TextView, StartEndView, PopupButton } from 'utopia-ui'
 import { itemsApi } from '../api/itemsApi';
-import { permissionsApi } from '../api/permissionsApi';
-import { Place, Event, Tag } from '../api/directus';
+import { Place, Event } from '../api/directus';
 import { useEffect, useState } from 'react';
-import {CalendarDaysIcon, MapPinIcon, UserIcon} from '@heroicons/react/20/solid'
- import { refiBcnApi } from '../api/refiBcnApi';
+import { CalendarDaysIcon, MapPinIcon, UserIcon } from '@heroicons/react/20/solid'
 
 function MapContainer() {
 
 
   const [placesApi, setPlacesApi] = useState<itemsApi<Place>>();
   const [eventsApi, setEventsApi] = useState<itemsApi<Event>>();
-  const [tagsApi, setTagsApi] = useState<itemsApi<Tag>>();
-  const [permissionsApiInstance, setPermissionsApiInstance] = useState<permissionsApi>();
   const [updatesApiInstance, setUpdatesApiInstance] = useState<itemsApi<Place>>();
-  const [refiApi, setRefiApi] = useState<refiBcnApi>();
 
 
 
 
   useEffect(() => {
 
-    setPlacesApi(new itemsApi<Place>('places',"e31de961-6709-4413-a27d-00e59ccfe472"));
-    setEventsApi(new itemsApi<Event>('events', "1837e83e-07f1-44c0-88c0-8e9ea8e597db"));
-    setUpdatesApiInstance(new itemsApi('updates',"b4dd8b6b-80e8-4173-9682-4a5755e7b9cb", undefined, {"latest":{"_eq": true}}));
-    setTagsApi(new itemsApi<Tag>('tags', undefined, "8bf681a4-1b8d-44ba-afba-c6dbf79a769f"));
-    setPermissionsApiInstance(new permissionsApi());
-    setRefiApi(new refiBcnApi('refi'));
+    setPlacesApi(new itemsApi<Place>('items', undefined, undefined, {"type":{"_eq":"project"}}, {type: "project"}));
+    setEventsApi(new itemsApi<Event>('items', undefined, undefined, {"type":{"_eq":"event"}}, {type: "event"}));
+    setUpdatesApiInstance(new itemsApi('updates', "d2e5c850-74db-4789-910b-79d6784ad265", undefined, { "latest": { "_eq": true } }));
+
 
   }, []);
 
@@ -36,7 +29,7 @@ function MapContainer() {
   return (
 
 
-    <UtopiaMap zoom={5} height='calc(100dvh - 64px)' width="100%">
+    <UtopiaMap zoom={12} height='calc(100dvh - 64px)' width="100%" center={[52.49, 13.46]}>
       <Layer
         name='Events'
         menuIcon={icon}
@@ -44,7 +37,8 @@ function MapContainer() {
         menuColor='#f9a825'
         markerIcon='calendar-days-solid'
         markerShape='square'
-        markerDefaultColor='#818583'
+        markerDefaultColor='#3D3846'
+        itemAvatarField='image'
         //     data={events}
         api={eventsApi}>
         <ItemForm>
@@ -58,15 +52,23 @@ function MapContainer() {
         </ItemView>
       </Layer>
       <Layer
-        name='Places'
+        name='Projects'
         menuIcon={MapPinIcon}
         menuText='add new place'
         menuColor='#2E7D32'
         markerIcon='circle-solid'
         markerShape='circle'
-        markerDefaultColor='#818583'
+        markerDefaultColor='#3D3846'
+        itemAvatarField='image'
+        itemColorField='color'
+        itemOwnerField='user_created'
         // data={places}
-        api={placesApi} />
+        api={placesApi}>
+        <ItemView>
+          <PopupButton url={'/item'} parameterField={'id'} text={'Profile'} colorField={'color'} />
+          <TextView truncate></TextView>
+        </ItemView>
+      </Layer>
       <Layer
         name='People'
         menuIcon={UserIcon}
@@ -92,14 +94,10 @@ function MapContainer() {
         </ItemView>
         <ItemForm title='Place yor Profile'>
           <div className='flex justify-center'>
-          <p>Press Save to place your Profile to the Map</p>
+            <p>Press Save to place your Profile to the Map</p>
           </div>
         </ItemForm>
       </Layer>
-      <Layer name='ReFi-BCN' menuIcon={MapPinIcon} menuText='add new place' menuColor='#2E7D32' markerIcon='circle-solid' markerShape='circle' markerDefaultColor='#818583' itemTextField='description' itemLatitudeField='geolocation.lat' itemLongitudeField='geolocation.lon' api={refiApi}> </Layer>
-
-      <Tags api={tagsApi}></Tags>
-      <Permissions api={permissionsApiInstance} adminRole='8ed0b24e-3320-48cd-8444-bc152304e580'></Permissions>
     </UtopiaMap>
   )
 }

@@ -1,5 +1,5 @@
 import { MapOverlayPage } from '../Templates'
-import { useAddItem, useItems, useUpdateItem } from '../Map/hooks/useItems'
+import { useAddItem, useItems, useRemoveItem, useUpdateItem } from '../Map/hooks/useItems'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react';
 import { Item } from '../../types';
@@ -19,6 +19,7 @@ import { useAuth } from '../Auth';
 import { useLayers } from '../Map/hooks/useLayers';
 import { ActionButton } from './ActionsButton';
 import { LinkedItemsHeaderView } from './LinkedItemsHeaderView';
+import { HeaderView } from '../Map/Subcomponents/ItemPopupComponents/HeaderView';
 
 export function OverlayItemProfile() {
 
@@ -33,6 +34,7 @@ export function OverlayItemProfile() {
 
     const layers = useLayers();
 
+    const removeItem = useRemoveItem();
 
     const tags = useTags();
 
@@ -196,22 +198,34 @@ export function OverlayItemProfile() {
 
     }
 
+    const handleDelete = async (event: React.MouseEvent<HTMLElement>) => {
+        event.stopPropagation();
+        setLoading(true);
+        let success = false;
+        try {
+          await item.layer?.api?.deleteItem!(item.id)
+          success = true;
+        } catch (error) {
+          toast.error(error.toString());
+        }
+        if (success) {
+          removeItem(item);
+          toast.success("Item deleted");
+        }
+        setLoading(false);
+        map.closePopup();
+        let params = new URLSearchParams(window.location.search);
+        window.history.pushState({}, "", "/" + `${params ? `?${params}` : ""}`);
+        navigate("/");
+      }
+    
+    
+
     return (
         <MapOverlayPage className='tw-mx-4 tw-mt-4 tw-max-h-[calc(100dvh-96px)] tw-h-[calc(100dvh-96px)] md:tw-w-[calc(50%-32px)] tw-w-[calc(100%-32px)] tw-min-w-80 tw-max-w-3xl !tw-left-auto tw-top-0 tw-bottom-0'>
             {item &&
                 <>
-                    <div className='tw-flex tw-flex-row'>
-                        <div className="tw-grow">
-                            <p className="tw-text-3xl tw-font-semibold">{item.layer?.itemAvatarField && getValue(item, item.layer.itemAvatarField) && <img className='tw-w-20 tw-h-20 tw-rounded-full tw-inline' src={`https://api.utopia-lab.org/assets/${getValue(item, item.layer.itemAvatarField)}?width=160&heigth=160`}></img>} {item.layer?.itemNameField && getValue(item, item.layer.itemNameField)}</p>
-                        </div>
-                        {(item.layer?.api?.updateItem && hasUserPermission(item.layer.api?.collectionName!, "update", item)) ?
-                            <a className='tw-self-center tw-btn tw-btn-sm tw-mr-4 tw-cursor-pointer' onClick={() => navigate("/edit-item/" + item.id)}>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                                </svg>
-                            </a> : ""
-                        }
-                    </div>
+                    <HeaderView api={item.layer?.api} item={item} deleteCallback={handleDelete} editCallback={ () => navigate("/edit-item/"+item.id)} big/>
 
 
 

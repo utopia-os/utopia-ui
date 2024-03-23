@@ -9,7 +9,7 @@ import { useEffect } from "react";
 
 
 
-export function HeaderView({ item, api, editCallback, deleteCallback, itemNameField, itemAvatarField, loading, hideMenu = false }: {
+export function HeaderView({ item, api, editCallback, deleteCallback, itemNameField, itemAvatarField, loading, hideMenu = false, big = false }: {
   item: Item,
   api?: ItemsApi<any>,
   editCallback?: any,
@@ -17,7 +17,8 @@ export function HeaderView({ item, api, editCallback, deleteCallback, itemNameFi
   itemNameField?: string,
   itemAvatarField?: string,
   loading?: boolean,
-  hideMenu?: boolean
+  hideMenu?: boolean,
+  big?: boolean
 }) {
 
 
@@ -30,7 +31,7 @@ export function HeaderView({ item, api, editCallback, deleteCallback, itemNameFi
   const assetsApi = useAssetApi();
 
 
-  const avatar = itemAvatarField && getValue(item, itemAvatarField) ? assetsApi.url + getValue(item, itemAvatarField) : item.layer?.itemAvatarField && item && getValue(item, item.layer?.itemAvatarField) && assetsApi.url + getValue(item, item.layer?.itemAvatarField);
+  const avatar = itemAvatarField && getValue(item, itemAvatarField) ? assetsApi.url + getValue(item, itemAvatarField) + `${big ? "?width=160&heigth=160": "?width=80&heigth=80"}` : item.layer?.itemAvatarField && item && getValue(item, item.layer?.itemAvatarField) && assetsApi.url + getValue(item, item.layer?.itemAvatarField) + `${big ? "?width=160&heigth=160": "?width=80&heigth=80"}`;
   const title = itemNameField ? getValue(item, itemNameField) : item.layer?.itemNameField && item && getValue(item, item.layer?.itemNameField);
 
 
@@ -43,21 +44,15 @@ export function HeaderView({ item, api, editCallback, deleteCallback, itemNameFi
 
   return (
     <>
-      <div className='tw-grid tw-grid-cols-6 tw-pb-2'>
-        <div className='tw-col-span-5'>
-          <div className="tw-flex tw-flex-row">{
-            avatar ?
-              <div className="tw-w-10 tw-min-w-[2.5em] tw-rounded-full">
-                <img className="tw-rounded-full" src={`${avatar}?width=80&height=80`} />
-              </div>
-              :
-              ""
-          }
-            <b className={`tw-text-xl tw-font-bold ${avatar ? "tw-ml-2 tw-mt-1" : ""}`}>{title ? title : item.name}</b>
+    <div className='tw-flex tw-flex-row'>
+        <div className="tw-grow">
+        <div className={`${big ? "tw-text-3xl " : "tw-text-xl "} tw-font-semibold`}>
+        {avatar &&
+                                <img className={`${big ? "tw-w-20" : "tw-w-10"} tw-inline tw-rounded-full`} src={avatar}></img>}
+                                <span className={`${avatar ? "tw-ml-2" : ""}`}>{title&& title}</span>
 
-          </div>
-        </div>
-        <div className='tw-col-span-1' onClick={(e) => e.stopPropagation()}>
+        </div>      </div>
+        <div onClick={(e) => e.stopPropagation()} className={`${big ? "tw-mt-5":"tw-mt-1"}`}>
           {(api?.deleteItem || item.layer?.api?.updateItem)
             && (hasUserPermission(api?.collectionName!, "delete", item) || hasUserPermission(api?.collectionName!, "update", item))
             && !hideMenu &&
@@ -88,6 +83,7 @@ export function HeaderView({ item, api, editCallback, deleteCallback, itemNameFi
               </ul>
             </div>}
         </div>
+
       </div>
       <DialogModal isOpened={modalOpen} title="Are you sure?" showCloseButton={false} onClose={() => (setModalOpen(false))} >
         <div onClick={(e) => e.stopPropagation()} >

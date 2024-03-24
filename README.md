@@ -29,6 +29,15 @@ install via npm
  npm install utopia-ui
 ```
 
+## Examples
+
+[Moos Map](https://github.com/utopia-os/moos-map)
+
+## Demo
+
+[Moos Map](https://moos-map.de)
+
+
 ## Map Component
 The map shows various Layers (places, events, profiles ...) of Irems at their respective position whith nice and informative Popups.
 
@@ -77,7 +86,7 @@ You can find some Sample Data (places, events, tags) for test in the `SamleData/
 
 ## Join the community
 
-*This Library is in early alpha stage. You are very welcome to participate in the development*
+*This Library is in alpha stage. You are very welcome to participate in the development*
 
 *We are looking for Web Developer, UX Designer, Community Manager, Visionaries, Artists, etc. who like to support this Vision.*
 

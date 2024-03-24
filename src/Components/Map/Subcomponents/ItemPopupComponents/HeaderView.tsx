@@ -4,7 +4,8 @@ import { useHasUserPermission } from "../../hooks/usePermissions";
 import { getValue } from "../../../../Utils/GetValue";
 import { useAssetApi } from '../../../AppShell/hooks/useAssets'
 import DialogModal from "../../../Templates/DialogModal";
-import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSetSelectPosition } from "../../hooks/useSetItemPosition";
 
 
 
@@ -24,12 +25,10 @@ export function HeaderView({ item, api, editCallback, deleteCallback, itemNameFi
 
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
 
-
   const hasUserPermission = useHasUserPermission();
-
-
+  const navigate = useNavigate();
   const assetsApi = useAssetApi();
-
+  const setSelectPosition = useSetSelectPosition();
 
   const avatar = itemAvatarField && getValue(item, itemAvatarField) ? assetsApi.url + getValue(item, itemAvatarField) + `${big ? "?width=160&heigth=160": "?width=80&heigth=80"}` : item.layer?.itemAvatarField && item && getValue(item, item.layer?.itemAvatarField) && assetsApi.url + getValue(item, item.layer?.itemAvatarField) + `${big ? "?width=160&heigth=160": "?width=80&heigth=80"}`;
   const title = itemNameField ? getValue(item, itemNameField) : item.layer?.itemNameField && item && getValue(item, item.layer?.itemNameField);
@@ -64,13 +63,19 @@ export function HeaderView({ item, api, editCallback, deleteCallback, itemNameFi
               </label>
               <ul tabIndex={0} className="tw-dropdown-content tw-menu tw-p-2 tw-shadow tw-bg-base-100 tw-rounded-box tw-z-1000">
                 {((api?.updateItem && hasUserPermission(api.collectionName!, "update", item)) || item.layer?.customEditLink) && <li>
-                  <a className="!tw-text-base-content tw-cursor-pointer" onClick={editCallback}>
+                  <a className="!tw-text-base-content tw-cursor-pointer" onClick={() => item.layer?.customEditLink? navigate(item.layer.customEditLink) : editCallback}>
                     <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor">
                       <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                     </svg>
                   </a>
                 </li>}
-
+                {((api?.updateItem && hasUserPermission(api.collectionName!, "update", item))) && <li>
+                  <a className="!tw-text-base-content tw-cursor-pointer" onClick={() => setSelectPosition(item)}>
+                  <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512 512" className="tw-w-5 tw-h-5" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M256 0c17.7 0 32 14.3 32 32V42.4c93.7 13.9 167.7 88 181.6 181.6H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H469.6c-13.9 93.7-88 167.7-181.6 181.6V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V469.6C130.3 455.7 56.3 381.7 42.4 288H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H42.4C56.3 130.3 130.3 56.3 224 42.4V32c0-17.7 14.3-32 32-32zM107.4 288c12.5 58.3 58.4 104.1 116.6 116.6V384c0-17.7 14.3-32 32-32s32 14.3 32 32v20.6c58.3-12.5 104.1-58.4 116.6-116.6H384c-17.7 0-32-14.3-32-32s14.3-32 32-32h20.6C392.1 165.7 346.3 119.9 288 107.4V128c0 17.7-14.3 32-32 32s-32-14.3-32-32V107.4C165.7 119.9 119.9 165.7 107.4 224H128c17.7 0 32 14.3 32 32s-14.3 32-32 32H107.4zM256 224a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path>
+                  </svg>
+                  </a>
+                </li>}
                 {api?.deleteItem && hasUserPermission(api.collectionName!, "delete", item) && <li>
                   <a className='tw-cursor-pointer !tw-text-error' onClick={openDeleteModal}>
                     {loading ? <span className="tw-loading tw-loading-spinner tw-loading-sm"></span>

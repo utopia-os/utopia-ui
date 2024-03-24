@@ -1,7 +1,7 @@
 import { TileLayer, MapContainer, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import * as React from "react";
-import { LayerProps, UtopiaMapProps } from "../../types"
+import { Geometry, Item, LayerProps, UtopiaMapProps } from "../../types"
 import "./UtopiaMap.css"
 import { LatLng } from "leaflet";
 import MarkerClusterGroup from 'react-leaflet-cluster'
@@ -12,12 +12,15 @@ import { SearchControl } from "./Subcomponents/Controls/SearchControl";
 import { LayerControl } from "./Subcomponents/Controls/LayerControl";
 import { QuestControl } from "./Subcomponents/Controls/QuestControl";
 import { Control } from "./Subcomponents/Controls/Control";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { TagsControl } from "./Subcomponents/Controls/TagsControl";
+import { useSelectPosition, useSetSelectPosition } from "./hooks/useSetItemPosition";
+import { useUpdateItem } from "./hooks/useItems";
+import { toast } from "react-toastify";
 
 
 export interface MapEventListenerProps {
-    selectNewItemPosition: LayerProps | null,
+    selectNewItemPosition: LayerProps | Item | null,
     setSelectNewItemPosition: React.Dispatch<any>,
     setItemFormPopup: React.Dispatch<React.SetStateAction<any>>
 }
@@ -45,31 +48,53 @@ function UtopiaMap({
 
                 console.log(e.latlng.lat + ',' + e.latlng.lng);
                 if (props.selectNewItemPosition != null) {
-                    props.setItemFormPopup({ layer: props.selectNewItemPosition, position: e.latlng })
-                    props.setSelectNewItemPosition(null)
+                    if ('menuIcon' in props.selectNewItemPosition) {
+                        props.setItemFormPopup({ layer: props.selectNewItemPosition, position: e.latlng })
+                        props.setSelectNewItemPosition(null)
+                    }
+                    if ('position' in props.selectNewItemPosition) {
+                        const position = new Geometry(e.latlng.lng,e.latlng.lat);
+                        itemUpdate({...selectNewItemPosition as Item, position: position })
+                        setSelectNewItemPosition(null);
+                    }
                 }
             },
             moveend: (e) => {
                 console.log(e);
             }
-
-
         })
         return null
     }
 
-    const [selectNewItemPosition, setSelectNewItemPosition] = useState<LayerProps | null>(null);
-    const [itemFormPopup, setItemFormPopup] = useState<ItemFormPopupProps | null>(null);
+    const itemUpdate = async (updatedItem: Item) => {
+        console.log(updatedItem);
+        console.log(updatedItem?.layer?.api?.updateItem!);
+        let success = false;
+        try {
+            await updatedItem?.layer?.api?.updateItem!({id: updatedItem.id, position: updatedItem.position })
+            success = true;
+        } catch (error) {
+            toast.error(error.toString());
+        }
+        if (success) {
+            updateItem(updatedItem)
+            toast.success("Item position updated");
+            navigate("/" + updatedItem.layer?.name + "/" + updatedItem.id)
+        }
+    }
 
+    const selectNewItemPosition = useSelectPosition();
+    const setSelectNewItemPosition = useSetSelectPosition();
     const clusterRef = React.useRef();
-
     const location = useLocation();
+    const updateItem = useUpdateItem();
+    const navigate = useNavigate();
+
+    const [itemFormPopup, setItemFormPopup] = useState<ItemFormPopupProps | null>(null);
 
     useEffect(() => {
         let params = new URLSearchParams(location.search);
         let urlPosition = params.get("position");
-
-
     }, [location]);
 
 
@@ -105,6 +130,10 @@ function UtopiaMap({
                 <AddButton triggerAction={setSelectNewItemPosition}></AddButton>
                 {selectNewItemPosition != null &&
                     <div className="tw-button tw-z-1000 tw-absolute tw-right-5 tw-top-4 tw-drop-shadow-md">
+                        <label className="tw-btn tw-btn-sm tw-rounded-2xl tw-btn-circle tw-btn-ghost hover:tw-bg-transparent tw-absolute tw-right-0 tw-top-0 tw-text-gray-600" onClick={() => {
+                            setSelectNewItemPosition(null)
+                        }}>
+                            <p className='tw-text-center '>✕</p></label>
                         <div className="tw-alert tw-bg-base-100 tw-text-base-content">
                             <div>
                                 <span>Select {selectNewItemPosition.name} position!</span>

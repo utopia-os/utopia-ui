@@ -14,7 +14,6 @@ import { hashTagRegex } from '../../Utils/HashTagRegex';
 import { randomColor } from '../../Utils/RandomColor';
 import { useAuth } from '../Auth';
 import { useLayers } from '../Map/hooks/useLayers';
-import { PermissionsProvider } from '../Map/hooks/usePermissions';
 import { HeaderView } from '../Map/Subcomponents/ItemPopupComponents/HeaderView';
 
 

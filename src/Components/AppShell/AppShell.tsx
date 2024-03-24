@@ -13,6 +13,7 @@ import { FilterProvider } from '../Map/hooks/useFilter'
 import { ItemsProvider } from '../Map/hooks/useItems'
 import { LayersProvider } from '../Map/hooks/useLayers'
 import { LeafletRefsProvider } from '../Map/hooks/useLeafletRefs'
+import { SelectPositionProvider } from '../Map/hooks/useSetItemPosition'
 
 export function AppShell({ appName, nameWidth, children, assetsApi }: { appName: string, nameWidth?: number, children: React.ReactNode, assetsApi: AssetsApi }) {
 
@@ -26,31 +27,33 @@ export function AppShell({ appName, nameWidth, children, assetsApi }: { appName:
                 <LayersProvider initialLayers={[]}>
                     <FilterProvider initialTags={[]}>
                         <ItemsProvider initialItems={[]}>
-                            <LeafletRefsProvider initialLeafletRefs={{}}>
-                                <QueryClientProvider client={queryClient}>
-                                    <BrowserRouter>
-                                        <AssetsProvider>
-                                            <SetAssetsApi assetsApi={assetsApi}></SetAssetsApi>
-                                            <QuestsProvider initialOpen={true}>
-                                                <ToastContainer position="top-right"
-                                                    autoClose={2000}
-                                                    hideProgressBar
-                                                    newestOnTop={false}
-                                                    closeOnClick
-                                                    rtl={false}
-                                                    pauseOnFocusLoss
-                                                    draggable
-                                                    pauseOnHover
-                                                    theme="light" />
-                                                <NavBar appName={appName} nameWidth={nameWidth}></NavBar>
-                                                <div id="app-content" className="tw-flex tw-!pl-[77px]">
-                                                    {children}
-                                                </div>
-                                            </QuestsProvider>
-                                        </AssetsProvider>
-                                    </BrowserRouter>
-                                </QueryClientProvider>
-                            </LeafletRefsProvider>
+                            <SelectPositionProvider>
+                                <LeafletRefsProvider initialLeafletRefs={{}}>
+                                    <QueryClientProvider client={queryClient}>
+                                        <BrowserRouter>
+                                            <AssetsProvider>
+                                                <SetAssetsApi assetsApi={assetsApi}></SetAssetsApi>
+                                                <QuestsProvider initialOpen={true}>
+                                                    <ToastContainer position="top-right"
+                                                        autoClose={2000}
+                                                        hideProgressBar
+                                                        newestOnTop={false}
+                                                        closeOnClick
+                                                        rtl={false}
+                                                        pauseOnFocusLoss
+                                                        draggable
+                                                        pauseOnHover
+                                                        theme="light" />
+                                                    <NavBar appName={appName} nameWidth={nameWidth}></NavBar>
+                                                    <div id="app-content" className="tw-flex tw-!pl-[77px]">
+                                                        {children}
+                                                    </div>
+                                                </QuestsProvider>
+                                            </AssetsProvider>
+                                        </BrowserRouter>
+                                    </QueryClientProvider>
+                                </LeafletRefsProvider>
+                            </SelectPositionProvider>
                         </ItemsProvider>
                     </FilterProvider>
                 </LayersProvider>

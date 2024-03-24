@@ -3,7 +3,6 @@ import { useAddItem, useItems, useRemoveItem, useUpdateItem } from '../Map/hooks
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react';
 import { Item } from '../../types';
-import { getValue } from '../../Utils/GetValue';
 import { useMap } from 'react-leaflet';
 import { LatLng } from 'leaflet';
 import { PopupStartEndInput, StartEndView, TextView } from '../Map';
@@ -20,6 +19,8 @@ import { useLayers } from '../Map/hooks/useLayers';
 import { ActionButton } from './ActionsButton';
 import { LinkedItemsHeaderView } from './LinkedItemsHeaderView';
 import { HeaderView } from '../Map/Subcomponents/ItemPopupComponents/HeaderView';
+import { useSelectPosition } from '../Map/hooks/useSetItemPosition';
+import { useLeafletRefs } from '../Map/hooks/useLeafletRefs';
 
 export function OverlayItemProfile() {
 
@@ -33,6 +34,7 @@ export function OverlayItemProfile() {
     const [updatePermission, setUpdatePermission] = useState<boolean>(false);
 
     const layers = useLayers();
+    const selectPosition = useSelectPosition();
 
     const removeItem = useRemoveItem();
 
@@ -97,9 +99,9 @@ export function OverlayItemProfile() {
     }, [location, items, activeTab])
 
 
-    useEffect(() => {       
+    useEffect(() => {
         let params = new URLSearchParams(location.search);
-        let urlTab = params.get("tab");        
+        let urlTab = params.get("tab");
         urlTab ? setActiveTab(Number(urlTab)) : setActiveTab(1);
     }, [location])
 
@@ -117,6 +119,14 @@ export function OverlayItemProfile() {
     useEffect(() => {
         item && item.user_created && hasUserPermission("items", "update", item) && setUpdatePermission(true);
     }, [item])
+
+
+    const [selecting, setSelecting] = useState<boolean>(false);
+
+    useEffect(() => {
+        selectPosition && map.closePopup();
+    }, [selectPosition])
+
 
 
     const submitNewItem = async (evt: any, type: string) => {
@@ -203,129 +213,133 @@ export function OverlayItemProfile() {
         setLoading(true);
         let success = false;
         try {
-          await item.layer?.api?.deleteItem!(item.id)
-          success = true;
+            await item.layer?.api?.deleteItem!(item.id)
+            success = true;
         } catch (error) {
-          toast.error(error.toString());
+            toast.error(error.toString());
         }
         if (success) {
-          removeItem(item);
-          toast.success("Item deleted");
+            removeItem(item);
+            toast.success("Item deleted");
         }
         setLoading(false);
         map.closePopup();
         let params = new URLSearchParams(window.location.search);
         window.history.pushState({}, "", "/" + `${params ? `?${params}` : ""}`);
         navigate("/");
-      }
-    
-    
+    }
+
+
 
     return (
-        <MapOverlayPage className='tw-mx-4 tw-mt-4 tw-max-h-[calc(100dvh-96px)] tw-h-[calc(100dvh-96px)] md:tw-w-[calc(50%-32px)] tw-w-[calc(100%-32px)] tw-min-w-80 tw-max-w-3xl !tw-left-auto tw-top-0 tw-bottom-0'>
-            {item &&
-                <>
-                    <HeaderView api={item.layer?.api} item={item} deleteCallback={handleDelete} editCallback={ () => navigate("/edit-item/"+item.id)} big/>
+        <>
+            {item &&    
+                <MapOverlayPage className={`tw-mx-4 tw-mt-4 tw-max-h-[calc(100dvh-96px)] tw-h-[calc(100dvh-96px)] md:tw-w-[calc(50%-32px)] tw-w-[calc(100%-32px)] tw-min-w-80 tw-max-w-3xl !tw-left-auto tw-top-0 tw-bottom-0 tw-transition-opacity tw-duration-500 ${!selectPosition ? 'tw-opacity-100 tw-pointer-events-auto' : 'tw-opacity-0 tw-pointer-events-none'}`}>
+
+                    <>
+                        <HeaderView api={item.layer?.api} item={item} deleteCallback={handleDelete} editCallback={() => navigate("/edit-item/" + item.id)} big />
 
 
 
 
-                    <div className='tw-h-full'>
+                        <div className='tw-h-full'>
 
-                        <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-2 tw-mb-2">
-                            <input type="radio" name="my_tabs_2" role="tab" className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`} aria-label="Info" checked={activeTab == 1 && true} onChange={() => updateActiveTab(1)} />
-                            <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-4 tw-mb-4 tw-overflow-x-hidden">
-                                <TextView item={item} />
-                            </div>
+                            <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-2 tw-mb-2">
+                                <input type="radio" name="my_tabs_2" role="tab" className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`} aria-label="Info" checked={activeTab == 1 && true} onChange={() => updateActiveTab(1)} />
+                                <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-4 tw-mb-4 tw-overflow-x-hidden">
+                                    <TextView item={item} />
+                                </div>
 
-                            <input type="radio" name="my_tabs_2" role="tab" className="tw-tab [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Projects" checked={activeTab == 2 && true} onChange={() => updateActiveTab(2)} />
-                            <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto tw-pt-4 tw-pb-1 -tw-mx-4 tw-overflow-x-hidden" >
-                                <div className='tw-h-full'>
-                                    <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-2 tw-pb-5'>
-                                        {relations && relations.map(i => {
-                                            if (i.type == 'project') return (
+                                <input type="radio" name="my_tabs_2" role="tab" className="tw-tab [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Projects" checked={activeTab == 2 && true} onChange={() => updateActiveTab(2)} />
+                                <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto tw-pt-4 tw-pb-1 -tw-mx-4 tw-overflow-x-hidden" >
+                                    <div className='tw-h-full'>
+                                        <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-1 2xl:tw-grid-cols-2 tw-pb-5'>
+                                            {relations && relations.map(i => {
+                                                if (i.type == 'project') return (
 
-                                                <div key={i.id} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-4 tw-mb-4 tw-h-fit' onClick={() => navigate('/item/' + i.id)}>
-                                                    <LinkedItemsHeaderView unlinkPermission={updatePermission} loading={loading} item={i} unlinkCallback={unlinkItem} />
+                                                    <div key={i.id} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-4 tw-mb-4 tw-h-fit' onClick={() => navigate('/item/' + i.id)}>
+                                                        <LinkedItemsHeaderView unlinkPermission={updatePermission} loading={loading} item={i} unlinkCallback={unlinkItem} />
 
-                                                    <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
-                                                        <TextView truncate item={i} />
+                                                        <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
+                                                            <TextView truncate item={i} />
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                            )
-                                            else return null
-                                        })}
-                                        {addItemPopupType == "project" ?
-                                            <form ref={tabRef} autoComplete='off' onSubmit={e => submitNewItem(e, addItemPopupType)} >
+                                                )
+                                                else return null
+                                            })}
+                                            {addItemPopupType == "project" ?
+                                                <form ref={tabRef} autoComplete='off' onSubmit={e => submitNewItem(e, addItemPopupType)} >
 
-                                                <div className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-6 tw-mb-4'>
-                                                    <label className="tw-btn tw-btn-sm tw-rounded-2xl tw-btn-circle tw-btn-ghost hover:tw-bg-transparent tw-absolute tw-right-0 tw-top-0 tw-text-gray-600" onClick={() => {
-                                                        setAddItemPopupType("")
-                                                    }}>
-                                                        <p className='tw-text-center '>✕</p></label>
-                                                    <TextInput type="text" placeholder="Name" dataField="name" defaultValue={""} inputStyle='' />
-                                                    <TextAreaInput placeholder="Text" dataField="text" defaultValue={""} inputStyle='tw-h-40 tw-mt-5' />
-                                                    <div className='tw-flex tw-justify-center'>
-                                                        <button className={loading ? 'tw-btn tw-btn-disabled tw-mt-5 tw-place-self-center' : 'tw-btn tw-mt-5 tw-place-self-center'} type='submit'>{loading ? <span className="tw-loading tw-loading-spinner"></span> : 'Save'}</button>
+                                                    <div className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-6 tw-mb-4'>
+                                                        <label className="tw-btn tw-btn-sm tw-rounded-2xl tw-btn-circle tw-btn-ghost hover:tw-bg-transparent tw-absolute tw-right-0 tw-top-0 tw-text-gray-600" onClick={() => {
+                                                            setAddItemPopupType("")
+                                                        }}>
+                                                            <p className='tw-text-center '>✕</p></label>
+                                                        <TextInput type="text" placeholder="Name" dataField="name" defaultValue={""} inputStyle='' />
+                                                        <TextAreaInput placeholder="Text" dataField="text" defaultValue={""} inputStyle='tw-h-40 tw-mt-5' />
+                                                        <div className='tw-flex tw-justify-center'>
+                                                            <button className={loading ? 'tw-btn tw-btn-disabled tw-mt-5 tw-place-self-center' : 'tw-btn tw-mt-5 tw-place-self-center'} type='submit'>{loading ? <span className="tw-loading tw-loading-spinner"></span> : 'Save'}</button>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </form> : <></>
-                                        }
-                                        {updatePermission && <ActionButton collection="items" item={item} existingRelations={relations} itemType={"project"} triggerItemSelected={linkItem} triggerAddButton={() => { setAddItemPopupType("project"); scroll() }} color={item.color}></ActionButton>}
+                                                </form> : <></>
+                                            }
+                                            {updatePermission && <ActionButton collection="items" item={item} existingRelations={relations} itemType={"project"} triggerItemSelected={linkItem} triggerAddButton={() => { setAddItemPopupType("project"); scroll() }} color={item.color}></ActionButton>}
 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Events" checked={activeTab == 3 && true} onChange={() => updateActiveTab(3)} />
-                            <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto tw-pt-4 tw-pb-1  -tw-mx-4 tw-overflow-x-hidden">
-                                <div className='tw-h-full'>
-                                    <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-2'>
-                                        {relations && relations.map(i => {
-                                            if (i.type == 'event') return (
+                                <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Events" checked={activeTab == 3 && true} onChange={() => updateActiveTab(3)} />
+                                <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto tw-pt-4 tw-pb-1  -tw-mx-4 tw-overflow-x-hidden">
+                                    <div className='tw-h-full'>
+                                        <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-1 2xl:tw-grid-cols-2'>
+                                            {relations && relations.map(i => {
+                                                if (i.type == 'event') return (
 
-                                                <div key={i.id} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-6 tw-mb-4' onClick={() => navigate('/item/' + i.id)}>
-                                                    <LinkedItemsHeaderView unlinkPermission={updatePermission} item={i} unlinkCallback={unlinkItem} loading={loading} />
-                                                    <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
-                                                        <StartEndView item={i}></StartEndView>
-                                                        <TextView truncate item={i} />
+                                                    <div key={i.id} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-6 tw-mb-4' onClick={() => navigate('/item/' + i.id)}>
+                                                        <LinkedItemsHeaderView unlinkPermission={updatePermission} item={i} unlinkCallback={unlinkItem} loading={loading} />
+                                                        <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
+                                                            <StartEndView item={i}></StartEndView>
+                                                            <TextView truncate item={i} />
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                            )
-                                            else return null
-                                        })}
-                                        {addItemPopupType == "event" ?
-                                            <form autoComplete='off' onSubmit={e => submitNewItem(e, addItemPopupType)} >
+                                                )
+                                                else return null
+                                            })}
+                                            {addItemPopupType == "event" ?
+                                                <form autoComplete='off' onSubmit={e => submitNewItem(e, addItemPopupType)} >
 
-                                                <div className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-4 tw-mb-4'>
-                                                    <label className="tw-btn tw-btn-sm tw-rounded-2xl tw-btn-circle tw-btn-ghost hover:tw-bg-transparent tw-absolute tw-right-0 tw-top-0 tw-text-gray-600" onClick={() => {
-                                                        setAddItemPopupType("")
-                                                    }}>
-                                                        <p className='tw-text-center '>✕</p></label>
-                                                    <TextInput type="text" placeholder="Name" dataField="name" defaultValue={""} inputStyle='' />
-                                                    <PopupStartEndInput></PopupStartEndInput>
-                                                    <TextAreaInput placeholder="Text" dataField="text" defaultValue={""} inputStyle='tw-h-40 tw-mt-5' />
-                                                    <div className='tw-flex tw-justify-center'>
-                                                        <button className={loading ? 'tw-btn tw-btn-disabled tw-mt-5 tw-place-self-center' : 'tw-btn tw-mt-5 tw-place-self-center'} type='submit'>{loading ? <span className="tw-loading tw-loading-spinner"></span> : 'Save'}</button>
+                                                    <div className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-4 tw-mb-4'>
+                                                        <label className="tw-btn tw-btn-sm tw-rounded-2xl tw-btn-circle tw-btn-ghost hover:tw-bg-transparent tw-absolute tw-right-0 tw-top-0 tw-text-gray-600" onClick={() => {
+                                                            setAddItemPopupType("")
+                                                        }}>
+                                                            <p className='tw-text-center '>✕</p></label>
+                                                        <TextInput type="text" placeholder="Name" dataField="name" defaultValue={""} inputStyle='' />
+                                                        <PopupStartEndInput></PopupStartEndInput>
+                                                        <TextAreaInput placeholder="Text" dataField="text" defaultValue={""} inputStyle='tw-h-40 tw-mt-5' />
+                                                        <div className='tw-flex tw-justify-center'>
+                                                            <button className={loading ? 'tw-btn tw-btn-disabled tw-mt-5 tw-place-self-center' : 'tw-btn tw-mt-5 tw-place-self-center'} type='submit'>{loading ? <span className="tw-loading tw-loading-spinner"></span> : 'Save'}</button>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </form> : <></>
-                                        }
-                                        {updatePermission && <ActionButton collection="items" item={item} existingRelations={relations} itemType={"event"} triggerItemSelected={linkItem} triggerAddButton={() => { setAddItemPopupType("event"); scroll() }} color={item.color}></ActionButton>}
+                                                </form> : <></>
+                                            }
+                                            {updatePermission && <ActionButton collection="items" item={item} existingRelations={relations} itemType={"event"} triggerItemSelected={linkItem} triggerAddButton={() => { setAddItemPopupType("event"); scroll() }} color={item.color}></ActionButton>}
 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Friends" checked={activeTab == 4 && true} onChange={() => updateActiveTab(4)} />
-                            <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-1 tw-overflow-x-hidden">
+                                <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Friends" checked={activeTab == 4 && true} onChange={() => updateActiveTab(4)} />
+                                <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-1 tw-overflow-x-hidden">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </>
+                    </>
+
+                </MapOverlayPage >
             }
-        </MapOverlayPage >
+        </>
     )
 }
 

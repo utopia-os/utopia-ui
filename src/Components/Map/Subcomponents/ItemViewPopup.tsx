@@ -61,7 +61,7 @@ export const ItemViewPopup = React.forwardRef((props: ItemViewPopupProps, ref: a
   return (
     <LeafletPopup ref={ref} maxHeight={377} minWidth={275} maxWidth={275} autoPanPadding={[20, 80]}>
       <div className='tw-bg-base-100 tw-text-base-content'>
-        <HeaderView api={props.item.layer?.api} item={props.item} editCallback={handleEdit} deleteCallback={handleDelete} />
+        <HeaderView api={props.item.layer?.api} item={props.item} editCallback={handleEdit} deleteCallback={handleDelete} updatePosition/>
         <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
           {props.children ?
 

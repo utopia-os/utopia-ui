@@ -47,12 +47,12 @@ function UtopiaMap({
                 document.querySelector('meta[property="og:description"]')?.setAttribute("content", `${document.querySelector('meta[name="description"]')?.getAttribute("content")}`);
 
                 console.log(e.latlng.lat + ',' + e.latlng.lng);
-                if (props.selectNewItemPosition != null) {
-                    if ('menuIcon' in props.selectNewItemPosition) {
+                if (selectNewItemPosition != null) {
+                    if ('menuIcon' in selectNewItemPosition) {
                         props.setItemFormPopup({ layer: props.selectNewItemPosition, position: e.latlng })
                         props.setSelectNewItemPosition(null)
                     }
-                    if ('position' in props.selectNewItemPosition) {
+                    if ('position' in selectNewItemPosition) {
                         const position = new Geometry(e.latlng.lng,e.latlng.lat);
                         itemUpdate({...selectNewItemPosition as Item, position: position })
                         setSelectNewItemPosition(null);

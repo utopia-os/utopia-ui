@@ -23,6 +23,7 @@ export interface LayerProps {
   api?: ItemsApi<any>,
   itemType: string,
   itemNameField?: string,
+  itemSubnameField?: string,
   itemTextField?: string,
   itemAvatarField?: string,
   itemColorField?: string,
@@ -34,6 +35,7 @@ export interface LayerProps {
   itemNeedsField?: string,
   onlyOnePerOwner?: boolean,
   customEditLink?: string,
+  customEditParameter?: string,
     setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>,
     itemFormPopup?: ItemFormPopupProps | null,
   clusterRef?: any
@@ -53,6 +55,7 @@ export class Item {
   layer?: LayerProps;
   relations?: Relation[];
   parent?:string;
+  subname?: string;
   [key: string]: any;
   constructor(id:string,name:string,text:string,position:Geometry, layer?: LayerProps, api?: ItemsApi<any>){
     this.id = id;

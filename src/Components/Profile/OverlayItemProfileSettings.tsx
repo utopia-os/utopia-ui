@@ -22,6 +22,7 @@ export function OverlayItemProfileSettings() {
 
     const [id, setId] = useState<string>("");
     const [name, setName] = useState<string>("");
+    const [subname, setSubname] = useState<string>("");
     const [text, setText] = useState<string>("");
     const [image, setImage] = useState<string>("");
     const [color, setColor] = useState<string>("");
@@ -68,7 +69,7 @@ export function OverlayItemProfileSettings() {
         
 
 
-        changedItem = { id: id, name: name, text: text, color: color, position: item.position, ...image.length > 10 && { image: image }};
+        changedItem = { id: id, name: name, subname: subname, text: text, color: color, position: item.position, ...image.length > 10 && { image: image }};
         // update profile item in current state
         //const item = items.find(i => i.layer?.itemOwnerField && getValue(i, i.layer?.itemOwnerField).id === id);
 
@@ -108,7 +109,10 @@ export function OverlayItemProfileSettings() {
                     <div className="tw-flex">
                         <AvatarWidget avatar={image} setAvatar={setImage}/>
                         <ColorPicker color={color? color : "#3D3846"} onChange={setColor} className={"-tw-left-6 tw-top-14 -tw-mr-6"} />
-                        <TextInput placeholder="Name" defaultValue={item?.name ? item.name : ""} updateFormValue={(v) => setName(v)} containerStyle='tw-grow tw-ml-6 tw-my-auto ' />
+                        <div className='tw-grow tw-mr-4'>
+                            <TextInput placeholder="Name" defaultValue={item?.name ? item.name : ""} updateFormValue={(v) => setName(v)} containerStyle='tw-grow tw-input-md' />
+                            <TextInput placeholder="Subtitle" defaultValue={item?.subname ? item.subname : ""} updateFormValue={(v) => setSubname(v)} containerStyle='tw-grow tw-input-sm tw-px-4 tw-mt-1' />
+                        </div>
                     </div>
 
 

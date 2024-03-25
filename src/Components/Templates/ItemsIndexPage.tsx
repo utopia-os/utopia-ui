@@ -23,7 +23,7 @@ type breadcrumb = {
 }
 
 
-export const ItemsIndexPage = ({ api, url, parameterField, breadcrumbs, itemNameField, itemTextField, itemImageField, itemSymbolField, children }: { api: ItemsApi<any>, url: string, parameterField: string, breadcrumbs: Array<breadcrumb>, itemNameField: string, itemTextField: string, itemImageField: string, itemSymbolField: string, children?: ReactNode }) => {
+export const ItemsIndexPage = ({ api, url, parameterField, breadcrumbs, itemNameField, itemTextField, itemImageField, itemSymbolField, itemSubnameField, children }: { api: ItemsApi<any>, url: string, parameterField: string, breadcrumbs: Array<breadcrumb>, itemNameField: string, itemTextField: string, itemImageField: string, itemSymbolField: string, itemSubnameField: string, children?: ReactNode }) => {
 
   console.log(itemSymbolField);
 
@@ -47,13 +47,10 @@ export const ItemsIndexPage = ({ api, url, parameterField, breadcrumbs, itemName
     setItems(items as any);
   }
 
-  const assetsApi = useAssetApi();
   const navigate = useNavigate();
 
   const tags = useTags();
   const addTag = useAddTag();
-  const addItem = useAddItem();
-  const resetFilterTags = useResetFilterTags();
   const { user } = useAuth();
 
 
@@ -138,7 +135,7 @@ export const ItemsIndexPage = ({ api, url, parameterField, breadcrumbs, itemName
             items?.map((i, k) => {
               return (
                 <div key={k} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-p-4 tw-mb-4 tw-h-fit' onClick={() => navigate(url + getValue(i, parameterField))}>
-                  <HeaderView loading={loading} item={i} api={api} itemAvatarField={itemImageField} itemNameField={itemNameField} editCallback={() => navigate("/edit-item/"+i.id)} deleteCallback={()=>deleteItem(i)}></HeaderView>
+                  <HeaderView loading={loading} item={i} api={api} itemAvatarField={itemImageField} itemNameField={itemNameField} itemSubnameField={itemSubnameField} editCallback={() => navigate("/edit-item/"+i.id)} deleteCallback={()=>deleteItem(i)}></HeaderView>
                   <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
                     <TextView truncate item={i} itemTextField={itemTextField} />
                   </div>

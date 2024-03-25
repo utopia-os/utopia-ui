@@ -18,7 +18,7 @@ function useSelectPositionManager(): {
     setMarkerClicked: React.Dispatch<React.SetStateAction<Item>>;
 } {
     const [selectPosition, setSelectPosition] = useState<LayerProps | null | Item>(null);
-    const [markerClicked, setMarkerClicked] = useState<Item>();
+    const [markerClicked, setMarkerClicked] = useState<Item | null>();
     const updateItem = useUpdateItem();
     const hasUserPermission = useHasUserPermission();
 
@@ -43,6 +43,7 @@ function useSelectPositionManager(): {
                 await linkItem(updatedItem.id);
                 toast.success("Item position updated");
                 setSelectPosition(null);
+                setMarkerClicked(null);
             }
         }
         else {
@@ -55,9 +56,6 @@ function useSelectPositionManager(): {
     const linkItem = async (id: string) => {
         if (markerClicked) {
             let new_relations = markerClicked.relations || [];
-            console.log(new_relations);
-            console.log(id);
-            
             
             if (!new_relations.some(r => r.related_items_id == id)) {
                 new_relations?.push({ items_id: markerClicked.id, related_items_id: id })
@@ -79,9 +77,6 @@ function useSelectPositionManager(): {
     }
     return { selectPosition, setSelectPosition, setMarkerClicked };
 }
-
-
-
 
 export const SelectPositionProvider: React.FunctionComponent<{
     children?: React.ReactNode

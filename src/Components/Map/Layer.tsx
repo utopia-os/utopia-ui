@@ -30,6 +30,7 @@ export const Layer = ({
     api,
     itemType,
     itemNameField = 'name',
+    itemSubnameField,
     itemTextField = 'text',
     itemAvatarField,
     itemColorField,
@@ -41,6 +42,7 @@ export const Layer = ({
     itemNeedsField,
     onlyOnePerOwner = false,
     customEditLink,
+    customEditParameter,
     setItemFormPopup,
     itemFormPopup,
     clusterRef
@@ -55,7 +57,6 @@ export const Layer = ({
     const addMarker = useAddMarker();
     const addPopup = useAddPopup();
     const leafletRefs = useLeafletRefs();
-    const resetFilterTags = useResetFilterTags();
 
     const location = useLocation();
 
@@ -76,8 +77,8 @@ export const Layer = ({
 
 
     useEffect(() => {
-        data && setItemsData({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemType, itemNameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, setItemFormPopup, itemFormPopup, clusterRef });
-        api && setItemsApi({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemType, itemNameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, setItemFormPopup, itemFormPopup, clusterRef });
+        data && setItemsData({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemType, itemNameField, itemSubnameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, customEditParameter, setItemFormPopup, itemFormPopup, clusterRef });
+        api && setItemsApi({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemType, itemNameField, itemSubnameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, customEditParameter, setItemFormPopup, itemFormPopup, clusterRef });
     }, [data, api])
 
     useMapEvents({
@@ -103,9 +104,8 @@ export const Layer = ({
                 if (window.location.pathname.split("/")[2]) {
                     const id = window.location.pathname.split("/")[2]
                     const marker = leafletRefs[id]?.marker;
-                    resetFilterTags();
-                    if (marker && filterTags.length == 0) {                        
-                        marker !== null && clusterRef?.zoomToShowLayer(marker, () => {
+                    if (marker) {                        
+                        marker && clusterRef.hasLayer(marker) && clusterRef?.zoomToShowLayer(marker, () => {
                             marker.openPopup();
                         });
                         const item = leafletRefs[id]?.item;

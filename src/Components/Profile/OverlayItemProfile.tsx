@@ -6,7 +6,6 @@ import { Item } from '../../types';
 import { useMap } from 'react-leaflet';
 import { LatLng } from 'leaflet';
 import { PopupStartEndInput, StartEndView, TextView } from '../Map';
-import useWindowDimensions from '../Map/hooks/useWindowDimension';
 import { useAddTag, useTags } from '../Map/hooks/useTags';
 import { useFilterTags, useResetFilterTags } from '../Map/hooks/useFilter';
 import { useHasUserPermission } from '../Map/hooks/usePermissions';
@@ -76,6 +75,8 @@ export function OverlayItemProfile() {
         const itemId = location.pathname.split("/")[2];
         const item = items.find(i => i.id === itemId);
         item && setItem(item);
+        console.log(item);
+        
 
 
     }, [items,location])
@@ -84,23 +85,38 @@ export function OverlayItemProfile() {
         if (item) {
             if(item.position) {
                 const marker = Object.entries(leafletRefs).find(r => r[1].item == item)?.[1].marker;
-                marker && clusterRef?.zoomToShowLayer(marker, () => {
+                marker && clusterRef.hasLayer(marker) && clusterRef?.zoomToShowLayer(marker, () => {
                     const bounds = map.getBounds();
-                    const x = bounds.getEast() - bounds.getWest()
-                    map.setView(new LatLng(item?.position?.coordinates[1]!, item?.position?.coordinates[0]! + x / 4), undefined, {duration: 1})}
+                    const x = bounds.getEast() - bounds.getWest();
+                    map.setView(new LatLng(item?.position?.coordinates[1]!, item?.position?.coordinates[0]! + x / 4), undefined, {duration: 1});
+                }
                 );
             }
             else {
-                const parent = items.find(i => i.id == item.parent);
+                
+                const parent = getFirstAncestor(item);
+
                 const marker = Object.entries(leafletRefs).find(r => r[1].item == parent)?.[1].marker;
-                marker && clusterRef?.zoomToShowLayer(marker, () => {
+                marker && clusterRef.hasLayer(marker) && clusterRef?.zoomToShowLayer(marker, () => {
                     const bounds = map.getBounds();
-                    const x = bounds.getEast() - bounds.getWest()
-                    map.setView(new LatLng(parent?.position?.coordinates[1]!, parent?.position?.coordinates[0]! + x / 4), undefined, {duration: 1})}
+                    const x = bounds.getEast() - bounds.getWest();
+                    map.setView(new LatLng(parent?.position?.coordinates[1]!, parent?.position?.coordinates[0]! + x / 4), undefined, {duration: 1});
+                }
                 );
             }
         }
     }, [item])
+
+    
+    const getFirstAncestor = (item: Item): Item | undefined => {
+        const parent = items.find(i => i.id === item.parent);
+        if (parent?.parent) {
+            return getFirstAncestor(parent);
+        } else {
+            return parent;
+        }
+    };
+    
     
 
 
@@ -120,7 +136,7 @@ export function OverlayItemProfile() {
             const item = items.find(i => i.id == r.related_items_id)
             item && setRelations(current => [...current, item])
         })
-    }, [item])
+    }, [item, activeTab])
 
     useEffect(() => {
         item && item.user_created && hasUserPermission("items", "update", item) && setUpdatePermission(true);
@@ -156,14 +172,14 @@ export function OverlayItemProfile() {
 
         let success = false;
         try {
-            await layer?.api?.createItem!({ ...formItem, id: uuid, type: type });
+            await layer?.api?.createItem!({ ...formItem, id: uuid, type: type, parent: item.id });
             await linkItem(uuid);
             success = true;
         } catch (error) {
             toast.error(error.toString());
         }
         if (success) {
-            addItem({ ...formItem, id: uuid, type: type, layer: layer, user_created: user });
+            addItem({ ...formItem, id: uuid, type: type, layer: layer, user_created: user, parent: item.id });
             toast.success("New item created");
             resetFilterTags();
         }
@@ -238,10 +254,10 @@ export function OverlayItemProfile() {
     return (
         <>
             {item &&
-                <MapOverlayPage key ={item.id} className={`tw-mx-4 tw-mt-4 tw-max-h-[calc(100dvh-96px)] tw-h-[calc(100dvh-96px)] md:tw-w-[calc(50%-32px)] tw-w-[calc(100%-32px)] tw-min-w-80 tw-max-w-3xl !tw-left-auto tw-top-0 tw-bottom-0 tw-transition-opacity tw-duration-500 ${!selectPosition ? 'tw-opacity-100 tw-pointer-events-auto' : 'tw-opacity-0 tw-pointer-events-none'}`}>
+                <MapOverlayPage key ={item.id} className={`tw-mx-4 tw-mt-4 tw-max-h-[calc(100dvh-96px)] tw-h-[calc(100dvh-96px)] md:tw-w-[calc(50%-32px)] tw-w-[calc(100%-32px)] tw-min-w-80 tw-max-w-3xl !tw-left-0 sm:!tw-left-auto tw-top-0 tw-bottom-0 tw-transition-opacity tw-duration-500 ${!selectPosition ? 'tw-opacity-100 tw-pointer-events-auto' : 'tw-opacity-0 tw-pointer-events-none'}`}>
 
                     <>
-                        <HeaderView api={item.layer?.api} item={item} deleteCallback={handleDelete} editCallback={() => navigate("/edit-item/" + item.id)} setPositionCallback={()=>{map.closePopup();setSelectPosition(item); navigate("/")}} big />
+                        <HeaderView api={item.layer?.api} item={item} deleteCallback={handleDelete} editCallback={() => navigate("/edit-item/" + item.id)} setPositionCallback={()=>{map.closePopup();setSelectPosition(item); navigate("/")}} big truncateSubname={false}/>
 
                         <div className='tw-h-full'>
                             <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-2 tw-mb-2">

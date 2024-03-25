@@ -14,9 +14,10 @@ import { QuestControl } from "./Subcomponents/Controls/QuestControl";
 import { Control } from "./Subcomponents/Controls/Control";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { TagsControl } from "./Subcomponents/Controls/TagsControl";
-import { useSelectPosition, useSetSelectPosition } from "./hooks/useSetItemPosition";
+import { useSelectPosition, useSetSelectPosition } from "./hooks/useSelectPosition";
 import { useUpdateItem } from "./hooks/useItems";
 import { toast } from "react-toastify";
+import { useClusterRef, useSetClusterRef } from "./hooks/useClusterRef";
 
 
 export interface MapEventListenerProps {
@@ -44,15 +45,14 @@ function UtopiaMap({
                 window.history.pushState({}, "", `/` + `${params.toString() !== "" ? `?${params}` : ""}`)
                 document.title = document.title.split("-")[0];
                 document.querySelector('meta[property="og:title"]')?.setAttribute("content", document.title);
-                document.querySelector('meta[property="og:description"]')?.setAttribute("content", `${document.querySelector('meta[name="description"]')?.getAttribute("content")}`);
-
+                document.querySelector('meta[property="og:description"]')?.setAttribute("content", `${document.querySelector('meta[name="description"]')?.getAttribute("content")}`);                
                 console.log(e.latlng.lat + ',' + e.latlng.lng);
                 if (selectNewItemPosition != null) {
                     if ('menuIcon' in selectNewItemPosition) {
                         props.setItemFormPopup({ layer: props.selectNewItemPosition, position: e.latlng })
                         props.setSelectNewItemPosition(null)
                     }
-                    if ('position' in selectNewItemPosition) {
+                    if ('text' in selectNewItemPosition) {
                         const position = new Geometry(e.latlng.lng,e.latlng.lat);
                         itemUpdate({...selectNewItemPosition as Item, position: position })
                         setSelectNewItemPosition(null);
@@ -61,14 +61,13 @@ function UtopiaMap({
             },
             moveend: (e) => {
                 console.log(e);
-            }
+            },
+            
         })
         return null
     }
 
     const itemUpdate = async (updatedItem: Item) => {
-        console.log(updatedItem);
-        console.log(updatedItem?.layer?.api?.updateItem!);
         let success = false;
         try {
             await updatedItem?.layer?.api?.updateItem!({id: updatedItem.id, position: updatedItem.position })
@@ -85,10 +84,11 @@ function UtopiaMap({
 
     const selectNewItemPosition = useSelectPosition();
     const setSelectNewItemPosition = useSetSelectPosition();
-    const clusterRef = React.useRef();
     const location = useLocation();
     const updateItem = useUpdateItem();
     const navigate = useNavigate();
+    const setClusterRef = useSetClusterRef();
+    const clusterRef = useClusterRef();
 
     const [itemFormPopup, setItemFormPopup] = useState<ItemFormPopupProps | null>(null);
 
@@ -100,13 +100,11 @@ function UtopiaMap({
 
     return (
         <>
-
-
             <div className={(selectNewItemPosition != null ? "crosshair-cursor-enabled" : undefined)}>
                 <MapContainer ref={mapDivRef} style={{ height: height, width: width }} center={new LatLng(center[0], center[1])} zoom={zoom} zoomControl={false} maxZoom={19}>
                     <Outlet></Outlet>
                     <Control position='topLeft' zIndex="1000">
-                        <SearchControl clusterRef={clusterRef} />
+                        <SearchControl />
                         <TagsControl />
                     </Control>
                     <Control position='bottomLeft' zIndex="999">
@@ -117,7 +115,7 @@ function UtopiaMap({
                         maxZoom={19}
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://tile.osmand.net/hd/{z}/{x}/{y}.png" />
-                    <MarkerClusterGroup ref={clusterRef} showCoverageOnHover chunkedLoading maxClusterRadius={50} removeOutsideVisibleBounds={false}>
+                    <MarkerClusterGroup ref={(r)=> setClusterRef(r)} showCoverageOnHover chunkedLoading maxClusterRadius={50} removeOutsideVisibleBounds={false}>
                         {
                             React.Children.toArray(children).map((child) =>
                                 React.isValidElement<{ setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps>>, itemFormPopup: ItemFormPopupProps | null, clusterRef: React.MutableRefObject<undefined> }>(child) ?

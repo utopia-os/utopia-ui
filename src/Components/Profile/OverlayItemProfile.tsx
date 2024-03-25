@@ -8,7 +8,7 @@ import { LatLng } from 'leaflet';
 import { PopupStartEndInput, StartEndView, TextView } from '../Map';
 import useWindowDimensions from '../Map/hooks/useWindowDimension';
 import { useAddTag, useTags } from '../Map/hooks/useTags';
-import { useResetFilterTags } from '../Map/hooks/useFilter';
+import { useFilterTags, useResetFilterTags } from '../Map/hooks/useFilter';
 import { useHasUserPermission } from '../Map/hooks/usePermissions';
 import { TextAreaInput, TextInput } from '../Input';
 import { hashTagRegex } from '../../Utils/HashTagRegex';
@@ -19,10 +19,17 @@ import { useLayers } from '../Map/hooks/useLayers';
 import { ActionButton } from './ActionsButton';
 import { LinkedItemsHeaderView } from './LinkedItemsHeaderView';
 import { HeaderView } from '../Map/Subcomponents/ItemPopupComponents/HeaderView';
-import { useSelectPosition } from '../Map/hooks/useSetItemPosition';
+import { useSelectPosition, useSetSelectPosition } from '../Map/hooks/useSelectPosition';
+import { useClusterRef } from '../Map/hooks/useClusterRef';
 import { useLeafletRefs } from '../Map/hooks/useLeafletRefs';
 
 export function OverlayItemProfile() {
+
+    const [updatePermission, setUpdatePermission] = useState<boolean>(false);
+    const [relations, setRelations] = useState<Array<Item>>([]);
+    const [activeTab, setActiveTab] = useState<number>(1);
+    const [addItemPopupType, setAddItemPopupType] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(false);
 
     const location = useLocation();
     const items = useItems();
@@ -30,33 +37,20 @@ export function OverlayItemProfile() {
     const [item, setItem] = useState<Item>({} as Item)
     const map = useMap();
     const windowDimension = useWindowDimensions();
-
-    const [updatePermission, setUpdatePermission] = useState<boolean>(false);
-
     const layers = useLayers();
     const selectPosition = useSelectPosition();
-
     const removeItem = useRemoveItem();
-
     const tags = useTags();
-
     const navigate = useNavigate();
-
-    const [relations, setRelations] = useState<Array<Item>>([]);
-
-    const [activeTab, setActiveTab] = useState<number>(1);
-
-    const [addItemPopupType, setAddItemPopupType] = useState<string>("");
-
-    const [loading, setLoading] = useState<boolean>(false);
-
     const addTag = useAddTag();
     const resetFilterTags = useResetFilterTags();
-
+    const filterTags = useFilterTags();
     const addItem = useAddItem();
     const { user } = useAuth();
-
     const hasUserPermission = useHasUserPermission();
+    const setSelectPosition = useSetSelectPosition();
+    const clusterRef = useClusterRef();
+    const leafletRefs = useLeafletRefs();
 
     const tabRef = useRef<HTMLFormElement>(null);
 
@@ -66,11 +60,6 @@ export function OverlayItemProfile() {
 
     useEffect(() => {
         scroll();
-    }, [addItemPopupType])
-
-    useEffect(() => {
-        console.log(addItemPopupType);
-
     }, [addItemPopupType])
 
 
@@ -85,18 +74,31 @@ export function OverlayItemProfile() {
     }
 
     useEffect(() => {
-
         const itemId = location.pathname.split("/")[2];
         const item = items.find(i => i.id === itemId);
         item && setItem(item);
-        const bounds = map.getBounds();
-        const x = bounds.getEast() - bounds.getWest()
-        if (windowDimension.width > 768)
-            if (item?.position && item?.position.coordinates[0])
-                map.setView(new LatLng(item?.position.coordinates[1]!, item?.position.coordinates[0]! + x / 4))
+        resetFilterTags();
+        if (item && filterTags.length == 0) {
+            if(item.position) {
+                const marker = Object.entries(leafletRefs).find(r => r[1].item == item)?.[1].marker;
+                marker && clusterRef?.zoomToShowLayer(marker, () => {
+                    const bounds = map.getBounds();
+                    const x = bounds.getEast() - bounds.getWest()
+                    map.setView(new LatLng(item?.position?.coordinates[1]!, item?.position?.coordinates[0]! + x / 4), undefined, {duration: 1})}
+                );
+            }
+            else {
+                const parent = items.find(i => i.id == item.parent);
+                const marker = Object.entries(leafletRefs).find(r => r[1].item == parent)?.[1].marker;
+                marker && clusterRef?.zoomToShowLayer(marker, () => {
+                    const bounds = map.getBounds();
+                    const x = bounds.getEast() - bounds.getWest()
+                    map.setView(new LatLng(parent?.position?.coordinates[1]!, parent?.position?.coordinates[0]! + x / 4), undefined, {duration: 1})}
+                );
+            }
+        }
 
-
-    }, [location, items, activeTab])
+    }, [items, activeTab, leafletRefs])
 
 
     useEffect(() => {
@@ -120,8 +122,6 @@ export function OverlayItemProfile() {
         item && item.user_created && hasUserPermission("items", "update", item) && setUpdatePermission(true);
     }, [item])
 
-
-    const [selecting, setSelecting] = useState<boolean>(false);
 
     useEffect(() => {
         selectPosition && map.closePopup();
@@ -233,17 +233,13 @@ export function OverlayItemProfile() {
 
     return (
         <>
-            {item &&    
+            {item &&
                 <MapOverlayPage className={`tw-mx-4 tw-mt-4 tw-max-h-[calc(100dvh-96px)] tw-h-[calc(100dvh-96px)] md:tw-w-[calc(50%-32px)] tw-w-[calc(100%-32px)] tw-min-w-80 tw-max-w-3xl !tw-left-auto tw-top-0 tw-bottom-0 tw-transition-opacity tw-duration-500 ${!selectPosition ? 'tw-opacity-100 tw-pointer-events-auto' : 'tw-opacity-0 tw-pointer-events-none'}`}>
 
                     <>
-                        <HeaderView api={item.layer?.api} item={item} deleteCallback={handleDelete} editCallback={() => navigate("/edit-item/" + item.id)} big updatePosition/>
-
-
-
+                        <HeaderView api={item.layer?.api} item={item} deleteCallback={handleDelete} editCallback={() => navigate("/edit-item/" + item.id)} setPositionCallback={()=>{map.closePopup();setSelectPosition(item); navigate("/")}} big />
 
                         <div className='tw-h-full'>
-
                             <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-2 tw-mb-2">
                                 <input type="radio" name="my_tabs_2" role="tab" className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`} aria-label="Info" checked={activeTab == 1 && true} onChange={() => updateActiveTab(1)} />
                                 <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-4 tw-mb-4 tw-overflow-x-hidden">

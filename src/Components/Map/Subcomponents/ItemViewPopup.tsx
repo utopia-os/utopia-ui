@@ -10,6 +10,7 @@ import { LatLng } from 'leaflet'
 import { useNavigate } from 'react-router-dom'
 import { useRemoveItem } from '../hooks/useItems'
 import { toast } from 'react-toastify'
+import { useSetSelectPosition } from '../hooks/useSelectPosition'
 
 
 export interface ItemViewPopupProps {
@@ -26,6 +27,7 @@ export const ItemViewPopup = React.forwardRef((props: ItemViewPopupProps, ref: a
   const [loading, setLoading] = React.useState<boolean>(false);
   const removeItem = useRemoveItem();
   const navigate = useNavigate();
+  const setSelectPosition = useSetSelectPosition();
 
 
   const [infoExpanded, setInfoExpanded] = useState<Boolean>(false);
@@ -61,7 +63,7 @@ export const ItemViewPopup = React.forwardRef((props: ItemViewPopupProps, ref: a
   return (
     <LeafletPopup ref={ref} maxHeight={377} minWidth={275} maxWidth={275} autoPanPadding={[20, 80]}>
       <div className='tw-bg-base-100 tw-text-base-content'>
-        <HeaderView api={props.item.layer?.api} item={props.item} editCallback={handleEdit} deleteCallback={handleDelete} updatePosition/>
+        <HeaderView api={props.item.layer?.api} item={props.item} editCallback={handleEdit} deleteCallback={handleDelete} setPositionCallback={()=>{map.closePopup();setSelectPosition(props.item); navigate("/")}} loading={loading} />
         <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
           {props.children ?
 

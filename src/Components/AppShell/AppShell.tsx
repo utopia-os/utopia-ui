@@ -13,7 +13,8 @@ import { FilterProvider } from '../Map/hooks/useFilter'
 import { ItemsProvider } from '../Map/hooks/useItems'
 import { LayersProvider } from '../Map/hooks/useLayers'
 import { LeafletRefsProvider } from '../Map/hooks/useLeafletRefs'
-import { SelectPositionProvider } from '../Map/hooks/useSetItemPosition'
+import { SelectPositionProvider } from '../Map/hooks/useSelectPosition'
+import { ClusterRefProvider } from '../Map/hooks/useClusterRef'
 
 export function AppShell({ appName, nameWidth, children, assetsApi }: { appName: string, nameWidth?: number, children: React.ReactNode, assetsApi: AssetsApi }) {
 
@@ -32,23 +33,25 @@ export function AppShell({ appName, nameWidth, children, assetsApi }: { appName:
                                     <QueryClientProvider client={queryClient}>
                                         <BrowserRouter>
                                             <AssetsProvider>
-                                                <SetAssetsApi assetsApi={assetsApi}></SetAssetsApi>
-                                                <QuestsProvider initialOpen={true}>
-                                                    <ToastContainer position="top-right"
-                                                        autoClose={2000}
-                                                        hideProgressBar
-                                                        newestOnTop={false}
-                                                        closeOnClick
-                                                        rtl={false}
-                                                        pauseOnFocusLoss
-                                                        draggable
-                                                        pauseOnHover
-                                                        theme="light" />
-                                                    <NavBar appName={appName} nameWidth={nameWidth}></NavBar>
-                                                    <div id="app-content" className="tw-flex tw-!pl-[77px]">
-                                                        {children}
-                                                    </div>
-                                                </QuestsProvider>
+                                                <ClusterRefProvider>
+                                                    <SetAssetsApi assetsApi={assetsApi}></SetAssetsApi>
+                                                    <QuestsProvider initialOpen={true}>
+                                                        <ToastContainer position="top-right"
+                                                            autoClose={2000}
+                                                            hideProgressBar
+                                                            newestOnTop={false}
+                                                            closeOnClick
+                                                            rtl={false}
+                                                            pauseOnFocusLoss
+                                                            draggable
+                                                            pauseOnHover
+                                                            theme="light" />
+                                                        <NavBar appName={appName} nameWidth={nameWidth}></NavBar>
+                                                        <div id="app-content" className="tw-flex tw-!pl-[77px]">
+                                                            {children}
+                                                        </div>
+                                                    </QuestsProvider>
+                                                </ClusterRefProvider>
                                             </AssetsProvider>
                                         </BrowserRouter>
                                     </QueryClientProvider>

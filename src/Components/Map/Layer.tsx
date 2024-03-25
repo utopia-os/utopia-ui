@@ -6,7 +6,7 @@ import { ItemViewPopup } from './Subcomponents/ItemViewPopup'
 import { useAllItemsLoaded, useItems, useSetItemsApi, useSetItemsData } from './hooks/useItems'
 import { useEffect, useState } from 'react'
 import { ItemFormPopup } from './Subcomponents/ItemFormPopup'
-import { useFilterTags, useIsLayerVisible } from './hooks/useFilter'
+import { useFilterTags, useIsLayerVisible, useResetFilterTags } from './hooks/useFilter'
 import { useAddTag, useAllTagsLoaded, useGetItemTags, useTags } from './hooks/useTags'
 import { useAddMarker, useAddPopup, useLeafletRefs } from './hooks/useLeafletRefs'
 import { Popup } from 'leaflet'
@@ -15,6 +15,7 @@ import { getValue } from '../../Utils/GetValue'
 import { hashTagRegex } from '../../Utils/HashTagRegex'
 import { randomColor } from '../../Utils/RandomColor'
 import { encodeTag } from '../../Utils/FormatTags'
+import { useSetMarkerClicked } from './hooks/useSelectPosition'
 
 export const Layer = ({
     data,
@@ -27,6 +28,7 @@ export const Layer = ({
     markerShape = 'circle',
     markerDefaultColor = '#777',
     api,
+    itemType,
     itemNameField = 'name',
     itemTextField = 'text',
     itemAvatarField,
@@ -53,11 +55,14 @@ export const Layer = ({
     const addMarker = useAddMarker();
     const addPopup = useAddPopup();
     const leafletRefs = useLeafletRefs();
+    const resetFilterTags = useResetFilterTags();
 
-    let location = useLocation();
+    const location = useLocation();
 
     const allTagsLoaded = useAllTagsLoaded();
     const allItemsLoaded = useAllItemsLoaded();
+
+    const setMarkerClicked = useSetMarkerClicked();
 
     const tags = useTags();
     const addTag = useAddTag();
@@ -71,16 +76,16 @@ export const Layer = ({
 
 
     useEffect(() => {
-        data && setItemsData({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemNameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, setItemFormPopup, itemFormPopup, clusterRef });
-        api && setItemsApi({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemNameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, setItemFormPopup, itemFormPopup, clusterRef });
+        data && setItemsData({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemType, itemNameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, setItemFormPopup, itemFormPopup, clusterRef });
+        api && setItemsApi({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemType, itemNameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, setItemFormPopup, itemFormPopup, clusterRef });
     }, [data, api])
 
     useMapEvents({
         popupopen: (e) => {
             const item = Object.entries(leafletRefs).find(r => r[1].popup == e.popup)?.[1].item;
             if (item?.layer?.name == name && window.location.pathname.split("/")[2] != item.id) {
-                let params = new URLSearchParams(window.location.search);                                              
-                window.history.pushState({}, "", `/${name}/${item.id}`+ `${params.toString() !== "" ? `?${params}` : ""}`)
+                let params = new URLSearchParams(window.location.search);
+                window.history.pushState({}, "", `/${name}/${item.id}` + `${params.toString() !== "" ? `?${params}` : ""}`)
                 let title = "";
                 if (item.name) title = item.name;
                 else if (item.layer?.itemNameField) title = getValue(item, item.layer.itemNameField);
@@ -98,8 +103,9 @@ export const Layer = ({
                 if (window.location.pathname.split("/")[2]) {
                     const id = window.location.pathname.split("/")[2]
                     const marker = leafletRefs[id]?.marker;
-                    if (marker && marker != null) {
-                        marker !== null && clusterRef?.current?.zoomToShowLayer(marker, () => {
+                    resetFilterTags();
+                    if (marker && filterTags.length == 0) {                        
+                        marker !== null && clusterRef?.zoomToShowLayer(marker, () => {
                             marker.openPopup();
                         });
                         const item = leafletRefs[id]?.item;
@@ -113,7 +119,6 @@ export const Layer = ({
                 }
             }
         }
-
     }
 
     useEffect(() => {
@@ -157,7 +162,7 @@ export const Layer = ({
                             }
 
 
-                            if (allTagsLoaded && allItemsLoaded) {                                
+                            if (allTagsLoaded && allItemsLoaded) {
                                 item[itemTextField].match(hashTagRegex)?.map(tag => {
                                     if ((!tags.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) && !newTagsToAdd.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
                                         const newTag = { id: crypto.randomUUID(), name: tag.slice(1), color: randomColor() };
@@ -188,7 +193,13 @@ export const Layer = ({
                                 <Marker ref={(r) => {
                                     if (!(item.id in leafletRefs && leafletRefs[item.id].marker == r))
                                         r && addMarker(item, r);
-                                }} icon={MarkerIconFactory(markerShape, color1, color2, markerIcon)} key={item.id} position={[latitude, longitude]}>
+                                }}
+                                    eventHandlers={{
+                                        click: () => {
+                                            setMarkerClicked(item)
+                                        },
+                                    }}
+                                    icon={MarkerIconFactory(markerShape, color1, color2, markerIcon)} key={item.id} position={[latitude, longitude]}>
                                     {
                                         (children && React.Children.toArray(children).some(child => React.isValidElement(child) && child.props.__TYPE === "ItemView") ?
                                             React.Children.toArray(children).map((child) =>

@@ -96,7 +96,7 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
                    const item = items.find(item => item.layer == props.layer && item.user_created?.id == user?.id);                   
                    item && removeItem(item);
                 }
-                addItem({...formItem, id: uuid, layer: props.layer, user_created: user});
+                addItem({...formItem, id: uuid, layer: props.layer, user_created: user, type: props.layer.itemType });
                 toast.success("New item created");
                 resetFilterTags();
             } 

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useAddFilterTag, useFilterTags, useResetFilterTags, useSetSearchPhrase } from '../../hooks/useFilter'
+import { useAddFilterTag, useFilterTags, useResetFilterTags } from '../../hooks/useFilter'
 import useWindowDimensions from '../../hooks/useWindowDimension';
 import axios from 'axios';
 import { useRef, useState } from 'react';
@@ -15,10 +15,11 @@ import * as L from 'leaflet';
 import MarkerIconFactory from '../../../../Utils/MarkerIconFactory';
 import { decodeTag } from '../../../../Utils/FormatTags';
 import { useNavigate } from 'react-router-dom';
+import { useClusterRef } from '../../hooks/useClusterRef';
 
 
 
-export const SearchControl = ({ clusterRef }) => {
+export const SearchControl = () => {
 
     const windowDimensions = useWindowDimensions();
     const [popupOpen, setPopupOpen] = useState(false);
@@ -36,6 +37,7 @@ export const SearchControl = ({ clusterRef }) => {
     const addFilterTag = useAddFilterTag();
     const resetFilterTags = useResetFilterTags();
     const filterTags = useFilterTags();
+    const clusterRef = useClusterRef();
 
     useMapEvents({
         popupopen: () => {            
@@ -115,17 +117,9 @@ export const SearchControl = ({ clusterRef }) => {
                             <div key={item.id} className='tw-cursor-pointer hover:tw-font-bold' onClick={() => {
                                 const marker = Object.entries(leafletRefs).find(r => r[1].item == item)?.[1].marker;
                                 if(marker){
-                                    if (filterTags.length > 0) {
-                                        marker !== null && window.history.pushState({}, "", `/${item.layer.name}/${item.id}`)
-                                        resetFilterTags();
-                                        hide();
-                                    }
-                                    else {
-                                        marker !== null && clusterRef?.current?.zoomToShowLayer(marker, () => {
-                                            marker?.openPopup();
-                                            hide();
-                                        });
-                                    }
+                                        navigate(`/${item.layer.name}/${item.id}`)
+                                    
+                    
                                 }
                                 else {
                                     navigate("item/"+item.id)

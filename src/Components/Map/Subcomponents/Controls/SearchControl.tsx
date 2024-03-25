@@ -116,10 +116,9 @@ export const SearchControl = () => {
                         {itemsResults.slice(0, 5).map(item => (
                             <div key={item.id} className='tw-cursor-pointer hover:tw-font-bold' onClick={() => {
                                 const marker = Object.entries(leafletRefs).find(r => r[1].item == item)?.[1].marker;
-                                if(marker){
+                                resetFilterTags();
+                                if(marker && filterTags.length == 0){
                                         navigate(`/${item.layer.name}/${item.id}`)
-                                    
-                    
                                 }
                                 else {
                                     navigate("item/"+item.id)

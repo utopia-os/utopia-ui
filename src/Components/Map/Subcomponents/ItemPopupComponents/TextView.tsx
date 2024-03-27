@@ -86,7 +86,6 @@ export const TextView = ({ item, truncate = false, itemTextField}: { item?: Item
   const CustomExternalLink = ({ href, children }) => (
     <a className='tw-font-bold'
       href={href}
-      target="_blank"
     > {children}</a>
   );
   const CustomHashTagLink = ({ children, tag, item }) => {    

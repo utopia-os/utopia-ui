@@ -2,13 +2,30 @@ import { useAuth } from "../Auth"
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import QuestionMarkIcon from '@heroicons/react/24/outline/QuestionMarkCircleIcon'
-import * as React from "react";
+import { useEffect, useState } from "react";
+import { useItems } from "../Map/hooks/useItems";
+import { Item } from "../../types";
 
 
 export default function NavBar({ appName, nameWidth = 200}: { appName: string, nameWidth?: number }) {
 
 
-  const { isAuthenticated, user, logout, token } = useAuth();
+  const { isAuthenticated, user, logout } = useAuth();
+
+  const [userProfile, setUserProfile] = useState<Item>({}as Item);
+  const items = useItems();
+
+  useEffect(() => {
+    const profile = user && items.find(i => i.user_created.id === user.id && i.type === "user");
+    profile ? setUserProfile(profile) : setUserProfile({id: crypto.randomUUID(), name: user?.first_name, text: ""});
+
+  }, [user, items])
+
+  useEffect(() => {
+    
+  }, [userProfile])
+  
+  
 
   const onLogout = () => {
     toast.promise(
@@ -51,9 +68,9 @@ export default function NavBar({ appName, nameWidth = 200}: { appName: string, n
 
         {isAuthenticated ?
           <div className="tw-flex-none">
-            {user?.avatar ? <div className="tw-avatar">
+            { userProfile?.image? <div className="tw-avatar">
               <div className="tw-w-10 tw-rounded-full">
-                <img src={"https://api.utopia-lab.org/assets/" + user?.avatar + "?access_token=" + token} />
+                <img src={"https://api.utopia-lab.org/assets/" + userProfile.image} />
               </div>
             </div> : <></>}
             <div className='tw-ml-2 tw-mr-2'>{user?.first_name}</div>
@@ -64,7 +81,7 @@ export default function NavBar({ appName, nameWidth = 200}: { appName: string, n
                 </svg>
               </label>
               <ul tabIndex={0} className="tw-menu tw-menu-compact tw-dropdown-content tw-mt-3 tw-p-2 tw-shadow tw-bg-base-100 tw-rounded-box tw-w-52 !tw-z-[10000]">
-                <li><Link to={"/profile-settings"}>Profile</Link></li>
+                <li><Link to={`${userProfile.id && "/edit-item/"+userProfile.id}`}>Profile</Link></li>
                 <li><Link to={"/user-settings"}>Settings</Link></li>
                 <li><a onClick={() => { onLogout() }}>Logout</a></li>
               </ul>

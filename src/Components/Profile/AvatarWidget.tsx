@@ -146,7 +146,8 @@ export const AvatarWidget = ({avatar, setAvatar}:{avatar:string, setAvatar : Rea
                 onClose={() => {
                     setCropModalOpen(false);
                     setImage("");
-                }}>
+                }}
+                closeOnClickOutside={false}>
                 <ReactCrop crop={crop} onChange={(c) => setCrop(c)} aspect={1} >
                     <img src={image} ref={imgRef} onLoad={onImageLoad} />
                 </ReactCrop>

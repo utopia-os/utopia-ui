@@ -64,7 +64,6 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
 
 
 
-
         if(props.item) {
             let success = false;
             try {
@@ -74,6 +73,8 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
                 toast.error(error.toString());
             }
             if(success) {
+                console.log(props.item);
+                
                 updateItem({...props.item, ...formItem});
                 toast.success("Item updated");
             } 
@@ -81,10 +82,12 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
             map.closePopup();
         }
         else {
+            const item = items.find(i => i.user_created.id === user?.id && i.type === props.layer.itemType)
             const uuid = crypto.randomUUID();
             let success = false;
             try {
-                await props.layer.api?.createItem!({...formItem, id: uuid });
+                props.layer.onlyOnePerOwner && item && await props.layer.api?.updateItem!({...formItem, id: item?.id });
+                (!props.layer.onlyOnePerOwner || !item) && await props.layer.api?.createItem!({...formItem, id: uuid,  name: formItem.name ? formItem.name : user?.first_name });
                 success = true;
             } catch (error) {
                 toast.error(error.toString());
@@ -92,11 +95,8 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
             if(success) {
                 console.log(props.layer);
                 
-                if(props.layer.onlyOnePerOwner){
-                   const item = items.find(item => item.layer == props.layer && item.user_created?.id == user?.id);                   
-                   item && removeItem(item);
-                }
-                addItem({...formItem, id: uuid, layer: props.layer, user_created: user, type: props.layer.itemType });
+                props.layer.onlyOnePerOwner && item && updateItem({...item, ...formItem});
+                (!props.layer.onlyOnePerOwner || !item) && addItem({...formItem, name: formItem.name ? formItem.name : user?.first_name , user_created: user, type: props.layer.itemType, id: uuid, layer: props.layer});
                 toast.success("New item created");
                 resetFilterTags();
             } 

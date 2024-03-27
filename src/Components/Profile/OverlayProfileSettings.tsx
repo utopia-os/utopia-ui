@@ -1,6 +1,5 @@
-import * as React from 'react'
 import { useItems, useUpdateItem } from '../Map/hooks/useItems'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getValue } from '../../Utils/GetValue';
 import { toast } from 'react-toastify';
 import { useAuth } from '../Auth';
@@ -13,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { Tag, UserItem } from '../../types';
 import { MapOverlayPage } from '../Templates';
 import { TagsWidget } from './TagsWidget';
-import { decodeTag, encodeTag } from '../../Utils/FormatTags';
+import { encodeTag } from '../../Utils/FormatTags';
 import { AvatarWidget } from './AvatarWidget';
 
 
@@ -41,12 +40,12 @@ export function OverlayProfileSettings() {
     const addTag = useAddTag();
     const navigate = useNavigate();
 
-    React.useEffect(() => {
+    useEffect(() => {
         setId(user?.id ? user.id : "");
         setName(user?.first_name ? user.first_name : "");
         setText(user?.description ? user.description : "");
         setAvatar(user?.avatar ? user?.avatar : "");
-        setColor(user?.color ? user.color : "#aabbcc");
+        setColor(user?.color ? user.color : "#3D3846");
         setOffers([]);
         setNeeds([]);
         user?.offers.map(o=>  {

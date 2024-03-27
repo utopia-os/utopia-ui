@@ -1,21 +1,21 @@
 import * as React from 'react'
-import { useItems, useUpdateItem } from '../Map/hooks/useItems'
+import { useItems, useUpdateItem, useAddItem } from '../Map/hooks/useItems'
 import { useEffect, useState } from 'react';
 import { getValue } from '../../Utils/GetValue';
 import { toast } from 'react-toastify';
 import { useAuth } from '../Auth';
 import { TextInput, TextAreaInput } from '../Input';
 import { ColorPicker } from './ColorPicker';
-import DialogModal from '../Templates/DialogModal';
 import { hashTagRegex } from '../../Utils/HashTagRegex';
 import { useAddTag, useTags } from '../Map/hooks/useTags';
 import { randomColor } from '../../Utils/RandomColor';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Geometry, Item, Tag, UserItem } from '../../types';
+import { Item } from '../../types';
 import { MapOverlayPage } from '../Templates';
-import { TagsWidget } from './TagsWidget';
-import { decodeTag, encodeTag } from '../../Utils/FormatTags';
+
 import { AvatarWidget } from './AvatarWidget';
+import { encodeTag } from '../../Utils/FormatTags';
+import { useLayers } from '../Map/hooks/useLayers';
 
 
 export function OverlayItemProfileSettings() {
@@ -31,34 +31,38 @@ export function OverlayItemProfileSettings() {
     const [activeTab, setActiveTab] = useState<number>(1);
     const [loading, setLoading] = useState<boolean>(false);
 
+    const { user } = useAuth();
 
 
 
     const updateItem = useUpdateItem();
-
+    const addItem = useAddItem();
+    const layers = useLayers();
     const location = useLocation();
-    const items = useItems();
-    const [item, setItem] = useState<Item>({} as Item)
+
 
     const tags = useTags();
     const addTag = useAddTag();
     const navigate = useNavigate();
 
 
-
+    const items = useItems();
+    const [item, setItem] = useState<Item>({} as Item)
     useEffect(() => {
         const itemId = location.pathname.split("/")[2];
         const item = items.find(i => i.id === itemId);
         item && setItem(item);
+        !item && setItem({id: crypto.randomUUID(), name: user ? user.first_name : "", text: ""})
 
     }, [location, items, activeTab])
 
     React.useEffect(() => {
         if (item.layer?.itemColorField) setColor(getValue(item, item.layer?.itemColorField));
-        else setColor(item.layer?.markerDefaultColor || "#000")
+        else setColor(item.layer?.markerDefaultColor || "#3D3846")
 
         setId(item?.id ? item.id : "");
         setName(item?.name ? item.name : "");
+        setSubname(item?.subname ? item.subname : "");
         setText(item?.text ? item.text : "");
         setImage(item?.image ? item?.image : "");
     }, [item])
@@ -83,8 +87,10 @@ export function OverlayItemProfileSettings() {
         });
 
         setLoading(true);
+        console.log(item.layer);
+        
 
-        item?.layer?.api?.updateItem && toast.promise(
+        if(item.layer) {item?.layer?.api?.updateItem && toast.promise(
             item?.layer?.api?.updateItem(changedItem),
             {
                 pending: 'updating Item  ...',
@@ -99,7 +105,30 @@ export function OverlayItemProfileSettings() {
             .then(() => {
                 setLoading(false);
                 navigate("/item/"+item.id)});
+
+            }
+            else {
+                const layer = layers.find(l => l.name == "People")
+                layer?.api?.createItem && toast.promise(
+                    layer?.api?.createItem(changedItem),
+                    {
+                        pending: 'updating Item  ...',
+                        success: 'Item updated',
+                        error: {
+                            render({ data }) {
+                                return `${data}`
+                            },
+                        },
+                    })
+                    .then(() => item && addItem({...item, ...changedItem, layer: layer, user_created: user, type: layer.itemType}))
+                    .then(() => {
+                        setLoading(false);
+                        navigate("/")});
+                        console.log({...item, ...changedItem, layer: layer, user_created: user, type: "User"});
+                        
+            }
     }
+    
 
 
     return (

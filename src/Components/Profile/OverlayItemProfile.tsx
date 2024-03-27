@@ -82,6 +82,11 @@ export function OverlayItemProfile() {
     }, [items,location])
 
     useEffect(() => {
+
+    }, [item])
+    
+
+    useEffect(() => {
         if (item) {
             if(item.position) {
                 const marker = Object.entries(leafletRefs).find(r => r[1].item == item)?.[1].marker;
@@ -307,7 +312,7 @@ export function OverlayItemProfile() {
                                 </div>
 
                                 <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Events" checked={activeTab == 3 && true} onChange={() => updateActiveTab(3)} />
-                                <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto tw-pt-4 tw-pb-1  -tw-mx-4 tw-overflow-x-hidden">
+                                <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto tw-pt-4 tw-pb-1 -tw-mx-4 tw-overflow-x-hidden">
                                     <div className='tw-h-full'>
                                         <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-1 2xl:tw-grid-cols-2'>
                                             {relations && relations.map(i => {
@@ -341,13 +346,31 @@ export function OverlayItemProfile() {
                                                     </div>
                                                 </form> : <></>
                                             }
-                                            {updatePermission && <ActionButton collection="items" item={item} existingRelations={relations} itemType={"event"} triggerItemSelected={linkItem} triggerAddButton={() => { setAddItemPopupType("event"); scroll() }} color={item.color}></ActionButton>}
+                                            {updatePermission && <ActionButton collection="items" item={item} existingRelations={relations} itemType={"event"} triggerItemSelected={linkItem} triggerAddButton={() => { setAddItemPopupType("user"); scroll() }} color={item.color}></ActionButton>}
 
                                         </div>
                                     </div>
                                 </div>
-                                <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Friends" checked={activeTab == 4 && true} onChange={() => updateActiveTab(4)} />
-                                <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-1 tw-overflow-x-hidden">
+                                <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Community" checked={activeTab == 4 && true} onChange={() => updateActiveTab(4)} />
+                                <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto tw-pt-4 tw-pb-1 -tw-mx-4 tw-overflow-x-hidden">
+                                    <div className='tw-h-full'>
+                                        <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-1 2xl:tw-grid-cols-2'>
+                                            {relations && relations.map(i => {
+                                                if (i.type == 'user') return (
+
+                                                    <div key={i.id} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-6 tw-mb-4' onClick={() => navigate('/item/' + i.id)}>
+                                                        <LinkedItemsHeaderView unlinkPermission={updatePermission} item={i} unlinkCallback={unlinkItem} loading={loading} />
+                                                        <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
+                                                            <TextView truncate item={i} />
+                                                        </div>
+                                                    </div>
+                                                )
+                                                else return null
+                                            })}
+                                            {updatePermission && <ActionButton collection="items" item={item} existingRelations={relations} itemType={"user"} triggerItemSelected={linkItem} color={item.color}></ActionButton>}
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

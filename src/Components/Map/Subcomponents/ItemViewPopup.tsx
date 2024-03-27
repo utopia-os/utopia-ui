@@ -8,7 +8,7 @@ import { timeAgo } from '../../../Utils/TimeAgo'
 import { useEffect, useState } from 'react'
 import { LatLng } from 'leaflet'
 import { useNavigate } from 'react-router-dom'
-import { useRemoveItem } from '../hooks/useItems'
+import { useRemoveItem, useUpdateItem } from '../hooks/useItems'
 import { toast } from 'react-toastify'
 import { useSetSelectPosition } from '../hooks/useSelectPosition'
 
@@ -26,6 +26,7 @@ export const ItemViewPopup = React.forwardRef((props: ItemViewPopupProps, ref: a
   const map = useMap();
   const [loading, setLoading] = React.useState<boolean>(false);
   const removeItem = useRemoveItem();
+  const updadateItem = useUpdateItem();
   const navigate = useNavigate();
   const setSelectPosition = useSetSelectPosition();
 
@@ -43,13 +44,15 @@ export const ItemViewPopup = React.forwardRef((props: ItemViewPopupProps, ref: a
     setLoading(true);
     let success = false;
     try {
-      await props.item.layer?.api?.deleteItem!(props.item.id)
+      !props.item.layer?.onlyOnePerOwner && await props.item.layer?.api?.deleteItem!(props.item.id);
+      props.item.layer?.onlyOnePerOwner && await props.item.layer.api?.updateItem!({id: props.item.id, position: null})
       success = true;
     } catch (error) {
       toast.error(error.toString());
     }
     if (success) {
-      removeItem(props.item);
+      !props.item.layer?.onlyOnePerOwner && removeItem(props.item);
+      props.item.layer?.onlyOnePerOwner && updadateItem({...props.item, position: undefined});
       toast.success("Item deleted");
     }
     setLoading(false);

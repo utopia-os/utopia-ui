@@ -2,6 +2,7 @@ import * as React from 'react'
 import { useQuestsOpen, useSetQuestOpen } from './hooks/useQuests';
 import { useAuth } from '../Auth';
 import { useEffect } from 'react';
+import { useItems } from '../Map/hooks/useItems';
 
 export function Quests() {
 
@@ -13,6 +14,8 @@ export function Quests() {
       setQuestsOpen(false);
     }, [])
     
+    const items = useItems();
+    const profile = items.find(i => i.user_created.id === user?.id && i.type =="user")
 
     return (
         <>{questsOpen ?
@@ -30,8 +33,8 @@ export function Quests() {
                     </h2>
                     <ul className='tw-flex-row'>
                         <li><label className="tw-label tw-justify-normal tw-pt-1 tw-pb-0"><input type="checkbox" readOnly={true} className="tw-checkbox tw-checkbox-xs tw-checkbox-success" checked={isAuthenticated ? isAuthenticated : false} /><span className='tw-text-sm tw-label-text tw-mx-2'>Sign Up</span></label></li>
-                        <li><label className="tw-label tw-justify-normal tw-pt-1 tw-pb-0"><input type="checkbox" readOnly={true} className="tw-checkbox tw-checkbox-xs tw-checkbox-success" checked={user?.description ? true : false} /><span className='tw-text-sm tw-label-text tw-mx-2'>Fill Profile</span></label></li>
-                        <li><label className="tw-label tw-justify-normal tw-pt-1 tw-pb-0"><input type="checkbox" readOnly={true} className="tw-checkbox tw-checkbox-xs tw-checkbox-success" checked={user?.avatar ? true : false} /><span className='tw-text-sm tw-label-text tw-mx-2'>Upload Avatar</span></label></li>
+                        <li><label className="tw-label tw-justify-normal tw-pt-1 tw-pb-0"><input type="checkbox" readOnly={true} className="tw-checkbox tw-checkbox-xs tw-checkbox-success" checked={profile?.text ? true : false} /><span className='tw-text-sm tw-label-text tw-mx-2'>Fill Profile</span></label></li>
+                        <li><label className="tw-label tw-justify-normal tw-pt-1 tw-pb-0"><input type="checkbox" readOnly={true} className="tw-checkbox tw-checkbox-xs tw-checkbox-success" checked={profile?.image ? true : false} /><span className='tw-text-sm tw-label-text tw-mx-2'>Upload Avatar</span></label></li>
                     </ul>
                     { /**                 <button className='tw-btn tw-btn-xs tw-btn-neutral tw-w-fit tw-self-center tw-mt-1'>Next &gt;</button> */
                     }                </div>

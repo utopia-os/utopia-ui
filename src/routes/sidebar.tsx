@@ -1,5 +1,5 @@
 
-import { RectangleGroupIcon } from '@heroicons/react/24/outline'
+import { RectangleGroupIcon, CalendarDaysIcon, UserGroupIcon } from '@heroicons/react/24/outline'
 import { MapIcon } from '@heroicons/react/24/outline'
 
 //const iconClasses = `h-6 w-6`
@@ -16,6 +16,16 @@ export const routes = [
     path: '/items', // url
     icon: <RectangleGroupIcon style={{width: 24 }}/>, // icon component
     name: 'Projects', // name that appear in Sidebar
+  },
+  {
+    path: '/calendar', // url
+    icon: <CalendarDaysIcon style={{width: 24 }}/>, // icon component
+    name: 'Calendar', // name that appear in Sidebar
+  },
+  {
+    path: '/community', // url
+    icon: <UserGroupIcon style={{width: 24 }}/>, // icon component
+    name: 'Community', // name that appear in Sidebar
   }/**
   {
     path: '/people', // url

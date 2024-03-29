@@ -1,8 +1,9 @@
 import * as React from 'react'
 import { useQuestsOpen, useSetQuestOpen } from './hooks/useQuests';
 import { useAuth } from '../Auth';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useItems } from '../Map/hooks/useItems';
+import { Item } from '../../types';
 
 export function Quests() {
 
@@ -13,9 +14,15 @@ export function Quests() {
     useEffect(() => {
       setQuestsOpen(false);
     }, [])
+
+    const [profile, setProfie] = useState<Item>()
     
     const items = useItems();
-    const profile = items.find(i => i.user_created.id === user?.id && i.type =="user")
+
+    useEffect(() => {
+      setProfie(items.find(i => i.user_created.id === user?.id && i.type =="user"))
+    }, [items, user])
+    
 
     return (
         <>{questsOpen ?

@@ -2,8 +2,7 @@
 
 ### Why ?
 
-The Community Ecosystem Map is a Tool for all the people out there that are looking for meaningful relationships and real community. For everyone, who has the desire to reconnect with the ecosystem and  socio-sphere around and who wants to step out of his/her bubble at home and finde like-minded people, projects and places. 
-
+The Community Ecosystem Map is a Tool for all the people out there that are looking for meaningful relationships and real community. For everyone, who has the desire to reconnect with the ecosystem and socio-sphere around and who wants to step out of his/her bubble at home and finde like-minded people, projects and places. 
 
 ### How ?
 
@@ -21,11 +20,14 @@ Sign up now, become part of the network and grow the ecosystem by start mapping 
 
 This map is showing the moos ecosystem using the [Utopia-UI](https://github.com/utopia-os/utopia-ui) Components.
 
-## Live Demo
+### Implementation
 
-The current development status is live @ [moos-map.de](https://moos-map.de).
+The map is visualizing the  ecosystem within and around the Moos community while using the building blocks of the [Utopia UI Framework](https://github.com/utopia-os/utopia-ui). During the Code 2 Community Hackathon I [extended the capabilities of that framework](https://github.com/utopia-os/utopia-ui/compare/5fd1fc4de100b77e57d9a18a72925ca6ea5e96f5...ea31a5672bd2b1262142f66a53ee0be801a4c2c3?w=1) to make the manifold relations between project, events and community members visible and to include also projects without an specific geographic location.
 
-## Getting Started
+Being present during the Hackathon at Moos, there was a close interaction with other teams. 
+The  [Moos Knowledge Garden Team]()  was providing a valuable data set which was imported with the help of the [Obsidian Node Canvas]() project, which was also ways to enrich the map with crawled web data and the help of vector embedding.
+
+### Run the code
 
 clone repository and ...
 

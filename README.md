@@ -6,7 +6,7 @@ The Community Ecosystem Map 🗺️ is a tool for everyone out there looking for
 
 ### How? 🛠️
 
-This map is a tool for collaborative mapping 🤝. It makes local initiatives, people, and events visible 🌟 and enables real-life decentralized networking 🕸️ and local economy. It's also an invitation to reconnect with our environment 🌳 and the community around us to actively shape our collective future 🚀 and start growing a decentralized network of people, projects, and events all over the world 🌐, starting in our local neighborhood. In this way, it can also become the bridge 🌉 between virtual Web3 solutions and true physical reality.
+This map is a tool for collaborative mapping 🤝. It makes local initiatives, people, and events visible 🌟 and enables real-life decentralized networking 🕸️ and local economy. It's also an invitation to reconnect with our environment 🌳 and the community around us to actively shape our collective future 🚀 and start growing a decentralized network of people, projects, and events all over the world 🌍, starting in our local neighborhood. In this way, it can also become the bridge 🌉 between virtual Web3 solutions and true physical reality.
 
 ### What? 🌈
 
@@ -41,4 +41,4 @@ npm install
 npm run dev
 ```
 
-Let's start mapping and growing our community ecosystem together! 🌱🌐
+Let's start mapping and growing our community ecosystem together! 🌱 🌍

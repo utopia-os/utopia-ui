@@ -2,7 +2,7 @@
 
 ### Why? 🤔
 
-The Community Ecosystem Map 🗺️ is a tool for all the people out there looking for meaningful relationships 💞 and real community 🤗. For everyone who desires to reconnect with the ecosystem 🌱 and socio-sphere around them and who wants to step out of their bubble 🏠 to find like-minded people, projects, and places. 
+The Community Ecosystem Map 🗺️ is a tool for everyone out there looking for meaningful relationships 💞 and real community 🤗. For all of us who want to reconnect with the ecosystem 🌱 and socio-sphere around them and who wants to step out of their bubble at home🏠 to find like-minded people, projects, and places. 
 
 ### How? 🛠️
 
@@ -22,9 +22,15 @@ This map is showing the moos ecosystem using the [Utopia-UI](https://github.com/
 
 ### Implementation 🏗️
 
-The map is visualizing the ecosystem within and around the Moos community, using the building blocks of the [Utopia UI Framework](https://github.com/utopia-os/utopia-ui). During the Code 2 Community Hackathon, I extended the capabilities of that framework to make the manifold relations between projects, events, and community members visible 🌟 and to include also projects without a specific geographic location 🗺️.
+The map is visualizing the ecosystem within and around the Moos community, using the building blocks of the [Utopia UI Framework](https://github.com/utopia-os/utopia-ui). During the Code 2 Community Hackathon, I [extended](https://github.com/utopia-os/utopia-ui/compare/5fd1fc4de100b77e57d9a18a72925ca6ea5e96f5...ea31a5672bd2b1262142f66a53ee0be801a4c2c3?w=1) the capabilities of that framework to make the manifold relations between projects, events, and community members visible 🌟 and to include also projects without a specific geographic location 🗺️.
 
 Being present during the Hackathon at Moos, there was a close interaction with other teams 🤝. The [Moos Knowledge Garden Team]() provided a valuable dataset, which was imported with the help of the [Obsidian Node Canvas]() project, which also found ways to enrich the map with crawled web data and the help of vector embedding.
+### Further Development 🚀
+
+- Calendar View 📅
+- Data Interoperability using [Murmurations](https://murmurations.network/) 🔗
+- Tokenomics (Rewards for mapping and proof of presence via QR handshakes) 💰🤝
+- Gamification (see [Utopia Game](https://raw.githubusercontent.com/utopia-os/Community-Ecosystem-Map/main/Utopia%20Game%20Konzept%20EN.pdf)) 🎮🌍
 
 ### Run the code 💻
 

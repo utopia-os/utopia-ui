@@ -11,6 +11,7 @@ export interface UtopiaMapProps {
 }
 
 export interface LayerProps {
+  id?: string,
   data?: Item[],
   children?: React.ReactNode,
   name: string,
@@ -21,7 +22,7 @@ export interface LayerProps {
   markerShape: string,
   markerDefaultColor: string,
   api?: ItemsApi<any>,
-  itemType: string,
+  itemType: ItemType,
   itemNameField?: string,
   itemSubnameField?: string,
   itemTextField?: string,
@@ -39,6 +40,12 @@ export interface LayerProps {
     setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>,
     itemFormPopup?: ItemFormPopupProps | null,
   clusterRef?: any
+}
+
+export interface ItemType {
+  name: string;
+  [key: string]: any;
+
 }
 
 export class Item {

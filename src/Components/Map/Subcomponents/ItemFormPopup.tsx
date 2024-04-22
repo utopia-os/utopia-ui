@@ -82,7 +82,9 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
             map.closePopup();
         }
         else {
-            const item = items.find(i => i.user_created.id === user?.id && i.type === props.layer.itemType)
+            const item = items.find(i => i.user_created.id === user?.id && i.layer?.itemType.name === props.layer.itemType.name);
+            console.log(item);
+            
             const uuid = crypto.randomUUID();
             let success = false;
             try {
@@ -92,9 +94,7 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
             } catch (error) {
                 toast.error(error.toString());
             }
-            if(success) {
-                console.log(props.layer);
-                
+            if(success) {                
                 props.layer.onlyOnePerOwner && item && updateItem({...item, ...formItem});
                 (!props.layer.onlyOnePerOwner || !item) && addItem({...formItem, name: formItem.name ? formItem.name : user?.first_name , user_created: user, type: props.layer.itemType, id: uuid, layer: props.layer});
                 toast.success("New item created");

@@ -22,7 +22,7 @@ type breadcrumb = {
 }
 
 
-export const OverlayItemsIndexPage = ({url, type, parameterField, breadcrumbs, itemNameField, itemTextField, itemImageField, itemSymbolField, itemSubnameField, plusButton = true, children }: { type: string, url: string, parameterField: string, breadcrumbs: Array<breadcrumb>, itemNameField: string, itemTextField: string, itemImageField: string, itemSymbolField: string, itemSubnameField: string, plusButton?: boolean, children?: ReactNode }) => {
+export const OverlayItemsIndexPage = ({url, layerName, parameterField, breadcrumbs, itemNameField, itemTextField, itemImageField, itemSymbolField, itemSubnameField, plusButton = true, children }: { layerName: string, url: string, parameterField: string, breadcrumbs: Array<breadcrumb>, itemNameField: string, itemTextField: string, itemImageField: string, itemSymbolField: string, itemSubnameField: string, plusButton?: boolean, children?: ReactNode }) => {
 
     console.log(itemSymbolField);
 
@@ -56,9 +56,8 @@ export const OverlayItemsIndexPage = ({url, type, parameterField, breadcrumbs, i
 
     }, [items])
     
+    const layer = layers.find(l => l.name == layerName);
 
-
-    const layer = layers.find(l => l.itemType == type);
 
     const submitNewItem = async (evt: any) => {
         evt.preventDefault();
@@ -77,7 +76,7 @@ export const OverlayItemsIndexPage = ({url, type, parameterField, breadcrumbs, i
         const uuid = crypto.randomUUID();
         let success = false;
         try {
-            await layer?.api?.createItem!({ ...formItem, id: uuid, type: type });
+            await layer?.api?.createItem!({ ...formItem, id: uuid});
             success = true;
         } catch (error) {
             toast.error(error.toString());
@@ -85,7 +84,7 @@ export const OverlayItemsIndexPage = ({url, type, parameterField, breadcrumbs, i
         if (success) {
             toast.success("New item created");
         }
-        addItem({...formItem, user_created: user, type: type, id: uuid, layer: layer});
+        addItem({...formItem, user_created: user, id: uuid, layer: layer});
         setLoading(false);
         setAddItemPopupType("");
     }
@@ -107,7 +106,6 @@ export const OverlayItemsIndexPage = ({url, type, parameterField, breadcrumbs, i
     }
 
 
-
     return (
 <>
 
@@ -123,7 +121,7 @@ export const OverlayItemsIndexPage = ({url, type, parameterField, breadcrumbs, i
             </div>
             <div className="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-3 tw-gap-6 tw-pt-4">
                 {
-                    items?.filter(i=>i.type === type).map((i, k) => {
+                    items?.filter(i=>i.layer?.name === layerName).map((i, k) => {
                         return (
                             <div key={k} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-p-4 tw-mb-4 tw-h-fit' onClick={() => navigate(url + getValue(i, parameterField))}>
                                 <HeaderView loading={loading} item={i} api={layer?.api} itemAvatarField={itemImageField} itemNameField={itemNameField} itemSubnameField={itemSubnameField} editCallback={() => navigate("/edit-item/" + i.id)} deleteCallback={() => deleteItem(i)}></HeaderView>
@@ -136,7 +134,7 @@ export const OverlayItemsIndexPage = ({url, type, parameterField, breadcrumbs, i
 
                     })
                 }
-                {addItemPopupType == "project" ?
+                {addItemPopupType == "place" ?
 
                     <form ref={tabRef} autoComplete='off' onSubmit={e => submitNewItem(e)}  >
 
@@ -161,7 +159,7 @@ export const OverlayItemsIndexPage = ({url, type, parameterField, breadcrumbs, i
         </MapOverlayPage>
 
 
-        {plusButton && <PlusButton triggerAction={() => { setAddItemPopupType("project"); scroll(); }} color={'#777'} collection='items' />}
+        {plusButton && <PlusButton triggerAction={() => { setAddItemPopupType("place"); scroll(); }} color={'#777'} collection='items' />}
 
 </>
 

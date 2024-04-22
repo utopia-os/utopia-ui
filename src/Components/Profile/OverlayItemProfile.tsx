@@ -276,7 +276,7 @@ export function OverlayItemProfile() {
                                     <div className='tw-h-full'>
                                         <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-1 2xl:tw-grid-cols-2 tw-pb-5'>
                                             {relations && relations.map(i => {
-                                                if (i.type == 'project') return (
+                                                if (i.layer?.itemType.name == 'project') return (
 
                                                     <div key={i.id} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-4 tw-mb-4 tw-h-fit' onClick={() => navigate('/item/' + i.id)}>
                                                         <LinkedItemsHeaderView unlinkPermission={updatePermission} loading={loading} item={i} unlinkCallback={unlinkItem} />
@@ -316,7 +316,7 @@ export function OverlayItemProfile() {
                                     <div className='tw-h-full'>
                                         <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-1 2xl:tw-grid-cols-2'>
                                             {relations && relations.map(i => {
-                                                if (i.type == 'event') return (
+                                                if (i.layer?.itemType.name == 'event') return (
 
                                                     <div key={i.id} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-6 tw-mb-4' onClick={() => navigate('/item/' + i.id)}>
                                                         <LinkedItemsHeaderView unlinkPermission={updatePermission} item={i} unlinkCallback={unlinkItem} loading={loading} />
@@ -332,7 +332,7 @@ export function OverlayItemProfile() {
                                             {addItemPopupType == "event" ?
                                                 <form autoComplete='off' onSubmit={e => submitNewItem(e, addItemPopupType)} >
 
-                                                    <div className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-4 tw-mb-4'>
+                                                    <div className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-6 tw-mb-4'>
                                                         <label className="tw-btn tw-btn-sm tw-rounded-2xl tw-btn-circle tw-btn-ghost hover:tw-bg-transparent tw-absolute tw-right-0 tw-top-0 tw-text-gray-600" onClick={() => {
                                                             setAddItemPopupType("")
                                                         }}>
@@ -346,7 +346,7 @@ export function OverlayItemProfile() {
                                                     </div>
                                                 </form> : <></>
                                             }
-                                            {updatePermission && <ActionButton collection="items" item={item} existingRelations={relations} itemType={"event"} triggerItemSelected={linkItem} triggerAddButton={() => { setAddItemPopupType("user"); scroll() }} color={item.color}></ActionButton>}
+                                            {updatePermission && <ActionButton collection="items" item={item} existingRelations={relations} itemType={"event"} triggerItemSelected={linkItem} triggerAddButton={() => { setAddItemPopupType("event"); scroll() }} color={item.color}></ActionButton>}
 
                                         </div>
                                     </div>
@@ -356,7 +356,7 @@ export function OverlayItemProfile() {
                                     <div className='tw-h-full'>
                                         <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-1 2xl:tw-grid-cols-2'>
                                             {relations && relations.map(i => {
-                                                if (i.type == 'user') return (
+                                                if (i.layer?.itemType.name == 'user') return (
 
                                                     <div key={i.id} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-6 tw-mb-4' onClick={() => navigate('/item/' + i.id)}>
                                                         <LinkedItemsHeaderView unlinkPermission={updatePermission} item={i} unlinkCallback={unlinkItem} loading={loading} />

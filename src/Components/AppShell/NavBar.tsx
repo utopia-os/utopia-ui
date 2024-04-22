@@ -2,12 +2,12 @@ import { useAuth } from "../Auth"
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import QuestionMarkIcon from '@heroicons/react/24/outline/QuestionMarkCircleIcon'
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useItems } from "../Map/hooks/useItems";
 import { Item } from "../../types";
 
 
-export default function NavBar({ appName, nameWidth = 200}: { appName: string, nameWidth?: number }) {
+export default function NavBar({ appName}: { appName: string }) {
 
 
   const { isAuthenticated, user, logout } = useAuth();
@@ -16,14 +16,20 @@ export default function NavBar({ appName, nameWidth = 200}: { appName: string, n
   const items = useItems();
 
   useEffect(() => {
-    const profile = user && items.find(i => i.user_created.id === user.id && i.type === "user");
+    const profile = user && items.find(i => (i.user_created.id === user.id) && i.layer?.itemType.name === "user");    
     profile ? setUserProfile(profile) : setUserProfile({id: crypto.randomUUID(), name: user?.first_name, text: ""});
-
   }, [user, items])
 
   useEffect(() => {
     
   }, [userProfile])
+  
+  const nameRef = useRef<any>(null);
+  const [nameWidth, setNameWidth] = useState<number>(0);
+
+  useEffect(() => {
+    nameRef && setNameWidth(nameRef.current.scrollWidth)    
+  }, [nameRef, appName])
   
   
 
@@ -58,8 +64,8 @@ export default function NavBar({ appName, nameWidth = 200}: { appName: string, n
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="tw-inline-block tw-w-5 tw-h-5 tw-stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
         </button>
         <div className="tw-flex-1 tw-mr-2">
-          <div className={`tw-flex-1 tw-truncate tw-grid tw-grid-flow-col`} style={{maxWidth: nameWidth}}>
-            <Link className="tw-btn tw-btn-ghost tw-px-2 tw-normal-case tw-text-xl tw-flex-1 tw-truncate" to={"/"}><h1 className="tw-truncate">{appName}</h1></Link>
+          <div className={`tw-flex-1 tw-truncate tw-grid tw-grid-flow-col`} style={{maxWidth: nameWidth+60}}>
+            <Link className="tw-btn tw-btn-ghost tw-px-2 tw-normal-case tw-text-xl tw-flex-1 tw-truncate" to={"/"}><h1 ref={nameRef} className="tw-truncate">{appName}</h1></Link>
             <button className="tw-btn tw-px-2  tw-btn-ghost" onClick={() => window.my_modal_3.showModal()}><QuestionMarkIcon className="tw-h-5 tw-w-5" /></button>
           </div>
         </div>

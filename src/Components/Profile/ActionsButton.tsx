@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useHasUserPermission, usePermissions } from "../Map/hooks/usePermissions";
 import DialogModal from "../Templates/DialogModal";
 import { useItems } from "../Map/hooks/useItems";
-import { TextView } from "../Map";
 import { HeaderView } from "../Map/Subcomponents/ItemPopupComponents/HeaderView";
 import { Item } from "../../types";
 
@@ -20,7 +19,7 @@ export function ActionButton({ item, triggerAddButton, triggerItemSelected, exis
 
     const items = useItems();
 
-    const filterdItems = items.filter(i => i.type == itemType).filter(i => !existingRelations.some(s => s.id == i.id)).filter(i => i.id != item.id)
+    const filterdItems = items.filter(i => i.layer?.itemType.name == itemType).filter(i => !existingRelations.some(s => s.id == i.id)).filter(i => i.id != item.id)
 
 
     

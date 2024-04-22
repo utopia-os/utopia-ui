@@ -84,9 +84,9 @@ export const Layer = ({
     useMapEvents({
         popupopen: (e) => {
             const item = Object.entries(leafletRefs).find(r => r[1].popup == e.popup)?.[1].item;
-            if (item?.layer?.name == name && window.location.pathname.split("/")[2] != item.id) {
+            if (item?.layer?.name == name && window.location.pathname.split("/")[1] != item.id) {
                 let params = new URLSearchParams(window.location.search);
-                window.history.pushState({}, "", `/${name}/${item.id}` + `${params.toString() !== "" ? `?${params}` : ""}`)
+                window.history.pushState({}, "", `/${item.id}` + `${params.toString() !== "" ? `?${params}` : ""}`)
                 let title = "";
                 if (item.name) title = item.name;
                 else if (item.layer?.itemNameField) title = getValue(item, item.layer.itemNameField);
@@ -96,26 +96,23 @@ export const Layer = ({
     })
 
     const openPopup = () => {
-        if (window.location.pathname.split("/").length <= 2 || window.location.pathname.split("/")[2] === "") {
+        if (window.location.pathname.split("/").length <= 1 || window.location.pathname.split("/")[1] === "") {
             map.closePopup();
         }
         else {
-            if (window.location.pathname.split("/")[1] == name) {
-                if (window.location.pathname.split("/")[2]) {
-                    const id = window.location.pathname.split("/")[2]
-                    const marker = leafletRefs[id]?.marker;
-                    if (marker) {                        
-                        marker && clusterRef.hasLayer(marker) && clusterRef?.zoomToShowLayer(marker, () => {
-                            marker.openPopup();
-                        });
-                        const item = leafletRefs[id]?.item;
-                        let title = "";
-                        if (item.name) title = item.name;
-                        else if (item.layer?.itemNameField) title = getValue(item, item.layer.itemNameField);
-                        document.title = `${document.title.split("-")[0]} - ${title}`;
-                        document.querySelector('meta[property="og:title"]')?.setAttribute("content", item.name);
-                        document.querySelector('meta[property="og:description"]')?.setAttribute("content", item.text);
-                    }
+            if (window.location.pathname.split("/")[1]) {
+                const id = window.location.pathname.split("/")[1]
+                const ref = leafletRefs[id];
+                if (ref?.marker && ref.item.layer?.name === name) {
+                    ref.marker && clusterRef.hasLayer(ref.marker) && clusterRef?.zoomToShowLayer(ref.marker, () => {
+                        ref.marker.openPopup();
+                    });
+                    let title = "";
+                    if (ref.item.name) title = ref.item.name;
+                    else if (ref.item.layer?.itemNameField) title = getValue(ref.item.name, ref.item.layer.itemNameField);
+                    document.title = `${document.title.split("-")[0]} - ${title}`;
+                    document.querySelector('meta[property="og:title"]')?.setAttribute("content", ref.item.name);
+                    document.querySelector('meta[property="og:description"]')?.setAttribute("content", ref.item.text);
                 }
             }
         }

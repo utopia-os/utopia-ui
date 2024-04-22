@@ -16,7 +16,7 @@ import { LeafletRefsProvider } from '../Map/hooks/useLeafletRefs'
 import { SelectPositionProvider } from '../Map/hooks/useSelectPosition'
 import { ClusterRefProvider } from '../Map/hooks/useClusterRef'
 
-export function AppShell({ appName, nameWidth, children, assetsApi }: { appName: string, nameWidth?: number, children: React.ReactNode, assetsApi: AssetsApi }) {
+export function AppShell({ appName, children, assetsApi }: { appName: string, children: React.ReactNode, assetsApi: AssetsApi }) {
 
     // Create a client
     const queryClient = new QueryClient()
@@ -46,7 +46,7 @@ export function AppShell({ appName, nameWidth, children, assetsApi }: { appName:
                                                             draggable
                                                             pauseOnHover
                                                             theme="light" />
-                                                        <NavBar appName={appName} nameWidth={nameWidth}></NavBar>
+                                                        <NavBar appName={appName}></NavBar>
                                                         <div id="app-content" className="tw-flex tw-!pl-[77px]">
                                                             {children}
                                                         </div>

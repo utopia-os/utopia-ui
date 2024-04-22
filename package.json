@@ -18,7 +18,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/leaflet": "^1.7.11",
-    "@types/react": "^18.0.14",
+    "@types/react": "^18.2.0",
     "@types/react-dom": "^18.0.5",
     "@types/react-leaflet": "^2.8.2",
     "@typescript-eslint/eslint-plugin": "^5.38.1",

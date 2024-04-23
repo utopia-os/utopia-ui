@@ -170,21 +170,23 @@ export const Layer = ({
                             }
 
 
-                            const itemTtags = getItemTags(item);
+                            const itemTags = getItemTags(item);
 
                             const latitude = itemLatitudeField && item ? getValue(item, itemLatitudeField) : undefined;
                             const longitude = itemLongitudeField && item ? getValue(item, itemLongitudeField) : undefined;
 
                             let color1 = markerDefaultColor;
                             let color2 = "RGBA(35, 31, 32, 0.2)";
-                            if (itemColorField) color1 = getValue(item, itemColorField);
+                            console.log(getValue(item, itemColorField));
+                            
+                            if (itemColorField && getValue(item, itemColorField) != null) color1 = getValue(item, itemColorField);
 
-                            else if (itemTtags && itemTtags[0]) {
-                                color1 = itemTtags[0].color;
+                            else if (itemTags && itemTags[0]) {
+                                color1 = itemTags[0].color;
                             }
-                            if (itemTtags && itemTtags[0] && itemColorField) color2 = itemTtags[0].color;
-                            else if (itemTtags && itemTtags[1]) {
-                                color2 = itemTtags[1].color;
+                            if (itemTags && itemTags[0] && itemColorField) color2 = itemTags[0].color;
+                            else if (itemTags && itemTags[1]) {
+                                color2 = itemTags[1].color;
                             }
                             return (
                                 <Marker ref={(r) => {

@@ -77,7 +77,7 @@ function usePermissionsManager(initialPermissions: Permission[]): {
             p.permissions._and.some(condition => 
               condition.user_created &&
               condition.user_created._eq === "$CURRENT_USER" &&
-              item.user_created.id === user?.id
+              item.user_created?.id === user?.id
             )
           )
         );

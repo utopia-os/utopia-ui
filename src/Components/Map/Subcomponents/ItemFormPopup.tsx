@@ -82,7 +82,7 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
             map.closePopup();
         }
         else {
-            const item = items.find(i => i.user_created.id === user?.id && i.layer?.itemType.name === props.layer.itemType.name);
+            const item = items.find(i => i.user_created?.id === user?.id && i.layer?.itemType.name === props.layer.itemType.name);
             console.log(item);
             
             const uuid = crypto.randomUUID();

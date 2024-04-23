@@ -16,7 +16,7 @@ export default function NavBar({ appName}: { appName: string }) {
   const items = useItems();
 
   useEffect(() => {
-    const profile = user && items.find(i => (i.user_created.id === user.id) && i.layer?.itemType.name === "user");    
+    const profile = user && items.find(i => (i.user_created?.id === user.id) && i.layer?.itemType.name === "user");    
     profile ? setUserProfile(profile) : setUserProfile({id: crypto.randomUUID(), name: user?.first_name, text: ""});
   }, [user, items])
 

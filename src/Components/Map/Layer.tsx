@@ -15,7 +15,7 @@ import { getValue } from '../../Utils/GetValue'
 import { hashTagRegex } from '../../Utils/HashTagRegex'
 import { randomColor } from '../../Utils/RandomColor'
 import { encodeTag } from '../../Utils/FormatTags'
-import { useSetMarkerClicked } from './hooks/useSelectPosition'
+import { useSelectPosition, useSetMarkerClicked } from './hooks/useSelectPosition'
 
 export const Layer = ({
     data,
@@ -64,6 +64,7 @@ export const Layer = ({
     const allItemsLoaded = useAllItemsLoaded();
 
     const setMarkerClicked = useSetMarkerClicked();
+    const selectPosition = useSelectPosition();
 
     const tags = useTags();
     const addTag = useAddTag();
@@ -192,7 +193,7 @@ export const Layer = ({
                                 }}
                                     eventHandlers={{
                                         click: () => {
-                                            setMarkerClicked(item)
+                                            selectPosition && setMarkerClicked(item)
                                         },
                                     }}
                                     icon={MarkerIconFactory(markerShape, color1, color2, markerIcon)} key={item.id} position={[latitude, longitude]}>

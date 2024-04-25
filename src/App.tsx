@@ -12,6 +12,8 @@ import { useEffect, useState } from 'react'
 import { itemsApi } from './api/itemsApi'
 import { permissionsApi } from './api/permissionsApi'
 import { Tag } from 'utopia-ui/dist/types'
+import { mapApi } from './api/mapApi'
+import { layersApi } from './api/layersApi'
 
 
 function App() {
@@ -19,31 +21,78 @@ function App() {
 
   const [permissionsApiInstance, setPermissionsApiInstance] = useState<permissionsApi>();
   const [tagsApi, setTagsApi] = useState<itemsApi<Tag>>();
+  const [mapApiInstance, setMapApiInstance] = useState<mapApi>();
+  const [layersApiInstance, setLayersApiInstance] = useState<layersApi>();
+  const [map, setMap] = useState<any>();
+  const [layers, setLayers] = useState<any>();
+  const [layerPageRoutes, setLayerPageRoutes] = useState<any>();
 
 
   useEffect(() => {
-
     setPermissionsApiInstance(new permissionsApi());
     setTagsApi(new itemsApi<Tag>('tags', undefined, "36fc9ba7-1a6b-4fc2-9db1-39d67aaf6918"));
+    setMapApiInstance(new mapApi(window.location.origin));
   }, [])
 
+  useEffect(() => {
+    mapApiInstance && getMap();
+  }, [mapApiInstance])
 
-  return (
+
+  const getMap = async () => {
+    const map = await mapApiInstance?.getItems();
+    map && setMap(map);
+    map && setLayersApiInstance(new layersApi(map.id));
+  }
+
+  useEffect(() => {
+    layersApiInstance && getLayers();
+  }, [layersApiInstance])
+
+
+  const getLayers = async () => {
+    const layers = await layersApiInstance?.getItems();
+    layers && setLayers(layers);
+    setLayerPageRoutes(layers?.map((l: any) => ({
+      path: '/' + l.name, // url
+      icon: <img src={"https://api.utopia-lab.org/assets/" + l.indexIcon}></img>,
+      name: l.name, // name that appear in Sidebar
+    })));
+  }
+
+  useEffect(() => {
+if(map && map.name){
+  document.title = map?.name && map.name;
+  let link = document.querySelector("link[rel~='icon']") as HTMLLinkElement
+  if (!link) {
+    link = document.createElement('link');
+    link.rel = 'icon';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  }
+  link.href = map?.logo && "https://api.utopia-lab.org/assets/"+map.logo;  // Specify the path to your favicon
+
+}
+
+  }, [map])
+  
+
+
+  if (map && layers) return (
 
     <div className="App overflow-x-hidden">
 
       <AuthProvider userApi={new userApi}>
-        <AppShell assetsApi={new assetsApi("https://api.utopia-lab.org/assets/")} appName="Community Map" nameWidth={220}>
+        <AppShell assetsApi={new assetsApi("https://api.utopia-lab.org/assets/")} appName={map.name}>
           <Permissions api={permissionsApiInstance} adminRole='8ed0b24e-3320-48cd-8444-bc152304e580'></Permissions>
           <Tags api={tagsApi}></Tags>
           <Modal>
             <ModalContent />
           </Modal>
-          <SideBar routes={routes} bottomRoutes={bottomRoutes} />
+          <SideBar routes={[...routes, ...layerPageRoutes]} bottomRoutes={bottomRoutes} />
           <Content>
             <Quests />
             <Routes>
-              <Route path="/*" element={<MapContainer />}>
+              <Route path="/*" element={<MapContainer map={map} layers={layers} />}>
                 <Route path='login' element={<LoginPage />} />
                 <Route path='signup' element={<SignupPage />} />
                 <Route path='reset-password' element={<RequestPasswordPage reset_url="https://map.collaborative-finance.org/set-new-password/" />} />
@@ -55,16 +104,24 @@ function App() {
                 <Route path="user-settings" element={<OverlayUserSettings />} />
                 <Route path="moon-calendar" element={<MoonCalendar />} />
                 <Route path="landingpage" element={<Landingpage />} />
-                <Route path="items" element={<OverlayItemsIndexPage type='project' breadcrumbs={[{ name: "Home", path: "/" }, { name: "Projects", path: "/items/" }]} itemNameField={'name'} itemTextField={'text'} itemImageField={'image'} url={'/item/'} parameterField={'id'} itemSymbolField={'symbol'} itemSubnameField={'subname'} />} />
-                <Route path="calendar" element={<OverlayItemsIndexPage type="event" breadcrumbs={[{ name: "Home", path: "/" }, { name: "Events", path: "/calendar/" }]} itemNameField={'name'} itemTextField={'text'} itemImageField={'image'} url={'/item/'} parameterField={'id'} itemSymbolField={'symbol'} itemSubnameField={'subname'} />} />
-                <Route path="community" element={<OverlayItemsIndexPage type='user' breadcrumbs={[{ name: "Home", path: "/" }, { name: "Community", path: "/community/" }]} itemNameField={'name'} itemTextField={'text'} itemImageField={'image'} url={'/item/'} parameterField={'id'} itemSymbolField={'symbol'} itemSubnameField={'subname'} plusButton={false}/>} />
-
+                {
+                  layers.map((l: any) =>
+                    <Route key={l.id} path={l.name} element={<OverlayItemsIndexPage layerName={l.name} breadcrumbs={[{ name: "Home", path: "/" }, { name: l.name, path: "/" + l.name }]} itemNameField={'name'} itemTextField={'text'} itemImageField={'image'} url={'/item/'} parameterField={'id'} itemSymbolField={'symbol'} itemSubnameField={'subname'} />} />
+                  )
+                }
               </Route>
-
             </Routes>
           </Content>
         </AppShell>
       </AuthProvider>
+    </div>
+  )
+
+  else return (
+    <div className="flex items-center justify-center h-screen">
+      <div>
+        <p className='text-xl font-semibold'>This map does not exist</p>
+      </div>
     </div>
   )
 }

@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useAddFilterTag, useFilterTags, useResetFilterTags } from '../../hooks/useFilter'
 import useWindowDimensions from '../../hooks/useWindowDimension';
 import axios from 'axios';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useMap, useMapEvents } from 'react-leaflet';
 import { LatLng, LatLngBounds } from 'leaflet';
 import { useDebounce } from '../../hooks/useDebounce';
@@ -16,6 +16,7 @@ import MarkerIconFactory from '../../../../Utils/MarkerIconFactory';
 import { decodeTag } from '../../../../Utils/FormatTags';
 import { useNavigate } from 'react-router-dom';
 import { useClusterRef } from '../../hooks/useClusterRef';
+import { Item } from '../../../../types';
 
 
 
@@ -27,7 +28,7 @@ export const SearchControl = () => {
     const [value, setValue] = useState('');
     const [geoResults, setGeoResults] = useState<Array<any>>([]);
     const [tagsResults, setTagsResults] = useState<Array<any>>([]);
-    const [itemsResults, setItemsResults] = useState<Array<any>>([]);
+    const [itemsResults, setItemsResults] = useState<Array<Item>>([]);
     const [hideSuggestions, setHideSuggestions] = useState(true);
 
     const map = useMap();
@@ -35,9 +36,7 @@ export const SearchControl = () => {
     const items = useItems();
     const leafletRefs = useLeafletRefs();
     const addFilterTag = useAddFilterTag();
-    const resetFilterTags = useResetFilterTags();
-    const filterTags = useFilterTags();
-    const clusterRef = useClusterRef();
+
 
     useMapEvents({
         popupopen: () => {            
@@ -50,7 +49,7 @@ export const SearchControl = () => {
 
     const navigate = useNavigate();
 
-    useDebounce(() => {
+    useDebounce(() => {       
         const searchGeo = async () => {
             try {
                 const { data } = await axios.get(
@@ -62,10 +61,10 @@ export const SearchControl = () => {
             }
         };
         searchGeo();
-        setItemsResults(items.filter(item => {
+        setItemsResults(items.filter(item => {          
             if (item.layer?.itemNameField) item.name = getValue(item, item.layer.itemNameField)
             if (item.layer?.itemTextField) item.text = getValue(item, item.layer.itemTextField)
-            return item.name?.toLowerCase().includes(value.toLowerCase()) || item.text?.toLowerCase().includes(value.toLowerCase())
+            return value.length> 2 && (item.name?.toLowerCase().includes(value.toLowerCase()) || item.text?.toLowerCase().includes(value.toLowerCase()))
         }))
         let phrase = value;
         if(value.startsWith("#")) phrase = value.substring(1);
@@ -78,6 +77,12 @@ export const SearchControl = () => {
             setHideSuggestions(true);
         }, 200);
     }
+
+    useEffect(() => {
+      console.log(value);
+      
+    }, [value])
+    
 
     const searchInput = useRef<HTMLInputElement>(null);
 
@@ -117,7 +122,7 @@ export const SearchControl = () => {
                             <div key={item.id} className='tw-cursor-pointer hover:tw-font-bold' onClick={() => {
                                 const marker = Object.entries(leafletRefs).find(r => r[1].item == item)?.[1].marker;
                                 if(marker){
-                                        navigate(`/${item.layer.name}/${item.id}?${new URLSearchParams(window.location.search)}`)
+                                        navigate(`/${item.id}?${new URLSearchParams(window.location.search)}`)
                                 }
                                 else {
                                     navigate("item/"+item.id+"?"+new URLSearchParams(window.location.search))
@@ -125,7 +130,7 @@ export const SearchControl = () => {
 
                             }
                             }><div className='tw-flex tw-flex-row'>
-                                    <item.layer.menuIcon className="tw-text-current tw-w-5 tw-mr-2 tw-mt-0" />
+                                    <img src={item.layer?.menuIcon} className="tw-text-current tw-w-5 tw-mr-2 tw-mt-0" />
                                     <div>
                                         <div className='tw-text-sm tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>{item.name}</div>
                                         <div className='tw-text-xs tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>{item.text}</div>

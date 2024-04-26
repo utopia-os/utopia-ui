@@ -86,7 +86,7 @@ if(map && map.name){
           <Permissions api={permissionsApiInstance} adminRole='8ed0b24e-3320-48cd-8444-bc152304e580'></Permissions>
           <Tags api={tagsApi}></Tags>
           <Modal>
-            <ModalContent />
+            <ModalContent map={map} />
           </Modal>
           <SideBar routes={[...routes, ...layerPageRoutes]} bottomRoutes={bottomRoutes} />
           <Content>

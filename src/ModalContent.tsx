@@ -3,15 +3,16 @@ import { useState } from 'react'
 type ChapterProps = {
     clickAction1?: () => void
     clickAction2?: () => void
+    map?: any
 
 }
 
 
-export function Welcome1({ clickAction1 }: ChapterProps) {
+export function Welcome1({ clickAction1, map }: ChapterProps) {
     return (
         <>
-            <h3 className="font-bold text-lg">Welcome to the Community Ecosystem Map</h3>
-            <img className="float-right w-32 m-2" src="/3markers-globe.svg"></img>
+            <h3 className="font-bold text-lg">Welcome to {map?.name || "Utopia Map"}</h3>
+            <img className="float-right w-32 m-2" src={"https://api.utopia-lab.org/assets/"+map.logo}></img>
             <p className="py-3">
                 It is a tool for collaborative mapping to connect local initiatives, people and events.
             </p>
@@ -96,7 +97,7 @@ const close = () => {
     window.my_modal_3.close();
 }
 
-export const ModalContent = () => {
+export const ModalContent = ({map}:{map: any}) => {
 
     const [chapter, setChapter] = useState<number>(1);
     //const setQuestsOpen = useSetQuestOpen()
@@ -106,7 +107,7 @@ export const ModalContent = () => {
     const ActiveChapter = () => {
         switch (chapter) {
             case 1:
-                return <Welcome1 clickAction1={() => {
+                return <Welcome1 map={map} clickAction1={() => {
 
                     close();
                     setTimeout(() => {

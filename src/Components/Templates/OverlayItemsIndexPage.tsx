@@ -26,7 +26,8 @@ type breadcrumb = {
 export const OverlayItemsIndexPage = ({ url, layerName, parameterField, breadcrumbs, itemNameField, itemTextField, itemImageField, itemSymbolField, itemSubnameField, plusButton = true, children }: { layerName: string, url: string, parameterField: string, breadcrumbs: Array<breadcrumb>, itemNameField: string, itemTextField: string, itemImageField: string, itemSymbolField: string, itemSubnameField: string, plusButton?: boolean, children?: ReactNode }) => {
 
     console.log(itemSymbolField);
-    const [infoExpanded, setInfoExpanded] = useState<Number>(0);
+    const [infoExpanded, setInfoExpanded] = useState(new Map());
+
 
     const [loading, setLoading] = useState<boolean>(false);
     const [addItemPopupType, setAddItemPopupType] = useState<string>("");
@@ -124,36 +125,44 @@ export const OverlayItemsIndexPage = ({ url, layerName, parameterField, breadcru
                 <div className="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-3 tw-gap-6 tw-pt-4">
                     {
                         items?.filter(i => i.layer?.name === layerName)
-                        .sort((a, b) => {
-                            // Convert date_created to milliseconds, handle undefined by converting to lowest possible date (0 milliseconds)
-                            const dateA = a.date_updated ? new Date(a.date_updated).getTime() : a.date_created ? new Date(a.date_created).getTime() : 0;
-                            const dateB = b.date_updated ? new Date(b.date_updated).getTime() : b.date_created ? new Date(b.date_created).getTime() : 0;
-                            return dateB - dateA; // Subtracts milliseconds which are numbers
-                          })
-                          .map((i, k) => {
-                            return (
-                                <div key={k} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-p-4 tw-mb-4 tw-h-fit' onClick={() => navigate(url + getValue(i, parameterField))}>
-                                    <HeaderView loading={loading} item={i} api={layer?.api} itemAvatarField={itemImageField} itemNameField={itemNameField} itemSubnameField={itemSubnameField} editCallback={() => navigate("/edit-item/" + i.id)} deleteCallback={() => deleteItem(i)}></HeaderView>
-                                    <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
-                                        <TextView truncate item={i} itemTextField={itemTextField} />
+                            .sort((a, b) => {
+                                // Convert date_created to milliseconds, handle undefined by converting to lowest possible date (0 milliseconds)
+                                const dateA = a.date_updated ? new Date(a.date_updated).getTime() : a.date_created ? new Date(a.date_created).getTime() : 0;
+                                const dateB = b.date_updated ? new Date(b.date_updated).getTime() : b.date_created ? new Date(b.date_created).getTime() : 0;
+                                return dateB - dateA; // Subtracts milliseconds which are numbers
+                            })
+                            .map((i, k) => {
+                                return (
+                                    <div key={k} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-p-4 tw-mb-4 tw-h-fit' onClick={() => navigate(url + getValue(i, parameterField))}>
+                                        <HeaderView loading={loading} item={i} api={layer?.api} itemAvatarField={itemImageField} itemNameField={itemNameField} itemSubnameField={itemSubnameField} editCallback={() => navigate("/edit-item/" + i.id)} deleteCallback={() => deleteItem(i)}></HeaderView>
+                                        <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
+                                            <TextView truncate item={i} itemTextField={itemTextField} />
+                                        </div>
+                                        <div className='tw-flex -tw-mb-1 tw-flex-row tw-mr-2 -tw-mt-2' onClick={(e) => e.stopPropagation()}>
+
+                                            {
+                                                infoExpanded.get(k) ?
+                                                    <p className={`tw-italic tw-min-h-[21px] !tw-my-0 tw-text-gray-500`} onClick={() => setInfoExpanded(prevMap => {
+                                                        const newMap = new Map(prevMap); // Create a new Map from the previous Map
+                                                        newMap.set(k, false);          // Set new or update existing key-value pair
+                                                        return newMap;                   // Return the new Map to update the state
+                                                    })} >{`${i.date_updated && i.date_updated != i.date_created ? "updated" : "posted"} ${i && i.user_created && i.user_created.first_name ? `by ${i.user_created.first_name}` : ""} ${i.date_updated ? timeAgo(i.date_updated) : timeAgo(i.date_created!)}`}</p>
+                                                    :
+                                                    <p className="!tw-my-0 tw-min-h-[21px] tw-font-bold tw-cursor-pointer tw-text-gray-500" onClick={() => setInfoExpanded(prevMap => {
+                                                        const newMap = new Map(prevMap); // Create a new Map from the previous Map
+                                                        newMap.set(k, true);          // Set new or update existing key-value pair
+                                                        return newMap;                   // Return the new Map to update the state
+                                                    })}>ⓘ</p>
+                                            }
+                                            <div className='tw-grow '></div>
+                                            { //**        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="tw-place-self-end tw-w-4 tw-h-4 tw-mb-1 tw-cursor-pointer"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" /></svg> */ 
+                                            }
+                                        </div>
                                     </div>
-                                    <div className='tw-flex -tw-mb-1 tw-flex-row tw-mr-2 -tw-mt-2' onClick={(e)=> e.stopPropagation()}>
 
-                                    {
-            infoExpanded == k ?
-            <p className={`tw-italic tw-min-h-[21px] !tw-my-0 tw-text-gray-500`} onClick={() => setInfoExpanded(0)} >{`${i.date_updated &&  i.date_updated != i.date_created ? "updated" : "posted" } ${i && i.user_created && i.user_created.first_name ? `by ${i.user_created.first_name}` : ""} ${i.date_updated ? timeAgo(i.date_updated) : timeAgo(i.date_created!)}`}</p>
-              :
-              <p className="!tw-my-0 tw-min-h-[21px] tw-font-bold tw-cursor-pointer tw-text-gray-500" onClick={() => setInfoExpanded(k)}>ⓘ</p>
-          }
-                                        <div className='tw-grow '></div>
-                                        { //**        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="tw-place-self-end tw-w-4 tw-h-4 tw-mb-1 tw-cursor-pointer"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" /></svg> */ 
-                                        }
-                                    </div>
-                                </div>
+                                )
 
-                            )
-
-                        })
+                            })
                     }
                     {addItemPopupType == "place" ?
 

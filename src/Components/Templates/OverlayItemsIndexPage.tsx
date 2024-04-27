@@ -26,6 +26,7 @@ type breadcrumb = {
 export const OverlayItemsIndexPage = ({ url, layerName, parameterField, breadcrumbs, itemNameField, itemTextField, itemImageField, itemSymbolField, itemSubnameField, plusButton = true, children }: { layerName: string, url: string, parameterField: string, breadcrumbs: Array<breadcrumb>, itemNameField: string, itemTextField: string, itemImageField: string, itemSymbolField: string, itemSubnameField: string, plusButton?: boolean, children?: ReactNode }) => {
 
     console.log(itemSymbolField);
+    const [infoExpanded, setInfoExpanded] = useState<Number>(0);
 
     const [loading, setLoading] = useState<boolean>(false);
     const [addItemPopupType, setAddItemPopupType] = useState<string>("");
@@ -136,10 +137,14 @@ export const OverlayItemsIndexPage = ({ url, layerName, parameterField, breadcru
                                     <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
                                         <TextView truncate item={i} itemTextField={itemTextField} />
                                     </div>
-                                    <div className='tw-flex -tw-mb-1 tw-flex-row tw-mr-2 -tw-mt-2' >
+                                    <div className='tw-flex -tw-mb-1 tw-flex-row tw-mr-2 -tw-mt-2' onClick={(e)=> e.stopPropagation()}>
 
-                                                <p className={`tw-italic tw-min-h-[21px] !tw-my-0 tw-text-gray-500 tw-cursor-pointer`} >{`${i.date_updated &&  i.date_updated != i.date_created ? "updated" : "posted" } ${i && i.user_created && i.user_created.first_name ? `by ${i.user_created.first_name}` : ""} ${i.date_updated ? timeAgo(i.date_updated) : timeAgo(i.date_created!)}`}</p>
-
+                                    {
+            infoExpanded == k ?
+            <p className={`tw-italic tw-min-h-[21px] !tw-my-0 tw-text-gray-500`} onClick={() => setInfoExpanded(0)} >{`${i.date_updated &&  i.date_updated != i.date_created ? "updated" : "posted" } ${i && i.user_created && i.user_created.first_name ? `by ${i.user_created.first_name}` : ""} ${i.date_updated ? timeAgo(i.date_updated) : timeAgo(i.date_created!)}`}</p>
+              :
+              <p className="!tw-my-0 tw-min-h-[21px] tw-font-bold tw-cursor-pointer tw-text-gray-500" onClick={() => setInfoExpanded(k)}>ⓘ</p>
+          }
                                         <div className='tw-grow '></div>
                                         { //**        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="tw-place-self-end tw-w-4 tw-h-4 tw-mb-1 tw-cursor-pointer"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" /></svg> */ 
                                         }

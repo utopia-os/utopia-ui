@@ -42,7 +42,6 @@ export const OverlayItemsIndexPage = ({ url, layerName, parameterField, breadcru
         scroll();
     }, [addItemPopupType])
 
-
     const navigate = useNavigate();
 
     const tags = useTags();

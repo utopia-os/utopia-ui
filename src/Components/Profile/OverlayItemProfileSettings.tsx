@@ -108,7 +108,7 @@ export function OverlayItemProfileSettings() {
 
             }
             else {
-                const layer = layers.find(l => l.name == "People")
+                const layer = layers.find(l => l.itemType.name == "user")
                 layer?.api?.createItem && toast.promise(
                     layer?.api?.createItem(changedItem),
                     {

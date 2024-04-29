@@ -43,7 +43,17 @@ module.exports = {
     require("tw-elements/dist/plugin.cjs")
   ],
   daisyui: {
-    themes: ["light", "dark", "cupcake", "retro", "cyberpunk", "aqua"]
+    themes: ["light", "dark", "cupcake", "retro", "cyberpunk", "aqua",
+    {
+      docutopia: {
+        "primary": "#8e00ff",
+        "secondary": "#00bb7a",
+        "accent": "#006aff",
+        "neutral": "#231502",
+        "base-content": "#ffad6b",
+        "base-100": "#440844",
+      },
+    },]
   },
   prefix: 'tw-',
   content: ['./src/**/*.{js,jsx,ts,tsx}'],

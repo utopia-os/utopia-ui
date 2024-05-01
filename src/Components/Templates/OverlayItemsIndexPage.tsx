@@ -113,7 +113,7 @@ export const OverlayItemsIndexPage = ({ url, layerName, parameterField, breadcru
         <>
 
 
-            <MapOverlayPage className='tw-rounded-none tw-overflow-y-auto tw-to-base-200'>
+            <MapOverlayPage className='tw-rounded-none tw-overflow-y-auto tw-bg-base-200'>
                 <div className='tw-h-fit'>
                     {breadcrumbs &&
                         <div className="tw-text-sm tw-breadcrumbs">

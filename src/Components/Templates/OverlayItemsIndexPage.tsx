@@ -15,6 +15,7 @@ import { HeaderView } from '../Map/Subcomponents/ItemPopupComponents/HeaderView'
 import { MapOverlayPage } from './MapOverlayPage';
 import { useAddItem, useItems, useRemoveItem } from '../Map/hooks/useItems';
 import { timeAgo } from '../../Utils/TimeAgo';
+import { DateUserInfo } from './DateUserInfo';
 
 
 type breadcrumb = {
@@ -112,7 +113,7 @@ export const OverlayItemsIndexPage = ({ url, layerName, parameterField, breadcru
         <>
 
 
-            <MapOverlayPage className='tw-rounded-none tw-overflow-y-auto'>
+            <MapOverlayPage className='tw-rounded-none tw-overflow-y-auto tw-to-base-200'>
                 <div className='tw-h-fit'>
                     {breadcrumbs &&
                         <div className="tw-text-sm tw-breadcrumbs">
@@ -137,26 +138,7 @@ export const OverlayItemsIndexPage = ({ url, layerName, parameterField, breadcru
                                         <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
                                             <TextView truncate item={i} itemTextField={itemTextField} />
                                         </div>
-                                        <div className='tw-flex -tw-mb-1 tw-flex-row tw-mr-2 -tw-mt-2' onClick={(e) => e.stopPropagation()}>
-
-                                            {
-                                                infoExpanded.get(k) ?
-                                                    <p className={`tw-italic tw-min-h-[21px] !tw-my-0 tw-text-gray-500`} onClick={() => setInfoExpanded(prevMap => {
-                                                        const newMap = new Map(prevMap); // Create a new Map from the previous Map
-                                                        newMap.set(k, false);          // Set new or update existing key-value pair
-                                                        return newMap;                   // Return the new Map to update the state
-                                                    })} >{`${i.date_updated && i.date_updated != i.date_created ? "updated" : "posted"} ${i && i.user_created && i.user_created.first_name ? `by ${i.user_created.first_name}` : ""} ${i.date_updated ? timeAgo(i.date_updated) : timeAgo(i.date_created!)}`}</p>
-                                                    :
-                                                    <p className="!tw-my-0 tw-min-h-[21px] tw-font-bold tw-cursor-pointer tw-text-gray-500" onClick={() => setInfoExpanded(prevMap => {
-                                                        const newMap = new Map(prevMap); // Create a new Map from the previous Map
-                                                        newMap.set(k, true);          // Set new or update existing key-value pair
-                                                        return newMap;                   // Return the new Map to update the state
-                                                    })}>ⓘ</p>
-                                            }
-                                            <div className='tw-grow '></div>
-                                            { //**        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="tw-place-self-end tw-w-4 tw-h-4 tw-mb-1 tw-cursor-pointer"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" /></svg> */ 
-                                            }
-                                        </div>
+                                        <DateUserInfo item={i}></DateUserInfo>
                                     </div>
 
                                 )

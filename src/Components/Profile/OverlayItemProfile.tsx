@@ -2,12 +2,12 @@ import { MapOverlayPage } from '../Templates'
 import { useAddItem, useItems, useRemoveItem, useUpdateItem } from '../Map/hooks/useItems'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react';
-import { Item } from '../../types';
+import { Item, Tag } from '../../types';
 import { useMap } from 'react-leaflet';
 import { LatLng } from 'leaflet';
 import { PopupStartEndInput, StartEndView, TextView } from '../Map';
 import { useAddTag, useTags } from '../Map/hooks/useTags';
-import { useFilterTags, useResetFilterTags } from '../Map/hooks/useFilter';
+import { useAddFilterTag, useFilterTags, useResetFilterTags } from '../Map/hooks/useFilter';
 import { useHasUserPermission } from '../Map/hooks/usePermissions';
 import { TextAreaInput, TextInput } from '../Input';
 import { hashTagRegex } from '../../Utils/HashTagRegex';
@@ -21,6 +21,8 @@ import { HeaderView } from '../Map/Subcomponents/ItemPopupComponents/HeaderView'
 import { useSelectPosition, useSetSelectPosition } from '../Map/hooks/useSelectPosition';
 import { useClusterRef } from '../Map/hooks/useClusterRef';
 import { useLeafletRefs } from '../Map/hooks/useLeafletRefs';
+import { getValue } from '../../Utils/GetValue';
+import { TagView } from '../Templates/TagView';
 
 export function OverlayItemProfile() {
 
@@ -29,6 +31,8 @@ export function OverlayItemProfile() {
     const [activeTab, setActiveTab] = useState<number>(1);
     const [addItemPopupType, setAddItemPopupType] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
+    const [offers, setOffers] = useState<Array<Tag>>([]);
+    const [needs, setNeeds] = useState<Array<Tag>>([]);
 
     const location = useLocation();
     const items = useItems();
@@ -49,6 +53,8 @@ export function OverlayItemProfile() {
     const setSelectPosition = useSetSelectPosition();
     const clusterRef = useClusterRef();
     const leafletRefs = useLeafletRefs();
+    const addFilterTag = useAddFilterTag();
+
 
     const tabRef = useRef<HTMLFormElement>(null);
 
@@ -76,43 +82,60 @@ export function OverlayItemProfile() {
         const item = items.find(i => i.id === itemId);
         item && setItem(item);
         console.log(item);
-        
 
 
-    }, [items,location])
+
+
+    }, [items, location])
 
     useEffect(() => {
+        setOffers([]);
+        setNeeds([]);
+        setRelations([]);
 
-    }, [item])
-    
+        item.layer?.itemOffersField && getValue(item, item.layer.itemOffersField).map(o => {
+            const tag = tags.find(t => t.id === o.tags_id);
+            tag && setOffers(current => [...current, tag])
+        })
+        item.layer?.itemNeedsField && getValue(item, item.layer.itemNeedsField).map(n => {
+            const tag = tags.find(t => t.id === n.tags_id);
+            tag && setNeeds(current => [...current, tag])
+        })
+        item.relations?.map(r => {
+            const item = items.find(i => i.id == r.related_items_id)
+            item && setRelations(current => [...current, item])
+        })
+
+    }, [item,items])
+
 
     useEffect(() => {
         if (item) {
-            if(item.position) {
+            if (item.position) {
                 const marker = Object.entries(leafletRefs).find(r => r[1].item == item)?.[1].marker;
                 marker && clusterRef.hasLayer(marker) && clusterRef?.zoomToShowLayer(marker, () => {
                     const bounds = map.getBounds();
                     const x = bounds.getEast() - bounds.getWest();
-                    map.setView(new LatLng(item?.position?.coordinates[1]!, item?.position?.coordinates[0]! + x / 4), undefined, {duration: 1});
+                    map.setView(new LatLng(item?.position?.coordinates[1]!, item?.position?.coordinates[0]! + x / 4), undefined, { duration: 1 });
                 }
                 );
             }
             else {
-                
+
                 const parent = getFirstAncestor(item);
 
                 const marker = Object.entries(leafletRefs).find(r => r[1].item == parent)?.[1].marker;
                 marker && clusterRef.hasLayer(marker) && clusterRef?.zoomToShowLayer(marker, () => {
                     const bounds = map.getBounds();
                     const x = bounds.getEast() - bounds.getWest();
-                    map.setView(new LatLng(parent?.position?.coordinates[1]!, parent?.position?.coordinates[0]! + x / 4), undefined, {duration: 1});
+                    map.setView(new LatLng(parent?.position?.coordinates[1]!, parent?.position?.coordinates[0]! + x / 4), undefined, { duration: 1 });
                 }
                 );
             }
         }
     }, [item])
 
-    
+
     const getFirstAncestor = (item: Item): Item | undefined => {
         const parent = items.find(i => i.id === item.parent);
         if (parent?.parent) {
@@ -121,8 +144,8 @@ export function OverlayItemProfile() {
             return parent;
         }
     };
-    
-    
+
+
 
 
 
@@ -132,16 +155,6 @@ export function OverlayItemProfile() {
         urlTab ? setActiveTab(Number(urlTab)) : setActiveTab(1);
     }, [location])
 
-
-
-    useEffect(() => {
-
-        setRelations([]);
-        item.relations?.map(r => {
-            const item = items.find(i => i.id == r.related_items_id)
-            item && setRelations(current => [...current, item])
-        })
-    }, [item, activeTab])
 
     useEffect(() => {
         item && item.user_created && hasUserPermission("items", "update", item) && setUpdatePermission(true);
@@ -254,15 +267,13 @@ export function OverlayItemProfile() {
         navigate("/");
     }
 
-
-
     return (
         <>
             {item &&
-                <MapOverlayPage key ={item.id} className={`tw-mx-4 tw-mt-4 tw-max-h-[calc(100dvh-96px)] tw-h-[calc(100dvh-96px)] md:tw-w-[calc(50%-32px)] tw-w-[calc(100%-32px)] tw-min-w-80 tw-max-w-3xl !tw-left-0 sm:!tw-left-auto tw-top-0 tw-bottom-0 tw-transition-opacity tw-duration-500 ${!selectPosition ? 'tw-opacity-100 tw-pointer-events-auto' : 'tw-opacity-0 tw-pointer-events-none'}`}>
+                <MapOverlayPage key={item.id} className={`tw-mx-4 tw-mt-4 tw-max-h-[calc(100dvh-96px)] tw-h-[calc(100dvh-96px)] md:tw-w-[calc(50%-32px)] tw-w-[calc(100%-32px)] tw-min-w-80 tw-max-w-3xl !tw-left-0 sm:!tw-left-auto tw-top-0 tw-bottom-0 tw-transition-opacity tw-duration-500 ${!selectPosition ? 'tw-opacity-100 tw-pointer-events-auto' : 'tw-opacity-0 tw-pointer-events-none'}`}>
 
                     <>
-                        <HeaderView api={item.layer?.api} item={item} deleteCallback={handleDelete} editCallback={() => navigate("/edit-item/" + item.id)} setPositionCallback={()=>{map.closePopup();setSelectPosition(item); navigate("/")}} big truncateSubname={false}/>
+                        <HeaderView api={item.layer?.api} item={item} deleteCallback={handleDelete} editCallback={() => navigate("/edit-item/" + item.id)} setPositionCallback={() => { map.closePopup(); setSelectPosition(item); navigate("/") }} big truncateSubname={false} />
 
                         <div className='tw-h-full'>
                             <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-2 tw-mb-2">
@@ -271,107 +282,72 @@ export function OverlayItemProfile() {
                                     <TextView item={item} />
                                 </div>
 
-                                <input type="radio" name="my_tabs_2" role="tab" className="tw-tab [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Projects" checked={activeTab == 2 && true} onChange={() => updateActiveTab(2)} />
-                                <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto tw-pt-4 tw-pb-1 -tw-mx-4 tw-overflow-x-hidden" >
-                                    <div className='tw-h-full'>
-                                        <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-1 2xl:tw-grid-cols-2 tw-pb-5'>
-                                            {relations && relations.map(i => {
-                                                if (i.layer?.itemType.name == 'project') return (
+                                {item.layer?.itemType.offers_and_needs &&
 
-                                                    <div key={i.id} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-4 tw-mb-4 tw-h-fit' onClick={() => navigate('/item/' + i.id)}>
-                                                        <LinkedItemsHeaderView unlinkPermission={updatePermission} loading={loading} item={i} unlinkCallback={unlinkItem} />
+                                    <>
 
-                                                        <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
-                                                            <TextView truncate item={i} />
-                                                        </div>
-                                                    </div>
-
-                                                )
-                                                else return null
-                                            })}
-                                            {addItemPopupType == "project" ?
-                                                <form ref={tabRef} autoComplete='off' onSubmit={e => submitNewItem(e, addItemPopupType)} >
-
-                                                    <div className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-6 tw-mb-4'>
-                                                        <label className="tw-btn tw-btn-sm tw-rounded-2xl tw-btn-circle tw-btn-ghost hover:tw-bg-transparent tw-absolute tw-right-0 tw-top-0 tw-text-gray-600" onClick={() => {
-                                                            setAddItemPopupType("")
-                                                        }}>
-                                                            <p className='tw-text-center '>✕</p></label>
-                                                        <TextInput type="text" placeholder="Name" dataField="name" defaultValue={""} inputStyle='' />
-                                                        <TextAreaInput placeholder="Text" dataField="text" defaultValue={""} inputStyle='tw-h-40 tw-mt-5' />
-                                                        <div className='tw-flex tw-justify-center'>
-                                                            <button className={loading ? 'tw-btn tw-btn-disabled tw-mt-5 tw-place-self-center' : 'tw-btn tw-mt-5 tw-place-self-center'} type='submit'>{loading ? <span className="tw-loading tw-loading-spinner"></span> : 'Save'}</button>
-                                                        </div>
-                                                    </div>
-                                                </form> : <></>
-                                            }
-                                            {updatePermission && <ActionButton collection="items" item={item} existingRelations={relations} itemType={"project"} triggerItemSelected={linkItem} triggerAddButton={() => { setAddItemPopupType("project"); scroll() }} color={item.color}></ActionButton>}
-
+                                        <input type="radio" name="my_tabs_2" role="tab" className="tw-tab tw-min-w-[10em] [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Offers & Needs" checked={activeTab == 3 && true} onChange={() => updateActiveTab(3)} />
+                                        <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-268px)] tw-overflow-y-auto fade tw-pt-4 tw-pb-1" >
+                                            <div className='tw-h-full'>
+                                                <div className='tw-grid tw-grid-cols-1'>
+                                                    {
+                                                        offers.length > 0 ?
+                                                            <div className='tw-col-span-1'>
+                                                                <h3 className='-tw-mb-2'>Offers</h3>
+                                                                < div className='tw-flex tw-flex-wrap tw-mb-4'>
+                                                                    {
+                                                                        offers.map(o => <TagView key={o?.id} tag={o} onClick={() => {
+                                                                            console.log(o);
+                                                                            addFilterTag(o)
+                                                                        }} />)
+                                                                    }
+                                                                </div>
+                                                            </div> : ""
+                                                    }
+                                                    {
+                                                        needs.length > 0 ?
+                                                            <div className='tw-col-span-1'>
+                                                                <h3 className='-tw-mb-2 tw-col-span-1'>Needs</h3>
+                                                                < div className='tw-flex tw-flex-wrap  tw-mb-4'>
+                                                                    {
+                                                                        needs.map(n => <TagView key={n?.id} tag={n} onClick={() => addFilterTag(n)} />)
+                                                                    }
+                                                                </div>
+                                                            </div> : ""
+                                                    }
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    </>
 
-                                <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Events" checked={activeTab == 3 && true} onChange={() => updateActiveTab(3)} />
-                                <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto tw-pt-4 tw-pb-1 -tw-mx-4 tw-overflow-x-hidden">
-                                    <div className='tw-h-full'>
-                                        <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-1 2xl:tw-grid-cols-2'>
-                                            {relations && relations.map(i => {
-                                                if (i.layer?.itemType.name == 'event') return (
 
-                                                    <div key={i.id} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-6 tw-mb-4' onClick={() => navigate('/item/' + i.id)}>
-                                                        <LinkedItemsHeaderView unlinkPermission={updatePermission} item={i} unlinkCallback={unlinkItem} loading={loading} />
-                                                        <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
-                                                            <StartEndView item={i}></StartEndView>
-                                                            <TextView truncate item={i} />
+                                }
+
+                                {item.layer?.itemType.relations &&
+                                    <>
+                                        <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Relations" checked={activeTab == 7 && true} onChange={() => updateActiveTab(7)} />
+                                        <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto tw-pt-4 tw-pb-1 -tw-mx-4 tw-overflow-x-hidden">
+                                            <div className='tw-h-full'>
+                                                <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-1 2xl:tw-grid-cols-2'>
+                                                    {relations && relations.map(i =>
+
+
+                                                        <div key={i.id} className='tw-cursor-pointer tw-card tw-bg-base-200 tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-text-base-content tw-mx-4 tw-p-6 tw-mb-4' onClick={() => navigate('/item/' + i.id)}>
+                                                            <LinkedItemsHeaderView unlinkPermission={updatePermission} item={i} unlinkCallback={unlinkItem} loading={loading} />
+                                                            <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
+                                                                <TextView truncate item={i} />
+                                                            </div>
                                                         </div>
-                                                    </div>
 
-                                                )
-                                                else return null
-                                            })}
-                                            {addItemPopupType == "event" ?
-                                                <form autoComplete='off' onSubmit={e => submitNewItem(e, addItemPopupType)} >
 
-                                                    <div className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-6 tw-mb-4'>
-                                                        <label className="tw-btn tw-btn-sm tw-rounded-2xl tw-btn-circle tw-btn-ghost hover:tw-bg-transparent tw-absolute tw-right-0 tw-top-0 tw-text-gray-600" onClick={() => {
-                                                            setAddItemPopupType("")
-                                                        }}>
-                                                            <p className='tw-text-center '>✕</p></label>
-                                                        <TextInput type="text" placeholder="Name" dataField="name" defaultValue={""} inputStyle='' />
-                                                        <PopupStartEndInput></PopupStartEndInput>
-                                                        <TextAreaInput placeholder="Text" dataField="text" defaultValue={""} inputStyle='tw-h-40 tw-mt-5' />
-                                                        <div className='tw-flex tw-justify-center'>
-                                                            <button className={loading ? 'tw-btn tw-btn-disabled tw-mt-5 tw-place-self-center' : 'tw-btn tw-mt-5 tw-place-self-center'} type='submit'>{loading ? <span className="tw-loading tw-loading-spinner"></span> : 'Save'}</button>
-                                                        </div>
-                                                    </div>
-                                                </form> : <></>
-                                            }
-                                            {updatePermission && <ActionButton collection="items" item={item} existingRelations={relations} itemType={"event"} triggerItemSelected={linkItem} triggerAddButton={() => { setAddItemPopupType("event"); scroll() }} color={item.color}></ActionButton>}
+                                                    )}
+                                                    {updatePermission && <ActionButton collection="items" item={item} existingRelations={relations} triggerItemSelected={linkItem} color={item.color}></ActionButton>}
 
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Community" checked={activeTab == 4 && true} onChange={() => updateActiveTab(4)} />
-                                <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto tw-pt-4 tw-pb-1 -tw-mx-4 tw-overflow-x-hidden">
-                                    <div className='tw-h-full'>
-                                        <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-1 2xl:tw-grid-cols-2'>
-                                            {relations && relations.map(i => {
-                                                if (i.layer?.itemType.name == 'user') return (
-
-                                                    <div key={i.id} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-6 tw-mb-4' onClick={() => navigate('/item/' + i.id)}>
-                                                        <LinkedItemsHeaderView unlinkPermission={updatePermission} item={i} unlinkCallback={unlinkItem} loading={loading} />
-                                                        <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
-                                                            <TextView truncate item={i} />
-                                                        </div>
-                                                    </div>
-                                                )
-                                                else return null
-                                            })}
-                                            {updatePermission && <ActionButton collection="items" item={item} existingRelations={relations} itemType={"user"} triggerItemSelected={linkItem} color={item.color}></ActionButton>}
-
-                                        </div>
-                                    </div>
-                                </div>
+                                    </>
+                                }
                             </div>
                         </div>
                     </>

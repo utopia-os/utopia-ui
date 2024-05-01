@@ -10,12 +10,17 @@ import { hashTagRegex } from '../../Utils/HashTagRegex';
 import { useAddTag, useTags } from '../Map/hooks/useTags';
 import { randomColor } from '../../Utils/RandomColor';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Item } from '../../types';
+import { Item, Tag } from '../../types';
 import { MapOverlayPage } from '../Templates';
 
 import { AvatarWidget } from './AvatarWidget';
 import { encodeTag } from '../../Utils/FormatTags';
 import { useLayers } from '../Map/hooks/useLayers';
+import { TagsWidget } from './TagsWidget';
+import { LinkedItemsHeaderView } from './LinkedItemsHeaderView';
+import { TextView } from '../Map/Subcomponents/ItemPopupComponents/TextView';
+import { ActionButton } from './ActionsButton';
+import { useHasUserPermission } from '../Map/hooks/usePermissions';
 
 
 export function OverlayItemProfileSettings() {
@@ -26,6 +31,12 @@ export function OverlayItemProfileSettings() {
     const [text, setText] = useState<string>("");
     const [image, setImage] = useState<string>("");
     const [color, setColor] = useState<string>("");
+    const [offers, setOffers] = useState<Array<Tag>>([]);
+    const [needs, setNeeds] = useState<Array<Tag>>([]);
+    const [updatePermission, setUpdatePermission] = useState<boolean>(false);
+    const [relations, setRelations] = useState<Array<Item>>([]);
+
+
 
 
     const [activeTab, setActiveTab] = useState<number>(1);
@@ -34,6 +45,7 @@ export function OverlayItemProfileSettings() {
     const { user } = useAuth();
 
 
+    const hasUserPermission = useHasUserPermission();
 
     const updateItem = useUpdateItem();
     const addItem = useAddItem();
@@ -52,9 +64,27 @@ export function OverlayItemProfileSettings() {
         const itemId = location.pathname.split("/")[2];
         const item = items.find(i => i.id === itemId);
         item && setItem(item);
-        !item && setItem({id: crypto.randomUUID(), name: user ? user.first_name : "", text: ""})
+        !item && setItem({ id: crypto.randomUUID(), name: user ? user.first_name : "", text: "" })
 
     }, [location, items, activeTab])
+
+    const updateActiveTab = (id: number) => {
+        setActiveTab(id);
+
+        let params = new URLSearchParams(window.location.search);
+        let urlTab = params.get("tab");
+        if (!urlTab?.includes(id.toString()))
+            params.set("tab", `${id ? id : ""}`)
+        window.history.pushState('', '', "?" + params.toString());
+    }
+
+    useEffect(() => {
+        let params = new URLSearchParams(location.search);
+        let urlTab = params.get("tab");
+        urlTab ? setActiveTab(Number(urlTab)) : setActiveTab(1);
+    }, [location])
+
+
 
     React.useEffect(() => {
         if (item.layer?.itemColorField) setColor(getValue(item, item.layer?.itemColorField));
@@ -65,70 +95,116 @@ export function OverlayItemProfileSettings() {
         setSubname(item?.subname ? item.subname : "");
         setText(item?.text ? item.text : "");
         setImage(item?.image ? item?.image : "");
+        setOffers([]);
+        setNeeds([]);
+        item?.offers?.map(o => {
+            const offer = tags.find(t => t.id === o.tags_id);
+            offer && setOffers(current => [...current, offer])
+        })
+        item?.needs?.map(o => {
+            const need = tags.find(t => t.id === o.tags_id);
+            need && setNeeds(current => [...current, need])
+        })
+        setRelations([]);
+        item.relations?.map(r => {
+            const item = items.find(i => i.id == r.related_items_id)
+            item && setRelations(current => [...current, item])
+        })
+        item && item.user_created && hasUserPermission("items", "update", item) && setUpdatePermission(true);
+
     }, [item])
 
 
     const onUpdateItem = async () => {
         let changedItem = {} as Item;
-        
+
+        let offer_updates : Array<any> = [];
+        //check for new offers
+        offers.map(o => {
+            const existingOffer = item?.offers?.find(t => t.tags_id === o.id)
+            existingOffer && offer_updates.push(existingOffer.id)
+            if(!existingOffer && !tags.some(t => t.id === o.id)) addTag({...o,offer_or_need: true})
+            !existingOffer && offer_updates.push({items_id: item?.id, tags_id: o.id})
+        });
+
+        let needs_updates : Array<any> = [];
+
+        needs.map(n => {
+            const existingNeed = user?.needs.find(t => t.tags_id === n.id)
+            existingNeed && needs_updates.push(existingNeed.id)
+            !existingNeed && needs_updates.push({items_id: item?.id, tags_id: n.id})
+            !existingNeed && !tags.some(t => t.id === n.id) && addTag({...n,offer_or_need: true})
+        });
 
 
-        changedItem = { id: id, name: name, subname: subname, text: text, color: color, position: item.position, ...image.length > 10 && { image: image }};
+
+        changedItem = { id: id, name: name, subname: subname, text: text, color: color, position: item.position, ...image.length > 10 && { image: image }, ... offers.length > 0 && {offers: offer_updates}, ... needs.length > 0 && {needs: needs_updates} };
         // update profile item in current state
-        //const item = items.find(i => i.layer?.itemOwnerField && getValue(i, i.layer?.itemOwnerField).id === id);
+
+        let offers_state : Array<any> = [];
+        let needs_state : Array<any> = [];
+
+        await offers.map(o => {
+            offers_state.push({items_id: item?.id, tags_id: o.id})
+        });
+
+        await needs.map(n => {
+            needs_state.push({items_id: item?.id, tags_id: n.id})
+        });
+
+        changedItem = {... changedItem, offers: offers_state, needs: needs_state};
 
 
-      //  if (item && item.layer && item.layer.itemOwnerField) item[item.layer.itemOwnerField] = {... changedUser, offers: offer_state, needs: needs_state};
-        // add new hashtags from profile text
         text.toLocaleLowerCase().match(hashTagRegex)?.map(tag => {
             if (!tags.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
-                addTag({ id: crypto.randomUUID(), name: encodeTag(tag.slice(1).toLocaleLowerCase()), color: randomColor()})
+                addTag({ id: crypto.randomUUID(), name: encodeTag(tag.slice(1).toLocaleLowerCase()), color: randomColor() })
             }
         });
 
         setLoading(true);
         console.log(item.layer);
-        
 
-        if(item.layer) {item?.layer?.api?.updateItem && toast.promise(
-            item?.layer?.api?.updateItem(changedItem),
-            {
-                pending: 'updating Item  ...',
-                success: 'Item updated',
-                error: {
-                    render({ data }) {
-                        return `${data}`
-                    },
-                },
-            })
-            .then(() => item && updateItem({...item, ...changedItem}))
-            .then(() => {
-                setLoading(false);
-                navigate("/item/"+item.id)});
 
-            }
-            else {
-                const layer = layers.find(l => l.itemType.name == "user")
-                layer?.api?.createItem && toast.promise(
-                    layer?.api?.createItem(changedItem),
-                    {
-                        pending: 'updating Item  ...',
-                        success: 'Item updated',
-                        error: {
-                            render({ data }) {
-                                return `${data}`
-                            },
+        if (item.layer) {
+            item?.layer?.api?.updateItem && toast.promise(
+                item?.layer?.api?.updateItem(changedItem),
+                {
+                    pending: 'updating Item  ...',
+                    success: 'Item updated',
+                    error: {
+                        render({ data }) {
+                            return `${data}`
                         },
-                    })
-                    .then(() => item && addItem({...item, ...changedItem, layer: layer, user_created: user, type: layer.itemType}))
-                    .then(() => {
-                        setLoading(false);
-                        navigate("/")});
-                        console.log({...item, ...changedItem, layer: layer, user_created: user, type: "User"});
-                        
-            }
+                    },
+                })
+                .then(() => item && updateItem({ ...item, ...changedItem }))
+                .then(() => {
+                    setLoading(false);
+                    navigate("/item/" + item.id)
+                });
+
+        }
+        else {
+            const layer = layers.find(l => l.itemType.name == "user")
+            layer?.api?.createItem && toast.promise(
+                layer?.api?.createItem(changedItem),
+                {
+                    pending: 'updating Item  ...',
+                    success: 'Item updated',
+                    error: {
+                        render({ data }) {
+                            return `${data}`
+                        },
+                    },
+                })
+                .then(() => item && addItem({ ...item, ...changedItem, layer: layer, user_created: user, type: layer.itemType }))
+                .then(() => {
+                    setLoading(false);
+                    navigate("/")
+                });
+        }
     }
-    
+
 
 
     return (
@@ -136,8 +212,8 @@ export function OverlayItemProfileSettings() {
             <MapOverlayPage backdrop className='tw-mx-4 tw-mt-4 tw-mb-12 tw-overflow-x-hidden tw-max-h-[calc(100dvh-96px)] !tw-h-[calc(100dvh-96px)] tw-w-[calc(100%-32px)]  md:tw-w-[calc(50%-32px)] tw-max-w-3xl !tw-left-auto tw-top-0 tw-bottom-0'>
                 <div className='tw-flex tw-flex-col tw-h-full'>
                     <div className="tw-flex">
-                        <AvatarWidget avatar={image} setAvatar={setImage}/>
-                        <ColorPicker color={color? color : "#3D3846"} onChange={setColor} className={"-tw-left-6 tw-top-14 -tw-mr-6"} />
+                        <AvatarWidget avatar={image} setAvatar={setImage} />
+                        <ColorPicker color={color ? color : "#3D3846"} onChange={setColor} className={"-tw-left-6 tw-top-14 -tw-mr-6"} />
                         <div className='tw-grow tw-mr-4'>
                             <TextInput placeholder="Name" defaultValue={item?.name ? item.name : ""} updateFormValue={(v) => setName(v)} containerStyle='tw-grow tw-input-md' />
                             <TextInput placeholder="Subtitle" defaultValue={item?.subname ? item.subname : ""} updateFormValue={(v) => setSubname(v)} containerStyle='tw-grow tw-input-sm tw-px-4 tw-mt-1' />
@@ -146,22 +222,27 @@ export function OverlayItemProfileSettings() {
 
 
                     <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-4">
-                        <input type="radio" name="my_tabs_2" role="tab" className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`} aria-label="Vision" checked={activeTab == 1 && true} onChange={() => setActiveTab(1)} />
-                        <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-border-[var(--fallback-bc,oklch(var(--bc)/0.2))] tw-rounded-box tw-h-[calc(100dvh-332px)] tw-min-h-56">
-                            <TextAreaInput placeholder="My Vision..." defaultValue={item?.text ? item.text : ""} updateFormValue={(v) => {console.log(v);setText(v)}} containerStyle='tw-h-full' inputStyle='tw-h-full tw-border-t-0 tw-rounded-tl-none' />
+                        <input type="radio" name="my_tabs_2" role="tab" className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`} aria-label="Info" checked={activeTab == 1 && true} onChange={() => updateActiveTab(1)} />
+                        <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-border-[var(--fallback-bc,oklch(var(--bc)/0.2))] tw-rounded-box tw-h-[calc(100dvh-332px)] tw-min-h-56 tw-border-none">
+                            <TextAreaInput placeholder="My Vision..." defaultValue={item?.text ? item.text : ""} updateFormValue={(v) => { console.log(v); setText(v) }} containerStyle='tw-h-full' inputStyle='tw-h-full tw-border-t-0 tw-rounded-tl-none' />
                         </div>
+                        {item.layer?.itemType.offers_and_needs &&
+                            <>
+                                <input type="radio" name="my_tabs_2" role="tab" className={`tw-tab tw-min-w-[10em]  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`} aria-label="Offers & Needs" checked={activeTab == 3 && true} onChange={() => updateActiveTab(3)} />
+                                <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-border-[var(--fallback-bc,oklch(var(--bc)/0.2))] tw-rounded-box tw-h-[calc(100dvh-332px)] tw-min-h-56 tw-border-none">
+                                    <div className='tw-h-full'>
+                                        <div className='tw-w-full tw-h-[calc(50%-0.75em)] tw-mb-4'>
+                                            <TagsWidget defaultTags={offers} onUpdate={(v) => setOffers(v)} placeholder="enter your offers" containerStyle='tw-bg-transparent tw-w-full tw-h-full tw-mt-3 tw-text-xs tw-h-[calc(100%-1rem)] tw-min-h-[5em] tw-pb-2 tw-overflow-auto' />
+                                        </div>
+                                        <div className='tw-w-full tw-h-[calc(50%-0.75em)] '>
+                                            <TagsWidget defaultTags={needs} onUpdate={(v) => setNeeds(v)} placeholder="enter your needs" containerStyle='tw-bg-transparent tw-w-full tw-h-full tw-mt-3 tw-text-xs tw-h-[calc(100%-1rem)] tw-min-h-[5em] tw-pb-2 tw-overflow-auto' />
+                                        </div>
+                                    </div>
+                                </div>
+                            </>
+                        }
 
-                        <input type="radio" name="my_tabs_2" role="tab" className="tw-tab [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Projects" checked={activeTab == 2 && true} onChange={() => setActiveTab(2)} />
-                        <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-pt-4 tw-h-[calc(100dvh-332px)] tw-min-h-56">
-                        </div>
 
-                        <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Events" checked={activeTab == 3 && true} onChange={() => setActiveTab(3)} />
-                        <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-border-[var(--fallback-bc,oklch(var(--bc)/0.2))] tw-rounded-box tw-h-[calc(100dvh-332px)] tw-min-h-56">
-                        </div>
-
-                        <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Friends" checked={activeTab == 4 && true} onChange={() => setActiveTab(4)} />
-                        <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-border-[var(--fallback-bc,oklch(var(--bc)/0.2))] tw-rounded-box tw-h-[calc(100dvh-332px)] tw-min-h-56">
-                        </div>
                     </div>
 
                     <div className="tw-mt-4 tw-mb-4"><button className={loading ? " tw-loading tw-btn-disabled tw-btn tw-btn-primary tw-float-right" : "tw-btn tw-btn-primary tw-float-right"} onClick={() => onUpdateItem()}>Update</button></div>

@@ -55,7 +55,7 @@ export function LinkedItemsHeaderView({ item, unlinkCallback, itemNameField, ite
         <div className='tw-col-span-1' onClick={(e) => e.stopPropagation()}>
           {unlinkPermission &&
             <div className="tw-dropdown tw-dropdown-bottom">
-              <label tabIndex={0} className="tw-bg-base-100 tw-btn tw-m-1 tw-leading-3 tw-border-none tw-min-h-0 tw-h-6">
+              <label tabIndex={0} className=" tw-btn tw-m-1 tw-leading-3 tw-border-none tw-min-h-0 tw-h-6">
                 <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor">
                   <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
                 </svg>

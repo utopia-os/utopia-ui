@@ -9,7 +9,7 @@ export function ActionButton({ item, triggerAddButton, triggerItemSelected, exis
     triggerAddButton?: any,
     triggerItemSelected?: any,
     existingRelations: Item[],
-    itemType: string;
+    itemType?: string;
     color: string,
     collection?: string,
     item: Item
@@ -19,7 +19,7 @@ export function ActionButton({ item, triggerAddButton, triggerItemSelected, exis
 
     const items = useItems();
 
-    const filterdItems = items.filter(i => i.layer?.itemType.name == itemType).filter(i => !existingRelations.some(s => s.id == i.id)).filter(i => i.id != item.id)
+    const filterdItems = items.filter(i => !itemType || i.layer?.itemType.name == itemType).filter(i => !existingRelations.some(s => s.id == i.id)).filter(i => i.id != item.id)
 
 
     
@@ -37,7 +37,7 @@ export function ActionButton({ item, triggerAddButton, triggerItemSelected, exis
                         </svg>
                     </button>}
                 </div>
-                <DialogModal title={"Select"} isOpened={modalOpen} onClose={() => (setModalOpen(false))} className="!tw-max-w-2xl ">
+                <DialogModal title={"Select"} isOpened={modalOpen} onClose={() => (setModalOpen(false))} className="!tw-max-w-2xl tw-bg-base-200">
                     <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-2 lg:tw-grid-cols-2 xl:tw-grid-cols-2'>
                         {filterdItems.map(i => <div key={i.id} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-4 tw-mb-4 tw-h-fit' onClick={() => { triggerItemSelected(i.id); setModalOpen(false) }}>
                             <HeaderView item={i} hideMenu></HeaderView>

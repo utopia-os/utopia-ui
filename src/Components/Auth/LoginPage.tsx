@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import ErrorText from '../Typography/ErrorText'
 import { TextInput } from '../Input/TextInput'
@@ -17,6 +17,8 @@ export function LoginPage() {
     const navigate = useNavigate();
 
     const onLogin = async () => {
+        console.log(email);
+        console.log(password);
         await toast.promise(
             login({ email: email, password: password }),
             {
@@ -36,6 +38,22 @@ export function LoginPage() {
                 pending: 'logging in ...'
             });
     }
+
+
+    
+
+    useEffect(() => {
+        const keyDownHandler = event => {   
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            onLogin();
+          }
+        };
+        document.addEventListener('keydown', keyDownHandler);
+        return () => {
+          document.removeEventListener('keydown', keyDownHandler);
+        };
+      }, [onLogin]);
 
     return (
         <MapOverlayPage backdrop className='tw-max-w-xs tw-h-fit'>

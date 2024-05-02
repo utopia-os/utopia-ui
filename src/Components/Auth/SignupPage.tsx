@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import ErrorText from '../Typography/ErrorText'
 import { TextInput } from '../Input/TextInput'
@@ -38,6 +38,19 @@ export function SignupPage() {
                 pending: 'creating new user ...'
             });
     }
+
+    useEffect(() => {
+        const keyDownHandler = event => {   
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            onRegister();
+          }
+        };
+        document.addEventListener('keydown', keyDownHandler);
+        return () => {
+          document.removeEventListener('keydown', keyDownHandler);
+        };
+      }, [onRegister]);
 
 
     return (

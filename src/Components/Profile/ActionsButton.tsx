@@ -4,6 +4,7 @@ import DialogModal from "../Templates/DialogModal";
 import { useItems } from "../Map/hooks/useItems";
 import { HeaderView } from "../Map/Subcomponents/ItemPopupComponents/HeaderView";
 import { Item } from "../../types";
+import { TextInput } from "../Input";
 
 export function ActionButton({ item, triggerAddButton, triggerItemSelected, existingRelations, itemType, color = "#3D3846", collection = "items" }: {
     triggerAddButton?: any,
@@ -16,13 +17,15 @@ export function ActionButton({ item, triggerAddButton, triggerItemSelected, exis
 }) {
     const hasUserPermission = useHasUserPermission();
     const [modalOpen, setModalOpen] = useState<boolean>(false);
+    const [search, setSearch] = useState<string>("");
+
 
     const items = useItems();
 
     const filterdItems = items.filter(i => !itemType || i.layer?.itemType.name == itemType).filter(i => !existingRelations.some(s => s.id == i.id)).filter(i => i.id != item.id)
 
 
-    
+
     return (
         <>{hasUserPermission(collection, "update", item) &&
             <>
@@ -37,9 +40,14 @@ export function ActionButton({ item, triggerAddButton, triggerItemSelected, exis
                         </svg>
                     </button>}
                 </div>
-                <DialogModal title={"Select"} isOpened={modalOpen} onClose={() => (setModalOpen(false))} className="!tw-max-w-2xl tw-bg-base-200">
-                    <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-2 lg:tw-grid-cols-2 xl:tw-grid-cols-2'>
-                        {filterdItems.map(i => <div key={i.id} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-4 tw-mb-4 tw-h-fit' onClick={() => { triggerItemSelected(i.id); setModalOpen(false) }}>
+                <DialogModal title={"Select"} isOpened={modalOpen} onClose={() => (setModalOpen(false))} className="!tw-w-xl !sm:tw-w-2xl tw-min-h-80 tw-bg-base-200">
+                <TextInput defaultValue='' placeholder='🔍 Search' containerStyle='lg:col-span-2 tw-m-4 ' updateFormValue={(val) => { setSearch(val) }}></TextInput>      
+                       <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2'>
+                        {filterdItems.filter(item => {
+                            return search === ''
+                                ? item :
+                                item.name.toLowerCase().includes(search.toLowerCase());
+                        }).map(i => <div key={i.id} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-4 tw-mb-4 tw-h-fit' onClick={() => { triggerItemSelected(i.id); setModalOpen(false) }}>
                             <HeaderView item={i} hideMenu></HeaderView>
                         </div>)}
                     </div>

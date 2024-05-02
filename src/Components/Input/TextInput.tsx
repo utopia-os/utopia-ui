@@ -18,7 +18,7 @@ type InputTextProps = {
 export function TextInput({labelTitle, labelStyle, type, dataField, containerStyle, inputStyle, defaultValue, placeholder, autocomplete, updateFormValue} : InputTextProps){
 
     return(
-        <div className={`tw-form-control tw-w-full ${containerStyle}`}>
+        <div className={`tw-form-control ${containerStyle}`}>
             {labelTitle ? <label className="tw-label">
                 <span className={"tw-label-text tw-text-base-content " + labelStyle}>{labelTitle}</span>
              </label> 

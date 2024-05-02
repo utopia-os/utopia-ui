@@ -2,7 +2,7 @@ import { ReactNode, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { Item, ItemsApi, LayerProps } from '../../types';
 import { getValue } from '../../Utils/GetValue';
-import { TextView } from '../Map';
+import { StartEndView, TextView } from '../Map';
 import { PlusButton } from '../Profile/PlusButton';
 import { TextInput, TextAreaInput } from '../Input';
 import { useAddTag, useTags } from '../Map/hooks/useTags';
@@ -136,7 +136,12 @@ export const OverlayItemsIndexPage = ({ url, layerName, parameterField, breadcru
                                     <div key={k} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-p-4 tw-mb-4 tw-h-fit' onClick={() => navigate(url + getValue(i, parameterField))}>
                                         <HeaderView loading={loading} item={i} api={layer?.api} itemAvatarField={itemImageField} itemNameField={itemNameField} itemSubnameField={itemSubnameField} editCallback={() => navigate("/edit-item/" + i.id)} deleteCallback={() => deleteItem(i)}></HeaderView>
                                         <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
-                                            <TextView truncate item={i} itemTextField={itemTextField} />
+                                            {i.layer?.itemType.show_start_end &&
+                                                <StartEndView item={i}></StartEndView>
+                                            }
+                                            {i.layer?.itemType.show_text &&
+                                                <TextView truncate item={i} itemTextField={itemTextField} />
+                                                }
                                         </div>
                                         <DateUserInfo item={i}></DateUserInfo>
                                     </div>

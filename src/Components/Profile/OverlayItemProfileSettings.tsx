@@ -12,15 +12,11 @@ import { randomColor } from '../../Utils/RandomColor';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Item, Tag } from '../../types';
 import { MapOverlayPage } from '../Templates';
-
 import { AvatarWidget } from './AvatarWidget';
 import { encodeTag } from '../../Utils/FormatTags';
 import { useLayers } from '../Map/hooks/useLayers';
 import { TagsWidget } from './TagsWidget';
-import { LinkedItemsHeaderView } from './LinkedItemsHeaderView';
-import { TextView } from '../Map/Subcomponents/ItemPopupComponents/TextView';
-import { ActionButton } from './ActionsButton';
-import { useHasUserPermission } from '../Map/hooks/usePermissions';
+
 
 
 export function OverlayItemProfileSettings() {
@@ -33,19 +29,12 @@ export function OverlayItemProfileSettings() {
     const [color, setColor] = useState<string>("");
     const [offers, setOffers] = useState<Array<Tag>>([]);
     const [needs, setNeeds] = useState<Array<Tag>>([]);
-    const [updatePermission, setUpdatePermission] = useState<boolean>(false);
-    const [relations, setRelations] = useState<Array<Item>>([]);
-
 
 
 
     const [activeTab, setActiveTab] = useState<number>(1);
     const [loading, setLoading] = useState<boolean>(false);
-
     const { user } = useAuth();
-
-
-    const hasUserPermission = useHasUserPermission();
 
     const updateItem = useUpdateItem();
     const addItem = useAddItem();
@@ -57,16 +46,20 @@ export function OverlayItemProfileSettings() {
     const addTag = useAddTag();
     const navigate = useNavigate();
 
-
     const items = useItems();
     const [item, setItem] = useState<Item>({} as Item)
+
     useEffect(() => {
         const itemId = location.pathname.split("/")[2];
-        const item = items.find(i => i.id === itemId);
-        item && setItem(item);
-        !item && setItem({ id: crypto.randomUUID(), name: user ? user.first_name : "", text: "" })
 
-    }, [location, items, activeTab])
+            const item = items.find(i => i.id === itemId);
+            item && setItem(item);
+
+        const layer = layers.find(l => l.itemType.name == "user")
+
+        !item && setItem({ id: crypto.randomUUID(), name: user ? user.first_name : "", text: "", layer: layer, new: true })
+
+    }, [items])
 
     const updateActiveTab = (id: number) => {
         setActiveTab(id);
@@ -86,7 +79,7 @@ export function OverlayItemProfileSettings() {
 
 
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (item.layer?.itemColorField) setColor(getValue(item, item.layer?.itemColorField));
         else setColor(item.layer?.markerDefaultColor || "#3D3846")
 
@@ -105,54 +98,60 @@ export function OverlayItemProfileSettings() {
             const need = tags.find(t => t.id === o.tags_id);
             need && setNeeds(current => [...current, need])
         })
-        setRelations([]);
-        item.relations?.map(r => {
-            const item = items.find(i => i.id == r.related_items_id)
-            item && setRelations(current => [...current, item])
-        })
-        item && item.user_created && hasUserPermission("items", "update", item) && setUpdatePermission(true);
 
     }, [item])
+
+    useEffect(() => {
+        console.log(offers);
+        console.log(needs);
+        console.log(subname)
+
+
+    }, [offers, needs, subname])
 
 
     const onUpdateItem = async () => {
         let changedItem = {} as Item;
 
-        let offer_updates : Array<any> = [];
+        let offer_updates: Array<any> = [];
         //check for new offers
         offers.map(o => {
             const existingOffer = item?.offers?.find(t => t.tags_id === o.id)
             existingOffer && offer_updates.push(existingOffer.id)
-            if(!existingOffer && !tags.some(t => t.id === o.id)) addTag({...o,offer_or_need: true})
-            !existingOffer && offer_updates.push({items_id: item?.id, tags_id: o.id})
+            if (!existingOffer && !tags.some(t => t.id === o.id)) addTag({ ...o, offer_or_need: true })
+            !existingOffer && offer_updates.push({ items_id: item?.id, tags_id: o.id })
         });
 
-        let needs_updates : Array<any> = [];
+        let needs_updates: Array<any> = [];
 
         needs.map(n => {
             const existingNeed = user?.needs.find(t => t.tags_id === n.id)
             existingNeed && needs_updates.push(existingNeed.id)
-            !existingNeed && needs_updates.push({items_id: item?.id, tags_id: n.id})
-            !existingNeed && !tags.some(t => t.id === n.id) && addTag({...n,offer_or_need: true})
+            !existingNeed && needs_updates.push({ items_id: item?.id, tags_id: n.id })
+            !existingNeed && !tags.some(t => t.id === n.id) && addTag({ ...n, offer_or_need: true })
         });
 
 
 
-        changedItem = { id: id, name: name, subname: subname, text: text, color: color, position: item.position, ...image.length > 10 && { image: image }, ... offers.length > 0 && {offers: offer_updates}, ... needs.length > 0 && {needs: needs_updates} };
+
+
+
+
+        changedItem = { id: id, name: name, subname: subname, text: text, color: color, position: item.position, ...image.length > 10 && { image: image }, ...offers.length > 0 && { offers: offer_updates }, ...needs.length > 0 && { needs: needs_updates } };
         // update profile item in current state
 
-        let offers_state : Array<any> = [];
-        let needs_state : Array<any> = [];
+        let offers_state: Array<any> = [];
+        let needs_state: Array<any> = [];
 
         await offers.map(o => {
-            offers_state.push({items_id: item?.id, tags_id: o.id})
+            offers_state.push({ items_id: item?.id, tags_id: o.id })
         });
 
         await needs.map(n => {
-            needs_state.push({items_id: item?.id, tags_id: n.id})
+            needs_state.push({ items_id: item?.id, tags_id: n.id })
         });
 
-        changedItem = {... changedItem, offers: offers_state, needs: needs_state};
+        changedItem = { ...changedItem, offers: offers_state, needs: needs_state };
 
 
         text.toLocaleLowerCase().match(hashTagRegex)?.map(tag => {
@@ -165,7 +164,7 @@ export function OverlayItemProfileSettings() {
         console.log(item.layer);
 
 
-        if (item.layer) {
+        if (!item.new) {
             item?.layer?.api?.updateItem && toast.promise(
                 item?.layer?.api?.updateItem(changedItem),
                 {
@@ -185,9 +184,8 @@ export function OverlayItemProfileSettings() {
 
         }
         else {
-            const layer = layers.find(l => l.itemType.name == "user")
-            layer?.api?.createItem && toast.promise(
-                layer?.api?.createItem(changedItem),
+            item.layer?.api?.createItem && toast.promise(
+                item.layer?.api?.createItem(changedItem),
                 {
                     pending: 'updating Item  ...',
                     success: 'Item updated',
@@ -197,7 +195,7 @@ export function OverlayItemProfileSettings() {
                         },
                     },
                 })
-                .then(() => item && addItem({ ...item, ...changedItem, layer: layer, user_created: user, type: layer.itemType }))
+                .then(() => item && addItem({ ...item, ...changedItem, layer: item.layer, user_created: user, type: item.layer?.itemType }))
                 .then(() => {
                     setLoading(false);
                     navigate("/")

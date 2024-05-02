@@ -13,7 +13,8 @@ export class mapApi {
   async getItems() {
     try {
       const map = await directusClient.request(readItems("maps" as any, { fields: ['*'], filter: { "url": { "_eq": this.url } } as any, limit: 500 }));
-      return map[0];
+      if(map[0]) return map[0];
+      else return "null";
     } catch (error: any) {
       console.log(error);
       if (error.errors[0]?.message)

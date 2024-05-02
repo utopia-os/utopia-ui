@@ -13,8 +13,12 @@ function MapContainer({ layers, map }: { layers: Array<LayerProps>, map: any }) 
   const [apis, setApis] = useState<Array<layerApi>>([]);
 
   useEffect(() => {
-    layers.map(layer => {
-      apis && setApis(current => [...current, { id: layer.id!, api: new itemsApi<Place>('items', layer.id) }])
+    layers.map((layer:LayerProps) => {
+      apis && setApis(current => [...current, { id: layer.id!, api: new itemsApi<Place>('items', layer.id, undefined, {
+        ...(layer.itemType.name == "event" && {	"end": {
+          "_gte": "$NOW"
+        }})
+     }) }])
     })
   }, [layers])
 
@@ -36,7 +40,7 @@ function MapContainer({ layers, map }: { layers: Array<LayerProps>, map: any }) 
             markerIcon={layer.markerIcon}
             markerShape={layer.markerShape}
             onlyOnePerOwner={layer.onlyOnePerOwner}
-            markerDefaultColor='#3D3846'
+            markerDefaultColor={layer.menuColor}
             itemType={layer.itemType}
             itemNameField='name'
             itemTextField='text'
@@ -44,6 +48,8 @@ function MapContainer({ layers, map }: { layers: Array<LayerProps>, map: any }) 
             itemSubnameField='subname'
             itemColorField='color'
             itemOwnerField='user_created'
+            itemOffersField='offers'
+            itemNeedsField='needs'
             customEditLink='/edit-item'
             customEditParameter='id'
             api={apis?.find(api => api.id === layer.id)?.api}>

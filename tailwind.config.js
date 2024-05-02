@@ -1,12 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./src/**/*.{html,js,jsx,tsx,ts}"],
-    theme: {
+  theme: {
     extend: {
-            // that is animation class
-            animation: {
-              fade: 'fadeOut 1s ease-in-out',
-            },
+      // that is animation class
+      animation: {
+        fade: 'fadeOut 1s ease-in-out',
+      },
     },
   },
   plugins: [require("daisyui")],

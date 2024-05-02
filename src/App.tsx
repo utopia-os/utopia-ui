@@ -26,11 +26,11 @@ function App() {
   const [map, setMap] = useState<any>();
   const [layers, setLayers] = useState<any>();
   const [layerPageRoutes, setLayerPageRoutes] = useState<any>();
+  const [loading, setLoading] = useState<boolean>(true);
 
 
   useEffect(() => {
     setPermissionsApiInstance(new permissionsApi());
-    setTagsApi(new itemsApi<Tag>('tags', undefined, "36fc9ba7-1a6b-4fc2-9db1-39d67aaf6918"));
     setMapApiInstance(new mapApi(window.location.origin));
   }, [])
 
@@ -42,7 +42,8 @@ function App() {
   const getMap = async () => {
     const map = await mapApiInstance?.getItems();
     map && setMap(map);
-    map && setLayersApiInstance(new layersApi(map.id));
+    map && map!="null" && setLayersApiInstance(new layersApi(map.id));
+    map && map!="null" && map.own_tag_space ? setTagsApi(new itemsApi<Tag>('tags', undefined, map.id)) : setTagsApi(new itemsApi<Tag>('tags'));
   }
 
   useEffect(() => {
@@ -61,20 +62,24 @@ function App() {
   }
 
   useEffect(() => {
-if(map && map.name){
-  document.title = map?.name && map.name;
-  let link = document.querySelector("link[rel~='icon']") as HTMLLinkElement
-  if (!link) {
-    link = document.createElement('link');
-    link.rel = 'icon';
-    document.getElementsByTagName('head')[0].appendChild(link);
-  }
-  link.href = map?.logo && "https://api.utopia-lab.org/assets/"+map.logo;  // Specify the path to your favicon
+    if (map && map.name) {
+      document.title = map?.name && map.name;
+      let link = document.querySelector("link[rel~='icon']") as HTMLLinkElement
+      if (!link) {
+        link = document.createElement('link');
+        link.rel = 'icon';
+        document.getElementsByTagName('head')[0].appendChild(link);
+      }
+      link.href = map?.logo && "https://api.utopia-lab.org/assets/" + map.logo;  // Specify the path to your favicon
 
-}
+    }
+
+    setLoading(false);
+
+
 
   }, [map])
-  
+
 
 
   if (map && layers) return (
@@ -84,7 +89,7 @@ if(map && map.name){
       <AuthProvider userApi={new userApi}>
         <AppShell assetsApi={new assetsApi("https://api.utopia-lab.org/assets/")} appName={map.name}>
           <Permissions api={permissionsApiInstance} adminRole='8ed0b24e-3320-48cd-8444-bc152304e580'></Permissions>
-          <Tags api={tagsApi}></Tags>
+          {tagsApi && <Tags api={tagsApi}></Tags>}
           <Modal>
             <ModalContent map={map} />
           </Modal>
@@ -95,7 +100,7 @@ if(map && map.name){
               <Route path="/*" element={<MapContainer map={map} layers={layers} />}>
                 <Route path='login' element={<LoginPage />} />
                 <Route path='signup' element={<SignupPage />} />
-                <Route path='reset-password' element={<RequestPasswordPage reset_url="https://map.collaborative-finance.org/set-new-password/" />} />
+                <Route path='reset-password' element={<RequestPasswordPage reset_url={map.url + "/set-new-password/"} />} />
                 <Route path='set-new-password' element={<SetNewPasswordPage />} />
                 <Route path="profile/*" element={<OverlayProfile />} />
                 <Route path="item/*" element={<OverlayItemProfile />} />
@@ -106,7 +111,7 @@ if(map && map.name){
                 <Route path="landingpage" element={<Landingpage />} />
                 {
                   layers.map((l: any) =>
-                    <Route key={l.id} path={l.name} element={<OverlayItemsIndexPage layerName={l.name} breadcrumbs={[{ name: "Home", path: "/" }, { name: l.name, path: "/" + l.name }]} itemNameField={'name'} itemTextField={'text'} itemImageField={'image'} url={'/item/'} parameterField={'id'} itemSymbolField={'symbol'} itemSubnameField={'subname'} />} />
+                    <Route key={l.id} path={l.name} element={<OverlayItemsIndexPage plusButton={l.index_plus_button} layerName={l.name} breadcrumbs={[{ name: "Home", path: "/" }, { name: l.name, path: "/" + l.name }]} itemNameField={'name'} itemTextField={'text'} itemImageField={'image'} url={'/item/'} parameterField={'id'} itemSymbolField={'symbol'} itemSubnameField={'subname'} />} />
                   )
                 }
               </Route>
@@ -116,12 +121,18 @@ if(map && map.name){
       </AuthProvider>
     </div>
   )
+  else if (map == "null" && !loading) return (
+
+        <div className="flex items-center justify-center h-screen">
+        <div>
+          <p className='text-xl font-semibold'>This map does not exist</p>
+        </div>
+      </div>
+  )
 
   else return (
     <div className="flex items-center justify-center h-screen">
-      <div>
-        <p className='text-xl font-semibold'>This map does not exist</p>
-      </div>
+      <span className="loading loading-spinner loading-lg"></span>
     </div>
   )
 }

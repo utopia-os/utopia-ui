@@ -95,11 +95,11 @@ export function OverlayItemProfile() {
         setNeeds([]);
         setRelations([]);
 
-        item.layer?.itemOffersField && getValue(item, item.layer.itemOffersField).map(o => {
+        item.layer?.itemOffersField && getValue(item, item.layer.itemOffersField)?.map(o => {
             const tag = tags.find(t => t.id === o.tags_id);
             tag && setOffers(current => [...current, tag])
         })
-        item.layer?.itemNeedsField && getValue(item, item.layer.itemNeedsField).map(n => {
+        item.layer?.itemNeedsField && getValue(item, item.layer.itemNeedsField)?.map(n => {
             const tag = tags.find(t => t.id === n.tags_id);
             tag && setNeeds(current => [...current, tag])
         })

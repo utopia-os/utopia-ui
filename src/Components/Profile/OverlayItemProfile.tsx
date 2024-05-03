@@ -6,7 +6,7 @@ import { Item, Tag } from '../../types';
 import { useMap } from 'react-leaflet';
 import { LatLng } from 'leaflet';
 import { PopupStartEndInput, StartEndView, TextView } from '../Map';
-import { useAddTag, useTags } from '../Map/hooks/useTags';
+import { useAddTag, useGetItemTags, useTags } from '../Map/hooks/useTags';
 import { useAddFilterTag, useFilterTags, useResetFilterTags } from '../Map/hooks/useFilter';
 import { useHasUserPermission } from '../Map/hooks/usePermissions';
 import { TextAreaInput, TextInput } from '../Input';
@@ -54,6 +54,8 @@ export function OverlayItemProfile() {
     const clusterRef = useClusterRef();
     const leafletRefs = useLeafletRefs();
     const addFilterTag = useAddFilterTag();
+    const getItemTags = useGetItemTags();
+
 
 
     const tabRef = useRef<HTMLFormElement>(null);
@@ -344,7 +346,7 @@ export function OverlayItemProfile() {
 
 
                                                     )}
-                                                    {updatePermission && <ActionButton collection="items" item={item} existingRelations={relations} triggerItemSelected={linkItem} color={item.color}></ActionButton>}
+                                                    {updatePermission && <ActionButton collection="items" item={item} existingRelations={relations} triggerItemSelected={linkItem} color={item.color || (getItemTags(item)[0] && getItemTags(item)[0].color)}></ActionButton>}
 
                                                 </div>
                                             </div>

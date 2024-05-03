@@ -80,6 +80,7 @@ function usePermissionsManager(initialPermissions: Permission[]): {
               item.user_created?.id === user?.id
             )
           )
+    //      || ( !user && p.role == null )
         );
       }
     },

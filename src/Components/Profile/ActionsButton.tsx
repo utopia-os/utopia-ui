@@ -40,7 +40,7 @@ export function ActionButton({ item, triggerAddButton, triggerItemSelected, exis
                         </svg>
                     </button>}
                 </div>
-                <DialogModal title={"Select"} isOpened={modalOpen} onClose={() => (setModalOpen(false))} className="!tw-w-xl !sm:tw-w-2xl tw-min-h-80 tw-bg-base-200">
+                <DialogModal title={"Select"} isOpened={modalOpen} onClose={() => (setModalOpen(false))} className="tw-w-xl sm:tw-w-2xl tw-min-h-80 tw-bg-base-200">
                 <TextInput defaultValue='' placeholder='🔍 Search' containerStyle='lg:col-span-2 tw-m-4 ' updateFormValue={(val) => { setSearch(val) }}></TextInput>      
                        <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2'>
                         {filterdItems.filter(item => {

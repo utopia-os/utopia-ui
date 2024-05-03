@@ -10,7 +10,7 @@ export default function AddButton({ triggerAction }: { triggerAction: React.Disp
 
     const canAddItems = () => {
         let canAdd = false;
-        layers.map(layer => {
+        layers.map(layer => {            
             if (layer.api?.createItem && hasUserPermission(layer.api.collectionName!, "create")) canAdd = true;
         })
         return canAdd;

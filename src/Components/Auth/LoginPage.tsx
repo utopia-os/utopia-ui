@@ -17,8 +17,6 @@ export function LoginPage() {
     const navigate = useNavigate();
 
     const onLogin = async () => {
-        console.log(email);
-        console.log(password);
         await toast.promise(
             login({ email: email, password: password }),
             {

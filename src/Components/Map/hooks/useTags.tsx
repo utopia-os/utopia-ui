@@ -97,11 +97,11 @@ function useTagsManager(initialTags: Tag[]): {
         itemTags.push(tags.find(t => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())!)
       }
     })   
-    item.layer?.itemOffersField && getValue(item, item.layer.itemOffersField).map(o => {
+    item.layer?.itemOffersField && getValue(item, item.layer.itemOffersField) && getValue(item, item.layer.itemOffersField).map(o => {
       const offer = tags.find(t=> t.id === o.tags_id)
       offer && itemTags.push(offer)
     });
-    item.layer?.itemNeedsField && getValue(item, item.layer.itemNeedsField).map(n => {
+    item.layer?.itemNeedsField && getValue(item, item.layer.itemNeedsField) && getValue(item, item.layer.itemNeedsField).map(n => {
       const need = tags.find(t=>t.id === n.tags_id);
       need && itemTags.push(need);
     });

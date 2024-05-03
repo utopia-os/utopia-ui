@@ -43,6 +43,7 @@ export const Layer = ({
     onlyOnePerOwner = false,
     customEditLink,
     customEditParameter,
+    public_edit_items,
     setItemFormPopup,
     itemFormPopup,
     clusterRef
@@ -78,8 +79,8 @@ export const Layer = ({
 
 
     useEffect(() => {
-        data && setItemsData({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemType, itemNameField, itemSubnameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, customEditParameter, setItemFormPopup, itemFormPopup, clusterRef });
-        api && setItemsApi({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemType, itemNameField, itemSubnameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, customEditParameter, setItemFormPopup, itemFormPopup, clusterRef });
+        data && setItemsData({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemType, itemNameField, itemSubnameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, customEditParameter, public_edit_items, setItemFormPopup, itemFormPopup, clusterRef });
+        api && setItemsApi({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemType, itemNameField, itemSubnameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, customEditParameter, public_edit_items, setItemFormPopup, itemFormPopup, clusterRef });
     }, [data, api])
 
     useMapEvents({

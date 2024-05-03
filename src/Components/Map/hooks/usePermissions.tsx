@@ -1,6 +1,6 @@
 import { useCallback, useReducer, createContext, useContext } from "react";
 import * as React from "react";
-import { Item, ItemsApi, Permission, PermissionAction } from "../../../types";
+import { Item, ItemsApi, LayerProps, Permission, PermissionAction } from "../../../types";
 import { useAuth } from "../../Auth";
 
 type ActionType =
@@ -22,7 +22,7 @@ function usePermissionsManager(initialPermissions: Permission[]): {
   setPermissionApi: (api: ItemsApi<any>) => void;
   setPermissionData: (data: Permission[]) => void;
   setAdminRole: (adminRole: string) => void;
-  hasUserPermission: (collectionName: string, action: PermissionAction, item?: Item) => boolean;
+  hasUserPermission: (collectionName: string, action: PermissionAction, item?: Item, layer?: LayerProps) => boolean;
 } {
   const [permissions, dispatch] = useReducer((state: Permission[], action: ActionType) => {
     switch (action.type) {
@@ -63,7 +63,7 @@ function usePermissionsManager(initialPermissions: Permission[]): {
   }, []);
 
   const hasUserPermission = useCallback(
-    (collectionName: string, action: PermissionAction, item?: Item) => {           
+    (collectionName: string, action: PermissionAction, item?: Item, layer?: LayerProps) => {               
       if (permissions.length === 0) return true;
       else if (user && user.role === adminRole) return true;
       else {
@@ -80,7 +80,17 @@ function usePermissionsManager(initialPermissions: Permission[]): {
               item.user_created?.id === user?.id
             )
           )
-    //      || ( !user && p.role == null )
+          || ( !user && p.role == null ) &&
+          (layer?.public_edit_items || item?.layer?.public_edit_items) &&
+          (
+            // Wenn 'item' nicht gesetzt ist, ignorieren wir die Überprüfung von 'public_edit'
+            !item || 
+            p.permissions?._and?.some(condition => 
+              condition.public_edit &&
+              condition.public_edit._eq == true &&
+              item.public_edit == true
+            )
+          )
         );
       }
     },

@@ -37,6 +37,7 @@ export interface LayerProps {
   onlyOnePerOwner?: boolean,
   customEditLink?: string,
   customEditParameter?: string,
+  public_edit_items?: boolean
     setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>,
     itemFormPopup?: ItemFormPopupProps | null,
   clusterRef?: any
@@ -63,6 +64,7 @@ export class Item {
   relations?: Relation[];
   parent?:string;
   subname?: string;
+  public_edit?: boolean;
   [key: string]: any;
   constructor(id:string,name:string,text:string,position:Geometry, layer?: LayerProps, api?: ItemsApi<any>){
     this.id = id;
@@ -138,7 +140,9 @@ export type PermissionCondition = {
   user_created?: {
     _eq: string; // Erwartet den speziellen Wert "$CURRENT_USER" oder eine spezifische UUID
   };
-  // Hier können weitere Bedingungen nach Bedarf hinzugefügt werden
+  public_edit?: {
+    _eq: boolean; // Erwartet den speziellen Wert "$CURRENT_USER" oder eine spezifische UUID
+  };
 };
 
 export type Permission = {

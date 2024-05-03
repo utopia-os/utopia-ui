@@ -96,7 +96,7 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
             }
             if(success) {                
                 props.layer.onlyOnePerOwner && item && updateItem({...item, ...formItem});
-                (!props.layer.onlyOnePerOwner || !item) && addItem({...formItem, name: formItem.name ? formItem.name : user?.first_name , user_created: user, type: props.layer.itemType, id: uuid, layer: props.layer});
+                (!props.layer.onlyOnePerOwner || !item) && addItem({...formItem, name: formItem.name ? formItem.name : user?.first_name , user_created: user, type: props.layer.itemType, id: uuid, layer: props.layer, public_edit: !user ? true : false});
                 toast.success("New item created");
                 resetFilterTags();
             } 

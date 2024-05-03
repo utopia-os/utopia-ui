@@ -46,7 +46,6 @@ export function OverlayItemProfile() {
     const navigate = useNavigate();
     const addTag = useAddTag();
     const resetFilterTags = useResetFilterTags();
-    const filterTags = useFilterTags();
     const addItem = useAddItem();
     const { user } = useAuth();
     const hasUserPermission = useHasUserPermission();
@@ -54,7 +53,6 @@ export function OverlayItemProfile() {
     const clusterRef = useClusterRef();
     const leafletRefs = useLeafletRefs();
     const addFilterTag = useAddFilterTag();
-    const getItemTags = useGetItemTags();
 
 
 
@@ -346,7 +344,7 @@ export function OverlayItemProfile() {
 
 
                                                     )}
-                                                    {updatePermission && <ActionButton collection="items" item={item} existingRelations={relations} triggerItemSelected={linkItem} color={item.color || (getItemTags(item)[0] && getItemTags(item)[0].color)}></ActionButton>}
+                                                    {updatePermission && <ActionButton collection="items" item={item} existingRelations={relations} triggerItemSelected={linkItem} colorField={item.layer.itemColorField}></ActionButton>}
 
                                                 </div>
                                             </div>

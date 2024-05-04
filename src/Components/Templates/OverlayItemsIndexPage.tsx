@@ -2,7 +2,7 @@ import { ReactNode, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { Item, ItemsApi, LayerProps } from '../../types';
 import { getValue } from '../../Utils/GetValue';
-import { StartEndView, TextView } from '../Map';
+import { PopupStartEndInput, StartEndView, TextView } from '../Map';
 import { PlusButton } from '../Profile/PlusButton';
 import { TextInput, TextAreaInput } from '../Input';
 import { useAddTag, useTags } from '../Map/hooks/useTags';
@@ -14,7 +14,6 @@ import { useLayers } from '../Map/hooks/useLayers';
 import { HeaderView } from '../Map/Subcomponents/ItemPopupComponents/HeaderView';
 import { MapOverlayPage } from './MapOverlayPage';
 import { useAddItem, useItems, useRemoveItem } from '../Map/hooks/useItems';
-import { timeAgo } from '../../Utils/TimeAgo';
 import { DateUserInfo } from './DateUserInfo';
 
 
@@ -87,7 +86,7 @@ export const OverlayItemsIndexPage = ({ url, layerName, parameterField, breadcru
         if (success) {
             toast.success("New item created");
         }
-        addItem({ ...formItem, user_created: user, id: uuid, layer: layer });
+        addItem({ ...formItem, user_created: user, id: uuid, layer: layer, public_edit: !user ? true : false });
         setLoading(false);
         setAddItemPopupType("");
     }
@@ -141,7 +140,7 @@ export const OverlayItemsIndexPage = ({ url, layerName, parameterField, breadcru
                                             }
                                             {i.layer?.itemType.show_text &&
                                                 <TextView truncate item={i} itemTextField={itemTextField} />
-                                                }
+                                            }
                                         </div>
                                         <DateUserInfo item={i}></DateUserInfo>
                                     </div>
@@ -160,6 +159,9 @@ export const OverlayItemsIndexPage = ({ url, layerName, parameterField, breadcru
                                 }}>
                                     <p className='tw-text-center '>✕</p></label>
                                 <TextInput type="text" placeholder="Name" dataField="name" defaultValue={""} inputStyle='' />
+                                {layer?.itemType.show_start_end_input && 
+                                <PopupStartEndInput></PopupStartEndInput>
+                                }
                                 <TextAreaInput placeholder="Text" dataField="text" defaultValue={""} inputStyle='tw-h-40 tw-mt-5' />
                                 <div className='tw-flex tw-justify-center'>
                                     <button className={loading ? 'tw-btn tw-btn-disabled tw-mt-5 tw-place-self-center' : 'tw-btn tw-mt-5 tw-place-self-center'} type='submit'>{loading ? <span className="tw-loading tw-loading-spinner"></span> : 'Save'}</button>
@@ -175,7 +177,7 @@ export const OverlayItemsIndexPage = ({ url, layerName, parameterField, breadcru
             </MapOverlayPage>
 
 
-            {plusButton && <PlusButton triggerAction={() => { setAddItemPopupType("place"); scroll(); }} color={'#777'} collection='items' />}
+            {plusButton && <PlusButton layer={layer} triggerAction={() => { setAddItemPopupType("place"); scroll(); }} color={'#777'} collection='items' />}
 
         </>
 

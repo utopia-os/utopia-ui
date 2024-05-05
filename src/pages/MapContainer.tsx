@@ -52,6 +52,7 @@ function MapContainer({ layers, map }: { layers: Array<LayerProps>, map: any }) 
             itemNeedsField='needs'
             customEditLink='/edit-item'
             customEditParameter='id'
+            public_edit_items={layer.public_edit_items}
             api={apis?.find(api => api.id === layer.id)?.api}>
             <ItemView>
               {layer.itemType.show_start_end &&
@@ -68,6 +69,8 @@ function MapContainer({ layers, map }: { layers: Array<LayerProps>, map: any }) 
               {layer.itemType.show_name_input && <PopupTextInput dataField='name' placeholder='Name'></PopupTextInput>}
               {layer.itemType.show_start_end_input && <PopupStartEndInput></PopupStartEndInput>}
               {layer.itemType.show_text_input &&<PopupTextAreaInput dataField='text' placeholder={'Text ...'} style="tw-h-40"></PopupTextAreaInput>}
+              {//layer.public_edit_items && <PopupCheckboxInput dataField={'public_edit'} label={'public edit'}/>
+              }
               {layer.itemType.custom_text && <div className='flex justify-center'>
                 <p>Press Save to place your Profile to the Map</p>
               </div>}

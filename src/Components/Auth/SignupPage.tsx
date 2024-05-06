@@ -34,6 +34,7 @@ export function SignupPage() {
                     render({ data }) {
                         return `${data}`
                     },
+                    autoClose: 10000,
                 },
                 pending: 'creating new user ...'
             });

@@ -32,8 +32,9 @@ export function LoginPage() {
                     render({ data }) {
                         return `${data}`
                     },
+                    autoClose: 10000,
                 },
-                pending: 'logging in ...'
+                pending: 'logging in ...',
             });
     }
 

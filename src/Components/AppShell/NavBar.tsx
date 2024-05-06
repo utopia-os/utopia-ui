@@ -79,7 +79,7 @@ export default function NavBar({ appName}: { appName: string }) {
                 <img src={"https://api.utopia-lab.org/assets/" + userProfile.image} />
               </div>
             </div> : <></>}
-            <div className='tw-ml-2 tw-mr-2'>{user?.first_name}</div>
+            <div className='tw-ml-2 tw-mr-2'>{userProfile.name||user?.first_name}</div>
             <div className="tw-dropdown tw-dropdown-end">
               <label tabIndex={0} className="tw-btn tw-btn-ghost tw-btn-square">
                 <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor">

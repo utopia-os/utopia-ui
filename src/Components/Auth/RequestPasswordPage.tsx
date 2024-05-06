@@ -1,7 +1,5 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
-import * as React from 'react'
 import { toast } from 'react-toastify'
 import { useAuth } from './useAuth'
 import { MapOverlayPage} from '../Templates'

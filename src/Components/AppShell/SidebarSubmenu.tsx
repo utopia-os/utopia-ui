@@ -1,5 +1,4 @@
 import ChevronDownIcon from  '@heroicons/react/24/outline/ChevronDownIcon'
-import * as React from 'react'
 import {useEffect, useState} from 'react'
 import { Link, useLocation } from 'react-router-dom'
 

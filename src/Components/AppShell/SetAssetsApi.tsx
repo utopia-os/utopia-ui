@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { useSetAssetApi } from './hooks/useAssets'
 import { AssetsApi } from '../../types';
 import { useEffect } from 'react';

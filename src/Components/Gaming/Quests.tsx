@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { useQuestsOpen, useSetQuestOpen } from './hooks/useQuests';
 import { useAuth } from '../Auth';
 import { useEffect, useState } from 'react';

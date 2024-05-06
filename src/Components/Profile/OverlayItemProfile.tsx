@@ -110,25 +110,29 @@ export function OverlayItemProfile() {
 
 
     useEffect(() => {
+        const setMap = async (marker, x) => {
+            await map.setView(new LatLng(item?.position?.coordinates[1]!, item?.position?.coordinates[0]! + x / 4), undefined);
+            setTimeout(() => {
+                marker.openPopup();
+            }, 300);
+        }
         if (item) {
             if (item.position) {
                 const marker = Object.entries(leafletRefs).find(r => r[1].item == item)?.[1].marker;
                 marker && clusterRef.hasLayer(marker) && clusterRef?.zoomToShowLayer(marker, () => {
                     const bounds = map.getBounds();
                     const x = bounds.getEast() - bounds.getWest();
-                    map.setView(new LatLng(item?.position?.coordinates[1]!, item?.position?.coordinates[0]! + x / 4), undefined, { duration: 1 });
+                    setMap(marker, x);
                 }
                 );
             }
             else {
-
                 const parent = getFirstAncestor(item);
-
                 const marker = Object.entries(leafletRefs).find(r => r[1].item == parent)?.[1].marker;
                 marker && clusterRef.hasLayer(marker) && clusterRef?.zoomToShowLayer(marker, () => {
                     const bounds = map.getBounds();
                     const x = bounds.getEast() - bounds.getWest();
-                    map.setView(new LatLng(parent?.position?.coordinates[1]!, parent?.position?.coordinates[0]! + x / 4), undefined, { duration: 1 });
+                    setMap(marker, x);
                 }
                 );
             }
@@ -341,8 +345,6 @@ export function OverlayItemProfile() {
                                                                 <TextView truncate item={i} />
                                                             </div>
                                                         </div>
-
-
                                                     )}
                                                     {updatePermission && <ActionButton collection="items" item={item} existingRelations={relations} triggerItemSelected={linkItem} colorField={item.layer.itemColorField}></ActionButton>}
 

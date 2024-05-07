@@ -18,6 +18,7 @@ import { useSelectPosition, useSetSelectPosition } from "./hooks/useSelectPositi
 import { useUpdateItem } from "./hooks/useItems";
 import { toast } from "react-toastify";
 import { useClusterRef, useSetClusterRef } from "./hooks/useClusterRef";
+import { Feature, Geometry as GeoJSONGeometry } from 'geojson';
 
 
 
@@ -99,6 +100,13 @@ function UtopiaMap({
         let urlPosition = params.get("position");
     }, [location]);
 
+    const onEachFeature = (feature: Feature<GeoJSONGeometry, any>, layer: L.Layer) => {
+        if (feature.properties) {
+          layer.bindPopup(feature.properties.name);
+          console.log(feature);
+          
+        }
+    }
 
     return (
         <>
@@ -125,7 +133,7 @@ function UtopiaMap({
                             )
                         }
                     </MarkerClusterGroup>
-                    {geo && <GeoJSON data={geo} />}
+                    {geo && <GeoJSON data={geo} onEachFeature={onEachFeature}/>}
                     <MapEventListener setSelectNewItemPosition={setSelectNewItemPosition} selectNewItemPosition={selectNewItemPosition} setItemFormPopup={setItemFormPopup} />
                 </MapContainer>
                 <AddButton triggerAction={setSelectNewItemPosition}></AddButton>

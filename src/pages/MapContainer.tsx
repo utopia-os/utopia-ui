@@ -28,7 +28,7 @@ function MapContainer({ layers, map }: { layers: Array<LayerProps>, map: any }) 
 
   return (
 
-    <UtopiaMap zoom={map.zoom || 5} center={map.center? [map.center?.coordinates[1], map.center?.coordinates[0]] : [50.6, 9.5]} height='calc(100dvh - 64px)' width="100%" >
+    <UtopiaMap geo={map.geo} zoom={map.zoom || 5} center={map.center? [map.center?.coordinates[1], map.center?.coordinates[0]] : [50.6, 9.5]} height='calc(100dvh - 64px)' width="100%" >
       {layers && apis &&
         layers.map(layer =>
           <Layer

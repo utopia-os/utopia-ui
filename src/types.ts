@@ -1,4 +1,3 @@
-import { LatLng, LatLngTuple, latLng } from "leaflet";
 import { ItemFormPopupProps } from "./Components/Map/Subcomponents/ItemFormPopup";
 
 export interface UtopiaMapProps {
@@ -8,6 +7,7 @@ export interface UtopiaMapProps {
   zoom?: number,
   tags?: Tag[],
   children?: React.ReactNode,
+  geo?: any
 }
 
 export interface LayerProps {

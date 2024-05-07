@@ -1,4 +1,4 @@
-import { TileLayer, MapContainer, useMapEvents } from "react-leaflet";
+import { TileLayer, MapContainer, useMapEvents, GeoJSON } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import * as React from "react";
 import { Geometry, Item, LayerProps, UtopiaMapProps } from "../../types"
@@ -20,6 +20,7 @@ import { toast } from "react-toastify";
 import { useClusterRef, useSetClusterRef } from "./hooks/useClusterRef";
 
 
+
 export interface MapEventListenerProps {
     selectNewItemPosition: LayerProps | Item | null,
     setSelectNewItemPosition: React.Dispatch<any>,
@@ -35,7 +36,8 @@ function UtopiaMap({
     width = "100%",
     center = [50.6, 9.5],
     zoom = 10,
-    children }
+    children,
+    geo}
     : UtopiaMapProps) {
 
     function MapEventListener(props: MapEventListenerProps) {
@@ -123,6 +125,7 @@ function UtopiaMap({
                             )
                         }
                     </MarkerClusterGroup>
+                    {geo && <GeoJSON data={geo} />}
                     <MapEventListener setSelectNewItemPosition={setSelectNewItemPosition} selectNewItemPosition={selectNewItemPosition} setItemFormPopup={setItemFormPopup} />
                 </MapContainer>
                 <AddButton triggerAction={setSelectNewItemPosition}></AddButton>

@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { useItems, useUpdateItem, useAddItem } from '../Map/hooks/useItems'
 import { useEffect, useState } from 'react';
 import { getValue } from '../../Utils/GetValue';
@@ -7,7 +6,7 @@ import { useAuth } from '../Auth';
 import { TextInput, TextAreaInput } from '../Input';
 import { ColorPicker } from './ColorPicker';
 import { hashTagRegex } from '../../Utils/HashTagRegex';
-import { useAddTag, useTags } from '../Map/hooks/useTags';
+import { useAddTag, useGetItemTags, useTags } from '../Map/hooks/useTags';
 import { randomColor } from '../../Utils/RandomColor';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Item, Tag } from '../../types';
@@ -16,6 +15,10 @@ import { AvatarWidget } from './AvatarWidget';
 import { encodeTag } from '../../Utils/FormatTags';
 import { useLayers } from '../Map/hooks/useLayers';
 import { TagsWidget } from './TagsWidget';
+import { LinkedItemsHeaderView } from './LinkedItemsHeaderView';
+import { TextView } from '../Map';
+import { ActionButton } from './ActionsButton';
+import { useHasUserPermission } from '../Map/hooks/usePermissions';
 
 
 
@@ -29,7 +32,9 @@ export function OverlayItemProfileSettings() {
     const [color, setColor] = useState<string>("");
     const [offers, setOffers] = useState<Array<Tag>>([]);
     const [needs, setNeeds] = useState<Array<Tag>>([]);
+    const [relations, setRelations] = useState<Array<Item>>([]);
 
+    const [updatePermission, setUpdatePermission] = useState<boolean>(false);
 
 
     const [activeTab, setActiveTab] = useState<number>(1);
@@ -45,9 +50,17 @@ export function OverlayItemProfileSettings() {
     const tags = useTags();
     const addTag = useAddTag();
     const navigate = useNavigate();
+    const hasUserPermission = useHasUserPermission();
+    const getItemTags = useGetItemTags();
+
+
 
     const items = useItems();
     const [item, setItem] = useState<Item>({} as Item)
+
+    useEffect(() => {
+        item && item.user_created && hasUserPermission("items", "update", item) && setUpdatePermission(true);
+    }, [item])
 
     useEffect(() => {
         const itemId = location.pathname.split("/")[2];
@@ -90,6 +103,7 @@ export function OverlayItemProfileSettings() {
         setImage(item?.image ? item?.image : "");
         setOffers([]);
         setNeeds([]);
+        setRelations([]);
         item?.offers?.map(o => {
             const offer = tags.find(t => t.id === o.tags_id);
             offer && setOffers(current => [...current, offer])
@@ -97,6 +111,10 @@ export function OverlayItemProfileSettings() {
         item?.needs?.map(o => {
             const need = tags.find(t => t.id === o.tags_id);
             need && setNeeds(current => [...current, need])
+        })
+        item.relations?.map(r => {
+            const item = items.find(i => i.id == r.related_items_id)
+            item && setRelations(current => [...current, item])
         })
 
     }, [item])
@@ -203,6 +221,47 @@ export function OverlayItemProfileSettings() {
         }
     }
 
+    const linkItem = async (id: string) => {
+        let new_relations = item.relations || [];
+        new_relations?.push({ items_id: item.id, related_items_id: id })
+        const updatedItem = { id: item.id, relations: new_relations }
+
+        let success = false;
+        try {
+            await item?.layer?.api?.updateItem!(updatedItem)
+            success = true;
+        } catch (error) {
+            toast.error(error.toString());
+        }
+        if (success) {
+            updateItem({ ...item, relations: new_relations })
+            toast.success("Item linked");
+        }
+    }
+
+    const unlinkItem = async (id: string) => {
+        console.log(id);
+
+        let new_relations = item.relations?.filter(r => r.related_items_id !== id)
+        console.log(new_relations);
+
+        const updatedItem = { id: item.id, relations: new_relations }
+
+
+        let success = false;
+        try {
+            await item?.layer?.api?.updateItem!(updatedItem)
+            success = true;
+        } catch (error) {
+            toast.error(error.toString());
+        }
+        if (success) {
+            updateItem({ ...item, relations: new_relations })
+            toast.success("Item unlinked");
+        }
+
+    }
+
 
 
     return (
@@ -239,11 +298,34 @@ export function OverlayItemProfileSettings() {
                                 </div>
                             </>
                         }
+                        {item.layer?.itemType.relations &&
+                                    <>
+                                        <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Relations" checked={activeTab == 7 && true} onChange={() => updateActiveTab(7)} />
+                                        <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-332px)] tw-overflow-y-auto tw-pt-4 tw-pb-1 -tw-mx-4 tw-overflow-x-hidden">
+                                            <div className='tw-h-full'>
+                                                <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-1 2xl:tw-grid-cols-2'>
+                                                    {relations && relations.map(i =>
+
+
+                                                        <div key={i.id} className='tw-cursor-pointer tw-card tw-bg-base-200 tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-text-base-content tw-mx-4 tw-p-6 tw-mb-4' onClick={() => navigate('/item/' + i.id)}>
+                                                            <LinkedItemsHeaderView unlinkPermission={updatePermission} item={i} unlinkCallback={unlinkItem} loading={loading} />
+                                                            <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
+                                                                <TextView truncate item={i} />
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                    {updatePermission && <ActionButton customStyle="!tw-bottom-20" collection="items" item={item} existingRelations={relations} triggerItemSelected={linkItem} colorField={item.layer.itemColorField}></ActionButton>}
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </>
+                                }
 
 
                     </div>
 
-                    <div className="tw-mt-4 tw-mb-4"><button className={loading ? " tw-loading tw-btn-disabled tw-btn tw-btn-primary tw-float-right" : "tw-btn tw-btn-primary tw-float-right"} onClick={() => onUpdateItem()}>Update</button></div>
+                    <div className="tw-mt-4 tw-mb-4"><button className={loading ? " tw-loading tw-btn tw-float-right" : "tw-btn tw-float-right"} onClick={() => onUpdateItem()} style={true ? { backgroundColor: `${item.layer?.itemColorField && getValue(item,item.layer?.itemColorField)? getValue(item,item.layer?.itemColorField) : (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor)}`, color: "#fff" } : {color: "#fff"}}>Update</button></div>
 
                 </div>
 

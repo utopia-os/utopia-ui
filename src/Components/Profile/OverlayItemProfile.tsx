@@ -114,7 +114,7 @@ export function OverlayItemProfile() {
             await map.setView(new LatLng(item?.position?.coordinates[1]!, item?.position?.coordinates[0]! + x / 4), undefined);
             setTimeout(() => {
                 marker.openPopup();
-            }, 300);
+            }, 500);
         }
         if (item) {
             if (item.position) {

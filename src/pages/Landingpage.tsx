@@ -75,15 +75,11 @@ export const Landingpage = () => {
         <div className="hero-content text-center flex flex-col place-items-center p-0" >
           <div className='bg-no-repeat bg-center w-full' style={{ backgroundImage: "url(bg1.webp)" }}>
             <div className='min-h-[calc(100vh-60px)] flex flex-row items-center justify-center '>
-
-
-
               <div className={`max-w-md text-center bg-black p-8 m-8 bg-opacity-50 text-white backdrop-blur-sm rounded-xl movable-div ${isBoxVisible ? '' : 'move-out-left'}`}>
                 <h1 className="text-5xl font-bold">Utopia Game</h1>
                 <p className="py-6">ist mehr als nur ein Spiel. Es ist eine Bewegung, die darauf abzielt, die Spieler aus ihren virtuellen Welten zu befreien und sie zu inspirieren, das echte Leben zu erkunden, Fähigkeiten zu entwickeln und die Welt um sie herum zu gestalten. Bist du bereit, Teil dieser Revolution zu werden? </p>
                 <div className="btn !text-white btn-primary" onClick={startGame}>Play ▶</div>
               </div>
-
               <div className={`mockup-phone m-8 hidden lg:block movable-div ${isPhoneVisible ? '' : 'move-out-right'}`}>
                 <div className="camera"></div>
                 <div className="display">my-8

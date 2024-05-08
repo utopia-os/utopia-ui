@@ -111,7 +111,7 @@ function App() {
                 <Route path="landingpage" element={<Landingpage />} />
                 {
                   layers.map((l: any) =>
-                    <Route key={l.id} path={l.name} element={<OverlayItemsIndexPage plusButton={l.index_plus_button} layerName={l.name} breadcrumbs={[{ name: "Home", path: "/" }, { name: l.name, path: "/" + l.name }]} itemNameField={'name'} itemTextField={'text'} itemImageField={'image'} url={'/item/'} parameterField={'id'} itemSymbolField={'symbol'} itemSubnameField={'subname'} />} />
+                    <Route key={l.id} path={l.name} element={<OverlayItemsIndexPage plusButton={l.index_plus_button} layerName={l.name} breadcrumbs={[{ name: "Home", path: "/" }, { name: l.name, path: "/" + l.name }]} url={'/item/'} parameterField={'id'}  />} />
                   )
                 }
               </Route>

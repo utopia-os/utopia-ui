@@ -105,11 +105,11 @@ export function OverlayItemProfileSettings() {
         setNeeds([]);
         setRelations([]);
         item?.offers?.map(o => {
-            const offer = tags.find(t => t.id === o.tags_id);
+            const offer = tags?.find(t => t.id === o.tags_id);
             offer && setOffers(current => [...current, offer])
         })
         item?.needs?.map(o => {
-            const need = tags.find(t => t.id === o.tags_id);
+            const need = tags?.find(t => t.id === o.tags_id);
             need && setNeeds(current => [...current, need])
         })
         item.relations?.map(r => {
@@ -133,7 +133,7 @@ export function OverlayItemProfileSettings() {
 
         let offer_updates: Array<any> = [];
         //check for new offers
-        offers.map(o => {
+        offers?.map(o => {
             const existingOffer = item?.offers?.find(t => t.tags_id === o.id)
             existingOffer && offer_updates.push(existingOffer.id)
             if (!existingOffer && !tags.some(t => t.id === o.id)) addTag({ ...o, offer_or_need: true })
@@ -142,7 +142,7 @@ export function OverlayItemProfileSettings() {
 
         let needs_updates: Array<any> = [];
 
-        needs.map(n => {
+        needs?.map(n => {
             const existingNeed = user?.needs.find(t => t.tags_id === n.id)
             existingNeed && needs_updates.push(existingNeed.id)
             !existingNeed && needs_updates.push({ items_id: item?.id, tags_id: n.id })

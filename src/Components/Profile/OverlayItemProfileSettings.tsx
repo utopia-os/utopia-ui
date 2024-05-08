@@ -135,7 +135,7 @@ export function OverlayItemProfileSettings() {
         let needs_updates: Array<any> = [];
 
         needs?.map(n => {
-            const existingNeed = user?.needs.find(t => t.tags_id === n.id)
+            const existingNeed = item?.needs?.find(t => t.tags_id === n.id)
             existingNeed && needs_updates.push(existingNeed.id)
             !existingNeed && needs_updates.push({ items_id: item?.id, tags_id: n.id })
             !existingNeed && !tags.some(t => t.id === n.id) && addTag({ ...n, offer_or_need: true })

@@ -74,7 +74,7 @@ export const Landingpage = () => {
       <div className="hero min-h-full text-base">
         <div className="hero-content text-center flex flex-col place-items-center p-0" >
           <div className='bg-no-repeat bg-center w-full' style={{ backgroundImage: "url(bg1.webp)" }}>
-            <div className='min-h-screen flex flex-row items-center justify-center '>
+            <div className='min-h-[calc(100vh-60px)] flex flex-row items-center justify-center '>
 
 
 

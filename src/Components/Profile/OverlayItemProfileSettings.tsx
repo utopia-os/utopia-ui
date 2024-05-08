@@ -119,14 +119,6 @@ export function OverlayItemProfileSettings() {
 
     }, [item])
 
-    useEffect(() => {
-        console.log(offers);
-        console.log(needs);
-        console.log(subname)
-
-
-    }, [offers, needs, subname])
-
 
     const onUpdateItem = async () => {
         let changedItem = {} as Item;

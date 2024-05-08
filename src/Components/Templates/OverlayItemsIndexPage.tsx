@@ -15,6 +15,7 @@ import { HeaderView } from '../Map/Subcomponents/ItemPopupComponents/HeaderView'
 import { MapOverlayPage } from './MapOverlayPage';
 import { useAddItem, useItems, useRemoveItem } from '../Map/hooks/useItems';
 import { DateUserInfo } from './DateUserInfo';
+import { ItemCard } from './ItemCard';
 
 
 type breadcrumb = {
@@ -23,10 +24,8 @@ type breadcrumb = {
 }
 
 
-export const OverlayItemsIndexPage = ({ url, layerName, parameterField, breadcrumbs, itemNameField, itemTextField, itemImageField, itemSymbolField, itemSubnameField, plusButton = true, children }: { layerName: string, url: string, parameterField: string, breadcrumbs: Array<breadcrumb>, itemNameField: string, itemTextField: string, itemImageField: string, itemSymbolField: string, itemSubnameField: string, plusButton?: boolean, children?: ReactNode }) => {
+export const OverlayItemsIndexPage = ({ url, layerName, parameterField, breadcrumbs, plusButton = true, children }: { layerName: string, url: string, parameterField: string, breadcrumbs: Array<breadcrumb>, plusButton?: boolean, children?: ReactNode }) => {
 
-    console.log(itemSymbolField);
-    const [infoExpanded, setInfoExpanded] = useState(new Map());
 
 
     const [loading, setLoading] = useState<boolean>(false);
@@ -132,21 +131,8 @@ export const OverlayItemsIndexPage = ({ url, layerName, parameterField, breadcru
                             })
                             .map((i, k) => {
                                 return (
-                                    <div key={k} className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-p-4 tw-mb-4 tw-h-fit' onClick={() => navigate(url + getValue(i, parameterField))}>
-                                        <HeaderView loading={loading} item={i} api={layer?.api} itemAvatarField={itemImageField} itemNameField={itemNameField} itemSubnameField={itemSubnameField} editCallback={() => navigate("/edit-item/" + i.id)} deleteCallback={() => deleteItem(i)}></HeaderView>
-                                        <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
-                                            {i.layer?.itemType.show_start_end &&
-                                                <StartEndView item={i}></StartEndView>
-                                            }
-                                            {i.layer?.itemType.show_text &&
-                                                <TextView truncate item={i} itemTextField={itemTextField} />
-                                            }
-                                        </div>
-                                        <DateUserInfo item={i}></DateUserInfo>
-                                    </div>
-
+                                    <ItemCard key={k} i={i} loading={loading} url={url} parameterField={parameterField} deleteCallback={()=> deleteItem(i)} ></ItemCard>
                                 )
-
                             })
                     }
                     {addItemPopupType == "place" ?

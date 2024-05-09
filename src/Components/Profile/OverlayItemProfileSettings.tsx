@@ -94,7 +94,7 @@ export function OverlayItemProfileSettings() {
 
     useEffect(() => {
         if (item.layer?.itemColorField) setColor(getValue(item, item.layer?.itemColorField));
-        else setColor(item.layer?.markerDefaultColor || "#3D3846")
+        else setColor(item.layer?.itemColorField && getValue(item,item.layer?.itemColorField)? getValue(item,item.layer?.itemColorField) : (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor))
 
         setId(item?.id ? item.id : "");
         setName(item?.name ? item.name : "");
@@ -262,7 +262,7 @@ export function OverlayItemProfileSettings() {
                 <div className='tw-flex tw-flex-col tw-h-full'>
                     <div className="tw-flex">
                         <AvatarWidget avatar={image} setAvatar={setImage} />
-                        <ColorPicker color={item.layer?.itemColorField && getValue(item,item.layer?.itemColorField)? getValue(item,item.layer?.itemColorField) : (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor)} onChange={setColor} className={"-tw-left-6 tw-top-14 -tw-mr-6"} />
+                        <ColorPicker color={color} onChange={setColor} className={"-tw-left-6 tw-top-14 -tw-mr-6"} />
                         <div className='tw-grow tw-mr-4'>
                             <TextInput placeholder="Name" defaultValue={item?.name ? item.name : ""} updateFormValue={(v) => setName(v)} containerStyle='tw-grow tw-input-md' />
                             <TextInput placeholder="Subtitle" defaultValue={item?.subname ? item.subname : ""} updateFormValue={(v) => setSubname(v)} containerStyle='tw-grow tw-input-sm tw-px-4 tw-mt-1' />

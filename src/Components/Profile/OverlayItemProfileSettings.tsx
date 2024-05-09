@@ -93,8 +93,7 @@ export function OverlayItemProfileSettings() {
 
 
     useEffect(() => {
-        if (item.layer?.itemColorField) setColor(getValue(item, item.layer?.itemColorField));
-        else setColor(item.layer?.itemColorField && getValue(item,item.layer?.itemColorField)? getValue(item,item.layer?.itemColorField) : (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor))
+        setColor(item.layer?.itemColorField && getValue(item,item.layer?.itemColorField)? getValue(item,item.layer?.itemColorField) : (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor))
 
         setId(item?.id ? item.id : "");
         setName(item?.name ? item.name : "");

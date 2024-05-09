@@ -1,7 +1,7 @@
 import { TileLayer, MapContainer, useMapEvents, GeoJSON } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import * as React from "react";
-import { Geometry, Item, LayerProps, UtopiaMapProps } from "../../types"
+import { UtopiaMapProps } from "../../types"
 import "./UtopiaMap.css"
 import { LatLng } from "leaflet";
 import MarkerClusterGroup from 'react-leaflet-cluster'
@@ -14,20 +14,9 @@ import { QuestControl } from "./Subcomponents/Controls/QuestControl";
 import { Control } from "./Subcomponents/Controls/Control";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { TagsControl } from "./Subcomponents/Controls/TagsControl";
-import { useSelectPosition, useSetSelectPosition } from "./hooks/useSelectPosition";
-import { useUpdateItem } from "./hooks/useItems";
-import { toast } from "react-toastify";
+import { useSelectPosition, useSetMapClicked,useSetSelectPosition } from "./hooks/useSelectPosition";
 import { useClusterRef, useSetClusterRef } from "./hooks/useClusterRef";
 import { Feature, Geometry as GeoJSONGeometry } from 'geojson';
-
-
-
-export interface MapEventListenerProps {
-    selectNewItemPosition: LayerProps | Item | null,
-    setSelectNewItemPosition: React.Dispatch<any>,
-    setItemFormPopup: React.Dispatch<React.SetStateAction<any>>
-}
-
 
 // for refreshing map on resize (needs to be implemented)
 const mapDivRef = React.createRef();
@@ -38,60 +27,38 @@ function UtopiaMap({
     center = [50.6, 9.5],
     zoom = 10,
     children,
-    geo}
+    geo }
     : UtopiaMapProps) {
 
-    function MapEventListener(props: MapEventListenerProps) {
+    function MapEventListener() {
         useMapEvents({
             click: (e) => {
-                let params = new URLSearchParams(window.location.search);
-                window.history.pushState({}, "", `/` + `${params.toString() !== "" ? `?${params}` : ""}`)
-                document.title = document.title.split("-")[0];
-                document.querySelector('meta[property="og:title"]')?.setAttribute("content", document.title);
-                document.querySelector('meta[property="og:description"]')?.setAttribute("content", `${document.querySelector('meta[name="description"]')?.getAttribute("content")}`);                
+                resetMetaTags();
                 console.log(e.latlng.lat + ',' + e.latlng.lng);
-                if (selectNewItemPosition != null) {
-                    if ('menuIcon' in selectNewItemPosition) {
-                        props.setItemFormPopup({ layer: props.selectNewItemPosition, position: e.latlng })
-                        props.setSelectNewItemPosition(null)
-                    }
-                    if ('text' in selectNewItemPosition) {
-                        const position = new Geometry(e.latlng.lng,e.latlng.lat);
-                        itemUpdate({...selectNewItemPosition as Item, position: position })
-                        setSelectNewItemPosition(null);
-                    }
-                }
+                selectNewItemPosition && setMapClicked({ position: e.latlng, setItemFormPopup: setItemFormPopup })
             },
             moveend: (e) => {
                 console.log(e);
-            },
-            
+            }
         })
         return null
     }
 
-    const itemUpdate = async (updatedItem: Item) => {
-        let success = false;
-        try {
-            await updatedItem?.layer?.api?.updateItem!({id: updatedItem.id, position: updatedItem.position })
-            success = true;
-        } catch (error) {
-            toast.error(error.toString());
-        }
-        if (success) {
-            updateItem(updatedItem)
-            toast.success("Item position updated");
-            navigate("/" + updatedItem.layer?.name + "/" + updatedItem.id)
-        }
+    const resetMetaTags = () => {
+        let params = new URLSearchParams(window.location.search);
+        window.history.pushState({}, "", `/` + `${params.toString() !== "" ? `?${params}` : ""}`)
+        document.title = document.title.split("-")[0];
+        document.querySelector('meta[property="og:title"]')?.setAttribute("content", document.title);
+        document.querySelector('meta[property="og:description"]')?.setAttribute("content", `${document.querySelector('meta[name="description"]')?.getAttribute("content")}`);
     }
+
 
     const selectNewItemPosition = useSelectPosition();
     const setSelectNewItemPosition = useSetSelectPosition();
     const location = useLocation();
-    const updateItem = useUpdateItem();
-    const navigate = useNavigate();
     const setClusterRef = useSetClusterRef();
     const clusterRef = useClusterRef();
+    const setMapClicked = useSetMapClicked();
 
     const [itemFormPopup, setItemFormPopup] = useState<ItemFormPopupProps | null>(null);
 
@@ -102,9 +69,9 @@ function UtopiaMap({
 
     const onEachFeature = (feature: Feature<GeoJSONGeometry, any>, layer: L.Layer) => {
         if (feature.properties) {
-          layer.bindPopup(feature.properties.name);
-          console.log(feature);
-          
+            layer.bindPopup(feature.properties.name);
+            console.log(feature);
+
         }
     }
 
@@ -125,7 +92,7 @@ function UtopiaMap({
                         maxZoom={19}
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://tile.osmand.net/hd/{z}/{x}/{y}.png" />
-                    <MarkerClusterGroup ref={(r)=> setClusterRef(r)} showCoverageOnHover chunkedLoading maxClusterRadius={50} removeOutsideVisibleBounds={false}>
+                    <MarkerClusterGroup ref={(r) => setClusterRef(r)} showCoverageOnHover chunkedLoading maxClusterRadius={50} removeOutsideVisibleBounds={false}>
                         {
                             React.Children.toArray(children).map((child) =>
                                 React.isValidElement<{ setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps>>, itemFormPopup: ItemFormPopupProps | null, clusterRef: React.MutableRefObject<undefined> }>(child) ?
@@ -133,8 +100,13 @@ function UtopiaMap({
                             )
                         }
                     </MarkerClusterGroup>
-                    {geo && <GeoJSON data={geo} onEachFeature={onEachFeature}/>}
-                    <MapEventListener setSelectNewItemPosition={setSelectNewItemPosition} selectNewItemPosition={selectNewItemPosition} setItemFormPopup={setItemFormPopup} />
+                    {geo && <GeoJSON data={geo} onEachFeature={onEachFeature} eventHandlers={{
+                        click: (e) => {
+                            e.layer!.closePopup();
+                            selectNewItemPosition && setMapClicked({ position: e.latlng, setItemFormPopup: setItemFormPopup })
+                        },
+                    }} />}
+                    <MapEventListener />
                 </MapContainer>
                 <AddButton triggerAction={setSelectNewItemPosition}></AddButton>
                 {selectNewItemPosition != null &&

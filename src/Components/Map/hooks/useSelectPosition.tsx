@@ -1,8 +1,16 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { Item, LayerProps } from '../../../types';
+import { Geometry, Item, LayerProps } from '../../../types';
 import { useUpdateItem } from "./useItems";
 import { toast } from "react-toastify";
 import { useHasUserPermission } from "./usePermissions";
+import { LatLng } from "leaflet";
+import { ItemFormPopupProps } from "../Subcomponents/ItemFormPopup";
+import { useNavigate } from "react-router-dom";
+
+type PolygonClickedProps = {
+    position: LatLng
+    setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
+}
 
 type UseSelectPositionManagerResult = ReturnType<typeof useSelectPositionManager>;
 
@@ -10,26 +18,46 @@ const SelectPositionContext = createContext<UseSelectPositionManagerResult>({
     selectPosition: null,
     setSelectPosition: () => { },
     setMarkerClicked: () => { },
+    setMapClicked: () => {},
 });
 
 function useSelectPositionManager(): {
     selectPosition: Item | LayerProps | null;
     setSelectPosition: React.Dispatch<React.SetStateAction<Item | LayerProps | null>>;
     setMarkerClicked: React.Dispatch<React.SetStateAction<Item>>;
+    setMapClicked: React.Dispatch<React.SetStateAction<PolygonClickedProps | undefined>>;
 } {
     const [selectPosition, setSelectPosition] = useState<LayerProps | null | Item>(null);
     const [markerClicked, setMarkerClicked] = useState<Item | null>();
+    const [mapClicked, setMapClicked] = useState<PolygonClickedProps>();
     const updateItem = useUpdateItem();
     const hasUserPermission = useHasUserPermission();
 
 
+
     useEffect(() => {
         if (selectPosition && markerClicked && 'text' in selectPosition) {
-            itemUpdate({ ...selectPosition, parent: markerClicked.id })
+            itemUpdateParent({ ...selectPosition, parent: markerClicked.id })
         }
     }, [markerClicked])
 
-    const itemUpdate = async (updatedItem: Item) => {
+    useEffect(() => {
+       if (selectPosition != null) {
+        if ('menuIcon' in selectPosition) {
+            mapClicked && mapClicked.setItemFormPopup({ layer: selectPosition as LayerProps, position: mapClicked?.position })
+            setSelectPosition(null)
+        }
+        if ('text' in selectPosition) {
+            const position = mapClicked?.position.lng && new Geometry(mapClicked?.position.lng, mapClicked?.position.lat);
+            position && itemUpdatePosition({ ...selectPosition as Item, position: position })
+            setSelectPosition(null);
+        }
+    }
+        
+    }, [mapClicked])
+    
+
+    const itemUpdateParent = async (updatedItem: Item) => {
         if (markerClicked?.layer?.api?.collectionName && hasUserPermission(markerClicked?.layer?.api?.collectionName, "update", markerClicked)) {
             let success = false;
             try {
@@ -51,6 +79,20 @@ function useSelectPositionManager(): {
             toast.error("you don't have permission to add items to " + markerClicked?.name);
         }
 
+    }
+
+    const itemUpdatePosition = async (updatedItem: Item) => {
+        let success = false;
+        try {
+            await updatedItem?.layer?.api?.updateItem!({ id: updatedItem.id, position: updatedItem.position })
+            success = true;
+        } catch (error) {
+            toast.error(error.toString());
+        }
+        if (success) {
+            updateItem(updatedItem)
+            toast.success("Item position updated");
+        }
     }
 
     const linkItem = async (id: string) => {
@@ -75,7 +117,7 @@ function useSelectPositionManager(): {
             }
         }
     }
-    return { selectPosition, setSelectPosition, setMarkerClicked };
+    return { selectPosition, setSelectPosition, setMarkerClicked, setMapClicked };
 }
 
 export const SelectPositionProvider: React.FunctionComponent<{
@@ -99,4 +141,9 @@ export const useSetSelectPosition = (): UseSelectPositionManagerResult["setSelec
 export const useSetMarkerClicked = (): UseSelectPositionManagerResult["setMarkerClicked"] => {
     const { setMarkerClicked } = useContext(SelectPositionContext);
     return setMarkerClicked;
+}
+
+export const useSetMapClicked = (): UseSelectPositionManagerResult["setMapClicked"] => {
+    const { setMapClicked } = useContext(SelectPositionContext);
+    return setMapClicked;
 }

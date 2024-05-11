@@ -102,7 +102,7 @@ function UtopiaMap({
                     </MarkerClusterGroup>
                     {geo && <GeoJSON data={geo} onEachFeature={onEachFeature} eventHandlers={{
                         click: (e) => {
-                            e.layer!.closePopup();
+                            selectNewItemPosition && e.layer!.closePopup();
                             selectNewItemPosition && setMapClicked({ position: e.latlng, setItemFormPopup: setItemFormPopup })
                         },
                     }} />}

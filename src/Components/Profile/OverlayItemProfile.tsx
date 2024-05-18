@@ -5,11 +5,10 @@ import { useEffect, useRef, useState } from 'react';
 import { Item, Tag } from '../../types';
 import { useMap } from 'react-leaflet';
 import { LatLng } from 'leaflet';
-import { PopupStartEndInput, StartEndView, TextView } from '../Map';
-import { useAddTag, useGetItemTags, useTags } from '../Map/hooks/useTags';
-import { useAddFilterTag, useFilterTags, useResetFilterTags } from '../Map/hooks/useFilter';
+import { StartEndView, TextView } from '../Map';
+import { useAddTag, useTags } from '../Map/hooks/useTags';
+import { useAddFilterTag,  useResetFilterTags } from '../Map/hooks/useFilter';
 import { useHasUserPermission } from '../Map/hooks/usePermissions';
-import { TextAreaInput, TextInput } from '../Input';
 import { hashTagRegex } from '../../Utils/HashTagRegex';
 import { randomColor } from '../../Utils/RandomColor';
 import { toast } from 'react-toastify';
@@ -161,7 +160,7 @@ export function OverlayItemProfile() {
 
 
     useEffect(() => {
-        item && hasUserPermission("items", "update", item) && setUpdatePermission(true);
+        item  && hasUserPermission("items", "update", item) && setUpdatePermission(true);
     }, [item])
 
 

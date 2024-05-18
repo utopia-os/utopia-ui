@@ -161,7 +161,7 @@ export function OverlayItemProfile() {
 
 
     useEffect(() => {
-        item && item.user_created && hasUserPermission("items", "update", item) && setUpdatePermission(true);
+        item && hasUserPermission("items", "update", item) && setUpdatePermission(true);
     }, [item])
 
 

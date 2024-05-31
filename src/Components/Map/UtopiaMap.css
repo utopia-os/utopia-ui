@@ -78,6 +78,13 @@
     width: 24px;
   }
 
+  .quest-icon {
+    position: relative;
+    top: -34px;
+    left: 4px;
+    width: 24px;
+  }
+
   .drum-icon {
     position: relative;
     top: -38px;

@@ -59,7 +59,7 @@ export function OverlayItemProfileSettings() {
     const [item, setItem] = useState<Item>({} as Item)
 
     useEffect(() => {
-        item && item.user_created && hasUserPermission("items", "update", item) && setUpdatePermission(true);
+        item && hasUserPermission("items", "update", item) && setUpdatePermission(true);
     }, [item])
 
     useEffect(() => {

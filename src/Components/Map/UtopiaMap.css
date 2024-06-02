@@ -91,6 +91,13 @@
     left: 4px;
     width: 24px;
   }
+
+  .compass-icon {
+    position: relative;
+    top: -35px;
+    left: 4px;
+    width: 24px;
+  }
   
   .leaflet-popup-scrolled {
     overflow-x: hidden;

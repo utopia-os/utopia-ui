@@ -70,8 +70,6 @@ function UtopiaMap({
     const onEachFeature = (feature: Feature<GeoJSONGeometry, any>, layer: L.Layer) => {
         if (feature.properties) {
             layer.bindPopup(feature.properties.name);
-            console.log(feature);
-
         }
     }
 

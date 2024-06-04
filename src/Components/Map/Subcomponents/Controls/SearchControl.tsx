@@ -78,12 +78,6 @@ export const SearchControl = () => {
         }, 200);
     }
 
-    useEffect(() => {
-      console.log(value);
-      
-    }, [value])
-    
-
     const searchInput = useRef<HTMLInputElement>(null);
 
     return (<>

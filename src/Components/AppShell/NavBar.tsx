@@ -1,5 +1,5 @@
 import { useAuth } from "../Auth"
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import QuestionMarkIcon from '@heroicons/react/24/outline/QuestionMarkCircleIcon'
 import { useEffect, useRef, useState } from "react";
@@ -31,6 +31,16 @@ export default function NavBar({ appName}: { appName: string }) {
     nameRef && setNameWidth(nameRef.current.scrollWidth)    
   }, [nameRef, appName])
   
+  const location = useLocation();
+
+  const [showNav, setShowNav] = useState<boolean>(true)
+
+
+  useEffect(() => {
+      let params = new URLSearchParams(location.search);
+      let embedded = params.get("embedded");
+      embedded=="true" && setShowNav(false)
+  }, [location]);
   
 
   const onLogout = () => {
@@ -53,7 +63,7 @@ export default function NavBar({ appName}: { appName: string }) {
       });
   }
 
-  return (
+  if(showNav) return (
     <>
       <div className="tw-navbar tw-bg-base-100 tw-z-[10000] tw-shadow-xl tw-relative">
         <button className="tw-btn tw-btn-square tw-btn-ghost"
@@ -125,4 +135,5 @@ export default function NavBar({ appName}: { appName: string }) {
 
     </>
   )
+  else return (<></>)
 }

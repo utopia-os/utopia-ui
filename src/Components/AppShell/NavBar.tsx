@@ -33,13 +33,13 @@ export default function NavBar({ appName}: { appName: string }) {
   
   const location = useLocation();
 
-  const [showNav, setShowNav] = useState<boolean>(true)
+  const [showNav, setShowNav] = useState<boolean>(false)
 
 
   useEffect(() => {
       let params = new URLSearchParams(location.search);
       let embedded = params.get("embedded");
-      embedded=="true" && setShowNav(false)
+      embedded!="true" && setShowNav(true)
   }, [location]);
   
 

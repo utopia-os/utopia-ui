@@ -46,9 +46,11 @@ export function AppShell({ appName, children, assetsApi }: { appName: string, ch
                                                             draggable
                                                             pauseOnHover
                                                             theme="light" />
-                                                        <NavBar appName={appName}></NavBar>
-                                                        <div id="app-content" className="tw-flex tw-!pl-[77px]">
-                                                            {children}
+                                                        <div className='tw-flex tw-flex-col tw-h-full'>
+                                                            <NavBar appName={appName}></NavBar>
+                                                            <div id="app-content" className="tw-flex-grow">
+                                                                {children}
+                                                            </div>
                                                         </div>
                                                     </QuestsProvider>
                                                 </ClusterRefProvider>

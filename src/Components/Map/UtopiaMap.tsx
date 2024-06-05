@@ -75,7 +75,7 @@ function UtopiaMap({
 
     return (
         <>
-            <div className={(selectNewItemPosition != null ? "crosshair-cursor-enabled" : undefined)}>
+            <div className={`tw-h-full ${(selectNewItemPosition != null ? "crosshair-cursor-enabled" : undefined)}`}>
                 <MapContainer ref={mapDivRef} style={{ height: height, width: width }} center={new LatLng(center[0], center[1])} zoom={zoom} zoomControl={false} maxZoom={19}>
                     <Outlet></Outlet>
                     <Control position='topLeft' zIndex="1000">

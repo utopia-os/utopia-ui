@@ -26,14 +26,16 @@ export default function NavBar({ appName}: { appName: string }) {
   
   const nameRef = useRef<any>(null);
   const [nameWidth, setNameWidth] = useState<number>(0);
+  const location = useLocation();
+  const [showNav, setShowNav] = useState<boolean>(false)
+
+
 
   useEffect(() => {
-    nameRef && setNameWidth(nameRef.current.scrollWidth)    
-  }, [nameRef, appName])
+    showNav && nameRef && setNameWidth(nameRef.current.scrollWidth)    
+  }, [nameRef, appName, showNav])
   
-  const location = useLocation();
 
-  const [showNav, setShowNav] = useState<boolean>(false)
 
 
   useEffect(() => {

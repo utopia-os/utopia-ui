@@ -88,9 +88,7 @@ export const SearchControl = () => {
     useEffect(() => {
         let params = new URLSearchParams(location.search);
         let embedded = params.get("embedded");
-        embedded != "true" && setEmbedded(false)
-        console.log(embedded);
-        
+        embedded != "true" && setEmbedded(false)        
     }, [location]);
 
 

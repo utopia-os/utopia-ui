@@ -14,9 +14,10 @@ import { LocateControl } from './LocateControl';
 import * as L from 'leaflet';
 import MarkerIconFactory from '../../../../Utils/MarkerIconFactory';
 import { decodeTag } from '../../../../Utils/FormatTags';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useClusterRef } from '../../hooks/useClusterRef';
 import { Item } from '../../../../types';
+import { SidebarControl } from './SidebarControl';
 
 
 
@@ -39,7 +40,7 @@ export const SearchControl = () => {
 
 
     useMapEvents({
-        popupopen: () => {            
+        popupopen: () => {
             setPopupOpen(true);
         },
         popupclose: () => {
@@ -49,7 +50,7 @@ export const SearchControl = () => {
 
     const navigate = useNavigate();
 
-    useDebounce(() => {       
+    useDebounce(() => {
         const searchGeo = async () => {
             try {
                 const { data } = await axios.get(
@@ -61,13 +62,13 @@ export const SearchControl = () => {
             }
         };
         searchGeo();
-        setItemsResults(items.filter(item => {          
+        setItemsResults(items.filter(item => {
             if (item.layer?.itemNameField) item.name = getValue(item, item.layer.itemNameField)
             if (item.layer?.itemTextField) item.text = getValue(item, item.layer.itemTextField)
-            return value.length> 2 && (item.name?.toLowerCase().includes(value.toLowerCase()) || item.text?.toLowerCase().includes(value.toLowerCase()))
+            return value.length > 2 && (item.name?.toLowerCase().includes(value.toLowerCase()) || item.text?.toLowerCase().includes(value.toLowerCase()))
         }))
         let phrase = value;
-        if(value.startsWith("#")) phrase = value.substring(1);
+        if (value.startsWith("#")) phrase = value.substring(1);
         setTagsResults(tags.filter(tag => tag.name?.toLowerCase().includes(phrase.toLowerCase())))
 
     }, 500, [value]);
@@ -79,23 +80,37 @@ export const SearchControl = () => {
     }
 
     const searchInput = useRef<HTMLInputElement>(null);
+    const [embedded, setEmbedded] = useState<boolean>(true)
+
+
+
+    const location = useLocation();
+    useEffect(() => {
+        let params = new URLSearchParams(location.search);
+        let embedded = params.get("embedded");
+        embedded != "true" && setEmbedded(false)
+        console.log(embedded);
+        
+    }, [location]);
+
 
     return (<>
-        {!(windowDimensions.height < 500 && popupOpen && hideSuggestions)   &&
+        {!(windowDimensions.height < 500 && popupOpen && hideSuggestions) &&
             <div className='tw-w-[calc(100vw-2rem)] tw-max-w-[22rem] '>
                 <div className='flex tw-flex-row'>
-                    <input type="text" placeholder="search ..." autoComplete="off" value={value} className="tw-input tw-input-bordered tw-w-full tw-shadow-xl tw-rounded-lg tw-mr-2"
+                    {embedded && <SidebarControl />}
+                    <input type="text" placeholder="search ..." autoComplete="off" value={value} className="tw-input tw-input-bordered tw-grow tw-shadow-xl tw-rounded-lg"
                         ref={searchInput}
                         onChange={(e) => setValue(e.target.value)}
                         onFocus={() => {
                             setHideSuggestions(false);
-                            if(windowDimensions.width < 500) map.closePopup();
+                            if (windowDimensions.width < 500) map.closePopup();
                         }}
                         onBlur={() => hide()} />
                     <LocateControl />
                 </div>
                 {value.length > 0 && <button className="tw-btn tw-btn-sm tw-btn-circle tw-absolute tw-right-16 tw-top-2" onClick={() => setValue("")}>✕</button>}
-                {hideSuggestions || Array.from(geoResults).length == 0 && itemsResults.length == 0 && tagsResults.length == 0 && !isGeoCoordinate(value)|| value.length == 0? "" :
+                {hideSuggestions || Array.from(geoResults).length == 0 && itemsResults.length == 0 && tagsResults.length == 0 && !isGeoCoordinate(value) || value.length == 0 ? "" :
                     <div className='tw-card tw-card-body tw-bg-base-100 tw-p-4 tw-mt-2 tw-shadow-xl tw-overflow-y-auto tw-max-h-[calc(100dvh-152px)]'>
                         {tagsResults.length > 0 &&
                             <div className='tw-flex tw-flex-wrap'>
@@ -103,7 +118,7 @@ export const SearchControl = () => {
                                     <div key={tag.name} className='tw-rounded-2xl tw-text-white tw-p-1 tw-px-4 tw-shadow-md tw-card tw-mr-2 tw-mb-2 tw-cursor-pointer' style={{ backgroundColor: tag.color }} onClick={() => {
                                         addFilterTag(tag)
                                         let params = new URLSearchParams(window.location.search);
-                                        window.history.pushState({}, "", "/" + `${params? `?${params}` : ""}`);
+                                        window.history.pushState({}, "", "/" + `${params ? `?${params}` : ""}`);
                                     }}>
                                         <b>#{decodeTag(tag.name)}</b>
                                     </div>
@@ -115,11 +130,11 @@ export const SearchControl = () => {
                         {itemsResults.slice(0, 5).map(item => (
                             <div key={item.id} className='tw-cursor-pointer hover:tw-font-bold' onClick={() => {
                                 const marker = Object.entries(leafletRefs).find(r => r[1].item == item)?.[1].marker;
-                                if(marker){
-                                        navigate(`/${item.id}?${new URLSearchParams(window.location.search)}`)
+                                if (marker) {
+                                    navigate(`/${item.id}?${new URLSearchParams(window.location.search)}`)
                                 }
                                 else {
-                                    navigate("item/"+item.id+"?"+new URLSearchParams(window.location.search))
+                                    navigate("item/" + item.id + "?" + new URLSearchParams(window.location.search))
                                 }
 
                             }
@@ -136,7 +151,7 @@ export const SearchControl = () => {
                         {Array.from(geoResults).map((geo) => (
                             <div className='tw-flex tw-flex-row hover:tw-font-bold tw-cursor-pointer' key={Math.random()} onClick={() => {
                                 searchInput.current?.blur();
-                                L.marker(new LatLng(geo.geometry.coordinates[1], geo.geometry.coordinates[0]),{icon: MarkerIconFactory("circle", "#777", "RGBA(35, 31, 32, 0.2)", "circle-solid")}).addTo(map).bindPopup(`<h3 class="tw-text-base tw-font-bold">${geo?.properties.name ? geo?.properties.name : value}<h3>${capitalizeFirstLetter(geo?.properties?.osm_value)}`).openPopup().addEventListener("popupclose", (e) => {console.log(e.target.remove())});
+                                L.marker(new LatLng(geo.geometry.coordinates[1], geo.geometry.coordinates[0]), { icon: MarkerIconFactory("circle", "#777", "RGBA(35, 31, 32, 0.2)", "circle-solid") }).addTo(map).bindPopup(`<h3 class="tw-text-base tw-font-bold">${geo?.properties.name ? geo?.properties.name : value}<h3>${capitalizeFirstLetter(geo?.properties?.osm_value)}`).openPopup().addEventListener("popupclose", (e) => { console.log(e.target.remove()) });
                                 if (geo.properties.extent) map.fitBounds(new LatLngBounds(new LatLng(geo.properties.extent[1], geo.properties.extent[0]), new LatLng(geo.properties.extent[3], geo.properties.extent[2])));
                                 else map.setView(new LatLng(geo.geometry.coordinates[1], geo.geometry.coordinates[0]), 15, { duration: 1 });
                                 hide();
@@ -147,14 +162,14 @@ export const SearchControl = () => {
 
                                 <div>
                                     <div className='tw-text-sm tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>{geo?.properties.name ? geo?.properties.name : value}</div>
-                                    <div className='tw-text-xs tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>{geo?.properties?.city && `${capitalizeFirstLetter(geo?.properties?.city)}, `} {geo?.properties?.osm_value  && geo?.properties?.osm_value !== "yes" && geo?.properties?.osm_value !== "primary" && geo?.properties?.osm_value !== "path" && geo?.properties?.osm_value !== "secondary" && geo?.properties?.osm_value !== "residential" && geo?.properties?.osm_value !== "unclassified" && `${capitalizeFirstLetter(geo?.properties?.osm_value)}, `} {geo.properties.state && `${geo.properties.state}, `} {geo.properties.country && geo.properties.country}</div>
+                                    <div className='tw-text-xs tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>{geo?.properties?.city && `${capitalizeFirstLetter(geo?.properties?.city)}, `} {geo?.properties?.osm_value && geo?.properties?.osm_value !== "yes" && geo?.properties?.osm_value !== "primary" && geo?.properties?.osm_value !== "path" && geo?.properties?.osm_value !== "secondary" && geo?.properties?.osm_value !== "residential" && geo?.properties?.osm_value !== "unclassified" && `${capitalizeFirstLetter(geo?.properties?.osm_value)}, `} {geo.properties.state && `${geo.properties.state}, `} {geo.properties.country && geo.properties.country}</div>
                                 </div>
                             </div>
 
                         ))}
                         {isGeoCoordinate(value) &&
                             <div className='tw-flex tw-flex-row hover:tw-font-bold tw-cursor-pointer' onClick={() => {
-                                L.marker(new LatLng(extractCoordinates(value)![0], extractCoordinates(value)![1]),{icon: MarkerIconFactory("circle", "#777", "RGBA(35, 31, 32, 0.2)", "circle-solid")}).addTo(map).bindPopup(`<h3 class="tw-text-base tw-font-bold">${extractCoordinates(value)![0]}, ${extractCoordinates(value)![1]}</h3>`).openPopup().addEventListener("popupclose", (e) => {console.log(e.target.remove())});
+                                L.marker(new LatLng(extractCoordinates(value)![0], extractCoordinates(value)![1]), { icon: MarkerIconFactory("circle", "#777", "RGBA(35, 31, 32, 0.2)", "circle-solid") }).addTo(map).bindPopup(`<h3 class="tw-text-base tw-font-bold">${extractCoordinates(value)![0]}, ${extractCoordinates(value)![1]}</h3>`).openPopup().addEventListener("popupclose", (e) => { console.log(e.target.remove()) });
                                 map.setView(new LatLng(extractCoordinates(value)![0], extractCoordinates(value)![1]), 15, { duration: 1 })
                             }}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="tw-text-current tw-mr-2 tw-mt-0 tw-w-4">
@@ -175,7 +190,7 @@ export const SearchControl = () => {
     )
 }
 
-function isGeoCoordinate(input) {    
+function isGeoCoordinate(input) {
     const geokoordinatenRegex = /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/;
     return geokoordinatenRegex.test(input);
 }

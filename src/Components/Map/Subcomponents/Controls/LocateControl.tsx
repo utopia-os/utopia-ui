@@ -36,7 +36,7 @@ export const LocateControl = () => {
     })
 
     return (<>
-        <div className="tw-card tw-w-14 tw-bg-base-100 tw-shadow-xl tw-items-center tw-justify-center  hover:tw-bg-slate-300 hover:tw-cursor-pointer tw-transition-all tw-duration-300">
+        <div className="tw-card tw-h-12 tw-w-12 tw-bg-base-100 tw-shadow-xl tw-items-center tw-justify-center  hover:tw-bg-slate-300 hover:tw-cursor-pointer tw-transition-all tw-duration-300 tw-ml-2">
 
             <div className="tw-card-body tw-card tw-p-2 tw-h-10 tw-w-10  " onClick={() => {
                 if (active) {

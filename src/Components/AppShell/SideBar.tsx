@@ -49,7 +49,6 @@ export function SideBar({ routes, bottomRoutes }: { routes: route[], bottomRoute
     }
   }, [])
 
-  const searchInput = useRef<HTMLInputElement>(null);
   const [embedded, setEmbedded] = useState<boolean>(true)
 
 
@@ -57,8 +56,9 @@ export function SideBar({ routes, bottomRoutes }: { routes: route[], bottomRoute
       let params = new URLSearchParams(location.search);
       let embedded = params.get("embedded");
       embedded != "true" && setEmbedded(false)
-      
   }, [location]);
+
+  let params = new URLSearchParams(window.location.search);
 
   return (
     <nav
@@ -84,7 +84,7 @@ export function SideBar({ routes, bottomRoutes }: { routes: route[], bottomRoute
                       (<NavLink 
                         end
                         target={route.blank ? "_blank" : "_self"}
-                        to={route.path}
+                        to={`${route.path}${params && '?'+params}`}
                         className={({ isActive }) => `${isActive ? 'tw-font-semibold  tw-bg-base-200 !tw-rounded-none' : 'tw-font-normal !tw-rounded-none'}`} onClick={() => {
                           if (screen.width < 640 && !slim) instance.toggle();
                         }}>

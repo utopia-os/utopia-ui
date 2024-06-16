@@ -3,6 +3,7 @@ import * as React from "react";
 import { LayerProps, Tag } from "../../../types";
 import { useLayers } from "./useLayers";
 import { useLocation, useNavigate } from "react-router-dom";
+import useWindowDimensions from "./useWindowDimension";
 
 type ActionType =
   | { type: "ADD_TAG"; tag: Tag }
@@ -64,6 +65,7 @@ function useFilterManager(initialTags: Tag[]): {
 
   const initialLayers = useLayers()
   const navigate = useNavigate()
+  const windowDimensions = useWindowDimensions();
 
   const [visibleLayers, dispatchLayers] = useReducer((state: LayerProps[], action: ActionType) => {
     switch (action.type) {
@@ -96,7 +98,10 @@ function useFilterManager(initialTags: Tag[]): {
     let urlTags = params.get("tags");
     if(!urlTags?.includes(tag.name))
     params.set("tags", `${urlTags ? urlTags : ""}${urlTags? ',' : ''}${tag.name}`)
-    navigate(location.pathname + `${params ? `?${params}` : ""}`); 
+    if(windowDimensions.width < 786 && location.pathname.split("/").length > 2) navigate("/" + `${params ? `?${params}` : ""}`); 
+    else navigate(location.pathname + `${params ? `?${params}` : ""}`); 
+     
+
     
 
     dispatchTags({

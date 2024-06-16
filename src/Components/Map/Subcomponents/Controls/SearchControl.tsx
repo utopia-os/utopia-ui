@@ -88,7 +88,7 @@ export const SearchControl = () => {
     useEffect(() => {
         let params = new URLSearchParams(location.search);
         let embedded = params.get("embedded");
-        embedded != "true" && setEmbedded(false)        
+        embedded != "true" && setEmbedded(false)
     }, [location]);
 
 
@@ -97,6 +97,7 @@ export const SearchControl = () => {
             <div className='tw-w-[calc(100vw-2rem)] tw-max-w-[22rem] '>
                 <div className='flex tw-flex-row'>
                     {embedded && <SidebarControl />}
+                    <div className='tw-relative'>
                     <input type="text" placeholder="search ..." autoComplete="off" value={value} className="tw-input tw-input-bordered tw-grow tw-shadow-xl tw-rounded-lg"
                         ref={searchInput}
                         onChange={(e) => setValue(e.target.value)}
@@ -105,9 +106,10 @@ export const SearchControl = () => {
                             if (windowDimensions.width < 500) map.closePopup();
                         }}
                         onBlur={() => hide()} />
+                    {value.length > 0 && <button className="tw-btn tw-btn-sm tw-btn-circle tw-absolute tw-right-2 tw-top-2" onClick={() => setValue("")}>✕</button>}
+                    </div>
                     <LocateControl />
                 </div>
-                {value.length > 0 && <button className="tw-btn tw-btn-sm tw-btn-circle tw-absolute tw-right-16 tw-top-2" onClick={() => setValue("")}>✕</button>}
                 {hideSuggestions || Array.from(geoResults).length == 0 && itemsResults.length == 0 && tagsResults.length == 0 && !isGeoCoordinate(value) || value.length == 0 ? "" :
                     <div className='tw-card tw-card-body tw-bg-base-100 tw-p-4 tw-mt-2 tw-shadow-xl tw-overflow-y-auto tw-max-h-[calc(100dvh-152px)]'>
                         {tagsResults.length > 0 &&
@@ -115,8 +117,6 @@ export const SearchControl = () => {
                                 {tagsResults.slice(0, 3).map(tag => (
                                     <div key={tag.name} className='tw-rounded-2xl tw-text-white tw-p-1 tw-px-4 tw-shadow-md tw-card tw-mr-2 tw-mb-2 tw-cursor-pointer' style={{ backgroundColor: tag.color }} onClick={() => {
                                         addFilterTag(tag)
-                                        let params = new URLSearchParams(window.location.search);
-                                        window.history.pushState({}, "", "/" + `${params ? `?${params}` : ""}`);
                                     }}>
                                         <b>#{decodeTag(tag.name)}</b>
                                     </div>

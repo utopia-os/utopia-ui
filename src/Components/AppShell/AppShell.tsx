@@ -23,15 +23,15 @@ export function AppShell({ appName, children, assetsApi }: { appName: string, ch
 
 
     return (
-        <PermissionsProvider initialPermissions={[]}>
-            <TagsProvider initialTags={[]}>
-                <LayersProvider initialLayers={[]}>
-                    <FilterProvider initialTags={[]}>
-                        <ItemsProvider initialItems={[]}>
-                            <SelectPositionProvider>
-                                <LeafletRefsProvider initialLeafletRefs={{}}>
-                                    <QueryClientProvider client={queryClient}>
-                                        <BrowserRouter>
+        <BrowserRouter>
+            <PermissionsProvider initialPermissions={[]}>
+                <TagsProvider initialTags={[]}>
+                    <LayersProvider initialLayers={[]}>
+                        <FilterProvider initialTags={[]}>
+                            <ItemsProvider initialItems={[]}>
+                                <SelectPositionProvider>
+                                    <LeafletRefsProvider initialLeafletRefs={{}}>
+                                        <QueryClientProvider client={queryClient}>
                                             <AssetsProvider>
                                                 <ClusterRefProvider>
                                                     <SetAssetsApi assetsApi={assetsApi}></SetAssetsApi>
@@ -55,15 +55,15 @@ export function AppShell({ appName, children, assetsApi }: { appName: string, ch
                                                     </QuestsProvider>
                                                 </ClusterRefProvider>
                                             </AssetsProvider>
-                                        </BrowserRouter>
-                                    </QueryClientProvider>
-                                </LeafletRefsProvider>
-                            </SelectPositionProvider>
-                        </ItemsProvider>
-                    </FilterProvider>
-                </LayersProvider>
-            </TagsProvider>
-        </PermissionsProvider>
+                                        </QueryClientProvider>
+                                    </LeafletRefsProvider>
+                                </SelectPositionProvider>
+                            </ItemsProvider>
+                        </FilterProvider>
+                    </LayersProvider>
+                </TagsProvider>
+            </PermissionsProvider>
+        </BrowserRouter>
 
     )
 }

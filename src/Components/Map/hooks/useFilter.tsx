@@ -2,7 +2,7 @@ import { useCallback, useReducer, createContext, useContext } from "react";
 import * as React from "react";
 import { LayerProps, Tag } from "../../../types";
 import { useLayers } from "./useLayers";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 type ActionType =
   | { type: "ADD_TAG"; tag: Tag }
@@ -63,6 +63,7 @@ function useFilterManager(initialTags: Tag[]): {
   }, initialTags);
 
   const initialLayers = useLayers()
+  const navigate = useNavigate()
 
   const [visibleLayers, dispatchLayers] = useReducer((state: LayerProps[], action: ActionType) => {
     switch (action.type) {
@@ -95,7 +96,8 @@ function useFilterManager(initialTags: Tag[]): {
     let urlTags = params.get("tags");
     if(!urlTags?.includes(tag.name))
     params.set("tags", `${urlTags ? urlTags : ""}${urlTags? ',' : ''}${tag.name}`)
-    window.history.pushState('','', "?" +params.toString());
+    navigate(location.pathname + `${params ? `?${params}` : ""}`); 
+    
 
     dispatchTags({
       type: "ADD_TAG",
@@ -117,11 +119,11 @@ function useFilterManager(initialTags: Tag[]): {
     });    
     if(newUrlTags !== "") {
       params.set("tags", `${newUrlTags}`)
-      window.history.pushState('','', "?" +params.toString());
+      navigate(location.pathname + `${params ? `?${params}` : ""}`); 
     }
     else {
-
-      window.history.pushState('','', window.location.pathname);
+      params.delete("tags");
+      navigate(location.pathname + `${params ? `?${params}` : ""}`); 
     }
 
     dispatchTags({

@@ -78,11 +78,11 @@ function UtopiaMap({
             <div className={`tw-h-full ${(selectNewItemPosition != null ? "crosshair-cursor-enabled" : undefined)}`}>
                 <MapContainer ref={mapDivRef} style={{ height: height, width: width }} center={new LatLng(center[0], center[1])} zoom={zoom} zoomControl={false} maxZoom={19}>
                     <Outlet></Outlet>
-                    <Control position='topLeft' zIndex="1000">
+                    <Control position='topLeft' zIndex="1000" absolute>
                         <SearchControl />
                         <TagsControl />
                     </Control>
-                    <Control position='bottomLeft' zIndex="999">
+                    <Control position='bottomLeft' zIndex="999" absolute>
                         <QuestControl></QuestControl>
                         <LayerControl></LayerControl>
                     </Control>

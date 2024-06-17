@@ -113,28 +113,30 @@ export const OverlayItemsIndexPage = ({ url, layerName, parameterField, plusButt
             <MapOverlayPage className='tw-rounded-none tw-overflow-y-auto tw-bg-base-200 !tw-p-4'>
                 <div className='tw-flex tw-flex-col tw-h-full'>
                     <div className='tw-flex-none'>
-                    <Control position='topLeft' zIndex="1000" absolute={false}>
-                        <SearchControl />
-                        <TagsControl />
-                    </Control>
+                        <Control position='topLeft' zIndex="1000" absolute={false}>
+                            <SearchControl />
+                            <TagsControl />
+                        </Control>
                     </div>
-                    <div className="tw-overflow-scroll fade tw-flex-1 tw-grid tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-3 2xl:tw-grid-cols-4 tw-gap-6 tw-pt-4">
-                        {
-                            items?.filter(i => i.layer?.name === layerName).
-                                filter(item =>
-                                    filterTags.length == 0 ? item : filterTags.every(tag => getItemTags(item).some(filterTag => filterTag.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())))?.
-                                sort((a, b) => {
-                                    // Convert date_created to milliseconds, handle undefined by converting to lowest possible date (0 milliseconds)
-                                    const dateA = a.date_updated ? new Date(a.date_updated).getTime() : a.date_created ? new Date(a.date_created).getTime() : 0;
-                                    const dateB = b.date_updated ? new Date(b.date_updated).getTime() : b.date_created ? new Date(b.date_created).getTime() : 0;
-                                    return dateB - dateA; // Subtracts milliseconds which are numbers
-                                })?.
-                                map((i, k) => {
-                                    return (
-                                        <ItemCard key={k} i={i} loading={loading} url={url} parameterField={parameterField} deleteCallback={() => deleteItem(i)} ></ItemCard>
-                                    )
-                                })
-                        }
+                    <div className="tw-overflow-scroll fade tw-flex-1">
+                        <div className='tw-grid tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-3 2xl:tw-grid-cols-4 tw-gap-6 tw-pt-4'>
+                            {
+                                items?.filter(i => i.layer?.name === layerName).
+                                    filter(item =>
+                                        filterTags.length == 0 ? item : filterTags.every(tag => getItemTags(item).some(filterTag => filterTag.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())))?.
+                                    sort((a, b) => {
+                                        // Convert date_created to milliseconds, handle undefined by converting to lowest possible date (0 milliseconds)
+                                        const dateA = a.date_updated ? new Date(a.date_updated).getTime() : a.date_created ? new Date(a.date_created).getTime() : 0;
+                                        const dateB = b.date_updated ? new Date(b.date_updated).getTime() : b.date_created ? new Date(b.date_created).getTime() : 0;
+                                        return dateB - dateA; // Subtracts milliseconds which are numbers
+                                    })?.
+                                    map((i, k) => {
+                                        return (
+                                            <ItemCard key={k} i={i} loading={loading} url={url} parameterField={parameterField} deleteCallback={() => deleteItem(i)} ></ItemCard>
+                                        )
+                                    })
+                            }
+                        </div>
                         {addItemPopupType == "place" ?
 
                             <form ref={tabRef} autoComplete='off' onSubmit={e => submitNewItem(e)}  >

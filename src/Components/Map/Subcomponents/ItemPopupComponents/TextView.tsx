@@ -1,24 +1,24 @@
-import * as React from 'react'
-import { Item } from '../../../../types'
+import * as React from 'react';
+import { Item } from '../../../../types';
 import { useTags } from '../../hooks/useTags';
 import { useAddFilterTag } from '../../hooks/useFilter';
 import { hashTagRegex } from '../../../../Utils/HashTagRegex';
 import { fixUrls, mailRegex } from '../../../../Utils/ReplaceURLs';
-import Markdown from 'react-markdown'
+import Markdown from 'react-markdown';
 import { getValue } from '../../../../Utils/GetValue';
-import remarkBreaks from 'remark-breaks'
+import remarkBreaks from 'remark-breaks';
 import { decodeTag } from '../../../../Utils/FormatTags';
 
-export const TextView = ({ item, truncate = false, itemTextField}: { item?: Item, truncate?: boolean,itemTextField?: string }) => {
+export const TextView = ({ item, truncate = false, itemTextField }: { item?: Item, truncate?: boolean, itemTextField?: string }) => {
   const tags = useTags();
-  const addFilterTag = useAddFilterTag();  
+  const addFilterTag = useAddFilterTag();
 
   let text = "";
 
-  if(itemTextField && item) text = getValue(item, itemTextField);
-  else text = item?.layer?.itemTextField && item ? getValue(item, item.layer?.itemTextField) : ""
+  if (itemTextField && item) text = getValue(item, itemTextField);
+  else text = item?.layer?.itemTextField && item ? getValue(item, item.layer?.itemTextField) : "";
 
-  if(item && text && truncate) text = truncateString(text, 100, true);
+  if (item && text && truncate) text = truncateText(removeMarkdownKeepLinksAndParagraphs(text), 100);
 
   let replacedText;
 
@@ -32,18 +32,16 @@ export const TextView = ({ item, truncate = false, itemTextField}: { item?: Item
     if (url.match('^http:\/\/')) {
       shortUrl = url.split('http://')[1];
     }
-    return `[${shortUrl}](${url})`
-  }) : "" ;
+    return `[${shortUrl}](${url})`;
+  }) : "";
 
   replacedText ? replacedText = replacedText.replace(mailRegex, (url) => {
-    return `[${url}](mailto:${url})`
+    return `[${url}](mailto:${url})`;
   }) : "";
 
   replacedText ? replacedText = replacedText.replace(hashTagRegex, (match) => {
-    return `[${match}](${match})`
+    return `[${match}](${match})`;
   }) : "";
-
-
 
   const CustomH1 = ({ children }) => (
     <h1 className="tw-text-xl tw-font-bold">{children}</h1>
@@ -89,43 +87,37 @@ export const TextView = ({ item, truncate = false, itemTextField}: { item?: Item
       target='_blank'
     > {children}</a>
   );
-  const CustomHashTagLink = ({ children, tag, item }) => {    
+  const CustomHashTagLink = ({ children, tag, item }) => {
     return (
-    <a
-      style={{ color: tag ? tag.color : '#faa', fontWeight: 'bold', cursor: 'pointer' }}
-      key={tag ? tag.name + item!.id : item.id}
-      onClick={(e) => {       
-        e.stopPropagation();
-        addFilterTag(tag!);
-        // map.fitBounds(items)
-        // map.closePopup();
-      }}>{decodeTag(children)}</a>
-  )};
-
+      <a
+        style={{ color: tag ? tag.color : '#faa', fontWeight: 'bold', cursor: 'pointer' }}
+        key={tag ? tag.name + item!.id : item.id}
+        onClick={(e) => {
+          e.stopPropagation();
+          addFilterTag(tag!);
+        }}>{decodeTag(children)}</a>
+    )
+  };
 
   return (
-    //@ts-ignore
     <Markdown className={`tw-text-map tw-leading-map `} remarkPlugins={[remarkBreaks]} components={{
       p: CustomParagraph,
       a: ({ href, children }) => {
-        // Prüft, ob der Link ein YouTube-Video ist
         const isYouTubeVideo = href?.startsWith('https://www.youtube.com/watch?v=');
 
         if (isYouTubeVideo) {
-          const videoId = href?.split('v=')[1].split('&')[0]; // Extrahiert die Video-ID aus der URL
+          const videoId = href?.split('v=')[1].split('&')[0];
           const youtubeEmbedUrl = `https://www.youtube-nocookie.com/embed/${videoId}`;
 
           return (
-
             <iframe className='tw-w-full'
               src={youtubeEmbedUrl}
               allowFullScreen
             />
-
           );
         }
-        if (href?.startsWith("#")) {          
-          const tag = tags.find(t => t.name.toLowerCase() == decodeURI(href).slice(1).toLowerCase())
+        if (href?.startsWith("#")) {
+          const tag = tags.find(t => t.name.toLowerCase() === decodeURI(href).slice(1).toLowerCase());
           return <CustomHashTagLink tag={tag} item={item}>{children}</CustomHashTagLink>;
         } else {
           return (
@@ -146,16 +138,41 @@ export const TextView = ({ item, truncate = false, itemTextField}: { item?: Item
     }}>
       {replacedText}
     </Markdown>
-  )
+  );
+};
 
-
-
+function removeMarkdownKeepLinksAndParagraphs(text) {
+  // Remove Markdown syntax using regular expressions but keep links and paragraphs
+  return text
+    .replace(/!\[.*?\]\(.*?\)/g, '') // Remove images
+    .replace(/(`{1,3})(.*?)\1/g, '$2') // Remove inline code
+    .replace(/(\*{1,2}|_{1,2})(.*?)\1/g, '$2') // Remove bold and italic
+    .replace(/(#+)\s+(.*)/g, '$2') // Remove headers
+    .replace(/>\s+(.*)/g, '$1') // Remove blockquotes
+    .replace(/^\s*\n/gm, '\n') // Preserve empty lines
+    .replace(/(\r\n|\n|\r)/gm, '\n'); // Preserve line breaks
 }
 
-function truncateString( str, n, useWordBoundary ){
-  if (str.length <= n) { return str; }
-  const subString = str.slice(0, n-1); // the original check
-  return (useWordBoundary 
-    ? subString.slice(0, subString.lastIndexOf(" ")) 
-    : subString) + "&hellip;";
-};
+function truncateText(text, limit) {
+  if (text.length <= limit) {
+    return text;
+  }
+
+  let truncated = "";
+  let length = 0;
+
+  // Split the text by paragraphs
+  const paragraphs = text.split('\n');
+
+  for (let paragraph of paragraphs) {
+    if (length + paragraph.length > limit) {
+      truncated += paragraph.slice(0, limit - length) + '...';
+      break;
+    } else {
+      truncated += paragraph + '\n';
+      length += paragraph.length;
+    }
+  }
+
+  return truncated.trim();
+}

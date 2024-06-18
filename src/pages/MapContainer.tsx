@@ -13,12 +13,21 @@ function MapContainer({ layers, map }: { layers: Array<LayerProps>, map: any }) 
   const [apis, setApis] = useState<Array<layerApi>>([]);
 
   useEffect(() => {
-    layers.map((layer:LayerProps) => {
-      apis && setApis(current => [...current, { id: layer.id!, api: new itemsApi<Place>('items', layer.id, undefined, {
-        ...(layer.itemType.name == "event" && {	"end": {
-          "_gte": "$NOW"
-        }})
-     }) }])
+    // get timestamp for the end of the current day
+    let now = new Date();
+    let startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    let etartOfDayISO = startOfDay.toISOString();
+
+    layers.map((layer: LayerProps) => {
+      apis && setApis(current => [...current, {
+        id: layer.id!, api: new itemsApi<Place>('items', layer.id, undefined, {
+          ...(layer.itemType.name == "event" && {
+            "end": {
+              "_gt": etartOfDayISO
+            }
+          })
+        })
+      }])
     })
   }, [layers])
 
@@ -28,7 +37,7 @@ function MapContainer({ layers, map }: { layers: Array<LayerProps>, map: any }) 
 
   return (
 
-    <UtopiaMap geo={map.geo} zoom={map.zoom || 5} center={map.center? [map.center?.coordinates[1], map.center?.coordinates[0]] : [50.6, 9.5]} height='100%' width="100%" >
+    <UtopiaMap geo={map.geo} zoom={map.zoom || 5} center={map.center ? [map.center?.coordinates[1], map.center?.coordinates[0]] : [50.6, 9.5]} height='100%' width="100%" >
       {layers && apis &&
         layers.map(layer =>
           <Layer
@@ -68,7 +77,7 @@ function MapContainer({ layers, map }: { layers: Array<LayerProps>, map: any }) 
             <ItemForm>
               {layer.itemType.show_name_input && <PopupTextInput dataField='name' placeholder='Name'></PopupTextInput>}
               {layer.itemType.show_start_end_input && <PopupStartEndInput></PopupStartEndInput>}
-              {layer.itemType.show_text_input &&<PopupTextAreaInput dataField='text' placeholder={'Text ...'} style="tw-h-40"></PopupTextAreaInput>}
+              {layer.itemType.show_text_input && <PopupTextAreaInput dataField='text' placeholder={'Text ...'} style="tw-h-40"></PopupTextAreaInput>}
               {//layer.public_edit_items && <PopupCheckboxInput dataField={'public_edit'} label={'public edit'}/>
               }
               {layer.itemType.custom_text && <div className='flex justify-center'>

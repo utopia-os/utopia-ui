@@ -65,8 +65,8 @@ export function OverlayItemProfileSettings() {
     useEffect(() => {
         const itemId = location.pathname.split("/")[2];
 
-            const item = items.find(i => i.id === itemId);
-            item && setItem(item);
+        const item = items.find(i => i.id === itemId);
+        item && setItem(item);
 
         const layer = layers.find(l => l.itemType.name == "user")
 
@@ -93,7 +93,7 @@ export function OverlayItemProfileSettings() {
 
 
     useEffect(() => {
-        setColor(item.layer?.itemColorField && getValue(item,item.layer?.itemColorField)? getValue(item,item.layer?.itemColorField) : (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor))
+        setColor(item.layer?.itemColorField && getValue(item, item.layer?.itemColorField) ? getValue(item, item.layer?.itemColorField) : (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor))
 
         setId(item?.id ? item.id : "");
         setName(item?.name ? item.name : "");
@@ -253,6 +253,12 @@ export function OverlayItemProfileSettings() {
 
     }
 
+    useEffect(() => {
+      console.log(item);
+      
+    }, [item])
+    
+
 
 
     return (
@@ -268,55 +274,67 @@ export function OverlayItemProfileSettings() {
                         </div>
                     </div>
 
+                    {item.layer?.itemType.onepager &&
 
-                    <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-4">
-                        <input type="radio" name="my_tabs_2" role="tab" className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`} aria-label="Info" checked={activeTab == 1 && true} onChange={() => updateActiveTab(1)} />
-                        <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-border-[var(--fallback-bc,oklch(var(--bc)/0.2))] tw-rounded-box tw-h-[calc(100dvh-332px)] tw-min-h-56 tw-border-none">
-                            <TextAreaInput placeholder="My Vision..." defaultValue={item?.text ? item.text : ""} updateFormValue={(v) => { console.log(v); setText(v) }} containerStyle='tw-h-full' inputStyle='tw-h-full tw-border-t-0 tw-rounded-tl-none' />
-                        </div>
-                        {item.layer?.itemType.offers_and_needs &&
-                            <>
-                                <input type="radio" name="my_tabs_2" role="tab" className={`tw-tab tw-min-w-[10em]  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`} aria-label="Offers & Needs" checked={activeTab == 3 && true} onChange={() => updateActiveTab(3)} />
-                                <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-border-[var(--fallback-bc,oklch(var(--bc)/0.2))] tw-rounded-box tw-h-[calc(100dvh-332px)] tw-min-h-56 tw-border-none">
-                                    <div className='tw-h-full'>
-                                        <div className='tw-w-full tw-h-[calc(50%-0.75em)] tw-mb-4'>
-                                            <TagsWidget defaultTags={offers} onUpdate={(v) => setOffers(v)} placeholder="enter your offers" containerStyle='tw-bg-transparent tw-w-full tw-h-full tw-mt-3 tw-text-xs tw-h-[calc(100%-1rem)] tw-min-h-[5em] tw-pb-2 tw-overflow-auto' />
-                                        </div>
-                                        <div className='tw-w-full tw-h-[calc(50%-0.75em)] '>
-                                            <TagsWidget defaultTags={needs} onUpdate={(v) => setNeeds(v)} placeholder="enter your needs" containerStyle='tw-bg-transparent tw-w-full tw-h-full tw-mt-3 tw-text-xs tw-h-[calc(100%-1rem)] tw-min-h-[5em] tw-pb-2 tw-overflow-auto' />
-                                        </div>
-                                    </div>
-                                </div>
-                            </>
-                        }
-                        {item.layer?.itemType.relations &&
-                                    <>
-                                        <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Relations" checked={activeTab == 7 && true} onChange={() => updateActiveTab(7)} />
-                                        <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-332px)] tw-overflow-y-auto tw-pt-4 tw-pb-1 -tw-mx-4 tw-overflow-x-hidden">
-                                            <div className='tw-h-full'>
-                                                <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-1 2xl:tw-grid-cols-2'>
-                                                    {relations && relations.map(i =>
+                        <TextAreaInput placeholder="My Visino..." defaultValue={item?.text ? item.text : ""} updateFormValue={(v) => { console.log(v); setText(v) }} containerStyle='tw-h-full' inputStyle='tw-h-full tw-border-t-0 tw-rounded-tl-none' />
 
 
-                                                        <div key={i.id} className='tw-cursor-pointer tw-card tw-bg-base-200 tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-text-base-content tw-mx-4 tw-p-6 tw-mb-4' onClick={() => navigate('/item/' + i.id)}>
-                                                            <LinkedItemsHeaderView unlinkPermission={updatePermission} item={i} unlinkCallback={unlinkItem} loading={loading} />
-                                                            <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
-                                                                <TextView truncate item={i} />
-                                                            </div>
-                                                        </div>
-                                                    )}
-                                                    {updatePermission && <ActionButton customStyle="!tw-bottom-20" collection="items" item={item} existingRelations={relations} triggerItemSelected={linkItem} colorField={item.layer.itemColorField}></ActionButton>}
+                    }
 
-                                                </div>
+                    {!item.layer?.itemType.onepager  &&
+
+
+                        <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-4">
+                            <input type="radio" name="my_tabs_2" role="tab" className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`} aria-label="Info" checked={activeTab == 1 && true} onChange={() => updateActiveTab(1)} />
+                            <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-border-[var(--fallback-bc,oklch(var(--bc)/0.2))] tw-rounded-box tw-h-[calc(100dvh-332px)] tw-min-h-56 tw-border-none">
+                                <TextAreaInput placeholder="My Visino..." defaultValue={item?.text ? item.text : ""} updateFormValue={(v) => { console.log(v); setText(v) }} containerStyle='tw-h-full' inputStyle='tw-h-full tw-border-t-0 tw-rounded-tl-none' />
+                            </div>
+                            {item.layer?.itemType.offers_and_needs &&
+                                <>
+                                    <input type="radio" name="my_tabs_2" role="tab" className={`tw-tab tw-min-w-[10em]  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`} aria-label="Offers & Needs" checked={activeTab == 3 && true} onChange={() => updateActiveTab(3)} />
+                                    <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-border-[var(--fallback-bc,oklch(var(--bc)/0.2))] tw-rounded-box tw-h-[calc(100dvh-332px)] tw-min-h-56 tw-border-none">
+                                        <div className='tw-h-full'>
+                                            <div className='tw-w-full tw-h-[calc(50%-0.75em)] tw-mb-4'>
+                                                <TagsWidget defaultTags={offers} onUpdate={(v) => setOffers(v)} placeholder="enter your offers" containerStyle='tw-bg-transparent tw-w-full tw-h-full tw-mt-3 tw-text-xs tw-h-[calc(100%-1rem)] tw-min-h-[5em] tw-pb-2 tw-overflow-auto' />
+                                            </div>
+                                            <div className='tw-w-full tw-h-[calc(50%-0.75em)] '>
+                                                <TagsWidget defaultTags={needs} onUpdate={(v) => setNeeds(v)} placeholder="enter your needs" containerStyle='tw-bg-transparent tw-w-full tw-h-full tw-mt-3 tw-text-xs tw-h-[calc(100%-1rem)] tw-min-h-[5em] tw-pb-2 tw-overflow-auto' />
                                             </div>
                                         </div>
-                                    </>
-                                }
+                                    </div>
+                                </>
+                            }
+                            {item.layer?.itemType.relations &&
+                                <>
+                                    <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Relations" checked={activeTab == 7 && true} onChange={() => updateActiveTab(7)} />
+                                    <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-332px)] tw-overflow-y-auto tw-pt-4 tw-pb-1 -tw-mx-4 tw-overflow-x-hidden">
+                                        <div className='tw-h-full'>
+                                            <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-1 2xl:tw-grid-cols-2'>
+                                                {relations && relations.map(i =>
 
 
-                    </div>
+                                                    <div key={i.id} className='tw-cursor-pointer tw-card tw-bg-base-200 tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-text-base-content tw-mx-4 tw-p-6 tw-mb-4' onClick={() => navigate('/item/' + i.id)}>
+                                                        <LinkedItemsHeaderView unlinkPermission={updatePermission} item={i} unlinkCallback={unlinkItem} loading={loading} />
+                                                        <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
+                                                            <TextView truncate item={i} />
+                                                        </div>
+                                                    </div>
+                                                )}
+                                                {updatePermission && <ActionButton customStyle="!tw-bottom-20" collection="items" item={item} existingRelations={relations} triggerItemSelected={linkItem} colorField={item.layer.itemColorField}></ActionButton>}
 
-                    <div className="tw-mt-4 tw-mb-4"><button className={loading ? " tw-loading tw-btn tw-float-right" : "tw-btn tw-float-right"} onClick={() => onUpdateItem()} style={true ? { backgroundColor: `${item.layer?.itemColorField && getValue(item,item.layer?.itemColorField)? getValue(item,item.layer?.itemColorField) : (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor)}`, color: "#fff" } : {color: "#fff"}}>Update</button></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </>
+                            }
+
+
+                        </div>
+                    }
+
+
+
+                    <div className="tw-mt-4 tw-mb-4"><button className={loading ? " tw-loading tw-btn tw-float-right" : "tw-btn tw-float-right"} onClick={() => onUpdateItem()} style={true ? { backgroundColor: `${item.layer?.itemColorField && getValue(item, item.layer?.itemColorField) ? getValue(item, item.layer?.itemColorField) : (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor)}`, color: "#fff" } : { color: "#fff" }}>Update</button></div>
 
                 </div>
 

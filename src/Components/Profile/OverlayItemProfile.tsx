@@ -279,6 +279,28 @@ export function OverlayItemProfile() {
                         <HeaderView api={item.layer?.api} item={item} deleteCallback={handleDelete} editCallback={() => navigate("/edit-item/" + item.id)} setPositionCallback={() => { map.closePopup(); setSelectPosition(item); navigate("/") }} big truncateSubname={false} />
 
                         <div className='tw-h-full'>
+
+                        {item.layer?.itemType.onepager &&
+                        <>
+                            <TextView item={item} />
+                            <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-1 2xl:tw-grid-cols-2'>
+                            {relations && relations.map(i =>
+
+
+                                <div key={i.id} className='tw-cursor-pointer tw-card tw-bg-base-200 tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-text-base-content tw-mx-4 tw-p-6 tw-mb-4' onClick={() => navigate('/item/' + i.id)}>
+                                    <LinkedItemsHeaderView unlinkPermission={updatePermission} item={i} unlinkCallback={unlinkItem} loading={loading} />
+                                    <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
+                                        <TextView truncate item={i} />
+                                    </div>
+                                </div>
+                            )}
+                            {updatePermission && <ActionButton collection="items" item={item} existingRelations={relations} triggerItemSelected={linkItem} colorField={item.layer.itemColorField}></ActionButton>}
+
+                        </div>
+                        </>
+                        }
+
+                        {!item.layer?.itemType.onepager &&
                             <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-2 tw-mb-2">
                                 <input type="radio" name="my_tabs_2" role="tab" className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`} aria-label="Info" checked={activeTab == 1 && true} onChange={() => updateActiveTab(1)} />
                                 <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-4 tw-mb-4 tw-overflow-x-hidden">
@@ -353,6 +375,7 @@ export function OverlayItemProfile() {
                                     </>
                                 }
                             </div>
+                            }
                         </div>
                     </>
 

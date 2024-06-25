@@ -62,9 +62,13 @@ function UtopiaMap({
 
     const [itemFormPopup, setItemFormPopup] = useState<ItemFormPopupProps | null>(null);
 
+    const [embedded, setEmbedded] = useState<boolean>(true)
+
     useEffect(() => {
         let params = new URLSearchParams(location.search);
         let urlPosition = params.get("position");
+        let embedded = params.get("embedded");
+        embedded != "true" && setEmbedded(false)
     }, [location]);
 
     const onEachFeature = (feature: Feature<GeoJSONGeometry, any>, layer: L.Layer) => {
@@ -83,7 +87,9 @@ function UtopiaMap({
                         <TagsControl />
                     </Control>
                     <Control position='bottomLeft' zIndex="999" absolute>
-                        <QuestControl></QuestControl>
+                        {!embedded && (
+                            <QuestControl></QuestControl>
+                        )}
                         <LayerControl></LayerControl>
                     </Control>
                     <TileLayer

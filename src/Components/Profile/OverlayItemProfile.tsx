@@ -22,6 +22,9 @@ import { useClusterRef } from '../Map/hooks/useClusterRef';
 import { useLeafletRefs } from '../Map/hooks/useLeafletRefs';
 import { getValue } from '../../Utils/GetValue';
 import { TagView } from '../Templates/TagView';
+import RelationCard from "./RelationCard";
+import ContactInfo from "./ContactInfo";
+import ProfileSubHeader from "./ProfileSubHeader";
 
 export function OverlayItemProfile() {
 
@@ -270,45 +273,96 @@ export function OverlayItemProfile() {
         navigate("/");
     }
 
+    const d = {
+        groupName: "Gruppe Berlin-Britz",
+        location: "12347 Berlin-Britz",
+        country: "Berlin, Deutschland",
+        countryCode: "de",
+        contact: {
+            name: "Lisa Mustermann",
+            email: "lisa.mustermann@gmx.de",
+            avatarSrc: "https://cdn.prod.website-files.com/65c0d5530322d3f6f5f86099/65c0d5530322d3f6f5f86781_Andr%C3%A9.jpg" // optional
+        },
+        description: "Unsere KulturArche, ein historischer Frachtsegler...",
+        relations: [
+            {
+                title: "KulturArche EALA",
+                description: "Durchaus beeindruckt von der Ethik und der Arbeit...",
+                imageSrc: "https://cdn.prod.website-files.com/65c0d5530322d3f6f5f86099/65c0d5530322d3f6f5f86767_IMG_20190302_173147.jpg"
+            },
+            // Add more projects as needed
+        ],
+        url: window.location.href,
+        title: "Gruppe Berlin-Britz"
+    };
+
+
+
     return (
         <>
             {item &&
-                <MapOverlayPage key={item.id} className={`tw-mx-4 tw-mt-4 tw-max-h-[calc(100dvh-96px)] tw-h-[calc(100dvh-96px)] md:tw-w-[calc(50%-32px)] tw-w-[calc(100%-32px)] tw-min-w-80 tw-max-w-3xl !tw-left-0 sm:!tw-left-auto tw-top-0 tw-bottom-0 tw-transition-opacity tw-duration-500 ${!selectPosition ? 'tw-opacity-100 tw-pointer-events-auto' : 'tw-opacity-0 tw-pointer-events-none'}`}>
+                <MapOverlayPage key={item.id} padding={false}
+                    className={`tw-mx-4 tw-mt-4 tw-max-h-[calc(100dvh-96px)] tw-h-[calc(100dvh-96px)] md:tw-w-[calc(50%-32px)] tw-w-[calc(100%-32px)] tw-min-w-80 tw-max-w-3xl !tw-left-0 sm:!tw-left-auto tw-top-0 tw-bottom-0 tw-transition-opacity tw-duration-500 ${!selectPosition ? 'tw-opacity-100 tw-pointer-events-auto' : 'tw-opacity-0 tw-pointer-events-none'}`}>
 
                     <>
-                        <HeaderView api={item.layer?.api} item={item} deleteCallback={handleDelete} editCallback={() => navigate("/edit-item/" + item.id)} setPositionCallback={() => { map.closePopup(); setSelectPosition(item); navigate("/") }} big truncateSubname={false} />
+                        <div className="tw-px-6 tw-pt-6">
+                            <HeaderView api={item.layer?.api} item={item} deleteCallback={handleDelete} editCallback={() => navigate("/edit-item/" + item.id)} setPositionCallback={() => { map.closePopup(); setSelectPosition(item); navigate("/") }} big truncateSubname={false} />
+                        </div>
 
                         <div className='tw-h-full'>
 
                         {item.layer?.itemType.onepager &&
-                        <>
-                            <TextView item={item} />
-                            <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-1 2xl:tw-grid-cols-2'>
-                            {relations && relations.map(i =>
+                            <>
+                                <ProfileSubHeader
+                                    location={d.location}
+                                    country={d.country}
+                                    countryCode={d.countryCode}
+                                    url={d.url}
+                                    title={d.title}
+                                />
 
+                                {d.contact && (
+                                    <ContactInfo contact={d.contact}/>
+                                )}
 
-                                <div key={i.id} className='tw-cursor-pointer tw-card tw-bg-base-200 tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-text-base-content tw-mx-4 tw-p-6 tw-mb-4' onClick={() => navigate('/item/' + i.id)}>
-                                    <LinkedItemsHeaderView unlinkPermission={updatePermission} item={i} unlinkCallback={unlinkItem} loading={loading} />
-                                    <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
-                                        <TextView truncate item={i} />
-                                    </div>
+                                {/* Description Section */}
+                                <div className="tw-my-10 tw-px-6">
+                                    <h2 className="tw-text-lg tw-font-semibold">Beschreibung</h2>
+                                    <p className="tw-mt-2 tw-text-sm tw-text-gray-600">
+                                        {d.description ?? 'Keine Beschreibung vorhanden'}
+                                    </p>
                                 </div>
-                            )}
-                            {updatePermission && <ActionButton collection="items" item={item} existingRelations={relations} triggerItemSelected={linkItem} colorField={item.layer.itemColorField}></ActionButton>}
 
-                        </div>
-                        </>
+                                {/* Relations Section */}
+                                {d.relations && (
+                                    <div className="tw-my-10 tw-px-6">
+                                        <h2 className="tw-text-lg tw-font-semibold tw-mb-4">Projekte</h2>
+                                        {d.relations.map((project, index) => (
+                                            <RelationCard
+                                                key={index}
+                                                title={project.title}
+                                                description={project.description}
+                                                imageSrc={project.imageSrc}
+                                            />
+                                        ))}
+                                    </div>
+                                )}
+                            </>
                         }
 
-                        {!item.layer?.itemType.onepager &&
-                            <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-2 tw-mb-2">
-                                <input type="radio" name="my_tabs_2" role="tab" className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`} aria-label="Info" checked={activeTab == 1 && true} onChange={() => updateActiveTab(1)} />
-                                <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-4 tw-mb-4 tw-overflow-x-hidden">
-                                    {item.layer?.itemType.show_start_end &&
-                                        <div className='tw-max-w-xs'><StartEndView item={item}></StartEndView></div>
-                                    }
-                                    <TextView item={item} />
-                                </div>
+                            {!item.layer?.itemType.onepager &&
+                                <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-2 tw-mb-2">
+                                    <input type="radio" name="my_tabs_2" role="tab"
+                                           className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`}
+                                           aria-label="Info" checked={activeTab == 1 && true}
+                                           onChange={() => updateActiveTab(1)}/>
+                                    <div role="tabpanel"
+                                         className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-4 tw-mb-4 tw-overflow-x-hidden">
+                                        {item.layer?.itemType.show_start_end &&
+                                            <div className='tw-max-w-xs'><StartEndView item={item}></StartEndView></div>
+                                        }
+                                        <TextView item={item}/>
+                                    </div>
 
                                 {item.layer?.itemType.offers_and_needs &&
 

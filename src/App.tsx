@@ -1,5 +1,5 @@
 import { AppShell, SideBar, Content, AuthProvider, Modal, LoginPage, SignupPage, Quests, RequestPasswordPage, SetNewPasswordPage, OverlayProfile, OverlayProfileSettings, OverlayUserSettings, OverlayItemsIndexPage, OverlayItemProfile, OverlayItemProfileSettings, Permissions, Tags } from 'utopia-ui'
-import { bottomRoutes, routes } from './routes/sidebar'
+import { getBottomRoutes, routes } from './routes/sidebar'
 import { Route, Routes } from 'react-router-dom'
 import MapContainer from "./pages/MapContainer"
 import './App.css'
@@ -14,7 +14,6 @@ import { permissionsApi } from './api/permissionsApi'
 import { Tag } from 'utopia-ui/dist/types'
 import { mapApi } from './api/mapApi'
 import { layersApi } from './api/layersApi'
-
 
 function App() {
 
@@ -80,7 +79,8 @@ function App() {
 
   }, [map])
 
-
+  const currentUrl = window.location.href;
+  const bottomRoutes = getBottomRoutes(currentUrl);
 
   if (map && layers) return (
 

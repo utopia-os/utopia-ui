@@ -8,17 +8,25 @@ const ContactInfo = ({ email, name, avatar } : {email: string, name: string, ava
     <div className="tw-bg-gray-100 tw-my-10 tw-p-6">
         <h2 className="tw-text-lg tw-font-semibold">Du hast Fragen?</h2>
         <div className="tw-mt-4 tw-flex tw-items-center">
-            <div className="tw-w-20 tw-h-20 tw-bg-gray-200 tw-rounded-full tw-mr-5 tw-flex tw-items-center tw-justify-center">
-                {avatar ? (
-                    <img src={assetsApi.url+avatar} alt={name} className="tw-w-full tw-h-full tw-rounded-full" />
-                ) : (
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="tw-w-6 tw-h-6"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-
-                    )}
+            <div className="tw-mr-5 tw-flex tw-items-center tw-justify-center">
+                <div className="tw-avatar">
+                    <div
+                        className="tw-w-20 tw-h-20 tw-bg-gray-200 rounded-full tw-flex tw-items-center tw-justify-center overflow-hidden">
+                        {avatar ? (
+                            <img src={assetsApi.url + avatar} alt={name}
+                                 className="tw-w-full tw-h-full tw-object-cover"/>
+                        ) : (
+                            <div className="tw-flex tw-items-center tw-justify-center tw-w-full tw-h-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="tw-w-12 tw-h-12"
+                                     fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                     strokeLinejoin="round">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                        )}
+                    </div>
+                </div>
             </div>
             <div className="tw-text-sm">
                 <p className="tw-font-semibold">{name}</p>
@@ -35,6 +43,7 @@ const ContactInfo = ({ email, name, avatar } : {email: string, name: string, ava
             </div>
         </div>
     </div>
-)}
+    )
+}
 
 export default ContactInfo;

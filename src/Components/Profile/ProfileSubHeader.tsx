@@ -18,12 +18,11 @@ const flags = {
     )
 };
 
-const SubHeader = ({ location, country, countryCode, url, title }) => (
-    <div className="tw-px-6">
+const SubHeader = ({ location, type, url, title }) => (
+    <div>
         <div className="tw-flex tw-items-center tw-mt-6">
-            <span className="tw-text-sm tw-text-gray-600">{location}</span>
-            <span className="tw-ml-6">{flags[countryCode] || null}</span>
-            <span className="tw-text-sm tw-text-gray-600 tw-ml-2">{country}</span>
+            <span className="tw-text-sm tw-text-gray-600">{type}</span>
+            <span className="tw-text-sm tw-text-gray-600 tw-ml-6">{location}</span>
         </div>
         <div className="tw-mt-4">
             <SocialShareBar url={url} title={title} />

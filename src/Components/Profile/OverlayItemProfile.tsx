@@ -25,7 +25,6 @@ import { TagView } from '../Templates/TagView';
 import RelationCard from "./RelationCard";
 import ContactInfo from "./ContactInfo";
 import ProfileSubHeader from "./ProfileSubHeader";
-import SocialShareBar from './SocialShareBar';
 
 export function OverlayItemProfile() {
 
@@ -276,7 +275,7 @@ export function OverlayItemProfile() {
 
     const d = {
         groupName: "Gruppe Berlin-Britz",
-        location: "12347 Berlin-Britz",
+        location: "🇩🇪  12347 Berlin",
         country: "Berlin, Deutschland",
         countryCode: "de",
         contact: {
@@ -298,6 +297,7 @@ export function OverlayItemProfile() {
     };
 
 
+
     return (
         <>
             {item &&
@@ -305,26 +305,31 @@ export function OverlayItemProfile() {
                     className={`${item.layer?.itemType.onepager && '!tw-p-0'} tw-mx-4 tw-mt-4 tw-max-h-[calc(100dvh-96px)] tw-h-[calc(100dvh-96px)] md:tw-w-[calc(50%-32px)] tw-w-[calc(100%-32px)] tw-min-w-80 tw-max-w-3xl !tw-left-0 sm:!tw-left-auto tw-top-0 tw-bottom-0 tw-transition-opacity tw-duration-500 ${!selectPosition ? 'tw-opacity-100 tw-pointer-events-auto' : 'tw-opacity-0 tw-pointer-events-none'}`}>
 
                     <>
-                    <div className={`${item.layer?.itemType.onepager && 'tw-p-4'}`}>
-                            <HeaderView showAddress api={item.layer?.api} item={item} deleteCallback={handleDelete} editCallback={() => navigate("/edit-item/" + item.id)} setPositionCallback={() => { map.closePopup(); setSelectPosition(item); navigate("/") }} big truncateSubname={false} />
-                            <SocialShareBar url={""} title={"title"} />
-
-                    </div>
+                        <div className="tw-px-6 tw-pt-6">
+                            <HeaderView api={item.layer?.api} item={item} deleteCallback={handleDelete} editCallback={() => navigate("/edit-item/" + item.id)} setPositionCallback={() => { map.closePopup(); setSelectPosition(item); navigate("/") }} big truncateSubname={false} />
+                            <ProfileSubHeader
+                                location={d.location}
+                                type={"Regionalgruppe"}
+                                url={d.url}
+                                title={d.title}
+                            />
+                        </div>
 
                         <div className='tw-h-full tw-overflow-y-auto fade'>
 
                         {item.layer?.itemType.onepager &&
                             <>
-
-
+                                {item.user_created.first_name && (
+                                    <ContactInfo name={item.user_created.first_name} avatar={item.user_created.avatar} email={item.contact} />
+                                )}
 
                                 {/* Description Section */}
-                                <TextView item={item}></TextView>
-
-
-                                {d.contact && (
-                                    <ContactInfo name={item.user_created.first_name} avatar={item.user_created.avatar} email={item.contact}/>
-                                )}
+                                <div className="tw-my-10 tw-px-6">
+                                    <h2 className="tw-text-lg tw-font-semibold">Beschreibung</h2>
+                                    <p className="tw-mt-2 tw-text-sm tw-text-gray-600">
+                                        <TextView rawText={item.text ?? 'Keine Beschreibung vorhanden'}/>
+                                    </p>
+                                </div>
 
                                 {/* Relations Section */}
                                 {d.relations && (

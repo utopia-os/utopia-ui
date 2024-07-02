@@ -21,6 +21,7 @@ export interface LayerProps {
   markerIcon: string,
   markerShape: string,
   markerDefaultColor: string,
+  markerDefaultColor2: string,
   api?: ItemsApi<any>,
   itemType: ItemType,
   itemNameField?: string,

@@ -5,6 +5,7 @@ const SocialShareBar = ({url, title, platforms = ['facebook', 'twitter', 'linked
         <div className="tw-flex tw-items-center tw-justify-end tw-space-x-2">
             {platforms.map((platform) => (
                 <SocialShareButton
+                    key={platform}
                     platform={platform}
                     url={url}
                     title={title}

@@ -326,9 +326,9 @@ export function OverlayItemProfile() {
                                 {/* Description Section */}
                                 <div className="tw-my-10 tw-px-6">
                                     <h2 className="tw-text-lg tw-font-semibold">Beschreibung</h2>
-                                    <p className="tw-mt-2 tw-text-sm tw-text-gray-600">
+                                    <div className="tw-mt-2 tw-text-sm tw-text-gray-600">
                                         <TextView rawText={item.text ?? 'Keine Beschreibung vorhanden'}/>
-                                    </p>
+                                    </div>
                                 </div>
 
                                 {/* Relations Section */}

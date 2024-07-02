@@ -27,6 +27,7 @@ export const Layer = ({
     markerIcon = 'circle-solid',
     markerShape = 'circle',
     markerDefaultColor = '#777',
+    markerDefaultColor2,
     api,
     itemType,
     itemNameField = 'name',
@@ -79,8 +80,8 @@ export const Layer = ({
 
 
     useEffect(() => {
-        data && setItemsData({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemType, itemNameField, itemSubnameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, customEditParameter, public_edit_items, setItemFormPopup, itemFormPopup, clusterRef });
-        api && setItemsApi({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemType, itemNameField, itemSubnameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, customEditParameter, public_edit_items, setItemFormPopup, itemFormPopup, clusterRef });
+        data && setItemsData({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, markerDefaultColor2, api, itemType, itemNameField, itemSubnameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, customEditParameter, public_edit_items, setItemFormPopup, itemFormPopup, clusterRef });
+        api && setItemsApi({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, markerDefaultColor2, api, itemType, itemNameField, itemSubnameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, customEditParameter, public_edit_items, setItemFormPopup, itemFormPopup, clusterRef });
     }, [data, api])
 
     useMapEvents({
@@ -178,7 +179,7 @@ export const Layer = ({
                             const longitude = itemLongitudeField && item ? getValue(item, itemLongitudeField) : undefined;
 
                             let color1 = markerDefaultColor;
-                            let color2 = "RGBA(35, 31, 32, 0.2)";                           
+                            let color2 = markerDefaultColor2;                           
                             if (itemColorField && getValue(item, itemColorField) != null) color1 = getValue(item, itemColorField);
                             else if (itemTags && itemTags[0]) {
                                 color1 = itemTags[0].color;

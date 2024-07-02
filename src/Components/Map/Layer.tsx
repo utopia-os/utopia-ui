@@ -197,7 +197,7 @@ export const Layer = ({
                                             selectPosition && setMarkerClicked(item)
                                         },
                                     }}
-                                    icon={MarkerIconFactory(markerShape, color1, color2, markerIcon)} key={item.id} position={[latitude, longitude]}>
+                                    icon={MarkerIconFactory(markerShape, color1, color2, item.markerIcon ? item.markerIcon : markerIcon)} key={item.id} position={[latitude, longitude]}>
                                     {
                                         (children && React.Children.toArray(children).some(child => React.isValidElement(child) && child.props.__TYPE === "ItemView") ?
                                             React.Children.toArray(children).map((child) =>

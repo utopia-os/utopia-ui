@@ -273,29 +273,6 @@ export function OverlayItemProfile() {
         navigate("/");
     }
 
-    const d = {
-        groupName: "Gruppe Berlin-Britz",
-        location: "🇩🇪  12347 Berlin",
-        country: "Berlin, Deutschland",
-        countryCode: "de",
-        contact: {
-            name: "Lisa Mustermann",
-            email: "lisa.mustermann@gmx.de",
-            avatarSrc: "https://cdn.prod.website-files.com/65c0d5530322d3f6f5f86099/65c0d5530322d3f6f5f86781_Andr%C3%A9.jpg" // optional
-        },
-        description: "Unsere KulturArche, ein historischer Frachtsegler...",
-        relations: [
-            {
-                title: "KulturArche EALA",
-                description: "Durchaus beeindruckt von der Ethik und der Arbeit...",
-                imageSrc: "https://cdn.prod.website-files.com/65c0d5530322d3f6f5f86099/65c0d5530322d3f6f5f86767_IMG_20190302_173147.jpg"
-            },
-            // Add more projects as needed
-        ],
-        url: window.location.href,
-        title: "Gruppe Berlin-Britz"
-    };
-
     const typeMapping = {
         'default': 'Würdekompass',
         'themenkompass': 'Themenkompass-Gruppe',
@@ -317,8 +294,8 @@ export function OverlayItemProfile() {
                             <ProfileSubHeader
                                 type={groupTypeText}
                                 status={item.status}
-                                url={d.url}
-                                title={d.title}
+                                url={window.location.href}
+                                title={item.name}
                             />
                         </div>
 

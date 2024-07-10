@@ -296,7 +296,14 @@ export function OverlayItemProfile() {
         title: "Gruppe Berlin-Britz"
     };
 
+    const typeMapping = {
+        'default': 'Würdekompass',
+        'themenkompass': 'Themenkompass-Gruppe',
+        'liebevoll.jetzt': 'liebevoll.jetzt',
+    };
 
+    let groupType = item.group_type ? item.group_type : 'default';
+    let groupTypeText = typeMapping[groupType];
 
     return (
         <>
@@ -308,8 +315,8 @@ export function OverlayItemProfile() {
                         <div className="tw-px-6 tw-pt-6">
                             <HeaderView api={item.layer?.api} item={item} deleteCallback={handleDelete} editCallback={() => navigate("/edit-item/" + item.id)} setPositionCallback={() => { map.closePopup(); setSelectPosition(item); navigate("/") }} big truncateSubname={false} />
                             <ProfileSubHeader
-                                location={d.location}
-                                type={"Regionalgruppe"}
+                                type={groupTypeText}
+                                status={item.status}
                                 url={d.url}
                                 title={d.title}
                             />
@@ -320,31 +327,38 @@ export function OverlayItemProfile() {
                         {item.layer?.itemType.onepager &&
                             <>
                                 {item.user_created.first_name && (
-                                    <ContactInfo name={item.user_created.first_name} avatar={item.user_created.avatar} email={item.contact} />
+                                    <ContactInfo name={item.user_created.first_name} avatar={item.user_created.avatar} email={item.contact} telephone={item.telephone} />
                                 )}
 
                                 {/* Description Section */}
-                                <div className="tw-my-10 tw-px-6">
-                                    <h2 className="tw-text-lg tw-font-semibold">Beschreibung</h2>
-                                    <div className="tw-mt-2 tw-text-sm tw-text-gray-600">
-                                        <TextView rawText={item.text ?? 'Keine Beschreibung vorhanden'}/>
-                                    </div>
+                                <div className="tw-my-10 tw-mt-2 tw-px-6 tw-text-sm tw-text-gray-600">
+                                    <TextView rawText={item.text || 'Keine Beschreibung vorhanden'}/>
                                 </div>
 
-                                {/* Relations Section */}
-                                {d.relations && (
+                                {/* Next Appointment Section */}
+                                {item.next_appointment && (
                                     <div className="tw-my-10 tw-px-6">
-                                        <h2 className="tw-text-lg tw-font-semibold tw-mb-4">Projekte</h2>
-                                        {d.relations.map((project, index) => (
-                                            <RelationCard
-                                                key={index}
-                                                title={project.title}
-                                                description={project.description}
-                                                imageSrc={project.imageSrc}
-                                            />
-                                        ))}
+                                        <h2 className="tw-text-lg tw-font-semibold">Nächste Termine</h2>
+                                        <div className="tw-mt-2 tw-text-sm tw-text-gray-600">
+                                            <TextView rawText={item.next_appointment}/>
+                                        </div>
                                     </div>
-                                )}
+                                )};
+
+                                {/* Relations Section */}
+                                {/*{d.relations && (*/}
+                                {/*    <div className="tw-my-10 tw-px-6">*/}
+                                {/*        <h2 className="tw-text-lg tw-font-semibold tw-mb-4">Projekte</h2>*/}
+                                {/*        {d.relations.map((project, index) => (*/}
+                                {/*            <RelationCard*/}
+                                {/*                key={index}*/}
+                                {/*                title={project.title}*/}
+                                {/*                description={project.description}*/}
+                                {/*                imageSrc={project.imageSrc}*/}
+                                {/*            />*/}
+                                {/*        ))}*/}
+                                {/*    </div>*/}
+                                {/*)}*/}
                             </>
                         }
 

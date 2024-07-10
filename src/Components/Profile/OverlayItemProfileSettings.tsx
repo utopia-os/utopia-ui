@@ -4,6 +4,7 @@ import { getValue } from '../../Utils/GetValue';
 import { toast } from 'react-toastify';
 import { useAuth } from '../Auth';
 import { TextInput, TextAreaInput } from '../Input';
+import ComboBoxInput from '../Input/ComboBoxInput';
 import { ColorPicker } from './ColorPicker';
 import { hashTagRegex } from '../../Utils/HashTagRegex';
 import { useAddTag, useGetItemTags, useTags } from '../Map/hooks/useTags';
@@ -24,10 +25,26 @@ import { useHasUserPermission } from '../Map/hooks/usePermissions';
 
 export function OverlayItemProfileSettings() {
 
+    const typeMapping = [
+        {value: 'kompass', label: 'Würdekompass'},
+        {value: 'themenkompass', label: 'Themenkompass-Gruppe'},
+        {value: 'liebevoll.jetzt', label: 'liebevoll.jetzt'}
+    ];
+    const statusMapping = [
+        {value: 'active', label: 'aktiv'},
+        {value: 'in_planning', label: 'in Planung'},
+        {value: 'paused', label: 'pausiert'}
+    ];
+
     const [id, setId] = useState<string>("");
+    const [groupType, setGroupType] = useState<string>("");
+    const [status, setStatus] = useState<string>("");
     const [name, setName] = useState<string>("");
     const [subname, setSubname] = useState<string>("");
     const [text, setText] = useState<string>("");
+    const [contact, setContact] = useState<string>("");
+    const [telephone, setTelephone] = useState<string>("");
+    const [nextAppointment, setNextAppointment] = useState<string>("");
     const [image, setImage] = useState<string>("");
     const [color, setColor] = useState<string>("");
     const [offers, setOffers] = useState<Array<Tag>>([]);
@@ -96,9 +113,14 @@ export function OverlayItemProfileSettings() {
         setColor(item.layer?.itemColorField && getValue(item, item.layer?.itemColorField) ? getValue(item, item.layer?.itemColorField) : (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor))
 
         setId(item?.id ? item.id : "");
+        setGroupType(item?.group_type || "kompass");
+        setStatus(item?.status || "active");
         setName(item?.name ? item.name : "");
         setSubname(item?.subname ? item.subname : "");
         setText(item?.text ? item.text : "");
+        setContact(item?.contact || "");
+        setTelephone(item?.telephone || "");
+        setNextAppointment(item?.next_appointment || "");
         setImage(item?.image ? item?.image : "");
         setOffers([]);
         setNeeds([]);
@@ -141,13 +163,23 @@ export function OverlayItemProfileSettings() {
         });
 
 
-
-
-
-
-
-        changedItem = { id: id, name: name, subname: subname, text: text, color: color, position: item.position, ...image.length > 10 && { image: image }, ...offers.length > 0 && { offers: offer_updates }, ...needs.length > 0 && { needs: needs_updates } };
         // update profile item in current state
+        changedItem = {
+            id: id,
+            group_type: groupType,
+            status: status,
+            name: name,
+            subname: subname,
+            text: text,
+            color: color,
+            position: item.position,
+            contact: contact,
+            telephone: telephone,
+            next_appointment: nextAppointment,
+            ...image.length > 10 && { image: image },
+            ...offers.length > 0 && { offers: offer_updates },
+            ...needs.length > 0 && { needs: needs_updates }
+        };
 
         let offers_state: Array<any> = [];
         let needs_state: Array<any> = [];
@@ -274,12 +306,80 @@ export function OverlayItemProfileSettings() {
                         </div>
                     </div>
 
-                    {item.layer?.itemType.onepager &&
+                    {item.layer?.itemType.onepager && (
+                        <div className="tw-space-y-6 tw-mt-6">
+                            <div className="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 tw-gap-6">
+                                <div>
+                                    <label htmlFor="groupType" className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
+                                        Gruppenart:
+                                    </label>
+                                    <ComboBoxInput
+                                        id="groupType"
+                                        options={typeMapping}
+                                        value={groupType}
+                                        onValueChange={(v) => setGroupType(v)}
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="status" className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
+                                        Gruppenstatus:
+                                    </label>
+                                    <ComboBoxInput
+                                        id="status"
+                                        options={statusMapping}
+                                        value={status}
+                                        onValueChange={(v) => setStatus(v)}
+                                    />
+                                </div>
+                            </div>
 
-                        <TextAreaInput placeholder="My Visino..." defaultValue={item?.text ? item.text : ""} updateFormValue={(v) => { console.log(v); setText(v) }} containerStyle='tw-h-full' inputStyle='tw-h-full tw-border-t-0 tw-rounded-tl-none' />
+                            <div>
+                                <label htmlFor="email" className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
+                                    Email-Adresse (Kontakt):
+                                </label>
+                                <TextInput
+                                    placeholder="Email"
+                                    defaultValue={contact}
+                                    updateFormValue={(v) => setContact(v)}
+                                />
+                            </div>
 
+                            <div>
+                                <label htmlFor="telephone" className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
+                                    Telefonnummer (Kontakt):
+                                </label>
+                                <TextInput
+                                    placeholder="Telefonnummer"
+                                    defaultValue={telephone}
+                                    updateFormValue={(v) => setTelephone(v)}
+                                />
+                            </div>
 
-                    }
+                            <div>
+                                <label htmlFor="nextAppointment" className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
+                                    Nächste Termine:
+                                </label>
+                                <TextAreaInput
+                                    placeholder="Nächste Termine"
+                                    defaultValue={nextAppointment}
+                                    updateFormValue={(v) => setNextAppointment(v)}
+                                    inputStyle="tw-h-24"
+                                />
+                            </div>
+
+                            <div>
+                                <label htmlFor="description" className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
+                                    Gruppenbeschreibung:
+                                </label>
+                                <TextAreaInput
+                                    placeholder="Beschreibung"
+                                    defaultValue={item?.text ?? ""}
+                                    updateFormValue={(v) => setText(v)}
+                                    inputStyle="tw-h-48"
+                                />
+                            </div>
+                        </div>
+                    )}
 
                     {!item.layer?.itemType.onepager  &&
 

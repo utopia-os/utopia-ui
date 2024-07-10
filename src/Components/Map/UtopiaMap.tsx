@@ -9,8 +9,7 @@ import AddButton from "./Subcomponents/AddButton";
 import { useEffect, useState } from "react";
 import { ItemFormPopupProps } from "./Subcomponents/ItemFormPopup";
 import { SearchControl } from "./Subcomponents/Controls/SearchControl";
-import { LayerControl } from "./Subcomponents/Controls/LayerControl";
-import { QuestControl } from "./Subcomponents/Controls/QuestControl";
+// import { QuestControl } from "./Subcomponents/Controls/QuestControl";
 import { Control } from "./Subcomponents/Controls/Control";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { TagsControl } from "./Subcomponents/Controls/TagsControl";
@@ -18,6 +17,8 @@ import { useSelectPosition, useSetMapClicked,useSetSelectPosition } from "./hook
 import { useClusterRef, useSetClusterRef } from "./hooks/useClusterRef";
 import { Feature, Geometry as GeoJSONGeometry } from 'geojson';
 import {useAuth} from "../Auth";
+import FilterControl from "./Subcomponents/Controls/FilterControl";
+import {LayerControl} from "./Subcomponents/Controls/LayerControl";
 
 // for refreshing map on resize (needs to be implemented)
 const mapDivRef = React.createRef();
@@ -61,6 +62,8 @@ function UtopiaMap({
     const clusterRef = useClusterRef();
     const setMapClicked = useSetMapClicked();
 
+    const [activeFilter, setActiveFilter] = useState(null);
+
     const [itemFormPopup, setItemFormPopup] = useState<ItemFormPopupProps | null>(null);
 
     const [embedded, setEmbedded] = useState<boolean>(true)
@@ -92,9 +95,11 @@ function UtopiaMap({
                         <TagsControl />
                     </Control>
                     <Control position='bottomLeft' zIndex="999" absolute>
-                        {!embedded && (
-                            <QuestControl></QuestControl>
-                        )}
+                        {/*{!embedded && (*/}
+                        {/*    <QuestControl></QuestControl>*/}
+                        {/*)}*/}
+                        <FilterControl activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
+                        {/*todo: needed layer handling is located LayerControl*/}
                         <LayerControl></LayerControl>
                     </Control>
                     <TileLayer

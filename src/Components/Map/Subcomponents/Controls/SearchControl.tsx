@@ -149,7 +149,7 @@ export const SearchControl = () => {
                         {Array.from(geoResults).map((geo) => (
                             <div className='tw-flex tw-flex-row hover:tw-font-bold tw-cursor-pointer' key={Math.random()} onClick={() => {
                                 searchInput.current?.blur();
-                                L.marker(new LatLng(geo.geometry.coordinates[1], geo.geometry.coordinates[0]), { icon: MarkerIconFactory("circle", "#777", "RGBA(35, 31, 32, 0.2)", "circle-solid") }).addTo(map).bindPopup(`<h3 class="tw-text-base tw-font-bold">${geo?.properties.name ? geo?.properties.name : value}<h3>${capitalizeFirstLetter(geo?.properties?.osm_value)}`).openPopup().addEventListener("popupclose", (e) => { console.log(e.target.remove()) });
+                                L.marker(new LatLng(geo.geometry.coordinates[1], geo.geometry.coordinates[0]), { icon: MarkerIconFactory("circle", "#777", "RGBA(35, 31, 32, 0.2)", "point") }).addTo(map).bindPopup(`<h3 class="tw-text-base tw-font-bold">${geo?.properties.name ? geo?.properties.name : value}<h3>${capitalizeFirstLetter(geo?.properties?.osm_value)}`).openPopup().addEventListener("popupclose", (e) => { console.log(e.target.remove()) });
                                 if (geo.properties.extent) map.fitBounds(new LatLngBounds(new LatLng(geo.properties.extent[1], geo.properties.extent[0]), new LatLng(geo.properties.extent[3], geo.properties.extent[2])));
                                 else map.setView(new LatLng(geo.geometry.coordinates[1], geo.geometry.coordinates[0]), 15, { duration: 1 });
                                 hide();

@@ -26,14 +26,14 @@ import { useHasUserPermission } from '../Map/hooks/usePermissions';
 export function OverlayItemProfileSettings() {
 
     const typeMapping = [
-        {value: 'kompass', label: 'Würdekompass'},
-        {value: 'themenkompass', label: 'Themenkompass-Gruppe'},
-        {value: 'liebevoll.jetzt', label: 'liebevoll.jetzt'}
+        { value: 'wuerdekompass', label: 'Regional-Gruppe' },
+        { value: 'themenkompass', label: 'Themen-Gruppe' },
+        { value: 'liebevoll.jetzt', label: 'liebevoll.jetzt' }
     ];
     const statusMapping = [
-        {value: 'active', label: 'aktiv'},
-        {value: 'in_planning', label: 'in Planung'},
-        {value: 'paused', label: 'pausiert'}
+        { value: 'active', label: 'aktiv' },
+        { value: 'in_planning', label: 'in Planung' },
+        { value: 'paused', label: 'pausiert' }
     ];
 
     const [id, setId] = useState<string>("");
@@ -45,6 +45,7 @@ export function OverlayItemProfileSettings() {
     const [contact, setContact] = useState<string>("");
     const [telephone, setTelephone] = useState<string>("");
     const [nextAppointment, setNextAppointment] = useState<string>("");
+    const [markerIcon, setMarkerIcon] = useState<string>("");
     const [image, setImage] = useState<string>("");
     const [color, setColor] = useState<string>("");
     const [offers, setOffers] = useState<Array<Tag>>([]);
@@ -69,6 +70,34 @@ export function OverlayItemProfileSettings() {
     const navigate = useNavigate();
     const hasUserPermission = useHasUserPermission();
     const getItemTags = useGetItemTags();
+
+    useEffect(() => {
+        switch (groupType) {
+            case "wuerdekompass":
+                setColor("#DF4D39");
+                setMarkerIcon("group");
+                setImage("88930921-6076-4bdf-a5b2-241d6e7bc875")
+
+                break;
+            case "themenkompass":
+                setColor("#26A269");
+                setMarkerIcon("group");
+                setImage("88930921-6076-4bdf-a5b2-241d6e7bc875")
+
+
+
+                break;
+            case "liebevoll.jetzt":
+                setColor("#E8B620");
+                setMarkerIcon("liebevoll.jetzt");
+                setImage("e735b96c-507b-471c-8317-386ece0ca51d")
+                break;
+
+            default:
+                break;
+        }
+    }, [groupType])
+
 
 
 
@@ -122,6 +151,7 @@ export function OverlayItemProfileSettings() {
         setTelephone(item?.telephone || "");
         setNextAppointment(item?.next_appointment || "");
         setImage(item?.image ? item?.image : "");
+        setMarkerIcon(item?.marker_icon ? item.marker_icon : "");
         setOffers([]);
         setNeeds([]);
         setRelations([]);
@@ -175,6 +205,7 @@ export function OverlayItemProfileSettings() {
             position: item.position,
             contact: contact,
             telephone: telephone,
+            markerIcon: markerIcon,
             next_appointment: nextAppointment,
             ...image.length > 10 && { image: image },
             ...offers.length > 0 && { offers: offer_updates },
@@ -286,10 +317,10 @@ export function OverlayItemProfileSettings() {
     }
 
     useEffect(() => {
-      console.log(item);
-      
+        console.log(item);
+
     }, [item])
-    
+
 
 
 
@@ -381,7 +412,7 @@ export function OverlayItemProfileSettings() {
                         </div>
                     )}
 
-                    {!item.layer?.itemType.onepager  &&
+                    {!item.layer?.itemType.onepager &&
 
 
                         <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-4">

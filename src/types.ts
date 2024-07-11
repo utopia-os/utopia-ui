@@ -7,7 +7,9 @@ export interface UtopiaMapProps {
   zoom?: number,
   tags?: Tag[],
   children?: React.ReactNode,
-  geo?: any
+  geo?: any,
+  showFilterControl?: boolean,
+  showLayerControl?: boolean
 }
 
 export interface LayerProps {

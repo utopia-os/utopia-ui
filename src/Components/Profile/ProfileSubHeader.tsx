@@ -18,11 +18,15 @@ const flags = {
     )
 };
 
-const SubHeader = ({ location, type, url, title }) => (
+const statusMapping = {
+    'in_planning': 'in Planung',
+    'paused': 'pausiert',
+};
+
+const SubHeader = ({ type, status, url, title }) => (
     <div>
         <div className="tw-flex tw-items-center tw-mt-6">
-            <span className="tw-text-sm tw-text-gray-600">{type}</span>
-            <span className="tw-text-sm tw-text-gray-600 tw-ml-6">{location}</span>
+            <span className="tw-text-sm tw-text-gray-600">{type}{(status && status !== 'active') ? ` (${statusMapping[status]})` : ''}</span>
         </div>
         <div className="tw-mt-4">
             <SocialShareBar url={url} title={title} />

@@ -273,30 +273,14 @@ export function OverlayItemProfile() {
         navigate("/");
     }
 
-    const d = {
-        groupName: "Gruppe Berlin-Britz",
-        location: "🇩🇪  12347 Berlin",
-        country: "Berlin, Deutschland",
-        countryCode: "de",
-        contact: {
-            name: "Lisa Mustermann",
-            email: "lisa.mustermann@gmx.de",
-            avatarSrc: "https://cdn.prod.website-files.com/65c0d5530322d3f6f5f86099/65c0d5530322d3f6f5f86781_Andr%C3%A9.jpg" // optional
-        },
-        description: "Unsere KulturArche, ein historischer Frachtsegler...",
-        relations: [
-            {
-                title: "KulturArche EALA",
-                description: "Durchaus beeindruckt von der Ethik und der Arbeit...",
-                imageSrc: "https://cdn.prod.website-files.com/65c0d5530322d3f6f5f86099/65c0d5530322d3f6f5f86767_IMG_20190302_173147.jpg"
-            },
-            // Add more projects as needed
-        ],
-        url: window.location.href,
-        title: "Gruppe Berlin-Britz"
+    const typeMapping = {
+        'default': 'Würdekompass',
+        'themenkompass': 'Themenkompass-Gruppe',
+        'liebevoll.jetzt': 'liebevoll.jetzt',
     };
 
-
+    let groupType = item.group_type ? item.group_type : 'default';
+    let groupTypeText = typeMapping[groupType];
 
     return (
         <>
@@ -308,10 +292,10 @@ export function OverlayItemProfile() {
                         <div className="tw-px-6 tw-pt-6">
                             <HeaderView api={item.layer?.api} item={item} deleteCallback={handleDelete} editCallback={() => navigate("/edit-item/" + item.id)} setPositionCallback={() => { map.closePopup(); setSelectPosition(item); navigate("/") }} big truncateSubname={false} />
                             <ProfileSubHeader
-                                location={d.location}
-                                type={"Regionalgruppe"}
-                                url={d.url}
-                                title={d.title}
+                                type={groupTypeText}
+                                status={item.status}
+                                url={window.location.href}
+                                title={item.name}
                             />
                         </div>
 
@@ -320,31 +304,38 @@ export function OverlayItemProfile() {
                         {item.layer?.itemType.onepager &&
                             <>
                                 {item.user_created.first_name && (
-                                    <ContactInfo name={item.user_created.first_name} avatar={item.user_created.avatar} email={item.contact} />
+                                    <ContactInfo name={item.user_created.first_name} avatar={item.user_created.avatar} email={item.contact} telephone={item.telephone} />
                                 )}
 
                                 {/* Description Section */}
-                                <div className="tw-my-10 tw-px-6">
-                                    <h2 className="tw-text-lg tw-font-semibold">Beschreibung</h2>
-                                    <div className="tw-mt-2 tw-text-sm tw-text-gray-600">
-                                        <TextView rawText={item.text ?? 'Keine Beschreibung vorhanden'}/>
-                                    </div>
+                                <div className="tw-my-10 tw-mt-2 tw-px-6 tw-text-sm tw-text-gray-600">
+                                    <TextView rawText={item.text || 'Keine Beschreibung vorhanden'}/>
                                 </div>
 
-                                {/* Relations Section */}
-                                {d.relations && (
+                                {/* Next Appointment Section */}
+                                {item.next_appointment && (
                                     <div className="tw-my-10 tw-px-6">
-                                        <h2 className="tw-text-lg tw-font-semibold tw-mb-4">Projekte</h2>
-                                        {d.relations.map((project, index) => (
-                                            <RelationCard
-                                                key={index}
-                                                title={project.title}
-                                                description={project.description}
-                                                imageSrc={project.imageSrc}
-                                            />
-                                        ))}
+                                        <h2 className="tw-text-lg tw-font-semibold">Nächste Termine</h2>
+                                        <div className="tw-mt-2 tw-text-sm tw-text-gray-600">
+                                            <TextView rawText={item.next_appointment}/>
+                                        </div>
                                     </div>
-                                )}
+                                )};
+
+                                {/* Relations Section */}
+                                {/*{d.relations && (*/}
+                                {/*    <div className="tw-my-10 tw-px-6">*/}
+                                {/*        <h2 className="tw-text-lg tw-font-semibold tw-mb-4">Projekte</h2>*/}
+                                {/*        {d.relations.map((project, index) => (*/}
+                                {/*            <RelationCard*/}
+                                {/*                key={index}*/}
+                                {/*                title={project.title}*/}
+                                {/*                description={project.description}*/}
+                                {/*                imageSrc={project.imageSrc}*/}
+                                {/*            />*/}
+                                {/*        ))}*/}
+                                {/*    </div>*/}
+                                {/*)}*/}
                             </>
                         }
 

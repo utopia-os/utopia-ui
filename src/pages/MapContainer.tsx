@@ -37,7 +37,7 @@ function MapContainer({ layers, map }: { layers: Array<LayerProps>, map: any }) 
 
   return (
 
-    <UtopiaMap geo={map.geo} zoom={map.zoom || 5} center={map.center ? [map.center?.coordinates[1], map.center?.coordinates[0]] : [50.6, 9.5]} height='100%' width="100%" >
+    <UtopiaMap geo={map.geo} zoom={map.zoom || 5} center={map.center ? [map.center?.coordinates[1], map.center?.coordinates[0]] : [50.6, 9.5]} height='100%' width="100%" showFilterControl={map.show_filter_control} showLayerControl={map.show_layer_control} >
       {layers && apis &&
         layers.map(layer =>
           <Layer
@@ -50,6 +50,7 @@ function MapContainer({ layers, map }: { layers: Array<LayerProps>, map: any }) 
             markerShape={layer.markerShape}
             onlyOnePerOwner={layer.onlyOnePerOwner}
             markerDefaultColor={layer.menuColor}
+            markerDefaultColor2={layer.markerDefaultColor2}
             itemType={layer.itemType}
             itemNameField='name'
             itemTextField='text'
@@ -62,6 +63,7 @@ function MapContainer({ layers, map }: { layers: Array<LayerProps>, map: any }) 
             customEditLink='/edit-item'
             customEditParameter='id'
             public_edit_items={layer.public_edit_items}
+            listed={layer.listed}
             api={apis?.find(api => api.id === layer.id)?.api}>
             <ItemView>
               {layer.itemType.show_start_end &&

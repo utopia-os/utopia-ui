@@ -53,7 +53,7 @@ function App() {
   const getLayers = async () => {
     const layers = await layersApiInstance?.getItems();
     layers && setLayers(layers);
-    setLayerPageRoutes(layers?.map((l: any) => ({
+    setLayerPageRoutes(layers?.filter((l: any) => l.listed).map((l: any) => ({
       path: '/' + l.name, // url
       icon: <img src={"https://api.utopia-lab.org/assets/" + l.indexIcon}></img>,
       name: l.name, // name that appear in Sidebar

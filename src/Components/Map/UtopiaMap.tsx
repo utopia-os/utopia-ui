@@ -17,8 +17,10 @@ import { useSelectPosition, useSetMapClicked,useSetSelectPosition } from "./hook
 import { useClusterRef, useSetClusterRef } from "./hooks/useClusterRef";
 import { Feature, Geometry as GeoJSONGeometry } from 'geojson';
 import {useAuth} from "../Auth";
-import FilterControl from "./Subcomponents/Controls/FilterControl";
+import {FilterControl} from "./Subcomponents/Controls/FilterControl";
 import {LayerControl} from "./Subcomponents/Controls/LayerControl";
+import { useLayers } from "./hooks/useLayers";
+import { useAddVisibleLayer } from "./hooks/useFilter";
 
 // for refreshing map on resize (needs to be implemented)
 const mapDivRef = React.createRef();
@@ -29,7 +31,10 @@ function UtopiaMap({
     center = [50.6, 9.5],
     zoom = 10,
     children,
-    geo }
+    geo,
+    showFilterControl=false,
+    showLayerControl = true
+ }
     : UtopiaMapProps) {
 
     function MapEventListener() {
@@ -62,8 +67,6 @@ function UtopiaMap({
     const clusterRef = useClusterRef();
     const setMapClicked = useSetMapClicked();
 
-    const [activeFilter, setActiveFilter] = useState(null);
-
     const [itemFormPopup, setItemFormPopup] = useState<ItemFormPopupProps | null>(null);
 
     const [embedded, setEmbedded] = useState<boolean>(true)
@@ -74,6 +77,16 @@ function UtopiaMap({
         let embedded = params.get("embedded");
         embedded != "true" && setEmbedded(false)
     }, [location]);
+
+
+    const layers = useLayers();
+    const addVisibleLayer = useAddVisibleLayer();
+
+    useEffect(() => {
+        layers.map(l => addVisibleLayer(l))
+        
+    }, [layers])
+    
 
     const { isAuthenticated } = useAuth();
 
@@ -98,9 +111,9 @@ function UtopiaMap({
                         {/*{!embedded && (*/}
                         {/*    <QuestControl></QuestControl>*/}
                         {/*)}*/}
-                        <FilterControl activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
+                        {showFilterControl && <FilterControl/>}
                         {/*todo: needed layer handling is located LayerControl*/}
-                        <LayerControl></LayerControl>
+                        {showLayerControl && <LayerControl></LayerControl>}
                     </Control>
                     <TileLayer
                         maxZoom={19}

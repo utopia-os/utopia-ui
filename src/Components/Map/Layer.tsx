@@ -6,7 +6,7 @@ import { ItemViewPopup } from './Subcomponents/ItemViewPopup'
 import { useAllItemsLoaded, useItems, useSetItemsApi, useSetItemsData } from './hooks/useItems'
 import { useEffect, useState } from 'react'
 import { ItemFormPopup } from './Subcomponents/ItemFormPopup'
-import { useFilterTags, useIsLayerVisible } from './hooks/useFilter'
+import { useFilterTags, useIsGroupTypeVisible, useIsLayerVisible } from './hooks/useFilter'
 import { useAddTag, useAllTagsLoaded, useGetItemTags, useTags } from './hooks/useTags'
 import { useAddMarker, useAddPopup, useLeafletRefs } from './hooks/useLeafletRefs'
 import { Popup } from 'leaflet'
@@ -78,6 +78,9 @@ export const Layer = ({
 
     const isLayerVisible = useIsLayerVisible();
 
+    const isGroupTypeVisible = useIsGroupTypeVisible();
+
+
 
     useEffect(() => {
         data && setItemsData({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, markerDefaultColor2, api, itemType, itemNameField, itemSubnameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, customEditParameter, public_edit_items, setItemFormPopup, itemFormPopup, clusterRef });
@@ -145,6 +148,7 @@ export const Layer = ({
                     filter(item =>
                         filterTags.length == 0 ? item : filterTags.every(tag => getItemTags(item).some(filterTag => filterTag.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())))?.
                     filter(item => item.layer && isLayerVisible(item.layer)).
+                    filter(item => item.group_type && isGroupTypeVisible(item.group_type)).
                     map((item: Item) => {
                         if (getValue(item, itemLongitudeField) && getValue(item, itemLatitudeField)) {
 

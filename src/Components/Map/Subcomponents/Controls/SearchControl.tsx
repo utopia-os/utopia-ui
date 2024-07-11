@@ -65,7 +65,7 @@ export const SearchControl = () => {
         setItemsResults(items.filter(item => {
             if (item.layer?.itemNameField) item.name = getValue(item, item.layer.itemNameField)
             if (item.layer?.itemTextField) item.text = getValue(item, item.layer.itemTextField)
-            return value.length > 2 && (item.name?.toLowerCase().includes(value.toLowerCase()) || item.text?.toLowerCase().includes(value.toLowerCase()))
+            return value.length > 2 && ((item.layer?.listed && item.name?.toLowerCase().includes(value.toLowerCase()) || item.text?.toLowerCase().includes(value.toLowerCase())))
         }))
         let phrase = value;
         if (value.startsWith("#")) phrase = value.substring(1);

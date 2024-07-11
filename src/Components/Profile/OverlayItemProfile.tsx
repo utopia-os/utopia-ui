@@ -68,6 +68,7 @@ export function OverlayItemProfile() {
         scroll();
     }, [addItemPopupType])
 
+    const profile = items.find(i => (i.user_created?.id === item.id) && i.layer?.itemType.name === "user");  
 
     const updateActiveTab = (id: number) => {
         setActiveTab(id);
@@ -304,7 +305,7 @@ export function OverlayItemProfile() {
                         {item.layer?.itemType.onepager &&
                             <>
                                 {item.user_created.first_name && (
-                                    <ContactInfo name={item.user_created.first_name} avatar={item.user_created.avatar} email={item.contact} telephone={item.telephone} />
+                                    <ContactInfo name={profile?.name ? profile.name : item.user_created.first_name} avatar={profile?.image ? profile.image : item.user_created.avatar} email={item.contact} telephone={item.telephone} />
                                 )}
 
                                 {/* Description Section */}

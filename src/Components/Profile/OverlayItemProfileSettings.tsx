@@ -205,7 +205,7 @@ export function OverlayItemProfileSettings() {
             position: item.position,
             contact: contact,
             telephone: telephone,
-            markerIcon: markerIcon,
+            ...markerIcon && {markerIcon: markerIcon},
             next_appointment: nextAppointment,
             ...image.length > 10 && { image: image },
             ...offers.length > 0 && { offers: offer_updates },

@@ -11,7 +11,7 @@ export default function AddButton({ triggerAction }: { triggerAction: React.Disp
     const canAddItems = () => {
         let canAdd = false;
         layers.map(layer => {            
-            if (layer.api?.createItem && hasUserPermission(layer.api.collectionName!, "create", undefined, layer)) canAdd = true;
+            if (layer.api?.createItem && hasUserPermission(layer.api.collectionName!, "create", undefined, layer) && layer.listed) canAdd = true;
         })
         return canAdd;
     }
@@ -28,7 +28,7 @@ export default function AddButton({ triggerAction }: { triggerAction: React.Disp
                     </label>
                     <ul tabIndex={0} className="tw-dropdown-content tw-pr-1 tw-list-none">
                         {layers.map((layer) => (
-                            layer.api?.createItem && hasUserPermission(layer.api.collectionName!, "create", undefined, layer) && (
+                            layer.api?.createItem && hasUserPermission(layer.api.collectionName!, "create", undefined, layer) && layer.listed &&(
                                 <li key={layer.name} >
                                     <a>
                                         <div className="tw-tooltip tw-tooltip-left" data-tip={layer.menuText}>

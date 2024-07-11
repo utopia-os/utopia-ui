@@ -40,7 +40,8 @@ export interface LayerProps {
   onlyOnePerOwner?: boolean,
   customEditLink?: string,
   customEditParameter?: string,
-  public_edit_items?: boolean
+  public_edit_items?: boolean,
+  listed?: boolean,
     setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>,
     itemFormPopup?: ItemFormPopupProps | null,
   clusterRef?: any

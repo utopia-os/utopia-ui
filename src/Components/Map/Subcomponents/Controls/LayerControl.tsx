@@ -10,6 +10,8 @@ export function LayerControl() {
 
     const layers = useLayers();
 
+
+
     const isLayerVisible = useIsLayerVisible();
     const toggleVisibleLayer = useToggleVisibleLayer();
     const addVisibleLayer = useAddVisibleLayer();
@@ -26,7 +28,7 @@ export function LayerControl() {
                         <ul className='tw-flex-row'>
                             {
                                 layers.map(layer =>
-                                    <li key={layer.name}><label htmlFor={layer.name} className="tw-label tw-justify-normal tw-pt-1 tw-pb-1"><input id={layer.name} onChange={() => toggleVisibleLayer(layer)} type="checkbox" className="tw-checkbox tw-checkbox-xs tw-checkbox-success" checked={isLayerVisible(layer)} /><span className='tw-text-sm tw-label-text tw-mx-2 tw-cursor-pointer'>{layer.name}</span></label></li>
+                                    (layer.listed && <li key={layer.name}><label htmlFor={layer.name} className="tw-label tw-justify-normal tw-pt-1 tw-pb-1"><input id={layer.name} onChange={() => toggleVisibleLayer(layer)} type="checkbox" className="tw-checkbox tw-checkbox-xs tw-checkbox-success" checked={isLayerVisible(layer)} /><span className='tw-text-sm tw-label-text tw-mx-2 tw-cursor-pointer'>{layer.name}</span></label></li>)
                                 )
                             }
                         </ul>

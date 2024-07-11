@@ -1,94 +1,55 @@
-import * as React from 'react';
-import { useState, useEffect } from 'react';
+import * as React from 'react'
+import * as L from 'leaflet'
+import { useLayers } from '../../hooks/useLayers';
+import { useAddVisibleGroupType, useIsGroupTypeVisible, useToggleVisibleGroupType } from '../../hooks/useFilter';
+import { useEffect } from 'react';
 
-const typeMapping = [
-    {value: null, label: 'Kein Filter'},
-    {value: 'kompass', label: 'Würdekompass'},
-    {value: 'themenkompass', label: 'Themenkompass-Gruppe'},
-    {value: 'liebevoll.jetzt', label: 'liebevoll.jetzt'}
-];
+export function FilterControl() {
 
-const CustomFilterIcon = ({ size = 20 }) => (
-    <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width={size}
-        height={size}
-        viewBox="0 0 24 24"
-        fill="currentColor"  // Changed from 'none' to 'currentColor'
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-    >
-        <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
-    </svg>
-);
+    const [open, setOpen] = React.useState(false);
 
-const CheckmarkIcon = () => (
-    <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-    >
-        <polyline points="20 6 9 17 4 12" />
-    </svg>
-);
+    const groupTypes = [{text: "Regional Gruppe", value: "wuerdekompass" },{text: "Themen Gruppe",  value:"themenkompass"}, {text: "liebevoll.jetzt", value: "liebevoll.jetzt"}]
 
-const FilterControl = ({ activeFilter, setActiveFilter }) => {
-    const [isOpen, setIsOpen] = useState(false);
 
-    const toggleFilter = () => {
-        setIsOpen(!isOpen);
-    };
+    useEffect(() => {
+        groupTypes.map(layer =>
+            addVisibleGroupType(layer.value)
+        )
+    }, [])
 
-    const applyFilter = (filterValue) => {
-        setActiveFilter(filterValue);
-        setIsOpen(false);
-    };
+
+    const isGroupTypeVisible = useIsGroupTypeVisible();
+    const toggleVisibleGroupType = useToggleVisibleGroupType();
+    const addVisibleGroupType = useAddVisibleGroupType();
 
     return (
-        <div className="tw-relative">
-            <div className="tw-indicator">
-                {activeFilter !== null && (
-                    <span className="tw-indicator-item tw-badge tw-badge-secondary tw-bg-red-500 tw-border-red-500"></span>
-                )}
-                <button
-                    className="tw-w-12 tw-h-12 tw-rounded-full tw-bg-base-100 tw-flex tw-items-center tw-justify-center tw-border tw-border-gray-300 hover:tw-bg-gray-200 focus:tw-bg-gray-200 focus:tw-outline-none"
-                    onClick={toggleFilter}
-                >
-                    <CustomFilterIcon size={24} />
-                </button>
-            </div>
+        <div className="tw-card tw-bg-base-100 tw-shadow-xl tw-mt-2 tw-w-fit">
+            {
+                open ?
+                    <div className="tw-card-body tw-p-2 tw-w-fit tw-transition-all tw-duration-300">
+                        <label className="tw-btn tw-btn-sm tw-rounded-2xl tw-btn-circle tw-btn-ghost hover:tw-bg-transparent tw-absolute tw-right-0 tw-top-0 tw-text-gray-600" onClick={() => {
+                            setOpen(false)
+                        }}>
+                            <p className='tw-text-center '>✕</p></label>
+                        <ul className='tw-flex-row'>
+                            {
+                                groupTypes.map(groupType =>
+                                    <li key={groupType.value}><label htmlFor={groupType.value} className="tw-label tw-justify-normal tw-pt-1 tw-pb-1"><input id={groupType.value} onChange={() => toggleVisibleGroupType(groupType.value)} type="checkbox" className="tw-checkbox tw-checkbox-xs tw-checkbox-success" checked={isGroupTypeVisible(groupType.value)} /><span className='tw-text-sm tw-label-text tw-mx-2 tw-cursor-pointer'>{groupType.text}</span></label></li>
+                                )
+                            }
+                        </ul>
+                    </div>
+                    :
+                    <div className="tw-card-body hover:tw-bg-slate-300 tw-card tw-p-2 tw-h-10 tw-w-10 tw-transition-all tw-duration-300 hover:tw-cursor-pointer" onClick={() => {
+                        setOpen(true)
+                    }}>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
+                        </svg>
+                    </div>
 
-            {isOpen && (
-                <div className="tw-absolute tw-bottom-12 tw-left-0 tw-bg-base-100 tw-shadow-xl tw-rounded-lg tw-overflow-hidden tw-border tw-border-gray-200 tw-min-w-[250px]">
-                    <ul className="tw-py-1">
-                        {typeMapping.map((type) => (
-                            <li key={type.value}>
-                                <button
-                                    onClick={() => applyFilter(type.value)}
-                                    className={`tw-w-full tw-text-left tw-text-sm tw-px-4 tw-py-2 tw-flex tw-items-center tw-space-x-2
-                                      hover:tw-bg-gray-300 focus:tw-bg-gray-300 focus:tw-outline-none
-                                      ${activeFilter === type.value ? 'tw-bg-gray-200' : ''}`}
-                                >
-                                     <span className="tw-w-4">
-                                        {activeFilter === type.value && <CheckmarkIcon />}
-                                     </span>
-                                    <span>{type.label}</span>
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
+            }
+
         </div>
-    );
-};
-
-export default FilterControl;
+    )
+}

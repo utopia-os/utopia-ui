@@ -68,7 +68,14 @@ export function OverlayItemProfile() {
         scroll();
     }, [addItemPopupType])
 
-    const profile = items.find(i => (i.user_created?.id === item.id) && i.layer?.itemType.name === "user");  
+    const [profile, setProfile] = useState<Item>();
+
+
+    useEffect(() => {
+        setProfile(items.find(i => (i.user_created?.id === item.user_created?.id) && i.layer?.itemType.name === "user"));        
+    }, [item, items])
+    
+
 
     const updateActiveTab = (id: number) => {
         setActiveTab(id);

@@ -6,7 +6,6 @@ import { useAssetApi } from '../../../AppShell/hooks/useAssets'
 import DialogModal from "../../../Templates/DialogModal";
 import { useNavigate } from "react-router-dom";
 import { useMap } from "react-leaflet";
-import { reverseGeocode } from "../../../../Utils/ReverseGeocoder";
 import { useEffect } from "react";
 
 
@@ -41,15 +40,6 @@ export function HeaderView({ item, api, editCallback, deleteCallback, setPositio
   const subtitle = itemSubnameField ? getValue(item, itemSubnameField) : item.layer?.itemSubnameField && item && getValue(item, item.layer?.itemSubnameField);
 
   const [address, setAdress] = React.useState<string>("");
-
-  useEffect(() => {
-    
-    item.position && reverseGeocode(item.position?.coordinates[1],item.position?.coordinates[0]).then(address => {
-      setAdress(address);
-  });
-    
-  }, [item])
-  
 
 
 

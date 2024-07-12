@@ -42,6 +42,7 @@ export interface LayerProps {
   customEditParameter?: string,
   public_edit_items?: boolean,
   listed?: boolean,
+  item_presets?: Record<string, unknown>,
     setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>,
     itemFormPopup?: ItemFormPopupProps | null,
   clusterRef?: any

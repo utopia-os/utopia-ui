@@ -74,7 +74,7 @@ export function OverlayItemProfileSettings() {
     useEffect(() => {
         switch (groupType) {
             case "wuerdekompass":
-                setColor("#DF4D39");
+                setColor(item?.layer?.menuColor || "#1A5FB4");
                 setMarkerIcon("group");
                 setImage("88930921-6076-4bdf-a5b2-241d6e7bc875")
 
@@ -83,8 +83,6 @@ export function OverlayItemProfileSettings() {
                 setColor("#26A269");
                 setMarkerIcon("group");
                 setImage("88930921-6076-4bdf-a5b2-241d6e7bc875")
-
-
 
                 break;
             case "liebevoll.jetzt":
@@ -142,7 +140,7 @@ export function OverlayItemProfileSettings() {
         setColor(item.layer?.itemColorField && getValue(item, item.layer?.itemColorField) ? getValue(item, item.layer?.itemColorField) : (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor))
 
         setId(item?.id ? item.id : "");
-        setGroupType(item?.group_type || "kompass");
+        setGroupType(item?.group_type || "wuerdekompass");
         setStatus(item?.status || "active");
         setName(item?.name ? item.name : "");
         setSubname(item?.subname ? item.subname : "");

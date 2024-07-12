@@ -8,7 +8,7 @@ export function FilterControl() {
 
     const [open, setOpen] = React.useState(false);
 
-    const groupTypes = [{text: "Regional Gruppe", value: "wuerdekompass" },{text: "Themen Gruppe",  value:"themenkompass"}, {text: "liebevoll.jetzt", value: "liebevoll.jetzt"}]
+    const groupTypes = [{ text: "Regional Gruppe", value: "wuerdekompass" }, { text: "Themen Gruppe", value: "themenkompass" }, { text: "liebevoll.jetzt", value: "liebevoll.jetzt" }]
 
 
     useEffect(() => {

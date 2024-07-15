@@ -87,7 +87,7 @@ function App() {
     <div className="App overflow-x-hidden">
 
       <AuthProvider userApi={new userApi}>
-        <AppShell assetsApi={new assetsApi("https://api.utopia-lab.org/assets/")} appName={map.name}>
+        <AppShell assetsApi={new assetsApi("https://api.utopia-lab.org/assets/")} appName={map.name} userType={map.user_type.name}>
           <Permissions api={permissionsApiInstance} adminRole='8ed0b24e-3320-48cd-8444-bc152304e580'></Permissions>
           {tagsApi && <Tags api={tagsApi}></Tags>}
           <Modal>
@@ -103,8 +103,8 @@ function App() {
                 <Route path='reset-password' element={<RequestPasswordPage reset_url={map.url + "/set-new-password/"} />} />
                 <Route path='set-new-password' element={<SetNewPasswordPage />} />
                 <Route path="profile/*" element={<OverlayProfile />} />
-                <Route path="item/*" element={<OverlayItemProfile />} />
-                <Route path="edit-item/*" element={<OverlayItemProfileSettings />} />
+                <Route path="item/*" element={<OverlayItemProfile userType={map.user_type.name} />} />
+                <Route path="edit-item/*" element={<OverlayItemProfileSettings userType={map.user_type.name}/>} />
                 <Route path="profile-settings" element={<OverlayProfileSettings />} />
                 <Route path="user-settings" element={<OverlayUserSettings />} />
                 <Route path="moon-calendar" element={<MoonCalendar />} />

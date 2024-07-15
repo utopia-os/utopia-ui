@@ -7,7 +7,7 @@ import { useItems } from "../Map/hooks/useItems";
 import { Item } from "../../types";
 
 
-export default function NavBar({ appName}: { appName: string }) {
+export default function NavBar({ appName, userType}: { appName: string, userType: string }) {
 
 
   const { isAuthenticated, user, logout } = useAuth();
@@ -16,7 +16,7 @@ export default function NavBar({ appName}: { appName: string }) {
   const items = useItems();
 
   useEffect(() => {
-    const profile = user && items.find(i => (i.user_created?.id === user.id) && i.layer?.itemType.name === "user");    
+    const profile = user && items.find(i => (i.user_created?.id === user.id) && i.layer?.itemType.name === userType);    
     profile ? setUserProfile(profile) : setUserProfile({id: crypto.randomUUID(), name: user?.first_name, text: ""});
   }, [user, items])
 

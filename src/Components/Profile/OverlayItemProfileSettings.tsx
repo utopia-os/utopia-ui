@@ -23,7 +23,7 @@ import { useHasUserPermission } from '../Map/hooks/usePermissions';
 
 
 
-export function OverlayItemProfileSettings() {
+export function OverlayItemProfileSettings({ userType }: { userType: string }) {
 
     const typeMapping = [
         { value: 'wuerdekompass', label: 'Regional-Gruppe' },
@@ -112,7 +112,7 @@ export function OverlayItemProfileSettings() {
         const item = items.find(i => i.id === itemId);
         item && setItem(item);
 
-        const layer = layers.find(l => l.itemType.name == "user")
+        const layer = layers.find(l => l.itemType.name == userType)
 
         !item && setItem({ id: crypto.randomUUID(), name: user ? user.first_name : "", text: "", layer: layer, new: true })
 
@@ -203,7 +203,7 @@ export function OverlayItemProfileSettings() {
             position: item.position,
             contact: contact,
             telephone: telephone,
-            ...markerIcon && {markerIcon: markerIcon},
+            ...markerIcon && { markerIcon: markerIcon },
             next_appointment: nextAppointment,
             ...image.length > 10 && { image: image },
             ...offers.length > 0 && { offers: offer_updates },
@@ -314,10 +314,11 @@ export function OverlayItemProfileSettings() {
 
     }
 
-    useEffect(() => {
-        console.log(item);
+    const [template, setTemplate] = useState<string>("")
 
-    }, [item])
+    useEffect(() => {
+        setTemplate(item.layer?.itemType.template || userType);
+    }, [userType, item])
 
 
 
@@ -335,7 +336,7 @@ export function OverlayItemProfileSettings() {
                         </div>
                     </div>
 
-                    {item.layer?.itemType.onepager && (
+                    {template == "onepager" && (
                         <div className="tw-space-y-6 tw-mt-6">
                             <div className="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 tw-gap-6">
                                 <div>
@@ -410,13 +411,18 @@ export function OverlayItemProfileSettings() {
                         </div>
                     )}
 
-                    {!item.layer?.itemType.onepager &&
+                    {template == "simple" &&
+                            <TextAreaInput placeholder="About me ..." defaultValue={item?.text ? item.text : ""} updateFormValue={(v) => { console.log(v); setText(v) }} containerStyle='tw-mt-8 tw-h-full' inputStyle='tw-h-full' />
+
+                    }
+
+                    {template == "tabs" &&
 
 
                         <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-4">
                             <input type="radio" name="my_tabs_2" role="tab" className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`} aria-label="Info" checked={activeTab == 1 && true} onChange={() => updateActiveTab(1)} />
                             <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-border-[var(--fallback-bc,oklch(var(--bc)/0.2))] tw-rounded-box tw-h-[calc(100dvh-332px)] tw-min-h-56 tw-border-none">
-                                <TextAreaInput placeholder="My Visino..." defaultValue={item?.text ? item.text : ""} updateFormValue={(v) => { console.log(v); setText(v) }} containerStyle='tw-h-full' inputStyle='tw-h-full tw-border-t-0 tw-rounded-tl-none' />
+                                <TextAreaInput placeholder="About me ..." defaultValue={item?.text ? item.text : ""} updateFormValue={(v) => { console.log(v); setText(v) }} containerStyle='tw-h-full' inputStyle='tw-h-full tw-border-t-0 tw-rounded-tl-none' />
                             </div>
                             {item.layer?.itemType.offers_and_needs &&
                                 <>

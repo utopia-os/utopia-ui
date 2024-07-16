@@ -60,9 +60,11 @@ const ContactInfo = ({ email, telephone, name, avatar, link }: { email: string, 
 export default ContactInfo;
 
 const ConditionalLink = ({ url, children }) => {
+    let params = new URLSearchParams(window.location.search);
+
     if (url) {
         return (
-            <Link to={url}>
+            <Link to={url+"/"+params}>
                 {children}
             </Link>
         );

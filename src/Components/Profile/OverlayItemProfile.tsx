@@ -289,6 +289,8 @@ export function OverlayItemProfile({ userType }: { userType: string }) {
         setTemplate(item.layer?.itemType.template || userType);
     }, [userType, item])
 
+
+
     return (
         <>
             {item &&
@@ -413,7 +415,7 @@ export function OverlayItemProfile({ userType }: { userType: string }) {
                                         <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Relations" checked={activeTab == 7 && true} onChange={() => updateActiveTab(7)} />
                                         <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto tw-pt-4 tw-pb-1 -tw-mr-4 -tw-mb-4 tw-overflow-x-hidden">
                                             <div className='tw-h-full'>
-                                                <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-1 2xl:tw-grid-cols-2'>
+                                                <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-1 2xl:tw-grid-cols-2 tw-pb-4'>
                                                     {relations && relations.map(i =>
 
 

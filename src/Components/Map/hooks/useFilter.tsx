@@ -12,6 +12,9 @@ type ActionType =
   | { type: "TOGGLE_LAYER"; layer: LayerProps }
   | { type: "ADD_LAYER"; layer: LayerProps }
   | { type: "RESET_LAYERS" }
+  | { type: "TOGGLE_GROUP_TYPE"; groupType: string }
+  | { type: "ADD_GROUP_TYPE"; groupType: string }
+  | { type: "RESET_GROUP_TYPE" }
   ;
 
 type UseFilterManagerResult = ReturnType<typeof useFilterManager>;
@@ -27,7 +30,11 @@ const FilterContext = createContext<UseFilterManagerResult>({
   addVisibleLayer: () => { },
   toggleVisibleLayer: () => { },
   resetVisibleLayers: () => { },
-  isLayerVisible: () => true
+  isLayerVisible: () => true,
+
+  addVisibleGroupType: () => { },
+  toggleVisibleGroupType: () => { },
+  isGroupTypeVisible: () => true
 });
 
 function useFilterManager(initialTags: Tag[]): {
@@ -42,6 +49,9 @@ function useFilterManager(initialTags: Tag[]): {
   toggleVisibleLayer: (layer: LayerProps) => void;
   resetVisibleLayers: () => void;
   isLayerVisible: (layer: LayerProps) => boolean;
+  addVisibleGroupType: (groupType: string) => void;
+  toggleVisibleGroupType: (groupType: string) => void;
+  isGroupTypeVisible: (groupType: string) => boolean;
 } {
   const [filterTags, dispatchTags] = useReducer((state: Tag[], action: ActionType) => {
     switch (action.type) {
@@ -84,6 +94,29 @@ function useFilterManager(initialTags: Tag[]): {
           if(exist2) return state.filter(({name}) => name != action.layer.name);
           else return [... state, action.layer];
       case "RESET_LAYERS":
+        return initialLayers;
+      default:
+        throw new Error();
+    }
+  }, initialLayers);
+
+  const [visibleGroupTypes, dispatchGroupTypes] = useReducer((state: string[], action: ActionType) => {
+    switch (action.type) {
+      case "ADD_GROUP_TYPE":
+        const exist1 = state.find((groupType) =>
+          groupType === action.groupType ? true : false
+        );
+        if (!exist1) return [
+          ...state,
+          action.groupType,
+        ];
+        else return state;
+      case "TOGGLE_GROUP_TYPE":
+        const exist2 = state.some((groupType) =>
+          groupType === action.groupType);
+          if(exist2) return state.filter((groupType) => groupType != action.groupType);
+          else return [... state, action.groupType];
+      case "RESET_GROUP_TYPE":
         return initialLayers;
       default:
         throw new Error();
@@ -170,11 +203,31 @@ function useFilterManager(initialTags: Tag[]): {
     return visibleLayers.some(l => l.name === layer.name)
   }, [visibleLayers]);
 
+  const addVisibleGroupType = (groupType: string) => {
+    dispatchGroupTypes({
+      type: "ADD_GROUP_TYPE",
+      groupType,
+    });
+
+  };
+
+  const toggleVisibleGroupType = (groupType: string) => {
+    dispatchGroupTypes({
+      type: "TOGGLE_GROUP_TYPE",
+      groupType,
+    });
+
+  };
+
+  const isGroupTypeVisible = useCallback((groupType: string) => {
+    return visibleGroupTypes.some(gt => gt === groupType)
+  }, [visibleGroupTypes]);
+
   const setSearchPhrase = useCallback((phrase: string) => {
     searchPhraseSet(phrase)
   }, []);
 
-  return { filterTags, addFilterTag, removeFilterTag, resetFilterTags, setSearchPhrase, searchPhrase, visibleLayers, toggleVisibleLayer, resetVisibleLayers, isLayerVisible, addVisibleLayer };
+  return { filterTags, addFilterTag, removeFilterTag, resetFilterTags, setSearchPhrase, searchPhrase, visibleLayers, toggleVisibleLayer, resetVisibleLayers, isLayerVisible, addVisibleLayer, addVisibleGroupType, toggleVisibleGroupType, isGroupTypeVisible };
 }
 
 export const FilterProvider: React.FunctionComponent<{
@@ -239,4 +292,21 @@ export const useResetVisibleLayers = (): UseFilterManagerResult["resetVisibleLay
 export const useIsLayerVisible = (): UseFilterManagerResult["isLayerVisible"] => {
   const { isLayerVisible } = useContext(FilterContext);
   return isLayerVisible;
+};
+
+export const useAddVisibleGroupType = (): UseFilterManagerResult["addVisibleGroupType"] => {
+  const { addVisibleGroupType } = useContext(FilterContext);
+  return addVisibleGroupType;
+};
+
+
+export const useToggleVisibleGroupType = (): UseFilterManagerResult["toggleVisibleGroupType"] => {
+  const { toggleVisibleGroupType } = useContext(FilterContext);
+  return toggleVisibleGroupType;
+};
+
+
+export const useIsGroupTypeVisible = (): UseFilterManagerResult["isGroupTypeVisible"] => {
+  const { isGroupTypeVisible } = useContext(FilterContext);
+  return isGroupTypeVisible
 };

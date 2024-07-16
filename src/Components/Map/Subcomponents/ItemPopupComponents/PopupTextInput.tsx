@@ -11,6 +11,6 @@ export const PopupTextInput = ({ dataField, placeholder, style, item }:
     }) => {
 
     return (
-        <TextInput defaultValue={item?.name ? item.name : ""} dataField={dataField} placeholder={placeholder} inputStyle={style} type='text'></TextInput>
+        <TextInput defaultValue={item?.name ? item.name : ""} dataField={dataField} placeholder={placeholder} inputStyle={style} type='text' containerStyle={'tw-mt-4 tw-mb-4'}></TextInput>
     )
 }

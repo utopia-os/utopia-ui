@@ -7,7 +7,7 @@ import { useItems } from "../Map/hooks/useItems";
 import { Item } from "../../types";
 
 
-export default function NavBar({ appName}: { appName: string }) {
+export default function NavBar({ appName, userType}: { appName: string, userType: string }) {
 
 
   const { isAuthenticated, user, logout } = useAuth();
@@ -16,7 +16,7 @@ export default function NavBar({ appName}: { appName: string }) {
   const items = useItems();
 
   useEffect(() => {
-    const profile = user && items.find(i => (i.user_created?.id === user.id) && i.layer?.itemType.name === "user");    
+    const profile = user && items.find(i => (i.user_created?.id === user.id) && i.layer?.itemType.name === userType);    
     profile ? setUserProfile(profile) : setUserProfile({id: crypto.randomUUID(), name: user?.first_name, text: ""});
   }, [user, items])
 
@@ -86,12 +86,14 @@ export default function NavBar({ appName}: { appName: string }) {
 
         {isAuthenticated ?
           <div className="tw-flex-none">
-            { userProfile?.image? <div className="tw-avatar">
+            <Link to={`${userProfile.id && "/item/"+userProfile.id}`} className="tw-flex tw-items-center">
+            { userProfile?.image && <div className="tw-avatar">
               <div className="tw-w-10 tw-rounded-full">
                 <img src={"https://api.utopia-lab.org/assets/" + userProfile.image} />
               </div>
-            </div> : <></>}
+            </div>}
             <div className='tw-ml-2 tw-mr-2'>{userProfile.name||user?.first_name}</div>
+            </Link>
             <div className="tw-dropdown tw-dropdown-end">
               <label tabIndex={0} className="tw-btn tw-btn-ghost tw-btn-square">
                 <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor">

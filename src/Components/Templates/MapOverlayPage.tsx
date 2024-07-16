@@ -40,4 +40,3 @@ export function MapOverlayPage({ children, className, backdrop, card = true }: {
         </div>
     )
 }
-

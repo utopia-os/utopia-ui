@@ -50,7 +50,7 @@ function MapContainer({ layers, map }: { layers: Array<LayerProps>, map: any }) 
             markerShape={layer.markerShape}
             onlyOnePerOwner={layer.onlyOnePerOwner}
             markerDefaultColor={layer.menuColor}
-            markerDefaultColor2={layer.markerDefaultColor2}
+            markerDefaultColor2={layer.markerDefaultColor2 ? layer.markerDefaultColor2 : "RGBA(35, 31, 32, 0.2)"}
             itemType={layer.itemType}
             itemNameField='name'
             itemTextField='text'

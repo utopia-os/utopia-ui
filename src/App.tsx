@@ -1,4 +1,4 @@
-import { AppShell, SideBar, Content, AuthProvider, Modal, LoginPage, SignupPage, Quests, RequestPasswordPage, SetNewPasswordPage, OverlayProfile, OverlayProfileSettings, OverlayUserSettings, OverlayItemsIndexPage, OverlayItemProfile, OverlayItemProfileSettings, Permissions, Tags } from 'utopia-ui'
+import { AppShell, SideBar, Content, AuthProvider, Modal, LoginPage, SignupPage, Quests, RequestPasswordPage, SetNewPasswordPage, OverlayUserSettings, OverlayItemsIndexPage, OverlayItemProfile, OverlayItemProfileSettings, Permissions, Tags } from 'utopia-ui'
 import { getBottomRoutes, routes } from './routes/sidebar'
 import { Route, Routes } from 'react-router-dom'
 import MapContainer from "./pages/MapContainer"

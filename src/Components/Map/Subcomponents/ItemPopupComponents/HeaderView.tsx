@@ -24,7 +24,7 @@ export function HeaderView({ item, api, editCallback, deleteCallback, setPositio
   hideMenu?: boolean,
   big?: boolean,
   hideSubname?: boolean,
-  truncateSubname?:boolean,
+  truncateSubname?: boolean,
   showAddress?: boolean
 }) {
 
@@ -56,11 +56,15 @@ export function HeaderView({ item, api, editCallback, deleteCallback, setPositio
         <div className={`tw-grow tw-max-w-[calc(100%-60px)] }`}>
           <div className="flex items-center">
             {avatar && (
-              <img
-                className={`${big ? "tw-w-20" : "tw-w-10"} tw-inline tw-rounded-full`}
-                src={avatar}
-                alt={item.name+" logo"}
-              />
+              <div className="tw-avatar">
+                <div className={`${big ? "tw-w-20" : "tw-w-10"} tw-inline tw-items-center tw-justify-center overflow-hidden`}>
+                  <img
+                    className={`tw-w-full tw-h-full tw-object-cover tw-rounded-full`}
+                    src={avatar}
+                    alt={item.name + " logo"}
+                  />
+                </div>
+              </div>
             )}
             <div className={`${avatar ? "tw-ml-2" : ""} tw-overflow-hidden`}>
               <div className={`${big ? "xl:tw-text-3xl tw-text-2xl" : "tw-text-xl"} tw-font-semibold tw-truncate`}>
@@ -87,7 +91,7 @@ export function HeaderView({ item, api, editCallback, deleteCallback, setPositio
               </label>
               <ul tabIndex={0} className="tw-dropdown-content tw-menu tw-p-2 tw-shadow tw-bg-base-100 tw-rounded-box tw-z-1000">
                 {((api?.updateItem && hasUserPermission(api.collectionName!, "update", item)) || item.layer?.customEditLink) && editCallback && <li>
-                  <a className="!tw-text-base-content tw-cursor-pointer" onClick={(e) => item.layer?.customEditLink ? navigate(`${item.layer.customEditLink}${item.layer.customEditParameter ? "/"+getValue(item, item.layer.customEditParameter): ""} `) : editCallback(e)}>
+                  <a className="!tw-text-base-content tw-cursor-pointer" onClick={(e) => item.layer?.customEditLink ? navigate(`${item.layer.customEditLink}${item.layer.customEditParameter ? "/" + getValue(item, item.layer.customEditParameter) : ""} `) : editCallback(e)}>
                     <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor">
                       <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                     </svg>

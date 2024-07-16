@@ -102,10 +102,8 @@ function App() {
                 <Route path='signup' element={<SignupPage />} />
                 <Route path='reset-password' element={<RequestPasswordPage reset_url={map.url + "/set-new-password/"} />} />
                 <Route path='set-new-password' element={<SetNewPasswordPage />} />
-                <Route path="profile/*" element={<OverlayProfile />} />
                 <Route path="item/*" element={<OverlayItemProfile userType={map.user_type.name} />} />
                 <Route path="edit-item/*" element={<OverlayItemProfileSettings userType={map.user_type.name}/>} />
-                <Route path="profile-settings" element={<OverlayProfileSettings />} />
                 <Route path="user-settings" element={<OverlayUserSettings />} />
                 <Route path="moon-calendar" element={<MoonCalendar />} />
                 <Route path="landingpage" element={<Landingpage />} />

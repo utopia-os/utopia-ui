@@ -16,7 +16,6 @@ import { TagsControl } from "./Subcomponents/Controls/TagsControl";
 import { useSelectPosition, useSetMapClicked,useSetSelectPosition } from "./hooks/useSelectPosition";
 import { useClusterRef, useSetClusterRef } from "./hooks/useClusterRef";
 import { Feature, Geometry as GeoJSONGeometry } from 'geojson';
-import {useAuth} from "../Auth";
 import {FilterControl} from "./Subcomponents/Controls/FilterControl";
 import {LayerControl} from "./Subcomponents/Controls/LayerControl";
 import { useLayers } from "./hooks/useLayers";
@@ -88,8 +87,6 @@ function UtopiaMap({
     }, [layers])
     
 
-    const { isAuthenticated } = useAuth();
-
 
 
     const onEachFeature = (feature: Feature<GeoJSONGeometry, any>, layer: L.Layer) => {
@@ -135,9 +132,7 @@ function UtopiaMap({
                     }} />}
                     <MapEventListener />
                 </MapContainer>
-                {!embedded && isAuthenticated && (
                     <AddButton triggerAction={setSelectNewItemPosition}></AddButton>
-                )}
                 {selectNewItemPosition != null &&
                     <div className="tw-button tw-z-1000 tw-absolute tw-right-5 tw-top-4 tw-drop-shadow-md">
                         <label className="tw-btn tw-btn-sm tw-rounded-2xl tw-btn-circle tw-btn-ghost hover:tw-bg-transparent tw-absolute tw-right-0 tw-top-0 tw-text-gray-600" onClick={() => {

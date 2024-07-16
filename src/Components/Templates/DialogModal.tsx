@@ -48,7 +48,7 @@ const DialogModal = ({
   }, [isOpened]);
 
 
-  return (
+  if(isOpened) return (
     <dialog className={`${className ?  className: ""} tw-card tw-shadow-xl tw-absolute tw-right-0 tw-top-0 tw-bottom-0 tw-left-0 tw-m-auto tw-transition-opacity tw-duration-300 tw-p-4 tw-max-w-xl tw-bg-base-100`}
     
       ref={ref}
@@ -67,6 +67,7 @@ const DialogModal = ({
       </div>
     </dialog>
   );
+  else return (<></>)
 };
 
 export default DialogModal;

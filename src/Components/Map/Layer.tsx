@@ -27,7 +27,7 @@ export const Layer = ({
     markerIcon = 'circle-solid',
     markerShape = 'circle',
     markerDefaultColor = '#777',
-    markerDefaultColor2,
+    markerDefaultColor2 = "RGBA(35, 31, 32, 0.2)",
     api,
     itemType,
     itemNameField = 'name',
@@ -149,7 +149,7 @@ export const Layer = ({
                     filter(item =>
                         filterTags.length == 0 ? item : filterTags.every(tag => getItemTags(item).some(filterTag => filterTag.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())))?.
                     filter(item => item.layer && isLayerVisible(item.layer)).
-                    filter(item => item.group_type && isGroupTypeVisible(item.group_type)).
+                    filter(item => item.group_type && isGroupTypeVisible(item.group_type)||item.group_type==null).
                     map((item: Item) => {
                         if (getValue(item, itemLongitudeField) && getValue(item, itemLatitudeField)) {
 
@@ -184,7 +184,7 @@ export const Layer = ({
                             const longitude = itemLongitudeField && item ? getValue(item, itemLongitudeField) : undefined;
 
                             let color1 = markerDefaultColor;
-                            let color2 = markerDefaultColor2;                           
+                            let color2 = markerDefaultColor2;                                                      
                             if (itemColorField && getValue(item, itemColorField) != null) color1 = getValue(item, itemColorField);
                             else if (itemTags && itemTags[0]) {
                                 color1 = itemTags[0].color;

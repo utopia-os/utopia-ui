@@ -64,7 +64,7 @@ const ConditionalLink = ({ url, children }) => {
 
     if (url) {
         return (
-            <Link to={url+"/"+params}>
+            <Link to={url+"?"+params}>
                 {children}
             </Link>
         );

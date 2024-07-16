@@ -7,7 +7,9 @@ export interface UtopiaMapProps {
   zoom?: number,
   tags?: Tag[],
   children?: React.ReactNode,
-  geo?: any
+  geo?: any,
+  showFilterControl?: boolean,
+  showLayerControl?: boolean
 }
 
 export interface LayerProps {
@@ -21,6 +23,7 @@ export interface LayerProps {
   markerIcon: string,
   markerShape: string,
   markerDefaultColor: string,
+  markerDefaultColor2: string,
   api?: ItemsApi<any>,
   itemType: ItemType,
   itemNameField?: string,
@@ -37,7 +40,9 @@ export interface LayerProps {
   onlyOnePerOwner?: boolean,
   customEditLink?: string,
   customEditParameter?: string,
-  public_edit_items?: boolean
+  public_edit_items?: boolean,
+  listed?: boolean,
+  item_presets?: Record<string, unknown>,
     setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>,
     itemFormPopup?: ItemFormPopupProps | null,
   clusterRef?: any

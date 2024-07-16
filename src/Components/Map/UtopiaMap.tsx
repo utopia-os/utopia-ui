@@ -9,14 +9,17 @@ import AddButton from "./Subcomponents/AddButton";
 import { useEffect, useState } from "react";
 import { ItemFormPopupProps } from "./Subcomponents/ItemFormPopup";
 import { SearchControl } from "./Subcomponents/Controls/SearchControl";
-import { LayerControl } from "./Subcomponents/Controls/LayerControl";
-import { QuestControl } from "./Subcomponents/Controls/QuestControl";
+// import { QuestControl } from "./Subcomponents/Controls/QuestControl";
 import { Control } from "./Subcomponents/Controls/Control";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { TagsControl } from "./Subcomponents/Controls/TagsControl";
 import { useSelectPosition, useSetMapClicked,useSetSelectPosition } from "./hooks/useSelectPosition";
 import { useClusterRef, useSetClusterRef } from "./hooks/useClusterRef";
 import { Feature, Geometry as GeoJSONGeometry } from 'geojson';
+import {FilterControl} from "./Subcomponents/Controls/FilterControl";
+import {LayerControl} from "./Subcomponents/Controls/LayerControl";
+import { useLayers } from "./hooks/useLayers";
+import { useAddVisibleLayer } from "./hooks/useFilter";
 
 // for refreshing map on resize (needs to be implemented)
 const mapDivRef = React.createRef();
@@ -27,7 +30,10 @@ function UtopiaMap({
     center = [50.6, 9.5],
     zoom = 10,
     children,
-    geo }
+    geo,
+    showFilterControl=false,
+    showLayerControl = true
+ }
     : UtopiaMapProps) {
 
     function MapEventListener() {
@@ -62,10 +68,26 @@ function UtopiaMap({
 
     const [itemFormPopup, setItemFormPopup] = useState<ItemFormPopupProps | null>(null);
 
+    const [embedded, setEmbedded] = useState<boolean>(true)
+
     useEffect(() => {
         let params = new URLSearchParams(location.search);
         let urlPosition = params.get("position");
+        let embedded = params.get("embedded");
+        embedded != "true" && setEmbedded(false)
     }, [location]);
+
+
+    const layers = useLayers();
+    const addVisibleLayer = useAddVisibleLayer();
+
+    useEffect(() => {
+        layers.map(l => addVisibleLayer(l))
+        
+    }, [layers])
+    
+
+
 
     const onEachFeature = (feature: Feature<GeoJSONGeometry, any>, layer: L.Layer) => {
         if (feature.properties) {
@@ -83,8 +105,12 @@ function UtopiaMap({
                         <TagsControl />
                     </Control>
                     <Control position='bottomLeft' zIndex="999" absolute>
-                        <QuestControl></QuestControl>
-                        <LayerControl></LayerControl>
+                        {/*{!embedded && (*/}
+                        {/*    <QuestControl></QuestControl>*/}
+                        {/*)}*/}
+                        {showFilterControl && <FilterControl/>}
+                        {/*todo: needed layer handling is located LayerControl*/}
+                        {showLayerControl && <LayerControl></LayerControl>}
                     </Control>
                     <TileLayer
                         maxZoom={19}
@@ -106,7 +132,7 @@ function UtopiaMap({
                     }} />}
                     <MapEventListener />
                 </MapContainer>
-                <AddButton triggerAction={setSelectNewItemPosition}></AddButton>
+                    <AddButton triggerAction={setSelectNewItemPosition}></AddButton>
                 {selectNewItemPosition != null &&
                     <div className="tw-button tw-z-1000 tw-absolute tw-right-5 tw-top-4 tw-drop-shadow-md">
                         <label className="tw-btn tw-btn-sm tw-rounded-2xl tw-btn-circle tw-btn-ghost hover:tw-bg-transparent tw-absolute tw-right-0 tw-top-0 tw-text-gray-600" onClick={() => {

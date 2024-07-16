@@ -6,7 +6,7 @@ import { ItemViewPopup } from './Subcomponents/ItemViewPopup'
 import { useAllItemsLoaded, useItems, useSetItemsApi, useSetItemsData } from './hooks/useItems'
 import { useEffect, useState } from 'react'
 import { ItemFormPopup } from './Subcomponents/ItemFormPopup'
-import { useFilterTags, useIsLayerVisible } from './hooks/useFilter'
+import { useFilterTags, useIsGroupTypeVisible, useIsLayerVisible } from './hooks/useFilter'
 import { useAddTag, useAllTagsLoaded, useGetItemTags, useTags } from './hooks/useTags'
 import { useAddMarker, useAddPopup, useLeafletRefs } from './hooks/useLeafletRefs'
 import { Popup } from 'leaflet'
@@ -27,6 +27,7 @@ export const Layer = ({
     markerIcon = 'circle-solid',
     markerShape = 'circle',
     markerDefaultColor = '#777',
+    markerDefaultColor2,
     api,
     itemType,
     itemNameField = 'name',
@@ -44,6 +45,7 @@ export const Layer = ({
     customEditLink,
     customEditParameter,
     public_edit_items,
+    listed = true,
     setItemFormPopup,
     itemFormPopup,
     clusterRef
@@ -77,10 +79,13 @@ export const Layer = ({
 
     const isLayerVisible = useIsLayerVisible();
 
+    const isGroupTypeVisible = useIsGroupTypeVisible();
+
+
 
     useEffect(() => {
-        data && setItemsData({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemType, itemNameField, itemSubnameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, customEditParameter, public_edit_items, setItemFormPopup, itemFormPopup, clusterRef });
-        api && setItemsApi({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, api, itemType, itemNameField, itemSubnameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, customEditParameter, public_edit_items, setItemFormPopup, itemFormPopup, clusterRef });
+        data && setItemsData({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, markerDefaultColor2, api, itemType, itemNameField, itemSubnameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, customEditParameter, public_edit_items, listed, setItemFormPopup, itemFormPopup, clusterRef });
+        api && setItemsApi({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, markerDefaultColor2, api, itemType, itemNameField, itemSubnameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, customEditParameter, public_edit_items, listed, setItemFormPopup, itemFormPopup, clusterRef });
     }, [data, api])
 
     useMapEvents({
@@ -144,6 +149,7 @@ export const Layer = ({
                     filter(item =>
                         filterTags.length == 0 ? item : filterTags.every(tag => getItemTags(item).some(filterTag => filterTag.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())))?.
                     filter(item => item.layer && isLayerVisible(item.layer)).
+                    filter(item => item.group_type && isGroupTypeVisible(item.group_type)).
                     map((item: Item) => {
                         if (getValue(item, itemLongitudeField) && getValue(item, itemLatitudeField)) {
 
@@ -178,7 +184,7 @@ export const Layer = ({
                             const longitude = itemLongitudeField && item ? getValue(item, itemLongitudeField) : undefined;
 
                             let color1 = markerDefaultColor;
-                            let color2 = "RGBA(35, 31, 32, 0.2)";                           
+                            let color2 = markerDefaultColor2;                           
                             if (itemColorField && getValue(item, itemColorField) != null) color1 = getValue(item, itemColorField);
                             else if (itemTags && itemTags[0]) {
                                 color1 = itemTags[0].color;
@@ -197,7 +203,7 @@ export const Layer = ({
                                             selectPosition && setMarkerClicked(item)
                                         },
                                     }}
-                                    icon={MarkerIconFactory(markerShape, color1, color2, markerIcon)} key={item.id} position={[latitude, longitude]}>
+                                    icon={MarkerIconFactory(markerShape, color1, color2, item.markerIcon ? item.markerIcon : markerIcon)} key={item.id} position={[latitude, longitude]}>
                                     {
                                         (children && React.Children.toArray(children).some(child => React.isValidElement(child) && child.props.__TYPE === "ItemView") ?
                                             React.Children.toArray(children).map((child) =>

@@ -6,11 +6,12 @@ import { useAssetApi } from '../../../AppShell/hooks/useAssets'
 import DialogModal from "../../../Templates/DialogModal";
 import { useNavigate } from "react-router-dom";
 import { useMap } from "react-leaflet";
+import { useEffect } from "react";
 
 
 
 
-export function HeaderView({ item, api, editCallback, deleteCallback, setPositionCallback, itemNameField, itemSubnameField, itemAvatarField, loading, hideMenu = false, big = false, truncateSubname = true, hideSubname = false }: {
+export function HeaderView({ item, api, editCallback, deleteCallback, setPositionCallback, itemNameField, itemSubnameField, itemAvatarField, loading, hideMenu = false, big = false, truncateSubname = true, hideSubname = false, showAddress = false }: {
   item: Item,
   api?: ItemsApi<any>,
   editCallback?: any,
@@ -23,7 +24,8 @@ export function HeaderView({ item, api, editCallback, deleteCallback, setPositio
   hideMenu?: boolean,
   big?: boolean,
   hideSubname?: boolean,
-  truncateSubname?:boolean
+  truncateSubname?:boolean,
+  showAddress?: boolean
 }) {
 
 
@@ -36,6 +38,8 @@ export function HeaderView({ item, api, editCallback, deleteCallback, setPositio
   const avatar = itemAvatarField && getValue(item, itemAvatarField) ? assetsApi.url + getValue(item, itemAvatarField) + `${big ? "?width=160&heigth=160" : "?width=80&heigth=80"}` : item.layer?.itemAvatarField && item && getValue(item, item.layer?.itemAvatarField) && assetsApi.url + getValue(item, item.layer?.itemAvatarField) + `${big ? "?width=160&heigth=160" : "?width=80&heigth=80"}`;
   const title = itemNameField ? getValue(item, itemNameField) : item.layer?.itemNameField && item && getValue(item, item.layer?.itemNameField);
   const subtitle = itemSubnameField ? getValue(item, itemSubnameField) : item.layer?.itemSubnameField && item && getValue(item, item.layer?.itemSubnameField);
+
+  const [address, setAdress] = React.useState<string>("");
 
 
 
@@ -62,6 +66,9 @@ export function HeaderView({ item, api, editCallback, deleteCallback, setPositio
               <div className={`${big ? "xl:tw-text-3xl tw-text-2xl" : "tw-text-xl"} tw-font-semibold tw-truncate`}>
                 {title}
               </div>
+              {showAddress && address && !hideSubname && <div className={`tw-text-xs  tw-text-gray-500 ${truncateSubname && "tw-truncate"}`}>
+                {address}
+              </div>}
               {subtitle && !hideSubname && <div className={`tw-text-xs  tw-text-gray-500 ${truncateSubname && "tw-truncate"}`}>
                 {subtitle}
               </div>}

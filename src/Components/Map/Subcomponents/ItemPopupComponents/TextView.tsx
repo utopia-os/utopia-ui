@@ -9,18 +9,22 @@ import { getValue } from '../../../../Utils/GetValue';
 import remarkBreaks from 'remark-breaks';
 import { decodeTag } from '../../../../Utils/FormatTags';
 
-export const TextView = ({ item, truncate = false, itemTextField }: { item?: Item, truncate?: boolean, itemTextField?: string }) => {
+export const TextView = ({ item, truncate = false, itemTextField, rawText }: { item?: Item, truncate?: boolean, itemTextField?: string, rawText?: string }) => {
   const tags = useTags();
   const addFilterTag = useAddFilterTag();
 
   let text = "";
+  let replacedText = "";
 
-  if (itemTextField && item) text = getValue(item, itemTextField);
-  else text = item?.layer?.itemTextField && item ? getValue(item, item.layer?.itemTextField) : "";
+  if (rawText)
+    text = replacedText = rawText;
+  else if (itemTextField && item)
+    text = getValue(item, itemTextField);
+  else
+    text = item?.layer?.itemTextField && item ? getValue(item, item.layer?.itemTextField) : "";
 
   if (item && text && truncate) text = truncateText(removeMarkdownKeepLinksAndParagraphs(text), 100);
 
-  let replacedText;
 
   item && text ? replacedText = fixUrls(text) : "";
 
@@ -100,7 +104,7 @@ export const TextView = ({ item, truncate = false, itemTextField }: { item?: Ite
   };
 
   return (
-    <Markdown className={`tw-text-map tw-leading-map `} remarkPlugins={[remarkBreaks]} components={{
+    <Markdown className={`tw-text-map tw-leading-map tw-text-sm`} remarkPlugins={[remarkBreaks]} components={{
       p: CustomParagraph,
       a: ({ href, children }) => {
         const isYouTubeVideo = href?.startsWith('https://www.youtube.com/watch?v=');

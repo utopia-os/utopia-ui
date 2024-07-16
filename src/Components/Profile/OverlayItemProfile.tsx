@@ -325,7 +325,7 @@ export function OverlayItemProfile({ userType }: { userType: string }) {
                             {template == "onepager" &&
                                 <>
                                     {item.user_created.first_name && (
-                                        <ContactInfo name={profile?.name ? profile.name : item.user_created.first_name} avatar={profile?.image ? profile.image : item.user_created.avatar} email={item.contact} telephone={item.telephone} />
+                                        <ContactInfo link={`/item/${profile?.id}`} name={profile?.name ? profile.name : item.user_created.first_name} avatar={profile?.image ? profile.image : item.user_created.avatar} email={item.contact} telephone={item.telephone} />
                                     )}
 
                                     {/* Description Section */}

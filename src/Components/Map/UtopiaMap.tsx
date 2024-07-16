@@ -43,8 +43,7 @@ function UtopiaMap({
                 console.log(e.latlng.lat + ',' + e.latlng.lng);
                 selectNewItemPosition && setMapClicked({ position: e.latlng, setItemFormPopup: setItemFormPopup })
             },
-            moveend: (e) => {
-                console.log(e);
+            moveend: () => {
             }
         })
         return null

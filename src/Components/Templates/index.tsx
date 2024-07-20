@@ -6,3 +6,4 @@ export {MoonCalendar} from './MoonCalendar'
 export {ItemsIndexPage} from "./ItemsIndexPage"
 export {ItemViewPage} from "./ItemViewPage"
 export {OverlayItemsIndexPage} from "./OverlayItemsIndexPage"
+export {SelectUser} from "./SelectUser"

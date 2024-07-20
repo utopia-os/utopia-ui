@@ -3,7 +3,7 @@ export {AppShell, Content, SideBar} from "./Components/AppShell"
 export {AuthProvider, useAuth, LoginPage, SignupPage, RequestPasswordPage, SetNewPasswordPage} from "./Components/Auth"
 export {UserSettings, ProfileSettings, OverlayProfile, OverlayProfileSettings, OverlayUserSettings, OverlayItemProfile, OverlayItemProfileSettings} from './Components/Profile'
 export {Quests, Modal} from './Components/Gaming'
-export {TitleCard, CardPage, MapOverlayPage, OverlayItemsIndexPage, CircleLayout, MoonCalendar, ItemsIndexPage, ItemViewPage} from './Components/Templates'
+export {TitleCard, CardPage, MapOverlayPage, OverlayItemsIndexPage, CircleLayout, MoonCalendar, ItemsIndexPage, ItemViewPage, SelectUser} from './Components/Templates'
 export {TextInput, TextAreaInput, SelectBox} from './Components/Input'
 
 import "./index.css"

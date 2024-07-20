@@ -25,6 +25,9 @@ import { TagView } from '../Templates/TagView';
 import RelationCard from "./RelationCard";
 import ContactInfo from "./ContactInfo";
 import ProfileSubHeader from "./ProfileSubHeader";
+import { symbol } from 'prop-types';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
+import { add, eachDayOfInterval, endOfMonth, endOfWeek, format, getDay, isSameMonth, isToday, parse, startOfToday, startOfWeek } from 'date-fns';
 
 export function OverlayItemProfile({ userType }: { userType: string }) {
 
@@ -289,7 +292,92 @@ export function OverlayItemProfile({ userType }: { userType: string }) {
         setTemplate(item.layer?.itemType.template || userType);
     }, [userType, item])
 
+    const attestations = [{
+        from: "Timo",
+        avatar: "https://api.utopia-lab.org/assets/262117f8-feb6-444f-9bd2-e84087285760?width=80&heigth=80",
+        symbol: "🥇",
+        text: "1. Platz im Bogenschießen",
+        date: "21.06.2024",
+    },
+    {
+        from: "Sebastian",
+        avatar: "https://api.utopia-lab.org/assets/7510a082-882b-41c3-aa7d-5a19f9502f25?width=80&heigth=80",
+        symbol: "🌱",
+        text: "danke fürs Rasen mähen",
+        date: "29.06.2024",
+    },
+    {
+        from: "Yurij",
+        avatar: "https://api.utopia-lab.org/assets/abe62291-35ad-45de-b978-e5906d8a3eb6?width=80&heigth=80",
+        symbol: "🏆",
+        text: "bester Coder ever",
+        date: "04.07.2024",
+    },
+    {
+        from: "Luca",
+        avatar: "https://api.utopia-lab.org/assets/e285e653-36e8-4211-a69d-00053c1f610e?width=80&heigth=80",
+        symbol: "🙏",
+        text: "Vielen Dank für deine Hilfe!!!",
+        date: "04.07.2024",
+    },
+    {
+        from: "Lisa",
+        avatar: "https://i.pinimg.com/originals/c0/ed/08/c0ed088cd6532d4fd27396aefddac57c.jpg",
+        symbol: "❤️",
+        text: "Vielen Dank für deine Hilfe!!!",
+        date: "04.07.2024",
+    },
+    {
+        from: "Timo",
+        avatar: "https://api.utopia-lab.org/assets/262117f8-feb6-444f-9bd2-e84087285760?width=80&heigth=80",
+        symbol: "🥈",
+        text: "2. Platz im Bogenschießen",
+        date: "21.06.2024",
+    },
+    {
+        from: "Anton",
+        avatar: "https://api.utopia-lab.org/assets/007dc678-6073-4ad1-9b47-f2cfe1dca582?width=80&heigth=80",
+        symbol: "🌱",
+        text: "danke fürs Rasen mähen",
+        date: "29.06.2024"
+    },
+    ]
 
+    const today = startOfToday();
+    const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+    const colStartClasses = [
+      "",
+      "col-start-2",
+      "col-start-3",
+      "col-start-4",
+      "col-start-5",
+      "col-start-6",
+      "col-start-7",
+    ];
+  
+    const [currMonth, setCurrMonth] = useState(() => format(today, "MMM-yyyy"));
+    let firstDayOfMonth = parse(currMonth, "MMM-yyyy", new Date());
+  
+    const daysInMonth = eachDayOfInterval({
+      start: startOfWeek(firstDayOfMonth),
+      end: endOfWeek(endOfMonth(firstDayOfMonth)),
+    });
+  
+    const getPrevMonth = (event: React.MouseEvent<SVGSVGElement>) => {
+      event.preventDefault();
+      const firstDayOfPrevMonth = add(firstDayOfMonth, { months: -1 });
+      setCurrMonth(format(firstDayOfPrevMonth, "MMM-yyyy"));
+    };
+  
+    const getNextMonth = (event: React.MouseEvent<SVGSVGElement>) => {
+      event.preventDefault();
+      const firstDayOfNextMonth = add(firstDayOfMonth, { months: 1 });
+      setCurrMonth(format(firstDayOfNextMonth, "MMM-yyyy"));
+    };
+
+    const capitalizeFirstLetter = (string: string) => {
+        return string
+    }
 
     return (
         <>
@@ -358,23 +446,124 @@ export function OverlayItemProfile({ userType }: { userType: string }) {
 
                         {template == "tabs" &&
                             <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-2 tw-mb-2">
-                                <input type="radio" name="my_tabs_2" role="tab"
-                                    className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`}
-                                    aria-label="Info" checked={activeTab == 1 && true}
-                                    onChange={() => updateActiveTab(1)} />
-                                <div role="tabpanel"
-                                    className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-4 tw-mb-4 tw-overflow-x-hidden">
-                                    {item.layer?.itemType.show_start_end &&
-                                        <div className='tw-max-w-xs'><StartEndView item={item}></StartEndView></div>
-                                    }
-                                    <TextView item={item} />
-                                </div>
+                                {item.layer?.itemType.text &&
+                                    <>
+                                        <input type="radio" name="my_tabs_2" role="tab"
+                                            className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`}
+                                            aria-label="👤" checked={activeTab == 1 && true}
+                                            onChange={() => updateActiveTab(1)} />
+                                        <div role="tabpanel"
+                                            className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-4 tw-mb-4 tw-overflow-x-hidden">
+                                            {item.layer?.itemType.show_start_end &&
+                                                <div className='tw-max-w-xs'><StartEndView item={item}></StartEndView></div>
+                                            }
+                                            <TextView item={item} />
+                                        </div>
+                                    </>
+                                }
+                                {item.layer?.itemType.questlog &&
+                                    <>
+                                        <input type="radio" name="my_tabs_2" role="tab"
+                                            className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`}
+                                            aria-label="❤️" checked={activeTab == 2 && true}
+                                            onChange={() => updateActiveTab(2)} />
+
+                                        <div role="tabpanel"
+                                            className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-4 tw-mb-4 tw-overflow-x-hidden">
+                                            <table className="sm:tw-table-sm md:tw-table-md">
+                                                <tbody>
+                                                    {attestations.map((a, i) => <tr key={i}>
+                                                        <td>
+                                                            <div className='tw-mask tw-mask-circle tw-text-xl md:tw-text-2xl tw-bg-slate-200 tw-rounded-full tw-p-2 tw-my-1 tw-mr-2'>{a.symbol}</div>
+
+                                                        </td>
+                                                        <td>
+                                                            <div className='tw-mr-2' ><i>{a.text}</i></div>
+
+                                                        </td>
+                                                        <td>
+                                                            <div className="flex items-center gap-3">
+                                                                <div className="tw-avatar">
+                                                                    <div className="tw-mask tw-rounded-full h-8 w-8 tw-mr-2">
+                                                                        <img
+                                                                            src={a.avatar}
+                                                                            alt="Avatar Tailwind CSS Component" />
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <div className="font-bold">{a.from}</div>
+                                                                    <div className="tw-text-xs opacity-50 tw-text-zinc-500">{a.date}</div>
+
+                                                                </div>
+                                                            </div>
+                                                        </td>
+
+
+                                                    </tr>)}
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </>
+                                }
+                                {item.layer?.itemType.text &&
+                                    <>
+                                        <input type="radio" name="my_tabs_2" role="tab"
+                                            className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`}
+                                            aria-label="🗓" checked={activeTab == 4 && true}
+                                            onChange={() => updateActiveTab(4)} />
+                                        <div role="tabpanel"
+                                            className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-4 tw-mb-4 tw-overflow-x-hidden tw-mt-4">
+                                            <div className="flex items-center justify-between">
+                                                <p className="font-semibold text-xl">
+                                                    {format(firstDayOfMonth, "MMMM yyyy")}
+                                                </p>
+                                                <div className="flex items-center justify-evenly gap-6 sm:gap-12">
+                                                    <ChevronLeftIcon
+                                                        className="w-6 h-6 cursor-pointer"
+                                                        onClick={getPrevMonth}
+                                                    />
+                                                    <ChevronRightIcon
+                                                        className="w-6 h-6 cursor-pointer"
+                                                        onClick={getNextMonth}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <hr className="my-6" />
+                                            <div className="grid grid-cols-7 gap-6 sm:gap-12 place-items-center">
+                                                {days.map((day, idx) => {
+                                                    return (
+                                                        <div key={idx} className="font-semibold">
+                                                            {capitalizeFirstLetter(day)}
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                            <div className="grid grid-cols-7 gap-4 sm:gap-12 mt-8 place-items-center">
+                                                {daysInMonth.map((day, idx) => {
+                                                    return (
+                                                        <div key={idx} className={colStartClasses[getDay(day)]}>
+                                                            <p
+                                                                className={`cursor-pointer flex items-center justify-center font-semibold h-8 w-8 rounded-full  hover:text-white ${isSameMonth(day, today) ? "text-current" : "text-gray-500"
+                                                                    } ${!isToday(day) && "hover:bg-primary-content"} ${isToday(day) && "bg-primary !text-white"
+                                                                    }`}
+                                                            >
+                                                                {format(day, "d")}
+                                                            </p>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    </>
+                                }
+
 
                                 {item.layer?.itemType.offers_and_needs &&
 
                                     <>
 
-                                        <input type="radio" name="my_tabs_2" role="tab" className="tw-tab tw-min-w-[10em] [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Offers & Needs" checked={activeTab == 3 && true} onChange={() => updateActiveTab(3)} />
+                                        <input type="radio" name="my_tabs_2" role="tab" className="tw-tab [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="🧩" checked={activeTab == 3 && true} onChange={() => updateActiveTab(3)} />
                                         <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-268px)] tw-overflow-y-auto fade tw-pt-4 tw-pb-1" >
                                             <div className='tw-h-full'>
                                                 <div className='tw-grid tw-grid-cols-1'>
@@ -412,7 +601,7 @@ export function OverlayItemProfile({ userType }: { userType: string }) {
 
                                 {item.layer?.itemType.relations &&
                                     <>
-                                        <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Relations" checked={activeTab == 7 && true} onChange={() => updateActiveTab(7)} />
+                                        <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="🔗" checked={activeTab == 7 && true} onChange={() => updateActiveTab(7)} />
                                         <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto tw-pt-4 tw-pb-1 -tw-mr-4 -tw-mb-4 tw-overflow-x-hidden">
                                             <div className='tw-h-full'>
                                                 <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-1 2xl:tw-grid-cols-2 tw-pb-4'>

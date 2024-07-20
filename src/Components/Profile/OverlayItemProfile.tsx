@@ -295,7 +295,7 @@ export function OverlayItemProfile({ userType }: { userType: string }) {
         <>
             {item &&
                 <MapOverlayPage key={item.id}
-                    className={`${template == "onepager" && '!tw-p-0'} tw-mx-4 tw-mt-4 tw-max-h-[calc(100dvh-96px)] tw-h-[calc(100dvh-96px)] md:tw-w-[calc(50%-32px)] tw-w-[calc(100%-32px)] tw-min-w-80 tw-max-w-3xl !tw-left-0 sm:!tw-left-auto tw-top-0 tw-bottom-0 tw-transition-opacity tw-duration-500 ${!selectPosition ? 'tw-opacity-100 tw-pointer-events-auto' : 'tw-opacity-0 tw-pointer-events-none'}`}>
+                    className={`${template == "onepager" && '!tw-p-0'} tw-mx-4 tw-mt-4 tw-mb-4 md:tw-w-[calc(50%-32px)] tw-w-[calc(100%-32px)] tw-min-w-80 tw-max-w-3xl !tw-left-0 sm:!tw-left-auto tw-top-0 tw-bottom-0 tw-transition-opacity tw-duration-500 ${!selectPosition ? 'tw-opacity-100 tw-pointer-events-auto' : 'tw-opacity-0 tw-pointer-events-none'}`}>
 
                     <>
                         <div className={`${template == "onepager" && "tw-px-6 tw-pt-6"}`}>

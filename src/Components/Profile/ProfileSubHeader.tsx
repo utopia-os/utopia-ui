@@ -25,9 +25,9 @@ const statusMapping = {
 
 const SubHeader = ({ type, status, url, title }) => (
     <div>
-        <div className="tw-flex tw-items-center tw-mt-6">
-            <span className="tw-text-sm tw-text-gray-600">{type}{(status && status !== 'active') ? ` (${statusMapping[status]})` : ''}</span>
-        </div>
+        {type && <div className="tw-flex tw-items-center tw-mt-4">
+            <span className="tw-text-sm tw-text-gray-600 tw-bg-slate-200 tw-rounded tw-py-1 tw-px-2">{type}{(status && status !== 'active') ? ` (${statusMapping[status]})` : ''}</span>
+        </div>}
         <div className="tw-mt-4">
             <SocialShareBar url={url} title={title} />
         </div>

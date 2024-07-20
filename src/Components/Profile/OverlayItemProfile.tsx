@@ -303,7 +303,7 @@ export function OverlayItemProfile({ userType }: { userType: string }) {
                             {template == "onepager" && <ProfileSubHeader
                                 type={groupTypeText}
                                 status={item.status}
-                                url={window.location.href}
+                                url={`https://www.wuerdekompass.org/aktivitaeten/gruppensuche/#/gruppe/${item.slug}`}
                                 title={item.name}
                             />}
                         </div>

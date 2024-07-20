@@ -1,4 +1,4 @@
-import { AppShell, SideBar, Content, AuthProvider, Modal, LoginPage, SignupPage, Quests, RequestPasswordPage, SetNewPasswordPage, OverlayUserSettings, OverlayItemsIndexPage, OverlayItemProfile, OverlayItemProfileSettings, Permissions, Tags } from 'utopia-ui'
+import { AppShell, SideBar, Content, AuthProvider, Modal, LoginPage, SignupPage, Quests, RequestPasswordPage, SetNewPasswordPage, OverlayUserSettings, OverlayItemsIndexPage, OverlayItemProfile, OverlayItemProfileSettings, Permissions, Tags, SelectUser } from 'utopia-ui'
 import { getBottomRoutes, routes } from './routes/sidebar'
 import { Route, Routes } from 'react-router-dom'
 import MapContainer from "./pages/MapContainer"
@@ -107,6 +107,7 @@ function App() {
                 <Route path="user-settings" element={<OverlayUserSettings />} />
                 <Route path="moon-calendar" element={<MoonCalendar />} />
                 <Route path="landingpage" element={<Landingpage />} />
+                <Route path="select-user" element={<SelectUser userType={map.user_type.name} />} />
                 {
                   layers.map((l: any) =>
                     <Route key={l.id} path={l.name} element={<OverlayItemsIndexPage plusButton={l.index_plus_button} layerName={l.name} url={'/item/'} parameterField={'id'}  />} />

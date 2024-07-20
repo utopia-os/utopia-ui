@@ -249,7 +249,7 @@ export function OverlayItemProfileSettings({ userType }: { userType: string }) {
                 .then(() => item && updateItem({ ...item, ...changedItem }))
                 .then(() => {
                     setLoading(false);
-                    navigate("/item/" + item.id)
+                    navigate(`/item/${item.id}${params && "?"+params}`)
                 });
 
         }
@@ -268,7 +268,7 @@ export function OverlayItemProfileSettings({ userType }: { userType: string }) {
                 .then(() => item && addItem({ ...item, ...changedItem, layer: item.layer, user_created: user, type: item.layer?.itemType }))
                 .then(() => {
                     setLoading(false);
-                    navigate("/")
+                    navigate(`/${params && "?"+params}`)
                 });
         }
     }
@@ -320,6 +320,7 @@ export function OverlayItemProfileSettings({ userType }: { userType: string }) {
         setTemplate(item.layer?.itemType.template || userType);
     }, [userType, item])
 
+    let params = new URLSearchParams(window.location.search);
 
 
 

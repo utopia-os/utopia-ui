@@ -76,13 +76,13 @@ export function OverlayItemProfileSettings({ userType }: { userType: string }) {
             case "wuerdekompass":
                 setColor(item?.layer?.menuColor || "#1A5FB4");
                 setMarkerIcon("group");
-                setImage("88930921-6076-4bdf-a5b2-241d6e7bc875")
+                setImage("59e6a346-d1ee-4767-9e42-fc720fb535c9")
 
                 break;
             case "themenkompass":
                 setColor("#26A269");
                 setMarkerIcon("group");
-                setImage("88930921-6076-4bdf-a5b2-241d6e7bc875")
+                setImage("59e6a346-d1ee-4767-9e42-fc720fb535c9")
 
                 break;
             case "liebevoll.jetzt":

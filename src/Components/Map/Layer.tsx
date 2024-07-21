@@ -6,7 +6,7 @@ import { ItemViewPopup } from './Subcomponents/ItemViewPopup'
 import { useAllItemsLoaded, useItems, useSetItemsApi, useSetItemsData } from './hooks/useItems'
 import { useEffect, useState } from 'react'
 import { ItemFormPopup } from './Subcomponents/ItemFormPopup'
-import { useFilterTags, useIsGroupTypeVisible, useIsLayerVisible } from './hooks/useFilter'
+import { useFilterTags, useIsGroupTypeVisible, useIsLayerVisible, useVisibleGroupType } from './hooks/useFilter'
 import { useAddTag, useAllTagsLoaded, useGetItemTags, useTags } from './hooks/useTags'
 import { useAddMarker, useAddPopup, useLeafletRefs } from './hooks/useLeafletRefs'
 import { Popup } from 'leaflet'
@@ -81,6 +81,8 @@ export const Layer = ({
 
     const isGroupTypeVisible = useIsGroupTypeVisible();
 
+    const visibleGroupTypes =  useVisibleGroupType();
+
 
 
     useEffect(() => {
@@ -149,7 +151,7 @@ export const Layer = ({
                     filter(item =>
                         filterTags.length == 0 ? item : filterTags.every(tag => getItemTags(item).some(filterTag => filterTag.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())))?.
                     filter(item => item.layer && isLayerVisible(item.layer)).
-                    filter(item => item.group_type && isGroupTypeVisible(item.group_type)||item.group_type==null).
+                    filter(item => item.group_type && isGroupTypeVisible(item.group_type)|| visibleGroupTypes.length == 0).
                     map((item: Item) => {
                         if (getValue(item, itemLongitudeField) && getValue(item, itemLatitudeField)) {
 

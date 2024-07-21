@@ -23,6 +23,7 @@ const FilterContext = createContext<UseFilterManagerResult>({
   filterTags: [],
   searchPhrase: "",
   visibleLayers: [],
+  visibleGroupTypes: [],
   addFilterTag: () => { },
   removeFilterTag: () => { },
   resetFilterTags: () => { },
@@ -41,6 +42,7 @@ function useFilterManager(initialTags: Tag[]): {
   filterTags: Tag[];
   searchPhrase: string;
   visibleLayers: LayerProps[];
+  visibleGroupTypes: string[];
   addFilterTag: (tag: Tag) => void;
   removeFilterTag: (name: string) => void;
   resetFilterTags: () => void;
@@ -117,11 +119,11 @@ function useFilterManager(initialTags: Tag[]): {
           if(exist2) return state.filter((groupType) => groupType != action.groupType);
           else return [... state, action.groupType];
       case "RESET_GROUP_TYPE":
-        return initialLayers;
+        return [];
       default:
         throw new Error();
     }
-  }, initialLayers);
+  },[]);
 
   const [searchPhrase, searchPhraseSet] = React.useState<string>("");
 
@@ -227,7 +229,7 @@ function useFilterManager(initialTags: Tag[]): {
     searchPhraseSet(phrase)
   }, []);
 
-  return { filterTags, addFilterTag, removeFilterTag, resetFilterTags, setSearchPhrase, searchPhrase, visibleLayers, toggleVisibleLayer, resetVisibleLayers, isLayerVisible, addVisibleLayer, addVisibleGroupType, toggleVisibleGroupType, isGroupTypeVisible };
+  return { filterTags, addFilterTag, removeFilterTag, resetFilterTags, setSearchPhrase, searchPhrase, visibleLayers, toggleVisibleLayer, resetVisibleLayers, isLayerVisible, addVisibleLayer, visibleGroupTypes, addVisibleGroupType, toggleVisibleGroupType, isGroupTypeVisible };
 }
 
 export const FilterProvider: React.FunctionComponent<{
@@ -309,4 +311,9 @@ export const useToggleVisibleGroupType = (): UseFilterManagerResult["toggleVisib
 export const useIsGroupTypeVisible = (): UseFilterManagerResult["isGroupTypeVisible"] => {
   const { isGroupTypeVisible } = useContext(FilterContext);
   return isGroupTypeVisible
+};
+
+export const useVisibleGroupType = (): UseFilterManagerResult["visibleGroupTypes"] => {
+  const { visibleGroupTypes } = useContext(FilterContext);
+  return visibleGroupTypes;
 };

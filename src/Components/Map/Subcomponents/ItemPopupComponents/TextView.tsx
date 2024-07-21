@@ -79,7 +79,7 @@ export const TextView = ({ item, truncate = false, itemTextField, rawText }: { i
   );
   const CustomImage = ({ alt, src, title }) => (
     <img
-      className="max-w-full rounded-lg shadow-md"
+      className="tw-max-w-full tw-rounded tw-shadow"
       src={src}
       alt={alt}
       title={title}

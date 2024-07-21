@@ -41,7 +41,7 @@ export function FilterControl() {
                     </div>
                     :
                     <div className="tw-indicator">
-                        {visibleGroupTypes.length < groupTypes.length && <span className="tw-indicator-item tw-badge tw-badge-primary tw-h-4 tw-p-2 tw-translate-x-1/3 -tw-translate-y-1/3 tw-bg-[#DF4D39] tw-border-0"></span>}
+                        {visibleGroupTypes.length < groupTypes.length && <span className="tw-indicator-item tw-badge tw-badge-success tw-h-4 tw-p-2 tw-translate-x-1/3 -tw-translate-y-1/3 tw-border-0"></span>}
                         <div className="tw-card-body hover:tw-bg-slate-300 tw-card tw-p-2 tw-h-10 tw-w-10 tw-transition-all tw-duration-300 hover:tw-cursor-pointer" onClick={() => {
                             setOpen(true)
                         }}>

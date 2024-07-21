@@ -275,7 +275,7 @@ export function OverlayItemProfile({ userType }: { userType: string }) {
     }
 
     const typeMapping = {
-        'default': 'Würdekompass',
+        'wuerdekompass': 'Regional-Gruppe',
         'themenkompass': 'Themenkompass-Gruppe',
         'liebevoll.jetzt': 'liebevoll.jetzt',
     };
@@ -294,24 +294,23 @@ export function OverlayItemProfile({ userType }: { userType: string }) {
     return (
         <>
             {item &&
-                <MapOverlayPage key={item.id}
-                    className={`${template == "onepager" && '!tw-p-0'} tw-mx-4 tw-mt-4 tw-mb-4 md:tw-w-[calc(50%-32px)] tw-w-[calc(100%-32px)] tw-min-w-80 tw-max-w-3xl !tw-left-0 sm:!tw-left-auto tw-top-0 tw-bottom-0 tw-transition-opacity tw-duration-500 ${!selectPosition ? 'tw-opacity-100 tw-pointer-events-auto' : 'tw-opacity-0 tw-pointer-events-none'}`}>
-
+                <MapOverlayPage key={item.id} className={`!tw-p-0 tw-mx-4 tw-mt-4 tw-mb-4 md:tw-w-[calc(50%-32px)] tw-w-[calc(100%-32px)] tw-min-w-80 tw-max-w-3xl !tw-left-0 sm:!tw-left-auto tw-top-0 tw-bottom-0 tw-transition-opacity tw-duration-500 ${!selectPosition ? 'tw-opacity-100 tw-pointer-events-auto' : 'tw-opacity-0 tw-pointer-events-none'}`}>
                     <>
-                        <div className={`${template == "onepager" && "tw-px-6 tw-pt-6"}`}>
+                        <div className={`tw-px-6 tw-pt-6`}>
                             <HeaderView api={item.layer?.api} item={item} deleteCallback={handleDelete} editCallback={() => navigate("/edit-item/" + item.id)} setPositionCallback={() => { map.closePopup(); setSelectPosition(item); navigate("/") }} big truncateSubname={false} />
-                            {template == "onepager" && <ProfileSubHeader
-                                type={groupTypeText}
-                                status={item.status}
-                                url={`https://www.wuerdekompass.org/aktivitaeten/gruppensuche/#/gruppe/${item.slug}`}
-                                title={item.name}
-                            />}
                         </div>
 
 
                         {template == "onepager" &&
                             <div className='tw-h-full tw-overflow-y-auto fade'>
-
+                                <div className="tw-px-6">
+                                    <ProfileSubHeader
+                                        type={groupTypeText}
+                                        status={item.status}
+                                        url={`https://www.wuerdekompass.org/aktivitaeten/gruppensuche/#/gruppe/${item.slug}`}
+                                        title={item.name}
+                                    />
+                                </div>
                                 {item.user_created.first_name && (
                                     <ContactInfo link={`/item/${profile?.id}`} name={profile?.name ? profile.name : item.user_created.first_name} avatar={profile?.image ? profile.image : item.user_created.avatar} email={item.contact} telephone={item.telephone} />
                                 )}
@@ -349,15 +348,13 @@ export function OverlayItemProfile({ userType }: { userType: string }) {
                         }
 
                         {template == "simple" &&
-                            <div className='tw-mt-8 tw-h-full tw-overflow-y-auto fade'>
-
-
+                            <div className='tw-mt-8 tw-h-full tw-overflow-y-auto fade tw-px-6'>
                                 <TextView item={item} />
                             </div>
                         }
 
                         {template == "tabs" &&
-                            <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-2 tw-mb-2">
+                            <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-2 tw-mb-2 tw-px-6">
                                 <input type="radio" name="my_tabs_2" role="tab"
                                     className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`}
                                     aria-label="Info" checked={activeTab == 1 && true}

@@ -316,7 +316,7 @@ export function OverlayItemProfile({ userType }: { userType: string }) {
                                 )}
 
                                 {/* Description Section */}
-                                <div className="tw-my-10 tw-mt-2 tw-px-6 tw-text-sm tw-text-gray-600">
+                                <div className="tw-my-10 tw-mt-2 tw-px-6 tw-text-sm ">
                                     <TextView rawText={item.text || 'Keine Beschreibung vorhanden'} />
                                 </div>
 
@@ -324,7 +324,7 @@ export function OverlayItemProfile({ userType }: { userType: string }) {
                                 {item.next_appointment && (
                                     <div className="tw-my-10 tw-px-6">
                                         <h2 className="tw-text-lg tw-font-semibold">Nächste Termine</h2>
-                                        <div className="tw-mt-2 tw-text-sm tw-text-gray-600">
+                                        <div className="tw-mt-2 tw-text-sm">
                                             <TextView rawText={item.next_appointment} />
                                         </div>
                                     </div>

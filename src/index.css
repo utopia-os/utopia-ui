@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .fade {
-  mask-image: linear-gradient(180deg, transparent, #000 2%, #000 98%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 1%, #000 99%, transparent);
 }
 
 .tw-modal {

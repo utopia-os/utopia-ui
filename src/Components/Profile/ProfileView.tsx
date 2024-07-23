@@ -5,36 +5,32 @@ import { useEffect, useRef, useState } from 'react';
 import { Item, Tag } from '../../types';
 import { useMap } from 'react-leaflet';
 import { LatLng } from 'leaflet';
-import { StartEndView, TextView } from '../Map';
 import { useAddTag, useTags } from '../Map/hooks/useTags';
-import { useAddFilterTag, useResetFilterTags } from '../Map/hooks/useFilter';
+import { useResetFilterTags } from '../Map/hooks/useFilter';
 import { useHasUserPermission } from '../Map/hooks/usePermissions';
 import { hashTagRegex } from '../../Utils/HashTagRegex';
 import { randomColor } from '../../Utils/RandomColor';
 import { toast } from 'react-toastify';
 import { useAuth } from '../Auth';
 import { useLayers } from '../Map/hooks/useLayers';
-import { ActionButton } from './Subcomponents/ActionsButton';
-import { LinkedItemsHeaderView } from './Subcomponents/LinkedItemsHeaderView';
 import { HeaderView } from '../Map/Subcomponents/ItemPopupComponents/HeaderView';
 import { useSelectPosition, useSetSelectPosition } from '../Map/hooks/useSelectPosition';
 import { useClusterRef } from '../Map/hooks/useClusterRef';
 import { useLeafletRefs } from '../Map/hooks/useLeafletRefs';
 import { getValue } from '../../Utils/GetValue';
-import { TagView } from '../Templates/TagView';
-import RelationCard from "./Subcomponents/RelationCard";
-import ContactInfo from "./Subcomponents/ContactInfo";
-import ProfileSubHeader from "./Subcomponents/ProfileSubHeader";
+import { Tabs } from './Templates/Tabs';
+import { Onepager } from './Templates/Onepager';
+import { Simple } from './Templates/Simple';
 
 export function ProfileView({ userType }: { userType: string }) {
 
     const [updatePermission, setUpdatePermission] = useState<boolean>(false);
     const [relations, setRelations] = useState<Array<Item>>([]);
-    const [activeTab, setActiveTab] = useState<number>(1);
-    const [addItemPopupType, setAddItemPopupType] = useState<string>("");
-    const [loading, setLoading] = useState<boolean>(false);
     const [offers, setOffers] = useState<Array<Tag>>([]);
     const [needs, setNeeds] = useState<Array<Tag>>([]);
+    const [loading, setLoading] = useState<boolean>(false);
+
+    const [addItemPopupType, setAddItemPopupType] = useState<string>("");
 
     const location = useLocation();
     const items = useItems();
@@ -54,9 +50,6 @@ export function ProfileView({ userType }: { userType: string }) {
     const setSelectPosition = useSetSelectPosition();
     const clusterRef = useClusterRef();
     const leafletRefs = useLeafletRefs();
-    const addFilterTag = useAddFilterTag();
-
-
 
     const tabRef = useRef<HTMLFormElement>(null);
 
@@ -68,25 +61,7 @@ export function ProfileView({ userType }: { userType: string }) {
         scroll();
     }, [addItemPopupType])
 
-    const [profile_owner, setProfileOwner] = useState<Item>();
 
-
-    useEffect(() => {
-        setProfileOwner(items.find(i => (i.user_created?.id === item.user_created?.id) && i.layer?.itemType.name === userType));
-    }, [item, items])
-
-
-
-
-    const updateActiveTab = (id: number) => {
-        setActiveTab(id);
-
-        let params = new URLSearchParams(window.location.search);
-        let urlTab = params.get("tab");
-        if (!urlTab?.includes(id.toString()))
-            params.set("tab", `${id ? id : ""}`)
-        window.history.pushState('', '', "?" + params.toString());
-    }
 
     useEffect(() => {
         const itemId = location.pathname.split("/")[2];
@@ -145,7 +120,6 @@ export function ProfileView({ userType }: { userType: string }) {
         }
     }, [item])
 
-
     const getFirstAncestor = (item: Item): Item | undefined => {
         const parent = items.find(i => i.id === item.parent);
         if (parent?.parent) {
@@ -155,17 +129,6 @@ export function ProfileView({ userType }: { userType: string }) {
         }
     };
 
-
-
-
-
-    useEffect(() => {
-        let params = new URLSearchParams(location.search);
-        let urlTab = params.get("tab");
-        urlTab ? setActiveTab(Number(urlTab)) : setActiveTab(1);
-    }, [location])
-
-
     useEffect(() => {
         item && hasUserPermission("items", "update", item) && setUpdatePermission(true);
     }, [item])
@@ -174,8 +137,6 @@ export function ProfileView({ userType }: { userType: string }) {
     useEffect(() => {
         selectPosition && map.closePopup();
     }, [selectPosition])
-
-
 
     const submitNewItem = async (evt: any, type: string) => {
         evt.preventDefault();
@@ -274,22 +235,11 @@ export function ProfileView({ userType }: { userType: string }) {
         navigate("/");
     }
 
-    const typeMapping = {
-        'wuerdekompass': 'Regional-Gruppe',
-        'themenkompass': 'Themenkompass-Gruppe',
-        'liebevoll.jetzt': 'liebevoll.jetzt',
-    };
-
-    let groupType = item.group_type ? item.group_type : 'default';
-    let groupTypeText = typeMapping[groupType];
-
     const [template, setTemplate] = useState<string>("")
 
     useEffect(() => {
         setTemplate(item.layer?.itemType.template || userType);
     }, [userType, item])
-
-
 
     return (
         <>
@@ -302,135 +252,15 @@ export function ProfileView({ userType }: { userType: string }) {
 
 
                         {template == "onepager" &&
-                            <div className='tw-h-full tw-overflow-y-auto fade'>
-                                <div className="tw-px-6">
-                                    <ProfileSubHeader
-                                        type={groupTypeText}
-                                        status={item.status}
-                                        url={`https://www.wuerdekompass.org/aktivitaeten/gruppensuche/#/gruppe/${item.slug}`}
-                                        title={item.name}
-                                    />
-                                </div>
-                                {item.user_created.first_name && (
-                                    <ContactInfo link={`/item/${profile_owner?.id}`} name={profile_owner?.name ? profile_owner.name : item.user_created.first_name} avatar={profile_owner?.image ? profile_owner.image : item.user_created.avatar} email={item.contact} telephone={item.telephone} />
-                                )}
-
-                                {/* Description Section */}
-                                <div className="tw-my-10 tw-mt-2 tw-px-6 tw-text-sm ">
-                                    <TextView rawText={item.text || 'Keine Beschreibung vorhanden'} />
-                                </div>
-
-                                {/* Next Appointment Section */}
-                                {item.next_appointment && (
-                                    <div className="tw-my-10 tw-px-6">
-                                        <h2 className="tw-text-lg tw-font-semibold">Nächste Termine</h2>
-                                        <div className="tw-mt-2 tw-text-sm">
-                                            <TextView rawText={item.next_appointment} />
-                                        </div>
-                                    </div>
-                                )};
-
-                                {/* Relations Section */}
-                                {/*{d.relations && (*/}
-                                {/*    <div className="tw-my-10 tw-px-6">*/}
-                                {/*        <h2 className="tw-text-lg tw-font-semibold tw-mb-4">Projekte</h2>*/}
-                                {/*        {d.relations.map((project, index) => (*/}
-                                {/*            <RelationCard*/}
-                                {/*                key={index}*/}
-                                {/*                title={project.title}*/}
-                                {/*                description={project.description}*/}
-                                {/*                imageSrc={project.imageSrc}*/}
-                                {/*            />*/}
-                                {/*        ))}*/}
-                                {/*    </div>*/}
-                                {/*)}*/}
-                            </div>
+                            <Onepager item={item} userType={userType}/>
                         }
 
                         {template == "simple" &&
-                            <div className='tw-mt-8 tw-h-full tw-overflow-y-auto fade tw-px-6'>
-                                <TextView item={item} />
-                            </div>
+                            <Simple item={item}></Simple>
                         }
 
                         {template == "tabs" &&
-                            <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-2 tw-mb-2 tw-px-6">
-                                <input type="radio" name="my_tabs_2" role="tab"
-                                    className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`}
-                                    aria-label="Info" checked={activeTab == 1 && true}
-                                    onChange={() => updateActiveTab(1)} />
-                                <div role="tabpanel"
-                                    className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-4 tw-mb-4 tw-overflow-x-hidden">
-                                    {item.layer?.itemType.show_start_end &&
-                                        <div className='tw-max-w-xs'><StartEndView item={item}></StartEndView></div>
-                                    }
-                                    <TextView item={item} />
-                                </div>
-
-                                {item.layer?.itemType.offers_and_needs &&
-
-                                    <>
-
-                                        <input type="radio" name="my_tabs_2" role="tab" className="tw-tab tw-min-w-[10em] [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Offers & Needs" checked={activeTab == 3 && true} onChange={() => updateActiveTab(3)} />
-                                        <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-268px)] tw-overflow-y-auto fade tw-pt-4 tw-pb-1" >
-                                            <div className='tw-h-full'>
-                                                <div className='tw-grid tw-grid-cols-1'>
-                                                    {
-                                                        offers.length > 0 ?
-                                                            <div className='tw-col-span-1'>
-                                                                <h3 className='-tw-mb-2'>Offers</h3>
-                                                                < div className='tw-flex tw-flex-wrap tw-mb-4'>
-                                                                    {
-                                                                        offers.map(o => <TagView key={o?.id} tag={o} onClick={() => {
-                                                                            addFilterTag(o)
-                                                                        }} />)
-                                                                    }
-                                                                </div>
-                                                            </div> : ""
-                                                    }
-                                                    {
-                                                        needs.length > 0 ?
-                                                            <div className='tw-col-span-1'>
-                                                                <h3 className='-tw-mb-2 tw-col-span-1'>Needs</h3>
-                                                                < div className='tw-flex tw-flex-wrap  tw-mb-4'>
-                                                                    {
-                                                                        needs.map(n => <TagView key={n?.id} tag={n} onClick={() => addFilterTag(n)} />)
-                                                                    }
-                                                                </div>
-                                                            </div> : ""
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </>
-
-
-                                }
-
-                                {item.layer?.itemType.relations &&
-                                    <>
-                                        <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Relations" checked={activeTab == 7 && true} onChange={() => updateActiveTab(7)} />
-                                        <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto tw-pt-4 tw-pb-1 -tw-mr-4 -tw-mb-4 tw-overflow-x-hidden">
-                                            <div className='tw-h-full'>
-                                                <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-1 2xl:tw-grid-cols-2 tw-pb-4'>
-                                                    {relations && relations.map(i =>
-
-
-                                                        <div key={i.id} className='tw-cursor-pointer tw-card tw-bg-base-200 tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-text-base-content tw-p-6 tw-mr-4 tw-mb-4' onClick={() => navigate('/item/' + i.id)}>
-                                                            <LinkedItemsHeaderView unlinkPermission={updatePermission} item={i} unlinkCallback={unlinkItem} loading={loading} />
-                                                            <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
-                                                                <TextView truncate item={i} />
-                                                            </div>
-                                                        </div>
-                                                    )}
-                                                    {updatePermission && <ActionButton collection="items" item={item} existingRelations={relations} triggerItemSelected={linkItem} colorField={item.layer.itemColorField}></ActionButton>}
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </>
-                                }
-                            </div>
+                            <Tabs item={item} loading={loading} offers={offers} needs={needs} relations={relations} updatePermission={updatePermission} linkItem={linkItem} unlinkItem={unlinkItem}/>
                         }
                     </>
 
@@ -439,5 +269,3 @@ export function ProfileView({ userType }: { userType: string }) {
         </>
     )
 }
-
-

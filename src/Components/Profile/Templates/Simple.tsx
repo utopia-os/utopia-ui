@@ -1,7 +1,11 @@
 import * as React from 'react'
+import { TextView } from '../../Map'
+import { Item } from '../../../types'
 
-export const Simple = () => {
+export const Simple = ({item}:{item: Item}) => {
   return (
-    <div>Simple</div>
+    <div className='tw-mt-8 tw-h-full tw-overflow-y-auto fade tw-px-6'>
+    <TextView item={item} />
+</div>
   )
 }

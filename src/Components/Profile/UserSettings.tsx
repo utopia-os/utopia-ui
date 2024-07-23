@@ -13,7 +13,7 @@ import { toast } from 'react-toastify';
 import { useAuth } from '../Auth';
 import { TextInput } from '../Input';
 
-export function OverlayUserSettings() {
+export function UserSettings() {
     const { user, updateUser, loading, token } = useAuth();
 
     const [id, setId] = useState<string>("");

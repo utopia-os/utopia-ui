@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { useState } from 'react';
-import { useTags } from '../Map/hooks/useTags';
-import { Tag } from '../../types';
-import { Autocomplete } from '../Input/Autocomplete';
-import { randomColor } from '../../Utils/RandomColor';
-import { decodeTag, encodeTag } from '../../Utils/FormatTags';
+import { useTags } from '../../Map/hooks/useTags';
+import { Tag } from '../../../types';
+import { Autocomplete } from '../../Input/Autocomplete';
+import { randomColor } from '../../../Utils/RandomColor';
+import { decodeTag, encodeTag } from '../../../Utils/FormatTags';
 
 export const TagsWidget = ({placeholder, containerStyle, defaultTags, onUpdate}) => {
 

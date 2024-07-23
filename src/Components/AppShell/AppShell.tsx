@@ -15,6 +15,8 @@ import { LayersProvider } from '../Map/hooks/useLayers'
 import { LeafletRefsProvider } from '../Map/hooks/useLeafletRefs'
 import { SelectPositionProvider } from '../Map/hooks/useSelectPosition'
 import { ClusterRefProvider } from '../Map/hooks/useClusterRef'
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export function AppShell({ appName, children, assetsApi, userType }: { appName: string, children: React.ReactNode, assetsApi: AssetsApi, userType: string }) {
 

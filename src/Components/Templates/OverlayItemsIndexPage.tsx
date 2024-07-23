@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Item, ItemsApi, LayerProps } from '../../types';
 import { getValue } from '../../Utils/GetValue';
 import { PopupStartEndInput, StartEndView, TextView } from '../Map';
-import { PlusButton } from '../Profile/PlusButton';
+import { PlusButton } from '../Profile/Subcomponents/PlusButton';
 import { TextInput, TextAreaInput } from '../Input';
 import { useAddTag, useGetItemTags, useTags } from '../Map/hooks/useTags';
 import { toast } from 'react-toastify';

@@ -14,19 +14,19 @@ import { randomColor } from '../../Utils/RandomColor';
 import { toast } from 'react-toastify';
 import { useAuth } from '../Auth';
 import { useLayers } from '../Map/hooks/useLayers';
-import { ActionButton } from './ActionsButton';
-import { LinkedItemsHeaderView } from './LinkedItemsHeaderView';
+import { ActionButton } from './Subcomponents/ActionsButton';
+import { LinkedItemsHeaderView } from './Subcomponents/LinkedItemsHeaderView';
 import { HeaderView } from '../Map/Subcomponents/ItemPopupComponents/HeaderView';
 import { useSelectPosition, useSetSelectPosition } from '../Map/hooks/useSelectPosition';
 import { useClusterRef } from '../Map/hooks/useClusterRef';
 import { useLeafletRefs } from '../Map/hooks/useLeafletRefs';
 import { getValue } from '../../Utils/GetValue';
 import { TagView } from '../Templates/TagView';
-import RelationCard from "./RelationCard";
-import ContactInfo from "./ContactInfo";
-import ProfileSubHeader from "./ProfileSubHeader";
+import RelationCard from "./Subcomponents/RelationCard";
+import ContactInfo from "./Subcomponents/ContactInfo";
+import ProfileSubHeader from "./Subcomponents/ProfileSubHeader";
 
-export function OverlayItemProfile({ userType }: { userType: string }) {
+export function ProfileView({ userType }: { userType: string }) {
 
     const [updatePermission, setUpdatePermission] = useState<boolean>(false);
     const [relations, setRelations] = useState<Array<Item>>([]);

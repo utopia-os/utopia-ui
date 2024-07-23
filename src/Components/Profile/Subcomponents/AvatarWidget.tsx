@@ -1,8 +1,9 @@
 import * as React from "react";
 import { useState } from "react";
 import ReactCrop, { Crop, centerCrop, makeAspectCrop } from 'react-image-crop';
-import { useAssetApi } from '../AppShell/hooks/useAssets';
-import DialogModal from "../Templates/DialogModal";
+import { useAssetApi } from '../../AppShell/hooks/useAssets';
+import DialogModal from "../../Templates/DialogModal";
+import 'react-image-crop/dist/ReactCrop.css'
 
 
 export const AvatarWidget = ({avatar, setAvatar}:{avatar:string, setAvatar : React.Dispatch<React.SetStateAction<string>>}) => {

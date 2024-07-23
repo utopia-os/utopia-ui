@@ -5,25 +5,25 @@ import { toast } from 'react-toastify';
 import { useAuth } from '../Auth';
 import { TextInput, TextAreaInput } from '../Input';
 import ComboBoxInput from '../Input/ComboBoxInput';
-import { ColorPicker } from './ColorPicker';
+import { ColorPicker } from './Subcomponents/ColorPicker';
 import { hashTagRegex } from '../../Utils/HashTagRegex';
 import { useAddTag, useGetItemTags, useTags } from '../Map/hooks/useTags';
 import { randomColor } from '../../Utils/RandomColor';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Item, Tag } from '../../types';
 import { MapOverlayPage } from '../Templates';
-import { AvatarWidget } from './AvatarWidget';
+import { AvatarWidget } from './Subcomponents/AvatarWidget';
 import { encodeTag } from '../../Utils/FormatTags';
 import { useLayers } from '../Map/hooks/useLayers';
-import { TagsWidget } from './TagsWidget';
-import { LinkedItemsHeaderView } from './LinkedItemsHeaderView';
+import { TagsWidget } from './Subcomponents/TagsWidget';
+import { LinkedItemsHeaderView } from './Subcomponents/LinkedItemsHeaderView';
 import { TextView } from '../Map';
-import { ActionButton } from './ActionsButton';
+import { ActionButton } from './Subcomponents/ActionsButton';
 import { useHasUserPermission } from '../Map/hooks/usePermissions';
 
 
 
-export function OverlayItemProfileSettings({ userType }: { userType: string }) {
+export function ProfileForm({ userType }: { userType: string }) {
 
     const typeMapping = [
         { value: 'wuerdekompass', label: 'Regional-Gruppe' },

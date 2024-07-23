@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { useHasUserPermission, usePermissions } from "../Map/hooks/usePermissions";
-import DialogModal from "../Templates/DialogModal";
-import { useItems } from "../Map/hooks/useItems";
-import { HeaderView } from "../Map/Subcomponents/ItemPopupComponents/HeaderView";
-import { Item } from "../../types";
-import { TextInput } from "../Input";
-import { getValue } from "../../Utils/GetValue";
-import { useGetItemTags } from "../Map/hooks/useTags";
+import { useHasUserPermission, usePermissions } from "../../Map/hooks/usePermissions";
+import DialogModal from "../../Templates/DialogModal";
+import { useItems } from "../../Map/hooks/useItems";
+import { HeaderView } from "../../Map/Subcomponents/ItemPopupComponents/HeaderView";
+import { Item } from "../../../types";
+import { TextInput } from "../../Input";
+import { getValue } from "../../../Utils/GetValue";
+import { useGetItemTags } from "../../Map/hooks/useTags";
 
 export function ActionButton({ item, triggerAddButton, triggerItemSelected, existingRelations, itemType, colorField, collection = "items", customStyle }: {
     triggerAddButton?: any,

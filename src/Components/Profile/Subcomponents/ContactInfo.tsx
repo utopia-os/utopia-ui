@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useAssetApi } from "../AppShell/hooks/useAssets";
+import { useAssetApi } from "../../AppShell/hooks/useAssets";
 
 const ContactInfo = ({ email, telephone, name, avatar, link }: { email: string, telephone: string, name: string, avatar: string, link?: string }) => {
     const assetsApi = useAssetApi();

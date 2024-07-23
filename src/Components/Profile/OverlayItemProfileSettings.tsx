@@ -326,7 +326,7 @@ export function OverlayItemProfileSettings({ userType }: { userType: string }) {
 
     return (
         <>
-            <MapOverlayPage backdrop className='tw-mx-4 tw-mt-4 tw-mb-12 tw-overflow-x-hidden tw-max-h-[calc(100dvh-96px)] !tw-h-[calc(100dvh-96px)] tw-w-[calc(100%-32px)]  md:tw-w-[calc(50%-32px)] tw-max-w-3xl !tw-left-auto tw-top-0 tw-bottom-0'>
+            <MapOverlayPage backdrop className='tw-mx-4 tw-mt-4 tw-mb-4 tw-overflow-x-hidden tw-w-[calc(100%-32px)]  md:tw-w-[calc(50%-32px)] tw-max-w-3xl !tw-left-auto tw-top-0 tw-bottom-0'>
                 <div className='tw-flex tw-flex-col tw-h-full'>
                     <div className="tw-flex">
                         <AvatarWidget avatar={image} setAvatar={setImage} />
@@ -341,7 +341,7 @@ export function OverlayItemProfileSettings({ userType }: { userType: string }) {
                         <div className="tw-space-y-6 tw-mt-6">
                             <div className="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 tw-gap-6">
                                 <div>
-                                    <label htmlFor="groupType" className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
+                                    <label htmlFor="groupType" className="tw-block tw-text-sm tw-font-medium tw-text-gray-500 tw-mb-1">
                                         Gruppenart:
                                     </label>
                                     <ComboBoxInput
@@ -352,7 +352,7 @@ export function OverlayItemProfileSettings({ userType }: { userType: string }) {
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="status" className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
+                                    <label htmlFor="status" className="tw-block tw-text-sm tw-font-medium tw-text-gray-500 tw-mb-1">
                                         Gruppenstatus:
                                     </label>
                                     <ComboBoxInput
@@ -365,7 +365,7 @@ export function OverlayItemProfileSettings({ userType }: { userType: string }) {
                             </div>
 
                             <div>
-                                <label htmlFor="email" className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
+                                <label htmlFor="email" className="tw-block tw-text-sm tw-font-medium tw-text-gray-500 tw-mb-1">
                                     Email-Adresse (Kontakt):
                                 </label>
                                 <TextInput
@@ -376,7 +376,7 @@ export function OverlayItemProfileSettings({ userType }: { userType: string }) {
                             </div>
 
                             <div>
-                                <label htmlFor="telephone" className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
+                                <label htmlFor="telephone" className="tw-block tw-text-sm tw-font-medium tw-text-gray-500 tw-mb-1">
                                     Telefonnummer (Kontakt):
                                 </label>
                                 <TextInput
@@ -387,7 +387,7 @@ export function OverlayItemProfileSettings({ userType }: { userType: string }) {
                             </div>
 
                             <div>
-                                <label htmlFor="nextAppointment" className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
+                                <label htmlFor="nextAppointment" className="tw-block tw-text-sm tw-font-medium tw-text-gray-500 tw-mb-1">
                                     Nächste Termine:
                                 </label>
                                 <TextAreaInput
@@ -399,7 +399,7 @@ export function OverlayItemProfileSettings({ userType }: { userType: string }) {
                             </div>
 
                             <div>
-                                <label htmlFor="description" className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
+                                <label htmlFor="description" className="tw-block tw-text-sm tw-font-medium tw-text-gray-500 tw-mb-1">
                                     Gruppenbeschreibung:
                                 </label>
                                 <TextAreaInput

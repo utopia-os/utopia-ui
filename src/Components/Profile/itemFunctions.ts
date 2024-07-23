@@ -58,11 +58,7 @@ export const linkItem = async (id: string, item, updateItem) => {
 }
 
 export const unlinkItem = async (id: string, item, updateItem) => {
-    console.log(id);
-
     let new_relations = item.relations?.filter(r => r.related_items_id !== id)
-    console.log(new_relations);
-
     const updatedItem = { id: item.id, relations: new_relations }
 
 
@@ -164,8 +160,6 @@ export const onUpdateItem = async (state, item, tags, addTag, setLoading, naviga
     });
 
     setLoading(true);
-    console.log(item.layer);
-
 
     if (!item.new) {
         item?.layer?.api?.updateItem && toast.promise(

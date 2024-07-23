@@ -68,11 +68,11 @@ export function OverlayItemProfile({ userType }: { userType: string }) {
         scroll();
     }, [addItemPopupType])
 
-    const [profile, setProfile] = useState<Item>();
+    const [profile_owner, setProfileOwner] = useState<Item>();
 
 
     useEffect(() => {
-        setProfile(items.find(i => (i.user_created?.id === item.user_created?.id) && i.layer?.itemType.name === userType));
+        setProfileOwner(items.find(i => (i.user_created?.id === item.user_created?.id) && i.layer?.itemType.name === userType));
     }, [item, items])
 
 
@@ -312,7 +312,7 @@ export function OverlayItemProfile({ userType }: { userType: string }) {
                                     />
                                 </div>
                                 {item.user_created.first_name && (
-                                    <ContactInfo link={`/item/${profile?.id}`} name={profile?.name ? profile.name : item.user_created.first_name} avatar={profile?.image ? profile.image : item.user_created.avatar} email={item.contact} telephone={item.telephone} />
+                                    <ContactInfo link={`/item/${profile_owner?.id}`} name={profile_owner?.name ? profile_owner.name : item.user_created.first_name} avatar={profile_owner?.image ? profile_owner.image : item.user_created.avatar} email={item.contact} telephone={item.telephone} />
                                 )}
 
                                 {/* Description Section */}

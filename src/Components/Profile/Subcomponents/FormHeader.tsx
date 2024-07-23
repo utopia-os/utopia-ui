@@ -1,4 +1,4 @@
-import { TextInput } from "utopia-ui"
+import { TextInput } from "../../Input"
 import { AvatarWidget } from "./AvatarWidget"
 import { ColorPicker } from "./ColorPicker"
 

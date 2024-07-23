@@ -20,7 +20,7 @@ export const TabsForm = ({ item, state, setState, updatePermission, linkItem, un
         let urlTab = params.get("tab");
         if (!urlTab?.includes(id.toString()))
             params.set("tab", `${id ? id : ""}`)
-        window.history.pushState('', '', "?" + params.toString());
+        navigate(location.pathname+ "?" + params.toString());
     }
 
     useEffect(() => {

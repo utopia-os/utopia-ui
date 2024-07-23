@@ -1,5 +1,5 @@
 export { UtopiaMap, Layer, Tags, Permissions, ItemForm, ItemView, PopupTextAreaInput, PopupStartEndInput, PopupTextInput, PopupButton, TextView, StartEndView, PopupCheckboxInput } from './Components/Map';
-export {AppShell, Content, SideBar} from "./Components/AppShell"
+export {AppShell, Content, SideBar, Sitemap } from "./Components/AppShell"
 export {AuthProvider, useAuth, LoginPage, SignupPage, RequestPasswordPage, SetNewPasswordPage} from "./Components/Auth"
 export {UserSettings, ProfileSettings, OverlayProfile, OverlayProfileSettings, OverlayUserSettings, OverlayItemProfile, OverlayItemProfileSettings} from './Components/Profile'
 export {Quests, Modal} from './Components/Gaming'

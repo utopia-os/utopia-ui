@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTags } from '../../Map/hooks/useTags';
 import { Tag } from '../../../types';
 import { Autocomplete } from '../../Input/Autocomplete';
@@ -14,6 +14,12 @@ export const TagsWidget = ({placeholder, containerStyle, defaultTags, onUpdate})
   const [pushFilteredSuggestions, setPushFilteredSuggestions] = useState<Array<any>>([]);
 
   const [focusInput, setFocusInput] = useState<boolean>(false);
+  const [currentTags, setCurrentTags] = useState<Array<Tag>>(defaultTags);
+
+  useEffect(() => {
+    setCurrentTags(defaultTags)
+  }, [defaultTags])
+  
 
 
   const onChange = (e) => {
@@ -28,8 +34,8 @@ export const TagsWidget = ({placeholder, containerStyle, defaultTags, onUpdate})
     if ((key === 'Enter' || key === ',' ) && trimmedInput.length && !defaultTags.some(tag => tag.name.toLocaleLowerCase() === trimmedInput.toLocaleLowerCase())) {
       e.preventDefault();
       const newTag = tags.find(t => t.name === trimmedInput.toLocaleLowerCase())
-      newTag && onUpdate(prevState => [...prevState, newTag]);
-      !newTag && onUpdate(prevState => [...prevState,  { id: crypto.randomUUID(), name: encodeTag(trimmedInput), color: randomColor() }]);
+      newTag && onUpdate([...currentTags, newTag]);
+      !newTag && onUpdate([...currentTags,  { id: crypto.randomUUID(), name: encodeTag(trimmedInput), color: randomColor() }]);
       setInput('');
       setPushFilteredSuggestions([]);
     }
@@ -50,15 +56,15 @@ export const TagsWidget = ({placeholder, containerStyle, defaultTags, onUpdate})
   }
 
   const deleteTag = (tag) => {
-    onUpdate(prevState => prevState.filter((t) => t !== tag))
+    onUpdate(currentTags.filter((t) => t !== tag))
   }
 
 
   const onSelected = (tag) => {
     if(!defaultTags.some(t => t.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())) {
       const newTag = tags.find(t => t.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())
-      newTag && onUpdate(prevState => [...prevState, newTag]);
-      !newTag && onUpdate(prevState => [...prevState,  { id: crypto.randomUUID(), name: tag.name.toLocaleLowerCase(), color: randomColor() }]);
+      newTag && onUpdate([...currentTags, newTag]);
+      !newTag && onUpdate([...currentTags,  { id: crypto.randomUUID(), name: tag.name.toLocaleLowerCase(), color: randomColor() }]);
       setInput('');
       setPushFilteredSuggestions([]);
     }

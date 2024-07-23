@@ -5,7 +5,7 @@ import ProfileSubHeader from "../Subcomponents/ProfileSubHeader"
 import { useEffect, useState } from "react"
 import { useItems } from "../../Map/hooks/useItems"
 
-export const Onepager = ({item, userType}:{item: Item, userType: string}) => {
+export const OnepagerView = ({item, userType}:{item: Item, userType: string}) => {
 
   const [profile_owner, setProfileOwner] = useState<Item>();
   const items = useItems();

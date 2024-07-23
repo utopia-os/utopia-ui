@@ -1,7 +1,7 @@
 import { MapOverlayPage } from '../Templates'
 import { useItems, useRemoveItem, useUpdateItem } from '../Map/hooks/useItems'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Item, Tag } from '../../types';
 import { useMap } from 'react-leaflet';
 import { LatLng } from 'leaflet';
@@ -11,26 +11,25 @@ import { useSelectPosition, useSetSelectPosition } from '../Map/hooks/useSelectP
 import { useClusterRef } from '../Map/hooks/useClusterRef';
 import { useLeafletRefs } from '../Map/hooks/useLeafletRefs';
 import { getValue } from '../../Utils/GetValue';
-import { Tabs } from './Templates/Tabs';
-import { Onepager } from './Templates/Onepager';
-import { Simple } from './Templates/Simple';
+import { TabsView } from './Templates/TabsView';
+import { OnepagerView } from './Templates/OnepagerView';
+import { SimpleView } from './Templates/SimpleView';
 import { handleDelete, linkItem, unlinkItem } from './itemFunctions';
 import { useTags } from '../Map/hooks/useTags';
 
 export function ProfileView({ userType }: { userType: string }) {
 
+    const [item, setItem] = useState<Item>({} as Item)
     const [updatePermission, setUpdatePermission] = useState<boolean>(false);
     const [relations, setRelations] = useState<Array<Item>>([]);
     const [offers, setOffers] = useState<Array<Tag>>([]);
     const [needs, setNeeds] = useState<Array<Tag>>([]);
     const [loading, setLoading] = useState<boolean>(false);
-
-    const [addItemPopupType, setAddItemPopupType] = useState<string>("");
+    const [template, setTemplate] = useState<string>("");
 
     const location = useLocation();
     const items = useItems();
     const updateItem = useUpdateItem();
-    const [item, setItem] = useState<Item>({} as Item)
     const map = useMap();
     const selectPosition = useSelectPosition();
     const removeItem = useRemoveItem();
@@ -40,16 +39,6 @@ export function ProfileView({ userType }: { userType: string }) {
     const setSelectPosition = useSetSelectPosition();
     const clusterRef = useClusterRef();
     const leafletRefs = useLeafletRefs();
-
-    const tabRef = useRef<HTMLFormElement>(null);
-
-    function scroll() {
-        tabRef.current?.scrollIntoView();
-    }
-
-    useEffect(() => {
-        scroll();
-    }, [addItemPopupType])
 
     useEffect(() => {
         const itemId = location.pathname.split("/")[2];
@@ -126,9 +115,6 @@ export function ProfileView({ userType }: { userType: string }) {
         selectPosition && map.closePopup();
     }, [selectPosition])
 
-
-    const [template, setTemplate] = useState<string>("")
-
     useEffect(() => {
         setTemplate(item.layer?.itemType.template || userType);
     }, [userType, item])
@@ -142,17 +128,16 @@ export function ProfileView({ userType }: { userType: string }) {
                             <HeaderView api={item.layer?.api} item={item} deleteCallback={(e) => handleDelete(e, item, setLoading, removeItem, map, navigate)} editCallback={() => navigate("/edit-item/" + item.id)} setPositionCallback={() => { map.closePopup(); setSelectPosition(item); navigate("/") }} big truncateSubname={false} />
                         </div>
 
-
                         {template == "onepager" &&
-                            <Onepager item={item} userType={userType}/>
+                            <OnepagerView item={item} userType={userType}/>
                         }
 
                         {template == "simple" &&
-                            <Simple item={item}></Simple>
+                            <SimpleView item={item}/>
                         }
 
                         {template == "tabs" &&
-                            <Tabs item={item} loading={loading} offers={offers} needs={needs} relations={relations} updatePermission={updatePermission} linkItem={(id) => linkItem(id, item, updateItem)} unlinkItem={(id) => unlinkItem(id, item, updateItem)}/>
+                            <TabsView item={item} loading={loading} offers={offers} needs={needs} relations={relations} updatePermission={updatePermission} linkItem={(id) => linkItem(id, item, updateItem)} unlinkItem={(id) => unlinkItem(id, item, updateItem)}/>
                         }
                     </>
 

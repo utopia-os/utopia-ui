@@ -6,7 +6,7 @@ import DialogModal from "../../Templates/DialogModal";
 import 'react-image-crop/dist/ReactCrop.css'
 
 
-export const AvatarWidget = ({avatar, setAvatar}:{avatar:string, setAvatar : React.Dispatch<React.SetStateAction<string>>}) => {
+export const AvatarWidget = ({avatar, setAvatar}:{avatar:string, setAvatar : React.Dispatch<React.SetStateAction<any>>}) => {
 
 
     const [crop, setCrop] = useState<Crop>();

@@ -2,17 +2,28 @@ import { StartEndView, TextView } from '../../Map'
 import { TagView } from '../../Templates/TagView'
 import { LinkedItemsHeaderView } from '../Subcomponents/LinkedItemsHeaderView'
 import { ActionButton } from '../Subcomponents/ActionsButton'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useAddFilterTag } from '../../Map/hooks/useFilter'
 import { Item, Tag } from 'utopia-ui/dist/types'
 import { useNavigate } from 'react-router-dom'
 
-export const Tabs = ({ item, offers, needs, relations, updatePermission, loading, linkItem, unlinkItem }: { item: Item, offers: Array<Tag>, needs: Array<Tag>, relations: Array<Item>, updatePermission: boolean, loading: boolean, linkItem: (id: string) => Promise<void>, unlinkItem: (id: string) => Promise<void> }) => {
+export const TabsView = ({ item, offers, needs, relations, updatePermission, loading, linkItem, unlinkItem }: { item: Item, offers: Array<Tag>, needs: Array<Tag>, relations: Array<Item>, updatePermission: boolean, loading: boolean, linkItem: (id: string) => Promise<void>, unlinkItem: (id: string) => Promise<void> }) => {
 
   const addFilterTag = useAddFilterTag();
   const [activeTab, setActiveTab] = useState<number>(1);
   const navigate = useNavigate();
 
+  const [addItemPopupType, setAddItemPopupType] = useState<string>("");
+
+  useEffect(() => {
+      scroll();
+  }, [addItemPopupType])
+  
+  function scroll() {
+      tabRef.current?.scrollIntoView();
+  }
+
+  const tabRef = useRef<HTMLFormElement>(null);
 
   const updateActiveTab = (id: number) => {
     setActiveTab(id);

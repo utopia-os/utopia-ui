@@ -63,33 +63,46 @@ function usePermissionsManager(initialPermissions: Permission[]): {
   }, []);
 
   const hasUserPermission = useCallback(
-    (collectionName: string, action: PermissionAction, item?: Item, layer?: LayerProps) => {               
+    (
+      collectionName: string, 
+      action: PermissionAction, 
+      item?: Item, 
+      layer?: LayerProps
+    ) => {
+      const evaluateCondition = (condition: any) => {
+        if (condition.user_created?._eq === "$CURRENT_USER") {
+          return item?.user_created?.id === user?.id;
+        }
+        if (condition.public_edit?._eq === true) {
+          return item?.public_edit === true;
+        }
+        return false;
+      };
+  
+      const evaluatePermissions = (permissionConditions: any) => {
+        return permissionConditions._and?.every((andCondition: any) => 
+          andCondition._or 
+            ? andCondition._or.some((orCondition: any) => evaluateCondition(orCondition))
+            : evaluateCondition(andCondition)
+        );
+      };
+  
       if (permissions.length === 0) return true;
       else if (user && user.role === adminRole) return true;
       else {
         return permissions.some(p =>
           p.action === action &&
           p.collection === collectionName &&
-          p.role === user?.role &&
           (
-            // Wenn 'item' nicht gesetzt ist, ignorieren wir die Überprüfung von 'user_created'
-            !item || !p.permissions || !p.permissions._and ||
-            p.permissions._and.some(condition => 
-              condition.user_created &&
-              condition.user_created._eq === "$CURRENT_USER" &&
-              item.user_created?.id === user?.id
-            )
-          )
-          || ( !user && p.role == null ) &&
-          (layer?.public_edit_items || item?.layer?.public_edit_items) &&
-          (
-            // Wenn 'item' nicht gesetzt ist, ignorieren wir die Überprüfung von 'public_edit'
-            !item || 
-            p.permissions?._and?.some(condition => 
-              condition.public_edit &&
-              condition.public_edit._eq == true &&
-              item.public_edit == true
-            )
+            (p.role === user?.role &&
+            (
+              !item || !p.permissions || evaluatePermissions(p.permissions)
+            )) ||
+            (p.role == null &&
+            (
+              (layer?.public_edit_items || item?.layer?.public_edit_items) &&
+              (!item || !p.permissions || evaluatePermissions(p.permissions))
+            ))
           )
         );
       }

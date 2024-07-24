@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import { useAssetApi } from "../AppShell/hooks/useAssets";
+import { useAssetApi } from "../../AppShell/hooks/useAssets";
 
 const ContactInfo = ({ email, telephone, name, avatar, link }: { email: string, telephone: string, name: string, avatar: string, link?: string }) => {
     const assetsApi = useAssetApi();
 
     return (
-        <div className="tw-bg-gray-100 tw-my-10 tw-p-6">
+        <div className="tw-bg-base-200  tw-mb-6 tw-mt-6 tw-p-6">
             <h2 className="tw-text-lg tw-font-semibold">Du hast Fragen?</h2>
             <div className="tw-mt-4 tw-flex tw-items-center">
                 {avatar && (

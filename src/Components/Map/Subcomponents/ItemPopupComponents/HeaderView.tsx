@@ -41,6 +41,7 @@ export function HeaderView({ item, api, editCallback, deleteCallback, setPositio
 
   const [address, setAdress] = React.useState<string>("");
 
+  let params = new URLSearchParams(window.location.search);
 
 
   const openDeleteModal = async (event: React.MouseEvent<HTMLElement>) => {
@@ -90,8 +91,8 @@ export function HeaderView({ item, api, editCallback, deleteCallback, setPositio
                 </svg>
               </label>
               <ul tabIndex={0} className="tw-dropdown-content tw-menu tw-p-2 tw-shadow tw-bg-base-100 tw-rounded-box tw-z-1000">
-                {((api?.updateItem && hasUserPermission(api.collectionName!, "update", item)) || item.layer?.customEditLink) && editCallback && <li>
-                  <a className="!tw-text-base-content tw-cursor-pointer" onClick={(e) => item.layer?.customEditLink ? navigate(`${item.layer.customEditLink}${item.layer.customEditParameter ? "/" + getValue(item, item.layer.customEditParameter) : ""} `) : editCallback(e)}>
+                {((api?.updateItem && hasUserPermission(api.collectionName!, "update", item))) && editCallback && <li>
+                  <a className="!tw-text-base-content tw-cursor-pointer" onClick={(e) => item.layer?.customEditLink ? navigate(`${item.layer.customEditLink}${item.layer.customEditParameter ? `/${getValue(item, item.layer.customEditParameter)}${params && "?"+params}` : ""} `) : editCallback(e)}>
                     <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor">
                       <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                     </svg>

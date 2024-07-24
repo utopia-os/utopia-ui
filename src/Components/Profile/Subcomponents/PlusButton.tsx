@@ -1,5 +1,5 @@
-import { LayerProps } from "../../types";
-import { useHasUserPermission } from "../Map/hooks/usePermissions";
+import { LayerProps } from "../../../types";
+import { useHasUserPermission } from "../../Map/hooks/usePermissions";
 
 export function PlusButton({ layer, triggerAction, color, collection="items" }: { layer?: LayerProps ,triggerAction: any, color: string, collection?:string }) {
     const hasUserPermission = useHasUserPermission();     

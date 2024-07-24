@@ -1,4 +1,4 @@
-import { AppShell, SideBar, Content, AuthProvider, Modal, LoginPage, SignupPage, Quests, RequestPasswordPage, SetNewPasswordPage, OverlayUserSettings, OverlayItemsIndexPage, OverlayItemProfile, OverlayItemProfileSettings, Permissions, Tags, SelectUser } from 'utopia-ui'
+import { AppShell, SideBar, Content, AuthProvider, Modal, LoginPage, SignupPage, Quests, RequestPasswordPage, SetNewPasswordPage, UserSettings, OverlayItemsIndexPage, ProfileView, ProfileForm, Permissions, Tags, SelectUser } from 'utopia-ui'
 import { getBottomRoutes, routes } from './routes/sidebar'
 import { Route, Routes } from 'react-router-dom'
 import MapContainer from "./pages/MapContainer"
@@ -102,9 +102,9 @@ function App() {
                 <Route path='signup' element={<SignupPage />} />
                 <Route path='reset-password' element={<RequestPasswordPage reset_url={map.url + "/set-new-password/"} />} />
                 <Route path='set-new-password' element={<SetNewPasswordPage />} />
-                <Route path="item/*" element={<OverlayItemProfile userType={map.user_type.name} />} />
-                <Route path="edit-item/*" element={<OverlayItemProfileSettings userType={map.user_type.name}/>} />
-                <Route path="user-settings" element={<OverlayUserSettings />} />
+                <Route path="item/*" element={<ProfileView userType={map.user_type.name} />} />
+                <Route path="edit-item/*" element={<ProfileForm userType={map.user_type.name}/>} />
+                <Route path="user-settings" element={<UserSettings />} />
                 <Route path="moon-calendar" element={<MoonCalendar />} />
                 <Route path="landingpage" element={<Landingpage />} />
                 <Route path="select-user" element={<SelectUser userType={map.user_type.name} />} />

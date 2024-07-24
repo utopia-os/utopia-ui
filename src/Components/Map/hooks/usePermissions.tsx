@@ -80,7 +80,7 @@ function usePermissionsManager(initialPermissions: Permission[]): {
               item.user_created?.id === user?.id
             )
           )
-          || ( !user && p.role == null ) &&
+          || 
           (layer?.public_edit_items || item?.layer?.public_edit_items) &&
           (
             // Wenn 'item' nicht gesetzt ist, ignorieren wir die Überprüfung von 'public_edit'

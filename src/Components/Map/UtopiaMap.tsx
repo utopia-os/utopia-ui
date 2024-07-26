@@ -20,6 +20,7 @@ import {FilterControl} from "./Subcomponents/Controls/FilterControl";
 import {LayerControl} from "./Subcomponents/Controls/LayerControl";
 import { useLayers } from "./hooks/useLayers";
 import { useAddVisibleLayer } from "./hooks/useFilter";
+import { GratitudeControl } from "./Subcomponents/Controls/GratitudeControl";
 
 // for refreshing map on resize (needs to be implemented)
 const mapDivRef = React.createRef();
@@ -60,21 +61,13 @@ function UtopiaMap({
 
     const selectNewItemPosition = useSelectPosition();
     const setSelectNewItemPosition = useSetSelectPosition();
-    const location = useLocation();
     const setClusterRef = useSetClusterRef();
     const clusterRef = useClusterRef();
     const setMapClicked = useSetMapClicked();
 
     const [itemFormPopup, setItemFormPopup] = useState<ItemFormPopupProps | null>(null);
 
-    const [embedded, setEmbedded] = useState<boolean>(true)
 
-    useEffect(() => {
-        let params = new URLSearchParams(location.search);
-        let urlPosition = params.get("position");
-        let embedded = params.get("embedded");
-        embedded != "true" && setEmbedded(false)
-    }, [location]);
 
 
     const layers = useLayers();
@@ -110,6 +103,7 @@ function UtopiaMap({
                         {showFilterControl && <FilterControl/>}
                         {/*todo: needed layer handling is located LayerControl*/}
                         {showLayerControl && <LayerControl></LayerControl>}
+                        {<GratitudeControl/>}
                     </Control>
                     <TileLayer
                         maxZoom={19}

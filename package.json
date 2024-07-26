@@ -1,10 +1,6 @@
 {
   "name": "utopia-ui",
-<<<<<<< HEAD
-  "version": "3.0.0-alpha.204",
-=======
   "version": "3.0.0-alpha.215",
->>>>>>> 8dc8779fe58040fb5c2a763d6519e57ddffc7ab7
   "description": "Reuseable React Components to build mapping apps for real life communities and networks",
   "repository": "https://github.com/utopia-os/utopia-ui",
   "homepage:": "https://utopia-os.org/",

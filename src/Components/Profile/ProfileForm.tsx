@@ -66,6 +66,17 @@ export function ProfileForm({ userType }: { userType: string }) {
     }, [items])
 
     useEffect(() => {
+      console.log(state.offers);
+      console.log(state.needs);
+      console.log(state.id);
+      console.log(item);
+
+
+      
+    }, [state])
+    
+
+    useEffect(() => {
         const newColor = item.layer?.itemColorField && getValue(item, item.layer?.itemColorField)
             ? getValue(item, item.layer?.itemColorField)
             : (getItemTags(item) && getItemTags(item)[0]?.color)

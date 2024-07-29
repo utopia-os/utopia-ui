@@ -103,7 +103,7 @@ export const onUpdateItem = async (state, item, tags, addTag, setLoading, naviga
 
     let offer_updates: Array<any> = [];
     //check for new offers
-    state.offers?.map(o => {
+    await state.offers?.map(o => {
         const existingOffer = item?.offers?.find(t => t.tags_id === o.id)
         existingOffer && offer_updates.push(existingOffer.id)
         if (!existingOffer && !tags.some(t => t.id === o.id)) addTag({ ...o, offer_or_need: true })
@@ -112,7 +112,7 @@ export const onUpdateItem = async (state, item, tags, addTag, setLoading, naviga
 
     let needs_updates: Array<any> = [];
 
-    state.needs?.map(n => {
+    await state.needs?.map(n => {
         const existingNeed = item?.needs?.find(t => t.tags_id === n.id)
         existingNeed && needs_updates.push(existingNeed.id)
         !existingNeed && needs_updates.push({ items_id: item?.id, tags_id: n.id })

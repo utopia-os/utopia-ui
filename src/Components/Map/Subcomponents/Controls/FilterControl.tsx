@@ -26,7 +26,7 @@ export function FilterControl() {
         <div className="tw-card tw-bg-base-100 tw-shadow-xl tw-mt-2 tw-w-fit">
             {
                 open ?
-                    <div className="tw-card-body tw-pr-4 tw-p-2 tw-w-fit tw-transition-all tw-duration-300">
+                    <div className="tw-card-body tw-pr-4 tw-min-w-[8rem] tw-p-2 tw-w-fit tw-transition-all tw-duration-300">
                         <label className="tw-btn tw-btn-sm tw-rounded-2xl tw-btn-circle tw-btn-ghost hover:tw-bg-transparent tw-absolute tw-right-0 tw-top-0 tw-text-gray-600" onClick={() => {
                             setOpen(false)
                         }}>

@@ -15,17 +15,38 @@ type InputTextProps = {
 }
 
 
-export function TextInput({labelTitle, labelStyle, type, dataField, containerStyle, inputStyle, defaultValue, placeholder, autocomplete, updateFormValue} : InputTextProps){
+export function TextInput({ labelTitle, labelStyle, type, dataField, containerStyle, inputStyle, defaultValue, placeholder, autocomplete, updateFormValue }: InputTextProps) {
+    const [inputValue, setInputValue] = useState<string>(defaultValue || "");
 
-    return(
+    useEffect(() => {
+        setInputValue(defaultValue || "");
+    }, [defaultValue]);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue = e.target.value;
+        setInputValue(newValue);
+        if (updateFormValue) {
+            updateFormValue(newValue);
+        }
+    };
+
+    return (
         <div className={`tw-form-control ${containerStyle}`}>
-            {labelTitle ? <label className="tw-label">
-                <span className={"tw-label-text tw-text-base-content " + labelStyle}>{labelTitle}</span>
-             </label> 
-             : " "} 
-            <input required type={type || "text"} name={dataField} defaultValue={defaultValue} placeholder={placeholder || ""} autoComplete={autocomplete} onChange={(e) => updateFormValue&& updateFormValue(e.target.value)}className={`tw-input  tw-input-bordered tw-w-full ${inputStyle ? inputStyle : ""}`} />
+            {labelTitle ? (
+                <label className="tw-label">
+                    <span className={`tw-label-text tw-text-base-content ${labelStyle}`}>{labelTitle}</span>
+                </label>
+            ) : null}
+            <input
+                required
+                type={type || "text"}
+                name={dataField}
+                value={inputValue}
+                placeholder={placeholder || ""}
+                autoComplete={autocomplete}
+                onChange={handleChange}
+                className={`tw-input tw-input-bordered tw-w-full ${inputStyle || ""}`}
+            />
         </div>
-    )
+    );
 }
-
-

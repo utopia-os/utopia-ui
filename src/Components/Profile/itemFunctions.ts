@@ -162,7 +162,7 @@ export const onUpdateItem = async (state, item, tags, addTag, setLoading, naviga
         }
     });
 
- 
+    //take care that addTag request comes before item request
     await sleep(200); 
 
     if (!item.new) {

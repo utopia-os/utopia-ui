@@ -71,7 +71,7 @@ export function SideBar({ routes, bottomRoutes }: { routes: route[], bottomRoute
       data-te-sidenav-content="#app-content"
       data-te-sidenav-slim-collapsed="true"
       data-te-sidenav-slim-width="56"
-      data-te-sidenav-width="168">
+      data-te-sidenav-width="180">
       <div className={`tw-flex tw-flex-col  ${embedded ? "tw-h-full" :"tw-h-[calc(100dvh-64px)]"}`}>
         <ul className="tw-menu tw-w-full tw-bg-base-100 tw-text-base-content tw-p-0" data-te-sidenav-menu-ref>
           {

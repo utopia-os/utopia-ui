@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { useEffect } from 'react';
-import { decodeTag } from '../../Utils/FormatTags';
 import { TagView } from '../Templates/TagView';
 
 export const Autocomplete = ({ inputProps, suggestions, onSelected, pushFilteredSuggestions, setFocus }: { inputProps: any, suggestions: Array<any>, onSelected: (suggestion) => void, pushFilteredSuggestions?: Array<any>, setFocus?: boolean }) => {

@@ -130,7 +130,7 @@ export function ProfileForm({ userType }: { userType: string }) {
                     )}
 
                     {template == "simple" &&
-                        <SimpleForm item={item} setState={setState}></SimpleForm>
+                        <SimpleForm item={item} state={state} setState={setState}></SimpleForm>
                     }
 
                     {template == "tabs" &&

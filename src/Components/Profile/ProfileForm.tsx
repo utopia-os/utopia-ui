@@ -63,18 +63,7 @@ export function ProfileForm({ userType }: { userType: string }) {
 
         !item && setItem({ id: crypto.randomUUID(), name: user ? user.first_name : "", text: "", layer: layer, new: true })
 
-    }, [items])
-
-    useEffect(() => {
-      console.log(state.offers);
-      console.log(state.needs);
-      console.log(state.id);
-      console.log(item);
-
-
-      
-    }, [state])
-    
+    }, [items])   
 
     useEffect(() => {
         const newColor = item.layer?.itemColorField && getValue(item, item.layer?.itemColorField)

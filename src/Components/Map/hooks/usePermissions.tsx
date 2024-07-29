@@ -80,7 +80,11 @@ function usePermissionsManager(initialPermissions: Permission[]): {
       };
   
       const evaluatePermissions = (permissionConditions: any) => {
-        return permissionConditions._and?.every((andCondition: any) => 
+        if (!permissionConditions || !permissionConditions._and) {
+          return true;
+        }
+  
+        return permissionConditions._and.every((andCondition: any) => 
           andCondition._or 
             ? andCondition._or.some((orCondition: any) => evaluateCondition(orCondition))
             : evaluateCondition(andCondition)
@@ -96,12 +100,12 @@ function usePermissionsManager(initialPermissions: Permission[]): {
           (
             (p.role === user?.role &&
             (
-              !item || !p.permissions || evaluatePermissions(p.permissions)
+              !item || evaluatePermissions(p.permissions)
             )) ||
             (p.role == null &&
             (
               (layer?.public_edit_items || item?.layer?.public_edit_items) &&
-              (!item || !p.permissions || evaluatePermissions(p.permissions))
+              (!item || evaluatePermissions(p.permissions))
             ))
           )
         );

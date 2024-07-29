@@ -22,12 +22,6 @@ import { TagsControl } from '../Map/Subcomponents/Controls/TagsControl';
 import { useFilterTags } from '../Map/hooks/useFilter';
 
 
-type breadcrumb = {
-    name: string,
-    path: string
-}
-
-
 export const OverlayItemsIndexPage = ({ url, layerName, parameterField, plusButton = true }: { layerName: string, url: string, parameterField: string, plusButton?: boolean }) => {
 
 
@@ -44,6 +38,11 @@ export const OverlayItemsIndexPage = ({ url, layerName, parameterField, plusButt
     useEffect(() => {
         scroll();
     }, [addItemPopupType])
+
+    useEffect(() => {
+      setAddItemPopupType("");
+    }, [layerName])
+    
 
     const tags = useTags();
     const addTag = useAddTag();
@@ -120,42 +119,44 @@ export const OverlayItemsIndexPage = ({ url, layerName, parameterField, plusButt
                         <div className='tw-columns-1 md:tw-columns-2 lg:tw-columns-3 2xl:tw-columns-4 tw-gap-6 tw-pt-4'>
                             {
                                 items?.filter(i => i.layer?.name === layerName).
-                                filter(item =>
-                                    filterTags.length == 0 ? item : filterTags.every(tag => getItemTags(item).some(filterTag => filterTag.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())))?.
-                                sort((a, b) => {
-                                    // Convert date_created to milliseconds, handle undefined by converting to lowest possible date (0 milliseconds)
-                                    const dateA = a.date_updated ? new Date(a.date_updated).getTime() : a.date_created ? new Date(a.date_created).getTime() : 0;
-                                    const dateB = b.date_updated ? new Date(b.date_updated).getTime() : b.date_created ? new Date(b.date_created).getTime() : 0;
-                                    return dateB - dateA; // Subtracts milliseconds which are numbers
-                                })?.
-                                map((i, k) => (
-                                    <div key={k} className="tw-break-inside-avoid tw-mb-6">
-                                        <ItemCard i={i} loading={loading} url={url} parameterField={parameterField} deleteCallback={() => deleteItem(i)} />
-                                    </div>
-                                ))
+                                    filter(item =>
+                                        filterTags.length == 0 ? item : filterTags.every(tag => getItemTags(item).some(filterTag => filterTag.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())))?.
+                                    sort((a, b) => {
+                                        // Convert date_created to milliseconds, handle undefined by converting to lowest possible date (0 milliseconds)
+                                        const dateA = a.date_updated ? new Date(a.date_updated).getTime() : a.date_created ? new Date(a.date_created).getTime() : 0;
+                                        const dateB = b.date_updated ? new Date(b.date_updated).getTime() : b.date_created ? new Date(b.date_created).getTime() : 0;
+                                        return dateB - dateA; // Subtracts milliseconds which are numbers
+                                    })?.
+                                    map((i, k) => (
+                                        <div key={k} className="tw-break-inside-avoid tw-mb-6">
+                                            <ItemCard i={i} loading={loading} url={url} parameterField={parameterField} deleteCallback={() => deleteItem(i)} />
+                                        </div>
+                                    ))
                             }
-                        </div>
-                        {addItemPopupType == "place" && (
-                            <form ref={tabRef} autoComplete='off' onSubmit={e => submitNewItem(e)}>
-                                <div className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-p-6 tw-mb-10'>
-                                    <label className="tw-btn tw-btn-sm tw-rounded-2xl tw-btn-circle tw-btn-ghost hover:tw-bg-transparent tw-absolute tw-right-0 tw-top-0 tw-text-gray-600" onClick={() => setAddItemPopupType("")}>
-                                        <p className='tw-text-center'>✕</p>
-                                    </label>
-                                    <TextInput type="text" placeholder="Name" dataField="name" defaultValue={""} inputStyle='' />
-                                    {layer?.itemType.show_start_end_input && <PopupStartEndInput />}
-                                    <TextAreaInput placeholder="Text" dataField="text" defaultValue={""} inputStyle='tw-h-40 tw-mt-5' />
-                                    <div className='tw-flex tw-justify-center'>
-                                        <button className={loading ? 'tw-btn tw-btn-disabled tw-mt-5 tw-place-self-center' : 'tw-btn tw-mt-5 tw-place-self-center'} type='submit'>
-                                            {loading ? <span className="tw-loading tw-loading-spinner"></span> : 'Save'}
-                                        </button>
+                            {addItemPopupType == "place" && (
+                                <form ref={tabRef} autoComplete='off' onSubmit={e => submitNewItem(e)}>
+                                    <div className='tw-cursor-pointer tw-break-inside-avoid tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-p-6 tw-mb-10'>
+                                        <label className="tw-btn tw-btn-sm tw-rounded-2xl tw-btn-circle tw-btn-ghost hover:tw-bg-transparent tw-absolute tw-right-0 tw-top-0 tw-text-gray-600" onClick={() => setAddItemPopupType("")}>
+                                            <p className='tw-text-center'>✕</p>
+                                        </label>
+                                        <TextInput type="text" placeholder="Name" dataField="name" defaultValue={""} inputStyle='' />
+                                        {layer?.itemType.show_start_end_input && <PopupStartEndInput />}
+                                        <TextAreaInput placeholder="Text" dataField="text" defaultValue={""} inputStyle='tw-h-40 tw-mt-5' />
+                                        <div className='tw-flex tw-justify-center'>
+                                            <button className={loading ? 'tw-btn tw-btn-disabled tw-mt-5 tw-place-self-center' : 'tw-btn tw-mt-5 tw-place-self-center'} type='submit'>
+                                                {loading ? <span className="tw-loading tw-loading-spinner"></span> : 'Save'}
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
-                        )}
+                                </form>
+                            )}
+                        </div>
+
                     </div>
                 </div>
             </MapOverlayPage>
 
             {plusButton && <PlusButton layer={layer} triggerAction={() => { setAddItemPopupType("place"); scroll(); }} color={'#777'} collection='items' />}
         </>
-    )}
+    )
+}

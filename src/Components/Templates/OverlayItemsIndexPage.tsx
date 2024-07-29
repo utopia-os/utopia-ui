@@ -120,7 +120,7 @@ export const OverlayItemsIndexPage = ({ url, layerName, parameterField, plusButt
                             {
                                 items?.filter(i => i.layer?.name === layerName).
                                     filter(item =>
-                                        filterTags.length == 0 ? item : filterTags.every(tag => getItemTags(item).some(filterTag => filterTag.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())))?.
+                                        filterTags.length == 0 ? item : filterTags.some(tag => getItemTags(item).some(filterTag => filterTag.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())))?.
                                     sort((a, b) => {
                                         // Convert date_created to milliseconds, handle undefined by converting to lowest possible date (0 milliseconds)
                                         const dateA = a.date_updated ? new Date(a.date_updated).getTime() : a.date_created ? new Date(a.date_created).getTime() : 0;

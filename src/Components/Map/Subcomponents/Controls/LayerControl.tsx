@@ -17,7 +17,7 @@ export function LayerControl() {
     const addVisibleLayer = useAddVisibleLayer();
 
     return (
-        <div className="tw-card tw-bg-base-100 tw-shadow-xl tw-mt-2 tw-w-fit">
+        <div className="tw-card tw-bg-base-100 tw-shadow-xl tw-mt-2 tw-w-fit tw-pr-4">
             {
                 open ?
                     <div className="tw-card-body tw-p-2 tw-w-36 tw-transition-all tw-duration-300">

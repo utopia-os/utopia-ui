@@ -149,7 +149,7 @@ export const Layer = ({
                 items.
                     filter(item => item.layer?.name === name)?.
                     filter(item =>
-                        filterTags.length == 0 ? item : filterTags.every(tag => getItemTags(item).some(filterTag => filterTag.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())))?.
+                        filterTags.length == 0 ? item : filterTags.some(tag => getItemTags(item).some(filterTag => filterTag.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())))?.
                     filter(item => item.layer && isLayerVisible(item.layer)).
                     filter(item => item.group_type && isGroupTypeVisible(item.group_type)|| visibleGroupTypes.length == 0).
                     map((item: Item) => {

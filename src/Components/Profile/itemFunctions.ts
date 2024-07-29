@@ -4,6 +4,8 @@ import { hashTagRegex } from '../../Utils/HashTagRegex';
 import { randomColor } from '../../Utils/RandomColor';
 import { toast } from 'react-toastify';
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export const submitNewItem = async (evt: any, type: string, item, user, setLoading, tags, addTag, addItem, linkItem, resetFilterTags, layers, addItemPopupType, setAddItemPopupType) => {
     evt.preventDefault();
     const formItem: Item = {} as Item;
@@ -142,24 +144,26 @@ export const onUpdateItem = async (state, item, tags, addTag, setLoading, naviga
     let offers_state: Array<any> = [];
     let needs_state: Array<any> = [];
 
-    await state.offers.map(o => {
+    state.offers.map(o => {
         offers_state.push({ items_id: item?.id, tags_id: o.id })
     });
 
-    await state.needs.map(n => {
+    state.needs.map(n => {
         needs_state.push({ items_id: item?.id, tags_id: n.id })
     });
 
     changedItem = { ...changedItem, offers: offers_state, needs: needs_state };
 
+    setLoading(true);
 
-    state.text.toLocaleLowerCase().match(hashTagRegex)?.map(tag => {
+    await state.text.toLocaleLowerCase().match(hashTagRegex)?.map(tag => {
         if (!tags.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
             addTag({ id: crypto.randomUUID(), name: encodeTag(tag.slice(1).toLocaleLowerCase()), color: randomColor() })
         }
     });
 
-    setLoading(true);
+ 
+    await sleep(200); 
 
     if (!item.new) {
         item?.layer?.api?.updateItem && toast.promise(
@@ -181,6 +185,7 @@ export const onUpdateItem = async (state, item, tags, addTag, setLoading, naviga
 
     }
     else {
+        item.new = false;
         item.layer?.api?.createItem && toast.promise(
             item.layer?.api?.createItem(changedItem),
             {

@@ -45,6 +45,7 @@ export const Autocomplete = ({ inputProps, suggestions, onSelected, pushFiltered
   }
 
   const handleKeyDown = (event) => {    
+    event.preventDefault();
     switch (event.key) {
       case 'ArrowDown':
         heighlightedSuggestion < filteredSuggestions.length-1 && setHeighlightedSuggestion(current => current +1)
@@ -53,7 +54,6 @@ export const Autocomplete = ({ inputProps, suggestions, onSelected, pushFiltered
         heighlightedSuggestion>0 && setHeighlightedSuggestion(current => current -1)
         break;
       case 'Enter':
-        event.preventDefault();
         if(filteredSuggestions.length > 0) {
           onSelected(filteredSuggestions[heighlightedSuggestion]);
           setHeighlightedSuggestion(0);

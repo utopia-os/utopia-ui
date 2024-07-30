@@ -127,12 +127,13 @@ function useFilterManager(initialTags: Tag[]): {
 
   const [searchPhrase, searchPhraseSet] = React.useState<string>("");
 
-  const addFilterTag = (tag: Tag) => {
-
-    let params = new URLSearchParams(window.location.search);
-    let urlTags = params.get("tags");
-    if(!urlTags?.includes(tag.name))
-    params.set("tags", `${urlTags ? urlTags : ""}${urlTags? ',' : ''}${tag.name}`)
+  const addFilterTag = useCallback((tag: Tag) => {
+    let params = new URLSearchParams(location.search);
+    let urlTags = params.get("tags")
+    let decodedTags = urlTags ? decodeURIComponent(urlTags) : "";
+    
+    if(!decodedTags?.includes(tag.name))
+    params.set("tags", `${urlTags ? urlTags : ""}${urlTags? ';' : ''}${tag.name}`)
     if(windowDimensions.width < 786 && location.pathname.split("/").length > 2) navigate("/" + `${params ? `?${params}` : ""}`); 
     else navigate(location.pathname + `${params ? `?${params}` : ""}`); 
      
@@ -144,14 +145,14 @@ function useFilterManager(initialTags: Tag[]): {
       tag,
     });
 
-  };
+  }, []);
 
   const removeFilterTag = useCallback((name: string) => {
 
     let params = new URLSearchParams(window.location.search);
     let urlTags = params.get("tags");
     let newUrlTags = "";
-    let tags = urlTags?.split(",");
+    let tags = urlTags?.split(";");
     if(tags?.length==0 && urlTags?.length && urlTags?.length > 0) tags[0]=urlTags;
       tags?.map(urlTag => {
         if(!(urlTag.toLocaleLowerCase() === name.toLocaleLowerCase()))

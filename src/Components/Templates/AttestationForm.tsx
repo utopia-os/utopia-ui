@@ -4,12 +4,11 @@ import { useItems } from '../Map/hooks/useItems'
 import { useAssetApi } from '../AppShell/hooks/useAssets'
 import { EmojiPicker } from './EmojiPicker';
 import { Link } from 'react-router-dom';
-import { ColorPicker } from '../Profile/Subcomponents/ColorPicker';
 import { useRef, useState } from 'react';
-import { Item, UserItem } from '../../types';
+import { Item, ItemsApi } from '../../types';
 import { useEffect } from 'react';
 
-export const AttestationForm = () => {
+export const AttestationForm = ({api}:{api:ItemsApi<any>}) => {
 
     const items = useItems();
     const assetsApi = useAssetApi();
@@ -34,6 +33,16 @@ export const AttestationForm = () => {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
     };
+
+    const sendAttestation = async () => {
+        api.createItem && api.createItem({
+            text: inputValue,
+            symbol: "🔥",
+            color: "",
+            shape: "",
+            to: users
+        })
+    }
 
 
 

@@ -51,6 +51,9 @@ export function ProfileForm({ userType }: { userType: string }) {
     const getItemTags = useGetItemTags();
     const items = useItems();
 
+    const [urlParams, setUrlParams] = useState(new URLSearchParams(location.search));
+
+
     useEffect(() => {
         item && hasUserPermission("items", "update", item) && setUpdatePermission(true);
     }, [item])
@@ -119,8 +122,6 @@ export function ProfileForm({ userType }: { userType: string }) {
         setTemplate(item.layer?.itemType.template || userType);
     }, [userType, item])
 
-    let params = new URLSearchParams(window.location.search);
-
     return (
         <>
             <MapOverlayPage backdrop className='tw-mx-4 tw-mt-4 tw-mb-4 tw-overflow-x-hidden tw-w-[calc(100%-32px)]  md:tw-w-[calc(50%-32px)] tw-max-w-3xl !tw-left-auto tw-top-0 tw-bottom-0'>
@@ -138,11 +139,11 @@ export function ProfileForm({ userType }: { userType: string }) {
                     }
 
                     {template == "tabs" &&
-                        <TabsForm loading={loading} item={item} state={state} setState={setState} updatePermission={updatePermission} linkItem={(id) => linkItem(id, item, updateItem)} unlinkItem={(id) => unlinkItem(id, item, updateItem)}></TabsForm>
+                        <TabsForm loading={loading} item={item} state={state} setState={setState} updatePermission={updatePermission} linkItem={(id) => linkItem(id, item, updateItem)} unlinkItem={(id) => unlinkItem(id, item, updateItem)} setUrlParams={setUrlParams}></TabsForm>
                     }
 
                     <div className="tw-mt-4 tw-mb-4">
-                        <button className={loading ? " tw-loading tw-btn tw-float-right" : "tw-btn tw-float-right"} onClick={() => onUpdateItem(state, item, tags, addTag, setLoading, navigate, updateItem, addItem, user, params)} style={true ? { backgroundColor: `${item.layer?.itemColorField && getValue(item, item.layer?.itemColorField) ? getValue(item, item.layer?.itemColorField) : (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor)}`, color: "#fff" } : { color: "#fff" }}>Update</button>
+                        <button className={loading ? " tw-loading tw-btn tw-float-right" : "tw-btn tw-float-right"} onClick={() => onUpdateItem(state, item, tags, addTag, setLoading, navigate, updateItem, addItem, user, urlParams)} style={true ? { backgroundColor: `${item.layer?.itemColorField && getValue(item, item.layer?.itemColorField) ? getValue(item, item.layer?.itemColorField) : (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor)}`, color: "#fff" } : { color: "#fff" }}>Update</button>
                     </div>
 
                 </div>

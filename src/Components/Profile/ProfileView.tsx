@@ -119,6 +119,9 @@ export function ProfileView({ userType }: { userType: string }) {
         setTemplate(item.layer?.itemType.template || userType);
     }, [userType, item])
 
+    const [urlParams, setUrlParams] = useState(new URLSearchParams(location.search));
+
+
     return (
         <>
             {item &&
@@ -137,7 +140,7 @@ export function ProfileView({ userType }: { userType: string }) {
                         }
 
                         {template == "tabs" &&
-                            <TabsView item={item} loading={loading} offers={offers} needs={needs} relations={relations} updatePermission={updatePermission} linkItem={(id) => linkItem(id, item, updateItem)} unlinkItem={(id) => unlinkItem(id, item, updateItem)}/>
+                            <TabsView setUrlParams={setUrlParams} item={item} loading={loading} offers={offers} needs={needs} relations={relations} updatePermission={updatePermission} linkItem={(id) => linkItem(id, item, updateItem)} unlinkItem={(id) => unlinkItem(id, item, updateItem)}/>
                         }
                     </>
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { TextAreaInput, TextInput } from "../../Input"
 import { PopupStartEndInput, TextView } from "../../Map"
 import { ActionButton } from "../Subcomponents/ActionsButton"
@@ -7,27 +7,27 @@ import { TagsWidget } from "../Subcomponents/TagsWidget"
 import { useNavigate } from "react-router-dom"
 import { useUpdateItem } from "../../Map/hooks/useItems"
 
-export const TabsForm = ({ item, state, setState, updatePermission, linkItem, unlinkItem, loading }) => {
+export const TabsForm = ({ item, state, setState, updatePermission, linkItem, unlinkItem, loading, setUrlParams }) => {
 
     const [activeTab, setActiveTab] = useState<number>(1);
     const navigate = useNavigate();
     const updateItem = useUpdateItem();
 
-    const updateActiveTab = (id: number) => {
+    const updateActiveTab = useCallback((id: number) => {
         setActiveTab(id);
-
+    
         let params = new URLSearchParams(window.location.search);
-        let urlTab = params.get("tab");
-        if (!urlTab?.includes(id.toString()))
-            params.set("tab", `${id ? id : ""}`)
-        navigate(location.pathname + "?" + params.toString());
-    }
-
-    useEffect(() => {
+        params.set("tab", `${id}`);
+        const newUrl = location.pathname + "?" + params.toString();
+        window.history.pushState({}, '', newUrl);
+        setUrlParams(params);
+      }, [location.pathname]);
+        
+      useEffect(() => {
         let params = new URLSearchParams(location.search);
         let urlTab = params.get("tab");
-        urlTab ? setActiveTab(Number(urlTab)) : setActiveTab(1);
-    }, [location])
+        setActiveTab(urlTab ? Number(urlTab) : 1);
+      }, [location.search]);
 
     return (
         <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-3">

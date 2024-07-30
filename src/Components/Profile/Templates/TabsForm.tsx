@@ -33,7 +33,7 @@ export const TabsForm = ({ item, state, setState, updatePermission, linkItem, un
         <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-3">
             <input type="radio" name="my_tabs_2" role="tab" className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`} aria-label="Info" checked={activeTab == 1 && true} onChange={() => updateActiveTab(1)} />
             <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-border-[var(--fallback-bc,oklch(var(--bc)/0.2))] tw-rounded-box tw-h-[calc(100dvh-332px)] tw-min-h-56 tw-border-none">
-                <div className="tw-flex tw-flex-col tw-h-full tw-pt-4">
+                <div className={`tw-flex tw-flex-col tw-h-full ${item.layer.itemType.show_start_end_input && "tw-pt-4"}`}>
                 {item.layer.itemType.show_start_end_input &&
                 <PopupStartEndInput
                 item={item}

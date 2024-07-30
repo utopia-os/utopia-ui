@@ -53,6 +53,7 @@ export const Autocomplete = ({ inputProps, suggestions, onSelected, pushFiltered
         heighlightedSuggestion>0 && setHeighlightedSuggestion(current => current -1)
         break;
       case 'Enter':
+        event.preventDefault();
         if(filteredSuggestions.length > 0) {
           onSelected(filteredSuggestions[heighlightedSuggestion]);
           setHeighlightedSuggestion(0);

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import { TextAreaInput } from "../../Input"
-import { TextView } from "../../Map"
+import { TextAreaInput, TextInput } from "../../Input"
+import { PopupStartEndInput, TextView } from "../../Map"
 import { ActionButton } from "../Subcomponents/ActionsButton"
 import { LinkedItemsHeaderView } from "../Subcomponents/LinkedItemsHeaderView"
 import { TagsWidget } from "../Subcomponents/TagsWidget"
@@ -20,7 +20,7 @@ export const TabsForm = ({ item, state, setState, updatePermission, linkItem, un
         let urlTab = params.get("tab");
         if (!urlTab?.includes(id.toString()))
             params.set("tab", `${id ? id : ""}`)
-        navigate(location.pathname+ "?" + params.toString());
+        navigate(location.pathname + "?" + params.toString());
     }
 
     useEffect(() => {
@@ -30,13 +30,41 @@ export const TabsForm = ({ item, state, setState, updatePermission, linkItem, un
     }, [location])
 
     return (
-        <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-4">
+        <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-3">
             <input type="radio" name="my_tabs_2" role="tab" className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`} aria-label="Info" checked={activeTab == 1 && true} onChange={() => updateActiveTab(1)} />
             <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-border-[var(--fallback-bc,oklch(var(--bc)/0.2))] tw-rounded-box tw-h-[calc(100dvh-332px)] tw-min-h-56 tw-border-none">
-                <TextAreaInput placeholder="About me ..." defaultValue={item?.text ? item.text : ""} updateFormValue={(v) => setState(prevState => ({
+                <div className="tw-flex tw-flex-col tw-h-full tw-pt-4">
+                {item.layer.itemType.show_start_end_input &&
+                <PopupStartEndInput
+                item={item}
+                showLabels={false}
+                updateEndValue={(e) => setState(prevState => ({
                     ...prevState,
-                    text: v
-                }))} containerStyle='tw-h-full' inputStyle='tw-h-full tw-border-t-0 tw-rounded-tl-none' />
+                    end: e
+                }))}
+                updateStartValue={(s) => setState(prevState => ({
+                    ...prevState,
+                    start: s
+                }))}></PopupStartEndInput>
+                }
+
+                    <TextAreaInput placeholder="About ..." defaultValue={item?.text ? item.text : ""} updateFormValue={(v) => setState(prevState => ({
+                        ...prevState,
+                        text: v
+                    }))} containerStyle='tw-grow' inputStyle={`tw-h-full  ${!item.layer.itemType.show_start_end_input && "tw-border-t-0 tw-rounded-tl-none"}`} />
+                    <div>
+                    <TextAreaInput
+                            placeholder="contact info"
+                            defaultValue={state.contact || ""}
+                            updateFormValue={(c) => setState(prevState => ({
+                                ...prevState,
+                                contact: c
+                            }))}
+                            inputStyle="tw-h-24"
+                            containerStyle="tw-pt-4"
+                        />
+                    </div>
+                </div>
             </div>
             {item.layer?.itemType.offers_and_needs &&
                 <>

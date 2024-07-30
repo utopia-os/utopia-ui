@@ -48,11 +48,13 @@ export const TabsView = ({ item, offers, needs, relations, updatePermission, loa
         aria-label="Info" checked={activeTab == 1 && true}
         onChange={() => updateActiveTab(1)} />
       <div role="tabpanel"
-        className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-4 tw-mb-4 tw-overflow-x-hidden">
+        className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-4 tw-mb-4 tw-overflow-x-hidden tw-flex tw-flex-col">
         {item.layer?.itemType.show_start_end &&
           <div className='tw-max-w-xs'><StartEndView item={item}></StartEndView></div>
         }
         <TextView item={item} />
+        <div className='tw-h-4'></div>
+        <TextView item={item} itemTextField='contact'/>
       </div>
 
       {item.layer?.itemType.offers_and_needs &&

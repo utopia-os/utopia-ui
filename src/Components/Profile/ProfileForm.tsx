@@ -31,7 +31,9 @@ export function ProfileForm({ userType }: { userType: string }) {
         markerIcon: "",
         offers: [] as Tag[],
         needs: [] as Tag[],
-        relations: [] as Item[]
+        relations: [] as Item[],
+        start: "",
+        end: ""
     });
 
     const [updatePermission, setUpdatePermission] = useState<boolean>(false);
@@ -105,7 +107,9 @@ export function ProfileForm({ userType }: { userType: string }) {
             markerIcon: item?.marker_icon ?? "",
             offers: offers,
             needs: needs,
-            relations: relations
+            relations: relations,
+            start: item?.start ?? "",
+            end: item?.end ?? ""
         });
     }, [item, tags, items]);
 

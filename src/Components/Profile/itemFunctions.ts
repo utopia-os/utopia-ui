@@ -119,23 +119,24 @@ export const onUpdateItem = async (state, item, tags, addTag, setLoading, naviga
         existingNeed && needs_updates.push(existingNeed.id)
         !existingNeed && needs_updates.push({ items_id: item?.id, tags_id: n.id })
         !existingNeed && !tags.some(t => t.id === n.id) && addTag({ ...n, offer_or_need: true })
-    });
-
+    });    
 
     // update profile item in current state
     changedItem = {
         id: state.id,
-        group_type: state.groupType,
-        status: state.status,
         name: state.name,
-        subname: state.subname,
-        text: state.text,
-        color: state.color,
+        ...state.subname && {subname: state.subname},
+        ...state.text && {text: state.text},
+        ...state.color && {color: state.color},
         position: item.position,
-        contact: state.contact,
-        telephone: state.telephone,
+        ...state.groupType && {group_type: state.groupType},
+        ...state.status && {status: state.status},
+        ...state.contact && {contact: state.contact},
+        ...state.telephone && {telephone: state.telephone},
+        ...state.end && {end: state.end},
+        ...state.start && {start: state.start},
         ...state.markerIcon && { markerIcon: state.markerIcon },
-        next_appointment: state.nextAppointment,
+        ...state.nextAppointment && {next_appointment: state.nextAppointment},
         ...state.image.length > 10 && { image: state.image },
         ...state.offers.length > 0 && { offers: offer_updates },
         ...state.needs.length > 0 && { needs: needs_updates }

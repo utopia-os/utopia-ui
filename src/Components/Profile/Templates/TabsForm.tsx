@@ -48,13 +48,13 @@ export const TabsForm = ({ item, state, setState, updatePermission, linkItem, un
                 }))}></PopupStartEndInput>
                 }
 
-                    <TextAreaInput placeholder="About ..." defaultValue={item?.text ? item.text : ""} updateFormValue={(v) => setState(prevState => ({
+                    <TextAreaInput placeholder="about ..." defaultValue={item?.text ? item.text : ""} updateFormValue={(v) => setState(prevState => ({
                         ...prevState,
                         text: v
                     }))} containerStyle='tw-grow' inputStyle={`tw-h-full  ${!item.layer.itemType.show_start_end_input && "tw-border-t-0 tw-rounded-tl-none"}`} />
                     <div>
                     <TextAreaInput
-                            placeholder="contact info"
+                            placeholder="contact info ..."
                             defaultValue={state.contact || ""}
                             updateFormValue={(c) => setState(prevState => ({
                                 ...prevState,
@@ -77,7 +77,7 @@ export const TabsForm = ({ item, state, setState, updatePermission, linkItem, un
                                     offers: v
                                 }))} placeholder="enter your offers" containerStyle='tw-bg-transparent tw-w-full tw-h-full tw-mt-3 tw-text-xs tw-h-[calc(100%-1rem)] tw-min-h-[5em] tw-pb-2 tw-overflow-auto' />
                             </div>
-                            <div className='tw-w-full tw-h-[calc(50%-0.75em)] '>
+                            <div className='tw-w-full tw-h-[calc(50%-1.5em)]'>
                                 <TagsWidget defaultTags={state.needs} onUpdate={(v) => setState(prevState => ({
                                     ...prevState,
                                     needs: v
@@ -90,7 +90,7 @@ export const TabsForm = ({ item, state, setState, updatePermission, linkItem, un
             {item.layer?.itemType.relations &&
                 <>
                     <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Relations" checked={activeTab == 7 && true} onChange={() => updateActiveTab(7)} />
-                    <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-340px)] tw-overflow-y-auto tw-pt-4 tw-pb-1 -tw-mx-4 tw-overflow-x-hidden fade">
+                    <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-332px)] tw-overflow-y-auto tw-pt-4 tw-pb-1 -tw-mx-4 tw-overflow-x-hidden fade">
                         <div className='tw-h-full'>
                             <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-1 2xl:tw-grid-cols-2 tw-mb-4'>
                                 {state.relations && state.relations.map(i =>

@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { useEffect } from 'react';
-import { decodeTag } from '../../Utils/FormatTags';
 import { TagView } from '../Templates/TagView';
 
 export const Autocomplete = ({ inputProps, suggestions, onSelected, pushFilteredSuggestions, setFocus }: { inputProps: any, suggestions: Array<any>, onSelected: (suggestion) => void, pushFilteredSuggestions?: Array<any>, setFocus?: boolean }) => {
@@ -46,6 +45,7 @@ export const Autocomplete = ({ inputProps, suggestions, onSelected, pushFiltered
   }
 
   const handleKeyDown = (event) => {    
+    event.preventDefault();
     switch (event.key) {
       case 'ArrowDown':
         heighlightedSuggestion < filteredSuggestions.length-1 && setHeighlightedSuggestion(current => current +1)
@@ -68,7 +68,7 @@ export const Autocomplete = ({ inputProps, suggestions, onSelected, pushFiltered
 
   return (
     <div>
-      <input ref={inputRef} {...inputProps} type="text" onChange={(e) => handleChange(e)} onKeyDown={handleKeyDown}/>
+      <input ref={inputRef} {...inputProps} type="text" onChange={(e) => handleChange(e)} tabindex="-1" onKeyDown={handleKeyDown}/>
       <ul className={`tw-absolute tw-z-[4000] ${filteredSuggestions.length>0 && 'tw-bg-base-100 tw-rounded-xl tw-p-2'}`}>
         {filteredSuggestions.map((suggestion, index) => (
           <li key={index} onClick={() => handleSuggestionClick(suggestion)}><TagView heighlight={index == heighlightedSuggestion} tag={suggestion}></TagView></li>

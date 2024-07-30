@@ -2,15 +2,15 @@ import { StartEndView, TextView } from '../../Map'
 import { TagView } from '../../Templates/TagView'
 import { LinkedItemsHeaderView } from '../Subcomponents/LinkedItemsHeaderView'
 import { ActionButton } from '../Subcomponents/ActionsButton'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useAddFilterTag } from '../../Map/hooks/useFilter'
 import { Item, Tag } from 'utopia-ui/dist/types'
 import { useNavigate } from 'react-router-dom'
 
-export const TabsView = ({ item, offers, needs, relations, updatePermission, loading, linkItem, unlinkItem }: { item: Item, offers: Array<Tag>, needs: Array<Tag>, relations: Array<Item>, updatePermission: boolean, loading: boolean, linkItem: (id: string) => Promise<void>, unlinkItem: (id: string) => Promise<void> }) => {
+export const TabsView = ({ item, offers, needs, relations, updatePermission, loading, linkItem, unlinkItem, setUrlParams }: { item: Item, offers: Array<Tag>, needs: Array<Tag>, relations: Array<Item>, updatePermission: boolean, loading: boolean, linkItem: (id: string) => Promise<void>, unlinkItem: (id: string) => Promise<void> , setUrlParams: any}) => {
 
   const addFilterTag = useAddFilterTag();
-  const [activeTab, setActiveTab] = useState<number>(1);
+  const [activeTab, setActiveTab] = useState<number>();
   const navigate = useNavigate();
 
   const [addItemPopupType, setAddItemPopupType] = useState<string>("");
@@ -25,21 +25,22 @@ export const TabsView = ({ item, offers, needs, relations, updatePermission, loa
 
   const tabRef = useRef<HTMLFormElement>(null);
 
-  const updateActiveTab = (id: number) => {
+  const updateActiveTab = useCallback((id: number) => {
     setActiveTab(id);
 
     let params = new URLSearchParams(window.location.search);
-    let urlTab = params.get("tab");
-    if (!urlTab?.includes(id.toString()))
-      params.set("tab", `${id ? id : ""}`)
-    navigate(location.pathname+ "?" + params.toString());
-  }
+    params.set("tab", `${id}`);
+    const newUrl = location.pathname + "?" + params.toString();
+    window.history.pushState({}, '', newUrl);
+    setUrlParams(params);
+  }, [location.pathname]);
+
 
   useEffect(() => {
     let params = new URLSearchParams(location.search);
     let urlTab = params.get("tab");
-    urlTab ? setActiveTab(Number(urlTab)) : setActiveTab(1);
-  }, [location])
+    setActiveTab(urlTab ? Number(urlTab) : 1);
+  }, [location.search]);
 
   const attestations = [{
     from: "Timo",
@@ -104,6 +105,8 @@ export const TabsView = ({ item, offers, needs, relations, updatePermission, loa
           <div className='tw-max-w-xs'><StartEndView item={item}></StartEndView></div>
         }
         <TextView item={item} />
+        <div className='tw-h-4'></div>
+        <TextView item={item} itemTextField='contact'/>
       </div>
       {item.layer?.itemType.questlog &&
                 <>

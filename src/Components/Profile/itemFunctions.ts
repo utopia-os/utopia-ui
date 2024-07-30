@@ -4,6 +4,8 @@ import { hashTagRegex } from '../../Utils/HashTagRegex';
 import { randomColor } from '../../Utils/RandomColor';
 import { toast } from 'react-toastify';
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export const submitNewItem = async (evt: any, type: string, item, user, setLoading, tags, addTag, addItem, linkItem, resetFilterTags, layers, addItemPopupType, setAddItemPopupType) => {
     evt.preventDefault();
     const formItem: Item = {} as Item;
@@ -103,7 +105,7 @@ export const onUpdateItem = async (state, item, tags, addTag, setLoading, naviga
 
     let offer_updates: Array<any> = [];
     //check for new offers
-    state.offers?.map(o => {
+    await state.offers?.map(o => {
         const existingOffer = item?.offers?.find(t => t.tags_id === o.id)
         existingOffer && offer_updates.push(existingOffer.id)
         if (!existingOffer && !tags.some(t => t.id === o.id)) addTag({ ...o, offer_or_need: true })
@@ -112,28 +114,29 @@ export const onUpdateItem = async (state, item, tags, addTag, setLoading, naviga
 
     let needs_updates: Array<any> = [];
 
-    state.needs?.map(n => {
+    await state.needs?.map(n => {
         const existingNeed = item?.needs?.find(t => t.tags_id === n.id)
         existingNeed && needs_updates.push(existingNeed.id)
         !existingNeed && needs_updates.push({ items_id: item?.id, tags_id: n.id })
         !existingNeed && !tags.some(t => t.id === n.id) && addTag({ ...n, offer_or_need: true })
-    });
-
+    });    
 
     // update profile item in current state
     changedItem = {
         id: state.id,
-        group_type: state.groupType,
-        status: state.status,
         name: state.name,
-        subname: state.subname,
-        text: state.text,
-        color: state.color,
+        ...state.subname && {subname: state.subname},
+        ...state.text && {text: state.text},
+        ...state.color && {color: state.color},
         position: item.position,
-        contact: state.contact,
-        telephone: state.telephone,
+        ...state.groupType && {group_type: state.groupType},
+        ...state.status && {status: state.status},
+        ...state.contact && {contact: state.contact},
+        ...state.telephone && {telephone: state.telephone},
+        ...state.end && {end: state.end},
+        ...state.start && {start: state.start},
         ...state.markerIcon && { markerIcon: state.markerIcon },
-        next_appointment: state.nextAppointment,
+        ...state.nextAppointment && {next_appointment: state.nextAppointment},
         ...state.image.length > 10 && { image: state.image },
         ...state.offers.length > 0 && { offers: offer_updates },
         ...state.needs.length > 0 && { needs: needs_updates }
@@ -142,24 +145,26 @@ export const onUpdateItem = async (state, item, tags, addTag, setLoading, naviga
     let offers_state: Array<any> = [];
     let needs_state: Array<any> = [];
 
-    await state.offers.map(o => {
+    state.offers.map(o => {
         offers_state.push({ items_id: item?.id, tags_id: o.id })
     });
 
-    await state.needs.map(n => {
+    state.needs.map(n => {
         needs_state.push({ items_id: item?.id, tags_id: n.id })
     });
 
     changedItem = { ...changedItem, offers: offers_state, needs: needs_state };
 
+    setLoading(true);
 
-    state.text.toLocaleLowerCase().match(hashTagRegex)?.map(tag => {
+    await state.text.toLocaleLowerCase().match(hashTagRegex)?.map(tag => {
         if (!tags.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
             addTag({ id: crypto.randomUUID(), name: encodeTag(tag.slice(1).toLocaleLowerCase()), color: randomColor() })
         }
     });
 
-    setLoading(true);
+    //take care that addTag request comes before item request
+    await sleep(200); 
 
     if (!item.new) {
         item?.layer?.api?.updateItem && toast.promise(
@@ -181,6 +186,7 @@ export const onUpdateItem = async (state, item, tags, addTag, setLoading, naviga
 
     }
     else {
+        item.new = false;
         item.layer?.api?.createItem && toast.promise(
             item.layer?.api?.createItem(changedItem),
             {

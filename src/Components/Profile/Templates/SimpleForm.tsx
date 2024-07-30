@@ -1,10 +1,16 @@
-import { TextAreaInput } from "../../Input"
+import { TextAreaInput } from "../../Input";
 
-export const SimpleForm = (item, setState) => {
+export const SimpleForm = ({ state, setState }) => {
   return (
-    <TextAreaInput placeholder="About me ..." defaultValue={item?.text ? item.text : ""} updateFormValue={(v) => setState(prevState => ({
-      ...prevState,
-      text: v
-  }))} containerStyle='tw-mt-8 tw-h-full' inputStyle='tw-h-full' />
-  )
-}
+    <TextAreaInput
+      placeholder="About me ..."
+      defaultValue={state?.text || ""}
+      updateFormValue={(v) => setState(prevState => ({
+        ...prevState,
+        text: v
+      }))}
+      containerStyle='tw-mt-8 tw-h-full'
+      inputStyle='tw-h-full'
+    />
+  );
+};

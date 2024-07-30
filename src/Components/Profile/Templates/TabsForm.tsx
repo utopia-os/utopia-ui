@@ -1,43 +1,71 @@
-import { useEffect, useState } from "react"
-import { TextAreaInput } from "../../Input"
-import { TextView } from "../../Map"
+import { useCallback, useEffect, useState } from "react"
+import { TextAreaInput, TextInput } from "../../Input"
+import { PopupStartEndInput, TextView } from "../../Map"
 import { ActionButton } from "../Subcomponents/ActionsButton"
 import { LinkedItemsHeaderView } from "../Subcomponents/LinkedItemsHeaderView"
 import { TagsWidget } from "../Subcomponents/TagsWidget"
 import { useNavigate } from "react-router-dom"
 import { useUpdateItem } from "../../Map/hooks/useItems"
 
-export const TabsForm = ({ item, state, setState, updatePermission, linkItem, unlinkItem, loading }) => {
+export const TabsForm = ({ item, state, setState, updatePermission, linkItem, unlinkItem, loading, setUrlParams }) => {
 
     const [activeTab, setActiveTab] = useState<number>(1);
     const navigate = useNavigate();
     const updateItem = useUpdateItem();
 
-    const updateActiveTab = (id: number) => {
+    const updateActiveTab = useCallback((id: number) => {
         setActiveTab(id);
-
+    
         let params = new URLSearchParams(window.location.search);
-        let urlTab = params.get("tab");
-        if (!urlTab?.includes(id.toString()))
-            params.set("tab", `${id ? id : ""}`)
-        navigate(location.pathname+ "?" + params.toString());
-    }
 
-
-    useEffect(() => {
+        params.set("tab", `${id}`);
+        const newUrl = location.pathname + "?" + params.toString();
+        window.history.pushState({}, '', newUrl);
+        setUrlParams(params);
+      }, [location.pathname]);
+        
+      useEffect(() => {
         let params = new URLSearchParams(location.search);
         let urlTab = params.get("tab");
-        urlTab ? setActiveTab(Number(urlTab)) : setActiveTab(1);
-    }, [location])
+        setActiveTab(urlTab ? Number(urlTab) : 1);
+      }, [location.search]);
 
     return (
-        <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-4">
+        <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-3">
             <input type="radio" name="my_tabs_2" role="tab" className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`} aria-label="Info" checked={activeTab == 1 && true} onChange={() => updateActiveTab(1)} />
             <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-border-[var(--fallback-bc,oklch(var(--bc)/0.2))] tw-rounded-box tw-h-[calc(100dvh-332px)] tw-min-h-56 tw-border-none">
-                <TextAreaInput placeholder="About me ..." defaultValue={item?.text ? item.text : ""} updateFormValue={(v) => setState(prevState => ({
+                <div className={`tw-flex tw-flex-col tw-h-full ${item.layer.itemType.show_start_end_input && "tw-pt-4"}`}>
+                {item.layer.itemType.show_start_end_input &&
+                <PopupStartEndInput
+                item={item}
+                showLabels={false}
+                updateEndValue={(e) => setState(prevState => ({
                     ...prevState,
-                    text: v
-                }))} containerStyle='tw-h-full' inputStyle='tw-h-full tw-border-t-0 tw-rounded-tl-none' />
+                    end: e
+                }))}
+                updateStartValue={(s) => setState(prevState => ({
+                    ...prevState,
+                    start: s
+                }))}></PopupStartEndInput>
+                }
+
+                    <TextAreaInput placeholder="about ..." defaultValue={item?.text ? item.text : ""} updateFormValue={(v) => setState(prevState => ({
+                        ...prevState,
+                        text: v
+                    }))} containerStyle='tw-grow' inputStyle={`tw-h-full  ${!item.layer.itemType.show_start_end_input && "tw-border-t-0 tw-rounded-tl-none"}`} />
+                    <div>
+                    <TextAreaInput
+                            placeholder="contact info ..."
+                            defaultValue={state.contact || ""}
+                            updateFormValue={(c) => setState(prevState => ({
+                                ...prevState,
+                                contact: c
+                            }))}
+                            inputStyle="tw-h-24"
+                            containerStyle="tw-pt-4"
+                        />
+                    </div>
+                </div>
             </div>
             {item.layer?.itemType.offers_and_needs &&
                 <>
@@ -50,7 +78,7 @@ export const TabsForm = ({ item, state, setState, updatePermission, linkItem, un
                                     offers: v
                                 }))} placeholder="enter your offers" containerStyle='tw-bg-transparent tw-w-full tw-h-full tw-mt-3 tw-text-xs tw-h-[calc(100%-1rem)] tw-min-h-[5em] tw-pb-2 tw-overflow-auto' />
                             </div>
-                            <div className='tw-w-full tw-h-[calc(50%-0.75em)] '>
+                            <div className='tw-w-full tw-h-[calc(50%-1.5em)]'>
                                 <TagsWidget defaultTags={state.needs} onUpdate={(v) => setState(prevState => ({
                                     ...prevState,
                                     needs: v
@@ -63,7 +91,7 @@ export const TabsForm = ({ item, state, setState, updatePermission, linkItem, un
             {item.layer?.itemType.relations &&
                 <>
                     <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Relations" checked={activeTab == 7 && true} onChange={() => updateActiveTab(7)} />
-                    <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-340px)] tw-overflow-y-auto tw-pt-4 tw-pb-1 -tw-mx-4 tw-overflow-x-hidden fade">
+                    <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-332px)] tw-overflow-y-auto tw-pt-4 tw-pb-1 -tw-mx-4 tw-overflow-x-hidden fade">
                         <div className='tw-h-full'>
                             <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-1 2xl:tw-grid-cols-2 tw-mb-4'>
                                 {state.relations && state.relations.map(i =>

@@ -31,7 +31,9 @@ export function ProfileForm({ userType }: { userType: string }) {
         markerIcon: "",
         offers: [] as Tag[],
         needs: [] as Tag[],
-        relations: [] as Item[]
+        relations: [] as Item[],
+        start: "",
+        end: ""
     });
 
     const [updatePermission, setUpdatePermission] = useState<boolean>(false);
@@ -49,6 +51,9 @@ export function ProfileForm({ userType }: { userType: string }) {
     const getItemTags = useGetItemTags();
     const items = useItems();
 
+    const [urlParams, setUrlParams] = useState(new URLSearchParams(location.search));
+
+
     useEffect(() => {
         item && hasUserPermission("items", "update", item) && setUpdatePermission(true);
     }, [item])
@@ -63,7 +68,7 @@ export function ProfileForm({ userType }: { userType: string }) {
 
         !item && setItem({ id: crypto.randomUUID(), name: user ? user.first_name : "", text: "", layer: layer, new: true })
 
-    }, [items])
+    }, [items])   
 
     useEffect(() => {
         const newColor = item.layer?.itemColorField && getValue(item, item.layer?.itemColorField)
@@ -105,7 +110,9 @@ export function ProfileForm({ userType }: { userType: string }) {
             markerIcon: item?.marker_icon ?? "",
             offers: offers,
             needs: needs,
-            relations: relations
+            relations: relations,
+            start: item?.start ?? "",
+            end: item?.end ?? ""
         });
     }, [item, tags, items]);
 
@@ -114,8 +121,6 @@ export function ProfileForm({ userType }: { userType: string }) {
     useEffect(() => {
         setTemplate(item.layer?.itemType.template || userType);
     }, [userType, item])
-
-    let params = new URLSearchParams(window.location.search);
 
     return (
         <>
@@ -130,15 +135,15 @@ export function ProfileForm({ userType }: { userType: string }) {
                     )}
 
                     {template == "simple" &&
-                        <SimpleForm item={item} setState={setState}></SimpleForm>
+                        <SimpleForm state={state} setState={setState}></SimpleForm>
                     }
 
                     {template == "tabs" &&
-                        <TabsForm loading={loading} item={item} state={state} setState={setState} updatePermission={updatePermission} linkItem={(id) => linkItem(id, item, updateItem)} unlinkItem={(id) => unlinkItem(id, item, updateItem)}></TabsForm>
+                        <TabsForm loading={loading} item={item} state={state} setState={setState} updatePermission={updatePermission} linkItem={(id) => linkItem(id, item, updateItem)} unlinkItem={(id) => unlinkItem(id, item, updateItem)} setUrlParams={setUrlParams}></TabsForm>
                     }
 
                     <div className="tw-mt-4 tw-mb-4">
-                        <button className={loading ? " tw-loading tw-btn tw-float-right" : "tw-btn tw-float-right"} onClick={() => onUpdateItem(state, item, tags, addTag, setLoading, navigate, updateItem, addItem, user, params)} style={true ? { backgroundColor: `${item.layer?.itemColorField && getValue(item, item.layer?.itemColorField) ? getValue(item, item.layer?.itemColorField) : (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor)}`, color: "#fff" } : { color: "#fff" }}>Update</button>
+                        <button className={loading ? " tw-loading tw-btn tw-float-right" : "tw-btn tw-float-right"} onClick={() => onUpdateItem(state, item, tags, addTag, setLoading, navigate, updateItem, addItem, user, urlParams)} style={true ? { backgroundColor: `${item.layer?.itemColorField && getValue(item, item.layer?.itemColorField) ? getValue(item, item.layer?.itemColorField) : (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor)}`, color: "#fff" } : { color: "#fff" }}>Update</button>
                     </div>
 
                 </div>

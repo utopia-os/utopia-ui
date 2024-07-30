@@ -1,7 +1,4 @@
-import * as react from 'react'
 import { useState } from 'react'
-import { TitleCard } from './TitleCard'
-import { timeAgo } from '../../Utils/TimeAgo'
 import { MapOverlayPage } from './MapOverlayPage'
 import { useItems } from '../Map/hooks/useItems'
 import { useAssetApi } from '../AppShell/hooks/useAssets'
@@ -56,13 +53,3 @@ export const SelectUser = ({ userType }: { userType: string }) => {
         </MapOverlayPage>
     )
 }
-
-const TEAM_MEMBERS = [
-    { name: "Alex", avatar: "https://reqres.in/img/faces/1-image.jpg", email: "alex@dashwind.com", role: "Owner", joinedOn: timeAgo(new Date()), lastActive: "5 hr ago" },
-    { name: "Ereena", avatar: "https://reqres.in/img/faces/2-image.jpg", email: "ereena@dashwind.com", role: "Admin", joinedOn: timeAgo(new Date()), lastActive: "15 min ago" },
-    { name: "John", avatar: "https://reqres.in/img/faces/3-image.jpg", email: "jhon@dashwind.com", role: "Admin", joinedOn: timeAgo(new Date()), lastActive: "20 hr ago" },
-    { name: "Matrix", avatar: "https://reqres.in/img/faces/4-image.jpg", email: "matrix@dashwind.com", role: "Manager", joinedOn: timeAgo(new Date()), lastActive: "1 hr ago" },
-    { name: "Virat", avatar: "https://reqres.in/img/faces/5-image.jpg", email: "virat@dashwind.com", role: "Support", joinedOn: timeAgo(new Date()), lastActive: "40 min ago" },
-    { name: "Miya", avatar: "https://reqres.in/img/faces/6-image.jpg", email: "miya@dashwind.com", role: "Support", joinedOn: timeAgo(new Date()), lastActive: "5 hr ago" },
-
-]

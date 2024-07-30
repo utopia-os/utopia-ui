@@ -32,7 +32,7 @@ export const TabsView = ({ item, offers, needs, relations, updatePermission, loa
     let urlTab = params.get("tab");
     if (!urlTab?.includes(id.toString()))
       params.set("tab", `${id ? id : ""}`)
-    navigate(location.pathname+ "?" + params.toString());
+   // navigate(location.pathname+ "?" + params.toString());
   }
 
   useEffect(() => {

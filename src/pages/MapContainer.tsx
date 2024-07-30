@@ -83,7 +83,7 @@ function MapContainer({ layers, map }: { layers: Array<LayerProps>, map: any }) 
               {//layer.public_edit_items && <PopupCheckboxInput dataField={'public_edit'} label={'public edit'}/>
               }
               {layer.itemType.custom_text && <div className='flex justify-center'>
-                <p>Press Save to place your Profile to the Map</p>
+                <p>{layer.itemType.custom_text}</p>
               </div>}
               {layer.item_presets && Object.entries(layer.item_presets).map((ip : any) => <input key={ip[0]} type="hidden" id={ip[0]} name={ip[0]} value={ip[1]} />)}
             </ItemForm>

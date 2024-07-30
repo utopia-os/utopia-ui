@@ -68,7 +68,7 @@ export const Autocomplete = ({ inputProps, suggestions, onSelected, pushFiltered
 
   return (
     <div>
-      <input ref={inputRef} {...inputProps} type="text" onChange={(e) => handleChange(e)} onKeyDown={handleKeyDown}/>
+      <input ref={inputRef} {...inputProps} type="text" onChange={(e) => handleChange(e)} tabindex="-1" onKeyDown={handleKeyDown}/>
       <ul className={`tw-absolute tw-z-[4000] ${filteredSuggestions.length>0 && 'tw-bg-base-100 tw-rounded-xl tw-p-2'}`}>
         {filteredSuggestions.map((suggestion, index) => (
           <li key={index} onClick={() => handleSuggestionClick(suggestion)}><TagView heighlight={index == heighlightedSuggestion} tag={suggestion}></TagView></li>

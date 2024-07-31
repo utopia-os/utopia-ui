@@ -81,7 +81,7 @@ export const Layer = ({
 
     const isGroupTypeVisible = useIsGroupTypeVisible();
 
-    const visibleGroupTypes =  useVisibleGroupType();
+    const visibleGroupTypes = useVisibleGroupType();
 
 
 
@@ -95,7 +95,9 @@ export const Layer = ({
             const item = Object.entries(leafletRefs).find(r => r[1].popup == e.popup)?.[1].item;
             if (item?.layer?.name == name && window.location.pathname.split("/")[1] != item.id) {
                 let params = new URLSearchParams(window.location.search);
-                window.history.pushState({}, "", `/${item.id}` + `${params.toString() !== "" ? `?${params}` : ""}`)
+                if (!location.pathname.includes("/item/")) {
+                    window.history.pushState({}, "", `/${item.id}` + `${params.toString() !== "" ? `?${params}` : ""}`)
+                }
                 let title = "";
                 if (item.name) title = item.name;
                 else if (item.layer?.itemNameField) title = getValue(item, item.layer.itemNameField);
@@ -151,7 +153,7 @@ export const Layer = ({
                     filter(item =>
                         filterTags.length == 0 ? item : filterTags.some(tag => getItemTags(item).some(filterTag => filterTag.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())))?.
                     filter(item => item.layer && isLayerVisible(item.layer)).
-                    filter(item => item.group_type && isGroupTypeVisible(item.group_type)|| visibleGroupTypes.length == 0).
+                    filter(item => item.group_type && isGroupTypeVisible(item.group_type) || visibleGroupTypes.length == 0).
                     map((item: Item) => {
                         if (getValue(item, itemLongitudeField) && getValue(item, itemLatitudeField)) {
 
@@ -186,7 +188,7 @@ export const Layer = ({
                             const longitude = itemLongitudeField && item ? getValue(item, itemLongitudeField) : undefined;
 
                             let color1 = markerDefaultColor;
-                            let color2 = markerDefaultColor2;                                                      
+                            let color2 = markerDefaultColor2;
                             if (itemColorField && getValue(item, itemColorField) != null) color1 = getValue(item, itemColorField);
                             else if (itemTags && itemTags[0]) {
                                 color1 = itemTags[0].color;

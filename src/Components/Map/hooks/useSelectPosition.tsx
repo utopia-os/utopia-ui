@@ -36,7 +36,7 @@ function useSelectPositionManager(): {
 
 
     useEffect(() => {
-        if (selectPosition && markerClicked && 'text' in selectPosition) {
+        if (selectPosition && markerClicked && 'text' in selectPosition && markerClicked.id !==selectPosition.id) {
             itemUpdateParent({ ...selectPosition, parent: markerClicked.id })
         }
     }, [markerClicked])

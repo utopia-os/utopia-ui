@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react"
-import { TextAreaInput, TextInput } from "../../Input"
+import { TextAreaInput } from "../../Input"
 import { PopupStartEndInput, TextView } from "../../Map"
 import { ActionButton } from "../Subcomponents/ActionsButton"
 import { LinkedItemsHeaderView } from "../Subcomponents/LinkedItemsHeaderView"
@@ -15,45 +15,49 @@ export const TabsForm = ({ item, state, setState, updatePermission, linkItem, un
 
     const updateActiveTab = useCallback((id: number) => {
         setActiveTab(id);
-    
+
         let params = new URLSearchParams(window.location.search);
         params.set("tab", `${id}`);
         const newUrl = location.pathname + "?" + params.toString();
         window.history.pushState({}, '', newUrl);
         setUrlParams(params);
-      }, [location.pathname]);
-        
-      useEffect(() => {
+    }, [location.pathname]);
+
+    useEffect(() => {
         let params = new URLSearchParams(location.search);
         let urlTab = params.get("tab");
         setActiveTab(urlTab ? Number(urlTab) : 1);
-      }, [location.search]);
+    }, [location.search]);
 
     return (
         <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-3">
             <input type="radio" name="my_tabs_2" role="tab" className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`} aria-label="Info" checked={activeTab == 1 && true} onChange={() => updateActiveTab(1)} />
             <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-border-[var(--fallback-bc,oklch(var(--bc)/0.2))] tw-rounded-box tw-h-[calc(100dvh-332px)] tw-min-h-56 tw-border-none">
                 <div className={`tw-flex tw-flex-col tw-h-full ${item.layer.itemType.show_start_end_input && "tw-pt-4"}`}>
-                {item.layer.itemType.show_start_end_input &&
-                <PopupStartEndInput
-                item={item}
-                showLabels={false}
-                updateEndValue={(e) => setState(prevState => ({
-                    ...prevState,
-                    end: e
-                }))}
-                updateStartValue={(s) => setState(prevState => ({
-                    ...prevState,
-                    start: s
-                }))}></PopupStartEndInput>
-                }
+                    {item.layer.itemType.show_start_end_input &&
+                        <PopupStartEndInput
+                            item={item}
+                            showLabels={false}
+                            updateEndValue={(e) => setState(prevState => ({
+                                ...prevState,
+                                end: e
+                            }))}
+                            updateStartValue={(s) => setState(prevState => ({
+                                ...prevState,
+                                start: s
+                            }))}></PopupStartEndInput>
+                    }
 
-                    <TextAreaInput placeholder="about ..." defaultValue={item?.text ? item.text : ""} updateFormValue={(v) => setState(prevState => ({
-                        ...prevState,
-                        text: v
-                    }))} containerStyle='tw-grow' inputStyle={`tw-h-full  ${!item.layer.itemType.show_start_end_input && "tw-border-t-0 tw-rounded-tl-none"}`} />
+                    <TextAreaInput placeholder="about ..."
+                        defaultValue={item?.text ? item.text : ""}
+                        updateFormValue={(v) => setState(prevState => ({
+                            ...prevState,
+                            text: v
+                        }))}
+                        containerStyle='tw-grow'
+                        inputStyle={`tw-h-full  ${!item.layer.itemType.show_start_end_input && "tw-border-t-0 tw-rounded-tl-none"}`} />
                     <div>
-                    <TextAreaInput
+                        <TextAreaInput
                             placeholder="contact info ..."
                             defaultValue={state.contact || ""}
                             updateFormValue={(c) => setState(prevState => ({

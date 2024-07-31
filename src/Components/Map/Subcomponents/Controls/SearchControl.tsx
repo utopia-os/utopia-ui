@@ -167,7 +167,7 @@ export const SearchControl = () => {
                         ))}
                         {isGeoCoordinate(value) &&
                             <div className='tw-flex tw-flex-row hover:tw-font-bold tw-cursor-pointer' onClick={() => {
-                                L.marker(new LatLng(extractCoordinates(value)![0], extractCoordinates(value)![1]), { icon: MarkerIconFactory("circle", "#777", "RGBA(35, 31, 32, 0.2)", "circle-solid") }).addTo(map).bindPopup(`<h3 class="tw-text-base tw-font-bold">${extractCoordinates(value)![0]}, ${extractCoordinates(value)![1]}</h3>`).openPopup().addEventListener("popupclose", (e) => { console.log(e.target.remove()) });
+                                L.marker(new LatLng(extractCoordinates(value)![0], extractCoordinates(value)![1]), { icon: MarkerIconFactory("circle", "#777", "RGBA(35, 31, 32, 0.2)", "point") }).addTo(map).bindPopup(`<h3 class="tw-text-base tw-font-bold">${extractCoordinates(value)![0]}, ${extractCoordinates(value)![1]}</h3>`).openPopup().addEventListener("popupclose", (e) => { console.log(e.target.remove()) });
                                 map.setView(new LatLng(extractCoordinates(value)![0], extractCoordinates(value)![1]), 15, { duration: 1 })
                             }}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="tw-text-current tw-mr-2 tw-mt-0 tw-w-4">

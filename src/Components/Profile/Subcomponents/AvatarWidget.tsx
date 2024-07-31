@@ -1,14 +1,16 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useCallback, useRef } from "react";
 import ReactCrop, { Crop, centerCrop, makeAspectCrop } from 'react-image-crop';
 import { useAssetApi } from '../../AppShell/hooks/useAssets';
+import 'react-image-crop/dist/ReactCrop.css';
 import DialogModal from "../../Templates/DialogModal";
-import 'react-image-crop/dist/ReactCrop.css'
 
+interface AvatarWidgetProps {
+    avatar: string;
+    setAvatar: React.Dispatch<React.SetStateAction<any>>;
+}
 
-export const AvatarWidget = ({avatar, setAvatar}:{avatar:string, setAvatar : React.Dispatch<React.SetStateAction<any>>}) => {
-
-
+export const AvatarWidget: React.FC<AvatarWidgetProps> = ({ avatar, setAvatar }) => {
     const [crop, setCrop] = useState<Crop>();
     const [image, setImage] = useState<string>("");
     const [cropModalOpen, setCropModalOpen] = useState<boolean>(false);
@@ -16,31 +18,38 @@ export const AvatarWidget = ({avatar, setAvatar}:{avatar:string, setAvatar : Rea
 
     const assetsApi = useAssetApi();
 
+    const imgRef = useRef<HTMLImageElement>(null);
 
+    const onImageChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files && event.target.files[0];
+        if (file) {
+            const validFormats = ["image/jpeg", "image/png"];
+            const maxSizeMB = 10;
+            const maxSizeBytes = maxSizeMB * 1024 * 1024;
 
-    const imgRef = React.useRef<HTMLImageElement>(null)
+            if (!validFormats.includes(file.type)) {
+                alert("Unsupported file format. Please upload a JPEG or PNG image.");
+                return;
+            }
 
-    const onImageChange = (event) => {
-        if (event.target.files && event.target.files[0]) {
-            setImage(URL.createObjectURL(event.target.files[0]));
+            if (file.size > maxSizeBytes) {
+                alert(`File size exceeds ${maxSizeMB}MB. Please upload a smaller image.`);
+                return;
+            }
+
+            setImage(URL.createObjectURL(file));
+            setCropModalOpen(true);
+        } else {
+            alert("No file selected or an error occurred while selecting the file.");
         }
-        setCropModalOpen(true);
-    }
+    }, []);
 
-    function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
-        const { width, height } = e.currentTarget
+    const onImageLoad = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
+        const { width, height } = e.currentTarget;
+        setCrop(centerAspectCrop(width, height, 1));
+    }, []);
 
-        setCrop(centerAspectCrop(width, height, 1))
-    }
-
-
-    // This is to demonstate how to make and center a % aspect crop
-    // which is a bit trickier so we use some helper functions.
-    function centerAspectCrop(
-        mediaWidth: number,
-        mediaHeight: number,
-        aspect: number,
-    ) {
+    const centerAspectCrop = (mediaWidth: number, mediaHeight: number, aspect: number) => {
         return centerCrop(
             makeAspectCrop(
                 {
@@ -53,22 +62,50 @@ export const AvatarWidget = ({avatar, setAvatar}:{avatar:string, setAvatar : Rea
             ),
             mediaWidth,
             mediaHeight,
-        )
+        );
+    };
+
+    async function resizeImage(image: HTMLImageElement, maxWidth: number, maxHeight: number): Promise<HTMLImageElement> {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = image.width;
+        let height = image.height;
+
+        if (width > maxWidth) {
+            height *= maxWidth / width;
+            width = maxWidth;
+        }
+        if (height > maxHeight) {
+            width *= maxHeight / height;
+            height = maxHeight;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        if (ctx) {
+            ctx.drawImage(image, 0, 0, width, height);
+        }
+
+        const resizedImage = new Image();
+        resizedImage.src = canvas.toDataURL();
+
+        await resizedImage.decode();
+        return resizedImage;
     }
 
-    async function renderCrop() {
-        // get the image element
+    const renderCrop = useCallback(async () => {
         const image = imgRef.current;
         if (crop && image) {
+            const resizedImage = await resizeImage(image, 1024, 1024); // Bildgröße vor dem Zuschneiden reduzieren
+            const scaleX = resizedImage.naturalWidth / resizedImage.width;
+            const scaleY = resizedImage.naturalHeight / resizedImage.height;
 
-            const scaleX = image.naturalWidth / image.width
-            const scaleY = image.naturalHeight / image.height
-
-            // create a canvas element to draw the cropped image
             const canvas = new OffscreenCanvas(
                 crop.width * scaleX,
-                crop.height * scaleY,
-            )
+                crop.height * scaleY
+            );
             const ctx = canvas.getContext("2d");
             const pixelRatio = window.devicePixelRatio;
             canvas.width = crop.width * pixelRatio * scaleX;
@@ -76,9 +113,8 @@ export const AvatarWidget = ({avatar, setAvatar}:{avatar:string, setAvatar : Rea
 
             if (ctx) {
                 ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-
                 ctx.drawImage(
-                    image,
+                    resizedImage,
                     crop.x * scaleX,
                     crop.y * scaleY,
                     crop.width * scaleX,
@@ -89,28 +125,27 @@ export const AvatarWidget = ({avatar, setAvatar}:{avatar:string, setAvatar : Rea
                     crop.height * scaleY
                 );
             }
+
             const blob = await canvas.convertToBlob();
             await resizeBlob(blob);
             setCropping(false);
             setImage("");
         }
-    }
+    }, [crop]);
 
-    async function resizeBlob(blob) {
-        var img = new Image();
+    const resizeBlob = useCallback(async (blob: Blob) => {
+        const img = new Image();
         img.src = URL.createObjectURL(blob);
         await img.decode();
-        const canvas = new OffscreenCanvas(
-            400,
-            400
-        )
-        var ctx = canvas.getContext("2d");
-        ctx?.drawImage(img, 0, 0, 400, 400);
-        const resizedBlob = await canvas.convertToBlob()
-        const asset = await assetsApi.upload(resizedBlob, "test");
-        setAvatar(asset.id)
-    }
 
+        const canvas = new OffscreenCanvas(400, 400);
+        const ctx = canvas.getContext("2d");
+        ctx?.drawImage(img, 0, 0, 400, 400);
+
+        const resizedBlob = await canvas.convertToBlob();
+        const asset = await assetsApi.upload(resizedBlob, "avatar");
+        setAvatar(asset.id);
+    }, [assetsApi, setAvatar]);
 
     return (
         <>
@@ -135,11 +170,9 @@ export const AvatarWidget = ({avatar, setAvatar}:{avatar:string, setAvatar : Rea
                         </div>
                     }
                 </label>
-
                 : <div className='tw-w-20 tw-flex tw-items-center tw-justify-center'>
                     <span className="tw-loading tw-loading-spinner"></span>
                 </div>
-
             }
             <DialogModal
                 title=""
@@ -159,5 +192,5 @@ export const AvatarWidget = ({avatar, setAvatar}:{avatar:string, setAvatar : Rea
                 }}>Select</button>
             </DialogModal>
         </>
-    )
-}
+    );
+};

@@ -21,8 +21,6 @@ export const TabsView = ({ attestations, userType, item, offers, needs, relation
 
   const items = useItems();
   const assetsApi = useAssetApi();
-  const { user } = useAuth();
-
   const getUserProfile = (id: string) => {
     return items.find(i => i.user_created.id === id && i.layer?.itemType.name === userType)
   }

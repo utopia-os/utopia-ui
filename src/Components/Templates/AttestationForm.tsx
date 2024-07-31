@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import { Item, ItemsApi } from '../../types';
 import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 export const AttestationForm = ({api}:{api?:ItemsApi<any>}) => {
 
@@ -38,15 +39,27 @@ export const AttestationForm = ({api}:{api?:ItemsApi<any>}) => {
     const sendAttestation = async () => {
         const to : Array<any> = [];
         users?.map(u => to.push({ directus_users_id: u.user_created.id }));
-        console.log(to);
-        
-        api?.createItem && api.createItem({
-            text: inputValue,
-            emoji: selectedEmoji,
-            color: selectedColor,
-            shape: selectedShape,
-            to: to
-        }).then(()=> navigate("/"))
+
+
+        api?.createItem && toast.promise(
+            api.createItem({
+                text: inputValue,
+                emoji: selectedEmoji,
+                color: selectedColor,
+                shape: selectedShape,
+                to: to
+            }),            {
+                pending: 'creating attestation ...',
+                success: 'Attestation created',
+                error: {
+                    render({ data }) {
+                        return `${data}`
+                    },
+                },
+            })
+            .then( () =>           navigate("/item/" + items.find(i => i.user_created.id===to[0].directus_users_id && i.layer?.itemType.name==="player")?.id+"?tab=2")
+        )
+
     }
 
     const [selectedEmoji, setSelectedEmoji] = useState('select badge');

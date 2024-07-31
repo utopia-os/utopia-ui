@@ -12,7 +12,7 @@ export const EmojiPicker = ({selectedEmoji, selectedColor, selectedShape, setSel
     '📝', '✉️', '🧩','💡', '🎓', '💬', 
     '🛠', '💻', '🕹', '🖨', '🚐', '🛒',
     '⚽️', '🧵', '👀', '🌱',
-    '🏕', '💪',  '🎁',   '🎉', 
+    '🏕', '💪',  '🎁',   '🏹', 
     '🥕', '🥇', '🥈', '🥉'];
   const shapes = ["squircle", "circle", "hexagon-2"];
 

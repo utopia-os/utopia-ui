@@ -1,8 +1,11 @@
 import { useNavigate } from "react-router-dom"
+import { useAuth } from "../../../Auth";
 
 export const GratitudeControl = () => {
     const navigate = useNavigate();
-    return (
+    const {isAuthenticated} = useAuth();
+    
+    if(isAuthenticated) return (
         <div className="tw-card tw-bg-base-100 tw-shadow-xl tw-mt-2 tw-w-fit">
             {
 
@@ -22,4 +25,5 @@ export const GratitudeControl = () => {
 
         </div>
     )
+    else return (<></>);
 }

@@ -13,14 +13,15 @@ import { SearchControl } from "./Subcomponents/Controls/SearchControl";
 import { Control } from "./Subcomponents/Controls/Control";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { TagsControl } from "./Subcomponents/Controls/TagsControl";
-import { useSelectPosition, useSetMapClicked,useSetSelectPosition } from "./hooks/useSelectPosition";
+import { useSelectPosition, useSetMapClicked, useSetSelectPosition } from "./hooks/useSelectPosition";
 import { useClusterRef, useSetClusterRef } from "./hooks/useClusterRef";
 import { Feature, Geometry as GeoJSONGeometry } from 'geojson';
-import {FilterControl} from "./Subcomponents/Controls/FilterControl";
-import {LayerControl} from "./Subcomponents/Controls/LayerControl";
+import { FilterControl } from "./Subcomponents/Controls/FilterControl";
+import { LayerControl } from "./Subcomponents/Controls/LayerControl";
 import { useLayers } from "./hooks/useLayers";
 import { useAddVisibleLayer } from "./hooks/useFilter";
 import { GratitudeControl } from "./Subcomponents/Controls/GratitudeControl";
+import { SelectPosition } from "./Subcomponents/SelectPosition";
 
 // for refreshing map on resize (needs to be implemented)
 const mapDivRef = React.createRef();
@@ -32,9 +33,9 @@ function UtopiaMap({
     zoom = 10,
     children,
     geo,
-    showFilterControl=false,
+    showFilterControl = false,
     showLayerControl = true
- }
+}
     : UtopiaMapProps) {
 
     function MapEventListener() {
@@ -52,7 +53,9 @@ function UtopiaMap({
 
     const resetMetaTags = () => {
         let params = new URLSearchParams(window.location.search);
-        window.history.pushState({}, "", `/` + `${params.toString() !== "" ? `?${params}` : ""}`)
+        if (!location.pathname.includes("/item/")) {
+            window.history.pushState({}, "", `/` + `${params.toString() !== "" ? `?${params}` : ""}`)
+        }
         document.title = document.title.split("-")[0];
         document.querySelector('meta[property="og:title"]')?.setAttribute("content", document.title);
         document.querySelector('meta[property="og:description"]')?.setAttribute("content", `${document.querySelector('meta[name="description"]')?.getAttribute("content")}`);
@@ -75,9 +78,9 @@ function UtopiaMap({
 
     useEffect(() => {
         layers.map(l => addVisibleLayer(l))
-        
+
     }, [layers])
-    
+
 
 
 
@@ -100,7 +103,7 @@ function UtopiaMap({
                         {/*{!embedded && (*/}
                         {/*    <QuestControl></QuestControl>*/}
                         {/*)}*/}
-                        {showFilterControl && <FilterControl/>}
+                        {showFilterControl && <FilterControl />}
                         {/*todo: needed layer handling is located LayerControl*/}
                         {showLayerControl && <LayerControl></LayerControl>}
                         {<GratitudeControl/>}
@@ -125,19 +128,9 @@ function UtopiaMap({
                     }} />}
                     <MapEventListener />
                 </MapContainer>
-                    <AddButton triggerAction={setSelectNewItemPosition}></AddButton>
+                <AddButton triggerAction={setSelectNewItemPosition}></AddButton>
                 {selectNewItemPosition != null &&
-                    <div className="tw-button tw-z-1000 tw-absolute tw-right-5 tw-top-4 tw-drop-shadow-md">
-                        <label className="tw-btn tw-btn-sm tw-rounded-2xl tw-btn-circle tw-btn-ghost hover:tw-bg-transparent tw-absolute tw-right-0 tw-top-0 tw-text-gray-600" onClick={() => {
-                            setSelectNewItemPosition(null)
-                        }}>
-                            <p className='tw-text-center '>✕</p></label>
-                        <div className="tw-alert tw-bg-base-100 tw-text-base-content">
-                            <div>
-                                <span>Select {selectNewItemPosition.name} position!</span>
-                            </div>
-                        </div>
-                    </div>
+                    <SelectPosition setSelectNewItemPosition={setSelectNewItemPosition} />
                 }
             </div>
 

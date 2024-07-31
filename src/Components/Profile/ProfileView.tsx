@@ -19,7 +19,7 @@ import { useTags } from '../Map/hooks/useTags';
 
 export function ProfileView({ userType, attestationApi }: { userType: string , attestationApi?: ItemsApi<any>}) {
 
-    const [item, setItem] = useState<Item>({} as Item)
+    const [item, setItem] = useState<Item>()
     const [updatePermission, setUpdatePermission] = useState<boolean>(false);
     const [relations, setRelations] = useState<Array<Item>>([]);
     const [offers, setOffers] = useState<Array<Tag>>([]);
@@ -68,15 +68,15 @@ export function ProfileView({ userType, attestationApi }: { userType: string , a
         setNeeds([]);
         setRelations([]);
 
-        item.layer?.itemOffersField && getValue(item, item.layer.itemOffersField)?.map(o => {
+        item?.layer?.itemOffersField && getValue(item, item.layer.itemOffersField)?.map(o => {
             const tag = tags.find(t => t.id === o.tags_id);
             tag && setOffers(current => [...current, tag])
         })
-        item.layer?.itemNeedsField && getValue(item, item.layer.itemNeedsField)?.map(n => {
+        item?.layer?.itemNeedsField && getValue(item, item.layer.itemNeedsField)?.map(n => {
             const tag = tags.find(t => t.id === n.tags_id);
             tag && setNeeds(current => [...current, tag])
         })
-        item.relations?.map(r => {
+        item?.relations?.map(r => {
             const item = items.find(i => i.id == r.related_items_id)
             item && setRelations(current => [...current, item])
         })
@@ -133,7 +133,7 @@ export function ProfileView({ userType, attestationApi }: { userType: string , a
     }, [selectPosition])
 
     useEffect(() => {
-        setTemplate(item.layer?.itemType.template || userType);
+        setTemplate(item?.layer?.itemType.template || userType);
     }, [userType, item])
 
     const [urlParams, setUrlParams] = useState(new URLSearchParams(location.search));
@@ -141,7 +141,7 @@ export function ProfileView({ userType, attestationApi }: { userType: string , a
 
     return (
         <>
-            {item &&
+            {item && 
                 <MapOverlayPage key={item.id} className={`!tw-p-0 tw-mx-4 tw-mt-4 tw-mb-4 md:tw-w-[calc(50%-32px)] tw-w-[calc(100%-32px)] tw-min-w-80 tw-max-w-3xl !tw-left-0 sm:!tw-left-auto tw-top-0 tw-bottom-0 tw-transition-opacity tw-duration-500 ${!selectPosition ? 'tw-opacity-100 tw-pointer-events-auto' : 'tw-opacity-0 tw-pointer-events-none'}`}>
                     <>
                         <div className={`tw-px-6 tw-pt-6`}>

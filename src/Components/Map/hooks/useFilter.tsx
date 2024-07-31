@@ -156,7 +156,7 @@ function useFilterManager(initialTags: Tag[]): {
     if(tags?.length==0 && urlTags?.length && urlTags?.length > 0) tags[0]=urlTags;
       tags?.map(urlTag => {
         if(!(urlTag.toLocaleLowerCase() === name.toLocaleLowerCase()))
-          newUrlTags = newUrlTags + `${newUrlTags===""? urlTag : `,${urlTag}`}`
+          newUrlTags = newUrlTags + `${newUrlTags===""? urlTag : `;${urlTag}`}`
     });    
     if(newUrlTags !== "") {
       params.set("tags", `${newUrlTags}`)

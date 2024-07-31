@@ -98,7 +98,7 @@ export const SearchControl = () => {
                 <div className='flex tw-flex-row'>
                     {embedded && <SidebarControl />}
                     <div className='tw-relative'>
-                    <input type="text" placeholder="search ..." autoComplete="off" value={value} className="tw-input tw-input-bordered tw-grow tw-shadow-xl tw-rounded-lg"
+                    <input type="text" placeholder="search ..." autoComplete="off" value={value} className="tw-input tw-input-bordered tw-grow tw-shadow-xl tw-rounded-lg tw-pr-12"
                         ref={searchInput}
                         onChange={(e) => setValue(e.target.value)}
                         onFocus={() => {

@@ -1,8 +1,7 @@
-import * as React from "react"
-import { useEffect, useRef } from "react";
+import * as React from "react";
+import { useEffect, useRef, useState } from "react";
 import Tribute from "tributejs";
 import { useTags } from "../Map/hooks/useTags";
-
 
 type TextAreaProps = {
     labelTitle?: string;
@@ -19,21 +18,20 @@ interface KeyValue {
     [key: string]: string;
 }
 
-
 export function TextAreaInput({ labelTitle, dataField, labelStyle, containerStyle, inputStyle, defaultValue, placeholder, updateFormValue }: TextAreaProps) {
-
     const ref = useRef<HTMLTextAreaElement>(null);
+    const [inputValue, setInputValue] = useState<string>(defaultValue);
 
     // prevent react18 from calling useEffect twice
-    const init = useRef(false)
+    const init = useRef(false);
 
     const tags = useTags();
 
     let values: KeyValue[] = [];
 
-    tags.map(tag => {
-        values.push({ key: tag.name, value: tag.name, color: tag.color })
-    })
+    tags.forEach(tag => {
+        values.push({ key: tag.name, value: tag.name, color: tag.color });
+    });
 
     var tribute = new Tribute({
         containerClass: 'tw-z-3000 tw-bg-base-100 tw-p-2 tw-rounded-lg tw-shadow',
@@ -45,10 +43,9 @@ export function TextAreaInput({ labelTitle, dataField, labelStyle, containerStyl
             return ""
         },
         menuItemTemplate: function (item) {
-            return `<span style="color: ${item.original.color}; padding: 5px; boarder-radius: 3px;">#${item.string}</span>`;
+            return `<span style="color: ${item.original.color}; padding: 5px; border-radius: 3px;">#${item.string}</span>`;
         }
     });
-
 
     useEffect(() => {
         if (!init.current) {
@@ -56,17 +53,37 @@ export function TextAreaInput({ labelTitle, dataField, labelStyle, containerStyl
                 tribute.attach(ref.current);
             }
             init.current = true;
-        }    
-    }, [ref])
+        }
+    }, [ref]);
+
+    useEffect(() => {
+        setInputValue(defaultValue);
+    }, [defaultValue]);
+
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const newValue = e.target.value;
+        setInputValue(newValue);
+        if (updateFormValue) {
+            updateFormValue(newValue);
+        }
+    };
 
     return (
         <div className={`tw-form-control tw-w-full ${containerStyle ? containerStyle : ""}`}>
-            {labelTitle ? <label className="tw-label">
-                <span className={"tw-label-text tw-text-base-content " + labelStyle}>{labelTitle}</span>
-            </label> : ""}
-            <textarea required ref={ref} defaultValue={defaultValue} name={dataField} className={`tw-textarea tw-textarea-bordered tw-w-full  tw-leading-5 ${inputStyle ? inputStyle : ""}`} placeholder={placeholder || ""} onChange={(e) => updateFormValue && updateFormValue(e.target.value)}></textarea>
+            {labelTitle ? (
+                <label className="tw-label">
+                    <span className={`tw-label-text tw-text-base-content ${labelStyle}`}>{labelTitle}</span>
+                </label>
+            ) : null}
+            <textarea
+                required
+                ref={ref}
+                value={inputValue}
+                name={dataField}
+                className={`tw-textarea tw-textarea-bordered tw-w-full tw-leading-5 ${inputStyle || ""}`}
+                placeholder={placeholder || ""}
+                onChange={handleChange}
+            ></textarea>
         </div>
-    )
+    );
 }
-
-

@@ -2,7 +2,7 @@ import { MapOverlayPage } from '../Templates'
 import { useItems, useRemoveItem, useUpdateItem } from '../Map/hooks/useItems'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react';
-import { Item, Tag } from '../../types';
+import { Item, ItemsApi, Tag } from '../../types';
 import { useMap } from 'react-leaflet';
 import { LatLng } from 'leaflet';
 import { useHasUserPermission } from '../Map/hooks/usePermissions';
@@ -17,7 +17,7 @@ import { SimpleView } from './Templates/SimpleView';
 import { handleDelete, linkItem, unlinkItem } from './itemFunctions';
 import { useTags } from '../Map/hooks/useTags';
 
-export function ProfileView({ userType }: { userType: string }) {
+export function ProfileView({ userType, attestationApi }: { userType: string , attestationApi?: ItemsApi<any>}) {
 
     const [item, setItem] = useState<Item>({} as Item)
     const [updatePermission, setUpdatePermission] = useState<boolean>(false);
@@ -39,6 +39,23 @@ export function ProfileView({ userType }: { userType: string }) {
     const setSelectPosition = useSetSelectPosition();
     const clusterRef = useClusterRef();
     const leafletRefs = useLeafletRefs();
+
+    const [attestations, setAttestations] = useState<Array<any>>([]);
+    
+    useEffect(() => {
+        if (attestationApi) {
+            attestationApi.getItems()
+              .then(value => {
+                console.log(value);
+                
+                setAttestations(value);
+              })
+              .catch(error => {
+                console.error("Error fetching items:", error);
+              });
+          }
+    }, [attestationApi])
+    
 
     useEffect(() => {
         const itemId = location.pathname.split("/")[2];
@@ -140,7 +157,7 @@ export function ProfileView({ userType }: { userType: string }) {
                         }
 
                         {template == "tabs" &&
-                            <TabsView setUrlParams={setUrlParams} item={item} loading={loading} offers={offers} needs={needs} relations={relations} updatePermission={updatePermission} linkItem={(id) => linkItem(id, item, updateItem)} unlinkItem={(id) => unlinkItem(id, item, updateItem)}/>
+                            <TabsView userType={userType} attestations={attestations} setUrlParams={setUrlParams} item={item} loading={loading} offers={offers} needs={needs} relations={relations} updatePermission={updatePermission} linkItem={(id) => linkItem(id, item, updateItem)} unlinkItem={(id) => unlinkItem(id, item, updateItem)}/>
                         }
                     </>
 

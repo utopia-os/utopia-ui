@@ -1,9 +1,7 @@
 import { useState } from 'react';
 
-export const EmojiPicker = () => {
-  const [selectedEmoji, setSelectedEmoji] = useState('select badge');
-  const [selectedShape, setSelectedShape] = useState('circle');
-  const [selectedColor, setSelectedColor] = useState('#fff0d6');
+export const EmojiPicker = ({selectedEmoji, selectedColor, selectedShape, setSelectedEmoji, setSelectedColor, setSelectedShape}) => {
+
 
 
   const [isOpen, setIsOpen] = useState(false);

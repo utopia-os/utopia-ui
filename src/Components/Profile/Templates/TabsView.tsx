@@ -6,8 +6,12 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { useAddFilterTag } from '../../Map/hooks/useFilter'
 import { Item, Tag } from 'utopia-ui/dist/types'
 import { useNavigate } from 'react-router-dom'
+import { useItems } from '../../Map/hooks/useItems'
+import { useAssetApi } from '../../AppShell/hooks/useAssets'
+import { timeAgo } from '../../../Utils/TimeAgo'
+import { useAuth } from '../../Auth'
 
-export const TabsView = ({ item, offers, needs, relations, updatePermission, loading, linkItem, unlinkItem, setUrlParams }: { item: Item, offers: Array<Tag>, needs: Array<Tag>, relations: Array<Item>, updatePermission: boolean, loading: boolean, linkItem: (id: string) => Promise<void>, unlinkItem: (id: string) => Promise<void> , setUrlParams: any}) => {
+export const TabsView = ({ attestations, userType, item, offers, needs, relations, updatePermission, loading, linkItem, unlinkItem, setUrlParams }: { attestations: Array<any>, userType: string, item: Item, offers: Array<Tag>, needs: Array<Tag>, relations: Array<Item>, updatePermission: boolean, loading: boolean, linkItem: (id: string) => Promise<void>, unlinkItem: (id: string) => Promise<void>, setUrlParams: any }) => {
 
   const addFilterTag = useAddFilterTag();
   const [activeTab, setActiveTab] = useState<number>();
@@ -15,12 +19,20 @@ export const TabsView = ({ item, offers, needs, relations, updatePermission, loa
 
   const [addItemPopupType, setAddItemPopupType] = useState<string>("");
 
+  const items = useItems();
+  const assetsApi = useAssetApi();
+  const {user} = useAuth();
+
+  const getUserProfile = (id: string) => {
+    return items.find(i => i.user_created.id === id && i.layer?.itemType.name === userType)
+  }
+
   useEffect(() => {
-      scroll();
+    scroll();
   }, [addItemPopupType])
-  
+
   function scroll() {
-      tabRef.current?.scrollIntoView();
+    tabRef.current?.scrollIntoView();
   }
 
   const tabRef = useRef<HTMLFormElement>(null);
@@ -42,57 +54,6 @@ export const TabsView = ({ item, offers, needs, relations, updatePermission, loa
     setActiveTab(urlTab ? Number(urlTab) : 1);
   }, [location.search]);
 
-  const attestations = [{
-    from: "Timo",
-    avatar: "https://api.utopia-lab.org/assets/262117f8-feb6-444f-9bd2-e84087285760?width=80&heigth=80",
-    symbol: "🥇",
-    text: "1. Platz im Bogenschießen",
-    date: "21.06.2024",
-},
-{
-    from: "Sebastian",
-    avatar: "https://api.utopia-lab.org/assets/7510a082-882b-41c3-aa7d-5a19f9502f25?width=80&heigth=80",
-    symbol: "🌱",
-    text: "danke fürs Rasen mähen",
-    date: "29.06.2024",
-},
-{
-    from: "Yurij",
-    avatar: "https://api.utopia-lab.org/assets/abe62291-35ad-45de-b978-e5906d8a3eb6?width=80&heigth=80",
-    symbol: "🏆",
-    text: "bester Coder ever",
-    date: "04.07.2024",
-},
-{
-    from: "Luca",
-    avatar: "https://api.utopia-lab.org/assets/e285e653-36e8-4211-a69d-00053c1f610e?width=80&heigth=80",
-    symbol: "🙏",
-    text: "Vielen Dank für deine Hilfe!!!",
-    date: "04.07.2024",
-},
-{
-    from: "Lisa",
-    avatar: "https://i.pinimg.com/originals/c0/ed/08/c0ed088cd6532d4fd27396aefddac57c.jpg",
-    symbol: "❤️",
-    text: "Vielen Dank für deine Hilfe!!!",
-    date: "04.07.2024",
-},
-{
-    from: "Timo",
-    avatar: "https://api.utopia-lab.org/assets/262117f8-feb6-444f-9bd2-e84087285760?width=80&heigth=80",
-    symbol: "🥈",
-    text: "2. Platz im Bogenschießen",
-    date: "21.06.2024",
-},
-{
-    from: "Anton",
-    avatar: "https://api.utopia-lab.org/assets/007dc678-6073-4ad1-9b47-f2cfe1dca582?width=80&heigth=80",
-    symbol: "🌱",
-    text: "danke fürs Rasen mähen",
-    date: "29.06.2024"
-},
-]
-
   return (
     <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-2 tw-mb-2 tw-px-6">
       <input type="radio" name="my_tabs_2" role="tab"
@@ -106,53 +67,58 @@ export const TabsView = ({ item, offers, needs, relations, updatePermission, loa
         }
         <TextView item={item} />
         <div className='tw-h-4'></div>
-        <TextView item={item} itemTextField='contact'/>
+        <TextView item={item} itemTextField='contact' />
       </div>
       {item.layer?.itemType.questlog &&
-                <>
-                    <input type="radio" name="my_tabs_2" role="tab"
-                        className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`}
-                        aria-label="❤️" checked={activeTab == 2 && true}
-                        onChange={() => updateActiveTab(2)} />
+        <>
+          <input type="radio" name="my_tabs_2" role="tab"
+            className={`tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`}
+            aria-label="❤️" checked={activeTab == 2 && true}
+            onChange={() => updateActiveTab(2)} />
 
-                    <div role="tabpanel"
-                        className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-4 tw-mb-4 tw-overflow-x-hidden">
-                        <table className="sm:tw-table-sm md:tw-table-md">
-                            <tbody>
-                                {attestations.map((a, i) => <tr key={i}>
-                                    <td>
-                                        <div className='tw-mask tw-mask-circle tw-text-xl md:tw-text-2xl tw-bg-slate-200 tw-rounded-full tw-p-2 tw-my-1 tw-mr-2'>{a.symbol}</div>
+          <div role="tabpanel"
+            className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-4 tw-mb-4 tw-overflow-x-hidden">
+            <table className="sm:tw-table-sm md:tw-table-md">
+              <tbody>
+                {attestations.filter(a => a.to.some(t => t.directus_users_id == item.user_created.id)).map((a, i) => <tr key={i}>
+                  <td>
+                    <div
 
-                                    </td>
-                                    <td>
-                                        <div className='tw-mr-2' ><i>{a.text}</i></div>
-
-                                    </td>
-                                    <td>
-                                        <div className="flex items-center gap-3">
-                                            <div className="tw-avatar">
-                                                <div className="tw-mask tw-rounded-full h-8 w-8 tw-mr-2">
-                                                    <img
-                                                        src={a.avatar}
-                                                        alt="Avatar Tailwind CSS Component" />
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div className="font-bold">{a.from}</div>
-                                                <div className="tw-text-xs opacity-50 tw-text-zinc-500">{a.date}</div>
-
-                                            </div>
-                                        </div>
-                                    </td>
-
-
-                                </tr>)}
-                            </tbody>
-                        </table>
-
+                      className={`tw-cursor-pointer tw-text-3xl tw-mask tw-mask-${a.shape} tw-p-3 tw-mr-2 tw-bg-[${a.color}]`}
+                    >
+                      {a.emoji}
                     </div>
-                </>
-            }
+
+                  </td>
+                  <td>
+                    <div className='tw-mr-2' ><i>{a.text}</i></div>
+
+                  </td>
+                  <td>
+                    <div className="flex items-center gap-3">
+                      <div className="tw-avatar">
+                        <div className="tw-mask tw-rounded-full h-8 w-8 tw-mr-2">
+                          <img
+                            src={assetsApi.url + getUserProfile(a.user_created.id)?.image}
+                            alt="Avatar Tailwind CSS Component" />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="font-bold">{getUserProfile(a.user_created.id)?.name}</div>
+                        <div className="tw-text-xs opacity-50 tw-text-zinc-500">{timeAgo(a.date_created)}</div>
+
+                      </div>
+                    </div>
+                  </td>
+
+
+                </tr>)}
+              </tbody>
+            </table>
+
+          </div>
+        </>
+      }
       {item.layer?.itemType.offers_and_needs &&
 
         <>

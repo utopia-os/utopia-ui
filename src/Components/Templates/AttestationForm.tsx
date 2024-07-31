@@ -3,16 +3,17 @@ import { MapOverlayPage } from './MapOverlayPage'
 import { useItems } from '../Map/hooks/useItems'
 import { useAssetApi } from '../AppShell/hooks/useAssets'
 import { EmojiPicker } from './EmojiPicker';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import { Item, ItemsApi } from '../../types';
 import { useEffect } from 'react';
 
-export const AttestationForm = ({api}:{api:ItemsApi<any>}) => {
+export const AttestationForm = ({api}:{api?:ItemsApi<any>}) => {
 
     const items = useItems();
     const assetsApi = useAssetApi();
     const [users, setUsers] = useState<Array<Item>>();
+    const navigate = useNavigate();
 
     useEffect(() => {
         let params = new URLSearchParams(location.search);
@@ -35,16 +36,22 @@ export const AttestationForm = ({api}:{api:ItemsApi<any>}) => {
     };
 
     const sendAttestation = async () => {
-        api.createItem && api.createItem({
+        const to : Array<any> = [];
+        users?.map(u => to.push({ directus_users_id: u.user_created.id }));
+        console.log(to);
+        
+        api?.createItem && api.createItem({
             text: inputValue,
-            symbol: "🔥",
-            color: "",
-            shape: "",
-            to: users
-        })
+            emoji: selectedEmoji,
+            color: selectedColor,
+            shape: selectedShape,
+            to: to
+        }).then(()=> navigate("/"))
     }
 
-
+    const [selectedEmoji, setSelectedEmoji] = useState('select badge');
+    const [selectedShape, setSelectedShape] = useState('circle');
+    const [selectedColor, setSelectedColor] = useState('#fff0d6');
 
 
     return (
@@ -70,7 +77,7 @@ export const AttestationForm = ({api}:{api:ItemsApi<any>}) => {
             <div className='tw-w-full'>
                 <div className='tw-flex tw-justify-center tw-items-center'>
                     <div className=' tw-flex tw-justify-center tw-items-center tw-w-28 tw-h-28 tw-m-4'>
-                        <EmojiPicker />
+                        <EmojiPicker selectedEmoji={selectedEmoji} selectedColor={selectedColor} selectedShape={selectedShape} setSelectedEmoji={setSelectedEmoji} setSelectedColor={setSelectedColor} setSelectedShape={setSelectedShape} />
                     </div>
                 </div>
                 <div className='tw-flex tw-justify-center tw-items-center'>
@@ -82,7 +89,7 @@ export const AttestationForm = ({api}:{api:ItemsApi<any>}) => {
                         className="tw-input tw-min-w-0 tw-w-fit tw-resize-none tw-overflow-hidden tw-text-center " />
                 </div>
             </div>
-            <div className='tw-w-full tw-grid tw-mt-4'><Link className="tw-place-self-center" to="/item/b42a1404-fe08-4d84-8404-47ce623c3cf2?tab=2"><button className="tw-btn  tw-px-8">Next</button></Link></div>
+            <div className='tw-w-full tw-grid tw-mt-4'><button onClick={sendAttestation} className="tw-btn tw-place-self-center tw-px-8">Next</button></div>
         </MapOverlayPage>
     )
 }

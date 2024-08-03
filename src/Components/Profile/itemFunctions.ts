@@ -178,6 +178,7 @@ export const onUpdateItem = async (state, item, tags, addTag, setLoading, naviga
                     },
                 },
             })
+            .catch(setLoading(false))
             .then(() => item && updateItem({ ...item, ...changedItem }))
             .then(() => {
                 setLoading(false);
@@ -198,6 +199,7 @@ export const onUpdateItem = async (state, item, tags, addTag, setLoading, naviga
                     },
                 },
             })
+            .catch(setLoading(false))
             .then(() => item && addItem({ ...item, ...changedItem, layer: item.layer, user_created: user, type: item.layer?.itemType }))
             .then(() => {
                 setLoading(false);

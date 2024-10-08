@@ -52,6 +52,10 @@
 
 }
 
+.placeholder-center::placeholder {
+  text-align: center;
+}
+
 .custom-file-upload {
   cursor: pointer;
 }

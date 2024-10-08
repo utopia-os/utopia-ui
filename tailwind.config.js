@@ -4,6 +4,25 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
     "./node_modules/tw-elements/dist/js/**/*.js"
   ],
+  safelist: [
+    'tw-mask-squircle',
+    'tw-mask-circle',
+    'tw-mask-hexagon-2',
+    'tw-mask-decagon',
+    'tw-bg-[#FF99C8]',
+    'tw-bg-[#fff0d6]',
+    'tw-bg-[#FCF6BD]',
+    'tw-bg-[#D0F4DE]',
+    'tw-bg-[#A9DEF9]',
+    'tw-bg-[#E4C1F9]',
+    'tw-bg-[#de324c]',
+    'tw-bg-[#f4895f]',
+    'tw-bg-[#f8e16f]',
+    'tw-bg-[#95cf92]',
+    'tw-bg-[#369acc]',
+    'tw-bg-[#9656a2]',
+
+  ],
   theme: {
     extend: {
       zIndex: {
@@ -31,7 +50,7 @@ module.exports = {
         'sans': ["Helvetica", "sans-serif", 'Roboto'],
       },
       fontSize: {
-        'map':  "13px"
+        'map': "13px"
       },
       lineHeight: {
         'map': "1.4em"
@@ -54,17 +73,18 @@ module.exports = {
   ],
   daisyui: {
     themes: ["light", "dark", "cupcake", "retro", "cyberpunk", "aqua",
-    {
-      docutopia: {
-        "primary": "#8e00ff",
-        "secondary": "#00bb7a",
-        "accent": "#006aff",
-        "neutral": "#231502",
-        "base-content": "#ffad6b",
-        "base-100": "#440844",
-      },
-    },]
+      {
+        docutopia: {
+          "primary": "#8e00ff",
+          "secondary": "#00bb7a",
+          "accent": "#006aff",
+          "neutral": "#231502",
+          "base-content": "#ffad6b",
+          "base-100": "#440844",
+        },
+      },]
   },
   prefix: 'tw-',
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
+
 }

@@ -9,9 +9,8 @@ import AddButton from "./Subcomponents/AddButton";
 import { useEffect, useState } from "react";
 import { ItemFormPopupProps } from "./Subcomponents/ItemFormPopup";
 import { SearchControl } from "./Subcomponents/Controls/SearchControl";
-// import { QuestControl } from "./Subcomponents/Controls/QuestControl";
 import { Control } from "./Subcomponents/Controls/Control";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { TagsControl } from "./Subcomponents/Controls/TagsControl";
 import { useSelectPosition, useSetMapClicked, useSetSelectPosition } from "./hooks/useSelectPosition";
 import { useClusterRef, useSetClusterRef } from "./hooks/useClusterRef";
@@ -20,6 +19,7 @@ import { FilterControl } from "./Subcomponents/Controls/FilterControl";
 import { LayerControl } from "./Subcomponents/Controls/LayerControl";
 import { useLayers } from "./hooks/useLayers";
 import { useAddVisibleLayer } from "./hooks/useFilter";
+import { GratitudeControl } from "./Subcomponents/Controls/GratitudeControl";
 import { SelectPosition } from "./Subcomponents/SelectPosition";
 
 // for refreshing map on resize (needs to be implemented)
@@ -63,21 +63,13 @@ function UtopiaMap({
 
     const selectNewItemPosition = useSelectPosition();
     const setSelectNewItemPosition = useSetSelectPosition();
-    const location = useLocation();
     const setClusterRef = useSetClusterRef();
     const clusterRef = useClusterRef();
     const setMapClicked = useSetMapClicked();
 
     const [itemFormPopup, setItemFormPopup] = useState<ItemFormPopupProps | null>(null);
 
-    const [embedded, setEmbedded] = useState<boolean>(true)
 
-    useEffect(() => {
-        let params = new URLSearchParams(location.search);
-        let urlPosition = params.get("position");
-        let embedded = params.get("embedded");
-        embedded != "true" && setEmbedded(false)
-    }, [location]);
 
 
     const layers = useLayers();
@@ -113,6 +105,7 @@ function UtopiaMap({
                         {showFilterControl && <FilterControl />}
                         {/*todo: needed layer handling is located LayerControl*/}
                         {showLayerControl && <LayerControl></LayerControl>}
+                        {<GratitudeControl/>}
                     </Control>
                     <TileLayer
                         maxZoom={19}

@@ -17,6 +17,7 @@ export const TabsForm = ({ item, state, setState, updatePermission, linkItem, un
         setActiveTab(id);
 
         let params = new URLSearchParams(window.location.search);
+
         params.set("tab", `${id}`);
         const newUrl = location.pathname + "?" + params.toString();
         window.history.pushState({}, '', newUrl);

@@ -95,7 +95,7 @@ export const SearchControl = () => {
     return (<>
         {!(windowDimensions.height < 500 && popupOpen && hideSuggestions) &&
             <div className='tw-w-[calc(100vw-2rem)] tw-max-w-[22rem] '>
-                <div className='flex tw-flex-row'>
+                <div className='tw-flex tw-flex-row'>
                     {embedded && <SidebarControl />}
                     <div className='tw-relative'>
                     <input type="text" placeholder="search ..." autoComplete="off" value={value} className="tw-input tw-input-bordered tw-grow tw-shadow-xl tw-rounded-lg tw-pr-12"

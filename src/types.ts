@@ -9,7 +9,8 @@ export interface UtopiaMapProps {
   children?: React.ReactNode,
   geo?: any,
   showFilterControl?: boolean,
-  showLayerControl?: boolean
+  showLayerControl?: boolean,
+  showGratitudeControl?: boolean
 }
 
 export interface LayerProps {

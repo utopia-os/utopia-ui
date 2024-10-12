@@ -51,6 +51,7 @@ function UtopiaMap({
     children,
     geo,
     showFilterControl = false,
+    showGratitudeControl = false,
     showLayerControl = true
 }
     : UtopiaMapProps) {
@@ -123,7 +124,7 @@ function UtopiaMap({
                         {showFilterControl && <FilterControl />}
                         {/*todo: needed layer handling is located LayerControl*/}
                         {showLayerControl && <LayerControl></LayerControl>}
-                        {<GratitudeControl/>}
+                        {showGratitudeControl && <GratitudeControl/>}
                     </Control>
                     <TileLayer
                         maxZoom={19}

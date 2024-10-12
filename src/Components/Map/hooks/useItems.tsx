@@ -1,6 +1,6 @@
-import { useCallback, useReducer, createContext, useContext, useEffect, useState } from "react";
+import { useCallback, useReducer, createContext, useContext, useState } from "react";
 import * as React from "react";
-import { Item, ItemsApi, LayerProps, Tag } from "../../../types";
+import { Item, LayerProps } from "../../../types";
 import { toast } from "react-toastify";
 import { useAddLayer } from "./useLayers";
 
@@ -99,6 +99,7 @@ function useItemsManager(initialItems: Item[]): {
     layer.data?.map(item => {
       dispatch({ type: "ADD", item: { ...item, layer: layer } });
     })
+    setallItemsLoaded(true);
   }, []);
 
 

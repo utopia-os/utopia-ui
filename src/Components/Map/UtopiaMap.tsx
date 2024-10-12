@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { ItemFormPopupProps } from "./Subcomponents/ItemFormPopup";
 import { SearchControl } from "./Subcomponents/Controls/SearchControl";
 import { Control } from "./Subcomponents/Controls/Control";
-import { Outlet } from "react-router-dom";
+import { BrowserRouter, Outlet, useLocation } from "react-router-dom";
 import { TagsControl } from "./Subcomponents/Controls/TagsControl";
 import { useSelectPosition, useSetMapClicked, useSetSelectPosition } from "./hooks/useSelectPosition";
 import { useClusterRef, useSetClusterRef } from "./hooks/useClusterRef";
@@ -22,8 +22,26 @@ import { useAddVisibleLayer } from "./hooks/useFilter";
 import { GratitudeControl } from "./Subcomponents/Controls/GratitudeControl";
 import { SelectPosition } from "./Subcomponents/SelectPosition";
 
-// for refreshing map on resize (needs to be implemented)
 const mapDivRef = React.createRef();
+
+export const Router = ({ children }) => {
+    let location;
+    try {
+      location = useLocation();
+    } catch (e) {
+      location = null;
+    }
+  
+    if (!location) {
+      return (
+        <BrowserRouter>
+          {children}
+        </BrowserRouter>
+      );
+    }
+      return children;
+  };
+
 
 function UtopiaMap({
     height = "500px",
@@ -90,7 +108,7 @@ function UtopiaMap({
     }
 
     return (
-        <>
+        <Router>
             <div className={`tw-h-full ${(selectNewItemPosition != null ? "crosshair-cursor-enabled" : undefined)}`}>
                 <MapContainer ref={mapDivRef} style={{ height: height, width: width }} center={new LatLng(center[0], center[1])} zoom={zoom} zoomControl={false} maxZoom={19}>
                     <Outlet></Outlet>
@@ -133,7 +151,7 @@ function UtopiaMap({
                 }
             </div>
 
-        </>
+        </Router>
     );
 }
 

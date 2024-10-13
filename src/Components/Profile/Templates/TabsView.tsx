@@ -55,8 +55,8 @@ export const TabsView = ({ attestations, userType, item, offers, needs, relation
   return (
     <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-2 tw-mb-2 tw-px-6">
       <input type="radio" name="my_tabs_2" role="tab"
-        className={`tw-tab !tw-ps-3 !tw-pe-3 [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`}
-        aria-label={`${item.layer?.itemType.icon_as_labels ? "📝" : "📝\u00A0Info"}`} checked={activeTab == 1 && true}
+        className={`tw-tab tw-font-bold !tw-ps-2 !tw-pe-2 [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`}
+        aria-label={`${item.layer?.itemType.icon_as_labels && activeTab != 1 ? "📝" : "📝\u00A0Info"}`} checked={activeTab == 1 && true}
         onChange={() => updateActiveTab(1)} />
       <div role="tabpanel"
         className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-4 tw-mb-4 tw-overflow-x-hidden">
@@ -70,8 +70,8 @@ export const TabsView = ({ attestations, userType, item, offers, needs, relation
       {item.layer?.itemType.questlog &&
         <>
           <input type="radio" name="my_tabs_2" role="tab"
-            className={`tw-tab !tw-ps-3 !tw-pe-3 [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`}
-            aria-label={`${item.layer?.itemType.icon_as_labels ? "❤️" : "❤️\u00A0Reputation"}`} checked={activeTab == 2 && true}
+            className={`tw-tab tw-font-bold !tw-ps-2 !tw-pe-2 [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`}
+            aria-label={`${item.layer?.itemType.icon_as_labels && activeTab != 2 ? "❤️" : "❤️\u00A0Reputation"}`} checked={activeTab == 2 && true}
             onChange={() => updateActiveTab(2)} />
 
           <div role="tabpanel"
@@ -121,7 +121,7 @@ export const TabsView = ({ attestations, userType, item, offers, needs, relation
 
         <>
 
-          <input type="radio" name="my_tabs_2" role="tab" className={`tw-tab !tw-ps-3 !tw-pe-3 ${!item.layer?.itemType.icon_as_labels && "tw-min-w-[10em]"} [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`} aria-label={`${item.layer?.itemType.icon_as_labels ? "♻️" : "♻️\u00A0Offers & Needs"}`} checked={activeTab == 3 && true} onChange={() => updateActiveTab(3)} />
+          <input type="radio" name="my_tabs_2" role="tab" className={`tw-tab tw-font-bold !tw-ps-2 !tw-pe-2 ${!(item.layer?.itemType.icon_as_labels && activeTab != 3) && "tw-min-w-[10.4em]"} [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`} aria-label={`${item.layer?.itemType.icon_as_labels && activeTab != 3 ? "♻️" : "♻️\u00A0Offers & Needs"}`} checked={activeTab == 3 && true} onChange={() => updateActiveTab(3)} />
           <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-268px)] tw-overflow-y-auto fade tw-pt-4 tw-pb-1" >
             <div className='tw-h-full'>
               <div className='tw-grid tw-grid-cols-1'>
@@ -159,7 +159,7 @@ export const TabsView = ({ attestations, userType, item, offers, needs, relation
 
       {item.layer?.itemType.relations &&
         <>
-          <input type="radio" name="my_tabs_2" role="tab" className="tw-tab !tw-ps-3 !tw-pe-3 [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label={`${item.layer?.itemType.icon_as_labels ? "🔗" : "🔗\u00A0Relations"}`} checked={activeTab == 7 && true} onChange={() => updateActiveTab(7)} />
+          <input type="radio" name="my_tabs_2" role="tab" className="tw-tab tw-font-bold !tw-ps-2 !tw-pe-2 [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label={`${item.layer?.itemType.icon_as_labels && activeTab != 7 ? "🔗" : "🔗\u00A0Relations"}`} checked={activeTab == 7 && true} onChange={() => updateActiveTab(7)} />
           <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto tw-pt-4 tw-pb-1 -tw-mr-4 -tw-mb-4 tw-overflow-x-hidden">
             <div className='tw-h-full'>
               <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-1 2xl:tw-grid-cols-2 tw-pb-4'>

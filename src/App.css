@@ -3,7 +3,7 @@
   height: 100dvh;
 }
 
-#app-content  {
+#app-content {
   height: calc(100dvh - 64px);
 }
 
@@ -22,10 +22,12 @@
 }
 
 .move-out-right {
-  transform: translateX(100vw); /* Verschiebt das Div um die Breite des Viewports */
+  transform: translateX(100vw);
+  /* Verschiebt das Div um die Breite des Viewports */
 }
 
 
 .move-out-left {
-  transform: translateX(-100vw); /* Verschiebt das Div um die Breite des Viewports */
+  transform: translateX(-100vw);
+  /* Verschiebt das Div um die Breite des Viewports */
 }

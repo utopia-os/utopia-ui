@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { TextView } from 'utopia-ui'
 
 type ChapterProps = {
     clickAction1?: () => void
@@ -10,7 +11,11 @@ type ChapterProps = {
 
 export function Welcome1({ clickAction1, map }: ChapterProps) {
     return (
-        <>
+        <>{map.custom_text? 
+            <>
+            <TextView item={map} itemTextField={'custom_text'}></TextView>
+            </> : 
+            <>
             <h3 className="font-bold text-lg">Welcome to {map?.name || "Utopia Map"}</h3>
             <img className="float-right w-32 m-2" src={"https://api.utopia-lab.org/assets/"+map.logo}></img>
             <p className="py-3">
@@ -25,6 +30,7 @@ export function Welcome1({ clickAction1, map }: ChapterProps) {
             <div className="grid">
                 <label className="btn place-self-end mt-4" onClick={() => clickAction1!()}>Close</label>
             </div>
+            </>}
         </>
     )
 }

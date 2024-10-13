@@ -41,8 +41,8 @@ function App() {
   const getMap = async () => {
     const map = await mapApiInstance?.getItems();
     map && setMap(map);
-    map && map!="null" && setLayersApiInstance(new layersApi(map.id));
-    map && map!="null" && map.own_tag_space ? setTagsApi(new itemsApi<Tag>('tags', undefined, map.id)) : setTagsApi(new itemsApi<Tag>('tags'));
+    map && map != "null" && setLayersApiInstance(new layersApi(map.id));
+    map && map != "null" && map.own_tag_space ? setTagsApi(new itemsApi<Tag>('tags', undefined, map.id)) : setTagsApi(new itemsApi<Tag>('tags'));
   }
 
   useEffect(() => {
@@ -103,13 +103,13 @@ function App() {
                 <Route path='reset-password' element={<RequestPasswordPage reset_url={map.url + "/set-new-password/"} />} />
                 <Route path='set-new-password' element={<SetNewPasswordPage />} />
                 <Route path="item/*" element={<ProfileView userType={map.user_type.name} />} />
-                <Route path="edit-item/*" element={<ProfileForm userType={map.user_type.name}/>} />
+                <Route path="edit-item/*" element={<ProfileForm userType={map.user_type.name} />} />
                 <Route path="user-settings" element={<UserSettings />} />
                 <Route path="moon-calendar" element={<MoonCalendar />} />
                 <Route path="landingpage" element={<Landingpage />} />
                 {
                   layers.map((l: any) =>
-                    <Route key={l.id} path={l.name} element={<OverlayItemsIndexPage plusButton={l.index_plus_button} layerName={l.name} url={'/item/'} parameterField={'id'}  />} />
+                    <Route key={l.id} path={l.name} element={<OverlayItemsIndexPage plusButton={l.index_plus_button} layerName={l.name} url={'/item/'} parameterField={'id'} />} />
                   )
                 }
               </Route>
@@ -121,11 +121,11 @@ function App() {
   )
   else if (map == "null" && !loading) return (
 
-        <div className="flex items-center justify-center h-screen">
-        <div>
-          <p className='text-xl font-semibold'>This map does not exist</p>
-        </div>
+    <div className="flex items-center justify-center h-screen">
+      <div>
+        <p className='text-xl font-semibold'>This map does not exist</p>
       </div>
+    </div>
   )
 
   else return (

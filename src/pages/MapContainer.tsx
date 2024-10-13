@@ -37,7 +37,7 @@ function MapContainer({ layers, map }: { layers: Array<LayerProps>, map: any }) 
 
   return (
 
-    <UtopiaMap geo={map.geo} zoom={map.zoom || 5} center={map.center ? [map.center?.coordinates[1], map.center?.coordinates[0]] : [50.6, 9.5]} height='100%' width="100%" showFilterControl={map.show_filter_control} showLayerControl={map.show_layer_control} >
+    <UtopiaMap geo={map.geo} zoom={map.zoom || 5} center={map.center ? [map.center?.coordinates[1], map.center?.coordinates[0]] : [50.6, 9.5]} height='100%' width="100%" showFilterControl={map.show_filter_control} showLayerControl={map.show_layer_control} showGratitudeControl={map.show_gratitude_control} >
       {layers && apis &&
         layers.map(layer =>
           <Layer

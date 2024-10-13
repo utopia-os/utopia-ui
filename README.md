@@ -29,15 +29,6 @@ install via npm
  npm install utopia-ui
 ```
 
-## Examples
-
-[Moos Map](https://github.com/utopia-os/moos-map)
-
-## Demo
-
-[Moos Map](https://moos-map.de)
-
-
 ## Map Component
 The map shows various Layers (places, events, profiles ...) of Irems at their respective position whith nice and informative Popups.
 
@@ -45,35 +36,34 @@ Tags, colors and clusters help to retain the overview.
 
 use the Map UI Component
 ```jsx
-import { UtopiaMap, Layer, Tags } from 'utopia-ui'
+import { UtopiaMap, Layer} from 'utopia-ui'
 
-      <UtopiaMap zoom={5} height='calc(100vh - 64px)' width="100%">
-        <Layer
-          name='events'
-          menuIcon='CalendarIcon'
-          menuText='add new event'
-          menuColor='#f9a825'
-          markerIcon='calendar-days-solid'
-          markerShape='square'
-          markerDefaultColor='#777'
-          data={events} />
-        <Layer
-          name='places'
-          menuIcon='MapPinIcon'
-          menuText='add new place'
-          menuColor='#2E7D32'
-          markerIcon='circle-solid'
-          markerShape='circle'
-          markerDefaultColor='#777'
-          data={places} />
-        <Tags data={tags}></Tags>
-      </UtopiaMap>
+    <UtopiaMap zoom={5} height='100dvh' width="100dvw">
+      <Layer
+        name='events'
+        menuIcon='CalendarIcon'
+        menuText='add new event'
+        menuColor='#f9a825'
+        markerIcon='calendar'
+        markerShape='square'
+        markerDefaultColor='#777'
+        data={events} />
+      <Layer
+        name='places'
+        menuIcon='MapPinIcon'
+        menuText='add new place'
+        menuColor='#2E7D32'
+        markerIcon='point'
+        markerShape='circle'
+        markerDefaultColor='#777'
+        data={places} />
+    </UtopiaMap>
 ```
 You can find some Sample Data (places, events, tags) for test in the `SamleData/` folder
 
 
 
-### Options
+### Map Options
 
  Option         | Type              | Default      | Required   | Description 
  ---            | ---               | ---          | ---        | ---    
@@ -82,7 +72,11 @@ You can find some Sample Data (places, events, tags) for test in the `SamleData/
  `center`       | `LatLng`          |`[50.6, 9.5]` |    No      | initial map position           
  `zoom`         | `number`          |`10`          |    No      | initial zoom level
 
+### Layer Options
 
+ Option         | Type              | Default      | Required   | Description 
+ ---            | ---               | ---          | ---        | ---    
+|      ...      |                   |              |            |
 
 ## Join the community
 
@@ -90,4 +84,4 @@ You can find some Sample Data (places, events, tags) for test in the `SamleData/
 
 *We are looking for Web Developer, UX Designer, Community Manager, Visionaries, Artists, etc. who like to support this Vision.*
 
-[https://t.me/utopiaOS](https://t.me/utopiaOS)
+[https://t.me/UtopiaMap](https://t.me/UtopiaMap)

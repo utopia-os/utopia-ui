@@ -40,7 +40,6 @@ function useItemsManager(initialItems: Item[]): {
 
   const addLayer = useAddLayer();
 
-  const [itemsCount, setItemsCount] = useState<number>(0);
   const [allItemsLoaded, setallItemsLoaded] = useState<boolean>(false);
 
 
@@ -96,6 +95,7 @@ function useItemsManager(initialItems: Item[]): {
   }, [])
 
   const setItemsData = useCallback((layer: LayerProps) => {
+    addLayer(layer);
     layer.data?.map(item => {
       dispatch({ type: "ADD", item: { ...item, layer: layer } });
     })

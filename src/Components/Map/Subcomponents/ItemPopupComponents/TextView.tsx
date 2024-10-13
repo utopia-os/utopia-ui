@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Item } from '../../../../types';
 import { useTags } from '../../hooks/useTags';
 import { useAddFilterTag } from '../../hooks/useFilter';
@@ -8,6 +7,7 @@ import Markdown from 'react-markdown';
 import { getValue } from '../../../../Utils/GetValue';
 import remarkBreaks from 'remark-breaks';
 import { decodeTag } from '../../../../Utils/FormatTags';
+import { memo } from 'react';
 
 export const TextView = ({ item, truncate = false, itemTextField, rawText }: { item?: Item, truncate?: boolean, itemTextField?: string, rawText?: string }) => {
   const tags = useTags();
@@ -103,21 +103,34 @@ export const TextView = ({ item, truncate = false, itemTextField, rawText }: { i
     )
   };
 
+  const MemoizedVideoEmbed = memo(({ url }: { url: string }) => (
+    <iframe
+      className='tw-w-full'
+      src={url}
+      allow="fullscreen;  picture-in-picture"
+      allowFullScreen
+    />
+  ));
+
   return (
     <Markdown className={`tw-text-map tw-leading-map tw-text-sm`} remarkPlugins={[remarkBreaks]} components={{
       p: CustomParagraph,
       a: ({ href, children }) => {
         const isYouTubeVideo = href?.startsWith('https://www.youtube.com/watch?v=');
+        const isRumbleVideo = href?.startsWith('https://rumble.com/embed/');
+
 
         if (isYouTubeVideo) {
           const videoId = href?.split('v=')[1].split('&')[0];
           const youtubeEmbedUrl = `https://www.youtube-nocookie.com/embed/${videoId}`;
 
           return (
-            <iframe className='tw-w-full'
-              src={youtubeEmbedUrl}
-              allowFullScreen
-            />
+            <MemoizedVideoEmbed url={youtubeEmbedUrl}></MemoizedVideoEmbed>
+          );
+        }
+        if (isRumbleVideo) {
+          return (
+            <MemoizedVideoEmbed url={href!}></MemoizedVideoEmbed>
           );
         }
         if (href?.startsWith("#")) {

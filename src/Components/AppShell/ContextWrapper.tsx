@@ -30,7 +30,6 @@ export const ContextWrapper = ({ children }) => {
 
   // Case 1: Only the Router is missing, but ContextWrapper is already provided
   if (!location && isWrapped) {
-    console.log("Router is not present, but ContextWrapper is already provided. Wrapping with Router only.");
     return (
       <Router>
         {children}
@@ -40,7 +39,6 @@ export const ContextWrapper = ({ children }) => {
 
   // Case 2: Neither Router nor ContextWrapper is present
   if (!location && !isWrapped) {
-    console.log("Router and ContextWrapper are not present. Wrapping both.");
     return (
       <Router>
         <ContextCheckContext.Provider value={true}>
@@ -54,7 +52,6 @@ export const ContextWrapper = ({ children }) => {
 
   // Case 3: Only ContextWrapper is missing
   if (location && !isWrapped) {
-    console.log("ContextWrapper is not present. Wrapping ContextWrapper.");
     return (
       <ContextCheckContext.Provider value={true}>
         <Wrappers>{children}</Wrappers>
@@ -63,7 +60,6 @@ export const ContextWrapper = ({ children }) => {
   }
 
   // Case 4: Both Router and ContextWrapper are already present
-  console.log("Router and ContextWrapper are already present.");
   return children;
 };
 

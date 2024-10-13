@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as L from 'leaflet'
 import { useAddVisibleGroupType, useIsGroupTypeVisible, useToggleVisibleGroupType, useVisibleGroupType } from '../../hooks/useFilter';
 import { useEffect } from 'react';
 

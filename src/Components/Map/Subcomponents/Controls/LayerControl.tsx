@@ -1,8 +1,6 @@
 import * as React from 'react'
-import * as L from 'leaflet'
 import { useLayers } from '../../hooks/useLayers';
-import { useAddVisibleLayer, useIsLayerVisible, useToggleVisibleLayer } from '../../hooks/useFilter';
-import { useEffect } from 'react';
+import { useIsLayerVisible, useToggleVisibleLayer } from '../../hooks/useFilter';
 
 export function LayerControl() {
 
@@ -14,7 +12,6 @@ export function LayerControl() {
 
     const isLayerVisible = useIsLayerVisible();
     const toggleVisibleLayer = useToggleVisibleLayer();
-    const addVisibleLayer = useAddVisibleLayer();
 
     return (
         <div className="tw-card tw-bg-base-100 tw-shadow-xl tw-mt-2 tw-w-fit">

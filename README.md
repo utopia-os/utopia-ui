@@ -89,5 +89,5 @@ You can find some Sample Data (places, events, tags) for test in the `SamleData/
 ## Support us
 
 <a href="https://opencollective.com/utopia-project">
-    <img width="100" src="https://opencollective.com/utopia-project/donate/button@2x.png?color=blue" />
+    <img width="300" src="https://opencollective.com/utopia-project/donate/button@2x.png?color=blue" />
 </a>

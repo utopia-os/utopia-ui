@@ -1,4 +1,4 @@
-import { AppShell, SideBar, Content, AuthProvider, Modal, LoginPage, SignupPage, Quests, RequestPasswordPage, SetNewPasswordPage, UserSettings, OverlayItemsIndexPage, ProfileView, ProfileForm, Permissions, Tags } from 'utopia-ui'
+import { AppShell, SideBar, Content, AuthProvider, Modal, LoginPage, SignupPage, Quests, RequestPasswordPage, SetNewPasswordPage, UserSettings, OverlayItemsIndexPage, ProfileView, ProfileForm, Permissions, Tags, SelectUser, AttestationForm } from 'utopia-ui'
 import { getBottomRoutes, routes } from './routes/sidebar'
 import { Route, Routes } from 'react-router-dom'
 import MapContainer from "./pages/MapContainer"
@@ -22,6 +22,8 @@ function App() {
   const [tagsApi, setTagsApi] = useState<itemsApi<Tag>>();
   const [mapApiInstance, setMapApiInstance] = useState<mapApi>();
   const [layersApiInstance, setLayersApiInstance] = useState<layersApi>();
+  const [attestationApi, setAttestationApi] = useState<itemsApi<any>>();
+
   const [map, setMap] = useState<any>();
   const [layers, setLayers] = useState<any>();
   const [layerPageRoutes, setLayerPageRoutes] = useState<any>();
@@ -31,6 +33,7 @@ function App() {
   useEffect(() => {
     setPermissionsApiInstance(new permissionsApi());
     setMapApiInstance(new mapApi(window.location.origin));
+    setAttestationApi(new itemsApi<any>("attestations"));
   }, [])
 
   useEffect(() => {
@@ -102,11 +105,13 @@ function App() {
                 <Route path='signup' element={<SignupPage />} />
                 <Route path='reset-password' element={<RequestPasswordPage reset_url={map.url + "/set-new-password/"} />} />
                 <Route path='set-new-password' element={<SetNewPasswordPage />} />
-                <Route path="item/*" element={<ProfileView userType={map.user_type.name} />} />
-                <Route path="edit-item/*" element={<ProfileForm userType={map.user_type.name} />} />
+                <Route path="item/*" element={<ProfileView attestationApi={attestationApi} userType={map.user_type.name} />} />
+                <Route path="edit-item/*" element={<ProfileForm userType={map.user_type.name}/>} />
                 <Route path="user-settings" element={<UserSettings />} />
                 <Route path="moon-calendar" element={<MoonCalendar />} />
                 <Route path="landingpage" element={<Landingpage />} />
+                <Route path="select-user" element={<SelectUser userType={map.user_type.name} />} />
+                <Route path="attestation-form" element={<AttestationForm api={attestationApi}/>} />
                 {
                   layers.map((l: any) =>
                     <Route key={l.id} path={l.name} element={<OverlayItemsIndexPage plusButton={l.index_plus_button} layerName={l.name} url={'/item/'} parameterField={'id'} />} />

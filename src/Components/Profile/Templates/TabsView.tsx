@@ -71,9 +71,8 @@ export const TabsView = ({ attestations, userType, item, offers, needs, relation
         <>
           <input type="radio" name="my_tabs_2" role="tab"
             className={`tw-tab tw-font-bold !tw-ps-2 !tw-pe-2 [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`}
-            aria-label={`${item.layer?.itemType.icon_as_labels && activeTab != 2 ? "❤️" : "❤️\u00A0Reputation"}`} checked={activeTab == 2 && true}
+            aria-label={`${item.layer?.itemType.icon_as_labels && activeTab != 2 ? "❤️" : "❤️\u00A0Credibility"}`} checked={activeTab == 2 && true}
             onChange={() => updateActiveTab(2)} />
-
           <div role="tabpanel"
             className="tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-4 tw-mb-4 tw-overflow-x-hidden">
             <table className="sm:tw-table-sm md:tw-table-md">

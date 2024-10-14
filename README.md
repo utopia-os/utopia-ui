@@ -30,7 +30,7 @@ install via npm
 ```
 
 ## Map Component
-The map shows various Layers (places, events, profiles ...) of Irems at their respective position whith nice and informative Popups.
+The map shows various Layers (like places, events, profiles ...) of Items at their respective position whith nice and informative Popup and Profiles.
 
 Tags, colors and clusters help to retain the overview.
 
@@ -85,3 +85,9 @@ You can find some Sample Data (places, events, tags) for test in the `SamleData/
 *We are looking for Web Developer, UX Designer, Community Manager, Visionaries, Artists, etc. who like to support this Vision.*
 
 [https://t.me/UtopiaMap](https://t.me/UtopiaMap)
+
+## Support us
+
+<a href="https://opencollective.com/utopia-project">
+    <img src="https://opencollective.com/utopia-project/donate/button@2x.png?color=blue" />
+</a>

@@ -86,7 +86,7 @@ export const TextView = ({ item, truncate = false, itemTextField, rawText }: { i
     />
   );
   const CustomExternalLink = ({ href, children }) => (
-    <a className='tw-font-bold'
+    <a className='tw-font-bold tw-underline'
       href={href}
       target='_blank'
     > {children}</a>

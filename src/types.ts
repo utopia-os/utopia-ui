@@ -10,7 +10,8 @@ export interface UtopiaMapProps {
   geo?: any,
   showFilterControl?: boolean,
   showLayerControl?: boolean,
-  showGratitudeControl?: boolean
+  showGratitudeControl?: boolean,
+  infoText? : string
 }
 
 export interface LayerProps {

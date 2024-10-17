@@ -2,7 +2,6 @@ import * as React from 'react'
 import NavBar from './NavBar'
 import { SetAssetsApi } from './SetAssetsApi'
 import { AssetsApi } from '../../types'
-import 'react-toastify/dist/ReactToastify.css';
 import { ContextWrapper } from './ContextWrapper';
 
 

@@ -6,7 +6,7 @@ import "./UtopiaMap.css";
 import { LatLng } from "leaflet";
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import AddButton from "./Subcomponents/AddButton";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ItemFormPopupProps } from "./Subcomponents/ItemFormPopup";
 import { SearchControl } from "./Subcomponents/Controls/SearchControl";
 import { Control } from "./Subcomponents/Controls/Control";
@@ -21,6 +21,9 @@ import { useLayers } from "./hooks/useLayers";
 import { useAddVisibleLayer } from "./hooks/useFilter";
 import { GratitudeControl } from "./Subcomponents/Controls/GratitudeControl";
 import { SelectPosition } from "./Subcomponents/SelectPosition";
+import { toast } from 'react-toastify'
+import { TextView } from "./Subcomponents/ItemPopupComponents/TextView";
+
 
 const mapDivRef = React.createRef();
 
@@ -33,7 +36,8 @@ export function UtopiaMapInner({
     geo,
     showFilterControl = false,
     showGratitudeControl = false,
-    showLayerControl = true
+    showLayerControl = true,
+    infoText
 }: UtopiaMapProps) {
 
     // Hooks that rely on contexts, called after ContextWrapper is provided
@@ -50,6 +54,17 @@ export function UtopiaMapInner({
     useEffect(() => {
         layers.forEach(layer => addVisibleLayer(layer));
     }, [layers]);
+
+    const init = useRef(false)
+    useEffect(() => {
+        if (!init.current) {
+            infoText && setTimeout(() => {
+                toast(<TextView rawText={infoText}/>, { autoClose: false});
+            }, 4000);
+            init.current=true;
+        }
+    }, [])
+    
 
     function MapEventListener() {
         useMapEvents({

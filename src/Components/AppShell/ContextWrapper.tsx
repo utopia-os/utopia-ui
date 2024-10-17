@@ -78,6 +78,16 @@ export const Wrappers = ({ children }) => {
                     <AssetsProvider>
                       <ClusterRefProvider>
                         <QuestsProvider initialOpen={true}>
+                          <ToastContainer position="top-right"
+                            autoClose={2000}
+                            hideProgressBar
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                            theme="light" />
                           {children}
                         </QuestsProvider>
                       </ClusterRefProvider>

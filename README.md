@@ -10,7 +10,7 @@ Utopia UIs mission is to provide open source building blocks to create beautiful
 
 The building blocks are designed to allow different networks and communities to assemble their map and app for their specific needs and purpose.
 
-Utopia Game is the first app made with Utopia UI. It is an attempt to use gamification to get users to take action and make the map even more alive. Check it out at [utopia-game.org](https://utopia-game.org/) or see the code in the [repository](https://github.com/utopia-os/utopia-game)
+Utopia Game is one of the apps made with Utopia UI. It is an attempt to use gamification to get users to take action and make the map even more alive. Check it out at [utopia-game.org](https://utopia-game.org/) or see the code in the [repository](https://github.com/utopia-os/utopia-game)
 
 ## Features
 

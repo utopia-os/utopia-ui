@@ -28,20 +28,20 @@ In this tutorial we learn how we create a basic React app with a Map component u
 
 For this tutorial we use Vite to create an empty React app called "utopia-static-map"
 
-```shell=
+```shell
 npm create vite@latest utopia-static-map -- --template react
 ```
 
 We open our new app in the terminal and install the [utopia-ui](https://github.com/utopia-os/utopia-ui) package
 
-```shell=
+```shell
 cd utopia-static-map
 npm install utopia-ui
 ```
 
 We open our `src/App.jsx` and we replace the content with
 
-```jsx=
+```jsx
 import { UtopiaMap } from "utopia-ui"
 
 function App() {
@@ -57,7 +57,7 @@ export default App
 
 Then we start the development server to check out the result in our browser:
 
-```shell=
+```shell
 npm run dev
 ```
 
@@ -69,7 +69,7 @@ Now we add some static layer.
 
 First we put some sample data in a new file called `src/sample-data.js`
 
-```javascript=
+```javascript
 export const places = [{
     "id": 51,
     "name": "Stadtgemüse",
@@ -99,11 +99,11 @@ We want to create two Layers. One we want to call *Places* and the other *Events
 
 we import our sample data to the `src/App.jsx`
 
-```jsx=
+```jsx
 import { events, places } from "./sample-data"
 ```
 and than we create our two `<Layer>` inside of our `<UtopiaMap>` component
-```jsx=
+```jsx
     <UtopiaMap center={[50.6, 15.5]} zoom={5} height='100dvh' width="100dvw">
       <Layer
         name='events'
@@ -118,8 +118,6 @@ and than we create our two `<Layer>` inside of our `<UtopiaMap>` component
         markerDefaultColor='#007'
         data={places} />
     </UtopiaMap>
-  )
-}
 
 ```
 

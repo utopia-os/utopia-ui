@@ -114,6 +114,12 @@
     width: 24px;
   }
 
+  .staff-snake-icon {
+    position: relative;
+    top: -36px;
+    left: 4px;
+    width: 24px;
+  }
   
   .leaflet-popup-scrolled {
     overflow-x: hidden;

@@ -16,4 +16,4 @@ A marker on a Map which shows the geographic position of an [Item](#Item)
 It opens when the user clicks a Map Marker.
 
 #### Profile
-Belongs to an [Item](#Item) ans shows all the data of it
+A representation of all the the data of an [Item](#Item)

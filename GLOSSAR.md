@@ -17,3 +17,6 @@ A small preview of an item which opens on the map when the user clicks it's [Map
 
 #### Profile
 A representation of all the the data of an [Item](#Item)
+
+#### Network
+An initiative that aims to connect people in real life by providing their own [Map instance](#Map) to its circle

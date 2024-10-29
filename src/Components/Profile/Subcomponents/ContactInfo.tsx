@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
-import { useAssetApi } from "../../AppShell/hooks/useAssets";
+import { Link } from 'react-router-dom'
+import { useAssetApi } from '../../AppShell/hooks/useAssets'
 
 const ContactInfo = ({ email, telephone, name, avatar, link }: { email: string, telephone: string, name: string, avatar: string, link?: string }) => {
-    const assetsApi = useAssetApi();
+  const assetsApi = useAssetApi()
 
-    return (
+  return (
         <div className="tw-bg-base-200  tw-mb-6 tw-mt-6 tw-p-6">
             <h2 className="tw-text-lg tw-font-semibold">Du hast Fragen?</h2>
             <div className="tw-mt-4 tw-flex tw-items-center">
@@ -54,21 +54,21 @@ const ContactInfo = ({ email, telephone, name, avatar, link }: { email: string, 
                 </div>
             </div>
         </div>
-    )
+  )
 }
 
-export default ContactInfo;
+export default ContactInfo
 
 // eslint-disable-next-line react/prop-types
 const ConditionalLink = ({ url, children }) => {
-    const params = new URLSearchParams(window.location.search);
+  const params = new URLSearchParams(window.location.search)
 
-    if (url) {
-        return (
-            <Link to={url+"?"+params}>
+  if (url) {
+    return (
+            <Link to={url + '?' + params}>
                 {children}
             </Link>
-        );
-    }
-    return children;
-};
+    )
+  }
+  return children
+}

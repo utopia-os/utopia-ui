@@ -1,5 +1,4 @@
-import SocialShareBar from './SocialShareBar';
-
+import SocialShareBar from './SocialShareBar'
 
 /* const flags = {
     de: (
@@ -19,10 +18,10 @@ import SocialShareBar from './SocialShareBar';
 }; */
 
 const statusMapping = {
-    'in_planning': 'in Planung',
-    'paused': 'pausiert',
-    'active': 'aktiv'
-};
+  in_planning: 'in Planung',
+  paused: 'pausiert',
+  active: 'aktiv'
+}
 
 // eslint-disable-next-line react/prop-types
 const SubHeader = ({ type, status, url, title }) => (
@@ -30,7 +29,7 @@ const SubHeader = ({ type, status, url, title }) => (
         <div className='tw-float-left tw-mt-2 tw-mb-4 tw-flex tw-items-center'>
 
             {status && <div className="tw-mt-1.5">
-                <span className="tw-text-sm tw-text-current tw-bg-base-300 tw-rounded tw-py-0.5 tw-px-2 tw-inline-flex tw-items-center tw-mr-2"><span className={`tw-w-2 tw-h-2  ${ status=="in_planning" && "tw-bg-blue-700"} ${ status=="paused" && "tw-bg-orange-400"} ${ status=="active" && "tw-bg-green-500"} tw-rounded-full tw-mr-1.5`}></span>{statusMapping[status]}</span>
+                <span className="tw-text-sm tw-text-current tw-bg-base-300 tw-rounded tw-py-0.5 tw-px-2 tw-inline-flex tw-items-center tw-mr-2"><span className={`tw-w-2 tw-h-2  ${status == 'in_planning' && 'tw-bg-blue-700'} ${status == 'paused' && 'tw-bg-orange-400'} ${status == 'active' && 'tw-bg-green-500'} tw-rounded-full tw-mr-1.5`}></span>{statusMapping[status]}</span>
             </div>}
             {type && <div className="tw-mt-1.5">
                 <span className="tw-text-sm tw-text-current tw-bg-base-300 tw-rounded tw-py-1 tw-px-2">{type}</span>
@@ -40,6 +39,6 @@ const SubHeader = ({ type, status, url, title }) => (
             <SocialShareBar url={url} title={title} />
         </div>
     </div>
-);
+)
 
-export default SubHeader;
+export default SubHeader

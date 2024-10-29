@@ -1,17 +1,15 @@
-import { useCallback, useReducer, createContext, useContext, useState } from "react";
-import * as React from "react";
-import { Item, LayerProps } from "../../../types";
-import { toast } from "react-toastify";
-import { useAddLayer } from "./useLayers";
-
+import { useCallback, useReducer, createContext, useContext, useState } from 'react'
+import * as React from 'react'
+import { Item, LayerProps } from '../../../types'
+import { toast } from 'react-toastify'
+import { useAddLayer } from './useLayers'
 
 type ActionType =
-  | { type: "ADD"; item: Item }
-  | { type: "UPDATE"; item: Item }
-  | { type: "REMOVE"; item: Item }
-  | { type: "RESET"; layer: LayerProps }
+  | { type: 'ADD'; item: Item }
+  | { type: 'UPDATE'; item: Item }
+  | { type: 'REMOVE'; item: Item }
+  | { type: 'RESET'; layer: LayerProps }
   ;
-
 
 type UseItemManagerResult = ReturnType<typeof useItemsManager>;
 
@@ -24,9 +22,9 @@ const ItemContext = createContext<UseItemManagerResult>({
   setItemsApi: () => { },
   setItemsData: () => { },
   allItemsLoaded: false
-});
+})
 
-function useItemsManager(initialItems: Item[]): {
+function useItemsManager (initialItems: Item[]): {
   items: Item[];
   // eslint-disable-next-line no-unused-vars
   addItem: (item: Item) => void;
@@ -43,106 +41,100 @@ function useItemsManager(initialItems: Item[]): {
   allItemsLoaded: boolean;
 
 } {
+  const addLayer = useAddLayer()
 
-  const addLayer = useAddLayer();
-
-  const [allItemsLoaded, setallItemsLoaded] = useState<boolean>(false);
-
-
+  const [allItemsLoaded, setallItemsLoaded] = useState<boolean>(false)
 
   const [items, dispatch] = useReducer((state: Item[], action: ActionType) => {
     switch (action.type) {
-      case "ADD":
+      case 'ADD':
         // eslint-disable-next-line no-case-declarations
         const exist = state.find((item) =>
-          item.id === action.item.id ? true : false
-        );
-        if (!exist) return [
-          ...state,
-          action.item,
-        ];
-        else return state;
-      case "UPDATE":
+          item.id === action.item.id
+        )
+        if (!exist) {
+          return [
+            ...state,
+            action.item
+          ]
+        } else return state
+      case 'UPDATE':
         return state.map((item) => {
           if (item.id === action.item.id) {
             return action.item
           }
           return item
-        });
-      case "REMOVE":
-        return state.filter(item => item !== action.item);
-      case "RESET":
-        return state.filter(item => item.layer?.name !== action.layer.name);
+        })
+      case 'REMOVE':
+        return state.filter(item => item !== action.item)
+      case 'RESET':
+        return state.filter(item => item.layer?.name !== action.layer.name)
       default:
-        throw new Error();
+        throw new Error()
     }
-  }, initialItems);
-
+  }, initialItems)
 
   const setItemsApi = useCallback(async (layer: LayerProps) => {
-    addLayer(layer);
+    addLayer(layer)
     const result = await toast.promise(
       layer.api!.getItems(),
       {
         pending: `loading ${layer.name} ...`,
         success: `${layer.name} loaded`,
         error: {
-          render( {data} ) {        
+          render ({ data }) {
             return `${data}`
-          },
-        },
+          }
+        }
       }
-    );
-    if (result) {      
-      result.map(item => {       
-        dispatch({ type: "ADD", item: { ...item, layer: layer } });       
+    )
+    if (result) {
+      result.map(item => {
+        dispatch({ type: 'ADD', item: { ...item, layer } })
       })
-      setallItemsLoaded(true);
+      setallItemsLoaded(true)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const setItemsData = useCallback((layer: LayerProps) => {
-    addLayer(layer);
+    addLayer(layer)
     layer.data?.map(item => {
-      dispatch({ type: "ADD", item: { ...item, layer: layer } });
+      dispatch({ type: 'ADD', item: { ...item, layer } })
     })
-    setallItemsLoaded(true);
+    setallItemsLoaded(true)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
-
-  const addItem = useCallback(async (item: Item) => {   
+  const addItem = useCallback(async (item: Item) => {
     dispatch({
-      type: "ADD",
-      item,
-    });
-  }, []);
+      type: 'ADD',
+      item
+    })
+  }, [])
 
   const updateItem = useCallback(async (item: Item) => {
     dispatch({
-      type: "UPDATE",
-      item,
-    });
-  }, []);
+      type: 'UPDATE',
+      item
+    })
+  }, [])
 
   const removeItem = useCallback((item: Item) => {
     dispatch({
-      type: "REMOVE",
-      item,
-    });
-  }, []);
+      type: 'REMOVE',
+      item
+    })
+  }, [])
 
   const resetItems = useCallback((layer: LayerProps) => {
     dispatch({
-      type: "RESET",
+      type: 'RESET',
       layer
-    });
-  }, []);
+    })
+  }, [])
 
-
-
-  return { items, updateItem, addItem, removeItem, resetItems, setItemsApi, setItemsData, allItemsLoaded };
+  return { items, updateItem, addItem, removeItem, resetItems, setItemsApi, setItemsData, allItemsLoaded }
 }
 
 export const ItemsProvider: React.FunctionComponent<{
@@ -151,44 +143,44 @@ export const ItemsProvider: React.FunctionComponent<{
   <ItemContext.Provider value={useItemsManager(initialItems)}>
     {children}
   </ItemContext.Provider>
-);
+)
 
 export const useItems = (): Item[] => {
-  const { items } = useContext(ItemContext);
-  return items;
-};
+  const { items } = useContext(ItemContext)
+  return items
+}
 
-export const useAddItem = (): UseItemManagerResult["addItem"] => {
-  const { addItem } = useContext(ItemContext);
-  return addItem;
-};
+export const useAddItem = (): UseItemManagerResult['addItem'] => {
+  const { addItem } = useContext(ItemContext)
+  return addItem
+}
 
-export const useUpdateItem = (): UseItemManagerResult["updateItem"] => {
-  const { updateItem } = useContext(ItemContext);
-  return updateItem;
-};
+export const useUpdateItem = (): UseItemManagerResult['updateItem'] => {
+  const { updateItem } = useContext(ItemContext)
+  return updateItem
+}
 
-export const useRemoveItem = (): UseItemManagerResult["removeItem"] => {
-  const { removeItem } = useContext(ItemContext);
-  return removeItem;
-};
+export const useRemoveItem = (): UseItemManagerResult['removeItem'] => {
+  const { removeItem } = useContext(ItemContext)
+  return removeItem
+}
 
-export const useResetItems = (): UseItemManagerResult["resetItems"] => {
-  const { resetItems } = useContext(ItemContext);
-  return resetItems;
-};
+export const useResetItems = (): UseItemManagerResult['resetItems'] => {
+  const { resetItems } = useContext(ItemContext)
+  return resetItems
+}
 
-export const useSetItemsApi = (): UseItemManagerResult["setItemsApi"] => {
-  const { setItemsApi } = useContext(ItemContext);
-  return setItemsApi;
-};
+export const useSetItemsApi = (): UseItemManagerResult['setItemsApi'] => {
+  const { setItemsApi } = useContext(ItemContext)
+  return setItemsApi
+}
 
-export const useSetItemsData = (): UseItemManagerResult["setItemsData"] => {
-  const { setItemsData } = useContext(ItemContext);
-  return setItemsData;
-}; 
+export const useSetItemsData = (): UseItemManagerResult['setItemsData'] => {
+  const { setItemsData } = useContext(ItemContext)
+  return setItemsData
+}
 
-export const useAllItemsLoaded = (): UseItemManagerResult["allItemsLoaded"] => {
-  const { allItemsLoaded } = useContext(ItemContext);
-  return allItemsLoaded;
+export const useAllItemsLoaded = (): UseItemManagerResult['allItemsLoaded'] => {
+  const { allItemsLoaded } = useContext(ItemContext)
+  return allItemsLoaded
 }

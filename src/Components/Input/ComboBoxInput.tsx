@@ -1,5 +1,5 @@
-import { useState } from "react"
-import * as React from "react"
+import { useState } from 'react'
+import * as React from 'react'
 
 interface ComboBoxProps {
     id?: string;
@@ -10,15 +10,14 @@ interface ComboBoxProps {
 }
 
 const ComboBoxInput = ({ id, options, value, onValueChange }: ComboBoxProps) => {
-
   // eslint-disable-next-line no-unused-vars
-  const [selectedValue, setSelectedValue] = useState(value);
+  const [selectedValue, setSelectedValue] = useState(value)
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-      const value = e.target.value;
-      setSelectedValue(value);
-      onValueChange(value);
-  };
+    const value = e.target.value
+    setSelectedValue(value)
+    onValueChange(value)
+  }
 
   return (
     <select
@@ -30,7 +29,7 @@ const ComboBoxInput = ({ id, options, value, onValueChange }: ComboBoxProps) => 
         <option value={o.value} key={o.value} selected={o.value == value}>{o.label}</option>
       )}
     </select>
-  );
+  )
 }
 
-export default ComboBoxInput;
+export default ComboBoxInput

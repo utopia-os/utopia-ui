@@ -1,15 +1,14 @@
 import { useSetAssetApi } from './hooks/useAssets'
-import { AssetsApi } from '../../types';
-import { useEffect } from 'react';
+import { AssetsApi } from '../../types'
+import { useEffect } from 'react'
 
-export const SetAssetsApi = ({assetsApi}:{assetsApi: AssetsApi}) => {
-    const setAssetsApi = useSetAssetApi();
+export const SetAssetsApi = ({ assetsApi }:{assetsApi: AssetsApi}) => {
+  const setAssetsApi = useSetAssetApi()
 
-    useEffect(() => {
-      setAssetsApi(assetsApi)
+  useEffect(() => {
+    setAssetsApi(assetsApi)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [assetsApi])
-    
+  }, [assetsApi])
 
   return (
     <></>

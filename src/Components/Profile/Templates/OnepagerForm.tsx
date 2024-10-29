@@ -1,8 +1,8 @@
 import * as React from 'react'
-import { useEffect } from "react";
-import { Item, Tag } from "../../../types"
-import { TextAreaInput, TextInput } from "../../Input"
-import ComboBoxInput from "../../Input/ComboBoxInput"
+import { useEffect } from 'react'
+import { Item, Tag } from '../../../types'
+import { TextAreaInput, TextInput } from '../../Input'
+import ComboBoxInput from '../../Input/ComboBoxInput'
 
 export const OnepagerForm = ({ item, state, setState }: {
     state: {
@@ -25,53 +25,51 @@ export const OnepagerForm = ({ item, state, setState }: {
     setState: React.Dispatch<React.SetStateAction<any>>,
     item: Item
 }) => {
+  useEffect(() => {
+    switch (state.groupType) {
+      case 'wuerdekompass':
+        setState(prevState => ({
+          ...prevState,
+          color: item?.layer?.menuColor || '#1A5FB4',
+          markerIcon: 'group',
+          image: '59e6a346-d1ee-4767-9e42-fc720fb535c9'
+        }))
+        break
+      case 'themenkompass':
+        setState(prevState => ({
+          ...prevState,
+          color: '#26A269',
+          markerIcon: 'group',
+          image: '59e6a346-d1ee-4767-9e42-fc720fb535c9'
+        }))
+        break
+      case 'liebevoll.jetzt':
+        setState(prevState => ({
+          ...prevState,
+          color: '#E8B620',
+          markerIcon: 'liebevoll.jetzt',
+          image: 'e735b96c-507b-471c-8317-386ece0ca51d'
+        }))
 
-    useEffect(() => {
-        switch (state.groupType) {
-            case "wuerdekompass":
-                setState(prevState => ({
-                    ...prevState,
-                    color: item?.layer?.menuColor || "#1A5FB4",
-                    markerIcon: "group",
-                    image: "59e6a346-d1ee-4767-9e42-fc720fb535c9"
-                }));
-                break;
-            case "themenkompass":
-                setState(prevState => ({
-                    ...prevState,
-                    color: "#26A269",
-                    markerIcon: "group",
-                    image: "59e6a346-d1ee-4767-9e42-fc720fb535c9"
-                }));
-                break;
-            case "liebevoll.jetzt":
-                setState(prevState => ({
-                    ...prevState,
-                    color: "#E8B620",
-                    markerIcon: "liebevoll.jetzt",
-                    image: "e735b96c-507b-471c-8317-386ece0ca51d"
-                }));
-
-                break;
-            default:
-                break;
-        }
+        break
+      default:
+        break
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [state.groupType])
+  }, [state.groupType])
 
+  const typeMapping = [
+    { value: 'wuerdekompass', label: 'Regional-Gruppe' },
+    { value: 'themenkompass', label: 'Themen-Gruppe' },
+    { value: 'liebevoll.jetzt', label: 'liebevoll.jetzt' }
+  ]
+  const statusMapping = [
+    { value: 'active', label: 'aktiv' },
+    { value: 'in_planning', label: 'in Planung' },
+    { value: 'paused', label: 'pausiert' }
+  ]
 
-    const typeMapping = [
-        { value: 'wuerdekompass', label: 'Regional-Gruppe' },
-        { value: 'themenkompass', label: 'Themen-Gruppe' },
-        { value: 'liebevoll.jetzt', label: 'liebevoll.jetzt' }
-    ];
-    const statusMapping = [
-        { value: 'active', label: 'aktiv' },
-        { value: 'in_planning', label: 'in Planung' },
-        { value: 'paused', label: 'pausiert' }
-    ];
-
-    return (
+  return (
         <div className="tw-space-y-6 tw-mt-6">
             <div className="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 tw-gap-6">
                 <div>
@@ -83,8 +81,8 @@ export const OnepagerForm = ({ item, state, setState }: {
                         options={typeMapping}
                         value={state.groupType}
                         onValueChange={(v) => setState(prevState => ({
-                            ...prevState,
-                            groupType: v
+                          ...prevState,
+                          groupType: v
                         }))}
                     />
                 </div>
@@ -97,8 +95,8 @@ export const OnepagerForm = ({ item, state, setState }: {
                         options={statusMapping}
                         value={state.status}
                         onValueChange={(v) => setState(prevState => ({
-                            ...prevState,
-                            status: v
+                          ...prevState,
+                          status: v
                         }))}
                     />
                 </div>
@@ -112,8 +110,8 @@ export const OnepagerForm = ({ item, state, setState }: {
                     placeholder="Email"
                     defaultValue={state.contact}
                     updateFormValue={(v) => setState(prevState => ({
-                        ...prevState,
-                        contact: v
+                      ...prevState,
+                      contact: v
                     }))}
                 />
             </div>
@@ -126,8 +124,8 @@ export const OnepagerForm = ({ item, state, setState }: {
                     placeholder="Telefonnummer"
                     defaultValue={state.telephone}
                     updateFormValue={(v) => setState(prevState => ({
-                        ...prevState,
-                        telephone: v
+                      ...prevState,
+                      telephone: v
                     }))}
                 />
             </div>
@@ -140,8 +138,8 @@ export const OnepagerForm = ({ item, state, setState }: {
                     placeholder="Nächste Termine"
                     defaultValue={state.nextAppointment}
                     updateFormValue={(v) => setState(prevState => ({
-                        ...prevState,
-                        nextAppointment: v
+                      ...prevState,
+                      nextAppointment: v
                     }))}
                     inputStyle="tw-h-24"
                 />
@@ -153,14 +151,14 @@ export const OnepagerForm = ({ item, state, setState }: {
                 </label>
                 <TextAreaInput
                     placeholder="Beschreibung"
-                    defaultValue={state.text || ""}
+                    defaultValue={state.text || ''}
                     updateFormValue={(v) => setState(prevState => ({
-                        ...prevState,
-                        text: v
+                      ...prevState,
+                      text: v
                     }))}
                     inputStyle="tw-h-48"
                 />
             </div>
         </div>
-    )
+  )
 }

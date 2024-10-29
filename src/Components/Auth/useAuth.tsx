@@ -1,7 +1,6 @@
-import { createContext, useState, useContext, useEffect } from "react";
-import * as React from "react";
-import { UserApi, UserItem } from "../../types";
-
+import { createContext, useState, useContext, useEffect } from 'react'
+import * as React from 'react'
+import { UserApi, UserItem } from '../../types'
 
 type AuthProviderProps = {
   userApi: UserApi,
@@ -13,8 +12,6 @@ type AuthCredentials = {
   password: string;
   otp?: string | undefined;
 }
-
-
 
 type AuthContextProps = {
   isAuthenticated: boolean,
@@ -42,118 +39,111 @@ const AuthContext = createContext<AuthContextProps>({
   loading: false,
   logout: () => Promise.reject(),
   updateUser: () => Promise.reject(),
-  token: "",
+  token: '',
   requestPasswordReset: () => Promise.reject(),
   passwordReset: () => Promise.reject()
-});
+})
 
 export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
-  const [user, setUser] = useState<UserItem | null>(null);
-  const [token, setToken] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const isAuthenticated = !!user;
+  const [user, setUser] = useState<UserItem | null>(null)
+  const [token, setToken] = useState<string | null>(null)
+  const [loading, setLoading] = useState<boolean>(false)
+  const isAuthenticated = !!user
 
   useEffect(() => {
-    setLoading(true);
-    loadUser();
+    setLoading(true)
+    loadUser()
     setLoading(false)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
-  async function loadUser(): Promise<UserItem | undefined> {
+  async function loadUser (): Promise<UserItem | undefined> {
     try {
-        const token = await userApi.getToken();      
-        setToken(token);
-        if(token){
-          const me = await userApi.getUser();
-          setUser(me as UserItem);
-          setLoading(false);
-          return me as UserItem;
-        }
-        else return undefined;
-
+      const token = await userApi.getToken()
+      setToken(token)
+      if (token) {
+        const me = await userApi.getUser()
+        setUser(me as UserItem)
+        setLoading(false)
+        return me as UserItem
+      } else return undefined
     } catch (error) {
       setLoading(false)
-      return undefined;
+      return undefined
     }
   }
-  
 
   const login = async (credentials: AuthCredentials): Promise<UserItem | undefined> => {
-    setLoading(true);
+    setLoading(true)
     try {
-      const res = await userApi.login(credentials.email, credentials.password);
-      setToken(res.access_token);
-      return (await loadUser());
+      const res = await userApi.login(credentials.email, credentials.password)
+      setToken(res.access_token)
+      return (await loadUser())
     } catch (error: any) {
-      setLoading(false);
-      throw error;
+      setLoading(false)
+      throw error
     }
   }
 
   const register = async (credentials: AuthCredentials, userName): Promise<UserItem | undefined> => {
-    setLoading(true);
+    setLoading(true)
     try {
       /* const res = */ await userApi.register(credentials.email, credentials.password, userName)
-      return (await login(credentials));
+      return (await login(credentials))
     } catch (error: any) {
-      setLoading(false);
-      throw error;
+      setLoading(false)
+      throw error
     }
   }
 
-
   const logout = async () => {
     try {
-      await userApi.logout();
-      setUser(null);
+      await userApi.logout()
+      setUser(null)
     } catch (error: any) {
-      setLoading(false);
-      throw error;
+      setLoading(false)
+      throw error
     }
   }
 
   const updateUser = async (user: UserItem) => {
-    setLoading(true);
+    setLoading(true)
     // eslint-disable-next-line no-unused-vars
-    const { id, ...userRest } = user;
+    const { id, ...userRest } = user
 
     try {
-      const res = await userApi.updateUser(userRest);
-      setUser(res as any);
-      loadUser();
-      setLoading(false);
-      return res as any;
+      const res = await userApi.updateUser(userRest)
+      setUser(res as any)
+      loadUser()
+      setLoading(false)
+      return res as any
     } catch (error: any) {
-      setLoading(false);
-      throw error;
+      setLoading(false)
+      throw error
     }
   }
 
   const requestPasswordReset = async (email: string, reset_url?: string): Promise<any> => {
-    setLoading(true);
+    setLoading(true)
     try {
-      await userApi.requestPasswordReset(email, reset_url);
-      return setLoading(false);
+      await userApi.requestPasswordReset(email, reset_url)
+      return setLoading(false)
     } catch (error: any) {
-      setLoading(false);
-      throw error;
+      setLoading(false)
+      throw error
     }
   }
-
 
   const passwordReset = async (token: string, new_password:string): Promise<any> => {
-    setLoading(true);
+    setLoading(true)
     try {
-      await userApi.passwordReset(token, new_password);
-      return setLoading(false);
+      await userApi.passwordReset(token, new_password)
+      return setLoading(false)
     } catch (error: any) {
-      setLoading(false);
-      throw error;
+      setLoading(false)
+      throw error
     }
   }
-
-
 
   return (
     <AuthContext.Provider
@@ -161,6 +151,6 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
     >
       {children}
     </AuthContext.Provider>
-  );
-};
-export const useAuth = () => useContext(AuthContext);
+  )
+}
+export const useAuth = () => useContext(AuthContext)

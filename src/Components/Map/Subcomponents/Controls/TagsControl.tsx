@@ -1,11 +1,10 @@
 import * as React from 'react'
-import { useFilterTags, useRemoveFilterTag } from '../../hooks/useFilter';
-import { decodeTag } from '../../../../Utils/FormatTags';
+import { useFilterTags, useRemoveFilterTag } from '../../hooks/useFilter'
+import { decodeTag } from '../../../../Utils/FormatTags'
 
 export const TagsControl = () => {
-
-    const filterTags = useFilterTags();
-    const removeFilterTag = useRemoveFilterTag();
+  const filterTags = useFilterTags()
+  const removeFilterTag = useRemoveFilterTag()
 
   return (
     <div className='tw-flex tw-flex-wrap tw-mt-4 tw-w-[calc(100vw-2rem)] tw-max-w-xs'>
@@ -20,5 +19,3 @@ export const TagsControl = () => {
     }
 </div>)
 }
-
-

@@ -1,51 +1,45 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
 // eslint-disable-next-line react/prop-types
-export const EmojiPicker = ({selectedEmoji, selectedColor, selectedShape, setSelectedEmoji, setSelectedColor, setSelectedShape}) => {
-
-
-
-  const [isOpen, setIsOpen] = useState(false);
+export const EmojiPicker = ({ selectedEmoji, selectedColor, selectedShape, setSelectedEmoji, setSelectedColor, setSelectedShape }) => {
+  const [isOpen, setIsOpen] = useState(false)
 
   const emojis = [
     '❤️', '🙏', '👍', '🌻', '✨', '☀️',
-    '🔥', '🪵', '💧', '🎶', '🎨','🍄', 
-    '📝', '✉️', '🧩','💡', '🎓', '💬', 
+    '🔥', '🪵', '💧', '🎶', '🎨', '🍄',
+    '📝', '✉️', '🧩', '💡', '🎓', '💬',
     '🛠', '💻', '🕹', '🖨', '🚐', '🛒',
     '⚽️', '🧵', '👀', '🌱',
-    '🏕', '💪',  '🎁',   '🏹', 
-    '🥕', '🥇', '🥈', '🥉'];
-  const shapes = ["squircle", "circle", "hexagon-2"];
+    '🏕', '💪', '🎁', '🏹',
+    '🥕', '🥇', '🥈', '🥉']
+  const shapes = ['squircle', 'circle', 'hexagon-2']
 
-  const colors = ["#FF99C8", "#fff0d6", "#FCF6BD", "#D0F4DE", "#A9DEF9", "#E4C1F9", "#de324c", "#f4895f", "#f8e16f", "#95cf92", "#369acc", "#9656a2"]
-
+  const colors = ['#FF99C8', '#fff0d6', '#FCF6BD', '#D0F4DE', '#A9DEF9', '#E4C1F9', '#de324c', '#f4895f', '#f8e16f', '#95cf92', '#369acc', '#9656a2']
 
   const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
+    setIsOpen(!isOpen)
+  }
 
   const selectEmoji = (emoji) => {
-    setSelectedEmoji(emoji);
-    setIsOpen(false);
-  };
+    setSelectedEmoji(emoji)
+    setIsOpen(false)
+  }
 
   const selectShape = (shape) => {
-    setSelectedShape(shape);
-    setIsOpen(false);
-  };
+    setSelectedShape(shape)
+    setIsOpen(false)
+  }
 
   const selectColor = (color) => {
-    setSelectedColor(color);
-    setIsOpen(false);
-  };
-
-
+    setSelectedColor(color)
+    setIsOpen(false)
+  }
 
   return (
     <>
       <div
         onClick={toggleDropdown}
-        className={`tw-cursor-pointer ${selectedEmoji=="select badge" ? 'tw-text-sm !tw-p-9 tw-text-center ' : 'tw-text-6xl'} tw-mask tw-mask-${selectedShape} tw-p-6 tw-bg-[${selectedColor}]`}
+        className={`tw-cursor-pointer ${selectedEmoji == 'select badge' ? 'tw-text-sm !tw-p-9 tw-text-center ' : 'tw-text-6xl'} tw-mask tw-mask-${selectedShape} tw-p-6 tw-bg-[${selectedColor}]`}
       >
         {selectedEmoji}
       </div>
@@ -57,7 +51,7 @@ export const EmojiPicker = ({selectedEmoji, selectedColor, selectedShape, setSel
               <button
                 key={emoji}
                 onClick={() => selectEmoji(emoji)}
-                className={`tw-cursor-pointer  tw-text-2xl tw-p-2 hover:tw-bg-base-200 tw-rounded-md ${emoji == selectedEmoji && "tw-bg-base-300"}`}
+                className={`tw-cursor-pointer  tw-text-2xl tw-p-2 hover:tw-bg-base-200 tw-rounded-md ${emoji == selectedEmoji && 'tw-bg-base-300'}`}
               >
                 {emoji}
               </button>
@@ -68,7 +62,7 @@ export const EmojiPicker = ({selectedEmoji, selectedColor, selectedShape, setSel
             {shapes.map(shape => (
               <div
                 key={shape}
-                className={`tw-cursor-pointer hover:tw-bg-base-200 tw-rounded-md tw-p-2 ${shape == selectedShape && "tw-bg-base-300"}`}
+                className={`tw-cursor-pointer hover:tw-bg-base-200 tw-rounded-md tw-p-2 ${shape == selectedShape && 'tw-bg-base-300'}`}
                 onClick={() => selectShape(shape)}>
                 <div className={`tw-h-12 tw-mask tw-mask-${shape} tw-bg-neutral-content`}></div>
               </div>
@@ -79,7 +73,7 @@ export const EmojiPicker = ({selectedEmoji, selectedColor, selectedShape, setSel
             {colors.map(color => (
               <div
                 key={color}
-                className={`tw-cursor-pointer hover:tw-bg-base-200 tw-rounded-md tw-p-2 tw-flex tw-justify-center tw-items-center  ${color == selectedColor && "tw-bg-base-300"}`}
+                className={`tw-cursor-pointer hover:tw-bg-base-200 tw-rounded-md tw-p-2 tw-flex tw-justify-center tw-items-center  ${color == selectedColor && 'tw-bg-base-300'}`}
                 onClick={() => selectColor(color)}>
                 <div className={`tw-h-8 tw-w-8 tw-rounded-full tw-bg-[${color}]`}></div>
               </div>
@@ -89,6 +83,5 @@ export const EmojiPicker = ({selectedEmoji, selectedColor, selectedShape, setSel
 
       )}
     </>
-  );
-};
-
+  )
+}

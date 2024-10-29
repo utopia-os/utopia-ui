@@ -2,90 +2,86 @@ import * as React from 'react'
 import { MapOverlayPage } from './MapOverlayPage'
 import { useItems } from '../Map/hooks/useItems'
 import { useAssetApi } from '../AppShell/hooks/useAssets'
-import { EmojiPicker } from './EmojiPicker';
-import { useNavigate } from 'react-router-dom';
-import { useRef, useState } from 'react';
-import { Item, ItemsApi } from '../../types';
-import { useEffect } from 'react';
-import { toast } from 'react-toastify';
+import { EmojiPicker } from './EmojiPicker'
+import { useNavigate } from 'react-router-dom'
+import { useRef, useState, useEffect } from 'react'
+import { Item, ItemsApi } from '../../types'
+import { toast } from 'react-toastify'
 
-export const AttestationForm = ({api}:{api?:ItemsApi<any>}) => {
+export const AttestationForm = ({ api }:{api?:ItemsApi<any>}) => {
+  const items = useItems()
+  const assetsApi = useAssetApi()
+  const [users, setUsers] = useState<Array<Item>>()
+  const navigate = useNavigate()
 
-    const items = useItems();
-    const assetsApi = useAssetApi();
-    const [users, setUsers] = useState<Array<Item>>();
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        const params = new URLSearchParams(location.search);
-        const to_user_ids = params.get("to");
-        setUsers(items.filter(i => to_user_ids?.includes(i.id)))
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const to_user_ids = params.get('to')
+    setUsers(items.filter(i => to_user_ids?.includes(i.id)))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [items, location])
+  }, [items, location])
 
-    const [inputValue, setInputValue] = useState('');
-    const inputRef = useRef<HTMLInputElement>(null);
+  const [inputValue, setInputValue] = useState('')
+  const inputRef = useRef<HTMLInputElement>(null)
 
-    useEffect(() => {
-        if (inputRef.current) {
-            inputRef.current.style.width = 'auto';
-            inputRef.current.style.width = `${inputRef.current.scrollWidth+20}px`;
-        }
-    }, [inputValue]);
-
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setInputValue(event.target.value);
-    };
-
-    const sendAttestation = async () => {
-        const to : Array<any> = [];
-        users?.map(u => to.push({ directus_users_id: u.user_created.id }));
-
-
-        api?.createItem && toast.promise(
-            api.createItem({
-                text: inputValue,
-                emoji: selectedEmoji,
-                color: selectedColor,
-                shape: selectedShape,
-                to: to
-            }),            {
-                pending: 'creating attestation ...',
-                success: 'Attestation created',
-                error: {
-                    render({ data }) {
-                        return `${data}`
-                    },
-                },
-            })
-            .then( () =>           navigate("/item/" + items.find(i => i.user_created.id===to[0].directus_users_id && i.layer?.itemType.name==="player")?.id+"?tab=2")
-        )
-
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.style.width = 'auto'
+      inputRef.current.style.width = `${inputRef.current.scrollWidth + 20}px`
     }
+  }, [inputValue])
 
-    const [selectedEmoji, setSelectedEmoji] = useState('select badge');
-    const [selectedShape, setSelectedShape] = useState('circle');
-    const [selectedColor, setSelectedColor] = useState('#fff0d6');
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value)
+  }
 
+  const sendAttestation = async () => {
+    const to : Array<any> = []
+    users?.map(u => to.push({ directus_users_id: u.user_created.id }))
 
-    return (
+    api?.createItem && toast.promise(
+      api.createItem({
+        text: inputValue,
+        emoji: selectedEmoji,
+        color: selectedColor,
+        shape: selectedShape,
+        to
+      }), {
+        pending: 'creating attestation ...',
+        success: 'Attestation created',
+        error: {
+          render ({ data }) {
+            return `${data}`
+          }
+        }
+      })
+      .then(() => navigate('/item/' + items.find(i => i.user_created.id === to[0].directus_users_id && i.layer?.itemType.name === 'player')?.id + '?tab=2')
+      )
+  }
+
+  const [selectedEmoji, setSelectedEmoji] = useState('select badge')
+  const [selectedShape, setSelectedShape] = useState('circle')
+  const [selectedColor, setSelectedColor] = useState('#fff0d6')
+
+  return (
         <MapOverlayPage backdrop className='tw-h-fit tw-min-h-56 tw-w-96'>
             <div className='tw-text-center tw-text-xl tw-font-bold'>Gratitude</div>
             <div className='tw-text-center tw-text-base tw-text-gray-400'>to</div>
             <div className='tw-flex tw-flex-row tw-justify-center tw-items-center tw-flex-wrap'>
                 {users && users.map((u, k) => (
                     <div key={k} className="tw-flex tw-items-center tw-space-x-3 tw-mx-2 tw-my-1">
-                        {u.image ? <div className="tw-avatar">
+                        {u.image
+                          ? <div className="tw-avatar">
                             <div className="tw-mask tw-mask-circle tw-w-8 tw-h-8">
-                                <img src={assetsApi.url + u.image + "?width=40&heigth=40"} alt="Avatar" />
+                                <img src={assetsApi.url + u.image + '?width=40&heigth=40'} alt="Avatar" />
                             </div>
-                        </div> :
-                            <div className='tw-mask tw-mask-circle tw-text-xl md:tw-text-2xl tw-bg-slate-200 tw-rounded-full tw-w-8 tw-h-8'></div>}
+                        </div>
+                          : <div className='tw-mask tw-mask-circle tw-text-xl md:tw-text-2xl tw-bg-slate-200 tw-rounded-full tw-w-8 tw-h-8'></div>}
                         <div>
                             <div className="tw-font-bold">{u.name}</div>
                         </div>
                     </div>
-                ), ", ")}
+                ), ', ')}
             </div>
 
             <div className='tw-w-full'>
@@ -105,5 +101,5 @@ export const AttestationForm = ({api}:{api?:ItemsApi<any>}) => {
             </div>
             <div className='tw-w-full tw-grid tw-mt-4'><button onClick={sendAttestation} className="tw-btn tw-place-self-center tw-px-8">Next</button></div>
         </MapOverlayPage>
-    )
+  )
 }

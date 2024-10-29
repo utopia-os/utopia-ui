@@ -1,13 +1,8 @@
 import * as L from 'leaflet'
 import * as React from 'react'
 
-
-
-export const Control = ({ position, children, zIndex, absolute }: { position: "topLeft" | "topRight" | "bottomLeft" | "bottomRight", children: React.ReactNode, zIndex: string, absolute: boolean }) => {
-
-
+export const Control = ({ position, children, zIndex, absolute }: { position: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight', children: React.ReactNode, zIndex: string, absolute: boolean }) => {
   const controlContainerRef = React.createRef<HTMLDivElement>()
-
 
   React.useEffect(() => {
     if (controlContainerRef.current !== null) {
@@ -17,7 +12,7 @@ export const Control = ({ position, children, zIndex, absolute }: { position: "t
   }, [controlContainerRef])
 
   return (
-    <div ref={controlContainerRef} style={{zIndex: zIndex}} className={`${absolute && 'tw-absolute'} tw-z-[999] tw-flex-col ${position === 'topLeft' && "tw-top-4 tw-left-4"} ${position === 'bottomLeft' && "tw-bottom-4 tw-left-4"} ${position === 'topRight' && "tw-bottom-4 tw-right-4"} ${position === 'bottomRight' && "tw-bottom-4 tw-right-4"}`}>
+    <div ref={controlContainerRef} style={{ zIndex }} className={`${absolute && 'tw-absolute'} tw-z-[999] tw-flex-col ${position === 'topLeft' && 'tw-top-4 tw-left-4'} ${position === 'bottomLeft' && 'tw-bottom-4 tw-left-4'} ${position === 'topRight' && 'tw-bottom-4 tw-right-4'} ${position === 'bottomRight' && 'tw-bottom-4 tw-right-4'}`}>
 
         {children}
     </div>

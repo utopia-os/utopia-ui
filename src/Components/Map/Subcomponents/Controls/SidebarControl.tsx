@@ -1,11 +1,6 @@
-
-
 // Converts leaflet.locatecontrol to a React Component
 export const SidebarControl = () => {
-
-
-
-    return (<>
+  return (<>
         <div className="tw-card tw-bg-base-100 tw-shadow-xl tw-items-center tw-justify-center  hover:tw-bg-slate-300 hover:tw-cursor-pointer tw-transition-all tw-duration-300 tw-mr-2 tw-h-12 tw-w-12 ">
 
             <div className="tw-card-body tw-card tw-p-0">
@@ -19,7 +14,4 @@ export const SidebarControl = () => {
 
             </div>
         </div></>)
-
 }
-
-

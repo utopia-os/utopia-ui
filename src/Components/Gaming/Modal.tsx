@@ -1,16 +1,13 @@
-import * as React from "react"
-import { useEffect } from "react"
+import * as React from 'react'
+import { useEffect } from 'react'
 
-export function Modal({children, showOnStartup}:{children : React.ReactNode, showOnStartup?: boolean}) {
+export function Modal ({ children, showOnStartup }:{children : React.ReactNode, showOnStartup?: boolean}) {
+  useEffect(() => {
+    if (showOnStartup) { window.my_modal_3.showModal() }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-    useEffect(() => {
-        if(showOnStartup)
-        window.my_modal_3.showModal()
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [])
-
-
-    return (
+  return (
         <>
 
             {/* You can open the modal using ID.showModal() method */}
@@ -24,6 +21,5 @@ export function Modal({children, showOnStartup}:{children : React.ReactNode, sho
                 </form>
             </dialog>
         </>
-    )
+  )
 }
-

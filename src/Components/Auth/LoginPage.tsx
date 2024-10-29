@@ -13,6 +13,7 @@ export function LoginPage() {
 
     const navigate = useNavigate();
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const onLogin = async () => {
         await toast.promise(
             login({ email: email, password: password }),

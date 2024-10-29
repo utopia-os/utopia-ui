@@ -28,11 +28,14 @@ export const TextView = ({ item, truncate = false, itemTextField, rawText }: { i
 
   item && text ? replacedText = fixUrls(text) : "";
 
+  // eslint-disable-next-line no-useless-escape
   replacedText ? replacedText = replacedText.replace(/(?<!\]?\()https?:\/\/[^\s\)]+(?!\))/g, (url) => {
     let shortUrl = url;
+    // eslint-disable-next-line no-useless-escape
     if (url.match('^https:\/\/')) {
       shortUrl = url.split('https://')[1];
     }
+    // eslint-disable-next-line no-useless-escape
     if (url.match('^http:\/\/')) {
       shortUrl = url.split('http://')[1];
     }
@@ -47,36 +50,47 @@ export const TextView = ({ item, truncate = false, itemTextField, rawText }: { i
     return `[${match}](${match})`;
   }) : "";
 
+  // eslint-disable-next-line react/prop-types
   const CustomH1 = ({ children }) => (
     <h1 className="tw-text-xl tw-font-bold">{children}</h1>
   );
+  // eslint-disable-next-line react/prop-types
   const CustomH2 = ({ children }) => (
     <h2 className="tw-text-lg tw-font-bold">{children}</h2>
   );
+  // eslint-disable-next-line react/prop-types
   const CustomH3 = ({ children }) => (
     <h3 className="tw-text-base tw-font-bold">{children}</h3>
   );
+  // eslint-disable-next-line react/prop-types
   const CustomH4 = ({ children }) => (
     <h4 className="tw-text-base tw-font-bold">{children}</h4>
   );
+  // eslint-disable-next-line react/prop-types
   const CustomH5 = ({ children }) => (
     <h5 className="tw-text-sm tw-font-bold">{children}</h5>
   );
+  // eslint-disable-next-line react/prop-types
   const CustomH6 = ({ children }) => (
     <h6 className="tw-text-sm tw-font-bold">{children}</h6>
   );
+  // eslint-disable-next-line react/prop-types
   const CustomParagraph = ({ children }) => (
     <p className="!tw-my-2">{children}</p>
   );
+  // eslint-disable-next-line react/prop-types
   const CustomUnorderdList = ({ children }) => (
     <ul className="tw-list-disc tw-list-inside">{children}</ul>
   );
+  // eslint-disable-next-line react/prop-types
   const CustomOrderdList = ({ children }) => (
     <ol className="tw-list-decimal tw-list-inside">{children}</ol>
   );
+  // eslint-disable-next-line react/prop-types
   const CustomHorizontalRow = ({ children }) => (
     <hr className="tw-border-current">{children}</hr>
   );
+  // eslint-disable-next-line react/prop-types
   const CustomImage = ({ alt, src, title }) => (
     <img
       className="tw-max-w-full tw-rounded tw-shadow"
@@ -85,12 +99,14 @@ export const TextView = ({ item, truncate = false, itemTextField, rawText }: { i
       title={title}
     />
   );
+  // eslint-disable-next-line react/prop-types
   const CustomExternalLink = ({ href, children }) => (
     <a className='tw-font-bold tw-underline'
       href={href}
-      target='_blank'
+      target='_blank' rel="noreferrer"
     > {children}</a>
   );
+  /* eslint-disable react/prop-types */
   const CustomHashTagLink = ({ children, tag, item }) => {
     return (
       <a
@@ -102,7 +118,9 @@ export const TextView = ({ item, truncate = false, itemTextField, rawText }: { i
         }}>{decodeTag(children)}</a>
     )
   };
+  /* eslint-enable react/prop-types */
 
+  // eslint-disable-next-line react/display-name
   const MemoizedVideoEmbed = memo(({ url }: { url: string }) => (
     <iframe
       className='tw-w-full'
@@ -116,11 +134,14 @@ export const TextView = ({ item, truncate = false, itemTextField, rawText }: { i
     <Markdown className={`tw-text-map tw-leading-map tw-text-sm`} remarkPlugins={[remarkBreaks]} components={{
       p: CustomParagraph,
       a: ({ href, children }) => {
+        // eslint-disable-next-line react/prop-types
         const isYouTubeVideo = href?.startsWith('https://www.youtube.com/watch?v=');
+        // eslint-disable-next-line react/prop-types
         const isRumbleVideo = href?.startsWith('https://rumble.com/embed/');
 
 
         if (isYouTubeVideo) {
+          // eslint-disable-next-line react/prop-types
           const videoId = href?.split('v=')[1].split('&')[0];
           const youtubeEmbedUrl = `https://www.youtube-nocookie.com/embed/${videoId}`;
 
@@ -133,6 +154,7 @@ export const TextView = ({ item, truncate = false, itemTextField, rawText }: { i
             <MemoizedVideoEmbed url={href!}></MemoizedVideoEmbed>
           );
         }
+        // eslint-disable-next-line react/prop-types
         if (href?.startsWith("#")) {
           const tag = tags.find(t => t.name.toLowerCase() === decodeURI(href).slice(1).toLowerCase());
           return <CustomHashTagLink tag={tag} item={item}>{children}</CustomHashTagLink>;
@@ -181,7 +203,7 @@ function truncateText(text, limit) {
   // Split the text by paragraphs
   const paragraphs = text.split('\n');
 
-  for (let paragraph of paragraphs) {
+  for (const paragraph of paragraphs) {
     if (length + paragraph.length > limit) {
       truncated += paragraph.slice(0, limit - length) + '...';
       break;

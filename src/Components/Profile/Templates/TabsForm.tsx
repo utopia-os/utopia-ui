@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useCallback, useEffect, useState } from "react"
 import { TextAreaInput } from "../../Input"
 import { PopupStartEndInput, TextView } from "../../Map"
@@ -7,6 +8,7 @@ import { TagsWidget } from "../Subcomponents/TagsWidget"
 import { useNavigate } from "react-router-dom"
 import { useUpdateItem } from "../../Map/hooks/useItems"
 
+// eslint-disable-next-line react/prop-types
 export const TabsForm = ({ item, state, setState, updatePermission, linkItem, unlinkItem, loading, setUrlParams }) => {
 
     const [activeTab, setActiveTab] = useState<number>(1);
@@ -16,18 +18,20 @@ export const TabsForm = ({ item, state, setState, updatePermission, linkItem, un
     const updateActiveTab = useCallback((id: number) => {
         setActiveTab(id);
 
-        let params = new URLSearchParams(window.location.search);
+        const params = new URLSearchParams(window.location.search);
 
         params.set("tab", `${id}`);
         const newUrl = location.pathname + "?" + params.toString();
         window.history.pushState({}, '', newUrl);
         setUrlParams(params);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.pathname]);
 
     useEffect(() => {
-        let params = new URLSearchParams(location.search);
-        let urlTab = params.get("tab");
+        const params = new URLSearchParams(location.search);
+        const urlTab = params.get("tab");
         setActiveTab(urlTab ? Number(urlTab) : 1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.search]);
 
     return (

@@ -1,20 +1,14 @@
 import * as React from 'react'
-import { CardPage, MapOverlayPage } from '../Templates'
-import { useItems } from '../Map/hooks/useItems'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { MapOverlayPage } from '../Templates'
+import { useNavigate } from 'react-router-dom'
 import { useState } from 'react';
-import { Item, UserItem } from '../../types';
-import { getValue } from '../../Utils/GetValue';
-import { useMap } from 'react-leaflet';
-import { LatLng } from 'leaflet';
-import { TextView } from '../Map';
-import useWindowDimensions from '../Map/hooks/useWindowDimension';
+import { UserItem } from '../../types';
 import { toast } from 'react-toastify';
 import { useAuth } from '../Auth';
 import { TextInput } from '../Input';
 
 export function UserSettings() {
-    const { user, updateUser, loading, token } = useAuth();
+    const { user, updateUser, loading, /* token */ } = useAuth();
 
     const [id, setId] = useState<string>("");
     const [email, setEmail] = useState<string>("");

@@ -1,4 +1,4 @@
-import { Item } from "utopia-ui/dist/types"
+import { Item } from "../../../types"
 import { TextView } from "../../Map"
 import ContactInfo from "../Subcomponents/ContactInfo"
 import ProfileSubHeader from "../Subcomponents/ProfileSubHeader"
@@ -14,6 +14,7 @@ export const OnepagerView = ({item, userType}:{item: Item, userType: string}) =>
 
   useEffect(() => {
       setProfileOwner(items.find(i => (i.user_created?.id === item.user_created?.id) && i.layer?.itemType.name === userType));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item, items])
 
   const typeMapping = {
@@ -22,8 +23,8 @@ export const OnepagerView = ({item, userType}:{item: Item, userType: string}) =>
     'liebevoll.jetzt': 'liebevoll.jetzt',
 };
 
-let groupType = item.group_type ? item.group_type : 'default';
-let groupTypeText = typeMapping[groupType];
+const groupType = item.group_type ? item.group_type : 'default';
+const groupTypeText = typeMapping[groupType];
 
   return (
     <div className='tw-h-full tw-overflow-y-auto fade'>

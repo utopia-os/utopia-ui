@@ -1,8 +1,6 @@
-import { ReactNode, useEffect, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
-import { Item, ItemsApi, LayerProps } from '../../types';
-import { getValue } from '../../Utils/GetValue';
-import { PopupStartEndInput, StartEndView, TextView } from '../Map';
+import { useEffect, useRef, useState } from 'react'
+import { Item} from '../../types';
+import { PopupStartEndInput } from '../Map';
 import { PlusButton } from '../Profile/Subcomponents/PlusButton';
 import { TextInput, TextAreaInput } from '../Input';
 import { useAddTag, useGetItemTags, useTags } from '../Map/hooks/useTags';
@@ -11,10 +9,8 @@ import { hashTagRegex } from '../../Utils/HashTagRegex';
 import { randomColor } from '../../Utils/RandomColor';
 import { useAuth } from '../Auth';
 import { useLayers } from '../Map/hooks/useLayers';
-import { HeaderView } from '../Map/Subcomponents/ItemPopupComponents/HeaderView';
 import { MapOverlayPage } from './MapOverlayPage';
 import { useAddItem, useItems, useRemoveItem } from '../Map/hooks/useItems';
-import { DateUserInfo } from './DateUserInfo';
 import { ItemCard } from './ItemCard';
 import { Control } from '../Map/Subcomponents/Controls/Control';
 import { SearchControl } from '../Map/Subcomponents/Controls/SearchControl';

@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { useEffect } from "react";
 import { Item, Tag } from "../../../types"
 import { TextAreaInput, TextInput } from "../../Input"
@@ -55,6 +56,7 @@ export const OnepagerForm = ({ item, state, setState }: {
             default:
                 break;
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.groupType])
 
 

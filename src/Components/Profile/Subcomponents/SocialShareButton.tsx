@@ -49,6 +49,7 @@ const platformConfigs = {
     }
 };
 
+// eslint-disable-next-line react/prop-types
 const SocialShareButton = ({ platform, url, title }) => {
     const config = platformConfigs[platform];
 

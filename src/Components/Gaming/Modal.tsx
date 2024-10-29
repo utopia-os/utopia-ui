@@ -6,6 +6,7 @@ export function Modal({children, showOnStartup}:{children : React.ReactNode, sho
     useEffect(() => {
         if(showOnStartup)
         window.my_modal_3.showModal()
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [])
 
 

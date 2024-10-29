@@ -131,6 +131,7 @@ export const AvatarWidget: React.FC<AvatarWidgetProps> = ({ avatar, setAvatar })
             setCropping(false);
             setImage("");
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [crop]);
 
     const resizeBlob = useCallback(async (blob: Blob) => {

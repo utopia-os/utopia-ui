@@ -24,6 +24,7 @@ export const Sitemap = ({url}:{url:string}) => {
 
       setSitemap(generateSitemap());
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items]);
 
   return (

@@ -88,13 +88,14 @@ export const Layer = ({
     useEffect(() => {
         data && setItemsData({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, markerDefaultColor2, api, itemType, itemNameField, itemSubnameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, customEditParameter, public_edit_items, listed, setItemFormPopup, itemFormPopup, clusterRef });
         api && setItemsApi({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, markerDefaultColor2, api, itemType, itemNameField, itemSubnameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, customEditParameter, public_edit_items, listed, setItemFormPopup, itemFormPopup, clusterRef });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data, api])
 
     useMapEvents({
         popupopen: (e) => {
             const item = Object.entries(leafletRefs).find(r => r[1].popup == e.popup)?.[1].item;
             if (item?.layer?.name == name && window.location.pathname.split("/")[1] != item.id) {
-                let params = new URLSearchParams(window.location.search);
+                const params = new URLSearchParams(window.location.search);
                 if (!location.pathname.includes("/item/")) {
                     window.history.pushState({}, "", `/${item.id}` + `${params.toString() !== "" ? `?${params}` : ""}`)
                 }
@@ -131,6 +132,7 @@ export const Layer = ({
 
     useEffect(() => {
         openPopup();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [leafletRefs, location])
 
     useEffect(() => {
@@ -143,6 +145,7 @@ export const Layer = ({
                 }
             })
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [tagsReady])
 
     return (

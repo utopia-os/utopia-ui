@@ -18,7 +18,7 @@ export const MoonCalendar = () => {
 
 
   const [currMonth, setCurrMonth] = useState(() => format(today, "MMM-yyyy"));
-  let firstDayOfMonth = parse(currMonth, "MMM-yyyy", new Date());
+  const firstDayOfMonth = parse(currMonth, "MMM-yyyy", new Date());
 
 
   const getPrevMonth = (event: React.MouseEvent<SVGSVGElement>) => {

@@ -4,6 +4,7 @@ import { HexColorPicker } from "react-colorful";
 import "./ColorPicker.css"
 import useClickOutside from "../hooks/useClickOutside";
 
+// eslint-disable-next-line react/prop-types
 export const ColorPicker = ({ color, onChange, className }) => {
   const popover = useRef<HTMLDivElement>(null);
   const [isOpen, toggle] = useState(false);

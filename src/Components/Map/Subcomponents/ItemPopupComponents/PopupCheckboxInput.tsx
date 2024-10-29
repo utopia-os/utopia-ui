@@ -1,5 +1,3 @@
-import * as React from 'react'
-import { TextInput } from '../../../Input'
 import { Item } from '../../../../types'
 
 export const PopupCheckboxInput = ({ dataField, label, item }:

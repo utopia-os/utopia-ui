@@ -17,6 +17,7 @@ export const CircleLayout = ({ items,radius, fontSize } : {items: any, radius: n
         child.style.transform = `translate(${x}px, ${y}px)`;
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items]);
 
   return (

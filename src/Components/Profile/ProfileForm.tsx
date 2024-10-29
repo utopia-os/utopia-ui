@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-condition */
 import { useItems, useUpdateItem, useAddItem } from '../Map/hooks/useItems'
 import { useEffect, useState } from 'react';
 import { getValue } from '../../Utils/GetValue';
@@ -56,6 +57,7 @@ export function ProfileForm({ userType }: { userType: string }) {
 
     useEffect(() => {
         item && hasUserPermission("items", "update", item) && setUpdatePermission(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [item])
 
     useEffect(() => {
@@ -68,6 +70,7 @@ export function ProfileForm({ userType }: { userType: string }) {
 
         !item && setItem({ id: crypto.randomUUID(), name: user ? user.first_name : "", text: "", layer: layer, new: true })
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [items])   
 
     useEffect(() => {
@@ -114,6 +117,7 @@ export function ProfileForm({ userType }: { userType: string }) {
             start: item?.start ?? "",
             end: item?.end ?? ""
         });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [item, tags, items]);
 
     const [template, setTemplate] = useState<string>("")

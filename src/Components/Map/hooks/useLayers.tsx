@@ -14,11 +14,13 @@ const LayerContext = createContext<UseItemManagerResult>({
 
 function useLayerManager(initialLayers: LayerProps[]): {
   layers: LayerProps[];
+  // eslint-disable-next-line no-unused-vars
   addLayer: (layer: LayerProps) => void;
 } {
   const [layers, dispatch] = useReducer((state: LayerProps[], action: ActionType) => {
     switch (action.type) {
       case "ADD LAYER":
+        // eslint-disable-next-line no-case-declarations
         const exist = state.find((layer) =>
           layer.name === action.layer.name ? true : false
         );

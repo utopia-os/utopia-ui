@@ -5,12 +5,12 @@ export const randomColor = () => {
 const golden_ratio_conjugate = 0.618033988749895;
 
 function hsvToHex(h, s, v) {
-    var r, g, b;
-    var i = (Math.floor(h * 6));
-    var f = h * 6 - i;
-    var p = v * (1 - s);
-    var q = v * (1 - f * s);
-    var t = v * (1 - (1 - f) * s);
+    let r, g, b;
+    const i = (Math.floor(h * 6));
+    const f = h * 6 - i;
+    const p = v * (1 - s);
+    const q = v * (1 - f * s);
+    const t = v * (1 - (1 - f) * s);
 
     switch (i % 6) {
         case 0: r = v, g = t, b = p; break;

@@ -7,6 +7,7 @@ export const SetAssetsApi = ({assetsApi}:{assetsApi: AssetsApi}) => {
 
     useEffect(() => {
       setAssetsApi(assetsApi)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [assetsApi])
     
 

@@ -1,9 +1,11 @@
 import { TextAreaInput } from "../../Input";
 
+// eslint-disable-next-line react/prop-types
 export const SimpleForm = ({ state, setState }) => {
   return (
     <TextAreaInput
       placeholder="About me ..."
+      // eslint-disable-next-line react/prop-types
       defaultValue={state?.text || ""}
       updateFormValue={(v) => setState(prevState => ({
         ...prevState,

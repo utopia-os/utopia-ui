@@ -17,12 +17,14 @@ import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 // Helper context to determine if the ContextWrapper is already present.
 const ContextCheckContext = createContext(false);
 
+// eslint-disable-next-line react/prop-types
 export const ContextWrapper = ({ children }) => {
   const isWrapped = useContext(ContextCheckContext);
 
   // Check if we are already inside a Router
   let location;
   try {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     location = useLocation();
   } catch (e) {
     location = null;
@@ -63,6 +65,7 @@ export const ContextWrapper = ({ children }) => {
   return children;
 };
 
+// eslint-disable-next-line react/prop-types
 export const Wrappers = ({ children }) => {
   const queryClient = new QueryClient();
 

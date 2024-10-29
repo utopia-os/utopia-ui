@@ -13,6 +13,7 @@ export function FilterControl() {
         groupTypes.map(layer =>
             addVisibleGroupType(layer.value)
         )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 

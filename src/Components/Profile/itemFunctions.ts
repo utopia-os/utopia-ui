@@ -1,4 +1,5 @@
-import { Item, Tag } from '../../types';
+import * as React from 'react'
+import { Item } from '../../types';
 import { encodeTag } from '../../Utils/FormatTags';
 import { hashTagRegex } from '../../Utils/HashTagRegex';
 import { randomColor } from '../../Utils/RandomColor';
@@ -42,7 +43,7 @@ export const submitNewItem = async (evt: any, type: string, item, user, setLoadi
 }
 
 export const linkItem = async (id: string, item, updateItem) => {
-    let new_relations = item.relations || [];
+    const new_relations = item.relations || [];
     new_relations?.push({ items_id: item.id, related_items_id: id })
     const updatedItem = { id: item.id, relations: new_relations }
 
@@ -60,7 +61,7 @@ export const linkItem = async (id: string, item, updateItem) => {
 }
 
 export const unlinkItem = async (id: string, item, updateItem) => {
-    let new_relations = item.relations?.filter(r => r.related_items_id !== id)
+    const new_relations = item.relations?.filter(r => r.related_items_id !== id)
     const updatedItem = { id: item.id, relations: new_relations }
 
 
@@ -94,7 +95,7 @@ export const handleDelete = async (event: React.MouseEvent<HTMLElement>, item, s
     }
     setLoading(false);
     map.closePopup();
-    let params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(window.location.search);
     window.history.pushState({}, "", "/" + `${params ? `?${params}` : ""}`);
     navigate("/");
 }
@@ -103,7 +104,7 @@ export const handleDelete = async (event: React.MouseEvent<HTMLElement>, item, s
 export const onUpdateItem = async (state, item, tags, addTag, setLoading, navigate, updateItem, addItem, user, params) => {
     let changedItem = {} as Item;
 
-    let offer_updates: Array<any> = [];
+    const offer_updates: Array<any> = [];
     //check for new offers
     await state.offers?.map(o => {
         const existingOffer = item?.offers?.find(t => t.tags_id === o.id)
@@ -112,7 +113,7 @@ export const onUpdateItem = async (state, item, tags, addTag, setLoading, naviga
         !existingOffer && offer_updates.push({ items_id: item?.id, tags_id: o.id })
     });
 
-    let needs_updates: Array<any> = [];
+    const needs_updates: Array<any> = [];
 
     await state.needs?.map(n => {
         const existingNeed = item?.needs?.find(t => t.tags_id === n.id)
@@ -142,8 +143,8 @@ export const onUpdateItem = async (state, item, tags, addTag, setLoading, naviga
         ...state.needs.length > 0 && { needs: needs_updates }
     };
 
-    let offers_state: Array<any> = [];
-    let needs_state: Array<any> = [];
+    const offers_state: Array<any> = [];
+    const needs_state: Array<any> = [];
 
     state.offers.map(o => {
         offers_state.push({ items_id: item?.id, tags_id: o.id })

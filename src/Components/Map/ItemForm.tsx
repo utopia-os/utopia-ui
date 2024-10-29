@@ -8,6 +8,7 @@ export const ItemForm = ({ children, item, title, setPopupTitle }: { children?: 
     useEffect(() => {
         setPopupTitle&& title && setPopupTitle(title);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [title])
     
     return (

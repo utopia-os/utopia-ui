@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useAddFilterTag, useFilterTags, useResetFilterTags } from '../../hooks/useFilter'
+import { useAddFilterTag } from '../../hooks/useFilter'
 import useWindowDimensions from '../../hooks/useWindowDimension';
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
@@ -15,7 +15,6 @@ import * as L from 'leaflet';
 import MarkerIconFactory from '../../../../Utils/MarkerIconFactory';
 import { decodeTag } from '../../../../Utils/FormatTags';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useClusterRef } from '../../hooks/useClusterRef';
 import { Item } from '../../../../types';
 import { SidebarControl } from './SidebarControl';
 
@@ -86,8 +85,8 @@ export const SearchControl = () => {
 
     const location = useLocation();
     useEffect(() => {
-        let params = new URLSearchParams(location.search);
-        let embedded = params.get("embedded");
+        const params = new URLSearchParams(location.search);
+        const embedded = params.get("embedded");
         embedded != "true" && setEmbedded(false)
     }, [location]);
 

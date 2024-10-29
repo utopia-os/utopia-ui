@@ -2,6 +2,7 @@ import * as React from 'react'
 import { useEffect } from 'react';
 import { TagView } from '../Templates/TagView';
 
+// eslint-disable-next-line no-unused-vars
 export const Autocomplete = ({ inputProps, suggestions, onSelected, pushFilteredSuggestions, setFocus }: { inputProps: any, suggestions: Array<any>, onSelected: (suggestion) => void, pushFilteredSuggestions?: Array<any>, setFocus?: boolean }) => {
 
   const [filteredSuggestions, setFilteredSuggestions] = React.useState<Array<any>>([]);
@@ -19,6 +20,7 @@ export const Autocomplete = ({ inputProps, suggestions, onSelected, pushFiltered
   const inputRef = React.useRef<HTMLInputElement>();
 
 
+  // eslint-disable-next-line no-unused-vars
   const getSuggestionValue = suggestion => suggestion.name;
 
   const getSuggestions = value => {

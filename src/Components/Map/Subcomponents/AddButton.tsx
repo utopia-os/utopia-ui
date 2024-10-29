@@ -8,11 +8,11 @@ export default function AddButton({ triggerAction }: { triggerAction: React.Disp
     const layers = useLayers();
     const hasUserPermission = useHasUserPermission();
 
-    const canAddItems = () => {
+    const canAddItems = () => {        
         let canAdd = false;
         layers.map(layer => {            
             if (layer.api?.createItem && hasUserPermission(layer.api.collectionName!, "create", undefined, layer) && layer.listed) canAdd = true;
-        })
+        })        
         return canAdd;
     }
 

@@ -35,7 +35,7 @@ export const TabsForm = ({ item, state, setState, updatePermission, linkItem, un
 
   return (
         <div role="tablist" className="tw-tabs tw-tabs-lifted tw-mt-3">
-            <input type="radio" name="my_tabs_2" role="tab" className={'tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'} aria-label="Info" checked={activeTab == 1 && true} onChange={() => updateActiveTab(1)} />
+            <input type="radio" name="my_tabs_2" role="tab" className={'tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'} aria-label="Info" checked={activeTab === 1 && true} onChange={() => updateActiveTab(1)} />
             <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-border-[var(--fallback-bc,oklch(var(--bc)/0.2))] tw-rounded-box tw-h-[calc(100dvh-332px)] tw-min-h-56 tw-border-none">
                 <div className={`tw-flex tw-flex-col tw-h-full ${item.layer.itemType.show_start_end_input && 'tw-pt-4'}`}>
                     {item.layer.itemType.show_start_end_input &&
@@ -76,7 +76,7 @@ export const TabsForm = ({ item, state, setState, updatePermission, linkItem, un
             </div>
             {item.layer?.itemType.offers_and_needs &&
                 <>
-                    <input type="radio" name="my_tabs_2" role="tab" className={'tw-tab tw-min-w-[10em]  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'} aria-label="Offers & Needs" checked={activeTab == 3 && true} onChange={() => updateActiveTab(3)} />
+                    <input type="radio" name="my_tabs_2" role="tab" className={'tw-tab tw-min-w-[10em]  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'} aria-label="Offers & Needs" checked={activeTab === 3 && true} onChange={() => updateActiveTab(3)} />
                     <div role="tabpanel" className="tw-tab-content tw-bg-base-100 tw-border-[var(--fallback-bc,oklch(var(--bc)/0.2))] tw-rounded-box tw-h-[calc(100dvh-332px)] tw-min-h-56 tw-border-none">
                         <div className='tw-h-full'>
                             <div className='tw-w-full tw-h-[calc(50%-0.75em)] tw-mb-4'>
@@ -97,7 +97,7 @@ export const TabsForm = ({ item, state, setState, updatePermission, linkItem, un
             }
             {item.layer?.itemType.relations &&
                 <>
-                    <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Relations" checked={activeTab == 7 && true} onChange={() => updateActiveTab(7)} />
+                    <input type="radio" name="my_tabs_2" role="tab" className="tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]" aria-label="Relations" checked={activeTab === 7 && true} onChange={() => updateActiveTab(7)} />
                     <div role="tabpanel" className="tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-332px)] tw-overflow-y-auto tw-pt-4 tw-pb-1 -tw-mx-4 tw-overflow-x-hidden fade">
                         <div className='tw-h-full'>
                             <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-1 2xl:tw-grid-cols-2 tw-mb-4'>

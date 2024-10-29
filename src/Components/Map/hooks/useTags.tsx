@@ -43,7 +43,7 @@ function useTagsManager (initialTags: Tag[]): {
             ...state,
             { ...action.tag }
           ]
-          if (tagCount == newState.length) setallTagsLoaded(true)
+          if (tagCount === newState.length) setallTagsLoaded(true)
           return newState
         } else return state
       default:
@@ -57,11 +57,12 @@ function useTagsManager (initialTags: Tag[]): {
     setApi(api)
     const result = await api.getItems()
     setTagCount(result.length)
-    if (tagCount == 0) setallTagsLoaded(true)
+    if (tagCount === 0) setallTagsLoaded(true)
     if (result) {
       result.map(tag => {
         // tag.name = tag.name.toLocaleLowerCase();
         dispatch({ type: 'ADD', tag })
+        return null
       })
     }
 
@@ -72,6 +73,7 @@ function useTagsManager (initialTags: Tag[]): {
     data.map(tag => {
       // tag.name = tag.name.toLocaleLowerCase();
       dispatch({ type: 'ADD', tag })
+      return null
     })
   }, [])
 
@@ -93,14 +95,17 @@ function useTagsManager (initialTags: Tag[]): {
       if (tags.find(t => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
         itemTags.push(tags.find(t => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())!)
       }
+      return null
     })
     item.layer?.itemOffersField && getValue(item, item.layer.itemOffersField)?.map(o => {
       const offer = tags.find(t => t.id === o.tags_id)
       offer && itemTags.push(offer)
+      return null
     })
     item.layer?.itemNeedsField && getValue(item, item.layer.itemNeedsField)?.map(n => {
       const need = tags.find(t => t.id === n.tags_id)
       need && itemTags.push(need)
+      return null
     })
 
     return itemTags

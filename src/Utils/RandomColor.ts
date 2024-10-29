@@ -1,8 +1,8 @@
-export const randomColor = () => {
-  return hsvToHex((Math.random() + golden_ratio_conjugate) % 1, 0.8, 0.7)
-}
+const goldenRatioConjugate = 0.618033988749895
 
-const golden_ratio_conjugate = 0.618033988749895
+export const randomColor = () => {
+  return hsvToHex((Math.random() + goldenRatioConjugate) % 1, 0.8, 0.7)
+}
 
 function hsvToHex (h, s, v) {
   let r, g, b

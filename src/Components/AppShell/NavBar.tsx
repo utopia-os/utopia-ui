@@ -34,7 +34,7 @@ export default function NavBar ({ appName, userType }: { appName: string, userTy
   useEffect(() => {
     const params = new URLSearchParams(location.search)
     const embedded = params.get('embedded')
-    embedded != 'true' && setShowNav(true)
+    embedded !== 'true' && setShowNav(true)
   }, [location])
 
   const onLogout = () => {
@@ -43,7 +43,7 @@ export default function NavBar ({ appName, userType }: { appName: string, userTy
       {
         success: {
           render () {
-            return `Bye bye`
+            return 'Bye bye'
           },
           // other options
           icon: '👋'

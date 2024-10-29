@@ -57,7 +57,7 @@ export const Autocomplete = ({ inputProps, suggestions, onSelected, pushFiltered
           onSelected(filteredSuggestions[heighlightedSuggestion])
           setHeighlightedSuggestion(0)
         }
-        filteredSuggestions.length == 0 && inputProps.onKeyDown(event)
+        filteredSuggestions.length === 0 && inputProps.onKeyDown(event)
         break
       default:
         inputProps.onKeyDown(event)
@@ -70,7 +70,7 @@ export const Autocomplete = ({ inputProps, suggestions, onSelected, pushFiltered
       <input ref={inputRef} {...inputProps} type="text" onChange={(e) => handleChange(e)} tabIndex="-1" onKeyDown={handleKeyDown}/>
       <ul className={`tw-absolute tw-z-[4000] ${filteredSuggestions.length > 0 && 'tw-bg-base-100 tw-rounded-xl tw-p-2'}`}>
         {filteredSuggestions.map((suggestion, index) => (
-          <li key={index} onClick={() => handleSuggestionClick(suggestion)}><TagView heighlight={index == heighlightedSuggestion} tag={suggestion}></TagView></li>
+          <li key={index} onClick={() => handleSuggestionClick(suggestion)}><TagView heighlight={index === heighlightedSuggestion} tag={suggestion}></TagView></li>
         ))}
       </ul>
     </div>

@@ -31,6 +31,7 @@ export function Tags ({ data, api } : {data?: Tag[], api?: ItemsApi<Tag>}) {
       decodedTagsArray?.map(urlTag => {
         const tag = tags.find(t => t.name.toLocaleLowerCase() === urlTag.toLocaleLowerCase())
         tag && addFilterTag(tag)
+        return null
       })
     }
 

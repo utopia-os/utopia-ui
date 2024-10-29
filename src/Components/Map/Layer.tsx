@@ -44,6 +44,7 @@ export const Layer = ({
   onlyOnePerOwner = false,
   customEditLink,
   customEditParameter,
+  // eslint-disable-next-line camelcase
   public_edit_items,
   listed = true,
   setItemFormPopup,
@@ -82,15 +83,17 @@ export const Layer = ({
   const visibleGroupTypes = useVisibleGroupType()
 
   useEffect(() => {
+    // eslint-disable-next-line camelcase
     data && setItemsData({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, markerDefaultColor2, api, itemType, itemNameField, itemSubnameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, customEditParameter, public_edit_items, listed, setItemFormPopup, itemFormPopup, clusterRef })
+    // eslint-disable-next-line camelcase
     api && setItemsApi({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, markerDefaultColor2, api, itemType, itemNameField, itemSubnameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, customEditParameter, public_edit_items, listed, setItemFormPopup, itemFormPopup, clusterRef })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, api])
 
   useMapEvents({
     popupopen: (e) => {
-      const item = Object.entries(leafletRefs).find(r => r[1].popup == e.popup)?.[1].item
-      if (item?.layer?.name == name && window.location.pathname.split('/')[1] != item.id) {
+      const item = Object.entries(leafletRefs).find(r => r[1].popup === e.popup)?.[1].item
+      if (item?.layer?.name === name && window.location.pathname.split('/')[1] !== item.id) {
         const params = new URLSearchParams(window.location.search)
         if (!location.pathname.includes('/item/')) {
           window.history.pushState({}, '', `/${item.id}` + `${params.toString() !== '' ? `?${params}` : ''}`)
@@ -138,6 +141,7 @@ export const Layer = ({
           processedTags[newtag.name] = true
           addTag(newtag)
         }
+        return null
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -149,9 +153,9 @@ export const Layer = ({
                 items
                   .filter(item => item.layer?.name === name)
                   ?.filter(item =>
-                    filterTags.length == 0 ? item : filterTags.some(tag => getItemTags(item).some(filterTag => filterTag.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())))
+                    filterTags.length === 0 ? item : filterTags.some(tag => getItemTags(item).some(filterTag => filterTag.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())))
                   ?.filter(item => item.layer && isLayerVisible(item.layer))
-                  .filter(item => item.group_type && isGroupTypeVisible(item.group_type) || visibleGroupTypes.length == 0)
+                  .filter(item => item.group_type && isGroupTypeVisible(item.group_type) || visibleGroupTypes.length === 0)
                   .map((item: Item) => {
                     if (getValue(item, itemLongitudeField) && getValue(item, itemLatitudeField)) {
                       if (getValue(item, itemTextField)) item[itemTextField] = getValue(item, itemTextField)
@@ -171,6 +175,7 @@ export const Layer = ({
                             const newTag = { id: crypto.randomUUID(), name: tag.slice(1), color: randomColor() }
                             setNewTagsToAdd(current => [...current, newTag])
                           }
+                          return null
                         })
                         !tagsReady && setTagsReady(true)
                       }
@@ -192,7 +197,7 @@ export const Layer = ({
                       }
                       return (
                                 <Marker ref={(r) => {
-                                  if (!(item.id in leafletRefs && leafletRefs[item.id].marker == r)) { r && addMarker(item, r) }
+                                  if (!(item.id in leafletRefs && leafletRefs[item.id].marker === r)) { r && addMarker(item, r) }
                                 }}
                                     eventHandlers={{
                                       click: () => {
@@ -205,7 +210,7 @@ export const Layer = ({
                                           ? React.Children.toArray(children).map((child) =>
                                             React.isValidElement(child) && child.props.__TYPE === 'ItemView'
                                               ? <ItemViewPopup ref={(r) => {
-                                                if (!(item.id in leafletRefs && leafletRefs[item.id].popup == r)) { r && addPopup(item, r as Popup) }
+                                                if (!(item.id in leafletRefs && leafletRefs[item.id].popup === r)) { r && addPopup(item, r as Popup) }
                                               }} key={item.id + item.name}
                                                         item={item}
                                                         setItemFormPopup={setItemFormPopup}>
@@ -215,7 +220,7 @@ export const Layer = ({
                                           )
                                           : <>
                                                 <ItemViewPopup key={item.id + item.name} ref={(r) => {
-                                                  if (!(item.id in leafletRefs && leafletRefs[item.id].popup == r)) { r && addPopup(item, r as Popup) }
+                                                  if (!(item.id in leafletRefs && leafletRefs[item.id].popup === r)) { r && addPopup(item, r as Popup) }
                                                 }}
                                                     item={item}
                                                     setItemFormPopup={setItemFormPopup} />
@@ -229,7 +234,7 @@ export const Layer = ({
             }
             {// {children}}
             }
-            {itemFormPopup && itemFormPopup.layer!.name == name &&
+            {itemFormPopup && itemFormPopup.layer!.name === name &&
                 (children && React.Children.toArray(children).some(child => React.isValidElement(child) && child.props.__TYPE === 'ItemForm')
                   ? React.Children.toArray(children).map((child) =>
                     React.isValidElement(child) && child.props.__TYPE === 'ItemForm'

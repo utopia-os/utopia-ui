@@ -20,10 +20,11 @@ export const submitNewItem = async (evt: any, type: string, item, user, setLoadi
     if (!tags.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
       addTag({ id: crypto.randomUUID(), name: tag.slice(1), color: randomColor() })
     }
+    return null
   })
   const uuid = crypto.randomUUID()
 
-  const layer = layers.find(l => l.name.toLocaleLowerCase().replace('s', '') == addItemPopupType.toLocaleLowerCase())
+  const layer = layers.find(l => l.name.toLocaleLowerCase().replace('s', '') === addItemPopupType.toLocaleLowerCase())
 
   let success = false
   try {
@@ -43,9 +44,9 @@ export const submitNewItem = async (evt: any, type: string, item, user, setLoadi
 }
 
 export const linkItem = async (id: string, item, updateItem) => {
-  const new_relations = item.relations || []
-  new_relations?.push({ items_id: item.id, related_items_id: id })
-  const updatedItem = { id: item.id, relations: new_relations }
+  const newRelations = item.relations || []
+  newRelations?.push({ items_id: item.id, related_items_id: id })
+  const updatedItem = { id: item.id, relations: newRelations }
 
   let success = false
   try {
@@ -55,14 +56,14 @@ export const linkItem = async (id: string, item, updateItem) => {
     toast.error(error.toString())
   }
   if (success) {
-    updateItem({ ...item, relations: new_relations })
+    updateItem({ ...item, relations: newRelations })
     toast.success('Item linked')
   }
 }
 
 export const unlinkItem = async (id: string, item, updateItem) => {
-  const new_relations = item.relations?.filter(r => r.related_items_id !== id)
-  const updatedItem = { id: item.id, relations: new_relations }
+  const newRelations = item.relations?.filter(r => r.related_items_id !== id)
+  const updatedItem = { id: item.id, relations: newRelations }
 
   let success = false
   try {
@@ -72,7 +73,7 @@ export const unlinkItem = async (id: string, item, updateItem) => {
     toast.error(error.toString())
   }
   if (success) {
-    updateItem({ ...item, relations: new_relations })
+    updateItem({ ...item, relations: newRelations })
     toast.success('Item unlinked')
   }
 }
@@ -101,22 +102,24 @@ export const handleDelete = async (event: React.MouseEvent<HTMLElement>, item, s
 export const onUpdateItem = async (state, item, tags, addTag, setLoading, navigate, updateItem, addItem, user, params) => {
   let changedItem = {} as Item
 
-  const offer_updates: Array<any> = []
+  const offerUpdates: Array<any> = []
   // check for new offers
   await state.offers?.map(o => {
     const existingOffer = item?.offers?.find(t => t.tags_id === o.id)
-    existingOffer && offer_updates.push(existingOffer.id)
+    existingOffer && offerUpdates.push(existingOffer.id)
     if (!existingOffer && !tags.some(t => t.id === o.id)) addTag({ ...o, offer_or_need: true })
-    !existingOffer && offer_updates.push({ items_id: item?.id, tags_id: o.id })
+    !existingOffer && offerUpdates.push({ items_id: item?.id, tags_id: o.id })
+    return null
   })
 
-  const needs_updates: Array<any> = []
+  const needsUpdates: Array<any> = []
 
   await state.needs?.map(n => {
     const existingNeed = item?.needs?.find(t => t.tags_id === n.id)
-    existingNeed && needs_updates.push(existingNeed.id)
-    !existingNeed && needs_updates.push({ items_id: item?.id, tags_id: n.id })
+    existingNeed && needsUpdates.push(existingNeed.id)
+    !existingNeed && needsUpdates.push({ items_id: item?.id, tags_id: n.id })
     !existingNeed && !tags.some(t => t.id === n.id) && addTag({ ...n, offer_or_need: true })
+    return null
   })
 
   // update profile item in current state
@@ -136,22 +139,24 @@ export const onUpdateItem = async (state, item, tags, addTag, setLoading, naviga
     ...state.markerIcon && { markerIcon: state.markerIcon },
     next_appointment: state.nextAppointment,
     ...state.image.length > 10 && { image: state.image },
-    ...state.offers.length > 0 && { offers: offer_updates },
-    ...state.needs.length > 0 && { needs: needs_updates }
+    ...state.offers.length > 0 && { offers: offerUpdates },
+    ...state.needs.length > 0 && { needs: needsUpdates }
   }
 
-  const offers_state: Array<any> = []
-  const needs_state: Array<any> = []
+  const offersState: Array<any> = []
+  const needsState: Array<any> = []
 
   state.offers.map(o => {
-    offers_state.push({ items_id: item?.id, tags_id: o.id })
+    offersState.push({ items_id: item?.id, tags_id: o.id })
+    return null
   })
 
   state.needs.map(n => {
-    needs_state.push({ items_id: item?.id, tags_id: n.id })
+    needsState.push({ items_id: item?.id, tags_id: n.id })
+    return null
   })
 
-  changedItem = { ...changedItem, offers: offers_state, needs: needs_state }
+  changedItem = { ...changedItem, offers: offersState, needs: needsState }
 
   setLoading(true)
 
@@ -159,6 +164,7 @@ export const onUpdateItem = async (state, item, tags, addTag, setLoading, naviga
     if (!tags.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
       addTag({ id: crypto.randomUUID(), name: encodeTag(tag.slice(1).toLocaleLowerCase()), color: randomColor() })
     }
+    return null
   })
 
   // take care that addTag request comes before item request

@@ -94,11 +94,11 @@ function useSelectPositionManager (): {
 
   const linkItem = async (id: string) => {
     if (markerClicked) {
-      const new_relations = markerClicked.relations || []
+      const newRelations = markerClicked.relations || []
 
-      if (!new_relations.some(r => r.related_items_id == id)) {
-        new_relations?.push({ items_id: markerClicked.id, related_items_id: id })
-        const updatedItem = { id: markerClicked.id, relations: new_relations }
+      if (!newRelations.some(r => r.related_items_id === id)) {
+        newRelations?.push({ items_id: markerClicked.id, related_items_id: id })
+        const updatedItem = { id: markerClicked.id, relations: newRelations }
 
         let success = false
         try {
@@ -108,7 +108,7 @@ function useSelectPositionManager (): {
           toast.error(error.toString())
         }
         if (success) {
-          updateItem({ ...markerClicked, relations: new_relations })
+          updateItem({ ...markerClicked, relations: newRelations })
           toast.success('Item linked')
         }
       }

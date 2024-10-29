@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 export const SelectUser = ({ userType }: { userType: string }) => {
   const items = useItems()
-  const users = items.filter(i => i.layer?.itemType.name == userType)
+  const users = items.filter(i => i.layer?.itemType.name === userType)
   const assetsApi = useAssetApi()
 
   const [selectedUsers, setSelectedUsers] = useState<Array<string>>([])

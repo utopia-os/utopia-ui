@@ -38,11 +38,14 @@ export const MarketView = () => {
       i?.layer?.itemOffersField && getValue(i, i.layer.itemOffersField)?.map(o => {
         const tag = tags.find(t => t.id === o.tags_id)
         tag && setOffers(current => [...current, tag])
+        return null
       })
       i?.layer?.itemNeedsField && getValue(i, i.layer.itemNeedsField)?.map(n => {
         const tag = tags.find(t => t.id === n.tags_id)
         tag && setNeeds(current => [...current, tag])
+        return null
       })
+      return null
     })
     console.log(offers)
 

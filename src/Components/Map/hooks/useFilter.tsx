@@ -105,7 +105,7 @@ function useFilterManager (initialTags: Tag[]): {
       case 'TOGGLE_LAYER':
         const exist2 = state.some((layer) =>
           layer.name === action.layer.name)
-        if (exist2) return state.filter(({ name }) => name != action.layer.name)
+        if (exist2) return state.filter(({ name }) => name !== action.layer.name)
         else return [...state, action.layer]
       case 'RESET_LAYERS':
         return initialLayers
@@ -129,7 +129,7 @@ function useFilterManager (initialTags: Tag[]): {
       case 'TOGGLE_GROUP_TYPE':
         const exist2 = state.some((groupType) =>
           groupType === action.groupType)
-        if (exist2) return state.filter((groupType) => groupType != action.groupType)
+        if (exist2) return state.filter((groupType) => groupType !== action.groupType)
         else return [...state, action.groupType]
       case 'RESET_GROUP_TYPE':
         return []
@@ -162,9 +162,10 @@ function useFilterManager (initialTags: Tag[]): {
     const urlTags = params.get('tags')
     let newUrlTags = ''
     const tags = urlTags?.split(';')
-    if (tags?.length == 0 && urlTags?.length && urlTags?.length > 0) tags[0] = urlTags
+    if (tags?.length === 0 && urlTags?.length && urlTags?.length > 0) tags[0] = urlTags
     tags?.map(urlTag => {
       if (!(urlTag.toLocaleLowerCase() === name.toLocaleLowerCase())) { newUrlTags = newUrlTags + `${newUrlTags === '' ? urlTag : `;${urlTag}`}` }
+      return null
     })
     if (newUrlTags !== '') {
       params.set('tags', `${newUrlTags}`)

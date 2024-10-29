@@ -26,7 +26,7 @@ const ComboBoxInput = ({ id, options, value, onValueChange }: ComboBoxProps) => 
       onChange={handleChange}
     >
       {options.map((o) =>
-        <option value={o.value} key={o.value} selected={o.value == value}>{o.label}</option>
+        <option value={o.value} key={o.value} selected={o.value === value}>{o.label}</option>
       )}
     </select>
   )

@@ -48,7 +48,7 @@ export function SideBar ({ routes, bottomRoutes }: { routes: route[], bottomRout
   useEffect(() => {
     const params = new URLSearchParams(location.search)
     const embedded = params.get('embedded')
-    embedded != 'true' && setEmbedded(false)
+    embedded !== 'true' && setEmbedded(false)
   }, [location])
 
   const params = new URLSearchParams(window.location.search)

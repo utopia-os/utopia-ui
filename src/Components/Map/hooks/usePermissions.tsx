@@ -57,6 +57,7 @@ function usePermissionsManager (initialPermissions: Permission[]): {
     if (result) {
       result.map(permission => {
         dispatch({ type: 'ADD', permission })
+        return null
       })
     }
   }, [])
@@ -64,6 +65,7 @@ function usePermissionsManager (initialPermissions: Permission[]): {
   const setPermissionData = useCallback((data: Permission[]) => {
     data.map(permission => {
       dispatch({ type: 'ADD', permission })
+      return null
     })
   }, [])
 

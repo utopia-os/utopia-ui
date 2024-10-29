@@ -80,7 +80,7 @@ export const SearchControl = () => {
   useEffect(() => {
     const params = new URLSearchParams(location.search)
     const embedded = params.get('embedded')
-    embedded != 'true' && setEmbedded(false)
+    embedded !== 'true' && setEmbedded(false)
   }, [location])
 
   return (<>
@@ -101,7 +101,7 @@ export const SearchControl = () => {
                     </div>
                     <LocateControl />
                 </div>
-                {hideSuggestions || Array.from(geoResults).length == 0 && itemsResults.length == 0 && tagsResults.length == 0 && !isGeoCoordinate(value) || value.length == 0
+                {hideSuggestions || Array.from(geoResults).length === 0 && itemsResults.length === 0 && tagsResults.length === 0 && !isGeoCoordinate(value) || value.length === 0
                   ? ''
                   : <div className='tw-card tw-card-body tw-bg-base-100 tw-p-4 tw-mt-2 tw-shadow-xl tw-overflow-y-auto tw-max-h-[calc(100dvh-152px)] tw-absolute tw-z-3000'>
                         {tagsResults.length > 0 &&
@@ -119,7 +119,7 @@ export const SearchControl = () => {
                         {itemsResults.length > 0 && tagsResults.length > 0 && <hr className='tw-opacity-50'></hr>}
                         {itemsResults.slice(0, 5).map(item => (
                             <div key={item.id} className='tw-cursor-pointer hover:tw-font-bold' onClick={() => {
-                              const marker = Object.entries(leafletRefs).find(r => r[1].item == item)?.[1].marker
+                              const marker = Object.entries(leafletRefs).find(r => r[1].item === item)?.[1].marker
                               if (marker) {
                                 navigate(`/${item.id}?${new URLSearchParams(window.location.search)}`)
                               } else {

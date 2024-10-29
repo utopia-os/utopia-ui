@@ -10,6 +10,7 @@ export default function AddButton ({ triggerAction }: { triggerAction: React.Dis
     let canAdd = false
     layers.map(layer => {
       if (layer.api?.createItem && hasUserPermission(layer.api.collectionName!, 'create', undefined, layer) && layer.listed) canAdd = true
+      return null
     })
     return canAdd
   }

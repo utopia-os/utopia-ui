@@ -25,7 +25,7 @@ export function ActionButton ({ item, triggerAddButton, triggerItemSelected, exi
 
   const items = useItems()
 
-  const filterdItems = items.filter(i => !itemType || i.layer?.itemType.name == itemType).filter(i => !existingRelations.some(s => s.id == i.id)).filter(i => i.id != item.id)
+  const filterdItems = items.filter(i => !itemType || i.layer?.itemType.name === itemType).filter(i => !existingRelations.some(s => s.id === i.id)).filter(i => i.id !== item.id)
 
   return (
         <>{hasUserPermission(collection, 'update', item) &&

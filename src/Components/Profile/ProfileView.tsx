@@ -69,14 +69,17 @@ export function ProfileView ({ userType, attestationApi }: { userType: string, a
     item?.layer?.itemOffersField && getValue(item, item.layer.itemOffersField)?.map(o => {
       const tag = tags.find(t => t.id === o.tags_id)
       tag && setOffers(current => [...current, tag])
+      return null
     })
     item?.layer?.itemNeedsField && getValue(item, item.layer.itemNeedsField)?.map(n => {
       const tag = tags.find(t => t.id === n.tags_id)
       tag && setNeeds(current => [...current, tag])
+      return null
     })
     item?.relations?.map(r => {
-      const item = items.find(i => i.id == r.related_items_id)
+      const item = items.find(i => i.id === r.related_items_id)
       item && setRelations(current => [...current, item])
+      return null
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -91,7 +94,7 @@ export function ProfileView ({ userType, attestationApi }: { userType: string, a
     }
     if (item) {
       if (item.position) {
-        const marker = Object.entries(leafletRefs).find(r => r[1].item == item)?.[1].marker
+        const marker = Object.entries(leafletRefs).find(r => r[1].item === item)?.[1].marker
         marker && clusterRef.hasLayer(marker) && clusterRef?.zoomToShowLayer(marker, () => {
           const bounds = map.getBounds()
           const x = bounds.getEast() - bounds.getWest()
@@ -100,7 +103,7 @@ export function ProfileView ({ userType, attestationApi }: { userType: string, a
         )
       } else {
         const parent = getFirstAncestor(item)
-        const marker = Object.entries(leafletRefs).find(r => r[1].item == parent)?.[1].marker
+        const marker = Object.entries(leafletRefs).find(r => r[1].item === parent)?.[1].marker
         marker && clusterRef.hasLayer(marker) && clusterRef?.zoomToShowLayer(marker, () => {
           const bounds = map.getBounds()
           const x = bounds.getEast() - bounds.getWest()
@@ -146,15 +149,15 @@ export function ProfileView ({ userType, attestationApi }: { userType: string, a
                             <HeaderView api={item.layer?.api} item={item} deleteCallback={(e) => handleDelete(e, item, setLoading, removeItem, map, navigate)} editCallback={() => navigate('/edit-item/' + item.id)} setPositionCallback={() => { map.closePopup(); setSelectPosition(item); navigate('/') }} big truncateSubname={false} />
                         </div>
 
-                        {template == 'onepager' &&
+                        {template === 'onepager' &&
                             <OnepagerView item={item} userType={userType}/>
                         }
 
-                        {template == 'simple' &&
+                        {template === 'simple' &&
                             <SimpleView item={item}/>
                         }
 
-                        {template == 'tabs' &&
+                        {template === 'tabs' &&
                             <TabsView userType={userType} attestations={attestations} setUrlParams={setUrlParams} item={item} loading={loading} offers={offers} needs={needs} relations={relations} updatePermission={updatePermission} linkItem={(id) => linkItem(id, item, updateItem)} unlinkItem={(id) => unlinkItem(id, item, updateItem)}/>
                         }
                     </>

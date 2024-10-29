@@ -46,7 +46,7 @@ export const OverlayItemsIndexPage = ({ url, layerName, parameterField, plusButt
   const filterTags = useFilterTags()
   const getItemTags = useGetItemTags()
 
-  const layer = layers.find(l => l.name == layerName)
+  const layer = layers.find(l => l.name === layerName)
 
   const submitNewItem = async (evt: any) => {
     evt.preventDefault()
@@ -61,6 +61,7 @@ export const OverlayItemsIndexPage = ({ url, layerName, parameterField, plusButt
       if (!tags.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
         addTag({ id: crypto.randomUUID(), name: tag.slice(1), color: randomColor() })
       }
+      return null
     })
     const uuid = crypto.randomUUID()
     let success = false
@@ -109,7 +110,7 @@ export const OverlayItemsIndexPage = ({ url, layerName, parameterField, plusButt
                             {
                                 items?.filter(i => i.layer?.name === layerName)
                                   .filter(item =>
-                                    filterTags.length == 0 ? item : filterTags.some(tag => getItemTags(item).some(filterTag => filterTag.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())))
+                                    filterTags.length === 0 ? item : filterTags.some(tag => getItemTags(item).some(filterTag => filterTag.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())))
                                   ?.sort((a, b) => {
                                     // Convert date_created to milliseconds, handle undefined by converting to lowest possible date (0 milliseconds)
                                     const dateA = a.date_updated ? new Date(a.date_updated).getTime() : a.date_created ? new Date(a.date_created).getTime() : 0
@@ -122,7 +123,7 @@ export const OverlayItemsIndexPage = ({ url, layerName, parameterField, plusButt
                                         </div>
                                   ))
                             }
-                            {addItemPopupType == 'place' && (
+                            {addItemPopupType === 'place' && (
                                 <form ref={tabRef} autoComplete='off' onSubmit={e => submitNewItem(e)}>
                                     <div className='tw-cursor-pointer tw-break-inside-avoid tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-p-6 tw-mb-10'>
                                         <label className="tw-btn tw-btn-sm tw-rounded-2xl tw-btn-circle tw-btn-ghost hover:tw-bg-transparent tw-absolute tw-right-0 tw-top-0 tw-text-gray-600" onClick={() => setAddItemPopupType('')}>

@@ -16,8 +16,8 @@ export const AttestationForm = ({ api }:{api?:ItemsApi<any>}) => {
 
   useEffect(() => {
     const params = new URLSearchParams(location.search)
-    const to_user_ids = params.get('to')
-    setUsers(items.filter(i => to_user_ids?.includes(i.id)))
+    const toUserIds = params.get('to')
+    setUsers(items.filter(i => toUserIds?.includes(i.id)))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items, location])
 

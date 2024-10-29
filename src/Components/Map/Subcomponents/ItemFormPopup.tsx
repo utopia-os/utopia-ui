@@ -59,6 +59,7 @@ export function ItemFormPopup (props: ItemFormPopupProps) {
       if (!tags.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
         addTag({ id: crypto.randomUUID(), name: tag.slice(1), color: randomColor() })
       }
+      return null
     })
 
     if (props.item) {

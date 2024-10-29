@@ -80,7 +80,7 @@ export const ItemViewPopup = React.forwardRef((props: ItemViewPopupProps, ref: a
 
           {
             infoExpanded
-              ? <p className={'tw-italic tw-min-h-[21px] !tw-my-0 tw-text-gray-500'} >{`${props.item.date_updated && props.item.date_updated != props.item.date_created ? 'updated' : 'posted'} ${props.item && props.item.user_created && props.item.user_created.first_name ? `by ${props.item.user_created.first_name}` : ''} ${props.item.date_updated ? timeAgo(props.item.date_updated) : timeAgo(props.item.date_created!)}`}</p>
+              ? <p className={'tw-italic tw-min-h-[21px] !tw-my-0 tw-text-gray-500'} >{`${props.item.date_updated && props.item.date_updated !== props.item.date_created ? 'updated' : 'posted'} ${props.item && props.item.user_created && props.item.user_created.first_name ? `by ${props.item.user_created.first_name}` : ''} ${props.item.date_updated ? timeAgo(props.item.date_updated) : timeAgo(props.item.date_created!)}`}</p>
               : <p className="!tw-my-0 tw-min-h-[21px] tw-font-bold tw-cursor-pointer tw-text-gray-500" onClick={() => setInfoExpanded(true)}>ⓘ</p>
           }
           <div className='tw-grow'></div>

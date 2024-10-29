@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { useItems } from '../../Map/hooks/useItems'
 
 export const OnepagerView = ({ item, userType }:{item: Item, userType: string}) => {
-  const [profile_owner, setProfileOwner] = useState<Item>()
+  const [profileOwner, setProfileOwner] = useState<Item>()
   const items = useItems()
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export const OnepagerView = ({ item, userType }:{item: Item, userType: string}) 
         />
     </div>
     {item.user_created.first_name && (
-        <ContactInfo link={`/item/${profile_owner?.id}`} name={profile_owner?.name ? profile_owner.name : item.user_created.first_name} avatar={profile_owner?.image ? profile_owner.image : item.user_created.avatar} email={item.contact} telephone={item.telephone} />
+        <ContactInfo link={`/item/${profileOwner?.id}`} name={profileOwner?.name ? profileOwner.name : item.user_created.first_name} avatar={profileOwner?.image ? profileOwner.image : item.user_created.avatar} email={item.contact} telephone={item.telephone} />
     )}
 
     {/* Description Section */}

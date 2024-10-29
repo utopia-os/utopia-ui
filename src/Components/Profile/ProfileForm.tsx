@@ -64,7 +64,7 @@ export function ProfileForm ({ userType }: { userType: string }) {
     const item = items.find(i => i.id === itemId)
     item && setItem(item)
 
-    const layer = layers.find(l => l.itemType.name == userType)
+    const layer = layers.find(l => l.itemType.name === userType)
 
     !item && setItem({ id: crypto.randomUUID(), name: user ? user.first_name : '', text: '', layer, new: true })
 
@@ -132,15 +132,15 @@ export function ProfileForm ({ userType }: { userType: string }) {
 
                     <FormHeader item={item} state={state} setState={setState} />
 
-                    {template == 'onepager' && (
+                    {template === 'onepager' && (
                         <OnepagerForm item={item} state={state} setState={setState}></OnepagerForm>
                     )}
 
-                    {template == 'simple' &&
+                    {template === 'simple' &&
                         <SimpleForm state={state} setState={setState}></SimpleForm>
                     }
 
-                    {template == 'tabs' &&
+                    {template === 'tabs' &&
                         <TabsForm loading={loading} item={item} state={state} setState={setState} updatePermission={updatePermission} linkItem={(id) => linkItem(id, item, updateItem)} unlinkItem={(id) => unlinkItem(id, item, updateItem)} setUrlParams={setUrlParams}></TabsForm>
                     }
 

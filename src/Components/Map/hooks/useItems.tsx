@@ -91,6 +91,7 @@ function useItemsManager (initialItems: Item[]): {
     if (result) {
       result.map(item => {
         dispatch({ type: 'ADD', item: { ...item, layer } })
+        return null
       })
       setallItemsLoaded(true)
     }
@@ -101,6 +102,7 @@ function useItemsManager (initialItems: Item[]): {
     addLayer(layer)
     layer.data?.map(item => {
       dispatch({ type: 'ADD', item: { ...item, layer } })
+      return null
     })
     setallItemsLoaded(true)
   // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -5,7 +5,7 @@ import { useAuth } from './useAuth'
 import { MapOverlayPage } from '../Templates'
 
 // eslint-disable-next-line react/prop-types
-export function RequestPasswordPage ({ reset_url }) {
+export function RequestPasswordPage ({ resetUrl }) {
   const [email, setEmail] = useState<string>('')
 
   const { requestPasswordReset, loading } = useAuth()
@@ -14,7 +14,7 @@ export function RequestPasswordPage ({ reset_url }) {
 
   const onReset = async () => {
     await toast.promise(
-      requestPasswordReset(email, reset_url),
+      requestPasswordReset(email, resetUrl),
       {
         success: {
           render () {

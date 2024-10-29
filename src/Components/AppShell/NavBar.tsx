@@ -39,8 +39,8 @@ export default function NavBar({ appName, userType}: { appName: string, userType
 
 
   useEffect(() => {
-      let params = new URLSearchParams(location.search);
-      let embedded = params.get("embedded");
+      const params = new URLSearchParams(location.search);
+      const embedded = params.get("embedded");
       embedded!="true" && setShowNav(true)
   }, [location]);
   

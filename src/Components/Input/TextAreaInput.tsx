@@ -27,13 +27,13 @@ export function TextAreaInput({ labelTitle, dataField, labelStyle, containerStyl
 
     const tags = useTags();
 
-    let values: KeyValue[] = [];
+    const values: KeyValue[] = [];
 
     tags.forEach(tag => {
         values.push({ key: tag.name, value: tag.name, color: tag.color });
     });
 
-    var tribute = new Tribute({
+    const tribute = new Tribute({
         containerClass: 'tw-z-3000 tw-bg-base-100 tw-p-2 tw-rounded-lg tw-shadow',
         selectClass: 'tw-font-bold',
         trigger: "#",

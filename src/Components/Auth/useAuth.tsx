@@ -21,10 +21,10 @@ type AuthContextProps = {
   user: UserItem | null;
   login: (credentials: AuthCredentials) => Promise<UserItem | undefined>,
   register: (credentials: AuthCredentials, userName: string) => Promise<UserItem | undefined>,
-  loading: Boolean,
+  loading: boolean,
   logout: () => Promise<any>,
   updateUser: (user: UserItem) => any,
-  token: String | null,
+  token: string | null,
   requestPasswordReset: (email:string, reset_url: string) => Promise<any>,
   passwordReset: (token:string, new_password:string) => Promise<any>
 }
@@ -44,7 +44,7 @@ const AuthContext = createContext<AuthContextProps>({
 
 export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
   const [user, setUser] = useState<UserItem | null>(null);
-  const [token, setToken] = useState<String | null>(null);
+  const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const isAuthenticated = !!user;
 
@@ -82,7 +82,7 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
     } catch (error: any) {
       setLoading(false);
       throw error;
-    };
+    }
   }
 
   const register = async (credentials: AuthCredentials, userName): Promise<UserItem | undefined> => {
@@ -93,7 +93,7 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
     } catch (error: any) {
       setLoading(false);
       throw error;
-    };
+    }
   }
 
 
@@ -104,7 +104,7 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
     } catch (error: any) {
       setLoading(false);
       throw error;
-    };
+    }
   }
 
   const updateUser = async (user: UserItem) => {
@@ -120,7 +120,7 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
     } catch (error: any) {
       setLoading(false);
       throw error;
-    };
+    }
   }
 
   const requestPasswordReset = async (email: string, reset_url?: string): Promise<any> => {
@@ -131,7 +131,7 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
     } catch (error: any) {
       setLoading(false);
       throw error;
-    };
+    }
   }
 
 
@@ -143,7 +143,7 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
     } catch (error: any) {
       setLoading(false);
       throw error;
-    };
+    }
   }
 
 

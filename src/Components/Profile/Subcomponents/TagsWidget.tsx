@@ -6,6 +6,7 @@ import { Autocomplete } from '../../Input/Autocomplete';
 import { randomColor } from '../../../Utils/RandomColor';
 import { decodeTag, encodeTag } from '../../../Utils/FormatTags';
 
+// eslint-disable-next-line react/prop-types
 export const TagsWidget = ({placeholder, containerStyle, defaultTags, onUpdate}) => {
 
   const [input, setInput] = useState('');
@@ -31,6 +32,7 @@ export const TagsWidget = ({placeholder, containerStyle, defaultTags, onUpdate})
     const { key } = e;
     const trimmedInput = input.trim();
 
+    // eslint-disable-next-line react/prop-types
     if ((key === 'Enter' || key === ',' ) && trimmedInput.length && !defaultTags.some(tag => tag.name.toLocaleLowerCase() === trimmedInput.toLocaleLowerCase())) {
       e.preventDefault();
       const newTag = tags.find(t => t.name === trimmedInput.toLocaleLowerCase())
@@ -40,6 +42,7 @@ export const TagsWidget = ({placeholder, containerStyle, defaultTags, onUpdate})
       setPushFilteredSuggestions([]);
     }
 
+    // eslint-disable-next-line react/prop-types
     if (key === "Backspace" && !input.length && defaultTags.length && isKeyReleased) {
       const defaultTagsCopy = [...defaultTags];
       const poppedTag = defaultTagsCopy.pop();
@@ -61,6 +64,7 @@ export const TagsWidget = ({placeholder, containerStyle, defaultTags, onUpdate})
 
 
   const onSelected = (tag) => {
+    // eslint-disable-next-line react/prop-types
     if(!defaultTags.some(t => t.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())) {
       const newTag = tags.find(t => t.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())
       newTag && onUpdate([...currentTags, newTag]);
@@ -79,6 +83,7 @@ export const TagsWidget = ({placeholder, containerStyle, defaultTags, onUpdate})
     className: 'tw-bg-transparent tw-w-fit tw-mt-5 tw-h-fit'
   }
 
+  /* eslint-disable react/prop-types */
   return (
     <div onClick={()=> {
       setFocusInput(true);
@@ -99,4 +104,5 @@ export const TagsWidget = ({placeholder, containerStyle, defaultTags, onUpdate})
       </div>
     </div>
   )
+  /* eslint-enable react/prop-types */
 }

@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 import { useAuth } from './useAuth'
 import { MapOverlayPage} from '../Templates'
 
+// eslint-disable-next-line react/prop-types
 export function RequestPasswordPage({reset_url}) {
 
     const [email, setEmail] = useState<string>("");

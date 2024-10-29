@@ -12,6 +12,7 @@ export function Quests() {
 
     useEffect(() => {
       setQuestsOpen(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const [profile, setProfie] = useState<Item>()

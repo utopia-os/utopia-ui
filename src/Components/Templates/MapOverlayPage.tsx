@@ -26,6 +26,7 @@ export function MapOverlayPage({ children, className, backdrop, card = true }: {
             L.DomEvent.disableClickPropagation(backdropRef.current)
             L.DomEvent.disableScrollPropagation(backdropRef.current)
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [overlayRef, backdropRef])
 
 

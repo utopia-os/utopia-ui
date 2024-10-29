@@ -5,5 +5,6 @@ export const useDebounce = (callback, delay, deps) => {
   const { reset, clear } = useTimeout(callback, delay);
 
   useEffect(reset, [...deps, reset]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(clear, []);
 }

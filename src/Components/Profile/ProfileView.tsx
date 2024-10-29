@@ -81,6 +81,7 @@ export function ProfileView({ userType, attestationApi }: { userType: string , a
             item && setRelations(current => [...current, item])
         })
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [item, items])
 
 
@@ -112,6 +113,7 @@ export function ProfileView({ userType, attestationApi }: { userType: string , a
                 );
             }
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [item])
 
     const getFirstAncestor = (item: Item): Item | undefined => {
@@ -125,18 +127,20 @@ export function ProfileView({ userType, attestationApi }: { userType: string , a
 
     useEffect(() => {
         item && hasUserPermission("items", "update", item) && setUpdatePermission(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [item])
 
 
     useEffect(() => {
         selectPosition && map.closePopup();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectPosition])
 
     useEffect(() => {
         setTemplate(item?.layer?.itemType.template || userType);
     }, [userType, item])
 
-    const [urlParams, setUrlParams] = useState(new URLSearchParams(location.search));
+    const [/* urlParams, */ setUrlParams] = useState(new URLSearchParams(location.search));
 
 
     return (

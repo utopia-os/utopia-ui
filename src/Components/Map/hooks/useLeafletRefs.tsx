@@ -1,4 +1,4 @@
-import { useCallback, useReducer, createContext, useContext, useEffect } from "react";
+import { useCallback, useReducer, createContext, useContext } from "react";
 import * as React from "react";
 import { Item } from "../../../types";
 import { Marker, Popup } from "leaflet";
@@ -25,7 +25,9 @@ const LeafletRefsContext = createContext<UseLeafletRefsManagerResult>({
 
 function useLeafletRefsManager(initialLeafletRefs: {}): {
   leafletRefs: Record<string,LeafletRef>;
+  // eslint-disable-next-line no-unused-vars
   addMarker: (item: Item, marker: Marker) => void;
+  // eslint-disable-next-line no-unused-vars
   addPopup: (item: Item, popup: Popup) => void;
 } {
 

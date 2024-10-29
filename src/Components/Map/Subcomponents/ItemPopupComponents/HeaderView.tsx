@@ -5,11 +5,6 @@ import { getValue } from "../../../../Utils/GetValue";
 import { useAssetApi } from '../../../AppShell/hooks/useAssets'
 import DialogModal from "../../../Templates/DialogModal";
 import { useNavigate } from "react-router-dom";
-import { useMap } from "react-leaflet";
-import { useEffect } from "react";
-
-
-
 
 export function HeaderView({ item, api, editCallback, deleteCallback, setPositionCallback, itemNameField, itemSubnameField, itemAvatarField, loading, hideMenu = false, big = false, truncateSubname = true, hideSubname = false, showAddress = false }: {
   item: Item,
@@ -39,9 +34,9 @@ export function HeaderView({ item, api, editCallback, deleteCallback, setPositio
   const title = itemNameField ? getValue(item, itemNameField) : item.layer?.itemNameField && item && getValue(item, item.layer?.itemNameField);
   const subtitle = itemSubnameField ? getValue(item, itemSubnameField) : item.layer?.itemSubnameField && item && getValue(item, item.layer?.itemSubnameField);
 
-  const [address, setAdress] = React.useState<string>("");
+  const [address, /* setAdress*/] = React.useState<string>("");
 
-  let params = new URLSearchParams(window.location.search);
+  const params = new URLSearchParams(window.location.search);
 
 
   const openDeleteModal = async (event: React.MouseEvent<HTMLElement>) => {

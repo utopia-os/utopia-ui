@@ -1,8 +1,9 @@
+/* eslint-disable no-case-declarations */
 import { useCallback, useReducer, createContext, useContext } from "react";
 import * as React from "react";
 import { LayerProps, Tag } from "../../../types";
 import { useLayers } from "./useLayers";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useWindowDimensions from "./useWindowDimension";
 
 type ActionType =
@@ -43,16 +44,25 @@ function useFilterManager(initialTags: Tag[]): {
   searchPhrase: string;
   visibleLayers: LayerProps[];
   visibleGroupTypes: string[];
+  // eslint-disable-next-line no-unused-vars
   addFilterTag: (tag: Tag) => void;
+  // eslint-disable-next-line no-unused-vars
   removeFilterTag: (name: string) => void;
   resetFilterTags: () => void;
+  // eslint-disable-next-line no-unused-vars
   setSearchPhrase: (phrase: string) => void;
+  // eslint-disable-next-line no-unused-vars
   addVisibleLayer: (layer: LayerProps) => void;
+  // eslint-disable-next-line no-unused-vars
   toggleVisibleLayer: (layer: LayerProps) => void;
   resetVisibleLayers: () => void;
+  // eslint-disable-next-line no-unused-vars
   isLayerVisible: (layer: LayerProps) => boolean;
+  // eslint-disable-next-line no-unused-vars
   addVisibleGroupType: (groupType: string) => void;
+  // eslint-disable-next-line no-unused-vars
   toggleVisibleGroupType: (groupType: string) => void;
+  // eslint-disable-next-line no-unused-vars
   isGroupTypeVisible: (groupType: string) => boolean;
 } {
   const [filterTags, dispatchTags] = useReducer((state: Tag[], action: ActionType) => {
@@ -128,9 +138,9 @@ function useFilterManager(initialTags: Tag[]): {
   const [searchPhrase, searchPhraseSet] = React.useState<string>("");
 
   const addFilterTag = useCallback((tag: Tag) => {
-    let params = new URLSearchParams(location.search);
-    let urlTags = params.get("tags")
-    let decodedTags = urlTags ? decodeURIComponent(urlTags) : "";
+    const params = new URLSearchParams(location.search);
+    const urlTags = params.get("tags")
+    const decodedTags = urlTags ? decodeURIComponent(urlTags) : "";
     
     if(!decodedTags?.includes(tag.name))
     params.set("tags", `${urlTags ? urlTags : ""}${urlTags? ';' : ''}${tag.name}`)
@@ -145,14 +155,15 @@ function useFilterManager(initialTags: Tag[]): {
       tag,
     });
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const removeFilterTag = useCallback((name: string) => {
 
-    let params = new URLSearchParams(window.location.search);
-    let urlTags = params.get("tags");
+    const params = new URLSearchParams(window.location.search);
+    const urlTags = params.get("tags");
     let newUrlTags = "";
-    let tags = urlTags?.split(";");
+    const tags = urlTags?.split(";");
     if(tags?.length==0 && urlTags?.length && urlTags?.length > 0) tags[0]=urlTags;
       tags?.map(urlTag => {
         if(!(urlTag.toLocaleLowerCase() === name.toLocaleLowerCase()))
@@ -171,6 +182,7 @@ function useFilterManager(initialTags: Tag[]): {
       type: "REMOVE_TAG",
       name,
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const resetFilterTags = useCallback(() => {

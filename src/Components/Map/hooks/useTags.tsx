@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useCallback, useReducer, createContext, useContext, useState } from "react";
 import * as React from "react";
 import { Item, ItemsApi, Tag } from "../../../types";
@@ -34,6 +35,7 @@ function useTagsManager(initialTags: Tag[]): {
   const [tags, dispatch] = useReducer((state: Tag[], action: ActionType) => {
     switch (action.type) {
       case "ADD":
+        // eslint-disable-next-line no-case-declarations
         const exist = state.find((tag) =>
           tag.name.toLocaleLowerCase() === action.tag.name.toLocaleLowerCase() ? true : false
         );
@@ -67,6 +69,7 @@ function useTagsManager(initialTags: Tag[]): {
     }
 
     
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const setTagData = useCallback((data: Tag[]) => {

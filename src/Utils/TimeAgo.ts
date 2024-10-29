@@ -20,7 +20,7 @@ export const timeAgo = (date: string | number | Date) => {
 };
 
 const calculateTimeDifference = (time: number) => {
-  for (let { label, seconds } of units) {
+  for (const { label, seconds } of units) {
     const interval = Math.floor(time / seconds);
     if (interval >= 1) {
       return {

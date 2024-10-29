@@ -16,6 +16,7 @@ export function SignupPage() {
 
     const navigate = useNavigate();
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const onRegister = async () => {
         await toast.promise(
             register({ email: email, password: password }, userName),

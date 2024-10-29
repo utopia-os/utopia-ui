@@ -1,4 +1,4 @@
-export const LUNAR_MONTH: number = 29.530588853;
+export const LUNAR_MONTH = 29.530588853;
 
 export const getJulianDate = (date: Date = new Date()): number => {
   const time: number = date.getTime();

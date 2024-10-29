@@ -19,14 +19,19 @@ const PermissionContext = createContext<UsePermissionManagerResult>({
 
 function usePermissionsManager(initialPermissions: Permission[]): {
   permissions: Permission[];
+  // eslint-disable-next-line no-unused-vars
   setPermissionApi: (api: ItemsApi<any>) => void;
+  // eslint-disable-next-line no-unused-vars
   setPermissionData: (data: Permission[]) => void;
+  // eslint-disable-next-line no-unused-vars
   setAdminRole: (adminRole: string) => void;
+  // eslint-disable-next-line no-unused-vars
   hasUserPermission: (collectionName: string, action: PermissionAction, item?: Item, layer?: LayerProps) => boolean;
 } {
   const [permissions, dispatch] = useReducer((state: Permission[], action: ActionType) => {
     switch (action.type) {
       case "ADD":
+        // eslint-disable-next-line no-case-declarations
         const exist = state.find((permission) =>
           permission.id === action.permission.id ? true : false
         );
@@ -111,6 +116,7 @@ function usePermissionsManager(initialPermissions: Permission[]): {
         );
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [permissions, user]
   );
   

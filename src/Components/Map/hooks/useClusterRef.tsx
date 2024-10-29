@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { createContext, useContext, useState } from "react";
 
 type UseClusterRefManagerResult = ReturnType<typeof useClusterRefManager>;

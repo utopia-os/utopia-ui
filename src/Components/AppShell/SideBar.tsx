@@ -11,6 +11,7 @@ import * as React from 'react';
 
 type route = {
   path: string;
+  // eslint-disable-next-line no-undef
   icon: JSX.Element;
   name: string;
   submenu?: route;
@@ -53,12 +54,12 @@ export function SideBar({ routes, bottomRoutes }: { routes: route[], bottomRoute
 
 
   useEffect(() => {
-      let params = new URLSearchParams(location.search);
-      let embedded = params.get("embedded");
+      const params = new URLSearchParams(location.search);
+      const embedded = params.get("embedded");
       embedded != "true" && setEmbedded(false)
   }, [location]);
 
-  let params = new URLSearchParams(window.location.search);
+  const params = new URLSearchParams(window.location.search);
 
   return (
     <nav

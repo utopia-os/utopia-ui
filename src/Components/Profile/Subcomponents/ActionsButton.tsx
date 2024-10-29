@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useHasUserPermission, usePermissions } from "../../Map/hooks/usePermissions";
+import { useHasUserPermission } from "../../Map/hooks/usePermissions";
 import DialogModal from "../../Templates/DialogModal";
 import { useItems } from "../../Map/hooks/useItems";
 import { HeaderView } from "../../Map/Subcomponents/ItemPopupComponents/HeaderView";

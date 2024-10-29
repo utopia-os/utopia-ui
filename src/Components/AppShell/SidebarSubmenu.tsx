@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom'
 
 
 function SidebarSubmenu({submenu, name, icon} : {  path: string;
+    // eslint-disable-next-line no-undef
     icon: JSX.Element;
     name: string;
     submenu?: any  | undefined}){
@@ -14,6 +15,7 @@ function SidebarSubmenu({submenu, name, icon} : {  path: string;
     /** Open Submenu list if path found in routes, this is for directly loading submenu routes  first time */
     useEffect(() => {
         if(submenu.filter(m => {return m.path === location.pathname})[0])setIsExpanded(true)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

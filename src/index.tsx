@@ -9,6 +9,7 @@ export {TextInput, TextAreaInput, SelectBox} from './Components/Input'
 import "./index.css"
 
 declare global {
+    // eslint-disable-next-line no-unused-vars
     interface Window {
       my_modal_3: any;
     }

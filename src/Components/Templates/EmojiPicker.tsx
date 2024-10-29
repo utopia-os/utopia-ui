@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+// eslint-disable-next-line react/prop-types
 export const EmojiPicker = ({selectedEmoji, selectedColor, selectedShape, setSelectedEmoji, setSelectedColor, setSelectedShape}) => {
 
 
@@ -7,7 +8,7 @@ export const EmojiPicker = ({selectedEmoji, selectedColor, selectedShape, setSel
   const [isOpen, setIsOpen] = useState(false);
 
   const emojis = [
-    '❤️', '🙏', '👍', '🌻',, '✨', '☀️',
+    '❤️', '🙏', '👍', '🌻', '✨', '☀️',
     '🔥', '🪵', '💧', '🎶', '🎨','🍄', 
     '📝', '✉️', '🧩','💡', '🎓', '💬', 
     '🛠', '💻', '🕹', '🖨', '🚐', '🛒',

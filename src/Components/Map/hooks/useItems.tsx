@@ -28,11 +28,17 @@ const ItemContext = createContext<UseItemManagerResult>({
 
 function useItemsManager(initialItems: Item[]): {
   items: Item[];
+  // eslint-disable-next-line no-unused-vars
   addItem: (item: Item) => void;
+  // eslint-disable-next-line no-unused-vars
   updateItem: (item: Item) => void;
+  // eslint-disable-next-line no-unused-vars
   removeItem: (item: Item) => void;
+  // eslint-disable-next-line no-unused-vars
   resetItems: (layer: LayerProps) => void;
+  // eslint-disable-next-line no-unused-vars
   setItemsApi: (layer: LayerProps) => void;
+  // eslint-disable-next-line no-unused-vars
   setItemsData: (layer: LayerProps) => void;
   allItemsLoaded: boolean;
 
@@ -47,6 +53,7 @@ function useItemsManager(initialItems: Item[]): {
   const [items, dispatch] = useReducer((state: Item[], action: ActionType) => {
     switch (action.type) {
       case "ADD":
+        // eslint-disable-next-line no-case-declarations
         const exist = state.find((item) =>
           item.id === action.item.id ? true : false
         );
@@ -92,6 +99,7 @@ function useItemsManager(initialItems: Item[]): {
       })
       setallItemsLoaded(true);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const setItemsData = useCallback((layer: LayerProps) => {
@@ -100,6 +108,7 @@ function useItemsManager(initialItems: Item[]): {
       dispatch({ type: "ADD", item: { ...item, layer: layer } });
     })
     setallItemsLoaded(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 

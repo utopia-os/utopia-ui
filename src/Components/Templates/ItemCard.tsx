@@ -12,7 +12,7 @@ export const ItemCard = ({ i, loading, url, parameterField, deleteCallback }: { 
 
   return (
     <div className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-p-4 tw-mb-4 tw-h-fit' onClick={() => {
-      let params = new URLSearchParams(window.location.search);
+      const params = new URLSearchParams(window.location.search);
       if (windowDimensions.width < 786 && i.position)  navigate("/" + getValue(i, parameterField) + `${params ? `?${params}` : ""}`)
       else navigate(url + getValue(i, parameterField) + `${params ? `?${params}` : ""}`)
     }}>

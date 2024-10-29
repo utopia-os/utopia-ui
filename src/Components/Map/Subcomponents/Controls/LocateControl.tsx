@@ -1,4 +1,3 @@
-import * as React from 'react'
 import * as L from 'leaflet'
 import { useMap, useMapEvents } from 'react-leaflet'
 import 'leaflet.locatecontrol'
@@ -26,6 +25,7 @@ export const LocateControl = () => {
             setLc(L.control.locate().addTo(map));
             init.current = true;
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useMapEvents({

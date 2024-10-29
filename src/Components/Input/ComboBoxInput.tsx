@@ -5,11 +5,13 @@ interface ComboBoxProps {
     id?: string;
     options: { value: string, label: string }[];
     value: string;
+    // eslint-disable-next-line no-unused-vars
     onValueChange: (newValue: string) => void;
 }
 
 const ComboBoxInput = ({ id, options, value, onValueChange }: ComboBoxProps) => {
 
+  // eslint-disable-next-line no-unused-vars
   const [selectedValue, setSelectedValue] = useState(value);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

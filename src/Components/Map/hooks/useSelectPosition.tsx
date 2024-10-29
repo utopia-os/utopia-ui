@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { createContext, useContext, useEffect, useState } from "react";
 import { Geometry, Item, LayerProps } from '../../../types';
 import { useUpdateItem } from "./useItems";
@@ -5,7 +6,6 @@ import { toast } from "react-toastify";
 import { useHasUserPermission } from "./usePermissions";
 import { LatLng } from "leaflet";
 import { ItemFormPopupProps } from "../Subcomponents/ItemFormPopup";
-import { useNavigate } from "react-router-dom";
 
 type PolygonClickedProps = {
     position: LatLng
@@ -39,6 +39,7 @@ function useSelectPositionManager(): {
         if (selectPosition && markerClicked && 'text' in selectPosition && markerClicked.id !==selectPosition.id) {
             itemUpdateParent({ ...selectPosition, parent: markerClicked.id })
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [markerClicked])
 
     useEffect(() => {
@@ -54,6 +55,7 @@ function useSelectPositionManager(): {
         }
     }
         
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [mapClicked])
     
 

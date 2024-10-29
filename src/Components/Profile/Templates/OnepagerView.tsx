@@ -14,6 +14,7 @@ export const OnepagerView = ({item, userType}:{item: Item, userType: string}) =>
 
   useEffect(() => {
       setProfileOwner(items.find(i => (i.user_created?.id === item.user_created?.id) && i.layer?.itemType.name === userType));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item, items])
 
   const typeMapping = {

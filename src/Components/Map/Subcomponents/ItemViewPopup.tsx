@@ -5,7 +5,7 @@ import { ItemFormPopupProps } from './ItemFormPopup'
 import { HeaderView } from './ItemPopupComponents/HeaderView'
 import { TextView } from './ItemPopupComponents/TextView'
 import { timeAgo } from '../../../Utils/TimeAgo'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { LatLng } from 'leaflet'
 import { useNavigate } from 'react-router-dom'
 import { useRemoveItem, useUpdateItem } from '../hooks/useItems'
@@ -22,6 +22,7 @@ export interface ItemViewPopupProps {
 
 
 
+// eslint-disable-next-line react/display-name
 export const ItemViewPopup = React.forwardRef((props: ItemViewPopupProps, ref: any) => {
   const map = useMap();
   const [loading, setLoading] = React.useState<boolean>(false);

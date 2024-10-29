@@ -12,6 +12,7 @@ const setTagApi = useSetTagApi();
 useEffect(() => {
   data && setTagData(data); 
   api && setTagApi(api);  
+// eslint-disable-next-line react-hooks/exhaustive-deps
 }, [api, data])
 
 
@@ -34,6 +35,7 @@ useEffect(() => {
       tag && addFilterTag(tag)
   });}
 
+// eslint-disable-next-line react-hooks/exhaustive-deps
 }, [location, tags]);
 
 

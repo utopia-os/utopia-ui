@@ -11,6 +11,7 @@ import * as React from 'react';
 
 type route = {
   path: string;
+  // eslint-disable-next-line no-undef
   icon: JSX.Element;
   name: string;
   submenu?: route;

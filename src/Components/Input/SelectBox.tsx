@@ -10,6 +10,7 @@ type SelectBoxProps = {
     containerStyle?: string;
     defaultValue: string;
     placeholder?: string;
+    // eslint-disable-next-line no-unused-vars
     updateFormValue: (value: string ) => void;
 
     options: {name: string, value: string}[];

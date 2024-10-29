@@ -18,6 +18,7 @@ export default function NavBar({ appName, userType}: { appName: string, userType
   useEffect(() => {
     const profile = user && items.find(i => (i.user_created?.id === user.id) && i.layer?.itemType.name === userType);    
     profile ? setUserProfile(profile) : setUserProfile({id: crypto.randomUUID(), name: user?.first_name, text: ""});
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, items])
 
   useEffect(() => {

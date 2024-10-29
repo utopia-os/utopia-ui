@@ -2,7 +2,7 @@ import * as React from 'react'
 import { decodeTag } from '../../Utils/FormatTags'
 import { Tag } from '../../types'
 
-export const TagView = ({ tag, heighlight, onClick, count }: { tag: Tag, heighlight?: boolean, onClick?: (e) => void, count?: number }) => {
+export const TagView = ({ tag, heighlight, onClick, count }: { tag: Tag, heighlight?: boolean, onClick?: (/* e */) => void, count?: number }) => {
   return (
     // Use your imagination to render suggestions.
 

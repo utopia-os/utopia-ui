@@ -1,9 +1,9 @@
-
+import * as React from 'react'
 import { MapOverlayPage } from './MapOverlayPage'
 import { useItems } from '../Map/hooks/useItems'
 import { useAssetApi } from '../AppShell/hooks/useAssets'
 import { EmojiPicker } from './EmojiPicker';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import { Item, ItemsApi } from '../../types';
 import { useEffect } from 'react';
@@ -20,6 +20,7 @@ export const AttestationForm = ({api}:{api?:ItemsApi<any>}) => {
         const params = new URLSearchParams(location.search);
         const to_user_ids = params.get("to");
         setUsers(items.filter(i => to_user_ids?.includes(i.id)))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [items, location])
 
     const [inputValue, setInputValue] = useState('');

@@ -1,7 +1,7 @@
 import SocialShareBar from './SocialShareBar';
 
 
-const flags = {
+/* const flags = {
     de: (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5 3" className="tw-w-5 tw-h-3">
             <rect width="5" height="3" fill="#FFCE00" />
@@ -16,7 +16,7 @@ const flags = {
             <rect width="5" height="1" fill="#ED2939" />
         </svg>
     )
-};
+}; */
 
 const statusMapping = {
     'in_planning': 'in Planung',
@@ -24,6 +24,7 @@ const statusMapping = {
     'active': 'aktiv'
 };
 
+// eslint-disable-next-line react/prop-types
 const SubHeader = ({ type, status, url, title }) => (
     <div>
         <div className='tw-float-left tw-mt-2 tw-mb-4 tw-flex tw-items-center'>

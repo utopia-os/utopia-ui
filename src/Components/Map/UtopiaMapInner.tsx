@@ -53,6 +53,7 @@ export function UtopiaMapInner({
 
     useEffect(() => {
         layers.forEach(layer => addVisibleLayer(layer));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [layers]);
 
     const init = useRef(false)
@@ -63,6 +64,7 @@ export function UtopiaMapInner({
             }, 4000);
             init.current=true;
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     
 
@@ -90,6 +92,7 @@ export function UtopiaMapInner({
         document.querySelector('meta[property="og:description"]')?.setAttribute("content", `${document.querySelector('meta[name="description"]')?.getAttribute("content")}`);
     };
 
+    // eslint-disable-next-line no-undef
     const onEachFeature = (feature: Feature<GeoJSONGeometry, any>, layer: L.Layer) => {
         if (feature.properties) {
             layer.bindPopup(feature.properties.name);

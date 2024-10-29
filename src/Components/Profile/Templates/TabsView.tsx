@@ -9,15 +9,15 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useItems } from '../../Map/hooks/useItems'
 import { useAssetApi } from '../../AppShell/hooks/useAssets'
 import { timeAgo } from '../../../Utils/TimeAgo'
-import { useAuth } from '../../Auth'
 
+// eslint-disable-next-line no-unused-vars
 export const TabsView = ({ attestations, userType, item, offers, needs, relations, updatePermission, loading, linkItem, unlinkItem, setUrlParams }: { attestations: Array<any>, userType: string, item: Item, offers: Array<Tag>, needs: Array<Tag>, relations: Array<Item>, updatePermission: boolean, loading: boolean, linkItem: (id: string) => Promise<void>, unlinkItem: (id: string) => Promise<void>, setUrlParams: any }) => {
 
   const addFilterTag = useAddFilterTag();
   const [activeTab, setActiveTab] = useState<number>();
   const navigate = useNavigate();
 
-  const [addItemPopupType, setAddItemPopupType] = useState<string>("");
+  const [addItemPopupType, /* setAddItemPopupType */] = useState<string>("");
 
   const items = useItems();
   const assetsApi = useAssetApi();
@@ -43,6 +43,7 @@ export const TabsView = ({ attestations, userType, item, offers, needs, relation
     const newUrl = location.pathname + "?" + params.toString();
     window.history.pushState({}, '', newUrl);
     setUrlParams(params);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
 
@@ -50,6 +51,7 @@ export const TabsView = ({ attestations, userType, item, offers, needs, relation
     const params = new URLSearchParams(location.search);
     const urlTab = params.get("tab");
     setActiveTab(urlTab ? Number(urlTab) : 1);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search]);
 
   return (

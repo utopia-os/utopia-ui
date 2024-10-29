@@ -59,6 +59,7 @@ const ContactInfo = ({ email, telephone, name, avatar, link }: { email: string, 
 
 export default ContactInfo;
 
+// eslint-disable-next-line react/prop-types
 const ConditionalLink = ({ url, children }) => {
     const params = new URLSearchParams(window.location.search);
 

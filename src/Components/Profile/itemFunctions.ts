@@ -1,4 +1,5 @@
-import { Item, Tag } from '../../types';
+import * as React from 'react'
+import { Item } from '../../types';
 import { encodeTag } from '../../Utils/FormatTags';
 import { hashTagRegex } from '../../Utils/HashTagRegex';
 import { randomColor } from '../../Utils/RandomColor';

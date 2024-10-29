@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+
+import * as React from 'react'
 import { ItemFormPopupProps } from "./Components/Map/Subcomponents/ItemFormPopup";
 
 export interface UtopiaMapProps {
@@ -72,6 +75,7 @@ export class Item {
   parent?:string;
   subname?: string;
   public_edit?: boolean;
+  // eslint-disable-next-line no-undef
   [key: string]: any;
   constructor(id:string,name:string,text:string,position:Geometry, layer?: LayerProps, api?: ItemsApi<any>){
     this.id = id;

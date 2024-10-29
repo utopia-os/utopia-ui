@@ -50,6 +50,7 @@ export const MarketView = () => {
     })
     console.log(offers);
     
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items])
 
 

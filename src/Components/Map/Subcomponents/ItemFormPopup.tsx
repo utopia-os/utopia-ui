@@ -3,7 +3,7 @@ import { LatLng } from 'leaflet'
 import { Popup as LeafletPopup, useMap } from 'react-leaflet'
 import { useEffect, useRef, useState } from 'react'
 import { useAddItem, useItems, useRemoveItem, useUpdateItem } from '../hooks/useItems'
-import { Geometry, LayerProps, Item, ItemsApi } from '../../../types'
+import { Geometry, LayerProps, Item } from '../../../types'
 import { TextAreaInput } from '../../Input/TextAreaInput'
 import { TextInput } from '../../Input/TextInput'
 import { toast } from 'react-toastify'
@@ -25,6 +25,7 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
 
     const [spinner, setSpinner] = useState(false);
 
+    // eslint-disable-next-line no-unused-vars
     const [popupTitle, setPopupTitle] = useState<string>("");
 
     const formRef = useRef<HTMLFormElement>(null);
@@ -34,6 +35,7 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
     const addItem = useAddItem();
     const updateItem = useUpdateItem();
     const items = useItems();
+    // eslint-disable-next-line no-unused-vars
     const removeItem = useRemoveItem();
 
 

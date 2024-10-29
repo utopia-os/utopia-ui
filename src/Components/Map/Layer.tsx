@@ -88,6 +88,7 @@ export const Layer = ({
     useEffect(() => {
         data && setItemsData({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, markerDefaultColor2, api, itemType, itemNameField, itemSubnameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, customEditParameter, public_edit_items, listed, setItemFormPopup, itemFormPopup, clusterRef });
         api && setItemsApi({ data, children, name, menuIcon, menuText, menuColor, markerIcon, markerShape, markerDefaultColor, markerDefaultColor2, api, itemType, itemNameField, itemSubnameField, itemTextField, itemAvatarField, itemColorField, itemOwnerField, itemTagsField, itemOffersField, itemNeedsField, onlyOnePerOwner, customEditLink, customEditParameter, public_edit_items, listed, setItemFormPopup, itemFormPopup, clusterRef });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data, api])
 
     useMapEvents({
@@ -131,6 +132,7 @@ export const Layer = ({
 
     useEffect(() => {
         openPopup();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [leafletRefs, location])
 
     useEffect(() => {
@@ -143,6 +145,7 @@ export const Layer = ({
                 }
             })
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [tagsReady])
 
     return (

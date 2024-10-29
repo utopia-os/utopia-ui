@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { TextInput } from "../../Input"
 import { AvatarWidget } from "./AvatarWidget"
 import { ColorPicker } from "./ColorPicker"

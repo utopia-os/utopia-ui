@@ -11,6 +11,7 @@ type TextAreaProps = {
     inputStyle?: string;
     defaultValue: string;
     placeholder?: string;
+    // eslint-disable-next-line no-unused-vars
     updateFormValue?: (value: string) => void;
 }
 
@@ -54,6 +55,7 @@ export function TextAreaInput({ labelTitle, dataField, labelStyle, containerStyl
             }
             init.current = true;
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ref]);
 
     useEffect(() => {

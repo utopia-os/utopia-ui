@@ -14,6 +14,7 @@ useEffect(() => {
   adminRole && setAdminRole(adminRole);
   data && setPermissionData(data); 
   api && setPermissionApi(api);  
+// eslint-disable-next-line react-hooks/exhaustive-deps
 }, [api, data, adminRole, user])
 
   return (

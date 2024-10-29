@@ -19,13 +19,18 @@ type AuthCredentials = {
 type AuthContextProps = {
   isAuthenticated: boolean,
   user: UserItem | null;
+  // eslint-disable-next-line no-unused-vars
   login: (credentials: AuthCredentials) => Promise<UserItem | undefined>,
+  // eslint-disable-next-line no-unused-vars
   register: (credentials: AuthCredentials, userName: string) => Promise<UserItem | undefined>,
   loading: boolean,
   logout: () => Promise<any>,
+  // eslint-disable-next-line no-unused-vars
   updateUser: (user: UserItem) => any,
   token: string | null,
+  // eslint-disable-next-line no-unused-vars
   requestPasswordReset: (email:string, reset_url: string) => Promise<any>,
+  // eslint-disable-next-line no-unused-vars
   passwordReset: (token:string, new_password:string) => Promise<any>
 }
 
@@ -52,6 +57,7 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
     setLoading(true);
     loadUser();
     setLoading(false)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function loadUser(): Promise<UserItem | undefined> {
@@ -88,7 +94,7 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
   const register = async (credentials: AuthCredentials, userName): Promise<UserItem | undefined> => {
     setLoading(true);
     try {
-      const res = await userApi.register(credentials.email, credentials.password, userName)
+      /* const res = */ await userApi.register(credentials.email, credentials.password, userName)
       return (await login(credentials));
     } catch (error: any) {
       setLoading(false);
@@ -109,6 +115,7 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
 
   const updateUser = async (user: UserItem) => {
     setLoading(true);
+    // eslint-disable-next-line no-unused-vars
     const { id, ...userRest } = user;
 
     try {

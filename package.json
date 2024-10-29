@@ -8,7 +8,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "rollup -c",
-    "start": "rollup -c -w"
+    "start": "rollup -c -w",
+    "test:lint:eslint": "eslint --ext .ts,.tsx,.js,.jsx,.cjs,.mjs,.json,.yml,.yaml --max-warnings 0 ."
   },
   "files": [
     "dist"

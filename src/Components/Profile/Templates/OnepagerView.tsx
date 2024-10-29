@@ -1,4 +1,4 @@
-import { Item } from "utopia-ui/dist/types"
+import { Item } from "../../../types"
 import { TextView } from "../../Map"
 import ContactInfo from "../Subcomponents/ContactInfo"
 import ProfileSubHeader from "../Subcomponents/ProfileSubHeader"

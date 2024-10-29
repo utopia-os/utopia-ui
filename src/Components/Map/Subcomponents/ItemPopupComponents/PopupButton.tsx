@@ -6,7 +6,7 @@ import { useGetItemTags } from '../../hooks/useTags';
 
 export const PopupButton = ({url, parameterField, text, colorField, item} : {url: string, parameterField?: string, text: string, colorField?: string, item? : Item}) => {
 
-    let params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(window.location.search);
     const getItemTags = useGetItemTags();
 
     

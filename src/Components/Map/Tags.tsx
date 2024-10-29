@@ -23,10 +23,10 @@ const filterTags = useFilterTags()
 
 
 useEffect(() => {
-  let params = new URLSearchParams(location.search);
-  let urlTags = params.get("tags")
-  let decodedTags = urlTags ? decodeURIComponent(urlTags) : "";
-  let decodedTagsArray = decodedTags.split(";");
+  const params = new URLSearchParams(location.search);
+  const urlTags = params.get("tags")
+  const decodedTags = urlTags ? decodeURIComponent(urlTags) : "";
+  const decodedTagsArray = decodedTags.split(";");
   if(decodedTagsArray?.some(ut => !filterTags.find(ft => ut.toLocaleLowerCase() === ft.name.toLocaleLowerCase()))||filterTags?.some(ft => !decodedTagsArray?.find(ut => ut.toLocaleLowerCase() === ft.name.toLocaleLowerCase())))
   {resetFilterTags()
     decodedTagsArray?.map(urlTag => {

@@ -94,7 +94,7 @@ export const Layer = ({
         popupopen: (e) => {
             const item = Object.entries(leafletRefs).find(r => r[1].popup == e.popup)?.[1].item;
             if (item?.layer?.name == name && window.location.pathname.split("/")[1] != item.id) {
-                let params = new URLSearchParams(window.location.search);
+                const params = new URLSearchParams(window.location.search);
                 if (!location.pathname.includes("/item/")) {
                     window.history.pushState({}, "", `/${item.id}` + `${params.toString() !== "" ? `?${params}` : ""}`)
                 }

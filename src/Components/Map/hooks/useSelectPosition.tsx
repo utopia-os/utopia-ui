@@ -97,7 +97,7 @@ function useSelectPositionManager(): {
 
     const linkItem = async (id: string) => {
         if (markerClicked) {
-            let new_relations = markerClicked.relations || [];
+            const new_relations = markerClicked.relations || [];
             
             if (!new_relations.some(r => r.related_items_id == id)) {
                 new_relations?.push({ items_id: markerClicked.id, related_items_id: id })

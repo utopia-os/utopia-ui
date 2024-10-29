@@ -41,7 +41,7 @@ export function HeaderView({ item, api, editCallback, deleteCallback, setPositio
 
   const [address, setAdress] = React.useState<string>("");
 
-  let params = new URLSearchParams(window.location.search);
+  const params = new URLSearchParams(window.location.search);
 
 
   const openDeleteModal = async (event: React.MouseEvent<HTMLElement>) => {

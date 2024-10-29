@@ -16,7 +16,7 @@ export const TabsForm = ({ item, state, setState, updatePermission, linkItem, un
     const updateActiveTab = useCallback((id: number) => {
         setActiveTab(id);
 
-        let params = new URLSearchParams(window.location.search);
+        const params = new URLSearchParams(window.location.search);
 
         params.set("tab", `${id}`);
         const newUrl = location.pathname + "?" + params.toString();
@@ -25,8 +25,8 @@ export const TabsForm = ({ item, state, setState, updatePermission, linkItem, un
     }, [location.pathname]);
 
     useEffect(() => {
-        let params = new URLSearchParams(location.search);
-        let urlTab = params.get("tab");
+        const params = new URLSearchParams(location.search);
+        const urlTab = params.get("tab");
         setActiveTab(urlTab ? Number(urlTab) : 1);
     }, [location.search]);
 

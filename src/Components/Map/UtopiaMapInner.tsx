@@ -81,7 +81,7 @@ export function UtopiaMapInner({
     }
 
     const resetMetaTags = () => {
-        let params = new URLSearchParams(window.location.search);
+        const params = new URLSearchParams(window.location.search);
         if (!window.location.pathname.includes("/item/")) {
             window.history.pushState({}, "", `/` + `${params.toString() !== "" ? `?${params}` : ""}`);
         }

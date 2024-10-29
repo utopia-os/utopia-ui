@@ -38,7 +38,7 @@ export const TabsView = ({ attestations, userType, item, offers, needs, relation
   const updateActiveTab = useCallback((id: number) => {
     setActiveTab(id);
 
-    let params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(window.location.search);
     params.set("tab", `${id}`);
     const newUrl = location.pathname + "?" + params.toString();
     window.history.pushState({}, '', newUrl);
@@ -47,8 +47,8 @@ export const TabsView = ({ attestations, userType, item, offers, needs, relation
 
 
   useEffect(() => {
-    let params = new URLSearchParams(location.search);
-    let urlTab = params.get("tab");
+    const params = new URLSearchParams(location.search);
+    const urlTab = params.get("tab");
     setActiveTab(urlTab ? Number(urlTab) : 1);
   }, [location.search]);
 

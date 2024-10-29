@@ -17,8 +17,8 @@ export const AttestationForm = ({api}:{api?:ItemsApi<any>}) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        let params = new URLSearchParams(location.search);
-        let to_user_ids = params.get("to");
+        const params = new URLSearchParams(location.search);
+        const to_user_ids = params.get("to");
         setUsers(items.filter(i => to_user_ids?.includes(i.id)))
     }, [items, location])
 

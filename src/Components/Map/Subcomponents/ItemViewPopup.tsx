@@ -31,7 +31,7 @@ export const ItemViewPopup = React.forwardRef((props: ItemViewPopupProps, ref: a
   const setSelectPosition = useSetSelectPosition();
 
 
-  const [infoExpanded, setInfoExpanded] = useState<Boolean>(false);
+  const [infoExpanded, setInfoExpanded] = useState<boolean>(false);
 
   const handleEdit = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
@@ -57,7 +57,7 @@ export const ItemViewPopup = React.forwardRef((props: ItemViewPopupProps, ref: a
     }
     setLoading(false);
     map.closePopup();
-    let params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(window.location.search);
     window.history.pushState({}, "", "/" + `${params ? `?${params}` : ""}`);
     navigate("/");
   }

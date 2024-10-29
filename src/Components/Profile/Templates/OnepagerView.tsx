@@ -22,8 +22,8 @@ export const OnepagerView = ({item, userType}:{item: Item, userType: string}) =>
     'liebevoll.jetzt': 'liebevoll.jetzt',
 };
 
-let groupType = item.group_type ? item.group_type : 'default';
-let groupTypeText = typeMapping[groupType];
+const groupType = item.group_type ? item.group_type : 'default';
+const groupTypeText = typeMapping[groupType];
 
   return (
     <div className='tw-h-full tw-overflow-y-auto fade'>

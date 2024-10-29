@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -85,6 +86,6 @@ module.exports = {
       },]
   },
   prefix: 'tw-',
-  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  // content: ['./src/**/*.{js,jsx,ts,tsx}'],
 
 }

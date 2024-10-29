@@ -103,11 +103,11 @@ function usePermissionsManager(initialPermissions: Permission[]): {
           p.action === action &&
           p.collection === collectionName &&
           (
-            (p.role === user?.role &&
+            (p.policy === user?.role &&
             (
               !item || evaluatePermissions(p.permissions)
             )) ||
-            (p.role == null &&
+            (p.policy == null &&
             (
               (layer?.public_edit_items || item?.layer?.public_edit_items) &&
               (!item || evaluatePermissions(p.permissions))
@@ -116,12 +116,8 @@ function usePermissionsManager(initialPermissions: Permission[]): {
         );
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [permissions, user]
   );
-  
-
-
 
   return { permissions, setPermissionApi, setPermissionData, setAdminRole, hasUserPermission };
 }

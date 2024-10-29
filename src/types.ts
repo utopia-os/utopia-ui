@@ -158,7 +158,7 @@ export type PermissionCondition = {
 
 export type Permission = {
   id?: string;
-  role: string;
+  policy: string;
   collection: string;
   action: PermissionAction;
   permissions?: { // Optional, für spezifische Bedingungen wie `user_created`

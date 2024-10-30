@@ -140,7 +140,7 @@ export function ProfileView({ userType, attestationApi }: { userType: string , a
         setTemplate(item?.layer?.itemType.template || userType);
     }, [userType, item])
 
-    const [/* urlParams, */ setUrlParams] = useState(new URLSearchParams(location.search));
+    const [ urlParams,  setUrlParams] = useState(new URLSearchParams(location.search));
 
 
     return (

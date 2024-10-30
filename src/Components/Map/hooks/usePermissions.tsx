@@ -121,7 +121,7 @@ function usePermissionsManager(initialPermissions: Permission[]): {
         );
       }
     },
-    [permissions, user]
+    [permissions, user, adminRole]
   );
   
   

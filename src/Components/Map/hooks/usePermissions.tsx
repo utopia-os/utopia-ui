@@ -119,7 +119,7 @@ function usePermissionsManager(initialPermissions: Permission[]): {
               (
                 !item || evaluatePermissions(p.permissions)
               )) ||
-              (p.policy === "$t:public_label" &&
+              (p.policy.name === "$t:public_label" &&
               (
                 (layer?.public_edit_items || item?.layer?.public_edit_items) &&
                 (!item || evaluatePermissions(p.permissions))

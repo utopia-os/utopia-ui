@@ -134,7 +134,7 @@ export type Profile = {
 
 export type UserItem = {
   id?: string;
-  role?: string;
+  role?: any;
   email?: string;
   password?: string;
   profile?: Profile;
@@ -166,7 +166,7 @@ export type PermissionAction = 'create'|'read'|'update'|'delete';
 
 export type Permission = {
   id?: string;
-  role: string;
+  policy: any;
   collection: string;
   action: PermissionAction;
   permissions?: { // Optional, für spezifische Bedingungen wie `user_created`

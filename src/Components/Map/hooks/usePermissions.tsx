@@ -76,6 +76,16 @@ function usePermissionsManager (initialPermissions: Permission[]): {
       item?: Item,
       layer?: LayerProps
     ) => {
+
+      console.log(layer?.name);
+      console.log(user?.role.name);
+      console.log(action);
+      console.log(permissions.filter(p => p.policy.name === user?.role.name || (p.policy.name === "$t:public_label" && !user)));
+      
+      
+      
+
+
       const evaluateCondition = (condition: any) => {
         if (condition.user_created?._eq === '$CURRENT_USER') {
           return item?.user_created?.id === user?.id
@@ -95,32 +105,34 @@ function usePermissionsManager (initialPermissions: Permission[]): {
           andCondition._or
             ? andCondition._or.some((orCondition: any) => evaluateCondition(orCondition))
             : evaluateCondition(andCondition)
-        )
-      }
-
-      if (permissions.length === 0) return true
-      else if (user && user.role === adminRole) return true
+        );
+      };
+      if (collectionName === "items" && action === "create" && layer?.public_edit_items) return true;
+      // Bedingung für leere Berechtigungen nur, wenn NICHT item und create
+      if (permissions.length === 0) return true;
+      else if (user && user.role.id === adminRole) return true;
       else {
         return permissions.some(p =>
           p.action === action &&
           p.collection === collectionName &&
-          (
-            (p.role === user?.role &&
+          
             (
-              !item || evaluatePermissions(p.permissions)
-            )) ||
-            (p.role == null &&
-            (
-              (layer?.public_edit_items || item?.layer?.public_edit_items) &&
-              (!item || evaluatePermissions(p.permissions))
-            ))
-          )
-        )
+              (p.policy.name === user?.role.name &&
+              (
+                !item || evaluatePermissions(p.permissions)
+              )) ||
+              (p.policy === "$t:public_label" &&
+              (
+                (layer?.public_edit_items || item?.layer?.public_edit_items) &&
+                (!item || evaluatePermissions(p.permissions))
+              ))
+            )
+          
+        );
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [permissions, user]
-  )
+    [permissions, user, adminRole]
+  );
 
   return { permissions, setPermissionApi, setPermissionData, setAdminRole, hasUserPermission }
 }

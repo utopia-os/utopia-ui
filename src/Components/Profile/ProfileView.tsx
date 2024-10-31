@@ -134,12 +134,6 @@ export function ProfileView ({ userType, attestationApi }: { userType: string, a
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectPosition])
 
-  useEffect(() => {
-    setTemplate(item?.layer?.itemType.template || userType)
-  }, [userType, item])
-
-  const [setUrlParams] = useState(new URLSearchParams(location.search))
-
   return (
         <>
             {item &&
@@ -157,8 +151,8 @@ export function ProfileView ({ userType, attestationApi }: { userType: string, a
                             <SimpleView item={item}/>
                         }
 
-                        {template === 'tabs' &&
-                            <TabsView userType={userType} attestations={attestations} setUrlParams={setUrlParams} item={item} loading={loading} offers={offers} needs={needs} relations={relations} updatePermission={updatePermission} linkItem={(id) => linkItem(id, item, updateItem)} unlinkItem={(id) => unlinkItem(id, item, updateItem)}/>
+                        {template == "tabs" &&
+                            <TabsView userType={userType} attestations={attestations} item={item} loading={loading} offers={offers} needs={needs} relations={relations} updatePermission={updatePermission} linkItem={(id) => linkItem(id, item, updateItem)} unlinkItem={(id) => unlinkItem(id, item, updateItem)}/>
                         }
                     </>
 

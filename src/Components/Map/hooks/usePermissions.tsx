@@ -78,7 +78,7 @@ function usePermissionsManager(initialPermissions: Permission[]): {
       console.log(layer?.name);
       console.log(user?.role.name);
       console.log(action);
-      console.log(permissions.filter(p => p.policy.name === user?.role.name || (p.policy.name === "$t:public_label" && !user)));
+      console.log(permissions.filter(p => (user && p.policy?.name === user?.role?.name) || (p.policy?.name === "$t:public_label" && !user)));
       
       
       
@@ -115,11 +115,11 @@ function usePermissionsManager(initialPermissions: Permission[]): {
           p.collection === collectionName &&
           
             (
-              (p.policy.name === user?.role.name &&
+              (p.policy?.name === user?.role.name &&
               (
                 !item || evaluatePermissions(p.permissions)
               )) ||
-              (p.policy.name === "$t:public_label" &&
+              (p.policy?.name === "$t:public_label" &&
               (
                 (layer?.public_edit_items || item?.layer?.public_edit_items) &&
                 (!item || evaluatePermissions(p.permissions))

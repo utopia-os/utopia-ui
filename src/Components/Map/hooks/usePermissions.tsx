@@ -74,6 +74,16 @@ function usePermissionsManager(initialPermissions: Permission[]): {
       item?: Item, 
       layer?: LayerProps
     ) => {
+
+      console.log(layer?.name);
+      console.log(user?.role.name);
+      console.log(action);
+      console.log(permissions.filter(p => p.policy.name === user?.role.name || (p.policy.name === "$t:public_label" && !user)));
+      
+      
+      
+
+
       const evaluateCondition = (condition: any) => {
         if (condition.user_created?._eq === "$CURRENT_USER") {
           return item?.user_created?.id === user?.id;
@@ -95,29 +105,27 @@ function usePermissionsManager(initialPermissions: Permission[]): {
             : evaluateCondition(andCondition)
         );
       };
-  
+      if (collectionName === "items" && action === "create" && layer?.public_edit_items) return true;
       // Bedingung für leere Berechtigungen nur, wenn NICHT item und create
-      if (permissions.length === 0 && !(collectionName === "item" && action === "create")) return true;
+      if (permissions.length === 0) return true;
       else if (user && user.role.id === adminRole) return true;
       else {
         return permissions.some(p =>
           p.action === action &&
           p.collection === collectionName &&
-          (
-            // Neue Bedingung für "item" und "create"
-            (collectionName === "item" && action === "create" && layer?.public_edit_items === true) ||
+          
             (
               (p.policy.name === user?.role.name &&
               (
                 !item || evaluatePermissions(p.permissions)
               )) ||
-              (p.policy == null &&
+              (p.policy === "$t:public_label" &&
               (
                 (layer?.public_edit_items || item?.layer?.public_edit_items) &&
                 (!item || evaluatePermissions(p.permissions))
               ))
             )
-          )
+          
         );
       }
     },

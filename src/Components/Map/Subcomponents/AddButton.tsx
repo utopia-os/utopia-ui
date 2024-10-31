@@ -1,23 +1,21 @@
 import * as React from 'react'
 import { useLayers } from '../hooks/useLayers'
-import { useHasUserPermission } from '../hooks/usePermissions';
+import { useHasUserPermission } from '../hooks/usePermissions'
 
+export default function AddButton ({ triggerAction }: { triggerAction: React.Dispatch<React.SetStateAction<any>> }) {
+  const layers = useLayers()
+  const hasUserPermission = useHasUserPermission()
 
-export default function AddButton({ triggerAction }: { triggerAction: React.Dispatch<React.SetStateAction<any>> }) {
+  const canAddItems = () => {
+    let canAdd = false
+    layers.map(layer => {
+      if (layer.api?.createItem && hasUserPermission(layer.api.collectionName!, 'create', undefined, layer) && layer.listed) canAdd = true
+      return null
+    })
+    return canAdd
+  }
 
-    const layers = useLayers();
-    const hasUserPermission = useHasUserPermission();
-
-    const canAddItems = () => {        
-        let canAdd = false;
-        layers.map(layer => {            
-            if (layer.api?.createItem && hasUserPermission(layer.api.collectionName!, "create", undefined, layer) && layer.listed) canAdd = true;
-        })        
-        return canAdd;
-    }
-
-
-    return (
+  return (
         <>{
             canAddItems()
               ? <div className="tw-dropdown tw-dropdown-top tw-dropdown-end tw-dropdown-hover tw-z-500 tw-absolute tw-right-4 tw-bottom-4" >

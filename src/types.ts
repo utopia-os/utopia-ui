@@ -130,7 +130,7 @@ export interface UserApi {
 
 export type UserItem = {
   id?: string;
-  role?: string;
+  role?: any;
   email?: string;
   password?: string;
   profile?: Profile;
@@ -158,7 +158,7 @@ export type PermissionCondition = {
 
 export type Permission = {
   id?: string;
-  role: string;
+  policy: any;
   collection: string;
   action: PermissionAction;
   permissions?: { // Optional, für spezifische Bedingungen wie `user_created`

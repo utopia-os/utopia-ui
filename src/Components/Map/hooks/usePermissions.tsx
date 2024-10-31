@@ -96,29 +96,34 @@ function usePermissionsManager(initialPermissions: Permission[]): {
         );
       };
   
-      if (permissions.length === 0) return true;
-      else if (user && user.role === adminRole) return true;
+      // Bedingung für leere Berechtigungen nur, wenn NICHT item und create
+      if (permissions.length === 0 && !(collectionName === "item" && action === "create")) return true;
+      else if (user && user.role.id === adminRole) return true;
       else {
         return permissions.some(p =>
           p.action === action &&
           p.collection === collectionName &&
           (
-            (p.role === user?.role &&
+            // Neue Bedingung für "item" und "create"
+            (collectionName === "item" && action === "create" && layer?.public_edit_items === true) ||
             (
-              !item || evaluatePermissions(p.permissions)
-            )) ||
-            (p.role == null &&
-            (
-              (layer?.public_edit_items || item?.layer?.public_edit_items) &&
-              (!item || evaluatePermissions(p.permissions))
-            ))
+              (p.policy.name === user?.role.name &&
+              (
+                !item || evaluatePermissions(p.permissions)
+              )) ||
+              (p.policy == null &&
+              (
+                (layer?.public_edit_items || item?.layer?.public_edit_items) &&
+                (!item || evaluatePermissions(p.permissions))
+              ))
+            )
           )
         );
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [permissions, user]
+    [permissions, user, adminRole]
   );
+  
   
 
 

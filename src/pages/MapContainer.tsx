@@ -37,7 +37,17 @@ function MapContainer({ layers, map }: { layers: Array<LayerProps>, map: any }) 
 
   return (
 
-    <UtopiaMap geo={map.geo} zoom={map.zoom || 5} center={map.center ? [map.center?.coordinates[1], map.center?.coordinates[0]] : [50.6, 9.5]} height='100%' width="100%" showFilterControl={map.show_filter_control} showLayerControl={map.show_layer_control} showGratitudeControl={map.show_gratitude_control} >
+    <UtopiaMap
+      geo={map.geo}
+      zoom={map.zoom || 5}
+      center={map.center ? [map.center?.coordinates[1], map.center?.coordinates[0]] : [50.6, 9.5]}
+      height='100%'
+      width="100%"
+      showFilterControl={map.show_filter_control}
+      showLayerControl={map.show_layer_control}
+      showGratitudeControl={map.show_gratitude_control}
+      infoText={map.info_text}
+    >
       {layers && apis &&
         layers.map(layer =>
           <Layer
@@ -85,7 +95,7 @@ function MapContainer({ layers, map }: { layers: Array<LayerProps>, map: any }) 
               {layer.itemType.custom_text && <div className='flex justify-center'>
                 <p>{layer.itemType.custom_text}</p>
               </div>}
-              {layer.item_presets && Object.entries(layer.item_presets).map((ip : any) => <input key={ip[0]} type="hidden" id={ip[0]} name={ip[0]} value={ip[1]} />)}
+              {layer.item_presets && Object.entries(layer.item_presets).map((ip: any) => <input key={ip[0]} type="hidden" id={ip[0]} name={ip[0]} value={ip[1]} />)}
             </ItemForm>
           </Layer>)
       }

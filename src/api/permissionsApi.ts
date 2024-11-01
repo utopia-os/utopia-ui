@@ -12,7 +12,7 @@ export class permissionsApi implements ItemsApi<Permission>{
 
   async getItems() {
     try {
-      return await directusClient.request(readPermissions());
+      return await directusClient.request(readPermissions({fields: ['*', {policy : ['name', 'roles']} as any]}));
     } catch (error: any) {
       console.log(error);
       if (error.errors[0]?.message)

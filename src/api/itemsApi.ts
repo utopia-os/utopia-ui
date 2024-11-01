@@ -30,7 +30,7 @@ export class itemsApi<T> implements ItemsApi<T>{
 
   async getItems() {
     try {
-      return await directusClient.request(readItems(this.collectionName as never, { fields: ['*', 'to.*', "relations.*", "user_created.*", {offers: ['*'], needs: ['*']}] , filter: this.filter, limit: -1 }));
+      return await directusClient.request(readItems(this.collectionName as never, { fields: ['*', 'to.*', "relations.*", "user_created.*", {offers: ['*'], needs: ['*']} as any] , filter: this.filter, limit: -1 }));
     } catch (error: any) {
       console.log(error);
       if (error.errors[0]?.message)

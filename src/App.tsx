@@ -1,4 +1,4 @@
-import { AppShell, SideBar, Content, AuthProvider, Modal, LoginPage, SignupPage, Quests, RequestPasswordPage, SetNewPasswordPage, UserSettings, OverlayItemsIndexPage, ProfileView, ProfileForm, Permissions, Tags, SelectUser, AttestationForm } from 'utopia-ui'
+import { AppShell, SideBar, Content, AuthProvider, Modal, LoginPage, SignupPage, Quests, RequestPasswordPage, SetNewPasswordPage, UserSettings, OverlayItemsIndexPage, ProfileView, ProfileForm, Permissions, Tags, SelectUser, AttestationForm, MarketView } from 'utopia-ui'
 import { getBottomRoutes, routes } from './routes/sidebar'
 import { Route, Routes } from 'react-router-dom'
 import MapContainer from "./pages/MapContainer"
@@ -110,6 +110,7 @@ function App() {
                 <Route path="user-settings" element={<UserSettings />} />
                 <Route path="moon-calendar" element={<MoonCalendar />} />
                 <Route path="landingpage" element={<Landingpage />} />
+                <Route path="market" element={<MarketView />} />
                 <Route path="select-user" element={<SelectUser userType={map.user_type.name} />} />
                 <Route path="attestation-form" element={<AttestationForm api={attestationApi}/>} />
                 {

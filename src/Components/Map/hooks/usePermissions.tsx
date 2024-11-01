@@ -75,15 +75,6 @@ function usePermissionsManager(initialPermissions: Permission[]): {
       layer?: LayerProps
     ) => {
 
-      console.log(layer?.name);
-      console.log(user?.role.name);
-      console.log(action);
-      console.log(permissions.filter(p => user ? (p.policy?.name === user?.role?.name) : (p.policy?.name === "$t:public_label" && !user)));
-      
-      
-      
-
-
       const evaluateCondition = (condition: any) => {
         if (condition.user_created?._eq === "$CURRENT_USER") {
           return item?.user_created?.id === user?.id;

@@ -24,7 +24,7 @@ export function ProfileView ({ userType, attestationApi }: { userType: string, a
   const [offers, setOffers] = useState<Array<Tag>>([])
   const [needs, setNeeds] = useState<Array<Tag>>([])
   const [loading, setLoading] = useState<boolean>(false)
-  const [template , setTemplate] = useState<string>('')
+  const [template, setTemplate] = useState<string>('')
 
   const location = useLocation()
   const items = useItems()
@@ -134,10 +134,9 @@ export function ProfileView ({ userType, attestationApi }: { userType: string, a
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectPosition])
 
-
   useEffect(() => {
-    setTemplate(item?.layer?.itemType.template || userType);
-}, [userType, item])
+    setTemplate(item?.layer?.itemType.template || userType)
+  }, [userType, item])
 
   return (
         <>

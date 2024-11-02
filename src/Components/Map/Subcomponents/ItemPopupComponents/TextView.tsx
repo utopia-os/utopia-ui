@@ -49,6 +49,7 @@ export const TextView = ({
       if (url.match('^http://')) {
         shortUrl = url.split('http://')[1]
       }
+
       return `[${shortUrl}](${url})`
     })
   }

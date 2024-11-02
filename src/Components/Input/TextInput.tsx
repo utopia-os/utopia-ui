@@ -11,7 +11,6 @@ type InputTextProps = {
   defaultValue?: string
   placeholder?: string
   autocomplete?: string
-
   updateFormValue?: (value: string) => void
 }
 

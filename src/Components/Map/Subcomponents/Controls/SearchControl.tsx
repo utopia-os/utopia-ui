@@ -60,7 +60,7 @@ export const SearchControl = () => {
     setItemsResults(items.filter(item => {
       if (item.layer?.itemNameField) item.name = getValue(item, item.layer.itemNameField)
       if (item.layer?.itemTextField) item.text = getValue(item, item.layer.itemTextField)
-      return value.length > 2 && ((item.layer?.listed && item.name?.toLowerCase().includes(value.toLowerCase()) || item.text?.toLowerCase().includes(value.toLowerCase())))
+      return value.length > 2 && (((item.layer?.listed && item.name?.toLowerCase().includes(value.toLowerCase())) || item.text?.toLowerCase().includes(value.toLowerCase())))
     }))
     let phrase = value
     if (value.startsWith('#')) phrase = value.substring(1)
@@ -101,7 +101,7 @@ export const SearchControl = () => {
                     </div>
                     <LocateControl />
                 </div>
-                {hideSuggestions || Array.from(geoResults).length === 0 && itemsResults.length === 0 && tagsResults.length === 0 && !isGeoCoordinate(value) || value.length === 0
+                {hideSuggestions || (Array.from(geoResults).length === 0 && itemsResults.length === 0 && tagsResults.length === 0 && !isGeoCoordinate(value)) || value.length === 0
                   ? ''
                   : <div className='tw-card tw-card-body tw-bg-base-100 tw-p-4 tw-mt-2 tw-shadow-xl tw-overflow-y-auto tw-max-h-[calc(100dvh-152px)] tw-absolute tw-z-3000'>
                         {tagsResults.length > 0 &&

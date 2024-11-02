@@ -83,7 +83,7 @@ export function SideBar ({ routes, bottomRoutes }: { routes: route[], bottomRout
                         }}>
                         {route.icon}<span className="group-[&[data-te-sidenav-slim-collapsed='true']]:data-[te-sidenav-slim='false']:tw-hidden" data-te-sidenav-slim="false">{route.name}</span>
                         {
-                          location.pathname.includes(route.path) && route.path.length > 1 || location.pathname === route.path
+                          (location.pathname.includes(route.path) && route.path.length > 1) || location.pathname === route.path
                             ? (<span className="tw-absolute tw-inset-y-0 tw-left-0 tw-w-1 tw-rounded-tr-md tw-rounded-br-md tw-bg-primary "
                             aria-hidden="true"></span>)
                             : null
@@ -117,7 +117,7 @@ export function SideBar ({ routes, bottomRoutes }: { routes: route[], bottomRout
                             }}>
                             {route.icon}<span className="group-[&[data-te-sidenav-slim-collapsed='true']]:data-[te-sidenav-slim='false']:tw-hidden" data-te-sidenav-slim="false">{route.name}</span>
                             {
-                              location.pathname.includes(route.path) && route.path.length > 1 || location.pathname === route.path
+                              (location.pathname.includes(route.path) && route.path.length > 1) || location.pathname === route.path
                                 ? (<span className="tw-absolute tw-inset-y-0 tw-left-0 tw-w-1 tw-rounded-tr-md tw-rounded-br-md tw-bg-primary "
                                 aria-hidden="true"></span>)
                                 : null

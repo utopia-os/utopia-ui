@@ -20,33 +20,35 @@ export const TextView = ({ item, truncate = false, itemTextField, rawText }: { i
 
   if (item && text && truncate) text = truncateText(removeMarkdownKeepLinksAndParagraphs(text), 100)
 
-  item && text ? replacedText = fixUrls(text) : ''
+  if (item && text) replacedText = fixUrls(text)
 
   // eslint-disable-next-line no-useless-escape
-  replacedText ? replacedText = replacedText.replace(/(?<!\]?\()https?:\/\/[^\s\)]+(?!\))/g, (url) => {
-    let shortUrl = url
-    // eslint-disable-next-line no-useless-escape
-    if (url.match('^https:\/\/')) {
-      shortUrl = url.split('https://')[1]
-    }
-    // eslint-disable-next-line no-useless-escape
-    if (url.match('^http:\/\/')) {
-      shortUrl = url.split('http://')[1]
-    }
-    return `[${shortUrl}](${url})`
-  }) : ''
+  if (replacedText) {
+    replacedText = replacedText.replace(/(?<!\]?\()https?:\/\/[^\s)]+(?!\))/g, (url) => {
+      let shortUrl = url
+      // eslint-disable-next-line no-useless-escape
+      if (url.match('^https:\/\/')) {
+        shortUrl = url.split('https://')[1]
+      }
+      // eslint-disable-next-line no-useless-escape
+      if (url.match('^http:\/\/')) {
+        shortUrl = url.split('http://')[1]
+      }
+      return `[${shortUrl}](${url})`
+    })
+  }
 
-  replacedText
-    ? replacedText = replacedText.replace(mailRegex, (url) => {
+  if (replacedText) {
+    replacedText = replacedText.replace(mailRegex, (url) => {
       return `[${url}](mailto:${url})`
     })
-    : ''
+  }
 
-  replacedText
-    ? replacedText = replacedText.replace(hashTagRegex, (match) => {
+  if (replacedText) {
+    replacedText = replacedText.replace(hashTagRegex, (match) => {
       return `[${match}](${match})`
     })
-    : ''
+  }
 
   // eslint-disable-next-line react/prop-types
   const CustomH1 = ({ children }) => (

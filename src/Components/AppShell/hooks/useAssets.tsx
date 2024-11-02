@@ -12,7 +12,7 @@ const AssetContext = createContext<UseAssetManagerResult>({
 
 function useAssetsManager(): {
   api: AssetsApi
-  // eslint-disable-next-line no-unused-vars
+
   setAssetsApi: (api: AssetsApi) => void
 } {
   const [api, setApi] = useState<AssetsApi>({} as AssetsApi)

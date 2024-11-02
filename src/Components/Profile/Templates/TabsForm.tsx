@@ -8,7 +8,6 @@ import { TagsWidget } from '../Subcomponents/TagsWidget'
 import { useNavigate } from 'react-router-dom'
 import { useUpdateItem } from '../../Map/hooks/useItems'
 
-// eslint-disable-next-line react/prop-types
 export const TabsForm = ({
   item,
   state,

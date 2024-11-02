@@ -43,25 +43,25 @@ function useFilterManager(initialTags: Tag[]): {
   searchPhrase: string
   visibleLayers: LayerProps[]
   visibleGroupTypes: string[]
-  // eslint-disable-next-line no-unused-vars
+
   addFilterTag: (tag: Tag) => void
-  // eslint-disable-next-line no-unused-vars
+
   removeFilterTag: (name: string) => void
   resetFilterTags: () => void
-  // eslint-disable-next-line no-unused-vars
+
   setSearchPhrase: (phrase: string) => void
-  // eslint-disable-next-line no-unused-vars
+
   addVisibleLayer: (layer: LayerProps) => void
-  // eslint-disable-next-line no-unused-vars
+
   toggleVisibleLayer: (layer: LayerProps) => void
   resetVisibleLayers: () => void
-  // eslint-disable-next-line no-unused-vars
+
   isLayerVisible: (layer: LayerProps) => boolean
-  // eslint-disable-next-line no-unused-vars
+
   addVisibleGroupType: (groupType: string) => void
-  // eslint-disable-next-line no-unused-vars
+
   toggleVisibleGroupType: (groupType: string) => void
-  // eslint-disable-next-line no-unused-vars
+
   isGroupTypeVisible: (groupType: string) => boolean
 } {
   const [filterTags, dispatchTags] = useReducer((state: Tag[], action: ActionType) => {

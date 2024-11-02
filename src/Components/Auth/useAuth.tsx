@@ -16,18 +16,18 @@ type AuthCredentials = {
 type AuthContextProps = {
   isAuthenticated: boolean
   user: UserItem | null
-  // eslint-disable-next-line no-unused-vars
+
   login: (credentials: AuthCredentials) => Promise<UserItem | undefined>
-  // eslint-disable-next-line no-unused-vars
+
   register: (credentials: AuthCredentials, userName: string) => Promise<UserItem | undefined>
   loading: boolean
   logout: () => Promise<any>
-  // eslint-disable-next-line no-unused-vars
+
   updateUser: (user: UserItem) => any
   token: string | null
-  // eslint-disable-next-line no-unused-vars
+
   requestPasswordReset: (email: string, reset_url: string) => Promise<any>
-  // eslint-disable-next-line no-unused-vars
+
   passwordReset: (token: string, new_password: string) => Promise<any>
 }
 
@@ -111,7 +111,7 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
 
   const updateUser = async (user: UserItem) => {
     setLoading(true)
-    // eslint-disable-next-line no-unused-vars
+
     const { id, ...userRest } = user
 
     try {

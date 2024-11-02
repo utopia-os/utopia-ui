@@ -10,7 +10,6 @@ import { useItems } from '../../Map/hooks/useItems'
 import { useAssetApi } from '../../AppShell/hooks/useAssets'
 import { timeAgo } from '../../../Utils/TimeAgo'
 
-// eslint-disable-next-line no-unused-vars
 export const TabsView = ({
   attestations,
   userType,

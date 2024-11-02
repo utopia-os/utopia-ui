@@ -23,9 +23,9 @@ const LeafletRefsContext = createContext<UseLeafletRefsManagerResult>({
 
 function useLeafletRefsManager(initialLeafletRefs: {}): {
   leafletRefs: Record<string, LeafletRef>
-  // eslint-disable-next-line no-unused-vars
+
   addMarker: (item: Item, marker: Marker) => void
-  // eslint-disable-next-line no-unused-vars
+
   addPopup: (item: Item, popup: Popup) => void
 } {
   const [leafletRefs, dispatch] = useReducer(

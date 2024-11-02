@@ -11,7 +11,7 @@ type TextAreaProps = {
   inputStyle?: string
   defaultValue: string
   placeholder?: string
-  // eslint-disable-next-line no-unused-vars
+
   updateFormValue?: (value: string) => void
 }
 

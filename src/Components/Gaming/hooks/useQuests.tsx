@@ -10,7 +10,7 @@ const QuestContext = createContext<UseQuestManagerResult>({
 
 function useQuestsManager(initialOpen: boolean): {
   open: boolean
-  // eslint-disable-next-line no-unused-vars
+
   setQuestsOpen: (open: boolean) => void
 } {
   const [open, setOpen] = useState<boolean>(initialOpen)

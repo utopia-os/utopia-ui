@@ -25,17 +25,17 @@ const ItemContext = createContext<UseItemManagerResult>({
 
 function useItemsManager(initialItems: Item[]): {
   items: Item[]
-  // eslint-disable-next-line no-unused-vars
+
   addItem: (item: Item) => void
-  // eslint-disable-next-line no-unused-vars
+
   updateItem: (item: Item) => void
-  // eslint-disable-next-line no-unused-vars
+
   removeItem: (item: Item) => void
-  // eslint-disable-next-line no-unused-vars
+
   resetItems: (layer: LayerProps) => void
-  // eslint-disable-next-line no-unused-vars
+
   setItemsApi: (layer: LayerProps) => void
-  // eslint-disable-next-line no-unused-vars
+
   setItemsData: (layer: LayerProps) => void
   allItemsLoaded: boolean
 } {

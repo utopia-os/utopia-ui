@@ -1,3 +1,12 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/prefer-optional-chain */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/require-await */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import * as React from 'react'
 import { MapOverlayPage } from './MapOverlayPage'
 import { useItems } from '../Map/hooks/useItems'
@@ -11,7 +20,7 @@ import { toast } from 'react-toastify'
 export const AttestationForm = ({ api }: { api?: ItemsApi<any> }) => {
   const items = useItems()
   const assetsApi = useAssetApi()
-  const [users, setUsers] = useState<Array<Item>>()
+  const [users, setUsers] = useState<Item[]>()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -36,7 +45,7 @@ export const AttestationForm = ({ api }: { api?: ItemsApi<any> }) => {
   }
 
   const sendAttestation = async () => {
-    const to: Array<any> = []
+    const to: any[] = []
     users?.map((u) => to.push({ directus_users_id: u.user_created.id }))
 
     api?.createItem &&

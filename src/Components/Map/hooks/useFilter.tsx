@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable no-case-declarations */
 import { useCallback, useReducer, createContext, useContext } from 'react'
 import * as React from 'react'
@@ -121,7 +125,7 @@ function useFilterManager(initialTags: Tag[]): {
     const urlTags = params.get('tags')
     const decodedTags = urlTags ? decodeURIComponent(urlTags) : ''
 
-    if (!decodedTags?.includes(tag.name)) {
+    if (!decodedTags.includes(tag.name)) {
       params.set('tags', `${urlTags || ''}${urlTags ? ';' : ''}${tag.name}`)
     }
     if (windowDimensions.width < 786 && location.pathname.split('/').length > 2)
@@ -141,7 +145,7 @@ function useFilterManager(initialTags: Tag[]): {
     const urlTags = params.get('tags')
     let newUrlTags = ''
     const tags = urlTags?.split(';')
-    if (tags?.length === 0 && urlTags?.length && urlTags?.length > 0) tags[0] = urlTags
+    if (tags?.length === 0 && urlTags?.length && urlTags.length > 0) tags[0] = urlTags
     tags?.map((urlTag) => {
       if (!(urlTag.toLocaleLowerCase() === name.toLocaleLowerCase())) {
         newUrlTags = newUrlTags + `${newUrlTags === '' ? urlTag : `;${urlTag}`}`

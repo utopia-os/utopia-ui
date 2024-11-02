@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import * as React from 'react'
 import { useLayers } from '../hooks/useLayers'
 import { useHasUserPermission } from '../hooks/usePermissions'

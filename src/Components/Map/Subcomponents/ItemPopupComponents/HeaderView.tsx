@@ -1,3 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/require-await */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import * as React from 'react'
 import { Item, ItemsApi } from '../../../../types'
 import { useHasUserPermission } from '../../hooks/usePermissions'
@@ -50,16 +61,16 @@ export function HeaderView({
         `${big ? '?width=160&heigth=160' : '?width=80&heigth=80'}`
       : item.layer?.itemAvatarField &&
         item &&
-        getValue(item, item.layer?.itemAvatarField) &&
+        getValue(item, item.layer.itemAvatarField) &&
         assetsApi.url +
-          getValue(item, item.layer?.itemAvatarField) +
+          getValue(item, item.layer.itemAvatarField) +
           `${big ? '?width=160&heigth=160' : '?width=80&heigth=80'}`
   const title = itemNameField
     ? getValue(item, itemNameField)
-    : item.layer?.itemNameField && item && getValue(item, item.layer?.itemNameField)
+    : item.layer?.itemNameField && item && getValue(item, item.layer.itemNameField)
   const subtitle = itemSubnameField
     ? getValue(item, itemSubnameField)
-    : item.layer?.itemSubnameField && item && getValue(item, item.layer?.itemSubnameField)
+    : item.layer?.itemSubnameField && item && getValue(item, item.layer.itemSubnameField)
 
   const [address] = React.useState<string>('')
 

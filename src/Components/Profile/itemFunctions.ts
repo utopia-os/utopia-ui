@@ -1,3 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/prefer-optional-chain */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import * as React from 'react'
 import { Item } from '../../types'
 import { encodeTag } from '../../Utils/FormatTags'
@@ -140,7 +151,7 @@ export const onUpdateItem = async (
 ) => {
   let changedItem = {} as Item
 
-  const offerUpdates: Array<any> = []
+  const offerUpdates: any[] = []
   // check for new offers
   await state.offers?.map((o) => {
     const existingOffer = item?.offers?.find((t) => t.tags_id === o.id)
@@ -150,7 +161,7 @@ export const onUpdateItem = async (
     return null
   })
 
-  const needsUpdates: Array<any> = []
+  const needsUpdates: any[] = []
 
   await state.needs?.map((n) => {
     const existingNeed = item?.needs?.find((t) => t.tags_id === n.id)
@@ -181,8 +192,8 @@ export const onUpdateItem = async (
     ...(state.needs.length > 0 && { needs: needsUpdates }),
   }
 
-  const offersState: Array<any> = []
-  const needsState: Array<any> = []
+  const offersState: any[] = []
+  const needsState: any[] = []
 
   state.offers.map((o) => {
     offersState.push({ items_id: item?.id, tags_id: o.id })

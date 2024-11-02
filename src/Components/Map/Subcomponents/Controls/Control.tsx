@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import * as L from 'leaflet'
 import * as React from 'react'
 

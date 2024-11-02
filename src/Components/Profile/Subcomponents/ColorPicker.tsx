@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useCallback, useEffect, useRef, useState } from 'react'
 import * as React from 'react'
 import { HexColorPicker } from 'react-colorful'

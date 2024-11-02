@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from 'react'
 import * as React from 'react'
 
@@ -9,7 +10,6 @@ interface ComboBoxProps {
 }
 
 const ComboBoxInput = ({ id, options, value, onValueChange }: ComboBoxProps) => {
-  // eslint-disable-next-line no-unused-vars
   const [selectedValue, setSelectedValue] = useState(value)
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

@@ -1,3 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import * as React from 'react'
 import { useEffect, useState } from 'react'
 import { useTags } from '../../Map/hooks/useTags'
@@ -11,10 +17,10 @@ export const TagsWidget = ({ placeholder, containerStyle, defaultTags, onUpdate 
   const [input, setInput] = useState('')
   const [isKeyReleased, setIsKeyReleased] = useState(false)
   const tags = useTags()
-  const [pushFilteredSuggestions, setPushFilteredSuggestions] = useState<Array<any>>([])
+  const [pushFilteredSuggestions, setPushFilteredSuggestions] = useState<any[]>([])
 
   const [focusInput, setFocusInput] = useState<boolean>(false)
-  const [currentTags, setCurrentTags] = useState<Array<Tag>>(defaultTags)
+  const [currentTags, setCurrentTags] = useState<Tag[]>(defaultTags)
 
   useEffect(() => {
     setCurrentTags(defaultTags)

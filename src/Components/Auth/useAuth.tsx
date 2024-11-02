@@ -1,19 +1,26 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createContext, useState, useContext, useEffect } from 'react'
 import * as React from 'react'
 import { UserApi, UserItem } from '../../types'
 
-type AuthProviderProps = {
+interface AuthProviderProps {
   userApi: UserApi
   children?: React.ReactNode
 }
 
-type AuthCredentials = {
+interface AuthCredentials {
   email: string
   password: string
   otp?: string | undefined
 }
 
-type AuthContextProps = {
+interface AuthContextProps {
   isAuthenticated: boolean
   user: UserItem | null
   login: (credentials: AuthCredentials) => Promise<UserItem | undefined>
@@ -58,9 +65,9 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
       setToken(token)
       if (token) {
         const me = await userApi.getUser()
-        setUser(me as UserItem)
+        setUser(me)
         setLoading(false)
-        return me as UserItem
+        return me
       } else return undefined
     } catch (error) {
       setLoading(false)

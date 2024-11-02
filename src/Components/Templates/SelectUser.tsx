@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 import { useState } from 'react'
 import { MapOverlayPage } from './MapOverlayPage'
 import { useItems } from '../Map/hooks/useItems'
@@ -9,7 +10,7 @@ export const SelectUser = ({ userType }: { userType: string }) => {
   const users = items.filter((i) => i.layer?.itemType.name === userType)
   const assetsApi = useAssetApi()
 
-  const [selectedUsers, setSelectedUsers] = useState<Array<string>>([])
+  const [selectedUsers, setSelectedUsers] = useState<string[]>([])
 
   return (
     <MapOverlayPage backdrop className='tw-h-3/4 tw-w-80'>

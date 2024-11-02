@@ -1,3 +1,10 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable no-constant-condition */
 import { useItems, useUpdateItem, useAddItem } from '../Map/hooks/useItems'
 import { useEffect, useState } from 'react'
@@ -80,25 +87,25 @@ export function ProfileForm({ userType }: { userType: string }) {
 
   useEffect(() => {
     const newColor =
-      item.layer?.itemColorField && getValue(item, item.layer?.itemColorField)
-        ? getValue(item, item.layer?.itemColorField)
+      item.layer?.itemColorField && getValue(item, item.layer.itemColorField)
+        ? getValue(item, item.layer.itemColorField)
         : getItemTags(item) && getItemTags(item)[0]?.color
           ? getItemTags(item)[0].color
-          : item?.layer?.markerDefaultColor
+          : item.layer?.markerDefaultColor
 
-    const offers = (item?.offers ?? []).reduce((acc: Tag[], o) => {
+    const offers = (item.offers ?? []).reduce((acc: Tag[], o) => {
       const offer = tags.find((t) => t.id === o.tags_id)
       if (offer) acc.push(offer)
       return acc
     }, [])
 
-    const needs = (item?.needs ?? []).reduce((acc: Tag[], o) => {
+    const needs = (item.needs ?? []).reduce((acc: Tag[], o) => {
       const need = tags.find((t) => t.id === o.tags_id)
       if (need) acc.push(need)
       return acc
     }, [])
 
-    const relations = (item?.relations ?? []).reduce((acc: Item[], r) => {
+    const relations = (item.relations ?? []).reduce((acc: Item[], r) => {
       const relatedItem = items.find((i) => i.id === r.related_items_id)
       if (relatedItem) acc.push(relatedItem)
       return acc
@@ -106,22 +113,22 @@ export function ProfileForm({ userType }: { userType: string }) {
 
     setState({
       color: newColor,
-      id: item?.id ?? '',
-      groupType: item?.group_type ?? 'wuerdekompass',
-      status: item?.status ?? 'active',
-      name: item?.name ?? '',
-      subname: item?.subname ?? '',
-      text: item?.text ?? '',
-      contact: item?.contact ?? '',
-      telephone: item?.telephone ?? '',
-      nextAppointment: item?.next_appointment ?? '',
-      image: item?.image ?? '',
-      markerIcon: item?.marker_icon ?? '',
+      id: item.id ?? '',
+      groupType: item.group_type ?? 'wuerdekompass',
+      status: item.status ?? 'active',
+      name: item.name ?? '',
+      subname: item.subname ?? '',
+      text: item.text ?? '',
+      contact: item.contact ?? '',
+      telephone: item.telephone ?? '',
+      nextAppointment: item.next_appointment ?? '',
+      image: item.image ?? '',
+      markerIcon: item.marker_icon ?? '',
       offers,
       needs,
       relations,
-      start: item?.start ?? '',
-      end: item?.end ?? '',
+      start: item.start ?? '',
+      end: item.end ?? '',
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item, tags, items])
@@ -180,7 +187,7 @@ export function ProfileForm({ userType }: { userType: string }) {
               style={
                 true
                   ? {
-                      backgroundColor: `${item.layer?.itemColorField && getValue(item, item.layer?.itemColorField) ? getValue(item, item.layer?.itemColorField) : getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor}`,
+                      backgroundColor: `${item.layer?.itemColorField && getValue(item, item.layer.itemColorField) ? getValue(item, item.layer.itemColorField) : getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item.layer?.markerDefaultColor}`,
                       color: '#fff',
                     }
                   : { color: '#fff' }

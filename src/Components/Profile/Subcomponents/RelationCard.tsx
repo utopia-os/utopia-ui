@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 // eslint-disable-next-line react/prop-types
 const RelationCard = ({ title, description, imageSrc }) => (
   <div className={`tw-mb-6 ${imageSrc ? 'md:tw-flex md:tw-space-x-4' : ''}`}>

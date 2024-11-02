@@ -1,8 +1,12 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { useCallback, useReducer, createContext, useContext } from 'react'
 import * as React from 'react'
 import { LayerProps } from '../../../types'
 
-type ActionType = { type: 'ADD LAYER'; layer: LayerProps }
+interface ActionType {
+  type: 'ADD LAYER'
+  layer: LayerProps
+}
 
 type UseItemManagerResult = ReturnType<typeof useLayerManager>
 

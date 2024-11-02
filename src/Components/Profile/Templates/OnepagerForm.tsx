@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import * as React from 'react'
 import { useEffect } from 'react'
 import { Item, Tag } from '../../../types'
@@ -34,7 +37,7 @@ export const OnepagerForm = ({
       case 'wuerdekompass':
         setState((prevState) => ({
           ...prevState,
-          color: item?.layer?.menuColor || '#1A5FB4',
+          color: item.layer?.menuColor || '#1A5FB4',
           markerIcon: 'group',
           image: '59e6a346-d1ee-4767-9e42-fc720fb535c9',
         }))

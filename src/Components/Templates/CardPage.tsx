@@ -11,7 +11,7 @@ export function CardPage({
   title: string
   hideTitle?: boolean
   children?: React.ReactNode
-  parents?: Array<{ name: string; path: string }>
+  parents?: { name: string; path: string }[]
 }) {
   return (
     <main className='tw-flex-1 tw-overflow-y-auto tw-overflow-x-hidden tw-pt-2 tw-px-6 tw-min-w-80 tw-flex tw-justify-center'>

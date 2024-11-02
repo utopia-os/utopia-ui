@@ -1,3 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DateUserInfo } from './DateUserInfo'
 import { StartEndView, TextView } from '../Map'
 import { HeaderView } from '../Map/Subcomponents/ItemPopupComponents/HeaderView'
@@ -45,7 +51,7 @@ export const ItemCard = ({
       <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
         {i.layer?.itemType.show_start_end && <StartEndView item={i}></StartEndView>}
         {i.layer?.itemType.show_text && (
-          <TextView truncate item={i} itemTextField={i.layer?.itemTextField} />
+          <TextView truncate item={i} itemTextField={i.layer.itemTextField} />
         )}
       </div>
       <DateUserInfo item={i}></DateUserInfo>

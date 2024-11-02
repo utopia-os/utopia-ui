@@ -1,3 +1,11 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { TileLayer, MapContainer, useMapEvents, GeoJSON } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import * as React from 'react'
@@ -99,7 +107,6 @@ export function UtopiaMapInner({
       )
   }
 
-  // eslint-disable-next-line no-undef
   const onEachFeature = (feature: Feature<GeoJSONGeometry, any>, layer: L.Layer) => {
     if (feature.properties) {
       layer.bindPopup(feature.properties.name)
@@ -157,7 +164,7 @@ export function UtopiaMapInner({
             eventHandlers={{
               click: (e) => {
                 if (selectNewItemPosition) {
-                  e.layer!.closePopup()
+                  e.layer.closePopup()
                   setMapClicked({ position: e.latlng, setItemFormPopup })
                 }
               },

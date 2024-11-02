@@ -10,7 +10,6 @@ const QuestContext = createContext<UseQuestManagerResult>({
 
 function useQuestsManager(initialOpen: boolean): {
   open: boolean
-
   setQuestsOpen: (open: boolean) => void
 } {
   const [open, setOpen] = useState<boolean>(initialOpen)

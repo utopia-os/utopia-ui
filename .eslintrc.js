@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-undef
 module.exports = {
   env: {
     browser: true,
@@ -7,7 +6,7 @@ module.exports = {
   extends: [
     'standard',
     'eslint:recommended',
-    // 'plugin:@eslint-community/eslint-comments/recommended',
+    'plugin:@eslint-community/eslint-comments/recommended',
     // 'plugin:@typescript-eslint/recommended',
     // 'plugin:import/recommended',
     // 'plugin:import/typescript',
@@ -56,9 +55,9 @@ module.exports = {
     //         ignores: ['+Page'],
     //       },
     //     ],
-    //     // Optional eslint-comments rule
-    //     '@eslint-community/eslint-comments/no-unused-disable': 'error',
-    //     '@eslint-community/eslint-comments/disable-enable-pair': ['error', { allowWholeFile: true }],
+    // Optional eslint-comments rule
+    '@eslint-community/eslint-comments/no-unused-disable': 'error',
+    '@eslint-community/eslint-comments/disable-enable-pair': ['error', { allowWholeFile: true }],
     //     // import
     //     'import/export': 'error',
     //     'import/no-deprecated': 'error',

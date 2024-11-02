@@ -12,7 +12,6 @@ function SidebarSubmenu({
   icon,
 }: {
   path: string
-
   icon: JSX.Element
   name: string
   submenu?: any | undefined

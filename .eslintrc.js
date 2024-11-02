@@ -158,15 +158,15 @@ module.exports = {
       //     '@typescript-eslint/no-floating-promises': ['error', { ignoreVoid: true }],
       //     'no-void': ['error', { allowAsStatement: true }],
       //   },
-      // },
-      // {
-      //   files: ['!*.json'],
-      //   plugins: ['prettier'],
-      //   extends: ['plugin:prettier/recommended'],
-      //   rules: {
-      //     'prettier/prettier': 'error',
-      //   },
-    },
+      },
+      {
+         files: ['!*.json'],
+         plugins: ['prettier'],
+         extends: ['plugin:prettier/recommended'],
+         rules: {
+           'prettier/prettier': 'error',
+         }
+      },
     {
       files: ['*.json'],
       plugins: ['json'],

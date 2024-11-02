@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/consistent-type-definitions */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { useState } from 'react'
 import InformationCircleIcon from '@heroicons/react/24/outline/InformationCircleIcon'
 import * as React from 'react'

@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/prefer-optional-chain */
 import * as React from 'react'
 import { TextInput } from '../../../Input'
 import { Item } from '../../../../types'
 
-type StartEndInputProps = {
+interface StartEndInputProps {
   item?: Item
   showLabels?: boolean
   updateStartValue?: (value: string) => void

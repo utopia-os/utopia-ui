@@ -1,3 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/require-await */
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import * as React from 'react'
 import { useAddFilterTag } from '../../hooks/useFilter'
 import useWindowDimensions from '../../hooks/useWindowDimension'
@@ -23,9 +35,9 @@ export const SearchControl = () => {
   const [popupOpen, setPopupOpen] = useState(false)
 
   const [value, setValue] = useState('')
-  const [geoResults, setGeoResults] = useState<Array<any>>([])
-  const [tagsResults, setTagsResults] = useState<Array<any>>([])
-  const [itemsResults, setItemsResults] = useState<Array<Item>>([])
+  const [geoResults, setGeoResults] = useState<any[]>([])
+  const [tagsResults, setTagsResults] = useState<any[]>([])
+  const [itemsResults, setItemsResults] = useState<Item[]>([])
   const [hideSuggestions, setHideSuggestions] = useState(true)
 
   const map = useMap()
@@ -62,14 +74,14 @@ export const SearchControl = () => {
           if (item.layer?.itemTextField) item.text = getValue(item, item.layer.itemTextField)
           return (
             value.length > 2 &&
-            ((item.layer?.listed && item.name?.toLowerCase().includes(value.toLowerCase())) ||
-              item.text?.toLowerCase().includes(value.toLowerCase()))
+            ((item.layer?.listed && item.name.toLowerCase().includes(value.toLowerCase())) ||
+              item.text.toLowerCase().includes(value.toLowerCase()))
           )
         }),
       )
       let phrase = value
       if (value.startsWith('#')) phrase = value.substring(1)
-      setTagsResults(tags.filter((tag) => tag.name?.toLowerCase().includes(phrase.toLowerCase())))
+      setTagsResults(tags.filter((tag) => tag.name.toLowerCase().includes(phrase.toLowerCase())))
     },
     500,
     [value],

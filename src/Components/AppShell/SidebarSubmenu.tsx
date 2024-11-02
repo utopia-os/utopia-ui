@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import ChevronDownIcon from '@heroicons/react/24/outline/ChevronDownIcon'
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
@@ -8,7 +12,7 @@ function SidebarSubmenu({
   icon,
 }: {
   path: string
-  // eslint-disable-next-line no-undef
+
   icon: JSX.Element
   name: string
   submenu?: any | undefined

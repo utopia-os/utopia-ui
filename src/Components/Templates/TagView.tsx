@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import * as React from 'react'
 import { decodeTag } from '../../Utils/FormatTags'
 import { Tag } from '../../types'

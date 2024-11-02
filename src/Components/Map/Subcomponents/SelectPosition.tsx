@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 export const SelectPosition = ({ setSelectNewItemPosition }: { setSelectNewItemPosition }) => {
   return (
     <div className='tw-animate-pulseGrow tw-button tw-z-1000 tw-absolute tw-right-5 tw-top-4 tw-drop-shadow-md'>

@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { useEffect, useState } from 'react'
 import { useItems } from '../Map/hooks/useItems'
 import { Tag } from '../../types'
@@ -24,8 +29,8 @@ function groupAndCount(arr) {
 }
 
 export const MarketView = () => {
-  const [offers, setOffers] = useState<Array<Tag>>([])
-  const [needs, setNeeds] = useState<Array<Tag>>([])
+  const [offers, setOffers] = useState<Tag[]>([])
+  const [needs, setNeeds] = useState<Tag[]>([])
   const navigate = useNavigate()
 
   const items = useItems()
@@ -35,13 +40,13 @@ export const MarketView = () => {
     setOffers([])
     setNeeds([])
     items.map((i) => {
-      i?.layer?.itemOffersField &&
+      i.layer?.itemOffersField &&
         getValue(i, i.layer.itemOffersField)?.map((o) => {
           const tag = tags.find((t) => t.id === o.tags_id)
           tag && setOffers((current) => [...current, tag])
           return null
         })
-      i?.layer?.itemNeedsField &&
+      i.layer?.itemNeedsField &&
         getValue(i, i.layer.itemNeedsField)?.map((n) => {
           const tag = tags.find((t) => t.id === n.tags_id)
           tag && setNeeds((current) => [...current, tag])

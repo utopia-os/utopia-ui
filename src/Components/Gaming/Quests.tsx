@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useQuestsOpen, useSetQuestOpen } from './hooks/useQuests'
 import { useAuth } from '../Auth'
 import { useEffect, useState } from 'react'

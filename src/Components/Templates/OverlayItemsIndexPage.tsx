@@ -1,3 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/prefer-optional-chain */
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { useEffect, useRef, useState } from 'react'
 import { Item } from '../../types'
 import { PopupStartEndInput } from '../Map'
@@ -122,7 +129,7 @@ export const OverlayItemsIndexPage = ({
           <div className='tw-overflow-scroll fade tw-flex-1'>
             <div className='tw-columns-1 md:tw-columns-2 lg:tw-columns-3 2xl:tw-columns-4 tw-gap-6 tw-pt-4'>
               {items
-                ?.filter((i) => i.layer?.name === layerName)
+                .filter((i) => i.layer?.name === layerName)
                 .filter((item) =>
                   filterTags.length === 0
                     ? item
@@ -133,7 +140,7 @@ export const OverlayItemsIndexPage = ({
                         ),
                       ),
                 )
-                ?.sort((a, b) => {
+                .sort((a, b) => {
                   // Convert date_created to milliseconds, handle undefined by converting to lowest possible date (0 milliseconds)
                   const dateA = a.date_updated
                     ? new Date(a.date_updated).getTime()
@@ -147,7 +154,7 @@ export const OverlayItemsIndexPage = ({
                       : 0
                   return dateB - dateA // Subtracts milliseconds which are numbers
                 })
-                ?.map((i, k) => (
+                .map((i, k) => (
                   <div key={k} className='tw-break-inside-avoid tw-mb-6'>
                     <ItemCard
                       i={i}

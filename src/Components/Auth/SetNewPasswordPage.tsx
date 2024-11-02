@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 

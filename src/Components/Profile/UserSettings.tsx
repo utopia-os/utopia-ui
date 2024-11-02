@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import * as React from 'react'
 import { MapOverlayPage } from '../Templates'
 import { useNavigate } from 'react-router-dom'

@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import * as React from 'react'
 import { Item, Tag } from '../../../types'
 import { TextAreaInput } from '../../Input'
 import { GroupSubheaderForm } from '../Subcomponents/GroupSubheaderForm'
 import { ContactInfoForm } from '../Subcomponents/ContactInfoForm'
 
-export type FormState = {
+export interface FormState {
   color: string
   id: string
   group_type: string

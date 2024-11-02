@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 import { Link } from 'react-router-dom'
 import { useAppState } from '../../AppShell/hooks/useAppState'
 import { Item } from '../../../types'

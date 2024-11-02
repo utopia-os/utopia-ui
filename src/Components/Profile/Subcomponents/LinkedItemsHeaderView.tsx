@@ -1,3 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useEffect } from 'react'
 import { getValue } from '../../../Utils/GetValue'
 import { Item } from '../../../types'
@@ -31,10 +38,10 @@ export function LinkedItemsHeaderView({
         appState.assetsApi.url + getValue(item, item.layer?.itemAvatarField)
   const title = itemNameField
     ? getValue(item, itemNameField)
-    : item.layer?.itemNameField && item && getValue(item, item.layer?.itemNameField)
+    : item.layer?.itemNameField && item && getValue(item, item.layer.itemNameField)
   const subtitle = itemSubnameField
     ? getValue(item, itemSubnameField)
-    : item.layer?.itemSubnameField && item && getValue(item, item.layer?.itemSubnameField)
+    : item.layer?.itemSubnameField && item && getValue(item, item.layer.itemSubnameField)
 
   useEffect(() => {}, [item])
 

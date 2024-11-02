@@ -39,8 +39,8 @@ export {
 export { TextInput, TextAreaInput, SelectBox } from './Components/Input'
 
 declare global {
-  // eslint-disable-next-line no-unused-vars
   interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     my_modal_3: any
   }
 }

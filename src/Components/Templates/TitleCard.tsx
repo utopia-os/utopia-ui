@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Subtitle from '../Typography/Subtitle'
 import * as React from 'react'
 

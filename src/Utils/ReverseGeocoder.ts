@@ -27,9 +27,9 @@ export async function reverseGeocode(lat: number, lon: number): Promise<string> 
     const address = response.data.address
 
     // Extrahiere Straße, Hausnummer und Ort
-    const street = address.road || ''
-    const houseNumber = address.house_number || ''
-    const city = address.city || address.town || address.village || ''
+    const street = address.road ?? ''
+    const houseNumber = address.house_number ?? ''
+    const city = address.city ?? address.town ?? address.village ?? ''
 
     // Formatiere die Adresse
     const formattedAddress = `${street} ${houseNumber}, ${city}`.trim()

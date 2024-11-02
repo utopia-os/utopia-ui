@@ -23,9 +23,7 @@ const LeafletRefsContext = createContext<UseLeafletRefsManagerResult>({
 
 function useLeafletRefsManager(initialLeafletRefs: {}): {
   leafletRefs: Record<string, LeafletRef>
-
   addMarker: (item: Item, marker: Marker) => void
-
   addPopup: (item: Item, popup: Popup) => void
 } {
   const [leafletRefs, dispatch] = useReducer(

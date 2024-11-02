@@ -13,7 +13,6 @@ const LayerContext = createContext<UseItemManagerResult>({
 
 function useLayerManager(initialLayers: LayerProps[]): {
   layers: LayerProps[]
-
   addLayer: (layer: LayerProps) => void
 } {
   const [layers, dispatch] = useReducer((state: LayerProps[], action: ActionType) => {

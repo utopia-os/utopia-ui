@@ -32,7 +32,6 @@ const FilterContext = createContext<UseFilterManagerResult>({
   toggleVisibleLayer: () => {},
   resetVisibleLayers: () => {},
   isLayerVisible: () => true,
-
   addVisibleGroupType: () => {},
   toggleVisibleGroupType: () => {},
   isGroupTypeVisible: () => true,
@@ -45,23 +44,15 @@ function useFilterManager(initialTags: Tag[]): {
   visibleGroupTypes: string[]
 
   addFilterTag: (tag: Tag) => void
-
   removeFilterTag: (name: string) => void
   resetFilterTags: () => void
-
   setSearchPhrase: (phrase: string) => void
-
   addVisibleLayer: (layer: LayerProps) => void
-
   toggleVisibleLayer: (layer: LayerProps) => void
   resetVisibleLayers: () => void
-
   isLayerVisible: (layer: LayerProps) => boolean
-
   addVisibleGroupType: (groupType: string) => void
-
   toggleVisibleGroupType: (groupType: string) => void
-
   isGroupTypeVisible: (groupType: string) => boolean
 } {
   const [filterTags, dispatchTags] = useReducer((state: Tag[], action: ActionType) => {

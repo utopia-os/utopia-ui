@@ -17,13 +17,9 @@ const PermissionContext = createContext<UsePermissionManagerResult>({
 
 function usePermissionsManager(initialPermissions: Permission[]): {
   permissions: Permission[]
-
   setPermissionApi: (api: ItemsApi<any>) => void
-
   setPermissionData: (data: Permission[]) => void
-
   setAdminRole: (adminRole: string) => void
-
   hasUserPermission: (
     collectionName: string,
     action: PermissionAction,

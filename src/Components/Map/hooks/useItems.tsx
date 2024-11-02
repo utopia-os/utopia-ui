@@ -25,17 +25,11 @@ const ItemContext = createContext<UseItemManagerResult>({
 
 function useItemsManager(initialItems: Item[]): {
   items: Item[]
-
   addItem: (item: Item) => void
-
   updateItem: (item: Item) => void
-
   removeItem: (item: Item) => void
-
   resetItems: (layer: LayerProps) => void
-
   setItemsApi: (layer: LayerProps) => void
-
   setItemsData: (layer: LayerProps) => void
   allItemsLoaded: boolean
 } {

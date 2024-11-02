@@ -12,7 +12,6 @@ const AssetContext = createContext<UseAssetManagerResult>({
 
 function useAssetsManager(): {
   api: AssetsApi
-
   setAssetsApi: (api: AssetsApi) => void
 } {
   const [api, setApi] = useState<AssetsApi>({} as AssetsApi)

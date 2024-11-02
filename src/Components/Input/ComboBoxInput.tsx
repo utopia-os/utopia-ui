@@ -5,7 +5,6 @@ interface ComboBoxProps {
   id?: string
   options: { value: string; label: string }[]
   value: string
-
   onValueChange: (newValue: string) => void
 }
 

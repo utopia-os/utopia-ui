@@ -16,18 +16,13 @@ type AuthCredentials = {
 type AuthContextProps = {
   isAuthenticated: boolean
   user: UserItem | null
-
   login: (credentials: AuthCredentials) => Promise<UserItem | undefined>
-
   register: (credentials: AuthCredentials, userName: string) => Promise<UserItem | undefined>
   loading: boolean
   logout: () => Promise<any>
-
   updateUser: (user: UserItem) => any
   token: string | null
-
   requestPasswordReset: (email: string, reset_url: string) => Promise<any>
-
   passwordReset: (token: string, new_password: string) => Promise<any>
 }
 
@@ -111,7 +106,6 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
 
   const updateUser = async (user: UserItem) => {
     setLoading(true)
-
     const { id, ...userRest } = user
 
     try {

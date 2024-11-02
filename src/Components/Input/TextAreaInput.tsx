@@ -11,7 +11,6 @@ type TextAreaProps = {
   inputStyle?: string
   defaultValue: string
   placeholder?: string
-
   updateFormValue?: (value: string) => void
 }
 

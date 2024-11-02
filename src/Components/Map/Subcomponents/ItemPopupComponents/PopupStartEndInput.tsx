@@ -5,9 +5,7 @@ import { Item } from '../../../../types'
 type StartEndInputProps = {
   item?: Item
   showLabels?: boolean
-
   updateStartValue?: (value: string) => void
-
   updateEndValue?: (value: string) => void
 }
 

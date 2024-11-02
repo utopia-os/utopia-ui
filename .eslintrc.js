@@ -7,7 +7,7 @@ module.exports = {
     'standard',
     'eslint:recommended',
     'plugin:@eslint-community/eslint-comments/recommended',
-    // 'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended',
     // 'plugin:import/recommended',
     // 'plugin:import/typescript',
     // 'plugin:promise/recommended',
@@ -20,7 +20,7 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: [
-    // '@typescript-eslint',
+    '@typescript-eslint',
     // 'import',
     // 'promise',
     // 'security',
@@ -139,24 +139,24 @@ module.exports = {
     {
       files: ['*.ts', '*.tsx'],
       parser: '@typescript-eslint/parser',
-      //   parserOptions: {
-      //     tsconfigRootDir: __dirname,
-      //     project: ['./tsconfig.json', '**/tsconfig.json'],
-      //     ecmaVersion: 'latest',
-      //     parser: '@typescript-eslint/parser',
-      //     sourceType: 'module',
-      //   },
-      //   plugins: ['@typescript-eslint'],
-      //   extends: [
-      //     'plugin:@typescript-eslint/recommended',
-      //     'plugin:@typescript-eslint/recommended-requiring-type-checking',
-      //     'plugin:@typescript-eslint/strict',
-      //   ],
-      //   rules: {
-      //     // allow explicitly defined dangling promises
-      //     '@typescript-eslint/no-floating-promises': ['error', { ignoreVoid: true }],
-      //     'no-void': ['error', { allowAsStatement: true }],
-      //   },
+      parserOptions: {
+        tsconfigRootDir: __dirname,
+        project: ['./tsconfig.json', '**/tsconfig.json'],
+        ecmaVersion: 'latest',
+        parser: '@typescript-eslint/parser',
+        sourceType: 'module',
+      },
+      plugins: ['@typescript-eslint'],
+      extends: [
+        'plugin:@typescript-eslint/recommended',
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
+        'plugin:@typescript-eslint/strict',
+      ],
+      rules: {
+        // allow explicitly defined dangling promises
+        '@typescript-eslint/no-floating-promises': ['error', { ignoreVoid: true }],
+        'no-void': ['error', { allowAsStatement: true }],
+      },
     },
     {
       files: ['!*.json'],

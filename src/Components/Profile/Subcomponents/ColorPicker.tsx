@@ -21,10 +21,10 @@ export const ColorPicker = ({ color, onChange, className }) => {
       const enablePropagation = (event) => {
         // Verhindere, dass Leaflet die Propagation stoppt
         event.stopPropagation = () => {}
-      };
+      }
 
       // Event-Listener für den Color-Picker
-      ['click', 'dblclick', 'mousedown', 'touchstart'].forEach(eventType => {
+      ;['click', 'dblclick', 'mousedown', 'touchstart'].forEach((eventType) => {
         colorPickerElement.addEventListener(eventType, enablePropagation, true)
       })
     }
@@ -32,15 +32,11 @@ export const ColorPicker = ({ color, onChange, className }) => {
 
   return (
     <div ref={colorPickerRef} className={`picker ${className}`}>
-      <div
-        className="swatch"
-        style={{ backgroundColor: color }}
-        onClick={() => toggle(true)}
-      />
+      <div className='swatch' style={{ backgroundColor: color }} onClick={() => toggle(true)} />
 
       {isOpen && (
-        <div className="popover tw-z-[10000]" ref={popover}>
-          <HexColorPicker color={color} onChange={onChange} onClick={() => toggle(false)}/>
+        <div className='popover tw-z-[10000]' ref={popover}>
+          <HexColorPicker color={color} onChange={onChange} onClick={() => toggle(false)} />
         </div>
       )}
     </div>

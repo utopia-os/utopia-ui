@@ -4,23 +4,18 @@ import { MouseEvent, useEffect, useRef } from 'react'
 const isClickInsideRectangle = (e: MouseEvent, element: HTMLElement) => {
   const r = element.getBoundingClientRect()
 
-  return (
-    e.clientX > r.left &&
-    e.clientX < r.right &&
-    e.clientY > r.top &&
-    e.clientY < r.bottom
-  )
+  return e.clientX > r.left && e.clientX < r.right && e.clientY > r.top && e.clientY < r.bottom
 }
 
 type Props = {
-  title: string;
-  isOpened: boolean;
-  onClose: () => void;
-  children: React.ReactNode;
-  showCloseButton?: boolean;
-  closeOnClickOutside?:boolean;
-  className?: string;
-};
+  title: string
+  isOpened: boolean
+  onClose: () => void
+  children: React.ReactNode
+  showCloseButton?: boolean
+  closeOnClickOutside?: boolean
+  className?: string
+}
 
 const DialogModal = ({
   title,
@@ -29,7 +24,7 @@ const DialogModal = ({
   children,
   showCloseButton = true,
   closeOnClickOutside = true,
-  className
+  className,
 }: Props) => {
   const ref = useRef<HTMLDialogElement>(null)
 
@@ -47,26 +42,31 @@ const DialogModal = ({
 
   if (isOpened) {
     return (
-    <dialog className={`${className || ''} tw-card tw-shadow-xl tw-absolute tw-right-0 tw-top-0 tw-bottom-0 tw-left-0 tw-m-auto tw-transition-opacity tw-duration-300 tw-p-4 tw-max-w-xl tw-bg-base-100`}
+      <dialog
+        className={`${className || ''} tw-card tw-shadow-xl tw-absolute tw-right-0 tw-top-0 tw-bottom-0 tw-left-0 tw-m-auto tw-transition-opacity tw-duration-300 tw-p-4 tw-max-w-xl tw-bg-base-100`}
+        ref={ref}
+        // eslint-disable-next-line react/no-unknown-property
+        onCancel={onClose}
+        onClick={(e) =>
+          ref.current && !isClickInsideRectangle(e, ref.current) && closeOnClickOutside && onClose()
+        }
+      >
+        <div className='tw-card-body tw-p-2'>
+          <h2 className='tw-text-2xl tw-font-semibold tw-mb-2 tw-text-center'>{title}</h2>
 
-      ref={ref}
-      // eslint-disable-next-line react/no-unknown-property
-      onCancel={onClose}
-      onClick={(e) =>
-        ref.current && !isClickInsideRectangle(e, ref.current) && closeOnClickOutside && onClose()
-      }
-    >
-     <div className="tw-card-body tw-p-2">
-
-     <h2 className='tw-text-2xl tw-font-semibold tw-mb-2 tw-text-center'>{title}</h2>
-
-      {children}
-     {showCloseButton && <button className="tw-btn tw-btn-sm tw-btn-circle tw-btn-ghost tw-absolute tw-right-2 tw-top-2" onClick={onClose}>✕</button>}
-
-      </div>
-    </dialog>
+          {children}
+          {showCloseButton && (
+            <button
+              className='tw-btn tw-btn-sm tw-btn-circle tw-btn-ghost tw-absolute tw-right-2 tw-top-2'
+              onClick={onClose}
+            >
+              ✕
+            </button>
+          )}
+        </div>
+      </dialog>
     )
-  } else return (<></>)
+  } else return <></>
 }
 
 export default DialogModal

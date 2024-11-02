@@ -15,7 +15,7 @@ import { SimpleForm } from './Templates/SimpleForm'
 import { TabsForm } from './Templates/TabsForm'
 import { FormHeader } from './Subcomponents/FormHeader'
 
-export function ProfileForm ({ userType }: { userType: string }) {
+export function ProfileForm({ userType }: { userType: string }) {
   const [state, setState] = useState({
     color: '',
     id: '',
@@ -33,7 +33,7 @@ export function ProfileForm ({ userType }: { userType: string }) {
     needs: [] as Tag[],
     relations: [] as Item[],
     start: '',
-    end: ''
+    end: '',
   })
 
   const [updatePermission, setUpdatePermission] = useState<boolean>(false)
@@ -61,37 +61,45 @@ export function ProfileForm ({ userType }: { userType: string }) {
   useEffect(() => {
     const itemId = location.pathname.split('/')[2]
 
-    const item = items.find(i => i.id === itemId)
+    const item = items.find((i) => i.id === itemId)
     item && setItem(item)
 
-    const layer = layers.find(l => l.itemType.name === userType)
+    const layer = layers.find((l) => l.itemType.name === userType)
 
-    !item && setItem({ id: crypto.randomUUID(), name: user ? user.first_name : '', text: '', layer, new: true })
+    !item &&
+      setItem({
+        id: crypto.randomUUID(),
+        name: user ? user.first_name : '',
+        text: '',
+        layer,
+        new: true,
+      })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items])
 
   useEffect(() => {
-    const newColor = item.layer?.itemColorField && getValue(item, item.layer?.itemColorField)
-      ? getValue(item, item.layer?.itemColorField)
-      : (getItemTags(item) && getItemTags(item)[0]?.color)
+    const newColor =
+      item.layer?.itemColorField && getValue(item, item.layer?.itemColorField)
+        ? getValue(item, item.layer?.itemColorField)
+        : getItemTags(item) && getItemTags(item)[0]?.color
           ? getItemTags(item)[0].color
           : item?.layer?.markerDefaultColor
 
     const offers = (item?.offers ?? []).reduce((acc: Tag[], o) => {
-      const offer = tags.find(t => t.id === o.tags_id)
+      const offer = tags.find((t) => t.id === o.tags_id)
       if (offer) acc.push(offer)
       return acc
     }, [])
 
     const needs = (item?.needs ?? []).reduce((acc: Tag[], o) => {
-      const need = tags.find(t => t.id === o.tags_id)
+      const need = tags.find((t) => t.id === o.tags_id)
       if (need) acc.push(need)
       return acc
     }, [])
 
     const relations = (item?.relations ?? []).reduce((acc: Item[], r) => {
-      const relatedItem = items.find(i => i.id === r.related_items_id)
+      const relatedItem = items.find((i) => i.id === r.related_items_id)
       if (relatedItem) acc.push(relatedItem)
       return acc
     }, [])
@@ -113,7 +121,7 @@ export function ProfileForm ({ userType }: { userType: string }) {
       needs,
       relations,
       start: item?.start ?? '',
-      end: item?.end ?? ''
+      end: item?.end ?? '',
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item, tags, items])
@@ -125,32 +133,64 @@ export function ProfileForm ({ userType }: { userType: string }) {
   }, [userType, item])
 
   return (
-        <>
-            <MapOverlayPage backdrop className='tw-mx-4 tw-mt-4 tw-mb-4 tw-overflow-x-hidden tw-w-[calc(100%-32px)]  md:tw-w-[calc(50%-32px)] tw-max-w-3xl !tw-left-auto tw-top-0 tw-bottom-0'>
+    <>
+      <MapOverlayPage
+        backdrop
+        className='tw-mx-4 tw-mt-4 tw-mb-4 tw-overflow-x-hidden tw-w-[calc(100%-32px)]  md:tw-w-[calc(50%-32px)] tw-max-w-3xl !tw-left-auto tw-top-0 tw-bottom-0'
+      >
+        <div className='tw-flex tw-flex-col tw-h-full'>
+          <FormHeader item={item} state={state} setState={setState} />
 
-                <div className='tw-flex tw-flex-col tw-h-full'>
+          {template === 'onepager' && (
+            <OnepagerForm item={item} state={state} setState={setState}></OnepagerForm>
+          )}
 
-                    <FormHeader item={item} state={state} setState={setState} />
+          {template === 'simple' && <SimpleForm state={state} setState={setState}></SimpleForm>}
 
-                    {template === 'onepager' && (
-                        <OnepagerForm item={item} state={state} setState={setState}></OnepagerForm>
-                    )}
+          {template === 'tabs' && (
+            <TabsForm
+              loading={loading}
+              item={item}
+              state={state}
+              setState={setState}
+              updatePermission={updatePermission}
+              linkItem={(id) => linkItem(id, item, updateItem)}
+              unlinkItem={(id) => unlinkItem(id, item, updateItem)}
+              setUrlParams={setUrlParams}
+            ></TabsForm>
+          )}
 
-                    {template === 'simple' &&
-                        <SimpleForm state={state} setState={setState}></SimpleForm>
+          <div className='tw-mt-4 tw-mb-4'>
+            <button
+              className={loading ? ' tw-loading tw-btn tw-float-right' : 'tw-btn tw-float-right'}
+              onClick={() =>
+                onUpdateItem(
+                  state,
+                  item,
+                  tags,
+                  addTag,
+                  setLoading,
+                  navigate,
+                  updateItem,
+                  addItem,
+                  user,
+                  urlParams,
+                )
+              }
+              style={
+                true
+                  ? {
+                      backgroundColor: `${item.layer?.itemColorField && getValue(item, item.layer?.itemColorField) ? getValue(item, item.layer?.itemColorField) : getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor}`,
+                      color: '#fff',
                     }
-
-                    {template === 'tabs' &&
-                        <TabsForm loading={loading} item={item} state={state} setState={setState} updatePermission={updatePermission} linkItem={(id) => linkItem(id, item, updateItem)} unlinkItem={(id) => unlinkItem(id, item, updateItem)} setUrlParams={setUrlParams}></TabsForm>
-                    }
-
-                    <div className="tw-mt-4 tw-mb-4">
-                        <button className={loading ? ' tw-loading tw-btn tw-float-right' : 'tw-btn tw-float-right'} onClick={() => onUpdateItem(state, item, tags, addTag, setLoading, navigate, updateItem, addItem, user, urlParams)} style={true ? { backgroundColor: `${item.layer?.itemColorField && getValue(item, item.layer?.itemColorField) ? getValue(item, item.layer?.itemColorField) : (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor)}`, color: '#fff' } : { color: '#fff' }}>Update</button>
-                    </div>
-
-                </div>
-
-            </MapOverlayPage>
-        </>
+                  : { color: '#fff' }
+              }
+            >
+              Update
+            </button>
+          </div>
+        </div>
+      </MapOverlayPage>
+    </>
   )
 }

@@ -2,7 +2,7 @@
 module.exports = {
   env: {
     browser: true,
-    es2021: true
+    es2021: true,
   },
   extends: [
     'standard',
@@ -13,12 +13,12 @@ module.exports = {
     // 'plugin:import/typescript',
     // 'plugin:promise/recommended',
     // 'plugin:security/recommended-legacy',
-    'plugin:react/recommended'
+    'plugin:react/recommended',
   ],
   parserOptions: {
     ecmaVersion: 'latest',
     parser: '@typescript-eslint/parser',
-    sourceType: 'module'
+    sourceType: 'module',
   },
   plugins: [
     // '@typescript-eslint',
@@ -27,7 +27,7 @@ module.exports = {
     // 'security',
     // 'no-catch-all',
     'react',
-    'react-hooks'
+    'react-hooks',
   ],
   settings: {
     // 'import/resolver': {
@@ -35,13 +35,13 @@ module.exports = {
     //  node: true,
     // },
     react: {
-      version: 'detect'
-    }
+      version: 'detect',
+    },
   },
   rules: {
     'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
     'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
-    'react/react-in-jsx-scope': 'off' // Disable requirement for React import
+    'react/react-in-jsx-scope': 'off', // Disable requirement for React import
     //     'no-catch-all/no-catch-all': 'error',
     //     'no-console': 'error',
     //     'no-debugger': 'error',
@@ -139,7 +139,7 @@ module.exports = {
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
-      parser: '@typescript-eslint/parser'
+      parser: '@typescript-eslint/parser',
       //   parserOptions: {
       //     tsconfigRootDir: __dirname,
       //     project: ['./tsconfig.json', '**/tsconfig.json'],
@@ -158,19 +158,19 @@ module.exports = {
       //     '@typescript-eslint/no-floating-promises': ['error', { ignoreVoid: true }],
       //     'no-void': ['error', { allowAsStatement: true }],
       //   },
+    },
+    {
+      files: ['!*.json'],
+      plugins: ['prettier'],
+      extends: ['plugin:prettier/recommended'],
+      rules: {
+        'prettier/prettier': 'error',
       },
-      {
-         files: ['!*.json'],
-         plugins: ['prettier'],
-         extends: ['plugin:prettier/recommended'],
-         rules: {
-           'prettier/prettier': 'error',
-         }
-      },
+    },
     {
       files: ['*.json'],
       plugins: ['json'],
-      extends: ['plugin:json/recommended-with-comments']
+      extends: ['plugin:json/recommended-with-comments'],
     },
     // {
     //   files: ['*.{test,spec}.[tj]s'],
@@ -206,7 +206,7 @@ module.exports = {
       files: ['*.yaml', '*.yml'],
       parser: 'yaml-eslint-parser',
       plugins: ['yml'],
-      extends: ['plugin:yml/prettier']
-    }
-  ]
+      extends: ['plugin:yml/prettier'],
+    },
+  ],
 }

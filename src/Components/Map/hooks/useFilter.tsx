@@ -16,66 +16,60 @@ type ActionType =
   | { type: 'TOGGLE_GROUP_TYPE'; groupType: string }
   | { type: 'ADD_GROUP_TYPE'; groupType: string }
   | { type: 'RESET_GROUP_TYPE' }
-  ;
 
-type UseFilterManagerResult = ReturnType<typeof useFilterManager>;
+type UseFilterManagerResult = ReturnType<typeof useFilterManager>
 
 const FilterContext = createContext<UseFilterManagerResult>({
   filterTags: [],
   searchPhrase: '',
   visibleLayers: [],
   visibleGroupTypes: [],
-  addFilterTag: () => { },
-  removeFilterTag: () => { },
-  resetFilterTags: () => { },
-  setSearchPhrase: () => { },
-  addVisibleLayer: () => { },
-  toggleVisibleLayer: () => { },
-  resetVisibleLayers: () => { },
+  addFilterTag: () => {},
+  removeFilterTag: () => {},
+  resetFilterTags: () => {},
+  setSearchPhrase: () => {},
+  addVisibleLayer: () => {},
+  toggleVisibleLayer: () => {},
+  resetVisibleLayers: () => {},
   isLayerVisible: () => true,
 
-  addVisibleGroupType: () => { },
-  toggleVisibleGroupType: () => { },
-  isGroupTypeVisible: () => true
+  addVisibleGroupType: () => {},
+  toggleVisibleGroupType: () => {},
+  isGroupTypeVisible: () => true,
 })
 
-function useFilterManager (initialTags: Tag[]): {
-  filterTags: Tag[];
-  searchPhrase: string;
-  visibleLayers: LayerProps[];
-  visibleGroupTypes: string[];
+function useFilterManager(initialTags: Tag[]): {
+  filterTags: Tag[]
+  searchPhrase: string
+  visibleLayers: LayerProps[]
+  visibleGroupTypes: string[]
   // eslint-disable-next-line no-unused-vars
-  addFilterTag: (tag: Tag) => void;
+  addFilterTag: (tag: Tag) => void
   // eslint-disable-next-line no-unused-vars
-  removeFilterTag: (name: string) => void;
-  resetFilterTags: () => void;
+  removeFilterTag: (name: string) => void
+  resetFilterTags: () => void
   // eslint-disable-next-line no-unused-vars
-  setSearchPhrase: (phrase: string) => void;
+  setSearchPhrase: (phrase: string) => void
   // eslint-disable-next-line no-unused-vars
-  addVisibleLayer: (layer: LayerProps) => void;
+  addVisibleLayer: (layer: LayerProps) => void
   // eslint-disable-next-line no-unused-vars
-  toggleVisibleLayer: (layer: LayerProps) => void;
-  resetVisibleLayers: () => void;
+  toggleVisibleLayer: (layer: LayerProps) => void
+  resetVisibleLayers: () => void
   // eslint-disable-next-line no-unused-vars
-  isLayerVisible: (layer: LayerProps) => boolean;
+  isLayerVisible: (layer: LayerProps) => boolean
   // eslint-disable-next-line no-unused-vars
-  addVisibleGroupType: (groupType: string) => void;
+  addVisibleGroupType: (groupType: string) => void
   // eslint-disable-next-line no-unused-vars
-  toggleVisibleGroupType: (groupType: string) => void;
+  toggleVisibleGroupType: (groupType: string) => void
   // eslint-disable-next-line no-unused-vars
-  isGroupTypeVisible: (groupType: string) => boolean;
+  isGroupTypeVisible: (groupType: string) => boolean
 } {
   const [filterTags, dispatchTags] = useReducer((state: Tag[], action: ActionType) => {
     switch (action.type) {
       case 'ADD_TAG':
-        const exist = state.find((tag) =>
-          tag.id === action.tag.id
-        )
+        const exist = state.find((tag) => tag.id === action.tag.id)
         if (!exist) {
-          return [
-            ...state,
-            action.tag
-          ]
+          return [...state, action.tag]
         } else return state
       case 'REMOVE_TAG':
         return state.filter(({ name }) => name !== action.name)
@@ -93,18 +87,12 @@ function useFilterManager (initialTags: Tag[]): {
   const [visibleLayers, dispatchLayers] = useReducer((state: LayerProps[], action: ActionType) => {
     switch (action.type) {
       case 'ADD_LAYER':
-        const exist1 = state.find((layer) =>
-          layer.name === action.layer.name
-        )
+        const exist1 = state.find((layer) => layer.name === action.layer.name)
         if (!exist1) {
-          return [
-            ...state,
-            action.layer
-          ]
+          return [...state, action.layer]
         } else return state
       case 'TOGGLE_LAYER':
-        const exist2 = state.some((layer) =>
-          layer.name === action.layer.name)
+        const exist2 = state.some((layer) => layer.name === action.layer.name)
         if (exist2) return state.filter(({ name }) => name !== action.layer.name)
         else return [...state, action.layer]
       case 'RESET_LAYERS':
@@ -114,29 +102,26 @@ function useFilterManager (initialTags: Tag[]): {
     }
   }, initialLayers)
 
-  const [visibleGroupTypes, dispatchGroupTypes] = useReducer((state: string[], action: ActionType) => {
-    switch (action.type) {
-      case 'ADD_GROUP_TYPE':
-        const exist1 = state.find((groupType) =>
-          groupType === action.groupType
-        )
-        if (!exist1) {
-          return [
-            ...state,
-            action.groupType
-          ]
-        } else return state
-      case 'TOGGLE_GROUP_TYPE':
-        const exist2 = state.some((groupType) =>
-          groupType === action.groupType)
-        if (exist2) return state.filter((groupType) => groupType !== action.groupType)
-        else return [...state, action.groupType]
-      case 'RESET_GROUP_TYPE':
-        return []
-      default:
-        throw new Error()
-    }
-  }, [])
+  const [visibleGroupTypes, dispatchGroupTypes] = useReducer(
+    (state: string[], action: ActionType) => {
+      switch (action.type) {
+        case 'ADD_GROUP_TYPE':
+          const exist1 = state.find((groupType) => groupType === action.groupType)
+          if (!exist1) {
+            return [...state, action.groupType]
+          } else return state
+        case 'TOGGLE_GROUP_TYPE':
+          const exist2 = state.some((groupType) => groupType === action.groupType)
+          if (exist2) return state.filter((groupType) => groupType !== action.groupType)
+          else return [...state, action.groupType]
+        case 'RESET_GROUP_TYPE':
+          return []
+        default:
+          throw new Error()
+      }
+    },
+    [],
+  )
 
   const [searchPhrase, searchPhraseSet] = React.useState<string>('')
 
@@ -145,16 +130,19 @@ function useFilterManager (initialTags: Tag[]): {
     const urlTags = params.get('tags')
     const decodedTags = urlTags ? decodeURIComponent(urlTags) : ''
 
-    if (!decodedTags?.includes(tag.name)) { params.set('tags', `${urlTags || ''}${urlTags ? ';' : ''}${tag.name}`) }
-    if (windowDimensions.width < 786 && location.pathname.split('/').length > 2) navigate('/' + `${params ? `?${params}` : ''}`)
+    if (!decodedTags?.includes(tag.name)) {
+      params.set('tags', `${urlTags || ''}${urlTags ? ';' : ''}${tag.name}`)
+    }
+    if (windowDimensions.width < 786 && location.pathname.split('/').length > 2)
+      navigate('/' + `${params ? `?${params}` : ''}`)
     else navigate(location.pathname + `${params ? `?${params}` : ''}`)
 
     dispatchTags({
       type: 'ADD_TAG',
-      tag
+      tag,
     })
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const removeFilterTag = useCallback((name: string) => {
@@ -163,8 +151,10 @@ function useFilterManager (initialTags: Tag[]): {
     let newUrlTags = ''
     const tags = urlTags?.split(';')
     if (tags?.length === 0 && urlTags?.length && urlTags?.length > 0) tags[0] = urlTags
-    tags?.map(urlTag => {
-      if (!(urlTag.toLocaleLowerCase() === name.toLocaleLowerCase())) { newUrlTags = newUrlTags + `${newUrlTags === '' ? urlTag : `;${urlTag}`}` }
+    tags?.map((urlTag) => {
+      if (!(urlTag.toLocaleLowerCase() === name.toLocaleLowerCase())) {
+        newUrlTags = newUrlTags + `${newUrlTags === '' ? urlTag : `;${urlTag}`}`
+      }
       return null
     })
     if (newUrlTags !== '') {
@@ -177,72 +167,93 @@ function useFilterManager (initialTags: Tag[]): {
 
     dispatchTags({
       type: 'REMOVE_TAG',
-      name
+      name,
     })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const resetFilterTags = useCallback(() => {
     dispatchTags({
-      type: 'RESET_TAGS'
+      type: 'RESET_TAGS',
     })
   }, [])
 
   const addVisibleLayer = (layer: LayerProps) => {
     dispatchLayers({
       type: 'ADD_LAYER',
-      layer
+      layer,
     })
   }
 
   const toggleVisibleLayer = (layer: LayerProps) => {
     dispatchLayers({
       type: 'TOGGLE_LAYER',
-      layer
+      layer,
     })
   }
 
   const resetVisibleLayers = useCallback(() => {
     dispatchLayers({
-      type: 'RESET_LAYERS'
+      type: 'RESET_LAYERS',
     })
   }, [])
 
-  const isLayerVisible = useCallback((layer: LayerProps) => {
-    return visibleLayers.some(l => l.name === layer.name)
-  }, [visibleLayers])
+  const isLayerVisible = useCallback(
+    (layer: LayerProps) => {
+      return visibleLayers.some((l) => l.name === layer.name)
+    },
+    [visibleLayers],
+  )
 
   const addVisibleGroupType = (groupType: string) => {
     dispatchGroupTypes({
       type: 'ADD_GROUP_TYPE',
-      groupType
+      groupType,
     })
   }
 
   const toggleVisibleGroupType = (groupType: string) => {
     dispatchGroupTypes({
       type: 'TOGGLE_GROUP_TYPE',
-      groupType
+      groupType,
     })
   }
 
-  const isGroupTypeVisible = useCallback((groupType: string) => {
-    return visibleGroupTypes.some(gt => gt === groupType)
-  }, [visibleGroupTypes])
+  const isGroupTypeVisible = useCallback(
+    (groupType: string) => {
+      return visibleGroupTypes.some((gt) => gt === groupType)
+    },
+    [visibleGroupTypes],
+  )
 
   const setSearchPhrase = useCallback((phrase: string) => {
     searchPhraseSet(phrase)
   }, [])
 
-  return { filterTags, addFilterTag, removeFilterTag, resetFilterTags, setSearchPhrase, searchPhrase, visibleLayers, toggleVisibleLayer, resetVisibleLayers, isLayerVisible, addVisibleLayer, visibleGroupTypes, addVisibleGroupType, toggleVisibleGroupType, isGroupTypeVisible }
+  return {
+    filterTags,
+    addFilterTag,
+    removeFilterTag,
+    resetFilterTags,
+    setSearchPhrase,
+    searchPhrase,
+    visibleLayers,
+    toggleVisibleLayer,
+    resetVisibleLayers,
+    isLayerVisible,
+    addVisibleLayer,
+    visibleGroupTypes,
+    addVisibleGroupType,
+    toggleVisibleGroupType,
+    isGroupTypeVisible,
+  }
 }
 
 export const FilterProvider: React.FunctionComponent<{
-  initialTags: Tag[], children?: React.ReactNode
+  initialTags: Tag[]
+  children?: React.ReactNode
 }> = ({ initialTags, children }) => (
-  <FilterContext.Provider value={useFilterManager(initialTags)}>
-    {children}
-  </FilterContext.Provider>
+  <FilterContext.Provider value={useFilterManager(initialTags)}>{children}</FilterContext.Provider>
 )
 
 export const useFilterTags = (): Tag[] => {

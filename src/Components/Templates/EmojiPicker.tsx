@@ -1,20 +1,70 @@
 import { useState } from 'react'
 
 // eslint-disable-next-line react/prop-types
-export const EmojiPicker = ({ selectedEmoji, selectedColor, selectedShape, setSelectedEmoji, setSelectedColor, setSelectedShape }) => {
+export const EmojiPicker = ({
+  selectedEmoji,
+  selectedColor,
+  selectedShape,
+  setSelectedEmoji,
+  setSelectedColor,
+  setSelectedShape,
+}) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const emojis = [
-    '❤️', '🙏', '👍', '🌻', '✨', '☀️',
-    '🔥', '🪵', '💧', '🎶', '🎨', '🍄',
-    '📝', '✉️', '🧩', '💡', '🎓', '💬',
-    '🛠', '💻', '🕹', '🖨', '🚐', '🛒',
-    '⚽️', '🧵', '👀', '🌱',
-    '🏕', '💪', '🎁', '🏹',
-    '🥕', '🥇', '🥈', '🥉']
+    '❤️',
+    '🙏',
+    '👍',
+    '🌻',
+    '✨',
+    '☀️',
+    '🔥',
+    '🪵',
+    '💧',
+    '🎶',
+    '🎨',
+    '🍄',
+    '📝',
+    '✉️',
+    '🧩',
+    '💡',
+    '🎓',
+    '💬',
+    '🛠',
+    '💻',
+    '🕹',
+    '🖨',
+    '🚐',
+    '🛒',
+    '⚽️',
+    '🧵',
+    '👀',
+    '🌱',
+    '🏕',
+    '💪',
+    '🎁',
+    '🏹',
+    '🥕',
+    '🥇',
+    '🥈',
+    '🥉',
+  ]
   const shapes = ['squircle', 'circle', 'hexagon-2']
 
-  const colors = ['#FF99C8', '#fff0d6', '#FCF6BD', '#D0F4DE', '#A9DEF9', '#E4C1F9', '#de324c', '#f4895f', '#f8e16f', '#95cf92', '#369acc', '#9656a2']
+  const colors = [
+    '#FF99C8',
+    '#fff0d6',
+    '#FCF6BD',
+    '#D0F4DE',
+    '#A9DEF9',
+    '#E4C1F9',
+    '#de324c',
+    '#f4895f',
+    '#f8e16f',
+    '#95cf92',
+    '#369acc',
+    '#9656a2',
+  ]
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen)
@@ -45,7 +95,7 @@ export const EmojiPicker = ({ selectedEmoji, selectedColor, selectedShape, setSe
       </div>
 
       {isOpen && (
-        <div className="tw-absolute tw-z-3000 tw-top-0 tw-left-1/2 tw-transform tw--translate-x-1/2 tw-mt-12 tw-bg-base-100 tw-rounded-2xl tw-shadow-lg tw-p-2 tw-w-full">
+        <div className='tw-absolute tw-z-3000 tw-top-0 tw-left-1/2 tw-transform tw--translate-x-1/2 tw-mt-12 tw-bg-base-100 tw-rounded-2xl tw-shadow-lg tw-p-2 tw-w-full'>
           <div className='tw-grid tw-grid-cols-6 tw-gap-2 tw-pb-2'>
             {emojis.map((emoji) => (
               <button
@@ -59,28 +109,29 @@ export const EmojiPicker = ({ selectedEmoji, selectedColor, selectedShape, setSe
           </div>
           <hr />
           <div className='tw-grid tw-grid-cols-3 tw-gap-2 tw-py-2'>
-            {shapes.map(shape => (
+            {shapes.map((shape) => (
               <div
                 key={shape}
                 className={`tw-cursor-pointer hover:tw-bg-base-200 tw-rounded-md tw-p-2 ${shape === selectedShape && 'tw-bg-base-300'}`}
-                onClick={() => selectShape(shape)}>
+                onClick={() => selectShape(shape)}
+              >
                 <div className={`tw-h-12 tw-mask tw-mask-${shape} tw-bg-neutral-content`}></div>
               </div>
             ))}
           </div>
           <hr />
           <div className='tw-grid tw-grid-cols-6 tw-gap-2 tw-py-2 tw-px-6'>
-            {colors.map(color => (
+            {colors.map((color) => (
               <div
                 key={color}
                 className={`tw-cursor-pointer hover:tw-bg-base-200 tw-rounded-md tw-p-2 tw-flex tw-justify-center tw-items-center  ${color === selectedColor && 'tw-bg-base-300'}`}
-                onClick={() => selectColor(color)}>
+                onClick={() => selectColor(color)}
+              >
                 <div className={`tw-h-8 tw-w-8 tw-rounded-full tw-bg-[${color}]`}></div>
               </div>
             ))}
           </div>
         </div>
-
       )}
     </>
   )

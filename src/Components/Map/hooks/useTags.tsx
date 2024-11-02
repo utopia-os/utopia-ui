@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useCallback, useReducer, createContext, useContext, useState } from 'react'
 import * as React from 'react'
 import { Item, ItemsApi, Tag } from '../../../types'

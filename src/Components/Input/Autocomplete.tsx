@@ -2,7 +2,6 @@ import * as React from 'react'
 import { useEffect } from 'react'
 import { TagView } from '../Templates/TagView'
 
-// eslint-disable-next-line no-unused-vars
 export const Autocomplete = ({
   inputProps,
   suggestions,

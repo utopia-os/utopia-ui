@@ -11,7 +11,6 @@ type InputTextProps = {
   defaultValue?: string
   placeholder?: string
   autocomplete?: string
-  // eslint-disable-next-line no-unused-vars
   updateFormValue?: (value: string) => void
 }
 

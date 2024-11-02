@@ -17,13 +17,9 @@ const PermissionContext = createContext<UsePermissionManagerResult>({
 
 function usePermissionsManager(initialPermissions: Permission[]): {
   permissions: Permission[]
-  // eslint-disable-next-line no-unused-vars
   setPermissionApi: (api: ItemsApi<any>) => void
-  // eslint-disable-next-line no-unused-vars
   setPermissionData: (data: Permission[]) => void
-  // eslint-disable-next-line no-unused-vars
   setAdminRole: (adminRole: string) => void
-  // eslint-disable-next-line no-unused-vars
   hasUserPermission: (
     collectionName: string,
     action: PermissionAction,

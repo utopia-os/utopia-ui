@@ -38,18 +38,18 @@ export const TextView = ({
 
   if (item && text) replacedText = fixUrls(text)
 
-  // eslint-disable-next-line no-useless-escape
   if (replacedText) {
     replacedText = replacedText.replace(/(?<!\]?\()https?:\/\/[^\s)]+(?!\))/g, (url) => {
       let shortUrl = url
-      // eslint-disable-next-line no-useless-escape
+
       if (url.match('^https://')) {
         shortUrl = url.split('https://')[1]
       }
-      // eslint-disable-next-line no-useless-escape
+
       if (url.match('^http://')) {
         shortUrl = url.split('http://')[1]
       }
+
       return `[${shortUrl}](${url})`
     })
   }

@@ -5,7 +5,6 @@ interface ComboBoxProps {
   id?: string
   options: { value: string; label: string }[]
   value: string
-  // eslint-disable-next-line no-unused-vars
   onValueChange: (newValue: string) => void
 }
 

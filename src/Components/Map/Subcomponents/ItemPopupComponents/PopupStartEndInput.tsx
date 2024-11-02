@@ -5,9 +5,7 @@ import { Item } from '../../../../types'
 type StartEndInputProps = {
   item?: Item
   showLabels?: boolean
-  // eslint-disable-next-line no-unused-vars
   updateStartValue?: (value: string) => void
-  // eslint-disable-next-line no-unused-vars
   updateEndValue?: (value: string) => void
 }
 

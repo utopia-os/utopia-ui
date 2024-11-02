@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import * as React from "react"
+import { useEffect, useState } from 'react'
+import * as React from 'react'
 
 type InputTextProps = {
     labelTitle?: string;
@@ -12,42 +12,43 @@ type InputTextProps = {
     placeholder?: string;
     autocomplete?: string
     // eslint-disable-next-line no-unused-vars
-    updateFormValue?: (value: string ) => void;
+    updateFormValue?: (value: string) => void;
 }
 
+export function TextInput ({ labelTitle, labelStyle, type, dataField, containerStyle, inputStyle, defaultValue, placeholder, autocomplete, updateFormValue }: InputTextProps) {
+  const [inputValue, setInputValue] = useState<string>(defaultValue || '')
 
-export function TextInput({ labelTitle, labelStyle, type, dataField, containerStyle, inputStyle, defaultValue, placeholder, autocomplete, updateFormValue }: InputTextProps) {
-    const [inputValue, setInputValue] = useState<string>(defaultValue || "");
+  useEffect(() => {
+    setInputValue(defaultValue || '')
+  }, [defaultValue])
 
-    useEffect(() => {
-        setInputValue(defaultValue || "");
-    }, [defaultValue]);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value
+    setInputValue(newValue)
+    if (updateFormValue) {
+      updateFormValue(newValue)
+    }
+  }
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = e.target.value;
-        setInputValue(newValue);
-        if (updateFormValue) {
-            updateFormValue(newValue);
-        }
-    };
-
-    return (
+  return (
         <div className={`tw-form-control ${containerStyle}`}>
-            {labelTitle ? (
+            {labelTitle
+              ? (
                 <label className="tw-label">
                     <span className={`tw-label-text tw-text-base-content ${labelStyle}`}>{labelTitle}</span>
                 </label>
-            ) : null}
+                )
+              : null}
             <input
                 required
-                type={type || "text"}
+                type={type || 'text'}
                 name={dataField}
                 value={inputValue}
-                placeholder={placeholder || ""}
+                placeholder={placeholder || ''}
                 autoComplete={autocomplete}
                 onChange={handleChange}
-                className={`tw-input tw-input-bordered tw-w-full ${inputStyle || ""}`}
+                className={`tw-input tw-input-bordered tw-w-full ${inputStyle || ''}`}
             />
         </div>
-    );
+  )
 }

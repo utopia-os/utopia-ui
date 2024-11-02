@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
-import { useTimeout } from './useTimeout';
+import { useEffect } from 'react'
+import { useTimeout } from './useTimeout'
 
 export const useDebounce = (callback, delay, deps) => {
-  const { reset, clear } = useTimeout(callback, delay);
+  const { reset, clear } = useTimeout(callback, delay)
 
-  useEffect(reset, [...deps, reset]);
+  useEffect(reset, [...deps, reset])
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(clear, []);
+  useEffect(clear, [])
 }

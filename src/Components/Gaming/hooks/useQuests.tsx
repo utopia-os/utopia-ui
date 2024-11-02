@@ -1,28 +1,25 @@
-import { useCallback, useState } from 'react';
-import { createContext, useContext } from "react";
-import * as React from "react";
-
-
+import { useCallback, useState, createContext, useContext } from 'react'
+import * as React from 'react'
 
 type UseQuestManagerResult = ReturnType<typeof useQuestsManager>;
 
 const QuestContext = createContext<UseQuestManagerResult>({
   open: false,
   setQuestsOpen: () => { }
-});
+})
 
-function useQuestsManager(initialOpen: boolean): {
+function useQuestsManager (initialOpen: boolean): {
   open: boolean;
   // eslint-disable-next-line no-unused-vars
   setQuestsOpen: (open: boolean) => void;
 } {
-  const [open, setOpen] = useState<boolean>(initialOpen);
+  const [open, setOpen] = useState<boolean>(initialOpen)
 
   const setQuestsOpen = useCallback((questOpen: boolean) => {
-    setOpen(questOpen);   
-  }, []);
+    setOpen(questOpen)
+  }, [])
 
-  return { open, setQuestsOpen };
+  return { open, setQuestsOpen }
 }
 
 export const QuestsProvider: React.FunctionComponent<{
@@ -31,15 +28,14 @@ export const QuestsProvider: React.FunctionComponent<{
   <QuestContext.Provider value={useQuestsManager(initialOpen)}>
     {children}
   </QuestContext.Provider>
-);
+)
 
 export const useQuestsOpen = (): boolean => {
-  const { open } = useContext(QuestContext);
-  return open;
-};
+  const { open } = useContext(QuestContext)
+  return open
+}
 
-
-export const useSetQuestOpen = (): UseQuestManagerResult["setQuestsOpen"] => {
-  const { setQuestsOpen } = useContext(QuestContext);
-  return setQuestsOpen;
+export const useSetQuestOpen = (): UseQuestManagerResult['setQuestsOpen'] => {
+  const { setQuestsOpen } = useContext(QuestContext)
+  return setQuestsOpen
 }

@@ -2,11 +2,10 @@ import * as React from 'react'
 import NavBar from './NavBar'
 import { SetAssetsApi } from './SetAssetsApi'
 import { AssetsApi } from '../../types'
-import { ContextWrapper } from './ContextWrapper';
+import { ContextWrapper } from './ContextWrapper'
 
-
-export function AppShell({ appName, children, assetsApi, userType }: { appName: string, children: React.ReactNode, assetsApi: AssetsApi, userType: string }) {
-    return (
+export function AppShell ({ appName, children, assetsApi, userType }: { appName: string, children: React.ReactNode, assetsApi: AssetsApi, userType: string }) {
+  return (
             <ContextWrapper>
                 <div className='tw-flex tw-flex-col tw-h-full'>
                     <SetAssetsApi assetsApi={assetsApi} />
@@ -16,5 +15,5 @@ export function AppShell({ appName, children, assetsApi, userType }: { appName: 
                     </div>
                 </div>
             </ContextWrapper>
-    )
+  )
 }

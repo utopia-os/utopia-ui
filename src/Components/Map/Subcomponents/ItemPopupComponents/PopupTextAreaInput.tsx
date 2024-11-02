@@ -9,8 +9,7 @@ export const PopupTextAreaInput = ({ dataField, placeholder, style, item }:
         style?: string,
         item?: Item
     }) => {
-
-    return (
-        <TextAreaInput defaultValue={item?.text ? item.text : ""} dataField={dataField} placeholder={placeholder} inputStyle={style}></TextAreaInput>
-    )
+  return (
+        <TextAreaInput defaultValue={item?.text ? item.text : ''} dataField={dataField} placeholder={placeholder} inputStyle={style}></TextAreaInput>
+  )
 }

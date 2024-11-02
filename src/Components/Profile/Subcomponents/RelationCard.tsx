@@ -1,4 +1,3 @@
-
 // eslint-disable-next-line react/prop-types
 const RelationCard = ({ title, description, imageSrc }) => (
     <div className={`tw-mb-6 ${imageSrc ? 'md:tw-flex md:tw-space-x-4' : ''}`}>
@@ -12,6 +11,6 @@ const RelationCard = ({ title, description, imageSrc }) => (
             <p className="tw-mt-2 tw-text-sm tw-text-gray-600">{description}</p>
         </div>
     </div>
-);
+)
 
-export default RelationCard;
+export default RelationCard

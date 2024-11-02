@@ -5,55 +5,53 @@ import { toast } from 'react-toastify'
 import { useAuth } from './useAuth'
 import { MapOverlayPage } from '../Templates'
 
-export function SignupPage() {
+export function SignupPage () {
+  const [email, setEmail] = useState<string>('')
+  const [userName, setUserName] = useState<string>('')
 
-    const [email, setEmail] = useState<string>("");
-    const [userName, setUserName] = useState<string>("");
+  const [password, setPassword] = useState<string>('')
 
-    const [password, setPassword] = useState<string>("");
+  const { register, loading } = useAuth()
 
-    const { register, loading } = useAuth();
+  const navigate = useNavigate()
 
-    const navigate = useNavigate();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const onRegister = async () => {
+    await toast.promise(
+      register({ email, password }, userName),
+      {
+        success: {
+          render ({ data }) {
+            navigate('/')
+            return `Hi ${data?.first_name}`
+          },
+          // other options
+          icon: '✌️'
+        },
+        error: {
+          render ({ data }) {
+            return `${data}`
+          },
+          autoClose: 10000
+        },
+        pending: 'creating new user ...'
+      })
+  }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const onRegister = async () => {
-        await toast.promise(
-            register({ email: email, password: password }, userName),
-            {
-                success: {
-                    render({ data }) {
-                        navigate(`/`);
-                        return `Hi ${data?.first_name}`
-                    },
-                    // other options
-                    icon: "✌️",
-                },
-                error: {
-                    render({ data }) {
-                        return `${data}`
-                    },
-                    autoClose: 10000,
-                },
-                pending: 'creating new user ...'
-            });
+  useEffect(() => {
+    const keyDownHandler = event => {
+      if (event.key === 'Enter') {
+        event.preventDefault()
+        onRegister()
+      }
     }
+    document.addEventListener('keydown', keyDownHandler)
+    return () => {
+      document.removeEventListener('keydown', keyDownHandler)
+    }
+  }, [onRegister])
 
-    useEffect(() => {
-        const keyDownHandler = event => {   
-          if (event.key === 'Enter') {
-            event.preventDefault();
-            onRegister();
-          }
-        };
-        document.addEventListener('keydown', keyDownHandler);
-        return () => {
-          document.removeEventListener('keydown', keyDownHandler);
-        };
-      }, [onRegister]);
-
-
-    return (
+  return (
         <MapOverlayPage backdrop className='tw-max-w-xs  tw-h-fit'>
             <h2 className='tw-text-2xl tw-font-semibold tw-mb-2 tw-text-center'>Sign Up</h2>
             <input type="text" placeholder="Name" value={userName} onChange={e => setUserName(e.target.value)} className="tw-input tw-input-bordered tw-w-full tw-max-w-xs" />
@@ -63,6 +61,5 @@ export function SignupPage() {
                 <button className={loading ? 'tw-btn tw-btn-disabled tw-btn-block tw-btn-primary' : 'tw-btn tw-btn-primary tw-btn-block'} onClick={() => onRegister()}>{loading ? <span className="tw-loading tw-loading-spinner"></span> : 'Sign Up'}</button>
             </div>
         </MapOverlayPage>
-    )
+  )
 }
-

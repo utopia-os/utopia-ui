@@ -10,24 +10,23 @@ import { PermissionsProvider } from '../Map/hooks/usePermissions'
 import { SelectPositionProvider } from '../Map/hooks/useSelectPosition'
 import { TagsProvider } from '../Map/hooks/useTags'
 import { AssetsProvider } from './hooks/useAssets'
-import { useContext, createContext } from 'react';
-import { BrowserRouter as Router, useLocation } from 'react-router-dom';
-
+import { useContext, createContext } from 'react'
+import { BrowserRouter as Router, useLocation } from 'react-router-dom'
 
 // Helper context to determine if the ContextWrapper is already present.
-const ContextCheckContext = createContext(false);
+const ContextCheckContext = createContext(false)
 
 // eslint-disable-next-line react/prop-types
 export const ContextWrapper = ({ children }) => {
-  const isWrapped = useContext(ContextCheckContext);
+  const isWrapped = useContext(ContextCheckContext)
 
   // Check if we are already inside a Router
-  let location;
+  let location
   try {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    location = useLocation();
+    location = useLocation()
   } catch (e) {
-    location = null;
+    location = null
   }
 
   // Case 1: Only the Router is missing, but ContextWrapper is already provided
@@ -36,7 +35,7 @@ export const ContextWrapper = ({ children }) => {
       <Router>
         {children}
       </Router>
-    );
+    )
   }
 
   // Case 2: Neither Router nor ContextWrapper is present
@@ -49,7 +48,7 @@ export const ContextWrapper = ({ children }) => {
           </Wrappers>
         </ContextCheckContext.Provider>
       </Router>
-    );
+    )
   }
 
   // Case 3: Only ContextWrapper is missing
@@ -58,16 +57,16 @@ export const ContextWrapper = ({ children }) => {
       <ContextCheckContext.Provider value={true}>
         <Wrappers>{children}</Wrappers>
       </ContextCheckContext.Provider>
-    );
+    )
   }
 
   // Case 4: Both Router and ContextWrapper are already present
-  return children;
-};
+  return children
+}
 
 // eslint-disable-next-line react/prop-types
 export const Wrappers = ({ children }) => {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient()
 
   return (
     <PermissionsProvider initialPermissions={[]}>
@@ -103,5 +102,5 @@ export const Wrappers = ({ children }) => {
         </LayersProvider>
       </TagsProvider>
     </PermissionsProvider>
-  );
-};
+  )
+}

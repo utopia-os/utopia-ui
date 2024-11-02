@@ -1,12 +1,19 @@
 /* eslint-disable no-unused-vars */
 
 import * as React from 'react'
-import { ItemFormPopupProps } from "./Components/Map/Subcomponents/ItemFormPopup";
+import { ItemFormPopupProps } from './Components/Map/Subcomponents/ItemFormPopup'
+
+export interface Tag {
+  color: string;
+  id: string;
+  name: string;
+  offer_or_need?: boolean
+}
 
 export interface UtopiaMapProps {
   height?: string,
   width?: string,
-  center?: [number,number],
+  center?: [number, number],
   zoom?: number,
   tags?: Tag[],
   children?: React.ReactNode,
@@ -17,8 +24,24 @@ export interface UtopiaMapProps {
   infoText? : string
 }
 
+export interface ItemType {
+  name: string;
+  [key: string]: any;
+
+}
+
+export interface ItemsApi<T> {
+  getItems(): Promise<any>,
+  getItem?(id: string): Promise<any>,
+  createItem?(item : T): Promise<any>,
+  updateItem?(item : T): Promise<any>,
+  deleteItem?(id : string): Promise<any>,
+  collectionName?: string
+}
+
 export interface LayerProps {
   id?: string,
+  // eslint-disable-next-line no-use-before-define
   data?: Item[],
   children?: React.ReactNode,
   name: string,
@@ -53,63 +76,46 @@ export interface LayerProps {
   clusterRef?: any
 }
 
-export interface ItemType {
-  name: string;
-  [key: string]: any;
+export class Geometry {
+  type: string
+  coordinates: number[]
+  constructor (lng: number, lat: number) {
+    this.coordinates = [lng, lat]
+    this.type = 'Point'
+  }
+}
 
+export type Relation = {
+  related_items_id: string;
+  [key: string]: any;
 }
 
 export class Item {
-  id: string ;
-  name: string;
-  text: string;
-  position?: Geometry;
-  date_created?: string;
-  date_updated?: string | null;
-  start?: string;
-  end?: string;
-  api?: ItemsApi<any>;
-  tags?: string[];
-  layer?: LayerProps;
-  relations?: Relation[];
-  parent?:string;
-  subname?: string;
+  id: string
+  name: string
+  text: string
+  position?: Geometry
+  date_created?: string
+  date_updated?: string | null
+  start?: string
+  end?: string
+  api?: ItemsApi<any>
+  tags?: string[]
+  layer?: LayerProps
+  relations?: Relation[]
+  parent?:string
+  subname?: string
   public_edit?: boolean;
   // eslint-disable-next-line no-undef
   [key: string]: any;
-  constructor(id:string,name:string,text:string,position:Geometry, layer?: LayerProps, api?: ItemsApi<any>){
-    this.id = id;
-    this.name = name;
-    this.text = text;
-    this.position = position;
-    this.layer = layer;
-    this.api = api;
+  constructor (id:string, name:string, text:string, position:Geometry, layer?: LayerProps, api?: ItemsApi<any>) {
+    this.id = id
+    this.name = name
+    this.text = text
+    this.position = position
+    this.layer = layer
+    this.api = api
   }
-}
-
-export class Geometry {
-  type: string;
-  coordinates: number[];
-  constructor(lng: number, lat: number) {
-    this.coordinates = [lng,lat];
-    this.type = "Point";
-  }
-}
-
-export interface Tag {
-  color: string;
-  id: string;
-  name: string;
-  offer_or_need?: boolean
-}
-
-export interface ItemsApi<T> {
-  getItems(): Promise<any>, 
-  getItem?(id: string): Promise<any>,
-  createItem?(item : T): Promise<any>,
-  updateItem?(item : T): Promise<any>,
-  deleteItem?(id : string): Promise<any>,
-  collectionName?: string
 }
 
 export interface AssetsApi {
@@ -117,15 +123,13 @@ export interface AssetsApi {
   url: string
 }
 
-export interface UserApi {
-  register(email: string, password: string, userName: string): Promise<void>,
-	login(email: string, password: string): Promise<any>,
-	logout(): Promise<void>,
-  getUser(): Promise<UserItem>,
-  getToken(): Promise<any>,
-	updateUser(user: UserItem): Promise<void>,
-  requestPasswordReset(email:string, reset_url?:string),
-  passwordReset(token:string,new_password:string)
+export type Profile = {
+  id?: string;
+  avatar?: string;
+  color?: string;
+  name: string;
+  text: string;
+  geoposition?: Geometry
 }
 
 export type UserItem = {
@@ -138,13 +142,15 @@ export type UserItem = {
 
 }
 
-export type Profile = {
-  id?: string;
-  avatar?: string;
-  color?: string;
-  name: string;
-  text: string;
-  geoposition?: Geometry
+export interface UserApi {
+  register(email: string, password: string, userName: string): Promise<void>,
+  login(email: string, password: string): Promise<any>,
+  logout(): Promise<void>,
+  getUser(): Promise<UserItem>,
+  getToken(): Promise<any>,
+  updateUser(user: UserItem): Promise<void>,
+  requestPasswordReset(email:string, reset_url?:string),
+  passwordReset(token:string, new_password:string)
 }
 
 export type PermissionCondition = {
@@ -156,6 +162,8 @@ export type PermissionCondition = {
   };
 };
 
+export type PermissionAction = 'create'|'read'|'update'|'delete';
+
 export type Permission = {
   id?: string;
   policy: any;
@@ -165,11 +173,3 @@ export type Permission = {
     _and: PermissionCondition[];
   };
 };
-
-
-export type PermissionAction =  "create"|"read"|"update"|"delete";
-
-export type Relation = {
-  related_items_id: string;
-  [key: string]: any;
-}

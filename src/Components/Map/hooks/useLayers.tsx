@@ -1,47 +1,48 @@
-import { useCallback, useReducer, createContext, useContext } from "react";
-import * as React from "react";
-import { LayerProps } from "../../../types";
+import { useCallback, useReducer, createContext, useContext } from 'react'
+import * as React from 'react'
+import { LayerProps } from '../../../types'
 
 type ActionType =
-  | { type: "ADD LAYER"; layer: LayerProps }
+  | { type: 'ADD LAYER'; layer: LayerProps }
 
 type UseItemManagerResult = ReturnType<typeof useLayerManager>;
 
 const LayerContext = createContext<UseItemManagerResult>({
   layers: [],
-  addLayer: () => { },
-});
+  addLayer: () => { }
+})
 
-function useLayerManager(initialLayers: LayerProps[]): {
+function useLayerManager (initialLayers: LayerProps[]): {
   layers: LayerProps[];
   // eslint-disable-next-line no-unused-vars
   addLayer: (layer: LayerProps) => void;
 } {
   const [layers, dispatch] = useReducer((state: LayerProps[], action: ActionType) => {
     switch (action.type) {
-      case "ADD LAYER":
+      case 'ADD LAYER':
         // eslint-disable-next-line no-case-declarations
         const exist = state.find((layer) =>
-          layer.name === action.layer.name ? true : false
-        );
-        if (!exist) return [
-          ...state,
-          action.layer,
-        ];
-        else return state;
+          layer.name === action.layer.name
+        )
+        if (!exist) {
+          return [
+            ...state,
+            action.layer
+          ]
+        } else return state
       default:
-        throw new Error();
+        throw new Error()
     }
-  }, initialLayers);
+  }, initialLayers)
 
   const addLayer = useCallback((layer: LayerProps) => {
     dispatch({
-      type: "ADD LAYER",
+      type: 'ADD LAYER',
       layer
-    });
-  }, []);
+    })
+  }, [])
 
-  return { layers, addLayer };
+  return { layers, addLayer }
 }
 
 export const LayersProvider: React.FunctionComponent<{
@@ -50,14 +51,14 @@ export const LayersProvider: React.FunctionComponent<{
   <LayerContext.Provider value={useLayerManager(initialLayers)}>
     {children}
   </LayerContext.Provider>
-);
+)
 
 export const useLayers = (): LayerProps[] => {
-  const { layers } = useContext(LayerContext);
-  return layers;
-};
+  const { layers } = useContext(LayerContext)
+  return layers
+}
 
-export const useAddLayer = (): UseItemManagerResult["addLayer"] => {
-  const { addLayer } = useContext(LayerContext);
-  return addLayer;
-};
+export const useAddLayer = (): UseItemManagerResult['addLayer'] => {
+  const { addLayer } = useContext(LayerContext)
+  return addLayer
+}

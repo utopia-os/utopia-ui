@@ -1,25 +1,21 @@
 import * as React from 'react'
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState } from 'react'
 
 type UseClusterRefManagerResult = ReturnType<typeof useClusterRefManager>;
 
 const ClusterRefContext = createContext<UseClusterRefManagerResult>({
-    clusterRef: {} as React.MutableRefObject<undefined>,
-    setClusterRef: () => { },
-});
+  clusterRef: {} as React.MutableRefObject<undefined>,
+  setClusterRef: () => { }
+})
 
-function useClusterRefManager(): {
+function useClusterRefManager (): {
     clusterRef: any
     setClusterRef: React.Dispatch<React.SetStateAction<React.MutableRefObject<undefined>>>;
-} {
-    const [clusterRef, setClusterRef] = useState<React.MutableRefObject<undefined>>({} as React.MutableRefObject<undefined>);
+    } {
+  const [clusterRef, setClusterRef] = useState<React.MutableRefObject<undefined>>({} as React.MutableRefObject<undefined>)
 
-    return { clusterRef, setClusterRef };
-
+  return { clusterRef, setClusterRef }
 }
-
-
-
 
 export const ClusterRefProvider: React.FunctionComponent<{
     children?: React.ReactNode
@@ -27,15 +23,14 @@ export const ClusterRefProvider: React.FunctionComponent<{
     <ClusterRefContext.Provider value={useClusterRefManager()}>
         {children}
     </ClusterRefContext.Provider>
-);
+)
 
-export const useClusterRef = (): any=> {
-    const { clusterRef } = useContext(ClusterRefContext);
-    return clusterRef;
-};
-
-export const useSetClusterRef = (): UseClusterRefManagerResult["setClusterRef"] => {
-    const { setClusterRef } = useContext(ClusterRefContext);
-    return setClusterRef;
+export const useClusterRef = (): any => {
+  const { clusterRef } = useContext(ClusterRefContext)
+  return clusterRef
 }
 
+export const useSetClusterRef = (): UseClusterRefManagerResult['setClusterRef'] => {
+  const { setClusterRef } = useContext(ClusterRefContext)
+  return setClusterRef
+}

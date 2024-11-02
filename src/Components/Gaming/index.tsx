@@ -1,2 +1,2 @@
-export {Modal} from './Modal'
-export {Quests} from './Quests'
+export { Modal } from './Modal'
+export { Quests } from './Quests'

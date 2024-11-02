@@ -33,8 +33,8 @@ export const TabsForm = ({
       const newUrl = location.pathname + '?' + params.toString()
       window.history.pushState({}, '', newUrl)
       setUrlParams(params)
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [location.pathname],
   )
 

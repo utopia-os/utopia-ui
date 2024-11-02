@@ -88,7 +88,6 @@ export const Layer = ({
   const visibleGroupTypes = useVisibleGroupType()
 
   useEffect(() => {
-    // eslint-disable-next-line camelcase
     data &&
       setItemsData({
         data,
@@ -115,13 +114,13 @@ export const Layer = ({
         onlyOnePerOwner,
         customEditLink,
         customEditParameter,
+        // eslint-disable-next-line camelcase
         public_edit_items,
         listed,
         setItemFormPopup,
         itemFormPopup,
         clusterRef,
       })
-    // eslint-disable-next-line camelcase
     api &&
       setItemsApi({
         data,
@@ -148,6 +147,7 @@ export const Layer = ({
         onlyOnePerOwner,
         customEditLink,
         customEditParameter,
+        // eslint-disable-next-line camelcase
         public_edit_items,
         listed,
         setItemFormPopup,

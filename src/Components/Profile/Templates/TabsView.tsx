@@ -64,8 +64,8 @@ export const TabsView = ({
       params.set('tab', `${id}`)
       const newUrl = location.pathname + '?' + params.toString()
       window.history.pushState({}, '', newUrl)
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [location.pathname],
   )
 

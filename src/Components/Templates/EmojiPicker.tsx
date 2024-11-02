@@ -1,12 +1,17 @@
 import { useState } from 'react'
 
-// eslint-disable-next-line react/prop-types
 export const EmojiPicker = ({
+  // eslint-disable-next-line react/prop-types
   selectedEmoji,
+  // eslint-disable-next-line react/prop-types
   selectedColor,
+  // eslint-disable-next-line react/prop-types
   selectedShape,
+  // eslint-disable-next-line react/prop-types
   setSelectedEmoji,
+  // eslint-disable-next-line react/prop-types
   setSelectedColor,
+  // eslint-disable-next-line react/prop-types
   setSelectedShape,
 }) => {
   const [isOpen, setIsOpen] = useState(false)

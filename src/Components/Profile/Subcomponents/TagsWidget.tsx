@@ -29,10 +29,10 @@ export const TagsWidget = ({ placeholder, containerStyle, defaultTags, onUpdate 
     const { key } = e
     const trimmedInput = input.trim()
 
-    // eslint-disable-next-line react/prop-types
     if (
       (key === 'Enter' || key === ',') &&
       trimmedInput.length &&
+      // eslint-disable-next-line react/prop-types
       !defaultTags.some((tag) => tag.name.toLocaleLowerCase() === trimmedInput.toLocaleLowerCase())
     ) {
       e.preventDefault()

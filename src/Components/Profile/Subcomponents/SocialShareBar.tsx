@@ -1,9 +1,11 @@
 import SocialShareButton from './SocialShareButton'
 
-// eslint-disable-next-line react/prop-types
 const SocialShareBar = ({
+  // eslint-disable-next-line react/prop-types
   url,
+  // eslint-disable-next-line react/prop-types
   title,
+  // eslint-disable-next-line react/prop-types
   platforms = ['facebook', 'twitter', 'linkedin', 'xing', 'email'],
 }) => {
   return (

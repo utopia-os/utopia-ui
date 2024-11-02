@@ -16,7 +16,7 @@
   ],
   "keywords": [],
   "author": "Anton Tranelis",
-  "license": "MIT",
+  "license": "GPL-3.0-only",
   "devDependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": "^4.4.1",
     "@types/leaflet": "^1.7.11",

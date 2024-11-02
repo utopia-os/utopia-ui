@@ -29,12 +29,20 @@ export const TagsWidget = ({ placeholder, containerStyle, defaultTags, onUpdate 
     const { key } = e
     const trimmedInput = input.trim()
 
-    // eslint-disable-next-line react/prop-types
-    if ((key === 'Enter' || key === ',') && trimmedInput.length && !defaultTags.some(tag => tag.name.toLocaleLowerCase() === trimmedInput.toLocaleLowerCase())) {
+    if (
+      (key === 'Enter' || key === ',') &&
+      trimmedInput.length &&
+      // eslint-disable-next-line react/prop-types
+      !defaultTags.some((tag) => tag.name.toLocaleLowerCase() === trimmedInput.toLocaleLowerCase())
+    ) {
       e.preventDefault()
-      const newTag = tags.find(t => t.name === trimmedInput.toLocaleLowerCase())
+      const newTag = tags.find((t) => t.name === trimmedInput.toLocaleLowerCase())
       newTag && onUpdate([...currentTags, newTag])
-      !newTag && onUpdate([...currentTags, { id: crypto.randomUUID(), name: encodeTag(trimmedInput), color: randomColor() }])
+      !newTag &&
+        onUpdate([
+          ...currentTags,
+          { id: crypto.randomUUID(), name: encodeTag(trimmedInput), color: randomColor() },
+        ])
       setInput('')
       setPushFilteredSuggestions([])
     }
@@ -61,10 +69,14 @@ export const TagsWidget = ({ placeholder, containerStyle, defaultTags, onUpdate 
 
   const onSelected = (tag) => {
     // eslint-disable-next-line react/prop-types
-    if (!defaultTags.some(t => t.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())) {
-      const newTag = tags.find(t => t.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())
+    if (!defaultTags.some((t) => t.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())) {
+      const newTag = tags.find((t) => t.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())
       newTag && onUpdate([...currentTags, newTag])
-      !newTag && onUpdate([...currentTags, { id: crypto.randomUUID(), name: tag.name.toLocaleLowerCase(), color: randomColor() }])
+      !newTag &&
+        onUpdate([
+          ...currentTags,
+          { id: crypto.randomUUID(), name: tag.name.toLocaleLowerCase(), color: randomColor() },
+        ])
       setInput('')
       setPushFilteredSuggestions([])
     }
@@ -76,27 +88,45 @@ export const TagsWidget = ({ placeholder, containerStyle, defaultTags, onUpdate 
     onKeyDown,
     onKeyUp,
     onChange,
-    className: 'tw-bg-transparent tw-w-fit tw-mt-5 tw-h-fit'
+    className: 'tw-bg-transparent tw-w-fit tw-mt-5 tw-h-fit',
   }
 
   /* eslint-disable react/prop-types */
   return (
-    <div onClick={() => {
-      setFocusInput(true)
-      setTimeout(() => {
-        setFocusInput(false)
-      }, 200)
-    }} className={`tw-input tw-input-bordered tw-cursor-text ${containerStyle}`}>
+    <div
+      onClick={() => {
+        setFocusInput(true)
+        setTimeout(() => {
+          setFocusInput(false)
+        }, 200)
+      }}
+      className={`tw-input tw-input-bordered tw-cursor-text ${containerStyle}`}
+    >
       <div className='tw-flex tw-flex-wrap tw-h-fit'>
-      {defaultTags.map((tag) => (
-        <div key={tag.name} className='tw-rounded-2xl tw-text-white tw-p-2 tw-px-4 tw-shadow-xl tw-card tw-mt-3 tw-mr-4' style={{ backgroundColor: tag.color ? tag.color : '#666' }}>
-          <div className="tw-card-actions tw-justify-end">
-            <label className="tw-btn tw-btn-xs tw-btn-circle tw-absolute tw--right-2 tw--top-2 tw-bg-white tw-text-gray-600" onClick={() => (deleteTag(tag))}>✕</label>
-          </div><b>{decodeTag(tag.name)}</b>
-        </div>
-
-      ))}
-      <Autocomplete suggestions={tags} pushFilteredSuggestions={pushFilteredSuggestions} setFocus={focusInput} inputProps={inputProps} onSelected={(tag) => onSelected(tag)}/>
+        {defaultTags.map((tag) => (
+          <div
+            key={tag.name}
+            className='tw-rounded-2xl tw-text-white tw-p-2 tw-px-4 tw-shadow-xl tw-card tw-mt-3 tw-mr-4'
+            style={{ backgroundColor: tag.color ? tag.color : '#666' }}
+          >
+            <div className='tw-card-actions tw-justify-end'>
+              <label
+                className='tw-btn tw-btn-xs tw-btn-circle tw-absolute tw--right-2 tw--top-2 tw-bg-white tw-text-gray-600'
+                onClick={() => deleteTag(tag)}
+              >
+                ✕
+              </label>
+            </div>
+            <b>{decodeTag(tag.name)}</b>
+          </div>
+        ))}
+        <Autocomplete
+          suggestions={tags}
+          pushFilteredSuggestions={pushFilteredSuggestions}
+          setFocus={focusInput}
+          inputProps={inputProps}
+          onSelected={(tag) => onSelected(tag)}
+        />
       </div>
     </div>
   )

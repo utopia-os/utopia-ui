@@ -3,7 +3,19 @@ import { useEffect } from 'react'
 import { TagView } from '../Templates/TagView'
 
 // eslint-disable-next-line no-unused-vars
-export const Autocomplete = ({ inputProps, suggestions, onSelected, pushFilteredSuggestions, setFocus }: { inputProps: any, suggestions: Array<any>, onSelected: (suggestion) => void, pushFilteredSuggestions?: Array<any>, setFocus?: boolean }) => {
+export const Autocomplete = ({
+  inputProps,
+  suggestions,
+  onSelected,
+  pushFilteredSuggestions,
+  setFocus,
+}: {
+  inputProps: any
+  suggestions: Array<any>
+  onSelected: (suggestion) => void
+  pushFilteredSuggestions?: Array<any>
+  setFocus?: boolean
+}) => {
   const [filteredSuggestions, setFilteredSuggestions] = React.useState<Array<any>>([])
   const [heighlightedSuggestion, setHeighlightedSuggestion] = React.useState<number>(0)
 
@@ -18,17 +30,15 @@ export const Autocomplete = ({ inputProps, suggestions, onSelected, pushFiltered
   const inputRef = React.useRef<HTMLInputElement>()
 
   // eslint-disable-next-line no-unused-vars
-  const getSuggestionValue = suggestion => suggestion.name
+  const getSuggestionValue = (suggestion) => suggestion.name
 
-  const getSuggestions = value => {
+  const getSuggestions = (value) => {
     const inputValue = value.trim().toLowerCase()
     const inputLength = inputValue.length
 
     return inputLength === 0
       ? []
-      : suggestions.filter(tag =>
-        tag.name.toLowerCase().slice(0, inputLength) === inputValue
-      )
+      : suggestions.filter((tag) => tag.name.toLowerCase().slice(0, inputLength) === inputValue)
   }
 
   const handleChange = (e) => {
@@ -40,17 +50,18 @@ export const Autocomplete = ({ inputProps, suggestions, onSelected, pushFiltered
     }
   }
 
-  function handleSuggestionClick (suggestion) {
+  function handleSuggestionClick(suggestion) {
     onSelected(suggestion)
   }
 
   const handleKeyDown = (event) => {
     switch (event.key) {
       case 'ArrowDown':
-        heighlightedSuggestion < filteredSuggestions.length - 1 && setHeighlightedSuggestion(current => current + 1)
+        heighlightedSuggestion < filteredSuggestions.length - 1 &&
+          setHeighlightedSuggestion((current) => current + 1)
         break
       case 'ArrowUp':
-        heighlightedSuggestion > 0 && setHeighlightedSuggestion(current => current - 1)
+        heighlightedSuggestion > 0 && setHeighlightedSuggestion((current) => current - 1)
         break
       case 'Enter':
         if (filteredSuggestions.length > 0) {
@@ -67,10 +78,21 @@ export const Autocomplete = ({ inputProps, suggestions, onSelected, pushFiltered
 
   return (
     <div>
-      <input ref={inputRef} {...inputProps} type="text" onChange={(e) => handleChange(e)} tabIndex="-1" onKeyDown={handleKeyDown}/>
-      <ul className={`tw-absolute tw-z-[4000] ${filteredSuggestions.length > 0 && 'tw-bg-base-100 tw-rounded-xl tw-p-2'}`}>
+      <input
+        ref={inputRef}
+        {...inputProps}
+        type='text'
+        onChange={(e) => handleChange(e)}
+        tabIndex='-1'
+        onKeyDown={handleKeyDown}
+      />
+      <ul
+        className={`tw-absolute tw-z-[4000] ${filteredSuggestions.length > 0 && 'tw-bg-base-100 tw-rounded-xl tw-p-2'}`}
+      >
         {filteredSuggestions.map((suggestion, index) => (
-          <li key={index} onClick={() => handleSuggestionClick(suggestion)}><TagView heighlight={index === heighlightedSuggestion} tag={suggestion}></TagView></li>
+          <li key={index} onClick={() => handleSuggestionClick(suggestion)}>
+            <TagView heighlight={index === heighlightedSuggestion} tag={suggestion}></TagView>
+          </li>
         ))}
       </ul>
     </div>

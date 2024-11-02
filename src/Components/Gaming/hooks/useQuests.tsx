@@ -1,17 +1,17 @@
 import { useCallback, useState, createContext, useContext } from 'react'
 import * as React from 'react'
 
-type UseQuestManagerResult = ReturnType<typeof useQuestsManager>;
+type UseQuestManagerResult = ReturnType<typeof useQuestsManager>
 
 const QuestContext = createContext<UseQuestManagerResult>({
   open: false,
-  setQuestsOpen: () => { }
+  setQuestsOpen: () => {},
 })
 
-function useQuestsManager (initialOpen: boolean): {
-  open: boolean;
+function useQuestsManager(initialOpen: boolean): {
+  open: boolean
   // eslint-disable-next-line no-unused-vars
-  setQuestsOpen: (open: boolean) => void;
+  setQuestsOpen: (open: boolean) => void
 } {
   const [open, setOpen] = useState<boolean>(initialOpen)
 
@@ -23,11 +23,10 @@ function useQuestsManager (initialOpen: boolean): {
 }
 
 export const QuestsProvider: React.FunctionComponent<{
-  initialOpen: boolean, children?: React.ReactNode
+  initialOpen: boolean
+  children?: React.ReactNode
 }> = ({ initialOpen, children }) => (
-  <QuestContext.Provider value={useQuestsManager(initialOpen)}>
-    {children}
-  </QuestContext.Provider>
+  <QuestContext.Provider value={useQuestsManager(initialOpen)}>{children}</QuestContext.Provider>
 )
 
 export const useQuestsOpen = (): boolean => {

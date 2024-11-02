@@ -5,27 +5,25 @@ import { Item, ItemsApi, Tag } from '../../../types'
 import { hashTagRegex } from '../../../Utils/HashTagRegex'
 import { getValue } from '../../../Utils/GetValue'
 
-type ActionType =
-  | { type: 'ADD'; tag: Tag }
-  | { type: 'REMOVE'; id: string };
+type ActionType = { type: 'ADD'; tag: Tag } | { type: 'REMOVE'; id: string }
 
-type UseTagManagerResult = ReturnType<typeof useTagsManager>;
+type UseTagManagerResult = ReturnType<typeof useTagsManager>
 
 const TagContext = createContext<UseTagManagerResult>({
   tags: [],
-  addTag: () => { },
-  setTagApi: () => { },
-  setTagData: () => { },
+  addTag: () => {},
+  setTagApi: () => {},
+  setTagData: () => {},
   getItemTags: () => [],
-  allTagsLoaded: false
+  allTagsLoaded: false,
 })
 
-function useTagsManager (initialTags: Tag[]): {
-  tags: Tag[];
-  addTag: (tag: Tag) => void;
-  setTagApi: (api: ItemsApi<Tag>) => void;
-  setTagData: (data: Tag[]) => void;
-  getItemTags: (item: Item) => Tag[];
+function useTagsManager(initialTags: Tag[]): {
+  tags: Tag[]
+  addTag: (tag: Tag) => void
+  setTagApi: (api: ItemsApi<Tag>) => void
+  setTagData: (data: Tag[]) => void
+  getItemTags: (item: Item) => Tag[]
   allTagsLoaded: boolean
 } {
   const [allTagsLoaded, setallTagsLoaded] = useState<boolean>(false)
@@ -35,14 +33,11 @@ function useTagsManager (initialTags: Tag[]): {
     switch (action.type) {
       case 'ADD':
         // eslint-disable-next-line no-case-declarations
-        const exist = state.find((tag) =>
-          tag.name.toLocaleLowerCase() === action.tag.name.toLocaleLowerCase()
+        const exist = state.find(
+          (tag) => tag.name.toLocaleLowerCase() === action.tag.name.toLocaleLowerCase(),
         )
         if (!exist) {
-          const newState = [
-            ...state,
-            { ...action.tag }
-          ]
+          const newState = [...state, { ...action.tag }]
           if (tagCount === newState.length) setallTagsLoaded(true)
           return newState
         } else return state
@@ -59,18 +54,18 @@ function useTagsManager (initialTags: Tag[]): {
     setTagCount(result.length)
     if (tagCount === 0) setallTagsLoaded(true)
     if (result) {
-      result.map(tag => {
+      result.map((tag) => {
         // tag.name = tag.name.toLocaleLowerCase();
         dispatch({ type: 'ADD', tag })
         return null
       })
     }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const setTagData = useCallback((data: Tag[]) => {
-    data.map(tag => {
+    data.map((tag) => {
       // tag.name = tag.name.toLocaleLowerCase();
       dispatch({ type: 'ADD', tag })
       return null
@@ -80,46 +75,53 @@ function useTagsManager (initialTags: Tag[]): {
   const addTag = (tag: Tag) => {
     dispatch({
       type: 'ADD',
-      tag
+      tag,
     })
     if (!tags.some((t) => t.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())) {
       api?.createItem && api.createItem(tag)
     }
   }
 
-  const getItemTags = useCallback((item: Item) => {
-    const text = item?.layer?.itemTextField && item ? getValue(item, item.layer?.itemTextField) : undefined
-    const itemTagStrings = text?.match(hashTagRegex)
-    const itemTags: Tag[] = []
-    itemTagStrings?.map(tag => {
-      if (tags.find(t => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
-        itemTags.push(tags.find(t => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())!)
-      }
-      return null
-    })
-    item.layer?.itemOffersField && getValue(item, item.layer.itemOffersField)?.map(o => {
-      const offer = tags.find(t => t.id === o.tags_id)
-      offer && itemTags.push(offer)
-      return null
-    })
-    item.layer?.itemNeedsField && getValue(item, item.layer.itemNeedsField)?.map(n => {
-      const need = tags.find(t => t.id === n.tags_id)
-      need && itemTags.push(need)
-      return null
-    })
+  const getItemTags = useCallback(
+    (item: Item) => {
+      const text =
+        item?.layer?.itemTextField && item ? getValue(item, item.layer?.itemTextField) : undefined
+      const itemTagStrings = text?.match(hashTagRegex)
+      const itemTags: Tag[] = []
+      itemTagStrings?.map((tag) => {
+        if (tags.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
+          itemTags.push(
+            tags.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())!,
+          )
+        }
+        return null
+      })
+      item.layer?.itemOffersField &&
+        getValue(item, item.layer.itemOffersField)?.map((o) => {
+          const offer = tags.find((t) => t.id === o.tags_id)
+          offer && itemTags.push(offer)
+          return null
+        })
+      item.layer?.itemNeedsField &&
+        getValue(item, item.layer.itemNeedsField)?.map((n) => {
+          const need = tags.find((t) => t.id === n.tags_id)
+          need && itemTags.push(need)
+          return null
+        })
 
-    return itemTags
-  }, [tags])
+      return itemTags
+    },
+    [tags],
+  )
 
   return { tags, addTag, setTagApi, setTagData, getItemTags, allTagsLoaded }
 }
 
 export const TagsProvider: React.FunctionComponent<{
-  initialTags: Tag[], children?: React.ReactNode
+  initialTags: Tag[]
+  children?: React.ReactNode
 }> = ({ initialTags, children }) => (
-  <TagContext.Provider value={useTagsManager(initialTags)}>
-    {children}
-  </TagContext.Provider>
+  <TagContext.Provider value={useTagsManager(initialTags)}>{children}</TagContext.Provider>
 )
 
 export const useTags = (): Tag[] => {

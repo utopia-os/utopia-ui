@@ -3,7 +3,7 @@ export const LUNAR_MONTH = 29.530588853
 export const getJulianDate = (date: Date = new Date()): number => {
   const time: number = date.getTime()
   const tzoffset: number = date.getTimezoneOffset()
-  return (time / 86400000) - (tzoffset / 1440) + 2440587.5
+  return time / 86400000 - tzoffset / 1440 + 2440587.5
 }
 
 export const normalize = (value: number): number => {
@@ -25,7 +25,7 @@ export const getNextNewMoon = (): Date => {
   return new Date(getLastNewMoon().getTime() + LUNAR_MONTH * 86400000)
 }
 
-export const getLastNewMoon = (date: Date = new Date()):Date => {
+export const getLastNewMoon = (date: Date = new Date()): Date => {
   const lunarAge: number = getLunarAge(date)
   return new Date(date.getTime() - lunarAge * 86400000)
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useItems } from '../Map/hooks/useItems'
 
-export const Sitemap = ({ url }:{url:string}) => {
+export const Sitemap = ({ url }: { url: string }) => {
   const [sitemap, setSitemap] = useState('')
 
   const items = useItems()
@@ -12,7 +12,7 @@ export const Sitemap = ({ url }:{url:string}) => {
         let sitemapXML = '<?xml version="1.0" encoding="UTF-8"?>\n'
         sitemapXML += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
 
-        items.forEach(item => {
+        items.forEach((item) => {
           sitemapXML += '  <url>\n'
           sitemapXML += `    <loc>${url}/${item.slug}</loc>\n`
           sitemapXML += '  </url>\n'
@@ -24,7 +24,7 @@ export const Sitemap = ({ url }:{url:string}) => {
 
       setSitemap(generateSitemap())
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items])
 
   return (

@@ -3,43 +3,41 @@ import * as React from 'react'
 import { Item, ItemsApi, LayerProps, Permission, PermissionAction } from '../../../types'
 import { useAuth } from '../../Auth'
 
-type ActionType =
-  | { type: 'ADD'; permission: Permission }
-  | { type: 'REMOVE'; id: string };
+type ActionType = { type: 'ADD'; permission: Permission } | { type: 'REMOVE'; id: string }
 
-type UsePermissionManagerResult = ReturnType<typeof usePermissionsManager>;
+type UsePermissionManagerResult = ReturnType<typeof usePermissionsManager>
 
 const PermissionContext = createContext<UsePermissionManagerResult>({
   permissions: [],
-  setPermissionApi: () => { },
-  setPermissionData: () => { },
-  setAdminRole: () => { },
-  hasUserPermission: () => true
+  setPermissionApi: () => {},
+  setPermissionData: () => {},
+  setAdminRole: () => {},
+  hasUserPermission: () => true,
 })
 
-function usePermissionsManager (initialPermissions: Permission[]): {
-  permissions: Permission[];
+function usePermissionsManager(initialPermissions: Permission[]): {
+  permissions: Permission[]
   // eslint-disable-next-line no-unused-vars
-  setPermissionApi: (api: ItemsApi<any>) => void;
+  setPermissionApi: (api: ItemsApi<any>) => void
   // eslint-disable-next-line no-unused-vars
-  setPermissionData: (data: Permission[]) => void;
+  setPermissionData: (data: Permission[]) => void
   // eslint-disable-next-line no-unused-vars
-  setAdminRole: (adminRole: string) => void;
+  setAdminRole: (adminRole: string) => void
   // eslint-disable-next-line no-unused-vars
-  hasUserPermission: (collectionName: string, action: PermissionAction, item?: Item, layer?: LayerProps) => boolean;
+  hasUserPermission: (
+    collectionName: string,
+    action: PermissionAction,
+    item?: Item,
+    layer?: LayerProps,
+  ) => boolean
 } {
   const [permissions, dispatch] = useReducer((state: Permission[], action: ActionType) => {
     switch (action.type) {
       case 'ADD':
         // eslint-disable-next-line no-case-declarations
-        const exist = state.find((permission) =>
-          permission.id === action.permission.id
-        )
+        const exist = state.find((permission) => permission.id === action.permission.id)
         if (!exist) {
-          return [
-            ...state,
-            action.permission
-          ]
+          return [...state, action.permission]
         } else return state
 
       case 'REMOVE':
@@ -55,7 +53,7 @@ function usePermissionsManager (initialPermissions: Permission[]): {
   const setPermissionApi = useCallback(async (api: ItemsApi<Permission>) => {
     const result = await api.getItems()
     if (result) {
-      result.map(permission => {
+      result.map((permission) => {
         dispatch({ type: 'ADD', permission })
         return null
       })
@@ -63,19 +61,14 @@ function usePermissionsManager (initialPermissions: Permission[]): {
   }, [])
 
   const setPermissionData = useCallback((data: Permission[]) => {
-    data.map(permission => {
+    data.map((permission) => {
       dispatch({ type: 'ADD', permission })
       return null
     })
   }, [])
 
   const hasUserPermission = useCallback(
-    (
-      collectionName: string,
-      action: PermissionAction,
-      item?: Item,
-      layer?: LayerProps
-    ) => {
+    (collectionName: string, action: PermissionAction, item?: Item, layer?: LayerProps) => {
       const evaluateCondition = (condition: any) => {
         if (condition.user_created?._eq === '$CURRENT_USER') {
           return item?.user_created?.id === user?.id
@@ -94,7 +87,7 @@ function usePermissionsManager (initialPermissions: Permission[]): {
         return permissionConditions._and.every((andCondition: any) =>
           andCondition._or
             ? andCondition._or.some((orCondition: any) => evaluateCondition(orCondition))
-            : evaluateCondition(andCondition)
+            : evaluateCondition(andCondition),
         )
       }
       if (collectionName === 'items' && action === 'create' && layer?.public_edit_items) return true
@@ -102,31 +95,27 @@ function usePermissionsManager (initialPermissions: Permission[]): {
       if (permissions.length === 0) return true
       else if (user && user.role.id === adminRole) return true
       else {
-        return permissions.some(p =>
-          p.action === action &&
-          p.collection === collectionName &&
-            (
-              (p.policy?.name === user?.role.name &&
-              (
-                !item || evaluatePermissions(p.permissions)
-              )) ||
+        return permissions.some(
+          (p) =>
+            p.action === action &&
+            p.collection === collectionName &&
+            ((p.policy?.name === user?.role.name &&
+              (!item || evaluatePermissions(p.permissions))) ||
               (p.policy?.name === '$t:public_label' &&
-              (
                 (layer?.public_edit_items || item?.layer?.public_edit_items) &&
-                (!item || evaluatePermissions(p.permissions))
-              ))
-            )
+                (!item || evaluatePermissions(p.permissions)))),
         )
       }
     },
-    [permissions, user, adminRole]
+    [permissions, user, adminRole],
   )
 
   return { permissions, setPermissionApi, setPermissionData, setAdminRole, hasUserPermission }
 }
 
 export const PermissionsProvider: React.FunctionComponent<{
-  initialPermissions: Permission[], children?: React.ReactNode
+  initialPermissions: Permission[]
+  children?: React.ReactNode
 }> = ({ initialPermissions, children }) => (
   <PermissionContext.Provider value={usePermissionsManager(initialPermissions)}>
     {children}

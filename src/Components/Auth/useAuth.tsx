@@ -3,32 +3,32 @@ import * as React from 'react'
 import { UserApi, UserItem } from '../../types'
 
 type AuthProviderProps = {
-  userApi: UserApi,
+  userApi: UserApi
   children?: React.ReactNode
 }
 
 type AuthCredentials = {
-  email: string;
-  password: string;
-  otp?: string | undefined;
+  email: string
+  password: string
+  otp?: string | undefined
 }
 
 type AuthContextProps = {
-  isAuthenticated: boolean,
-  user: UserItem | null;
+  isAuthenticated: boolean
+  user: UserItem | null
   // eslint-disable-next-line no-unused-vars
-  login: (credentials: AuthCredentials) => Promise<UserItem | undefined>,
+  login: (credentials: AuthCredentials) => Promise<UserItem | undefined>
   // eslint-disable-next-line no-unused-vars
-  register: (credentials: AuthCredentials, userName: string) => Promise<UserItem | undefined>,
-  loading: boolean,
-  logout: () => Promise<any>,
+  register: (credentials: AuthCredentials, userName: string) => Promise<UserItem | undefined>
+  loading: boolean
+  logout: () => Promise<any>
   // eslint-disable-next-line no-unused-vars
-  updateUser: (user: UserItem) => any,
-  token: string | null,
+  updateUser: (user: UserItem) => any
+  token: string | null
   // eslint-disable-next-line no-unused-vars
-  requestPasswordReset: (email:string, reset_url: string) => Promise<any>,
+  requestPasswordReset: (email: string, reset_url: string) => Promise<any>
   // eslint-disable-next-line no-unused-vars
-  passwordReset: (token:string, new_password:string) => Promise<any>
+  passwordReset: (token: string, new_password: string) => Promise<any>
 }
 
 const AuthContext = createContext<AuthContextProps>({
@@ -41,7 +41,7 @@ const AuthContext = createContext<AuthContextProps>({
   updateUser: () => Promise.reject(Error('Unimplemented')),
   token: '',
   requestPasswordReset: () => Promise.reject(Error('Unimplemented')),
-  passwordReset: () => Promise.reject(Error('Unimplemented'))
+  passwordReset: () => Promise.reject(Error('Unimplemented')),
 })
 
 export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
@@ -54,10 +54,10 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
     setLoading(true)
     loadUser()
     setLoading(false)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  async function loadUser (): Promise<UserItem | undefined> {
+  async function loadUser(): Promise<UserItem | undefined> {
     try {
       const token = await userApi.getToken()
       setToken(token)
@@ -78,18 +78,21 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
     try {
       const res = await userApi.login(credentials.email, credentials.password)
       setToken(res.access_token)
-      return (await loadUser())
+      return await loadUser()
     } catch (error: any) {
       setLoading(false)
       throw error
     }
   }
 
-  const register = async (credentials: AuthCredentials, userName): Promise<UserItem | undefined> => {
+  const register = async (
+    credentials: AuthCredentials,
+    userName,
+  ): Promise<UserItem | undefined> => {
     setLoading(true)
     try {
       /* const res = */ await userApi.register(credentials.email, credentials.password, userName)
-      return (await login(credentials))
+      return await login(credentials)
     } catch (error: any) {
       setLoading(false)
       throw error
@@ -134,7 +137,7 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
     }
   }
 
-  const passwordReset = async (token: string, newPassword:string): Promise<any> => {
+  const passwordReset = async (token: string, newPassword: string): Promise<any> => {
     setLoading(true)
     try {
       await userApi.passwordReset(token, newPassword)
@@ -147,7 +150,18 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, user, login, register, loading, logout, updateUser, token, requestPasswordReset, passwordReset }}
+      value={{
+        isAuthenticated,
+        user,
+        login,
+        register,
+        loading,
+        logout,
+        updateUser,
+        token,
+        requestPasswordReset,
+        passwordReset,
+      }}
     >
       {children}
     </AuthContext.Provider>

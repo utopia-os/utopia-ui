@@ -31,11 +31,7 @@ export const ContextWrapper = ({ children }) => {
 
   // Case 1: Only the Router is missing, but ContextWrapper is already provided
   if (!location && isWrapped) {
-    return (
-      <Router>
-        {children}
-      </Router>
-    )
+    return <Router>{children}</Router>
   }
 
   // Case 2: Neither Router nor ContextWrapper is present
@@ -43,9 +39,7 @@ export const ContextWrapper = ({ children }) => {
     return (
       <Router>
         <ContextCheckContext.Provider value={true}>
-          <Wrappers>
-            {children}
-          </Wrappers>
+          <Wrappers>{children}</Wrappers>
         </ContextCheckContext.Provider>
       </Router>
     )
@@ -80,7 +74,8 @@ export const Wrappers = ({ children }) => {
                     <AssetsProvider>
                       <ClusterRefProvider>
                         <QuestsProvider initialOpen={true}>
-                          <ToastContainer position="top-right"
+                          <ToastContainer
+                            position='top-right'
                             autoClose={2000}
                             hideProgressBar
                             newestOnTop={false}
@@ -89,7 +84,8 @@ export const Wrappers = ({ children }) => {
                             pauseOnFocusLoss
                             draggable
                             pauseOnHover
-                            theme="light" />
+                            theme='light'
+                          />
                           {children}
                         </QuestsProvider>
                       </ClusterRefProvider>

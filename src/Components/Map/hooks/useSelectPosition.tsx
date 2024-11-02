@@ -8,25 +8,25 @@ import { LatLng } from 'leaflet'
 import { ItemFormPopupProps } from '../Subcomponents/ItemFormPopup'
 
 type PolygonClickedProps = {
-    position: LatLng
-    setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
+  position: LatLng
+  setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
 }
 
-type UseSelectPositionManagerResult = ReturnType<typeof useSelectPositionManager>;
+type UseSelectPositionManagerResult = ReturnType<typeof useSelectPositionManager>
 
 const SelectPositionContext = createContext<UseSelectPositionManagerResult>({
   selectPosition: null,
-  setSelectPosition: () => { },
-  setMarkerClicked: () => { },
-  setMapClicked: () => {}
+  setSelectPosition: () => {},
+  setMarkerClicked: () => {},
+  setMapClicked: () => {},
 })
 
-function useSelectPositionManager (): {
-    selectPosition: Item | LayerProps | null;
-    setSelectPosition: React.Dispatch<React.SetStateAction<Item | LayerProps | null>>;
-    setMarkerClicked: React.Dispatch<React.SetStateAction<Item>>;
-    setMapClicked: React.Dispatch<React.SetStateAction<PolygonClickedProps | undefined>>;
-    } {
+function useSelectPositionManager(): {
+  selectPosition: Item | LayerProps | null
+  setSelectPosition: React.Dispatch<React.SetStateAction<Item | LayerProps | null>>
+  setMarkerClicked: React.Dispatch<React.SetStateAction<Item>>
+  setMapClicked: React.Dispatch<React.SetStateAction<PolygonClickedProps | undefined>>
+} {
   const [selectPosition, setSelectPosition] = useState<LayerProps | null | Item>(null)
   const [markerClicked, setMarkerClicked] = useState<Item | null>()
   const [mapClicked, setMapClicked] = useState<PolygonClickedProps>()
@@ -34,7 +34,12 @@ function useSelectPositionManager (): {
   const hasUserPermission = useHasUserPermission()
 
   useEffect(() => {
-    if (selectPosition && markerClicked && 'text' in selectPosition && markerClicked.id !== selectPosition.id) {
+    if (
+      selectPosition &&
+      markerClicked &&
+      'text' in selectPosition &&
+      markerClicked.id !== selectPosition.id
+    ) {
       itemUpdateParent({ ...selectPosition, parent: markerClicked.id })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -43,12 +48,18 @@ function useSelectPositionManager (): {
   useEffect(() => {
     if (selectPosition != null) {
       if ('menuIcon' in selectPosition) {
-        mapClicked && mapClicked.setItemFormPopup({ layer: selectPosition as LayerProps, position: mapClicked?.position })
+        mapClicked &&
+          mapClicked.setItemFormPopup({
+            layer: selectPosition as LayerProps,
+            position: mapClicked?.position,
+          })
         setSelectPosition(null)
       }
       if ('text' in selectPosition) {
-        const position = mapClicked?.position.lng && new Geometry(mapClicked?.position.lng, mapClicked?.position.lat)
-        position && itemUpdatePosition({ ...selectPosition as Item, position })
+        const position =
+          mapClicked?.position.lng &&
+          new Geometry(mapClicked?.position.lng, mapClicked?.position.lat)
+        position && itemUpdatePosition({ ...(selectPosition as Item), position })
         setSelectPosition(null)
       }
     }
@@ -57,10 +68,17 @@ function useSelectPositionManager (): {
   }, [mapClicked])
 
   const itemUpdateParent = async (updatedItem: Item) => {
-    if (markerClicked?.layer?.api?.collectionName && hasUserPermission(markerClicked?.layer?.api?.collectionName, 'update', markerClicked)) {
+    if (
+      markerClicked?.layer?.api?.collectionName &&
+      hasUserPermission(markerClicked?.layer?.api?.collectionName, 'update', markerClicked)
+    ) {
       let success = false
       try {
-        await updatedItem?.layer?.api?.updateItem!({ id: updatedItem.id, parent: updatedItem.parent, position: null })
+        await updatedItem?.layer?.api?.updateItem!({
+          id: updatedItem.id,
+          parent: updatedItem.parent,
+          position: null,
+        })
         success = true
       } catch (error) {
         toast.error(error.toString())
@@ -81,7 +99,10 @@ function useSelectPositionManager (): {
   const itemUpdatePosition = async (updatedItem: Item) => {
     let success = false
     try {
-      await updatedItem?.layer?.api?.updateItem!({ id: updatedItem.id, position: updatedItem.position })
+      await updatedItem?.layer?.api?.updateItem!({
+        id: updatedItem.id,
+        position: updatedItem.position,
+      })
       success = true
     } catch (error) {
       toast.error(error.toString())
@@ -96,7 +117,7 @@ function useSelectPositionManager (): {
     if (markerClicked) {
       const newRelations = markerClicked.relations || []
 
-      if (!newRelations.some(r => r.related_items_id === id)) {
+      if (!newRelations.some((r) => r.related_items_id === id)) {
         newRelations?.push({ items_id: markerClicked.id, related_items_id: id })
         const updatedItem = { id: markerClicked.id, relations: newRelations }
 
@@ -118,11 +139,11 @@ function useSelectPositionManager (): {
 }
 
 export const SelectPositionProvider: React.FunctionComponent<{
-    children?: React.ReactNode
+  children?: React.ReactNode
 }> = ({ children }) => (
-    <SelectPositionContext.Provider value={useSelectPositionManager()}>
-        {children}
-    </SelectPositionContext.Provider>
+  <SelectPositionContext.Provider value={useSelectPositionManager()}>
+    {children}
+  </SelectPositionContext.Provider>
 )
 
 export const useSelectPosition = (): Item | LayerProps | null => {

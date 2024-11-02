@@ -1,4 +1,4 @@
-export function getValue (obj, path) {
+export function getValue(obj, path) {
   if (!obj || typeof path !== 'string') return undefined
 
   const pathArray = path.split('.') // Use a different variable for the split path

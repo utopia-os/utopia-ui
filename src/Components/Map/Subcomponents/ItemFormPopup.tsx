@@ -14,14 +14,14 @@ import { useAddTag, useTags } from '../hooks/useTags'
 import { useAuth } from '../../Auth'
 
 export interface ItemFormPopupProps {
-    position: LatLng,
-    layer: LayerProps,
-    item?: Item,
-    children?: React.ReactNode,
-    setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
+  position: LatLng
+  layer: LayerProps
+  item?: Item
+  children?: React.ReactNode
+  setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
 }
 
-export function ItemFormPopup (props: ItemFormPopupProps) {
+export function ItemFormPopup(props: ItemFormPopupProps) {
   const [spinner, setSpinner] = useState(false)
 
   // eslint-disable-next-line no-unused-vars
@@ -55,12 +55,16 @@ export function ItemFormPopup (props: ItemFormPopupProps) {
     evt.preventDefault()
     setSpinner(true)
 
-    formItem.text && formItem.text.toLocaleLowerCase().match(hashTagRegex)?.map(tag => {
-      if (!tags.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
-        addTag({ id: crypto.randomUUID(), name: tag.slice(1), color: randomColor() })
-      }
-      return null
-    })
+    formItem.text &&
+      formItem.text
+        .toLocaleLowerCase()
+        .match(hashTagRegex)
+        ?.map((tag) => {
+          if (!tags.find((t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase())) {
+            addTag({ id: crypto.randomUUID(), name: tag.slice(1), color: randomColor() })
+          }
+          return null
+        })
 
     if (props.item) {
       let success = false
@@ -79,27 +83,46 @@ export function ItemFormPopup (props: ItemFormPopupProps) {
       setSpinner(false)
       map.closePopup()
     } else {
-      const item = items.find(i => i.user_created?.id === user?.id && i.layer?.itemType.name === props.layer.itemType.name)
+      const item = items.find(
+        (i) =>
+          i.user_created?.id === user?.id && i.layer?.itemType.name === props.layer.itemType.name,
+      )
 
       const uuid = crypto.randomUUID()
       let success = false
       try {
-        props.layer.onlyOnePerOwner && item && await props.layer.api?.updateItem!({ ...formItem, id: item?.id });
-        (!props.layer.onlyOnePerOwner || !item) && await props.layer.api?.createItem!({ ...formItem, id: uuid, name: formItem.name ? formItem.name : user?.first_name })
+        props.layer.onlyOnePerOwner &&
+          item &&
+          (await props.layer.api?.updateItem!({ ...formItem, id: item?.id }))
+        ;(!props.layer.onlyOnePerOwner || !item) &&
+          (await props.layer.api?.createItem!({
+            ...formItem,
+            id: uuid,
+            name: formItem.name ? formItem.name : user?.first_name,
+          }))
         success = true
       } catch (error) {
         toast.error(error.toString())
       }
       if (success) {
-        props.layer.onlyOnePerOwner && item && updateItem({ ...item, ...formItem });
-        (!props.layer.onlyOnePerOwner || !item) && addItem({ ...formItem, name: formItem.name ? formItem.name : user?.first_name, user_created: user, type: props.layer.itemType, id: uuid, layer: props.layer, public_edit: !user })
+        props.layer.onlyOnePerOwner && item && updateItem({ ...item, ...formItem })
+        ;(!props.layer.onlyOnePerOwner || !item) &&
+          addItem({
+            ...formItem,
+            name: formItem.name ? formItem.name : user?.first_name,
+            user_created: user,
+            type: props.layer.itemType,
+            id: uuid,
+            layer: props.layer,
+            public_edit: !user,
+          })
         toast.success('New item created')
         resetFilterTags()
       }
       setSpinner(false)
       map.closePopup()
     }
-        props.setItemFormPopup!(null)
+    props.setItemFormPopup!(null)
   }
 
   const resetPopup = () => {
@@ -113,39 +136,74 @@ export function ItemFormPopup (props: ItemFormPopupProps) {
   }, [props.position])
 
   return (
-        <LeafletPopup minWidth={275} maxWidth={275} autoPanPadding={[20, 80]}
-            eventHandlers={{
-              remove: () => {
-                setTimeout(function () {
-                  resetPopup()
-                }, 100)
-              }
-            }}
-            position={props.position}>
-            <form ref={formRef} onReset={resetPopup} autoComplete='off' onSubmit={e => handleSubmit(e)}>
-                {props.item
-                  ? <div className='tw-h-3'></div>
-                  : <div className='tw-flex tw-justify-center'><b className="tw-text-xl tw-text-center tw-font-bold">{ props.layer.menuText}</b></div>
-                }
+    <LeafletPopup
+      minWidth={275}
+      maxWidth={275}
+      autoPanPadding={[20, 80]}
+      eventHandlers={{
+        remove: () => {
+          setTimeout(function () {
+            resetPopup()
+          }, 100)
+        },
+      }}
+      position={props.position}
+    >
+      <form ref={formRef} onReset={resetPopup} autoComplete='off' onSubmit={(e) => handleSubmit(e)}>
+        {props.item ? (
+          <div className='tw-h-3'></div>
+        ) : (
+          <div className='tw-flex tw-justify-center'>
+            <b className='tw-text-xl tw-text-center tw-font-bold'>{props.layer.menuText}</b>
+          </div>
+        )}
 
-                {props.children
+        {props.children ? (
+          React.Children.toArray(props.children).map((child) =>
+            React.isValidElement<{
+              item: Item
+              test: string
+              setPopupTitle: React.Dispatch<React.SetStateAction<string>>
+            }>(child)
+              ? React.cloneElement(child, {
+                  item: props.item,
+                  key: props.position.toString(),
+                  setPopupTitle,
+                })
+              : '',
+          )
+        ) : (
+          <>
+            <TextInput
+              type='text'
+              placeholder='Name'
+              dataField='name'
+              defaultValue={props.item ? props.item.name : ''}
+              inputStyle=''
+            />
+            <TextAreaInput
+              key={props.position.toString()}
+              placeholder='Text'
+              dataField='text'
+              defaultValue={props.item ? props.item.text : ''}
+              inputStyle='tw-h-40 tw-mt-5'
+            />
+          </>
+        )}
 
-                  ? React.Children.toArray(props.children).map((child) =>
-                    React.isValidElement<{ item: Item, test: string, setPopupTitle: React.Dispatch<React.SetStateAction<string>> }>(child)
-                      ? React.cloneElement(child, { item: props.item, key: props.position.toString(), setPopupTitle })
-                      : ''
-                  )
-
-                  : <>
-                        <TextInput type="text" placeholder="Name" dataField="name" defaultValue={props.item ? props.item.name : ''} inputStyle='' />
-                        <TextAreaInput key={props.position.toString()} placeholder="Text" dataField="text" defaultValue={props.item ? props.item.text : ''} inputStyle='tw-h-40 tw-mt-5' />
-                    </>
-                }
-
-                <div className='tw-flex tw-justify-center'>
-                    <button className={spinner ? 'tw-btn tw-btn-disabled tw-mt-5 tw-place-self-center' : 'tw-btn tw-mt-5 tw-place-self-center'} type='submit'>{spinner ? <span className="tw-loading tw-loading-spinner"></span> : 'Save'}</button>
-                </div>
-            </form>
-        </LeafletPopup>
+        <div className='tw-flex tw-justify-center'>
+          <button
+            className={
+              spinner
+                ? 'tw-btn tw-btn-disabled tw-mt-5 tw-place-self-center'
+                : 'tw-btn tw-mt-5 tw-place-self-center'
+            }
+            type='submit'
+          >
+            {spinner ? <span className='tw-loading tw-loading-spinner'></span> : 'Save'}
+          </button>
+        </div>
+      </form>
+    </LeafletPopup>
   )
 }

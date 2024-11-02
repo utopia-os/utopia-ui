@@ -9,37 +9,35 @@ type ActionType =
   | { type: 'UPDATE'; item: Item }
   | { type: 'REMOVE'; item: Item }
   | { type: 'RESET'; layer: LayerProps }
-  ;
 
-type UseItemManagerResult = ReturnType<typeof useItemsManager>;
+type UseItemManagerResult = ReturnType<typeof useItemsManager>
 
 const ItemContext = createContext<UseItemManagerResult>({
   items: [],
-  addItem: () => { },
-  updateItem: () => { },
-  removeItem: () => { },
-  resetItems: () => { },
-  setItemsApi: () => { },
-  setItemsData: () => { },
-  allItemsLoaded: false
+  addItem: () => {},
+  updateItem: () => {},
+  removeItem: () => {},
+  resetItems: () => {},
+  setItemsApi: () => {},
+  setItemsData: () => {},
+  allItemsLoaded: false,
 })
 
-function useItemsManager (initialItems: Item[]): {
-  items: Item[];
+function useItemsManager(initialItems: Item[]): {
+  items: Item[]
   // eslint-disable-next-line no-unused-vars
-  addItem: (item: Item) => void;
+  addItem: (item: Item) => void
   // eslint-disable-next-line no-unused-vars
-  updateItem: (item: Item) => void;
+  updateItem: (item: Item) => void
   // eslint-disable-next-line no-unused-vars
-  removeItem: (item: Item) => void;
+  removeItem: (item: Item) => void
   // eslint-disable-next-line no-unused-vars
-  resetItems: (layer: LayerProps) => void;
+  resetItems: (layer: LayerProps) => void
   // eslint-disable-next-line no-unused-vars
-  setItemsApi: (layer: LayerProps) => void;
+  setItemsApi: (layer: LayerProps) => void
   // eslint-disable-next-line no-unused-vars
-  setItemsData: (layer: LayerProps) => void;
-  allItemsLoaded: boolean;
-
+  setItemsData: (layer: LayerProps) => void
+  allItemsLoaded: boolean
 } {
   const addLayer = useAddLayer()
 
@@ -49,14 +47,9 @@ function useItemsManager (initialItems: Item[]): {
     switch (action.type) {
       case 'ADD':
         // eslint-disable-next-line no-case-declarations
-        const exist = state.find((item) =>
-          item.id === action.item.id
-        )
+        const exist = state.find((item) => item.id === action.item.id)
         if (!exist) {
-          return [
-            ...state,
-            action.item
-          ]
+          return [...state, action.item]
         } else return state
       case 'UPDATE':
         return state.map((item) => {
@@ -66,9 +59,9 @@ function useItemsManager (initialItems: Item[]): {
           return item
         })
       case 'REMOVE':
-        return state.filter(item => item !== action.item)
+        return state.filter((item) => item !== action.item)
       case 'RESET':
-        return state.filter(item => item.layer?.name !== action.layer.name)
+        return state.filter((item) => item.layer?.name !== action.layer.name)
       default:
         throw new Error()
     }
@@ -76,75 +69,80 @@ function useItemsManager (initialItems: Item[]): {
 
   const setItemsApi = useCallback(async (layer: LayerProps) => {
     addLayer(layer)
-    const result = await toast.promise(
-      layer.api!.getItems(),
-      {
-        pending: `loading ${layer.name} ...`,
-        success: `${layer.name} loaded`,
-        error: {
-          render ({ data }) {
-            return `${data}`
-          }
-        }
-      }
-    )
+    const result = await toast.promise(layer.api!.getItems(), {
+      pending: `loading ${layer.name} ...`,
+      success: `${layer.name} loaded`,
+      error: {
+        render({ data }) {
+          return `${data}`
+        },
+      },
+    })
     if (result) {
-      result.map(item => {
+      result.map((item) => {
         dispatch({ type: 'ADD', item: { ...item, layer } })
         return null
       })
       setallItemsLoaded(true)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const setItemsData = useCallback((layer: LayerProps) => {
     addLayer(layer)
-    layer.data?.map(item => {
+    layer.data?.map((item) => {
       dispatch({ type: 'ADD', item: { ...item, layer } })
       return null
     })
     setallItemsLoaded(true)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const addItem = useCallback(async (item: Item) => {
     dispatch({
       type: 'ADD',
-      item
+      item,
     })
   }, [])
 
   const updateItem = useCallback(async (item: Item) => {
     dispatch({
       type: 'UPDATE',
-      item
+      item,
     })
   }, [])
 
   const removeItem = useCallback((item: Item) => {
     dispatch({
       type: 'REMOVE',
-      item
+      item,
     })
   }, [])
 
   const resetItems = useCallback((layer: LayerProps) => {
     dispatch({
       type: 'RESET',
-      layer
+      layer,
     })
   }, [])
 
-  return { items, updateItem, addItem, removeItem, resetItems, setItemsApi, setItemsData, allItemsLoaded }
+  return {
+    items,
+    updateItem,
+    addItem,
+    removeItem,
+    resetItems,
+    setItemsApi,
+    setItemsData,
+    allItemsLoaded,
+  }
 }
 
 export const ItemsProvider: React.FunctionComponent<{
-  initialItems: Item[], children?: React.ReactNode
+  initialItems: Item[]
+  children?: React.ReactNode
 }> = ({ initialItems, children }) => (
-  <ItemContext.Provider value={useItemsManager(initialItems)}>
-    {children}
-  </ItemContext.Provider>
+  <ItemContext.Provider value={useItemsManager(initialItems)}>{children}</ItemContext.Provider>
 )
 
 export const useItems = (): Item[] => {

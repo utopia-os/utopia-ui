@@ -1,25 +1,25 @@
 import axios from 'axios'
 
 interface ReverseGeocodeResponse {
-    place_id: number;
-    licence: string;
-    osm_type: string;
-    osm_id: number;
-    lat: string;
-    lon: string;
-    display_name: string;
-    address: {
-        road?: string;
-        house_number?: string;
-        city?: string;
-        town?: string;
-        village?: string;
-        [key: string]: string | undefined;
-    };
-    boundingbox: string[];
+  place_id: number
+  licence: string
+  osm_type: string
+  osm_id: number
+  lat: string
+  lon: string
+  display_name: string
+  address: {
+    road?: string
+    house_number?: string
+    city?: string
+    town?: string
+    village?: string
+    [key: string]: string | undefined
+  }
+  boundingbox: string[]
 }
 
-export async function reverseGeocode (lat: number, lon: number): Promise<string> {
+export async function reverseGeocode(lat: number, lon: number): Promise<string> {
   const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&addressdetails=1`
 
   try {

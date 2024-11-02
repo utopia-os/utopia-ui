@@ -4,22 +4,31 @@ import Tribute from 'tributejs'
 import { useTags } from '../Map/hooks/useTags'
 
 type TextAreaProps = {
-    labelTitle?: string;
-    labelStyle?: string;
-    containerStyle?: string;
-    dataField?: string;
-    inputStyle?: string;
-    defaultValue: string;
-    placeholder?: string;
-    // eslint-disable-next-line no-unused-vars
-    updateFormValue?: (value: string) => void;
+  labelTitle?: string
+  labelStyle?: string
+  containerStyle?: string
+  dataField?: string
+  inputStyle?: string
+  defaultValue: string
+  placeholder?: string
+  // eslint-disable-next-line no-unused-vars
+  updateFormValue?: (value: string) => void
 }
 
 interface KeyValue {
-    [key: string]: string;
+  [key: string]: string
 }
 
-export function TextAreaInput ({ labelTitle, dataField, labelStyle, containerStyle, inputStyle, defaultValue, placeholder, updateFormValue }: TextAreaProps) {
+export function TextAreaInput({
+  labelTitle,
+  dataField,
+  labelStyle,
+  containerStyle,
+  inputStyle,
+  defaultValue,
+  placeholder,
+  updateFormValue,
+}: TextAreaProps) {
   const ref = useRef<HTMLTextAreaElement>(null)
   const [inputValue, setInputValue] = useState<string>(defaultValue)
 
@@ -30,7 +39,7 @@ export function TextAreaInput ({ labelTitle, dataField, labelStyle, containerSty
 
   const values: KeyValue[] = []
 
-  tags.forEach(tag => {
+  tags.forEach((tag) => {
     values.push({ key: tag.name, value: tag.name, color: tag.color })
   })
 
@@ -45,7 +54,7 @@ export function TextAreaInput ({ labelTitle, dataField, labelStyle, containerSty
     },
     menuItemTemplate: function (item) {
       return `<span style="color: ${item.original.color}; padding: 5px; border-radius: 3px;">#${item.string}</span>`
-    }
+    },
   })
 
   useEffect(() => {
@@ -71,23 +80,21 @@ export function TextAreaInput ({ labelTitle, dataField, labelStyle, containerSty
   }
 
   return (
-        <div className={`tw-form-control tw-w-full ${containerStyle || ''}`}>
-            {labelTitle
-              ? (
-                <label className="tw-label">
-                    <span className={`tw-label-text tw-text-base-content ${labelStyle}`}>{labelTitle}</span>
-                </label>
-                )
-              : null}
-            <textarea
-                required
-                ref={ref}
-                value={inputValue}
-                name={dataField}
-                className={`tw-textarea tw-textarea-bordered tw-w-full tw-leading-5 ${inputStyle || ''}`}
-                placeholder={placeholder || ''}
-                onChange={handleChange}
-            ></textarea>
-        </div>
+    <div className={`tw-form-control tw-w-full ${containerStyle || ''}`}>
+      {labelTitle ? (
+        <label className='tw-label'>
+          <span className={`tw-label-text tw-text-base-content ${labelStyle}`}>{labelTitle}</span>
+        </label>
+      ) : null}
+      <textarea
+        required
+        ref={ref}
+        value={inputValue}
+        name={dataField}
+        className={`tw-textarea tw-textarea-bordered tw-w-full tw-leading-5 ${inputStyle || ''}`}
+        placeholder={placeholder || ''}
+        onChange={handleChange}
+      ></textarea>
+    </div>
   )
 }

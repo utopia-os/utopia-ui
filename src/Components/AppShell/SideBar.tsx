@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/consistent-type-definitions */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
@@ -11,9 +12,8 @@ import SidebarSubmenu from './SidebarSubmenu'
 import ChevronRightIcon from '@heroicons/react/24/outline/ChevronRightIcon'
 import * as React from 'react'
 
-interface route {
+type route = {
   path: string
-
   icon: JSX.Element
   name: string
   submenu?: route

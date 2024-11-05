@@ -196,7 +196,7 @@ export const Layer = ({
       if (window.location.pathname.split('/')[1]) {
         const id = window.location.pathname.split('/')[1]
         const ref = leafletRefs[id]
-        if (ref.marker && ref.item.layer?.name === name) {
+        if (ref?.marker && ref.item.layer?.name === name) {
           ref.marker &&
             clusterRef.hasLayer(ref.marker) &&
             clusterRef?.zoomToShowLayer(ref.marker, () => {

@@ -7,12 +7,11 @@ import { useAddFilterTag } from '../../Map/hooks/useFilter'
 import { Item, Tag } from '../../../types'
 import { Link, useNavigate } from 'react-router-dom'
 import { useItems } from '../../Map/hooks/useItems'
-import { useAssetApi } from '../../AppShell/hooks/useAssets'
+import { useAppState } from '../../AppShell/hooks/useAppState'
 import { timeAgo } from '../../../Utils/TimeAgo'
 
 export const TabsView = ({
   attestations,
-  userType,
   item,
   offers,
   needs,
@@ -23,7 +22,6 @@ export const TabsView = ({
   unlinkItem,
 }: {
   attestations: Array<any>
-  userType: string
   item: Item
   offers: Array<Tag>
   needs: Array<Tag>
@@ -40,9 +38,11 @@ export const TabsView = ({
   const [addItemPopupType] = useState<string>('')
 
   const items = useItems()
-  const assetsApi = useAssetApi()
+  const appState = useAppState()
   const getUserProfile = (id: string) => {
-    return items.find((i) => i.user_created.id === id && i.layer?.itemType.name === userType)
+    return items.find(
+      (i) => i.user_created.id === id && i.layer?.itemType.name === appState.userType,
+    )
   }
 
   useEffect(() => {
@@ -146,7 +146,10 @@ export const TabsView = ({
                             <div className='tw-avatar'>
                               <div className='tw-mask tw-rounded-full h-8 w-8 tw-mr-2'>
                                 <img
-                                  src={assetsApi.url + getUserProfile(a.user_created.id)?.image}
+                                  src={
+                                    appState.assetsApi.url +
+                                    getUserProfile(a.user_created.id)?.image
+                                  }
                                   alt='Avatar Tailwind CSS Component'
                                 />
                               </div>

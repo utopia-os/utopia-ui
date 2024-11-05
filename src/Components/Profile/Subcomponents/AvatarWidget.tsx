@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useState, useCallback, useRef } from 'react'
 import ReactCrop, { Crop, centerCrop, makeAspectCrop } from 'react-image-crop'
-import { useAssetApi } from '../../AppShell/hooks/useAssets'
+import { useAppState } from '../../AppShell/hooks/useAppState'
 import 'react-image-crop/dist/ReactCrop.css'
 import DialogModal from '../../Templates/DialogModal'
 
@@ -16,7 +16,7 @@ export const AvatarWidget: React.FC<AvatarWidgetProps> = ({ avatar, setAvatar })
   const [cropModalOpen, setCropModalOpen] = useState<boolean>(false)
   const [cropping, setCropping] = useState<boolean>(false)
 
-  const assetsApi = useAssetApi()
+  const appState = useAppState()
 
   const imgRef = useRef<HTMLImageElement>(null)
 
@@ -146,10 +146,10 @@ export const AvatarWidget: React.FC<AvatarWidgetProps> = ({ avatar, setAvatar })
       ctx?.drawImage(img, 0, 0, 400, 400)
 
       const resizedBlob = await canvas.convertToBlob()
-      const asset = await assetsApi.upload(resizedBlob, 'avatar')
+      const asset = await appState.assetsApi.upload(resizedBlob, 'avatar')
       setAvatar(asset.id)
     },
-    [assetsApi, setAvatar],
+    [appState.assetsApi, setAvatar],
   )
 
   return (
@@ -180,7 +180,10 @@ export const AvatarWidget: React.FC<AvatarWidgetProps> = ({ avatar, setAvatar })
           </div>
           {avatar ? (
             <div className='tw-h-20 tw-w-20'>
-              <img src={assetsApi.url + avatar} className='tw-h-20 tw-w-20 tw-rounded-full' />
+              <img
+                src={appState.assetsApi.url + avatar}
+                className='tw-h-20 tw-w-20 tw-rounded-full'
+              />
             </div>
           ) : (
             <div className='tw-h-20 tw-w-20'>

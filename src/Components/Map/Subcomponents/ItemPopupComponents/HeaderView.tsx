@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Item, ItemsApi } from '../../../../types'
 import { useHasUserPermission } from '../../hooks/usePermissions'
 import { getValue } from '../../../../Utils/GetValue'
-import { useAssetApi } from '../../../AppShell/hooks/useAssets'
+import { useAppState } from '../../../AppShell/hooks/useAppState'
 import DialogModal from '../../../Templates/DialogModal'
 import { useNavigate } from 'react-router-dom'
 
@@ -41,17 +41,17 @@ export function HeaderView({
 
   const hasUserPermission = useHasUserPermission()
   const navigate = useNavigate()
-  const assetsApi = useAssetApi()
+  const appState = useAppState()
 
   const avatar =
     itemAvatarField && getValue(item, itemAvatarField)
-      ? assetsApi.url +
+      ? appState.assetsApi.url +
         getValue(item, itemAvatarField) +
         `${big ? '?width=160&heigth=160' : '?width=80&heigth=80'}`
       : item.layer?.itemAvatarField &&
         item &&
         getValue(item, item.layer?.itemAvatarField) &&
-        assetsApi.url +
+        appState.assetsApi.url +
           getValue(item, item.layer?.itemAvatarField) +
           `${big ? '?width=160&heigth=160' : '?width=80&heigth=80'}`
   const title = itemNameField

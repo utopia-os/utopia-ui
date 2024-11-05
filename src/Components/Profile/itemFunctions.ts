@@ -175,7 +175,7 @@ export const onUpdateItem = async (
     ...(state.end && { end: state.end }),
     ...(state.start && { start: state.start }),
     ...(state.markerIcon && { markerIcon: state.markerIcon }),
-    next_appointment: state.nextAppointment,
+    next_appointment: state.next_appointment,
     ...(state.image.length > 10 && { image: state.image }),
     ...(state.offers.length > 0 && { offers: offerUpdates }),
     ...(state.needs.length > 0 && { needs: needsUpdates }),

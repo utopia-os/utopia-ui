@@ -1,4 +1,3 @@
-/* eslint-disable no-constant-condition */
 import { useItems, useUpdateItem, useAddItem } from '../Map/hooks/useItems'
 import { useEffect, useState } from 'react'
 import { getValue } from '../../Utils/GetValue'
@@ -14,21 +13,23 @@ import { linkItem, onUpdateItem, unlinkItem } from './itemFunctions'
 import { SimpleForm } from './Templates/SimpleForm'
 import { TabsForm } from './Templates/TabsForm'
 import { FormHeader } from './Subcomponents/FormHeader'
+import { useAppState } from '../AppShell/hooks/useAppState'
+import { FlexForm } from './Templates/FlexForm'
 
-export function ProfileForm({ userType }: { userType: string }) {
+export function ProfileForm() {
   const [state, setState] = useState({
     color: '',
     id: '',
-    groupType: 'wuerdekompass',
+    group_type: 'wuerdekompass',
     status: 'active',
     name: '',
     subname: '',
     text: '',
     contact: '',
     telephone: '',
-    nextAppointment: '',
+    next_appointment: '',
     image: '',
-    markerIcon: '',
+    marker_icon: '',
     offers: [] as Tag[],
     needs: [] as Tag[],
     relations: [] as Item[],
@@ -50,13 +51,13 @@ export function ProfileForm({ userType }: { userType: string }) {
   const hasUserPermission = useHasUserPermission()
   const getItemTags = useGetItemTags()
   const items = useItems()
+  const appState = useAppState()
 
   const [urlParams, setUrlParams] = useState(new URLSearchParams(location.search))
 
   useEffect(() => {
     item && hasUserPermission('items', 'update', item) && setUpdatePermission(true)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [item])
+  }, [hasUserPermission, item])
 
   useEffect(() => {
     const itemId = location.pathname.split('/')[2]
@@ -64,9 +65,8 @@ export function ProfileForm({ userType }: { userType: string }) {
     const item = items.find((i) => i.id === itemId)
     item && setItem(item)
 
-    const layer = layers.find((l) => l.itemType.name === userType)
-
-    !item &&
+    if (!item) {
+      const layer = layers.find((l) => l.itemType.name === appState.userType)
       setItem({
         id: crypto.randomUUID(),
         name: user ? user.first_name : '',
@@ -74,6 +74,7 @@ export function ProfileForm({ userType }: { userType: string }) {
         layer,
         new: true,
       })
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items])
@@ -107,16 +108,16 @@ export function ProfileForm({ userType }: { userType: string }) {
     setState({
       color: newColor,
       id: item?.id ?? '',
-      groupType: item?.group_type ?? 'wuerdekompass',
+      group_type: item?.group_type ?? 'wuerdekompass',
       status: item?.status ?? 'active',
       name: item?.name ?? '',
       subname: item?.subname ?? '',
       text: item?.text ?? '',
       contact: item?.contact ?? '',
       telephone: item?.telephone ?? '',
-      nextAppointment: item?.next_appointment ?? '',
+      next_appointment: item?.next_appointment ?? '',
       image: item?.image ?? '',
-      markerIcon: item?.marker_icon ?? '',
+      marker_icon: item?.marker_icon ?? '',
       offers,
       needs,
       relations,
@@ -129,8 +130,8 @@ export function ProfileForm({ userType }: { userType: string }) {
   const [template, setTemplate] = useState<string>('')
 
   useEffect(() => {
-    setTemplate(item.layer?.itemType.template || userType)
-  }, [userType, item])
+    setTemplate(item.layer?.itemType.template || appState.userType)
+  }, [appState.userType, item])
 
   return (
     <>
@@ -146,6 +147,10 @@ export function ProfileForm({ userType }: { userType: string }) {
           )}
 
           {template === 'simple' && <SimpleForm state={state} setState={setState}></SimpleForm>}
+
+          {template === 'flex' && (
+            <FlexForm item={item} state={state} setState={setState}></FlexForm>
+          )}
 
           {template === 'tabs' && (
             <TabsForm
@@ -177,14 +182,10 @@ export function ProfileForm({ userType }: { userType: string }) {
                   urlParams,
                 )
               }
-              style={
-                true
-                  ? {
-                      backgroundColor: `${item.layer?.itemColorField && getValue(item, item.layer?.itemColorField) ? getValue(item, item.layer?.itemColorField) : getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor}`,
-                      color: '#fff',
-                    }
-                  : { color: '#fff' }
-              }
+              style={{
+                backgroundColor: `${item.layer?.itemColorField && getValue(item, item.layer?.itemColorField) ? getValue(item, item.layer?.itemColorField) : getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor}`,
+                color: '#fff',
+              }}
             >
               Update
             </button>

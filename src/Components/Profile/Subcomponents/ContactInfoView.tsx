@@ -4,7 +4,7 @@ import { Item } from '../../../types'
 import { useEffect, useState } from 'react'
 import { useItems } from '../../Map/hooks/useItems'
 
-const ContactInfo = ({ item }: { item: Item }) => {
+export const ContactInfoView = ({ item, heading }: { item: Item; heading: string }) => {
   const appState = useAppState()
   const [profileOwner, setProfileOwner] = useState<Item>()
   const items = useItems()
@@ -31,7 +31,7 @@ const ContactInfo = ({ item }: { item: Item }) => {
 
   return (
     <div className='tw-bg-base-200  tw-mb-6 tw-mt-6 tw-p-6'>
-      <h2 className='tw-text-lg tw-font-semibold'>Du hast Fragen?</h2>
+      <h2 className='tw-text-lg tw-font-semibold'>{heading}</h2>
       <div className='tw-mt-4 tw-flex tw-items-center'>
         {profileOwner?.image && (
           <ConditionalLink url={'/item/' + profileOwner?.id}>
@@ -100,8 +100,6 @@ const ContactInfo = ({ item }: { item: Item }) => {
     </div>
   )
 }
-
-export default ContactInfo
 
 // eslint-disable-next-line react/prop-types
 const ConditionalLink = ({ url, children }) => {

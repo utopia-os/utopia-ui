@@ -108,8 +108,8 @@ export function ProfileForm() {
     setState({
       color: newColor,
       id: item?.id ?? '',
-      group_type: item?.group_type ?? 'wuerdekompass',
-      status: item?.status ?? 'active',
+      group_type: item?.group_type ?? '',
+      status: item?.status ?? '',
       name: item?.name ?? '',
       subname: item?.subname ?? '',
       text: item?.text ?? '',
@@ -165,7 +165,7 @@ export function ProfileForm() {
             ></TabsForm>
           )}
 
-          <div className='tw-mt-4 tw-mb-4'>
+          <div className='tw-mt-4'>
             <button
               className={loading ? ' tw-loading tw-btn tw-float-right' : 'tw-btn tw-float-right'}
               onClick={() =>

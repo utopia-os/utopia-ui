@@ -1,20 +1,15 @@
-import { useState } from 'react'
 import * as React from 'react'
 
 interface ComboBoxProps {
   id?: string
-  options: { value: string; label: string }[]
+  options: string[]
   value: string
   onValueChange: (newValue: string) => void
 }
 
 const ComboBoxInput = ({ id, options, value, onValueChange }: ComboBoxProps) => {
-  // eslint-disable-next-line no-unused-vars
-  const [selectedValue, setSelectedValue] = useState(value)
-
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value
-    setSelectedValue(value)
     onValueChange(value)
   }
 
@@ -25,8 +20,8 @@ const ComboBoxInput = ({ id, options, value, onValueChange }: ComboBoxProps) => 
       onChange={handleChange}
     >
       {options.map((o) => (
-        <option value={o.value} key={o.value} selected={o.value === value}>
-          {o.label}
+        <option value={o} key={o} selected={o === value}>
+          {o}
         </option>
       ))}
     </select>

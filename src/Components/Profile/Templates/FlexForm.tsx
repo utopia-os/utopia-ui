@@ -4,11 +4,13 @@ import { FormState } from './OnepagerForm'
 import { GroupSubheaderForm } from '../Subcomponents/GroupSubheaderForm'
 import { ContactInfoForm } from '../Subcomponents/ContactInfoForm'
 import { ProfileTextForm } from '../Subcomponents/ProfileTextForm'
+import { ProfileStartEndForm } from '../Subcomponents/ProfileStartEndForm'
 
 const componentMap = {
-  group_subheaders: GroupSubheaderForm,
+  groupSubheaders: GroupSubheaderForm,
   texts: ProfileTextForm,
-  contact_infos: ContactInfoForm,
+  contactInfos: ContactInfoForm,
+  startEnd: ProfileStartEndForm,
   // weitere Komponenten hier
 }
 
@@ -22,14 +24,15 @@ export const FlexForm = ({
   item: Item
 }) => {
   return (
-    <div className='tw-space-y-6 tw-mt-6'>
-      {item.layer?.itemType.profile_template.map((templateItem) => {
+    <div className='tw-mt-6 tw-flex tw-flex-col tw-h-full'>
+      {item.layer?.itemType.profileTemplate.map((templateItem) => {
         const TemplateComponent = componentMap[templateItem.collection]
         return TemplateComponent ? (
           <TemplateComponent
             key={templateItem.id}
             state={state}
             setState={setState}
+            item={item}
             {...templateItem.item}
           />
         ) : (

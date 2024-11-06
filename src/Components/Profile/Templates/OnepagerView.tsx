@@ -1,6 +1,6 @@
 import { Item } from '../../../types'
 import { TextView } from '../../Map'
-import ContactInfo from '../Subcomponents/ContactInfo'
+import { ContactInfoView } from '../Subcomponents/ContactInfoView'
 import { GroupSubHeaderView } from '../Subcomponents/GroupSubHeaderView'
 
 export const OnepagerView = ({ item }: { item: Item }) => {
@@ -10,7 +10,7 @@ export const OnepagerView = ({ item }: { item: Item }) => {
         item={item}
         share_base_url={`https://www.wuerdekompass.org/aktivitaeten/gruppensuche/#/gruppe/${item.slug}`}
       />
-      {item.user_created.first_name && <ContactInfo item={item} />}
+      {item.user_created.first_name && <ContactInfoView heading='Du hast Fragen?' item={item} />}
       {/* Description Section */}
       <div className='tw-my-10 tw-mt-2 tw-px-6 tw-text-sm '>
         <TextView rawText={item.text || 'Keine Beschreibung vorhanden'} />

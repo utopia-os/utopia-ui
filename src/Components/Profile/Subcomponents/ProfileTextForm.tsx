@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import * as React from 'react'
 import { TextAreaInput } from '../../Input'
 import { FormState } from '../Templates/OnepagerForm'
@@ -8,29 +7,33 @@ import { useEffect, useState } from 'react'
 export const ProfileTextForm = ({
   state,
   setState,
-  data_field,
-  section_name,
+  dataField,
+  heading,
+  size,
+  hideInputLabel,
 }: {
   state: FormState
   setState: React.Dispatch<React.SetStateAction<any>>
-  data_field?: string
-  section_name: string
+  dataField?: string
+  heading: string
+  size: string
+  hideInputLabel: boolean
 }) => {
-  const [field, setField] = useState<string>(data_field || 'text')
+  const [field, setField] = useState<string>(dataField || 'text')
 
   useEffect(() => {
-    if (!data_field) {
+    if (!dataField) {
       setField('text')
     }
-  }, [data_field])
+  }, [dataField])
 
   return (
-    <div>
+    <div className='tw-h-full tw-flex tw-flex-col tw-mt-4'>
       <label
         htmlFor='nextAppointment'
         className='tw-block tw-text-sm tw-font-medium tw-text-gray-500 tw-mb-1'
       >
-        {section_name || 'Text'}:
+        {heading || 'Text'}:
       </label>
       <TextAreaInput
         placeholder={'...'}
@@ -41,7 +44,9 @@ export const ProfileTextForm = ({
             [field]: v,
           }))
         }
-        inputStyle='tw-h-24'
+        labelStyle={hideInputLabel ? 'tw-hidden' : ''}
+        containerStyle={size === 'full' ? 'tw-grow tw-h-full' : ''}
+        inputStyle={size === 'full' ? 'tw-h-full' : 'tw-h-24'}
       />
     </div>
   )

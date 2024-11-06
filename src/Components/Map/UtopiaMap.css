@@ -120,6 +120,20 @@
     left: 4px;
     width: 24px;
   }
+
+  .flower-icon {
+    position: relative;
+    top: -35px;
+    left: 4px;
+    width: 24px;
+  }
+  
+  .network-icon {
+    position: relative;
+    top: -35px;
+    left: 4px;
+    width: 24px;
+  }
   
   .leaflet-popup-scrolled {
     overflow-x: hidden;

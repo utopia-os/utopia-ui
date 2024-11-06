@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { MapOverlayPage } from './MapOverlayPage'
 import { useItems } from '../Map/hooks/useItems'
-import { useAssetApi } from '../AppShell/hooks/useAssets'
+import { useAppState } from '../AppShell/hooks/useAppState'
 import { EmojiPicker } from './EmojiPicker'
 import { useNavigate } from 'react-router-dom'
 import { useRef, useState, useEffect } from 'react'
@@ -10,7 +10,7 @@ import { toast } from 'react-toastify'
 
 export const AttestationForm = ({ api }: { api?: ItemsApi<any> }) => {
   const items = useItems()
-  const assetsApi = useAssetApi()
+  const appState = useAppState()
   const [users, setUsers] = useState<Array<Item>>()
   const navigate = useNavigate()
 
@@ -88,7 +88,10 @@ export const AttestationForm = ({ api }: { api?: ItemsApi<any> }) => {
                 {u.image ? (
                   <div className='tw-avatar'>
                     <div className='tw-mask tw-mask-circle tw-w-8 tw-h-8'>
-                      <img src={assetsApi.url + u.image + '?width=40&heigth=40'} alt='Avatar' />
+                      <img
+                        src={appState.assetsApi.url + u.image + '?width=40&heigth=40'}
+                        alt='Avatar'
+                      />
                     </div>
                   </div>
                 ) : (

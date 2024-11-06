@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { getValue } from '../../../Utils/GetValue'
 import { Item } from '../../../types'
-import { useAssetApi } from '../../AppShell/hooks/useAssets'
+import { useAppState } from '../../AppShell/hooks/useAppState'
 
 export function LinkedItemsHeaderView({
   item,
@@ -20,15 +20,15 @@ export function LinkedItemsHeaderView({
   loading?: boolean
   unlinkPermission: boolean
 }) {
-  const assetsApi = useAssetApi()
+  const appState = useAppState()
 
   const avatar =
     itemAvatarField && getValue(item, itemAvatarField)
-      ? assetsApi.url + getValue(item, itemAvatarField)
+      ? appState.assetsApi.url + getValue(item, itemAvatarField)
       : item.layer?.itemAvatarField &&
         item &&
         getValue(item, item.layer?.itemAvatarField) &&
-        assetsApi.url + getValue(item, item.layer?.itemAvatarField)
+        appState.assetsApi.url + getValue(item, item.layer?.itemAvatarField)
   const title = itemNameField
     ? getValue(item, itemNameField)
     : item.layer?.itemNameField && item && getValue(item, item.layer?.itemNameField)

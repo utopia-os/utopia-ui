@@ -1,6 +1,6 @@
 import * as React from 'react'
 import NavBar from './NavBar'
-import { SetAssetsApi } from './SetAssetsApi'
+import { SetAppState } from './SetAppState'
 import { AssetsApi } from '../../types'
 import { ContextWrapper } from './ContextWrapper'
 
@@ -18,7 +18,7 @@ export function AppShell({
   return (
     <ContextWrapper>
       <div className='tw-flex tw-flex-col tw-h-full'>
-        <SetAssetsApi assetsApi={assetsApi} />
+        <SetAppState assetsApi={assetsApi} userType={userType} />
         <NavBar userType={userType} appName={appName}></NavBar>
         <div id='app-content' className='tw-flex-grow'>
           {children}

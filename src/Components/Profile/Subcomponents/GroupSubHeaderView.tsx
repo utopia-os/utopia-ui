@@ -26,7 +26,14 @@ export const GroupSubHeaderView = ({
       )}
     </div>
     <div>
-      <SocialShareBar url={shareBaseUrl + item.slug} title={item.name} />
+      <SocialShareBar
+        url={
+          shareBaseUrl && item.slug
+            ? shareBaseUrl + item.slug
+            : window.location.host + '/item/' + item.id
+        }
+        title={item.name}
+      />
     </div>
   </div>
 )

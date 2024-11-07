@@ -30,7 +30,7 @@ export const GroupSubHeaderView = ({
         url={
           shareBaseUrl && item.slug
             ? shareBaseUrl + item.slug
-            : window.location.host + '/item/' + item.id
+            : window.location.protocol + '//' + window.location.host + '/item/' + item.id
         }
         title={item.name}
       />

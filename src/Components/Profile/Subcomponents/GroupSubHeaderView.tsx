@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable camelcase */
 import { Item } from '../../../types'
 import SocialShareBar from './SocialShareBar'

@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { useCallback, useState, createContext, useContext } from 'react'
 import * as React from 'react'
 import { AssetsApi } from '../../../types'
 
-type AppState = {
+interface AppState {
   assetsApi: AssetsApi
   userType: string
 }

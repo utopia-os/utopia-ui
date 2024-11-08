@@ -35,7 +35,7 @@ const SocialShareBar = ({
             backgroundColor: '#444',
           }}
           onClick={() => copyLink()}
-          title='copy Link'
+          title='share link via email'
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'

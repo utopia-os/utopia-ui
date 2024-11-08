@@ -93,7 +93,7 @@ const SocialShareButton = ({ platform, url, title }) => {
         color: 'white',
         backgroundColor: bgColor,
       }}
-      title={`share link ${platform === 'email' ? 'via email' : 'on ' + platform}`}
+      title={`share link on ${platform}`}
     >
       {React.cloneElement(icon, { className: 'tw-w-4 tw-h-4 tw-fill-current' })}
     </a>

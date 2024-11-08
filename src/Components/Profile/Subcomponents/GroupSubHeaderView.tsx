@@ -1,13 +1,14 @@
-/* eslint-disable camelcase */
 import { Item } from '../../../types'
 import SocialShareBar from './SocialShareBar'
 
 export const GroupSubHeaderView = ({
   item,
-  share_base_url,
+  shareBaseUrl,
+  platforms,
 }: {
   item: Item
-  share_base_url: string
+  shareBaseUrl: string
+  platforms?: string[]
 }) => (
   <div className='tw-px-6'>
     <div className='tw-float-left tw-mt-2 tw-mb-4 tw-flex tw-items-center'>
@@ -27,7 +28,15 @@ export const GroupSubHeaderView = ({
       )}
     </div>
     <div>
-      <SocialShareBar url={share_base_url + item.slug} title={item.name} />
+      <SocialShareBar
+        url={
+          shareBaseUrl && item.slug
+            ? shareBaseUrl + item.slug
+            : window.location.protocol + '//' + window.location.host + '/item/' + item.id
+        }
+        title={item.name}
+        platforms={platforms}
+      />
     </div>
   </div>
 )

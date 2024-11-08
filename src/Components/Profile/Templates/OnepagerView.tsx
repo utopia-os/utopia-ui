@@ -8,7 +8,7 @@ export const OnepagerView = ({ item }: { item: Item }) => {
     <div className='tw-h-full tw-overflow-y-auto fade'>
       <GroupSubHeaderView
         item={item}
-        share_base_url={`https://www.wuerdekompass.org/aktivitaeten/gruppensuche/#/gruppe/${item.slug}`}
+        shareBaseUrl={`https://www.wuerdekompass.org/aktivitaeten/gruppensuche/#/gruppe/${item.slug}`}
       />
       {item.user_created.first_name && <ContactInfoView heading='Du hast Fragen?' item={item} />}
       {/* Description Section */}

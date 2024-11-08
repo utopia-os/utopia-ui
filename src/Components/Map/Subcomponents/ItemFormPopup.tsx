@@ -1,3 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/prefer-optional-chain */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import * as React from 'react'
 import { LatLng } from 'leaflet'
 import { Popup as LeafletPopup, useMap } from 'react-leaflet'
@@ -24,7 +33,6 @@ export interface ItemFormPopupProps {
 export function ItemFormPopup(props: ItemFormPopupProps) {
   const [spinner, setSpinner] = useState(false)
 
-  // eslint-disable-next-line no-unused-vars
   const [popupTitle, setPopupTitle] = useState<string>('')
 
   const formRef = useRef<HTMLFormElement>(null)
@@ -34,7 +42,7 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
   const addItem = useAddItem()
   const updateItem = useUpdateItem()
   const items = useItems()
-  // eslint-disable-next-line no-unused-vars
+
   const removeItem = useRemoveItem()
 
   const tags = useTags()
@@ -93,7 +101,7 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
       try {
         props.layer.onlyOnePerOwner &&
           item &&
-          (await props.layer.api?.updateItem!({ ...formItem, id: item?.id }))
+          (await props.layer.api?.updateItem!({ ...formItem, id: item.id }))
         ;(!props.layer.onlyOnePerOwner || !item) &&
           (await props.layer.api?.createItem!({
             ...formItem,

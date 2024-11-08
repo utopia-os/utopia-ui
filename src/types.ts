@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react'
 import { ItemFormPopupProps } from './Components/Map/Subcomponents/ItemFormPopup'
 
@@ -82,7 +83,7 @@ export class Geometry {
   }
 }
 
-export type Relation = {
+export interface Relation {
   related_items_id: string
   [key: string]: any
 }
@@ -102,8 +103,8 @@ export class Item {
   relations?: Relation[]
   parent?: string
   subname?: string
-  public_edit?: boolean;
-  // eslint-disable-next-line no-undef
+  public_edit?: boolean
+  slug?: string;
   [key: string]: any
   constructor(
     id: string,
@@ -127,7 +128,7 @@ export interface AssetsApi {
   url: string
 }
 
-export type Profile = {
+export interface Profile {
   id?: string
   avatar?: string
   color?: string
@@ -136,7 +137,7 @@ export type Profile = {
   geoposition?: Geometry
 }
 
-export type UserItem = {
+export interface UserItem {
   id?: string
   role?: any
   email?: string
@@ -156,7 +157,7 @@ export interface UserApi {
   passwordReset(token: string, new_password: string)
 }
 
-export type PermissionCondition = {
+export interface PermissionCondition {
   user_created?: {
     _eq: string // Erwartet den speziellen Wert "$CURRENT_USER" oder eine spezifische UUID
   }
@@ -167,7 +168,7 @@ export type PermissionCondition = {
 
 export type PermissionAction = 'create' | 'read' | 'update' | 'delete'
 
-export type Permission = {
+export interface Permission {
   id?: string
   policy: any
   collection: string

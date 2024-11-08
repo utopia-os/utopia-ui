@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react'
 import { useHasUserPermission } from '../../Map/hooks/usePermissions'
 import DialogModal from '../../Templates/DialogModal'
@@ -52,7 +56,7 @@ export function ActionButton({
                   setModalOpen(true)
                 }}
                 style={{
-                  backgroundColor: `${colorField && getValue(item, colorField) ? getValue(item, colorField) : getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor}`,
+                  backgroundColor: `${colorField && getValue(item, colorField) ? getValue(item, colorField) : getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item.layer?.markerDefaultColor}`,
                   color: '#fff',
                 }}
               >
@@ -76,7 +80,7 @@ export function ActionButton({
                   triggerAddButton()
                 }}
                 style={{
-                  backgroundColor: `${colorField && getValue(item, colorField) ? getValue(item, colorField) : getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor}`,
+                  backgroundColor: `${colorField && getValue(item, colorField) ? getValue(item, colorField) : getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item.layer?.markerDefaultColor}`,
                   color: '#fff',
                 }}
               >

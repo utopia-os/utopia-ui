@@ -7,7 +7,7 @@ const isClickInsideRectangle = (e: MouseEvent, element: HTMLElement) => {
   return e.clientX > r.left && e.clientX < r.right && e.clientY > r.top && e.clientY < r.bottom
 }
 
-type Props = {
+interface Props {
   title: string
   isOpened: boolean
   onClose: () => void
@@ -43,7 +43,7 @@ const DialogModal = ({
   if (isOpened) {
     return (
       <dialog
-        className={`${className || ''} tw-card tw-shadow-xl tw-absolute tw-right-0 tw-top-0 tw-bottom-0 tw-left-0 tw-m-auto tw-transition-opacity tw-duration-300 tw-p-4 tw-max-w-xl tw-bg-base-100`}
+        className={`${className ?? ''} tw-card tw-shadow-xl tw-absolute tw-right-0 tw-top-0 tw-bottom-0 tw-left-0 tw-m-auto tw-transition-opacity tw-duration-300 tw-p-4 tw-max-w-xl tw-bg-base-100`}
         ref={ref}
         // eslint-disable-next-line react/no-unknown-property
         onCancel={onClose}

@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import * as React from 'react'
 
 const platformConfigs = {
@@ -70,8 +74,15 @@ const platformConfigs = {
   },
 }
 
-// eslint-disable-next-line react/prop-types
-const SocialShareButton = ({ platform, url, title }) => {
+const SocialShareButton = ({
+  platform,
+  url,
+  title,
+}: {
+  platform: string
+  url: string
+  title: string
+}) => {
   const config = platformConfigs[platform]
 
   if (!config) {

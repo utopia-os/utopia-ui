@@ -1,3 +1,13 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/prefer-optional-chain */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useCallback, useReducer, createContext, useContext, useState } from 'react'
 import * as React from 'react'
 import { Item, ItemsApi, Tag } from '../../../types'
@@ -77,14 +87,14 @@ function useTagsManager(initialTags: Tag[]): {
       tag,
     })
     if (!tags.some((t) => t.name.toLocaleLowerCase() === tag.name.toLocaleLowerCase())) {
-      api?.createItem && api.createItem(tag)
+      api.createItem && api.createItem(tag)
     }
   }
 
   const getItemTags = useCallback(
     (item: Item) => {
       const text =
-        item?.layer?.itemTextField && item ? getValue(item, item.layer?.itemTextField) : undefined
+        item.layer?.itemTextField && item ? getValue(item, item.layer.itemTextField) : undefined
       const itemTagStrings = text?.match(hashTagRegex)
       const itemTags: Tag[] = []
       itemTagStrings?.map((tag) => {

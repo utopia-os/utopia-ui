@@ -1,3 +1,12 @@
+/* eslint-disable @typescript-eslint/prefer-optional-chain */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
+/* eslint-disable @typescript-eslint/await-thenable */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import * as React from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { Geometry, Item, LayerProps } from '../../../types'
@@ -7,7 +16,7 @@ import { useHasUserPermission } from './usePermissions'
 import { LatLng } from 'leaflet'
 import { ItemFormPopupProps } from '../Subcomponents/ItemFormPopup'
 
-type PolygonClickedProps = {
+interface PolygonClickedProps {
   position: LatLng
   setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
 }
@@ -51,15 +60,14 @@ function useSelectPositionManager(): {
         mapClicked &&
           mapClicked.setItemFormPopup({
             layer: selectPosition as LayerProps,
-            position: mapClicked?.position,
+            position: mapClicked.position,
           })
         setSelectPosition(null)
       }
       if ('text' in selectPosition) {
         const position =
-          mapClicked?.position.lng &&
-          new Geometry(mapClicked?.position.lng, mapClicked?.position.lat)
-        position && itemUpdatePosition({ ...(selectPosition as Item), position })
+          mapClicked?.position.lng && new Geometry(mapClicked.position.lng, mapClicked.position.lat)
+        position && itemUpdatePosition({ ...selectPosition, position })
         setSelectPosition(null)
       }
     }
@@ -70,11 +78,11 @@ function useSelectPositionManager(): {
   const itemUpdateParent = async (updatedItem: Item) => {
     if (
       markerClicked?.layer?.api?.collectionName &&
-      hasUserPermission(markerClicked?.layer?.api?.collectionName, 'update', markerClicked)
+      hasUserPermission(markerClicked.layer.api.collectionName, 'update', markerClicked)
     ) {
       let success = false
       try {
-        await updatedItem?.layer?.api?.updateItem!({
+        await updatedItem.layer?.api?.updateItem!({
           id: updatedItem.id,
           parent: updatedItem.parent,
           position: null,
@@ -99,7 +107,7 @@ function useSelectPositionManager(): {
   const itemUpdatePosition = async (updatedItem: Item) => {
     let success = false
     try {
-      await updatedItem?.layer?.api?.updateItem!({
+      await updatedItem.layer?.api?.updateItem!({
         id: updatedItem.id,
         position: updatedItem.position,
       })
@@ -118,12 +126,12 @@ function useSelectPositionManager(): {
       const newRelations = markerClicked.relations || []
 
       if (!newRelations.some((r) => r.related_items_id === id)) {
-        newRelations?.push({ items_id: markerClicked.id, related_items_id: id })
+        newRelations.push({ items_id: markerClicked.id, related_items_id: id })
         const updatedItem = { id: markerClicked.id, relations: newRelations }
 
         let success = false
         try {
-          await markerClicked?.layer?.api?.updateItem!(updatedItem)
+          await markerClicked.layer?.api?.updateItem!(updatedItem)
           success = true
         } catch (error) {
           toast.error(error.toString())

@@ -1,3 +1,10 @@
+/* eslint-disable @typescript-eslint/consistent-type-definitions */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { useRef, useState, useEffect } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { Sidenav, initTE } from 'tw-elements'
@@ -7,7 +14,6 @@ import * as React from 'react'
 
 type route = {
   path: string
-  // eslint-disable-next-line no-undef
   icon: JSX.Element
   name: string
   submenu?: route

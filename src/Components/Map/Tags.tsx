@@ -27,16 +27,16 @@ export function Tags({ data, api }: { data?: Tag[]; api?: ItemsApi<Tag> }) {
     const decodedTags = urlTags ? decodeURIComponent(urlTags) : ''
     const decodedTagsArray = decodedTags.split(';')
     if (
-      decodedTagsArray?.some(
+      decodedTagsArray.some(
         (ut) => !filterTags.find((ft) => ut.toLocaleLowerCase() === ft.name.toLocaleLowerCase()),
       ) ||
-      filterTags?.some(
+      filterTags.some(
         (ft) =>
-          !decodedTagsArray?.find((ut) => ut.toLocaleLowerCase() === ft.name.toLocaleLowerCase()),
+          !decodedTagsArray.find((ut) => ut.toLocaleLowerCase() === ft.name.toLocaleLowerCase()),
       )
     ) {
       resetFilterTags()
-      decodedTagsArray?.map((urlTag) => {
+      decodedTagsArray.map((urlTag) => {
         const tag = tags.find((t) => t.name.toLocaleLowerCase() === urlTag.toLocaleLowerCase())
         tag && addFilterTag(tag)
         return null

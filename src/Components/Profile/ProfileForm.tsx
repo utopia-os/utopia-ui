@@ -1,3 +1,10 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { useItems, useUpdateItem, useAddItem } from '../Map/hooks/useItems'
 import { useEffect, useState } from 'react'
 import { getValue } from '../../Utils/GetValue'
@@ -81,25 +88,25 @@ export function ProfileForm() {
 
   useEffect(() => {
     const newColor =
-      item.layer?.itemColorField && getValue(item, item.layer?.itemColorField)
-        ? getValue(item, item.layer?.itemColorField)
+      item.layer?.itemColorField && getValue(item, item.layer.itemColorField)
+        ? getValue(item, item.layer.itemColorField)
         : getItemTags(item) && getItemTags(item)[0]?.color
           ? getItemTags(item)[0].color
-          : item?.layer?.markerDefaultColor
+          : item.layer?.markerDefaultColor
 
-    const offers = (item?.offers ?? []).reduce((acc: Tag[], o) => {
+    const offers = (item.offers ?? []).reduce((acc: Tag[], o) => {
       const offer = tags.find((t) => t.id === o.tags_id)
       if (offer) acc.push(offer)
       return acc
     }, [])
 
-    const needs = (item?.needs ?? []).reduce((acc: Tag[], o) => {
+    const needs = (item.needs ?? []).reduce((acc: Tag[], o) => {
       const need = tags.find((t) => t.id === o.tags_id)
       if (need) acc.push(need)
       return acc
     }, [])
 
-    const relations = (item?.relations ?? []).reduce((acc: Item[], r) => {
+    const relations = (item.relations ?? []).reduce((acc: Item[], r) => {
       const relatedItem = items.find((i) => i.id === r.related_items_id)
       if (relatedItem) acc.push(relatedItem)
       return acc
@@ -121,8 +128,8 @@ export function ProfileForm() {
       offers,
       needs,
       relations,
-      start: item?.start ?? '',
-      end: item?.end ?? '',
+      start: item.start ?? '',
+      end: item.end ?? '',
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item, tags, items])

@@ -1,3 +1,12 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/prefer-optional-chain */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import * as React from 'react'
 import { Marker, Tooltip, useMap, useMapEvents } from 'react-leaflet'
 import { Item, LayerProps, Tag } from '../../types'
@@ -171,7 +180,7 @@ export const Layer = ({
         }
         let title = ''
         if (item.name) title = item.name
-        else if (item.layer?.itemNameField) title = getValue(item, item.layer.itemNameField)
+        else if (item.layer.itemNameField) title = getValue(item, item.layer.itemNameField)
         document.title = `${document.title.split('-')[0]} - ${title}`
       }
     },
@@ -195,7 +204,7 @@ export const Layer = ({
             })
           let title = ''
           if (ref.item.name) title = ref.item.name
-          else if (ref.item.layer?.itemNameField)
+          else if (ref.item.layer.itemNameField)
             title = getValue(ref.item.name, ref.item.layer.itemNameField)
           document.title = `${document.title.split('-')[0]} - ${title}`
           document
@@ -233,7 +242,7 @@ export const Layer = ({
       {items &&
         items
           .filter((item) => item.layer?.name === name)
-          ?.filter((item) =>
+          .filter((item) =>
             filterTags.length === 0
               ? item
               : filterTags.some((tag) =>
@@ -243,7 +252,7 @@ export const Layer = ({
                   ),
                 ),
           )
-          ?.filter((item) => item.layer && isLayerVisible(item.layer))
+          .filter((item) => item.layer && isLayerVisible(item.layer))
           .filter(
             (item) =>
               (item.group_type && isGroupTypeVisible(item.group_type)) ||
@@ -254,7 +263,7 @@ export const Layer = ({
               if (getValue(item, itemTextField)) item[itemTextField] = getValue(item, itemTextField)
               else item[itemTextField] = ''
 
-              if (item?.tags) {
+              if (item.tags) {
                 item[itemTextField] = item[itemTextField] + '\n\n'
                 item.tags.map((tag) => {
                   if (!item[itemTextField].includes(`#${encodeTag(tag)}`)) {
@@ -372,7 +381,7 @@ export const Layer = ({
         // {children}}
       }
       {itemFormPopup &&
-        itemFormPopup.layer!.name === name &&
+        itemFormPopup.layer.name === name &&
         (children &&
         React.Children.toArray(children).some(
           (child) => React.isValidElement(child) && child.props.__TYPE === 'ItemForm',
@@ -381,10 +390,10 @@ export const Layer = ({
             React.isValidElement(child) && child.props.__TYPE === 'ItemForm' ? (
               <ItemFormPopup
                 key={setItemFormPopup?.name}
-                position={itemFormPopup!.position}
-                layer={itemFormPopup!.layer}
+                position={itemFormPopup.position}
+                layer={itemFormPopup.layer}
                 setItemFormPopup={setItemFormPopup}
-                item={itemFormPopup!.item}
+                item={itemFormPopup.item}
               >
                 {child}
               </ItemFormPopup>
@@ -395,10 +404,10 @@ export const Layer = ({
         ) : (
           <>
             <ItemFormPopup
-              position={itemFormPopup!.position}
-              layer={itemFormPopup!.layer}
+              position={itemFormPopup.position}
+              layer={itemFormPopup.layer}
               setItemFormPopup={setItemFormPopup}
-              item={itemFormPopup!.item}
+              item={itemFormPopup.item}
             />
           </>
         ))}

@@ -1,3 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/await-thenable */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { MapOverlayPage } from '../Templates'
 import { useItems, useRemoveItem, useUpdateItem } from '../Map/hooks/useItems'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -22,9 +31,9 @@ import { useAppState } from '../AppShell/hooks/useAppState'
 export function ProfileView({ attestationApi }: { attestationApi?: ItemsApi<any> }) {
   const [item, setItem] = useState<Item>()
   const [updatePermission, setUpdatePermission] = useState<boolean>(false)
-  const [relations, setRelations] = useState<Array<Item>>([])
-  const [offers, setOffers] = useState<Array<Tag>>([])
-  const [needs, setNeeds] = useState<Array<Tag>>([])
+  const [relations, setRelations] = useState<Item[]>([])
+  const [offers, setOffers] = useState<Tag[]>([])
+  const [needs, setNeeds] = useState<Tag[]>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [template, setTemplate] = useState<string>('')
 
@@ -42,7 +51,7 @@ export function ProfileView({ attestationApi }: { attestationApi?: ItemsApi<any>
   const leafletRefs = useLeafletRefs()
   const appState = useAppState()
 
-  const [attestations, setAttestations] = useState<Array<any>>([])
+  const [attestations, setAttestations] = useState<any[]>([])
 
   useEffect(() => {
     if (attestationApi) {

@@ -1,3 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+/* eslint-disable @typescript-eslint/prefer-optional-chain */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { StartEndView, TextView } from '../../Map'
 import { TagView } from '../../Templates/TagView'
 import { LinkedItemsHeaderView } from '../Subcomponents/LinkedItemsHeaderView'
@@ -21,11 +29,11 @@ export const TabsView = ({
   linkItem,
   unlinkItem,
 }: {
-  attestations: Array<any>
+  attestations: any[]
   item: Item
-  offers: Array<Tag>
-  needs: Array<Tag>
-  relations: Array<Item>
+  offers: Tag[]
+  needs: Tag[]
+  relations: Item[]
   updatePermission: boolean
   loading: boolean
   linkItem: (id: string) => Promise<void>
@@ -110,7 +118,7 @@ export const TabsView = ({
             className={
               'tw-tab tw-font-bold !tw-ps-2 !tw-pe-2 [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'
             }
-            aria-label={`${item.layer?.itemType.icon_as_labels && activeTab !== 2 ? '❤️' : '❤️\u00A0Credibility'}`}
+            aria-label={`${item.layer.itemType.icon_as_labels && activeTab !== 2 ? '❤️' : '❤️\u00A0Credibility'}`}
             checked={activeTab === 2 && true}
             onChange={() => updateActiveTab(2)}
           />
@@ -178,8 +186,8 @@ export const TabsView = ({
             type='radio'
             name='my_tabs_2'
             role='tab'
-            className={`tw-tab tw-font-bold !tw-ps-2 !tw-pe-2 ${!(item.layer?.itemType.icon_as_labels && activeTab !== 3) && 'tw-min-w-[10.4em]'} [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`}
-            aria-label={`${item.layer?.itemType.icon_as_labels && activeTab !== 3 ? '♻️' : '♻️\u00A0Offers & Needs'}`}
+            className={`tw-tab tw-font-bold !tw-ps-2 !tw-pe-2 ${!(item.layer.itemType.icon_as_labels && activeTab !== 3) && 'tw-min-w-[10.4em]'} [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`}
+            aria-label={`${item.layer.itemType.icon_as_labels && activeTab !== 3 ? '♻️' : '♻️\u00A0Offers & Needs'}`}
             checked={activeTab === 3 && true}
             onChange={() => updateActiveTab(3)}
           />
@@ -195,7 +203,7 @@ export const TabsView = ({
                     <div className='tw-flex tw-flex-wrap tw-mb-4'>
                       {offers.map((o) => (
                         <TagView
-                          key={o?.id}
+                          key={o.id}
                           tag={o}
                           onClick={() => {
                             addFilterTag(o)
@@ -212,7 +220,7 @@ export const TabsView = ({
                     <h3 className='-tw-mb-2 tw-col-span-1'>Needs</h3>
                     <div className='tw-flex tw-flex-wrap  tw-mb-4'>
                       {needs.map((n) => (
-                        <TagView key={n?.id} tag={n} onClick={() => addFilterTag(n)} />
+                        <TagView key={n.id} tag={n} onClick={() => addFilterTag(n)} />
                       ))}
                     </div>
                   </div>
@@ -232,7 +240,7 @@ export const TabsView = ({
             name='my_tabs_2'
             role='tab'
             className='tw-tab tw-font-bold !tw-ps-2 !tw-pe-2 [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'
-            aria-label={`${item.layer?.itemType.icon_as_labels && activeTab !== 7 ? '🔗' : '🔗\u00A0Relations'}`}
+            aria-label={`${item.layer.itemType.icon_as_labels && activeTab !== 7 ? '🔗' : '🔗\u00A0Relations'}`}
             checked={activeTab === 7 && true}
             onChange={() => updateActiveTab(7)}
           />

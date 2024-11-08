@@ -1,3 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { Item } from '../../../../types'
 import { useTags } from '../../hooks/useTags'
 import { useAddFilterTag } from '../../hooks/useFilter'
@@ -31,7 +40,7 @@ export const TextView = ({
   } else if (itemTextField && item) {
     text = getValue(item, itemTextField)
   } else {
-    text = item?.layer?.itemTextField && item ? getValue(item, item.layer?.itemTextField) : ''
+    text = item?.layer?.itemTextField && item ? getValue(item, item.layer.itemTextField) : ''
   }
 
   if (item && text && truncate) text = truncateText(removeMarkdownKeepLinksAndParagraphs(text), 100)
@@ -106,10 +115,10 @@ export const TextView = ({
     return (
       <a
         style={{ color: tag ? tag.color : '#faa', fontWeight: 'bold', cursor: 'pointer' }}
-        key={tag ? tag.name + item!.id : item.id}
+        key={tag ? tag.name + item.id : item.id}
         onClick={(e) => {
           e.stopPropagation()
-          addFilterTag(tag!)
+          addFilterTag(tag)
         }}
       >
         {decodeTag(children)}

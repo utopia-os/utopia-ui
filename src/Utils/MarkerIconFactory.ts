@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import * as L from 'leaflet'
 
 const createSvg = (shape: string, markerColor: string, borderColor: string) => {

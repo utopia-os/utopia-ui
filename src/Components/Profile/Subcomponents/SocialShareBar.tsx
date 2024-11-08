@@ -2,12 +2,13 @@ import { toast } from 'react-toastify'
 import SocialShareButton from './SocialShareButton'
 
 const SocialShareBar = ({
-  // eslint-disable-next-line react/prop-types
   url,
-  // eslint-disable-next-line react/prop-types
   title,
-  // eslint-disable-next-line react/prop-types
   platforms = ['facebook', 'twitter', 'linkedin', 'xing', 'email'],
+}: {
+  url: string
+  title: string
+  platforms?: string[]
 }) => {
   const copyLink = () => {
     navigator.clipboard
@@ -15,7 +16,7 @@ const SocialShareBar = ({
       .then(() => {
         toast.success('link copied to clipboard')
       })
-      .catch((error) => {
+      .catch((error: never) => {
         toast.error('Fehler beim Kopieren des Links: ', error)
       })
   }

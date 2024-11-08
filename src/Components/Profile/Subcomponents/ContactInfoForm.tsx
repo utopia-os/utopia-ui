@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import * as React from 'react'
 import { TextInput } from '../../Input'
 import { FormState } from '../Templates/OnepagerForm'

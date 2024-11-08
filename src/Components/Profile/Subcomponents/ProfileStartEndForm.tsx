@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import * as React from 'react'
 import { PopupStartEndInput } from '../../Map'
 import { Item } from '../../../types'

@@ -9,14 +9,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { setTimeout } from 'timers/promises'
+
 import { toast } from 'react-toastify'
 
 import { Item } from '#src/types'
 import { encodeTag } from '#utils/FormatTags'
 import { hashTagRegex } from '#utils/HashTagRegex'
 import { randomColor } from '#utils/RandomColor'
-
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export const submitNewItem = async (
   evt: any,
@@ -224,7 +224,7 @@ export const onUpdateItem = async (
     })
 
   // take care that addTag request comes before item request
-  await sleep(200)
+  await setTimeout(200)
 
   if (!item.new) {
     item?.layer?.api?.updateItem &&
@@ -243,6 +243,7 @@ export const onUpdateItem = async (
         .then(() => {
           setLoading(false)
           navigate(`/item/${item.id}${params && '?' + params}`)
+          return null
         })
   } else {
     item.new = false
@@ -272,6 +273,7 @@ export const onUpdateItem = async (
         .then(() => {
           setLoading(false)
           navigate(`/${params && '?' + params}`)
+          return null
         })
   }
 }

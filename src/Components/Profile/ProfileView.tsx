@@ -63,7 +63,9 @@ export function ProfileView({ attestationApi }: { attestationApi?: ItemsApi<any>
           console.log(value)
 
           setAttestations(value)
+          return null
         })
+        // eslint-disable-next-line promise/prefer-await-to-callbacks
         .catch((error) => {
           console.error('Error fetching items:', error)
         })

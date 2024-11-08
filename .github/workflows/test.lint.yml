@@ -16,7 +16,7 @@ jobs:
           filters: |
             lint:
               - '.github/workflows/**/*'
-              - 'src/**/*'
+              - '**/*'
 
 #  build:
 #    if: needs.files-changed.outputs.frontend == 'true'

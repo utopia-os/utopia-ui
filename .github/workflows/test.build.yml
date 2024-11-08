@@ -16,7 +16,7 @@ jobs:
           filters: |
             build:
               - '.github/workflows/**/*'
-              - 'src/**/*'
+              - '**/*'
 
   build:
     if: needs.files-changed.outputs.build == 'true'

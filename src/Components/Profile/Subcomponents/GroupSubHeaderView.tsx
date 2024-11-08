@@ -4,9 +4,11 @@ import SocialShareBar from './SocialShareBar'
 export const GroupSubHeaderView = ({
   item,
   shareBaseUrl,
+  platforms,
 }: {
   item: Item
   shareBaseUrl: string
+  platforms?: string[]
 }) => (
   <div className='tw-px-6'>
     <div className='tw-float-left tw-mt-2 tw-mb-4 tw-flex tw-items-center'>
@@ -33,6 +35,7 @@ export const GroupSubHeaderView = ({
             : window.location.protocol + '//' + window.location.host + '/item/' + item.id
         }
         title={item.name}
+        platforms={platforms}
       />
     </div>
   </div>

@@ -20,6 +20,7 @@ export const ContactInfoForm = ({
         </label>
         <TextInput
           placeholder='Email'
+          type='email'
           defaultValue={state.contact}
           updateFormValue={(v) =>
             setState((prevState) => ({

@@ -38,14 +38,35 @@ const platformConfigs = {
     ),
     bgColor: '#026466',
   },
-  email: {
-    shareUrl: 'mailto:?subject={title}&body={url}',
+  whatsapp: {
+    shareUrl: 'https://api.whatsapp.com/send?text={title}%20{url}',
     icon: (
-      <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'>
-        <path d='M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z' />
+      <svg
+        stroke='currentColor'
+        fill='currentColor'
+        strokeWidth='0'
+        viewBox='0 0 512 512'
+        xmlns='http://www.w3.org/2000/svg'
+      >
+        <path d='M497.39 361.8l-112-48a24 24 0 0 0-28 6.9l-49.6 60.6A370.66 370.66 0 0 1 130.6 204.11l60.6-49.6a23.94 23.94 0 0 0 6.9-28l-48-112A24.16 24.16 0 0 0 122.6.61l-104 24A24 24 0 0 0 0 48c0 256.5 207.9 464 464 464a24 24 0 0 0 23.4-18.6l24-104a24.29 24.29 0 0 0-14.01-27.6z'></path>
       </svg>
     ),
-    bgColor: '#444444',
+    bgColor: '#25D366',
+  },
+  telegram: {
+    shareUrl: 'https://t.me/share/url?url={url}&text={title}',
+    icon: (
+      <svg
+        stroke='white'
+        fill='white'
+        strokeWidth='0'
+        viewBox='0 0 448 512'
+        xmlns='http://www.w3.org/2000/svg'
+      >
+        <path d='M446.7 98.6l-67.6 318.8c-5.1 22.5-18.4 28.1-37.3 17.5l-103-75.9-49.7 47.8c-5.5 5.5-10.1 10.1-20.7 10.1l7.4-104.9 190.9-172.5c8.3-7.4-1.8-11.5-12.9-4.1L117.8 284 16.2 252.2c-22.1-6.9-22.5-22.1 4.6-32.7L418.2 66.4c18.4-6.9 34.5 4.1 28.5 32.2z'></path>
+      </svg>
+    ),
+    bgColor: '#0088cc',
   },
 }
 
@@ -72,6 +93,7 @@ const SocialShareButton = ({ platform, url, title }) => {
         color: 'white',
         backgroundColor: bgColor,
       }}
+      title={`share link ${platform === 'email' ? 'via email' : 'on ' + platform}`}
     >
       {React.cloneElement(icon, { className: 'tw-w-4 tw-h-4 tw-fill-current' })}
     </a>

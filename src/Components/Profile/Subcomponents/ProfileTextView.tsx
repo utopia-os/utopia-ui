@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Item } from '../../../types'
 import { getValue } from '../../../Utils/GetValue'
 import { TextView } from '../../Map'

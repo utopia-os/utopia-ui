@@ -1,6 +1,6 @@
 {
   "name": "utopia-ui",
-  "version": "3.0.10",
+  "version": "3.0.19",
   "description": "Reuseable React Components to build mapping apps for real life communities and networks",
   "repository": "https://github.com/utopia-os/utopia-ui",
   "homepage:": "https://utopia-os.org/",
@@ -16,7 +16,7 @@
   ],
   "keywords": [],
   "author": "Anton Tranelis",
-  "license": "MIT",
+  "license": "GPL-3.0-only",
   "devDependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": "^4.4.1",
     "@types/leaflet": "^1.7.11",

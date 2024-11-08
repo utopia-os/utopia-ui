@@ -25,14 +25,10 @@ import { OnepagerView } from './Templates/OnepagerView'
 import { SimpleView } from './Templates/SimpleView'
 import { handleDelete, linkItem, unlinkItem } from './itemFunctions'
 import { useTags } from '../Map/hooks/useTags'
+import { FlexView } from './Templates/FlexView'
+import { useAppState } from '../AppShell/hooks/useAppState'
 
-export function ProfileView({
-  userType,
-  attestationApi,
-}: {
-  userType: string
-  attestationApi?: ItemsApi<any>
-}) {
+export function ProfileView({ attestationApi }: { attestationApi?: ItemsApi<any> }) {
   const [item, setItem] = useState<Item>()
   const [updatePermission, setUpdatePermission] = useState<boolean>(false)
   const [relations, setRelations] = useState<Item[]>([])
@@ -53,6 +49,7 @@ export function ProfileView({
   const setSelectPosition = useSetSelectPosition()
   const clusterRef = useClusterRef()
   const leafletRefs = useLeafletRefs()
+  const appState = useAppState()
 
   const [attestations, setAttestations] = useState<any[]>([])
 
@@ -158,8 +155,8 @@ export function ProfileView({
   }, [selectPosition])
 
   useEffect(() => {
-    setTemplate(item?.layer?.itemType.template || userType)
-  }, [userType, item])
+    setTemplate(item?.layer?.itemType.template || appState.userType)
+  }, [appState.userType, item])
 
   return (
     <>
@@ -185,13 +182,14 @@ export function ProfileView({
               />
             </div>
 
-            {template === 'onepager' && <OnepagerView item={item} userType={userType} />}
+            {template === 'onepager' && <OnepagerView item={item} />}
 
             {template === 'simple' && <SimpleView item={item} />}
 
+            {template === 'flex' && <FlexView item={item} />}
+
             {template === 'tabs' && (
               <TabsView
-                userType={userType}
                 attestations={attestations}
                 item={item}
                 loading={loading}

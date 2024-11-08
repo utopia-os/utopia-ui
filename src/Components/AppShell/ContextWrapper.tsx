@@ -10,7 +10,7 @@ import { LeafletRefsProvider } from '../Map/hooks/useLeafletRefs'
 import { PermissionsProvider } from '../Map/hooks/usePermissions'
 import { SelectPositionProvider } from '../Map/hooks/useSelectPosition'
 import { TagsProvider } from '../Map/hooks/useTags'
-import { AssetsProvider } from './hooks/useAssets'
+import { AppStateProvider } from './hooks/useAppState'
 import { useContext, createContext } from 'react'
 import { BrowserRouter as Router, useLocation } from 'react-router-dom'
 
@@ -72,7 +72,7 @@ export const Wrappers = ({ children }) => {
               <SelectPositionProvider>
                 <LeafletRefsProvider initialLeafletRefs={{}}>
                   <QueryClientProvider client={queryClient}>
-                    <AssetsProvider>
+                    <AppStateProvider>
                       <ClusterRefProvider>
                         <QuestsProvider initialOpen={true}>
                           <ToastContainer
@@ -90,7 +90,7 @@ export const Wrappers = ({ children }) => {
                           {children}
                         </QuestsProvider>
                       </ClusterRefProvider>
-                    </AssetsProvider>
+                    </AppStateProvider>
                   </QueryClientProvider>
                 </LeafletRefsProvider>
               </SelectPositionProvider>

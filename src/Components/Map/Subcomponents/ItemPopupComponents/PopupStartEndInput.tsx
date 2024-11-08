@@ -17,7 +17,7 @@ export const PopupStartEndInput = ({
   updateEndValue,
 }: StartEndInputProps) => {
   return (
-    <div className='tw-grid tw-grid-cols-2 tw-gap-2 tw-mb-5'>
+    <div className='tw-grid tw-grid-cols-2 tw-gap-2'>
       <TextInput
         type='date'
         placeholder='start'

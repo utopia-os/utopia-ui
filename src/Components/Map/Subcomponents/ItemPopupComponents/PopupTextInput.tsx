@@ -20,7 +20,7 @@ export const PopupTextInput = ({
       placeholder={placeholder}
       inputStyle={style}
       type='text'
-      containerStyle={'tw-mt-4 tw-mb-4'}
+      containerStyle={'tw-mt-4'}
     ></TextInput>
   )
 }

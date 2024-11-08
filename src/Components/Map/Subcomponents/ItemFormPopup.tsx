@@ -113,8 +113,8 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
         toast.error(error.toString())
       }
       if (success) {
-        props.layer.onlyOnePerOwner && item && updateItem({ ...item, ...formItem })
-        ;(!props.layer.onlyOnePerOwner || !item) &&
+        if (props.layer.onlyOnePerOwner && item) updateItem({ ...item, ...formItem })
+        if (!props.layer.onlyOnePerOwner || !item) {
           addItem({
             ...formItem,
             name: formItem.name ? formItem.name : user?.first_name,
@@ -124,6 +124,7 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
             layer: props.layer,
             public_edit: !user,
           })
+        }
         toast.success('New item created')
         resetFilterTags()
       }

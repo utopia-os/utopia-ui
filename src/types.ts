@@ -103,8 +103,8 @@ export class Item {
   relations?: Relation[]
   parent?: string
   subname?: string
-  public_edit?: boolean;
-
+  public_edit?: boolean
+  slug?: string;
   [key: string]: any
   constructor(
     id: string,

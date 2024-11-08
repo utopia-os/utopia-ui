@@ -2,13 +2,13 @@
 import { useState } from 'react'
 import { MapOverlayPage } from './MapOverlayPage'
 import { useItems } from '../Map/hooks/useItems'
-import { useAssetApi } from '../AppShell/hooks/useAssets'
+import { useAppState } from '../AppShell/hooks/useAppState'
 import { Link } from 'react-router-dom'
 
-export const SelectUser = ({ userType }: { userType: string }) => {
+export const SelectUser = () => {
+  const appState = useAppState()
   const items = useItems()
-  const users = items.filter((i) => i.layer?.itemType.name === userType)
-  const assetsApi = useAssetApi()
+  const users = items.filter((i) => i.layer?.itemType.name === appState.userType)
 
   const [selectedUsers, setSelectedUsers] = useState<string[]>([])
 
@@ -36,7 +36,7 @@ export const SelectUser = ({ userType }: { userType: string }) => {
                         <div className='tw-avatar'>
                           <div className='tw-mask tw-mask-circle tw-w-8 tw-h-8'>
                             <img
-                              src={assetsApi.url + u.image + '?width=40&heigth=40'}
+                              src={appState.assetsApi.url + u.image + '?width=40&heigth=40'}
                               alt='Avatar'
                             />
                           </div>

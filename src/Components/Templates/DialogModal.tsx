@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { MouseEvent, useEffect, useRef } from 'react'
 
 const isClickInsideRectangle = (e: MouseEvent, element: HTMLElement) => {

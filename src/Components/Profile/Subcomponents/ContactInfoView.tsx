@@ -3,11 +3,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
-import { Link } from 'react-router-dom'
-import { useAppState } from '../../AppShell/hooks/useAppState'
-import { Item } from '../../../types'
 import { useEffect, useState } from 'react'
-import { useItems } from '../../Map/hooks/useItems'
+import { Link } from 'react-router-dom'
+
+import { useAppState } from '#components/AppShell/hooks/useAppState'
+import { useItems } from '#components/Map/hooks/useItems'
+import { Item } from '#src/types'
 
 export const ContactInfoView = ({ item, heading }: { item: Item; heading: string }) => {
   const appState = useAppState()

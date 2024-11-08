@@ -1,14 +1,18 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
-import * as React from 'react'
 import { useState, useCallback, useRef } from 'react'
-import ReactCrop, { Crop, centerCrop, makeAspectCrop } from 'react-image-crop'
-import { useAppState } from '../../AppShell/hooks/useAppState'
+import { ReactCrop, centerCrop, makeAspectCrop } from 'react-image-crop'
+
+import { useAppState } from '#components/AppShell/hooks/useAppState'
+// eslint-disable-next-line import/no-unassigned-import
 import 'react-image-crop/dist/ReactCrop.css'
-import DialogModal from '../../Templates/DialogModal'
+import DialogModal from '#components/Templates/DialogModal'
+
+import type { Crop } from 'react-image-crop'
 
 interface AvatarWidgetProps {
   avatar: string

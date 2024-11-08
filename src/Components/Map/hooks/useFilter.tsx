@@ -1,13 +1,15 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable no-case-declarations */
-import { useCallback, useReducer, createContext, useContext } from 'react'
-import * as React from 'react'
-import { LayerProps, Tag } from '../../../types'
-import { useLayers } from './useLayers'
+import { useCallback, useReducer, createContext, useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+
+import { LayerProps, Tag } from '#src/types'
+
+import { useLayers } from './useLayers'
 import useWindowDimensions from './useWindowDimension'
 
 type ActionType =
@@ -118,7 +120,7 @@ function useFilterManager(initialTags: Tag[]): {
     [],
   )
 
-  const [searchPhrase, searchPhraseSet] = React.useState<string>('')
+  const [searchPhrase, searchPhraseSet] = useState<string>('')
 
   const addFilterTag = useCallback((tag: Tag) => {
     const params = new URLSearchParams(location.search)

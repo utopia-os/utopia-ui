@@ -6,17 +6,18 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { StartEndView, TextView } from '../../Map'
-import { TagView } from '../../Templates/TagView'
-import { LinkedItemsHeaderView } from '../Subcomponents/LinkedItemsHeaderView'
-import { ActionButton } from '../Subcomponents/ActionsButton'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useAddFilterTag } from '../../Map/hooks/useFilter'
-import { Item, Tag } from '../../../types'
 import { Link, useNavigate } from 'react-router-dom'
-import { useItems } from '../../Map/hooks/useItems'
-import { useAppState } from '../../AppShell/hooks/useAppState'
-import { timeAgo } from '../../../Utils/TimeAgo'
+
+import { useAppState } from '#components/AppShell/hooks/useAppState'
+import { StartEndView, TextView } from '#components/Map'
+import { useAddFilterTag } from '#components/Map/hooks/useFilter'
+import { useItems } from '#components/Map/hooks/useItems'
+import { ActionButton } from '#components/Profile/Subcomponents/ActionsButton'
+import { LinkedItemsHeaderView } from '#components/Profile/Subcomponents/LinkedItemsHeaderView'
+import { TagView } from '#components/Templates/TagView'
+import { Item, Tag } from '#src/types'
+import { timeAgo } from '#utils/TimeAgo'
 
 export const TabsView = ({
   attestations,

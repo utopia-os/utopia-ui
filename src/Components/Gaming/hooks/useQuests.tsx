@@ -1,6 +1,6 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { useCallback, useState, createContext, useContext } from 'react'
-import * as React from 'react'
 
 type UseQuestManagerResult = ReturnType<typeof useQuestsManager>
 

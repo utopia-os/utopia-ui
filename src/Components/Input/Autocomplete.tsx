@@ -5,9 +5,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import * as React from 'react'
-import { useEffect } from 'react'
-import { TagView } from '../Templates/TagView'
+import { useEffect, useRef, useState } from 'react'
+
+import { TagView } from '#components/Templates/TagView'
 
 export const Autocomplete = ({
   inputProps,
@@ -22,8 +22,8 @@ export const Autocomplete = ({
   pushFilteredSuggestions?: any[]
   setFocus?: boolean
 }) => {
-  const [filteredSuggestions, setFilteredSuggestions] = React.useState<any[]>([])
-  const [heighlightedSuggestion, setHeighlightedSuggestion] = React.useState<number>(0)
+  const [filteredSuggestions, setFilteredSuggestions] = useState<any[]>([])
+  const [heighlightedSuggestion, setHeighlightedSuggestion] = useState<number>(0)
 
   useEffect(() => {
     pushFilteredSuggestions && setFilteredSuggestions(pushFilteredSuggestions)
@@ -33,7 +33,7 @@ export const Autocomplete = ({
     setFocus && inputRef.current?.focus()
   }, [setFocus])
 
-  const inputRef = React.useRef<HTMLInputElement>()
+  const inputRef = useRef<HTMLInputElement>()
 
   const getSuggestionValue = (suggestion) => suggestion.name
 

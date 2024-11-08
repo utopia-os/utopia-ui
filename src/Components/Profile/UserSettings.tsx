@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import * as React from 'react'
-import { MapOverlayPage } from '../Templates'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
-import { UserItem } from '../../types'
 import { toast } from 'react-toastify'
-import { useAuth } from '../Auth'
-import { TextInput } from '../Input'
+
+import { useAuth } from '#components/Auth'
+import { TextInput } from '#components/Input'
+import { MapOverlayPage } from '#components/Templates'
+import { UserItem } from '#src/types'
 
 export function UserSettings() {
   const { user, updateUser, loading /* token */ } = useAuth()
@@ -21,7 +21,7 @@ export function UserSettings() {
 
   const navigate = useNavigate()
 
-  React.useEffect(() => {
+  useEffect(() => {
     setId(user?.id ? user.id : '')
     setEmail(user?.email ? user.email : '')
     setPassword(user?.password ? user.password : '')

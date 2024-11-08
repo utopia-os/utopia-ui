@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import * as React from 'react'
-import ComboBoxInput from '../../Input/ComboBoxInput'
-import { Item } from '../../../types'
 import { useEffect } from 'react'
-import { FormState } from '../Templates/OnepagerForm'
+
+import ComboBoxInput from '#components/Input/ComboBoxInput'
+import { Item, FormState } from '#src/types'
 
 interface groupType {
   groupTypes_id: {

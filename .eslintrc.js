@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-commonjs
 module.exports = {
   env: {
     browser: true,
@@ -29,10 +30,12 @@ module.exports = {
     'react-hooks',
   ],
   settings: {
-    // 'import/resolver': {
-    //  typescript: true,
-    //  node: true,
-    // },
+    'import/resolver': {
+      typescript: true,
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    },
     react: {
       version: 'detect',
     },
@@ -83,13 +86,16 @@ module.exports = {
     'import/no-relative-parent-imports': [
       'error',
       {
-        ignore: [
-          '#[src,root,components,pages,assets,layouts,queries,stores,plugins,context,types]/*',
-        ],
+        ignore: ['#[src,root,components,utils]/*'],
       },
     ],
     'import/no-self-import': 'error',
-    'import/no-unresolved': 'error',
+    'import/no-unresolved': [
+      'error',
+      {
+        ignore: ['react'],
+      },
+    ],
     'import/no-useless-path-segments': 'error',
     'import/no-webpack-loader-syntax': 'error',
     'import/consistent-type-specifier-style': 'error',

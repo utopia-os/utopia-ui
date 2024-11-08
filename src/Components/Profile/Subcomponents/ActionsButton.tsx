@@ -3,14 +3,15 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react'
-import { useHasUserPermission } from '../../Map/hooks/usePermissions'
-import DialogModal from '../../Templates/DialogModal'
-import { useItems } from '../../Map/hooks/useItems'
-import { HeaderView } from '../../Map/Subcomponents/ItemPopupComponents/HeaderView'
-import { Item } from '../../../types'
-import { TextInput } from '../../Input'
-import { getValue } from '../../../Utils/GetValue'
-import { useGetItemTags } from '../../Map/hooks/useTags'
+
+import { TextInput } from '#components/Input'
+import { useItems } from '#components/Map/hooks/useItems'
+import { useHasUserPermission } from '#components/Map/hooks/usePermissions'
+import { useGetItemTags } from '#components/Map/hooks/useTags'
+import { HeaderView } from '#components/Map/Subcomponents/ItemPopupComponents/HeaderView'
+import DialogModal from '#components/Templates/DialogModal'
+import { Item } from '#src/types'
+import { getValue } from '#utils/GetValue'
 
 export function ActionButton({
   item,

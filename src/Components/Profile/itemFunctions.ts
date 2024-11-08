@@ -9,12 +9,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import * as React from 'react'
-import { Item } from '../../types'
-import { encodeTag } from '../../Utils/FormatTags'
-import { hashTagRegex } from '../../Utils/HashTagRegex'
-import { randomColor } from '../../Utils/RandomColor'
 import { toast } from 'react-toastify'
+
+import { Item } from '#src/types'
+import { encodeTag } from '#utils/FormatTags'
+import { hashTagRegex } from '#utils/HashTagRegex'
+import { randomColor } from '#utils/RandomColor'
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 

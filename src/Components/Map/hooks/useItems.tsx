@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
@@ -7,9 +8,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useCallback, useReducer, createContext, useContext, useState } from 'react'
-import * as React from 'react'
-import { Item, LayerProps } from '../../../types'
 import { toast } from 'react-toastify'
+
+import { Item, LayerProps } from '#src/types'
+
 import { useAddLayer } from './useLayers'
 
 type ActionType =

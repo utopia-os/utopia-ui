@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { Item } from '../../../types'
-import { getValue } from '../../../Utils/GetValue'
-import { TextView } from '../../Map'
+import { TextView } from '#components/Map'
+import { Item } from '#src/types'
+import { getValue } from '#utils/GetValue'
 
 export const ProfileTextView = ({
   item,

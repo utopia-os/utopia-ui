@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { useEffect, useState } from 'react'
-import * as React from 'react'
 
 type InputTextProps = {
   labelTitle?: string

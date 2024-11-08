@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
-import * as React from 'react'
-
 type ContentProps = {
   children?: React.ReactNode
 }

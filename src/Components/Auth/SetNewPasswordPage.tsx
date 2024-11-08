@@ -2,10 +2,11 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
 import { toast } from 'react-toastify'
+
+import { MapOverlayPage } from '#components/Templates/MapOverlayPage'
+
 import { useAuth } from './useAuth'
-import { MapOverlayPage } from '../Templates'
 
 export function SetNewPasswordPage() {
   const [password, setPassword] = useState<string>('')

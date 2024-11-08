@@ -6,8 +6,10 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+
+import { MapOverlayPage } from '#components/Templates/MapOverlayPage'
+
 import { useAuth } from './useAuth'
-import { MapOverlayPage } from '../Templates'
 
 export function LoginPage() {
   const [email, setEmail] = useState<string>('')

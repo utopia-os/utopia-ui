@@ -1,6 +1,5 @@
-import * as React from 'react'
-import { useFilterTags, useRemoveFilterTag } from '../../hooks/useFilter'
-import { decodeTag } from '../../../../Utils/FormatTags'
+import { useFilterTags, useRemoveFilterTag } from '#components/Map/hooks/useFilter'
+import { decodeTag } from '#utils/FormatTags'
 
 export const TagsControl = () => {
   const filterTags = useFilterTags()

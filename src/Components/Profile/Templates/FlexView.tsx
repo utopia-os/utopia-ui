@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { GroupSubHeaderView } from '../Subcomponents/GroupSubHeaderView'
-import { ProfileTextView } from '../Subcomponents/ProfileTextView'
-import { ContactInfoView } from '../Subcomponents/ContactInfoView'
-import { Item } from '../../../types'
-import { ProfileStartEndView } from '../Subcomponents/ProfileStartEndView'
+
+import { ContactInfoView } from '#components/Profile/Subcomponents/ContactInfoView'
+import { GroupSubHeaderView } from '#components/Profile/Subcomponents/GroupSubHeaderView'
+import { ProfileStartEndView } from '#components/Profile/Subcomponents/ProfileStartEndView'
+import { ProfileTextView } from '#components/Profile/Subcomponents/ProfileTextView'
+import { Item } from '#src/types'
 
 const componentMap = {
   groupSubheaders: GroupSubHeaderView,

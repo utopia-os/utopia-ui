@@ -1,7 +1,8 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { useCallback, useReducer, createContext, useContext } from 'react'
-import * as React from 'react'
-import { LayerProps } from '../../../types'
+
+import { LayerProps } from '#src/types'
 
 interface ActionType {
   type: 'ADD LAYER'

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { TextAreaInput } from '../../Input'
+import { TextAreaInput } from '#components/Input'
 
 // eslint-disable-next-line react/prop-types
 export const SimpleForm = ({ state, setState }) => {

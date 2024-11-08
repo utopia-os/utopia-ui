@@ -1,8 +1,8 @@
-import * as React from 'react'
+import { AssetsApi } from '#src/types'
+
+import { ContextWrapper } from './ContextWrapper'
 import NavBar from './NavBar'
 import { SetAppState } from './SetAppState'
-import { AssetsApi } from '../../types'
-import { ContextWrapper } from './ContextWrapper'
 
 export function AppShell({
   appName,

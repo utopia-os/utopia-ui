@@ -7,16 +7,17 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { Item } from '../../../../types'
-import { useTags } from '../../hooks/useTags'
-import { useAddFilterTag } from '../../hooks/useFilter'
-import { hashTagRegex } from '../../../../Utils/HashTagRegex'
-import { fixUrls, mailRegex } from '../../../../Utils/ReplaceURLs'
-import Markdown from 'react-markdown'
-import { getValue } from '../../../../Utils/GetValue'
-import remarkBreaks from 'remark-breaks'
-import { decodeTag } from '../../../../Utils/FormatTags'
 import { memo } from 'react'
+import Markdown from 'react-markdown'
+import remarkBreaks from 'remark-breaks'
+
+import { useAddFilterTag } from '#components/Map/hooks/useFilter'
+import { useTags } from '#components/Map/hooks/useTags'
+import { Item } from '#src/types'
+import { decodeTag } from '#utils/FormatTags'
+import { getValue } from '#utils/GetValue'
+import { hashTagRegex } from '#utils/HashTagRegex'
+import { fixUrls, mailRegex } from '#utils/ReplaceURLs'
 
 export const TextView = ({
   item,

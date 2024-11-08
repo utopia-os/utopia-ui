@@ -1,6 +1,5 @@
-import * as React from 'react'
-import { TextInput } from '../../../Input'
-import { Item } from '../../../../types'
+import { TextInput } from '#components/Input'
+import { Item } from '#src/types'
 
 export const PopupTextInput = ({
   dataField,

@@ -4,13 +4,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import * as React from 'react'
 import { useEffect, useState } from 'react'
-import { useTags } from '../../Map/hooks/useTags'
-import { Tag } from '../../../types'
-import { Autocomplete } from '../../Input/Autocomplete'
-import { randomColor } from '../../../Utils/RandomColor'
-import { decodeTag, encodeTag } from '../../../Utils/FormatTags'
+
+import { Autocomplete } from '#components/Input/Autocomplete'
+import { useTags } from '#components/Map/hooks/useTags'
+import { Tag } from '#src/types'
+import { decodeTag, encodeTag } from '#utils/FormatTags'
+import { randomColor } from '#utils/RandomColor'
 
 // eslint-disable-next-line react/prop-types
 export const TagsWidget = ({ placeholder, containerStyle, defaultTags, onUpdate }) => {

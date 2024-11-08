@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-empty-function */
@@ -9,10 +10,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useCallback, useReducer, createContext, useContext, useState } from 'react'
-import * as React from 'react'
-import { Item, ItemsApi, Tag } from '../../../types'
-import { hashTagRegex } from '../../../Utils/HashTagRegex'
-import { getValue } from '../../../Utils/GetValue'
+
+import { Item, ItemsApi, Tag } from '#src/types'
+import { getValue } from '#utils/GetValue'
+import { hashTagRegex } from '#utils/HashTagRegex'
 
 type ActionType = { type: 'ADD'; tag: Tag } | { type: 'REMOVE'; id: string }
 
@@ -55,7 +56,7 @@ function useTagsManager(initialTags: Tag[]): {
     }
   }, initialTags)
 
-  const [api, setApi] = React.useState<ItemsApi<Tag>>({} as ItemsApi<Tag>)
+  const [api, setApi] = useState<ItemsApi<Tag>>({} as ItemsApi<Tag>)
 
   const setTagApi = useCallback(async (api: ItemsApi<Tag>) => {
     setApi(api)

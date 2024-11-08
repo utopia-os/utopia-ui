@@ -1,6 +1,5 @@
-import * as React from 'react'
-import { TextView } from '../../Map'
-import { Item } from '../../../types'
+import { TextView } from '#components/Map'
+import { Item } from '#src/types'
 
 export const SimpleView = ({ item }: { item: Item }) => {
   return (

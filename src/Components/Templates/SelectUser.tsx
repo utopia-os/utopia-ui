@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 import { useState } from 'react'
-import { MapOverlayPage } from './MapOverlayPage'
-import { useItems } from '../Map/hooks/useItems'
-import { useAppState } from '../AppShell/hooks/useAppState'
 import { Link } from 'react-router-dom'
+
+import { useAppState } from '#components/AppShell/hooks/useAppState'
+import { useItems } from '#components/Map/hooks/useItems'
+
+import { MapOverlayPage } from './MapOverlayPage'
 
 export const SelectUser = () => {
   const appState = useAppState()

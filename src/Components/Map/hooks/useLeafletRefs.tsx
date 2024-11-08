@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { useCallback, useReducer, createContext, useContext } from 'react'
-import * as React from 'react'
-import { Item } from '../../../types'
 import { Marker, Popup } from 'leaflet'
+import { useCallback, useReducer, createContext, useContext } from 'react'
+
+import { Item } from '#src/types'
 
 interface LeafletRef {
   item: Item

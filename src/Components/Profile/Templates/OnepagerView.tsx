@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import { Item } from '../../../types'
-import { TextView } from '../../Map'
-import { ContactInfoView } from '../Subcomponents/ContactInfoView'
-import { GroupSubHeaderView } from '../Subcomponents/GroupSubHeaderView'
+import { TextView } from '#components/Map'
+import { ContactInfoView } from '#components/Profile/Subcomponents/ContactInfoView'
+import { GroupSubHeaderView } from '#components/Profile/Subcomponents/GroupSubHeaderView'
+import { Item } from '#src/types'
 
 export const OnepagerView = ({ item }: { item: Item }) => {
   return (

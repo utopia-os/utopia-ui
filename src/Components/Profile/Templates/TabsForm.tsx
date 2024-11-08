@@ -7,13 +7,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable react/prop-types */
 import { useCallback, useEffect, useState } from 'react'
-import { TextAreaInput } from '../../Input'
-import { PopupStartEndInput, TextView } from '../../Map'
-import { ActionButton } from '../Subcomponents/ActionsButton'
-import { LinkedItemsHeaderView } from '../Subcomponents/LinkedItemsHeaderView'
-import { TagsWidget } from '../Subcomponents/TagsWidget'
 import { useNavigate } from 'react-router-dom'
-import { useUpdateItem } from '../../Map/hooks/useItems'
+
+import { TextAreaInput } from '#components/Input'
+import { PopupStartEndInput, TextView } from '#components/Map'
+import { useUpdateItem } from '#components/Map/hooks/useItems'
+import { ActionButton } from '#components/Profile/Subcomponents/ActionsButton'
+import { LinkedItemsHeaderView } from '#components/Profile/Subcomponents/LinkedItemsHeaderView'
+import { TagsWidget } from '#components/Profile/Subcomponents/TagsWidget'
 
 export const TabsForm = ({
   item,

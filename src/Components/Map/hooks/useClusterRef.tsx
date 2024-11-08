@@ -1,7 +1,7 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as React from 'react'
 import { createContext, useContext, useState } from 'react'
 
 type UseClusterRefManagerResult = ReturnType<typeof useClusterRefManager>

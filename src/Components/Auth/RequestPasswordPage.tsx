@@ -4,8 +4,10 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+
+import { MapOverlayPage } from '#components/Templates/MapOverlayPage'
+
 import { useAuth } from './useAuth'
-import { MapOverlayPage } from '../Templates'
 
 // eslint-disable-next-line react/prop-types
 export function RequestPasswordPage({ resetUrl }) {

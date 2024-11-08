@@ -6,9 +6,10 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useEffect } from 'react'
-import { getValue } from '../../../Utils/GetValue'
-import { Item } from '../../../types'
-import { useAppState } from '../../AppShell/hooks/useAppState'
+
+import { useAppState } from '#components/AppShell/hooks/useAppState'
+import { Item } from '#src/types'
+import { getValue } from '#utils/GetValue'
 
 export function LinkedItemsHeaderView({
   item,

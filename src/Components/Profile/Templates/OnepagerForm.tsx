@@ -1,28 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import * as React from 'react'
-import { Item, Tag } from '../../../types'
-import { TextAreaInput } from '../../Input'
-import { GroupSubheaderForm } from '../Subcomponents/GroupSubheaderForm'
-import { ContactInfoForm } from '../Subcomponents/ContactInfoForm'
-
-export interface FormState {
-  color: string
-  id: string
-  group_type: string
-  status: string
-  name: string
-  subname: string
-  text: string
-  contact: string
-  telephone: string
-  next_appointment: string
-  image: string
-  marker_icon: string
-  offers: Tag[]
-  needs: Tag[]
-  relations: Item[]
-}
+import { TextAreaInput } from '#components/Input'
+import { ContactInfoForm } from '#components/Profile/Subcomponents/ContactInfoForm'
+import { GroupSubheaderForm } from '#components/Profile/Subcomponents/GroupSubheaderForm'
+import { FormState, Item } from '#src/types'
 
 export const OnepagerForm = ({
   item,

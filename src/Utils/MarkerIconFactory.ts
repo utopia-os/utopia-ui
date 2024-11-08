@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import * as L from 'leaflet'
+import { divIcon, Point } from 'leaflet'
 
 const createSvg = (shape: string, markerColor: string, borderColor: string) => {
   const svgMap = {
@@ -66,11 +66,11 @@ const addIcon = (icon: string) => {
 }
 
 const MarkerIconFactory = (shape: string, color1: string, color2: string, icon: string) => {
-  return L.divIcon({
+  return divIcon({
     html: `${createSvg(shape, color1, color2)}${addIcon(icon)}`,
     iconAnchor: [17, 40],
     popupAnchor: [0, -40],
-    iconSize: new L.Point(40, 46),
+    iconSize: new Point(40, 46),
     className: 'leaflet-data-marker',
     shadowAnchor: [0, 0],
   })

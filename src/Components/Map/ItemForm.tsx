@@ -1,7 +1,7 @@
-import * as React from 'react'
-import { Item } from '../../types'
-import * as PropTypes from 'prop-types'
-import { useEffect } from 'react'
+import { node, string } from 'prop-types'
+import { Children, cloneElement, isValidElement, useEffect } from 'react'
+
+import { Item } from '#src/types'
 
 export const ItemForm = ({
   children,
@@ -23,9 +23,9 @@ export const ItemForm = ({
   return (
     <div>
       {children
-        ? React.Children.toArray(children).map((child) =>
-            React.isValidElement<{ item: Item; test: string }>(child)
-              ? React.cloneElement(child, { item, test: 'test' })
+        ? Children.toArray(children).map((child) =>
+            isValidElement<{ item: Item; test: string }>(child)
+              ? cloneElement(child, { item, test: 'test' })
               : '',
           )
         : ''}
@@ -34,8 +34,8 @@ export const ItemForm = ({
 }
 
 ItemForm.propTypes = {
-  children: PropTypes.node,
-  __TYPE: PropTypes.string,
+  children: node,
+  __TYPE: string,
 }
 
 ItemForm.defaultProps = {

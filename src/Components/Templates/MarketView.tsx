@@ -4,13 +4,15 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { useEffect, useState } from 'react'
-import { useItems } from '../Map/hooks/useItems'
-import { Tag } from '../../types'
-import { useTags } from '../Map/hooks/useTags'
-import { getValue } from '../../Utils/GetValue'
+import { useNavigate } from 'react-router-dom'
+
+import { useItems } from '#components/Map/hooks/useItems'
+import { useTags } from '#components/Map/hooks/useTags'
+import { Tag } from '#src/types'
+import { getValue } from '#utils/GetValue'
+
 import { MapOverlayPage } from './MapOverlayPage'
 import { TagView } from './TagView'
-import { useNavigate } from 'react-router-dom'
 
 function groupAndCount(arr) {
   const grouped = arr.reduce((acc, obj) => {

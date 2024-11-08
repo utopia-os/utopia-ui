@@ -1,6 +1,5 @@
-import * as React from 'react'
-import { StartEndView } from '../../Map'
-import { Item } from '../../../types'
+import { StartEndView } from '#components/Map'
+import { Item } from '#src/types'
 
 export const ProfileStartEndView = ({ item }: { item: Item }) => {
   return (

@@ -9,13 +9,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import * as React from 'react'
-import { Item, ItemsApi } from '../../../../types'
-import { useHasUserPermission } from '../../hooks/usePermissions'
-import { getValue } from '../../../../Utils/GetValue'
-import { useAppState } from '../../../AppShell/hooks/useAppState'
-import DialogModal from '../../../Templates/DialogModal'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+
+import { useAppState } from '#components/AppShell/hooks/useAppState'
+import { useHasUserPermission } from '#components/Map/hooks/usePermissions'
+import DialogModal from '#components/Templates/DialogModal'
+import { Item, ItemsApi } from '#src/types'
+import { getValue } from '#utils/GetValue'
 
 export function HeaderView({
   item,
@@ -48,7 +49,7 @@ export function HeaderView({
   truncateSubname?: boolean
   showAddress?: boolean
 }) {
-  const [modalOpen, setModalOpen] = React.useState<boolean>(false)
+  const [modalOpen, setModalOpen] = useState<boolean>(false)
 
   const hasUserPermission = useHasUserPermission()
   const navigate = useNavigate()
@@ -72,7 +73,7 @@ export function HeaderView({
     ? getValue(item, itemSubnameField)
     : item.layer?.itemSubnameField && item && getValue(item, item.layer.itemSubnameField)
 
-  const [address] = React.useState<string>('')
+  const [address] = useState<string>('')
 
   const params = new URLSearchParams(window.location.search)
 

@@ -1,9 +1,10 @@
-import * as React from 'react'
 import { useEffect } from 'react'
-import { ItemsApi, Tag } from '../../types'
-import { useSetTagData, useSetTagApi, useTags } from './hooks/useTags'
 import { useLocation } from 'react-router-dom'
+
+import { ItemsApi, Tag } from '#src/types'
+
 import { useAddFilterTag, useFilterTags, useResetFilterTags } from './hooks/useFilter'
+import { useSetTagData, useSetTagApi, useTags } from './hooks/useTags'
 
 export function Tags({ data, api }: { data?: Tag[]; api?: ItemsApi<Tag> }) {
   const setTagData = useSetTagData()

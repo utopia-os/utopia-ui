@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useEffect } from 'react'
+
 import { useTimeout } from './useTimeout'
 
 export const useDebounce = (callback, delay, deps) => {

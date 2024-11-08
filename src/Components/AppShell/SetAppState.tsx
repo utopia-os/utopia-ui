@@ -1,6 +1,8 @@
-import { useSetAppState } from './hooks/useAppState'
-import { AssetsApi } from '../../types'
 import { useEffect } from 'react'
+
+import { AssetsApi } from '#src/types'
+
+import { useSetAppState } from './hooks/useAppState'
 
 export const SetAppState = ({
   assetsApi,

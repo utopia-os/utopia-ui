@@ -1,13 +1,14 @@
-import * as React from 'react'
-import { Item } from '../../types'
-import * as PropTypes from 'prop-types'
+import { node, string } from 'prop-types'
+import { Children, cloneElement, isValidElement } from 'react'
+
+import { Item } from '#src/types'
 
 export const ItemView = ({ children, item }: { children?: React.ReactNode; item?: Item }) => {
   return (
     <div>
       {children
-        ? React.Children.toArray(children).map((child) =>
-            React.isValidElement<{ item: Item }>(child) ? React.cloneElement(child, { item }) : '',
+        ? Children.toArray(children).map((child) =>
+            isValidElement<{ item: Item }>(child) ? cloneElement(child, { item }) : '',
           )
         : ''}
     </div>
@@ -15,8 +16,8 @@ export const ItemView = ({ children, item }: { children?: React.ReactNode; item?
 }
 
 ItemView.propTypes = {
-  children: PropTypes.node,
-  __TYPE: PropTypes.string,
+  children: node,
+  __TYPE: string,
 }
 
 ItemView.defaultProps = {

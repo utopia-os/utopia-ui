@@ -2,11 +2,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as React from 'react'
-import { TextAreaInput } from '../../Input'
-import { FormState } from '../Templates/OnepagerForm'
-import { getValue } from '../../../Utils/GetValue'
 import { useEffect, useState } from 'react'
+
+import { TextAreaInput } from '#components/Input'
+import { FormState } from '#src/types'
+import { getValue } from '#utils/GetValue'
 
 export const ProfileTextForm = ({
   state,

@@ -29,7 +29,6 @@ function App() {
   const [layerPageRoutes, setLayerPageRoutes] = useState<any>();
   const [loading, setLoading] = useState<boolean>(true);
 
-
   useEffect(() => {
     setPermissionsApiInstance(new permissionsApi());
     setMapApiInstance(new mapApi(window.location.origin));
@@ -103,15 +102,15 @@ function App() {
               <Route path="/*" element={<MapContainer map={map} layers={layers} />}>
                 <Route path='login' element={<LoginPage />} />
                 <Route path='signup' element={<SignupPage />} />
-                <Route path='reset-password' element={<RequestPasswordPage reset_url={map.url + "/set-new-password/"} />} />
+                <Route path='reset-password' element={<RequestPasswordPage resetUrl={map.url + "/set-new-password/"} />} />
                 <Route path='set-new-password' element={<SetNewPasswordPage />} />
-                <Route path="item/*" element={<ProfileView attestationApi={attestationApi} userType={map.user_type.name} />} />
-                <Route path="edit-item/*" element={<ProfileForm userType={map.user_type.name}/>} />
+                <Route path="item/*" element={<ProfileView attestationApi={attestationApi} />} />
+                <Route path="edit-item/*" element={<ProfileForm/>} />
                 <Route path="user-settings" element={<UserSettings />} />
                 <Route path="moon-calendar" element={<MoonCalendar />} />
                 <Route path="landingpage" element={<Landingpage />} />
                 <Route path="market" element={<MarketView />} />
-                <Route path="select-user" element={<SelectUser userType={map.user_type.name} />} />
+                <Route path="select-user" element={<SelectUser/>} />
                 <Route path="attestation-form" element={<AttestationForm api={attestationApi}/>} />
                 {
                   layers.map((l: any) =>

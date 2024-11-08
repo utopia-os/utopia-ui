@@ -12,7 +12,7 @@ export class layersApi {
 
   async getItems() {
     try {
-      const layers = await directusClient.request(readItems("layers" as any, { fields: ['*', {itemType : ['*']}], filter: { "maps": { "maps_id": { "id": { "_eq": this.mapId } } } }, limit: 500 }));
+      const layers = await directusClient.request(readItems("layers" as any, { fields: ['*', {itemType : ['*.*', {profileTemplate: ['*', 'item.*.*.*'] }]} as any], filter: { "maps": { "maps_id": { "id": { "_eq": this.mapId } } } }, limit: 500 }));
       return layers;
     } catch (error: any) {
       console.log(error);

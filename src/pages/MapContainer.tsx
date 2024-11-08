@@ -21,12 +21,20 @@ function MapContainer({ layers, map }: { layers: Array<LayerProps>, map: any }) 
     layers.map((layer: LayerProps) => {
       apis && setApis(current => [...current, {
         id: layer.id!, api: new itemsApi<Place>('items', layer.id, undefined, {
-          ...(layer.itemType.name == "event" && {
-            "end": {
-              "_gt": etartOfDayISO
+          "_or": [
+            {
+              "end": {
+                "_gt": etartOfDayISO
+              }
+            },
+            {
+              "end": {
+                "_null": true
+              }
             }
-          })
-        })
+          ]
+        }
+        )
       }])
     })
   }, [layers])
@@ -89,7 +97,7 @@ function MapContainer({ layers, map }: { layers: Array<LayerProps>, map: any }) 
             <ItemForm>
               {layer.itemType.show_name_input && <PopupTextInput dataField='name' placeholder='Name'></PopupTextInput>}
               {layer.itemType.show_start_end_input && <PopupStartEndInput></PopupStartEndInput>}
-              {layer.itemType.show_text_input && <PopupTextAreaInput dataField='text' placeholder={'Text ...'} style="tw-h-40"></PopupTextAreaInput>}
+              {layer.itemType.show_text_input && <div className='mt-4'><PopupTextAreaInput dataField='text' placeholder={'Text ...'} style="tw-h-40"></PopupTextAreaInput></div>}
               {//layer.public_edit_items && <PopupCheckboxInput dataField={'public_edit'} label={'public edit'}/>
               }
               {layer.itemType.custom_text && <div className='flex justify-center'>

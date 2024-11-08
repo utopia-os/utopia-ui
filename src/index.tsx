@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-unassigned-import
 import './index.css'
 
 export {

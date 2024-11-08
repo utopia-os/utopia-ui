@@ -2,13 +2,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import * as React from 'react'
-import { Item } from '../../../types'
-import { FormState } from './OnepagerForm'
-import { GroupSubheaderForm } from '../Subcomponents/GroupSubheaderForm'
-import { ContactInfoForm } from '../Subcomponents/ContactInfoForm'
-import { ProfileTextForm } from '../Subcomponents/ProfileTextForm'
-import { ProfileStartEndForm } from '../Subcomponents/ProfileStartEndForm'
+
+import { ContactInfoForm } from '#components/Profile/Subcomponents/ContactInfoForm'
+import { GroupSubheaderForm } from '#components/Profile/Subcomponents/GroupSubheaderForm'
+import { ProfileStartEndForm } from '#components/Profile/Subcomponents/ProfileStartEndForm'
+import { ProfileTextForm } from '#components/Profile/Subcomponents/ProfileTextForm'
+import { Item, FormState } from '#src/types'
 
 const componentMap = {
   groupSubheaders: GroupSubheaderForm,

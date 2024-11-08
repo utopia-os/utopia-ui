@@ -3,10 +3,11 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useCallback, useEffect, useRef, useState } from 'react'
-import * as React from 'react'
 import { HexColorPicker } from 'react-colorful'
+
+// eslint-disable-next-line import/no-unassigned-import
 import './ColorPicker.css'
-import useClickOutside from '../hooks/useClickOutside'
+import useClickOutside from '#components/Profile/hooks/useClickOutside'
 
 // eslint-disable-next-line react/prop-types
 export const ColorPicker = ({ color, onChange, className }) => {
@@ -16,7 +17,7 @@ export const ColorPicker = ({ color, onChange, className }) => {
   const close = useCallback(() => toggle(false), [])
   useClickOutside(popover, close)
 
-  const colorPickerRef = React.useRef<HTMLDivElement>(null)
+  const colorPickerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     // Füge dem Color-Picker explizit Event-Listener hinzu

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import * as L from 'leaflet'
-import * as React from 'react'
+import { DomEvent } from 'leaflet'
+import { createRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 export function MapOverlayPage({
@@ -20,17 +20,17 @@ export function MapOverlayPage({
 
   const navigate = useNavigate()
 
-  const overlayRef = React.createRef<HTMLDivElement>()
-  const backdropRef = React.createRef<HTMLDivElement>()
+  const overlayRef = createRef<HTMLDivElement>()
+  const backdropRef = createRef<HTMLDivElement>()
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (overlayRef.current !== null) {
-      L.DomEvent.disableClickPropagation(overlayRef.current)
-      L.DomEvent.disableScrollPropagation(overlayRef.current)
+      DomEvent.disableClickPropagation(overlayRef.current)
+      DomEvent.disableScrollPropagation(overlayRef.current)
     }
     if (backdropRef.current !== null && backdrop) {
-      L.DomEvent.disableClickPropagation(backdropRef.current)
-      L.DomEvent.disableScrollPropagation(backdropRef.current)
+      DomEvent.disableClickPropagation(backdropRef.current)
+      DomEvent.disableScrollPropagation(backdropRef.current)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [overlayRef, backdropRef])

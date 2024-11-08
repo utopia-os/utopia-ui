@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import * as React from 'react'
+
 import { TitleCard } from './TitleCard'
 
 export function CardPage({

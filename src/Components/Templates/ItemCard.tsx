@@ -4,13 +4,15 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DateUserInfo } from './DateUserInfo'
-import { StartEndView, TextView } from '../Map'
-import { HeaderView } from '../Map/Subcomponents/ItemPopupComponents/HeaderView'
-import { Item } from '../../types'
 import { useNavigate } from 'react-router-dom'
-import { getValue } from '../../Utils/GetValue'
-import useWindowDimensions from '../Map/hooks/useWindowDimension'
+
+import { StartEndView, TextView } from '#components/Map'
+import useWindowDimensions from '#components/Map/hooks/useWindowDimension'
+import { HeaderView } from '#components/Map/Subcomponents/ItemPopupComponents/HeaderView'
+import { Item } from '#src/types'
+import { getValue } from '#utils/GetValue'
+
+import { DateUserInfo } from './DateUserInfo'
 
 export const ItemCard = ({
   i,

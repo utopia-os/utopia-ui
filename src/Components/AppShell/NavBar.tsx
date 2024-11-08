@@ -9,13 +9,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
-import { useAuth } from '../Auth'
-import { Link, useLocation } from 'react-router-dom'
-import { toast } from 'react-toastify'
 import QuestionMarkIcon from '@heroicons/react/24/outline/QuestionMarkCircleIcon'
 import { useEffect, useRef, useState } from 'react'
-import { useItems } from '../Map/hooks/useItems'
-import { Item } from '../../types'
+import { Link, useLocation } from 'react-router-dom'
+import { toast } from 'react-toastify'
+
+import { useAuth } from '#components/Auth'
+import { useItems } from '#components/Map/hooks/useItems'
+import { Item } from '#src/types'
 
 export default function NavBar({ appName, userType }: { appName: string; userType: string }) {
   const { isAuthenticated, user, logout } = useAuth()

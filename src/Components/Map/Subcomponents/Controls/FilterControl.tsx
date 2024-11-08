@@ -1,14 +1,14 @@
-import * as React from 'react'
+import { useEffect, useState } from 'react'
+
 import {
   useAddVisibleGroupType,
   useIsGroupTypeVisible,
   useToggleVisibleGroupType,
   useVisibleGroupType,
-} from '../../hooks/useFilter'
-import { useEffect } from 'react'
+} from '#components/Map/hooks/useFilter'
 
 export function FilterControl() {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
 
   const groupTypes = [
     { text: 'Regional Gruppe', value: 'wuerdekompass' },

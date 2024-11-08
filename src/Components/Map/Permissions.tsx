@@ -1,8 +1,9 @@
-import * as React from 'react'
 import { useEffect } from 'react'
-import { ItemsApi, Permission } from '../../types'
+
+import { useAuth } from '#components/Auth'
+import { ItemsApi, Permission } from '#src/types'
+
 import { useSetPermissionData, useSetPermissionApi, useSetAdminRole } from './hooks/usePermissions'
-import { useAuth } from '../Auth'
 
 export function Permissions({
   data,

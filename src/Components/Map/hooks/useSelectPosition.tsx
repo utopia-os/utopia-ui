@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-empty-function */
@@ -7,14 +8,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import * as React from 'react'
-import { createContext, useContext, useEffect, useState } from 'react'
-import { Geometry, Item, LayerProps } from '../../../types'
-import { useUpdateItem } from './useItems'
-import { toast } from 'react-toastify'
-import { useHasUserPermission } from './usePermissions'
 import { LatLng } from 'leaflet'
-import { ItemFormPopupProps } from '../Subcomponents/ItemFormPopup'
+import { createContext, useContext, useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
+
+import { Geometry, Item, LayerProps, ItemFormPopupProps } from '#src/types'
+
+import { useUpdateItem } from './useItems'
+import { useHasUserPermission } from './usePermissions'
 
 interface PolygonClickedProps {
   position: LatLng

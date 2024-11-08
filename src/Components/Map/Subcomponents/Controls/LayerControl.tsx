@@ -1,9 +1,10 @@
-import * as React from 'react'
-import { useLayers } from '../../hooks/useLayers'
-import { useIsLayerVisible, useToggleVisibleLayer } from '../../hooks/useFilter'
+import { useState } from 'react'
+
+import { useIsLayerVisible, useToggleVisibleLayer } from '#components/Map/hooks/useFilter'
+import { useLayers } from '#components/Map/hooks/useLayers'
 
 export function LayerControl() {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
 
   const layers = useLayers()
 

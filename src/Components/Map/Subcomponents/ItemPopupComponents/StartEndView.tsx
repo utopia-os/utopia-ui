@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
-import * as React from 'react'
-import { Item } from '../../../../types'
+import { Item } from '#src/types'
 
 export const StartEndView = ({ item }: { item?: Item }) => {
   return (

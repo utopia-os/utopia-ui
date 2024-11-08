@@ -1,5 +1,4 @@
-import * as React from 'react'
-import { useQuestsOpen, useSetQuestOpen } from '../../../Gaming/hooks/useQuests'
+import { useQuestsOpen, useSetQuestOpen } from '#components/Gaming/hooks/useQuests'
 
 export function QuestControl() {
   const questsOpen = useQuestsOpen()

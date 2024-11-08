@@ -5,23 +5,25 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import { useItems, useUpdateItem, useAddItem } from '../Map/hooks/useItems'
 import { useEffect, useState } from 'react'
-import { getValue } from '../../Utils/GetValue'
-import { useAuth } from '../Auth'
-import { useAddTag, useGetItemTags, useTags } from '../Map/hooks/useTags'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { Item, Tag } from '../../types'
-import { MapOverlayPage } from '../Templates'
-import { useLayers } from '../Map/hooks/useLayers'
-import { useHasUserPermission } from '../Map/hooks/usePermissions'
-import { OnepagerForm } from './Templates/OnepagerForm'
+
+import { useAppState } from '#components/AppShell/hooks/useAppState'
+import { useAuth } from '#components/Auth'
+import { useItems, useUpdateItem, useAddItem } from '#components/Map/hooks/useItems'
+import { useLayers } from '#components/Map/hooks/useLayers'
+import { useHasUserPermission } from '#components/Map/hooks/usePermissions'
+import { useAddTag, useGetItemTags, useTags } from '#components/Map/hooks/useTags'
+import { MapOverlayPage } from '#components/Templates'
+import { Item, Tag } from '#src/types'
+import { getValue } from '#utils/GetValue'
+
 import { linkItem, onUpdateItem, unlinkItem } from './itemFunctions'
+import { FormHeader } from './Subcomponents/FormHeader'
+import { FlexForm } from './Templates/FlexForm'
+import { OnepagerForm } from './Templates/OnepagerForm'
 import { SimpleForm } from './Templates/SimpleForm'
 import { TabsForm } from './Templates/TabsForm'
-import { FormHeader } from './Subcomponents/FormHeader'
-import { useAppState } from '../AppShell/hooks/useAppState'
-import { FlexForm } from './Templates/FlexForm'
 
 export function ProfileForm() {
   const [state, setState] = useState({

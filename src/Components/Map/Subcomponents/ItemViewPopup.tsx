@@ -7,19 +7,19 @@
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import * as React from 'react'
+import { LatLng } from 'leaflet'
+import { Children, cloneElement, forwardRef, isValidElement, useState } from 'react'
 import { Popup as LeafletPopup, useMap } from 'react-leaflet'
-import { Item } from '../../../types'
-import { ItemFormPopupProps } from './ItemFormPopup'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+
+import { useRemoveItem, useUpdateItem } from '#components/Map/hooks/useItems'
+import { useSetSelectPosition } from '#components/Map/hooks/useSelectPosition'
+import { Item, ItemFormPopupProps } from '#src/types'
+import { timeAgo } from '#utils/TimeAgo'
+
 import { HeaderView } from './ItemPopupComponents/HeaderView'
 import { TextView } from './ItemPopupComponents/TextView'
-import { timeAgo } from '../../../Utils/TimeAgo'
-import { useState } from 'react'
-import { LatLng } from 'leaflet'
-import { useNavigate } from 'react-router-dom'
-import { useRemoveItem, useUpdateItem } from '../hooks/useItems'
-import { toast } from 'react-toastify'
-import { useSetSelectPosition } from '../hooks/useSelectPosition'
 
 export interface ItemViewPopupProps {
   item: Item
@@ -28,9 +28,9 @@ export interface ItemViewPopupProps {
 }
 
 // eslint-disable-next-line react/display-name
-export const ItemViewPopup = React.forwardRef((props: ItemViewPopupProps, ref: any) => {
+export const ItemViewPopup = forwardRef((props: ItemViewPopupProps, ref: any) => {
   const map = useMap()
-  const [loading, setLoading] = React.useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
   const removeItem = useRemoveItem()
   const updadateItem = useUpdateItem()
   const navigate = useNavigate()
@@ -95,9 +95,9 @@ export const ItemViewPopup = React.forwardRef((props: ItemViewPopupProps, ref: a
         />
         <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
           {props.children ? (
-            React.Children.toArray(props.children).map((child) =>
-              React.isValidElement<{ item: Item; test: string }>(child)
-                ? React.cloneElement(child, { item: props.item })
+            Children.toArray(props.children).map((child) =>
+              isValidElement<{ item: Item; test: string }>(child)
+                ? cloneElement(child, { item: props.item })
                 : '',
             )
           ) : (

@@ -10,24 +10,24 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import * as React from 'react'
-import { useAddFilterTag } from '../../hooks/useFilter'
-import useWindowDimensions from '../../hooks/useWindowDimension'
 import axios from 'axios'
+import { LatLng, LatLngBounds, marker } from 'leaflet'
 import { useEffect, useRef, useState } from 'react'
 import { useMap, useMapEvents } from 'react-leaflet'
-import { LatLng, LatLngBounds } from 'leaflet'
-import { useDebounce } from '../../hooks/useDebounce'
-import { useTags } from '../../hooks/useTags'
-import { useItems } from '../../hooks/useItems'
-import { useLeafletRefs } from '../../hooks/useLeafletRefs'
-import { getValue } from '../../../../Utils/GetValue'
-import { LocateControl } from './LocateControl'
-import * as L from 'leaflet'
-import MarkerIconFactory from '../../../../Utils/MarkerIconFactory'
-import { decodeTag } from '../../../../Utils/FormatTags'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { Item } from '../../../../types'
+
+import { useDebounce } from '#components/Map/hooks/useDebounce'
+import { useAddFilterTag } from '#components/Map/hooks/useFilter'
+import { useItems } from '#components/Map/hooks/useItems'
+import { useLeafletRefs } from '#components/Map/hooks/useLeafletRefs'
+import { useTags } from '#components/Map/hooks/useTags'
+import useWindowDimensions from '#components/Map/hooks/useWindowDimension'
+import { Item } from '#src/types'
+import { decodeTag } from '#utils/FormatTags'
+import { getValue } from '#utils/GetValue'
+import MarkerIconFactory from '#utils/MarkerIconFactory'
+
+import { LocateControl } from './LocateControl'
 import { SidebarControl } from './SidebarControl'
 
 export const SearchControl = () => {
@@ -206,7 +206,7 @@ export const SearchControl = () => {
                   key={Math.random()}
                   onClick={() => {
                     searchInput.current?.blur()
-                    L.marker(new LatLng(geo.geometry.coordinates[1], geo.geometry.coordinates[0]), {
+                    marker(new LatLng(geo.geometry.coordinates[1], geo.geometry.coordinates[0]), {
                       icon: MarkerIconFactory('circle', '#777', 'RGBA(35, 31, 32, 0.2)', 'point'),
                     })
                       .addTo(map)
@@ -272,7 +272,7 @@ export const SearchControl = () => {
                 <div
                   className='tw-flex tw-flex-row hover:tw-font-bold tw-cursor-pointer'
                   onClick={() => {
-                    L.marker(
+                    marker(
                       new LatLng(extractCoordinates(value)![0], extractCoordinates(value)![1]),
                       {
                         icon: MarkerIconFactory('circle', '#777', 'RGBA(35, 31, 32, 0.2)', 'point'),

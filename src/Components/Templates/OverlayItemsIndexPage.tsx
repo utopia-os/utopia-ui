@@ -6,23 +6,25 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { useEffect, useRef, useState } from 'react'
-import { Item } from '../../types'
-import { PopupStartEndInput } from '../Map'
-import { PlusButton } from '../Profile/Subcomponents/PlusButton'
-import { TextInput, TextAreaInput } from '../Input'
-import { useAddTag, useGetItemTags, useTags } from '../Map/hooks/useTags'
 import { toast } from 'react-toastify'
-import { hashTagRegex } from '../../Utils/HashTagRegex'
-import { randomColor } from '../../Utils/RandomColor'
-import { useAuth } from '../Auth'
-import { useLayers } from '../Map/hooks/useLayers'
-import { MapOverlayPage } from './MapOverlayPage'
-import { useAddItem, useItems, useRemoveItem } from '../Map/hooks/useItems'
+
+import { useAuth } from '#components/Auth/useAuth'
+import { TextInput, TextAreaInput } from '#components/Input'
+import { PopupStartEndInput } from '#components/Map'
+import { useFilterTags } from '#components/Map/hooks/useFilter'
+import { useAddItem, useItems, useRemoveItem } from '#components/Map/hooks/useItems'
+import { useLayers } from '#components/Map/hooks/useLayers'
+import { useAddTag, useGetItemTags, useTags } from '#components/Map/hooks/useTags'
+import { Control } from '#components/Map/Subcomponents/Controls/Control'
+import { SearchControl } from '#components/Map/Subcomponents/Controls/SearchControl'
+import { TagsControl } from '#components/Map/Subcomponents/Controls/TagsControl'
+import { PlusButton } from '#components/Profile/Subcomponents/PlusButton'
+import { Item } from '#src/types'
+import { hashTagRegex } from '#utils/HashTagRegex'
+import { randomColor } from '#utils/RandomColor'
+
 import { ItemCard } from './ItemCard'
-import { Control } from '../Map/Subcomponents/Controls/Control'
-import { SearchControl } from '../Map/Subcomponents/Controls/SearchControl'
-import { TagsControl } from '../Map/Subcomponents/Controls/TagsControl'
-import { useFilterTags } from '../Map/hooks/useFilter'
+import { MapOverlayPage } from './MapOverlayPage'
 
 export const OverlayItemsIndexPage = ({
   url,

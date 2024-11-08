@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as React from 'react'
-import { ItemFormPopupProps } from './Components/Map/Subcomponents/ItemFormPopup'
+import { LatLng } from 'leaflet'
 
 export interface Tag {
   color: string
@@ -69,7 +68,9 @@ export interface LayerProps {
   public_edit_items?: boolean
   listed?: boolean
   item_presets?: Record<string, unknown>
+  // eslint-disable-next-line no-use-before-define
   setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
+  // eslint-disable-next-line no-use-before-define
   itemFormPopup?: ItemFormPopupProps | null
   clusterRef?: any
 }
@@ -177,4 +178,30 @@ export interface Permission {
     // Optional, für spezifische Bedingungen wie `user_created`
     _and: PermissionCondition[]
   }
+}
+
+export interface ItemFormPopupProps {
+  position: LatLng
+  layer: LayerProps
+  item?: Item
+  children?: React.ReactNode
+  setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
+}
+
+export interface FormState {
+  color: string
+  id: string
+  group_type: string
+  status: string
+  name: string
+  subname: string
+  text: string
+  contact: string
+  telephone: string
+  next_appointment: string
+  image: string
+  marker_icon: string
+  offers: Tag[]
+  needs: Tag[]
+  relations: Item[]
 }

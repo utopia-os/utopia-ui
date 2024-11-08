@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { Link } from 'react-router-dom'
-import { getValue } from '../../../../Utils/GetValue'
-import { Item } from '../../../../types'
-import { useGetItemTags } from '../../hooks/useTags'
+
+import { useGetItemTags } from '#components/Map/hooks/useTags'
+import { Item } from '#src/types'
+import { getValue } from '#utils/GetValue'
 
 export const PopupButton = ({
   url,

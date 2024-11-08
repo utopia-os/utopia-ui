@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import * as React from 'react'
-import { TextInput } from '../../Input'
-import { FormState } from '../Templates/OnepagerForm'
+import { TextInput } from '#components/Input'
+import { FormState } from '#src/types'
 
 export const ContactInfoForm = ({
   state,

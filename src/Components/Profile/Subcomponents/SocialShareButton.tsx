@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-import * as React from 'react'
+
+import { cloneElement } from 'react'
 
 const platformConfigs = {
   facebook: {
@@ -106,7 +107,7 @@ const SocialShareButton = ({
       }}
       title={`share link on ${platform}`}
     >
-      {React.cloneElement(icon, { className: 'tw-w-4 tw-h-4 tw-fill-current' })}
+      {cloneElement(icon, { className: 'tw-w-4 tw-h-4 tw-fill-current' })}
     </a>
   )
 }

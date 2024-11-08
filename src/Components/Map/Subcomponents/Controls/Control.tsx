@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import * as L from 'leaflet'
-import * as React from 'react'
+import { DomEvent } from 'leaflet'
+import { createRef, useEffect } from 'react'
 
 export const Control = ({
   position,
@@ -13,12 +13,12 @@ export const Control = ({
   zIndex: string
   absolute: boolean
 }) => {
-  const controlContainerRef = React.createRef<HTMLDivElement>()
+  const controlContainerRef = createRef<HTMLDivElement>()
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (controlContainerRef.current !== null) {
-      L.DomEvent.disableClickPropagation(controlContainerRef.current)
-      L.DomEvent.disableScrollPropagation(controlContainerRef.current)
+      DomEvent.disableClickPropagation(controlContainerRef.current)
+      DomEvent.disableScrollPropagation(controlContainerRef.current)
     }
   }, [controlContainerRef])
 

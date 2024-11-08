@@ -1,4 +1,4 @@
-import { Item } from '../../../../types'
+import { Item } from '#src/types'
 
 export const PopupCheckboxInput = ({
   dataField,

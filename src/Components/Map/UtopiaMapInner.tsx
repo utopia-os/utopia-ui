@@ -6,37 +6,49 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import { TileLayer, MapContainer, useMapEvents, GeoJSON } from 'react-leaflet'
-import 'leaflet/dist/leaflet.css'
-import * as React from 'react'
-import { UtopiaMapProps } from '../../types'
-import './UtopiaMap.css'
 import { LatLng } from 'leaflet'
+import {
+  Children,
+  cloneElement,
+  createRef,
+  isValidElement,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
+import { TileLayer, MapContainer, useMapEvents, GeoJSON } from 'react-leaflet'
+// eslint-disable-next-line import/no-unassigned-import
+import 'leaflet/dist/leaflet.css'
 import MarkerClusterGroup from 'react-leaflet-cluster'
-import AddButton from './Subcomponents/AddButton'
-import { useEffect, useRef, useState } from 'react'
-import { ItemFormPopupProps } from './Subcomponents/ItemFormPopup'
-import { SearchControl } from './Subcomponents/Controls/SearchControl'
-import { Control } from './Subcomponents/Controls/Control'
 import { Outlet } from 'react-router-dom'
-import { TagsControl } from './Subcomponents/Controls/TagsControl'
+import { toast } from 'react-toastify'
+
+import { ItemFormPopupProps, UtopiaMapProps } from '#src/types'
+
+// eslint-disable-next-line import/no-unassigned-import
+import './UtopiaMap.css'
+
+import { useClusterRef, useSetClusterRef } from './hooks/useClusterRef'
+import { useAddVisibleLayer } from './hooks/useFilter'
+import { useLayers } from './hooks/useLayers'
 import {
   useSelectPosition,
   useSetMapClicked,
   useSetSelectPosition,
 } from './hooks/useSelectPosition'
-import { useClusterRef, useSetClusterRef } from './hooks/useClusterRef'
-import { Feature, Geometry as GeoJSONGeometry } from 'geojson'
+import AddButton from './Subcomponents/AddButton'
+import { Control } from './Subcomponents/Controls/Control'
 import { FilterControl } from './Subcomponents/Controls/FilterControl'
-import { LayerControl } from './Subcomponents/Controls/LayerControl'
-import { useLayers } from './hooks/useLayers'
-import { useAddVisibleLayer } from './hooks/useFilter'
 import { GratitudeControl } from './Subcomponents/Controls/GratitudeControl'
-import { SelectPosition } from './Subcomponents/SelectPosition'
-import { toast } from 'react-toastify'
+import { LayerControl } from './Subcomponents/Controls/LayerControl'
+import { SearchControl } from './Subcomponents/Controls/SearchControl'
+import { TagsControl } from './Subcomponents/Controls/TagsControl'
 import { TextView } from './Subcomponents/ItemPopupComponents/TextView'
+import { SelectPosition } from './Subcomponents/SelectPosition'
 
-const mapDivRef = React.createRef()
+import type { Feature, Geometry as GeoJSONGeometry } from 'geojson'
+
+const mapDivRef = createRef()
 
 export function UtopiaMapInner({
   height = '500px',
@@ -147,13 +159,13 @@ export function UtopiaMapInner({
           maxClusterRadius={50}
           removeOutsideVisibleBounds={false}
         >
-          {React.Children.toArray(children).map((child) =>
-            React.isValidElement<{
+          {Children.toArray(children).map((child) =>
+            isValidElement<{
               setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps>>
               itemFormPopup: ItemFormPopupProps | null
               clusterRef: React.MutableRefObject<undefined>
             }>(child)
-              ? React.cloneElement(child, { setItemFormPopup, itemFormPopup, clusterRef })
+              ? cloneElement(child, { setItemFormPopup, itemFormPopup, clusterRef })
               : child,
           )}
         </MarkerClusterGroup>

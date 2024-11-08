@@ -4,12 +4,13 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import * as L from 'leaflet'
-import { useMap, useMapEvents } from 'react-leaflet'
-import 'leaflet.locatecontrol'
-
-import 'leaflet.locatecontrol/dist/L.Control.Locate.css'
+import { control } from 'leaflet'
 import { useEffect, useRef, useState } from 'react'
+import { useMap, useMapEvents } from 'react-leaflet'
+// eslint-disable-next-line import/no-unassigned-import
+import 'leaflet.locatecontrol'
+// eslint-disable-next-line import/no-unassigned-import
+import 'leaflet.locatecontrol/dist/L.Control.Locate.css'
 
 // Converts leaflet.locatecontrol to a React Component
 export const LocateControl = () => {
@@ -25,7 +26,7 @@ export const LocateControl = () => {
   useEffect(() => {
     if (!init.current) {
       // @ts-ignore
-      setLc(L.control.locate().addTo(map))
+      setLc(control.locate().addTo(map))
       init.current = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

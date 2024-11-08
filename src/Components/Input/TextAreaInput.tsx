@@ -2,10 +2,10 @@
 /* eslint-disable @typescript-eslint/consistent-indexed-object-style */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
-import * as React from 'react'
 import { useEffect, useRef, useState } from 'react'
 import Tribute from 'tributejs'
-import { useTags } from '../Map/hooks/useTags'
+
+import { useTags } from '#components/Map/hooks/useTags'
 
 type TextAreaProps = {
   labelTitle?: string

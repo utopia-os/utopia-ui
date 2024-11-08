@@ -7,29 +7,30 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import * as React from 'react'
+import { Popup } from 'leaflet'
+import { Children, isValidElement, useEffect, useState } from 'react'
 import { Marker, Tooltip, useMap, useMapEvents } from 'react-leaflet'
-import { Item, LayerProps, Tag } from '../../types'
-import MarkerIconFactory from '../../Utils/MarkerIconFactory'
-import { ItemViewPopup } from './Subcomponents/ItemViewPopup'
-import { useAllItemsLoaded, useItems, useSetItemsApi, useSetItemsData } from './hooks/useItems'
-import { useEffect, useState } from 'react'
-import { ItemFormPopup } from './Subcomponents/ItemFormPopup'
+import { useLocation } from 'react-router-dom'
+
+import { Item, LayerProps, Tag } from '#src/types'
+import { encodeTag } from '#utils/FormatTags'
+import { getValue } from '#utils/GetValue'
+import { hashTagRegex } from '#utils/HashTagRegex'
+import MarkerIconFactory from '#utils/MarkerIconFactory'
+import { randomColor } from '#utils/RandomColor'
+
 import {
   useFilterTags,
   useIsGroupTypeVisible,
   useIsLayerVisible,
   useVisibleGroupType,
 } from './hooks/useFilter'
-import { useAddTag, useAllTagsLoaded, useGetItemTags, useTags } from './hooks/useTags'
+import { useAllItemsLoaded, useItems, useSetItemsApi, useSetItemsData } from './hooks/useItems'
 import { useAddMarker, useAddPopup, useLeafletRefs } from './hooks/useLeafletRefs'
-import { Popup } from 'leaflet'
-import { useLocation } from 'react-router-dom'
-import { getValue } from '../../Utils/GetValue'
-import { hashTagRegex } from '../../Utils/HashTagRegex'
-import { randomColor } from '../../Utils/RandomColor'
-import { encodeTag } from '../../Utils/FormatTags'
 import { useSelectPosition, useSetMarkerClicked } from './hooks/useSelectPosition'
+import { useAddTag, useAllTagsLoaded, useGetItemTags, useTags } from './hooks/useTags'
+import { ItemFormPopup } from './Subcomponents/ItemFormPopup'
+import { ItemViewPopup } from './Subcomponents/ItemViewPopup'
 
 export const Layer = ({
   data,
@@ -335,11 +336,11 @@ export const Layer = ({
                   position={[latitude, longitude]}
                 >
                   {children &&
-                  React.Children.toArray(children).some(
-                    (child) => React.isValidElement(child) && child.props.__TYPE === 'ItemView',
+                  Children.toArray(children).some(
+                    (child) => isValidElement(child) && child.props.__TYPE === 'ItemView',
                   ) ? (
-                    React.Children.toArray(children).map((child) =>
-                      React.isValidElement(child) && child.props.__TYPE === 'ItemView' ? (
+                    Children.toArray(children).map((child) =>
+                      isValidElement(child) && child.props.__TYPE === 'ItemView' ? (
                         <ItemViewPopup
                           ref={(r) => {
                             if (!(item.id in leafletRefs && leafletRefs[item.id].popup === r)) {
@@ -383,11 +384,11 @@ export const Layer = ({
       {itemFormPopup &&
         itemFormPopup.layer.name === name &&
         (children &&
-        React.Children.toArray(children).some(
-          (child) => React.isValidElement(child) && child.props.__TYPE === 'ItemForm',
+        Children.toArray(children).some(
+          (child) => isValidElement(child) && child.props.__TYPE === 'ItemForm',
         ) ? (
-          React.Children.toArray(children).map((child) =>
-            React.isValidElement(child) && child.props.__TYPE === 'ItemForm' ? (
+          Children.toArray(children).map((child) =>
+            isValidElement(child) && child.props.__TYPE === 'ItemForm' ? (
               <ItemFormPopup
                 key={setItemFormPopup?.name}
                 position={itemFormPopup.position}

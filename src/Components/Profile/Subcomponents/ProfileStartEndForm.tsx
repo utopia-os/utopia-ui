@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import * as React from 'react'
-import { PopupStartEndInput } from '../../Map'
-import { Item } from '../../../types'
+import { PopupStartEndInput } from '#components/Map'
+import { Item } from '#src/types'
 
 export const ProfileStartEndForm = ({
   item,

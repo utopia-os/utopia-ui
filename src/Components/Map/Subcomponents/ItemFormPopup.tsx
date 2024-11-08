@@ -7,28 +7,19 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import * as React from 'react'
-import { LatLng } from 'leaflet'
+import { Children, cloneElement, isValidElement, useEffect, useRef, useState } from 'react'
 import { Popup as LeafletPopup, useMap } from 'react-leaflet'
-import { useEffect, useRef, useState } from 'react'
-import { useAddItem, useItems, useRemoveItem, useUpdateItem } from '../hooks/useItems'
-import { Geometry, LayerProps, Item } from '../../../types'
-import { TextAreaInput } from '../../Input/TextAreaInput'
-import { TextInput } from '../../Input/TextInput'
 import { toast } from 'react-toastify'
-import { useResetFilterTags } from '../hooks/useFilter'
-import { hashTagRegex } from '../../../Utils/HashTagRegex'
-import { randomColor } from '../../../Utils/RandomColor'
-import { useAddTag, useTags } from '../hooks/useTags'
-import { useAuth } from '../../Auth'
 
-export interface ItemFormPopupProps {
-  position: LatLng
-  layer: LayerProps
-  item?: Item
-  children?: React.ReactNode
-  setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
-}
+import { useAuth } from '#components/Auth/useAuth'
+import { TextAreaInput } from '#components/Input/TextAreaInput'
+import { TextInput } from '#components/Input/TextInput'
+import { useResetFilterTags } from '#components/Map/hooks/useFilter'
+import { useAddItem, useItems, useRemoveItem, useUpdateItem } from '#components/Map/hooks/useItems'
+import { useAddTag, useTags } from '#components/Map/hooks/useTags'
+import { Geometry, Item, ItemFormPopupProps } from '#src/types'
+import { hashTagRegex } from '#utils/HashTagRegex'
+import { randomColor } from '#utils/RandomColor'
 
 export function ItemFormPopup(props: ItemFormPopupProps) {
   const [spinner, setSpinner] = useState(false)
@@ -168,13 +159,13 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
         )}
 
         {props.children ? (
-          React.Children.toArray(props.children).map((child) =>
-            React.isValidElement<{
+          Children.toArray(props.children).map((child) =>
+            isValidElement<{
               item: Item
               test: string
               setPopupTitle: React.Dispatch<React.SetStateAction<string>>
             }>(child)
-              ? React.cloneElement(child, {
+              ? cloneElement(child, {
                   item: props.item,
                   key: props.position.toString(),
                   setPopupTitle,

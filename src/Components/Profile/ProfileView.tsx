@@ -7,26 +7,28 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { MapOverlayPage } from '../Templates'
-import { useItems, useRemoveItem, useUpdateItem } from '../Map/hooks/useItems'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import { Item, ItemsApi, Tag } from '../../types'
-import { useMap } from 'react-leaflet'
 import { LatLng } from 'leaflet'
-import { useHasUserPermission } from '../Map/hooks/usePermissions'
-import { HeaderView } from '../Map/Subcomponents/ItemPopupComponents/HeaderView'
-import { useSelectPosition, useSetSelectPosition } from '../Map/hooks/useSelectPosition'
-import { useClusterRef } from '../Map/hooks/useClusterRef'
-import { useLeafletRefs } from '../Map/hooks/useLeafletRefs'
-import { getValue } from '../../Utils/GetValue'
-import { TabsView } from './Templates/TabsView'
+import { useEffect, useState } from 'react'
+import { useMap } from 'react-leaflet'
+import { useLocation, useNavigate } from 'react-router-dom'
+
+import { useAppState } from '#components/AppShell/hooks/useAppState'
+import { useClusterRef } from '#components/Map/hooks/useClusterRef'
+import { useItems, useRemoveItem, useUpdateItem } from '#components/Map/hooks/useItems'
+import { useLeafletRefs } from '#components/Map/hooks/useLeafletRefs'
+import { useHasUserPermission } from '#components/Map/hooks/usePermissions'
+import { useSelectPosition, useSetSelectPosition } from '#components/Map/hooks/useSelectPosition'
+import { useTags } from '#components/Map/hooks/useTags'
+import { HeaderView } from '#components/Map/Subcomponents/ItemPopupComponents/HeaderView'
+import { MapOverlayPage } from '#components/Templates'
+import { Item, ItemsApi, Tag } from '#src/types'
+import { getValue } from '#utils/GetValue'
+
+import { handleDelete, linkItem, unlinkItem } from './itemFunctions'
+import { FlexView } from './Templates/FlexView'
 import { OnepagerView } from './Templates/OnepagerView'
 import { SimpleView } from './Templates/SimpleView'
-import { handleDelete, linkItem, unlinkItem } from './itemFunctions'
-import { useTags } from '../Map/hooks/useTags'
-import { FlexView } from './Templates/FlexView'
-import { useAppState } from '../AppShell/hooks/useAppState'
+import { TabsView } from './Templates/TabsView'
 
 export function ProfileView({ attestationApi }: { attestationApi?: ItemsApi<any> }) {
   const [item, setItem] = useState<Item>()

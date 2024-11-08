@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+// eslint-disable-next-line import/no-commonjs
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}', './node_modules/tw-elements/dist/js/**/*.js'],
   safelist: [
@@ -63,6 +64,7 @@ module.exports = {
       pulseGrow: 'pulseGrow 2s ease-in-out infinite',
     },
   },
+  // eslint-disable-next-line import/no-commonjs, import/extensions
   plugins: [require('daisyui'), require('tw-elements/dist/plugin.cjs')],
   daisyui: {
     themes: [

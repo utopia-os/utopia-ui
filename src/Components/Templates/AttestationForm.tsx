@@ -7,15 +7,16 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import * as React from 'react'
-import { MapOverlayPage } from './MapOverlayPage'
-import { useItems } from '../Map/hooks/useItems'
-import { useAppState } from '../AppShell/hooks/useAppState'
-import { EmojiPicker } from './EmojiPicker'
-import { useNavigate } from 'react-router-dom'
 import { useRef, useState, useEffect } from 'react'
-import { Item, ItemsApi } from '../../types'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+
+import { useAppState } from '#components/AppShell/hooks/useAppState'
+import { useItems } from '#components/Map/hooks/useItems'
+import { Item, ItemsApi } from '#src/types'
+
+import { EmojiPicker } from './EmojiPicker'
+import { MapOverlayPage } from './MapOverlayPage'
 
 export const AttestationForm = ({ api }: { api?: ItemsApi<any> }) => {
   const items = useItems()

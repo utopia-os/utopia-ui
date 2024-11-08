@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 interface ComboBoxProps {
   id?: string
   options: string[]

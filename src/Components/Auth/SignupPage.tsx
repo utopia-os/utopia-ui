@@ -5,10 +5,11 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
 import { toast } from 'react-toastify'
+
+import { MapOverlayPage } from '#components/Templates/MapOverlayPage'
+
 import { useAuth } from './useAuth'
-import { MapOverlayPage } from '../Templates'
 
 export function SignupPage() {
   const [email, setEmail] = useState<string>('')

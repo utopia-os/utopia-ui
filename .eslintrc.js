@@ -12,7 +12,7 @@ module.exports = {
     'plugin:import/recommended',
     'plugin:import/typescript',
     // 'plugin:promise/recommended',
-    // 'plugin:security/recommended-legacy',
+    'plugin:security/recommended-legacy',
     'plugin:react/recommended',
   ],
   parserOptions: {
@@ -24,7 +24,7 @@ module.exports = {
     '@typescript-eslint',
     'import',
     // 'promise',
-    // 'security',
+    'security',
     // 'no-catch-all',
     'react',
     'react-hooks',

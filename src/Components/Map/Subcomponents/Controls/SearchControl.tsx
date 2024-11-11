@@ -63,6 +63,7 @@ export const SearchControl = () => {
         try {
           const { data } = await axios.get(`https://photon.komoot.io/api/?q=${value}&limit=5`)
           setGeoResults(data.features)
+          // eslint-disable-next-line no-catch-all/no-catch-all
         } catch (error) {
           // eslint-disable-next-line no-console
           console.log(error)

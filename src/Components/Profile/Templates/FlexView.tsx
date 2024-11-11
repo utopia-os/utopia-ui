@@ -17,6 +17,7 @@ const componentMap = {
 }
 
 export const FlexView = ({ item }: { item: Item }) => {
+  // eslint-disable-next-line no-console
   console.log(item)
   return (
     <div className='tw-h-full tw-overflow-y-auto fade'>

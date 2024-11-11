@@ -74,6 +74,7 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
         toast.error(error.toString())
       }
       if (success) {
+        // eslint-disable-next-line no-console
         console.log(props.item)
 
         updateItem({ ...props.item, ...formItem })

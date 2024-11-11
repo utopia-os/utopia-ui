@@ -60,11 +60,13 @@ export function ProfileView({ attestationApi }: { attestationApi?: ItemsApi<any>
       attestationApi
         .getItems()
         .then((value) => {
+          // eslint-disable-next-line no-console
           console.log(value)
 
           setAttestations(value)
         })
         .catch((error) => {
+          // eslint-disable-next-line no-console
           console.error('Error fetching items:', error)
         })
     }

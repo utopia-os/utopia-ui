@@ -46,18 +46,11 @@ module.exports = {
     'react/react-in-jsx-scope': 'off', // Disable requirement for React import
     //     'no-catch-all/no-catch-all': 'error',
     //     'no-console': 'error',
-    //     'no-debugger': 'error',
-    //     camelcase: 'error',
-    //     indent: ['error', 2],
-    //     'linebreak-style': ['error', 'unix'],
-    //     semi: ['error', 'never'],
-    //     // This makes sure our vike router does not throw errors
-    //     'vue/multi-word-component-names': [
-    //       'error',
-    //       {
-    //         ignores: ['+Page'],
-    //       },
-    //     ],
+    'no-debugger': 'error',
+    camelcase: 'error',
+    indent: ['error', 2],
+    'linebreak-style': ['error', 'unix'],
+    semi: ['error', 'never'],
     // Optional eslint-comments rule
     '@eslint-community/eslint-comments/no-unused-disable': 'error',
     '@eslint-community/eslint-comments/disable-enable-pair': ['error', { allowWholeFile: true }],

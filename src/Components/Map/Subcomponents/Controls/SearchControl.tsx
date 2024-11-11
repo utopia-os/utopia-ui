@@ -328,6 +328,7 @@ export const SearchControl = () => {
 
 function isGeoCoordinate(input) {
   const geokoordinatenRegex =
+    // eslint-disable-next-line security/detect-unsafe-regex
     /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/
   return geokoordinatenRegex.test(input)
 }

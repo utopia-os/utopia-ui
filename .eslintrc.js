@@ -45,7 +45,7 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
     'react/react-in-jsx-scope': 'off', // Disable requirement for React import
     //     'no-catch-all/no-catch-all': 'error',
-    //     'no-console': 'error',
+    'no-console': 'error',
     'no-debugger': 'error',
     camelcase: 'error',
     indent: ['error', 2],

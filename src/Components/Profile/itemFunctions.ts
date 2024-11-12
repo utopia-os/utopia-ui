@@ -9,14 +9,15 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { setTimeout } from 'timers/promises'
-
 import { toast } from 'react-toastify'
 
 import { Item } from '#src/types'
 import { encodeTag } from '#utils/FormatTags'
 import { hashTagRegex } from '#utils/HashTagRegex'
 import { randomColor } from '#utils/RandomColor'
+
+// eslint-disable-next-line promise/avoid-new
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export const submitNewItem = async (
   evt: any,
@@ -224,7 +225,7 @@ export const onUpdateItem = async (
     })
 
   // take care that addTag request comes before item request
-  await setTimeout(200)
+  await sleep(200)
 
   if (!item.new) {
     item?.layer?.api?.updateItem &&

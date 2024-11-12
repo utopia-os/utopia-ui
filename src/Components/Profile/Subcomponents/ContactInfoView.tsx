@@ -16,6 +16,7 @@ export const ContactInfoView = ({ item, heading }: { item: Item; heading: string
   const items = useItems()
 
   useEffect(() => {
+    // eslint-disable-next-line no-console
     console.log(
       'user:',
       items.find(

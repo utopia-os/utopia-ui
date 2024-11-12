@@ -17,6 +17,7 @@ export function SetNewPasswordPage() {
 
   const onReset = async () => {
     const token = window.location.search.split('token=')[1]
+    // eslint-disable-next-line no-console
     console.log(token)
 
     await toast.promise(passwordReset(token, password), {

@@ -94,6 +94,7 @@ export function UtopiaMapInner({
     useMapEvents({
       click: (e) => {
         resetMetaTags()
+        // eslint-disable-next-line no-console
         console.log(e.latlng.lat + ',' + e.latlng.lng)
         if (selectNewItemPosition) {
           setMapClicked({ position: e.latlng, setItemFormPopup })

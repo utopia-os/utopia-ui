@@ -30,6 +30,7 @@ export const GroupSubheaderForm = ({
   useEffect(() => {
     if (groupTypes && groupStates) {
       const groupType = groupTypes.find((gt) => gt.groupTypes_id.name === state.group_type)
+      // eslint-disable-next-line no-console
       console.log(state.group_type)
       setState((prevState) => ({
         ...prevState,

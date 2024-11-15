@@ -1,4 +1,4 @@
-# Utopia Flex Map 🌍
+# Utopia Map 🌍
 
 
 Clone repository and ...

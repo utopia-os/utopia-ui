@@ -16,6 +16,7 @@ import { encodeTag } from '#utils/FormatTags'
 import { hashTagRegex } from '#utils/HashTagRegex'
 import { randomColor } from '#utils/RandomColor'
 
+// eslint-disable-next-line promise/avoid-new
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export const submitNewItem = async (
@@ -243,6 +244,7 @@ export const onUpdateItem = async (
         .then(() => {
           setLoading(false)
           navigate(`/item/${item.id}${params && '?' + params}`)
+          return null
         })
   } else {
     item.new = false
@@ -272,6 +274,7 @@ export const onUpdateItem = async (
         .then(() => {
           setLoading(false)
           navigate(`/${params && '?' + params}`)
+          return null
         })
   }
 }

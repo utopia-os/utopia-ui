@@ -2,6 +2,8 @@
 
 The Utopia Map is a flexible collaborative app for decentralized coordination and real life networking that can be adapted to the specific requirements of different networks. Its central element is the interactive geographical map on which users can enter any items.
 
+**Utopia Map** is based on **[Utopia UI](https://github.com/utopia-os/utopia-ui)**
+
 ## Getting Started
 Clone repository and ...
 

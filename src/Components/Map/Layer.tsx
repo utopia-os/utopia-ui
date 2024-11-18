@@ -196,6 +196,7 @@ export const Layer = ({
     } else {
       if (window.location.pathname.split('/')[1]) {
         const id = window.location.pathname.split('/')[1]
+        // eslint-disable-next-line security/detect-object-injection
         const ref = leafletRefs[id]
         if (ref?.marker && ref.item.layer?.name === name) {
           ref.marker &&
@@ -261,20 +262,27 @@ export const Layer = ({
           )
           .map((item: Item) => {
             if (getValue(item, itemLongitudeField) && getValue(item, itemLatitudeField)) {
+              // eslint-disable-next-line security/detect-object-injection
               if (getValue(item, itemTextField)) item[itemTextField] = getValue(item, itemTextField)
+              // eslint-disable-next-line security/detect-object-injection
               else item[itemTextField] = ''
 
               if (item.tags) {
+                // eslint-disable-next-line security/detect-object-injection
                 item[itemTextField] = item[itemTextField] + '\n\n'
                 item.tags.map((tag) => {
+                  // eslint-disable-next-line security/detect-object-injection
                   if (!item[itemTextField].includes(`#${encodeTag(tag)}`)) {
+                    // eslint-disable-next-line security/detect-object-injection
                     return (item[itemTextField] = item[itemTextField] + `#${encodeTag(tag)} `)
                   }
+                  // eslint-disable-next-line security/detect-object-injection
                   return item[itemTextField]
                 })
               }
 
               if (allTagsLoaded && allItemsLoaded) {
+                // eslint-disable-next-line security/detect-object-injection
                 item[itemTextField].match(hashTagRegex)?.map((tag) => {
                   if (
                     !tags.find(

@@ -25,6 +25,7 @@ const createSvg = (shape: string, markerColor: string, borderColor: string) => {
       markerColor +
       '" /><g opacity=".15" transform="matrix(1.0769 0 0 -1.0769 -272.731 48.23)"><path d="M276.75 42h-14.5L255 28.668 269.5 3 284 28.668zm-.595-1l6.701-12.323L269.5 5.033l-13.356 23.644L262.845 41z" fill="#231f20" /></g></svg>',
   }
+  // eslint-disable-next-line security/detect-object-injection
   return svgMap[shape]
 }
 

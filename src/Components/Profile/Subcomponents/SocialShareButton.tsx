@@ -84,6 +84,7 @@ const SocialShareButton = ({
   url: string
   title: string
 }) => {
+  // eslint-disable-next-line security/detect-object-injection
   const config = platformConfigs[platform]
 
   if (!config) {

@@ -63,7 +63,9 @@ export const SearchControl = () => {
         try {
           const { data } = await axios.get(`https://photon.komoot.io/api/?q=${value}&limit=5`)
           setGeoResults(data.features)
+          // eslint-disable-next-line no-catch-all/no-catch-all
         } catch (error) {
+          // eslint-disable-next-line no-console
           console.log(error)
         }
       }
@@ -215,6 +217,7 @@ export const SearchControl = () => {
                       )
                       .openPopup()
                       .addEventListener('popupclose', (e) => {
+                        // eslint-disable-next-line no-console
                         console.log(e.target.remove())
                       })
                     if (geo.properties.extent)
@@ -284,6 +287,7 @@ export const SearchControl = () => {
                       )
                       .openPopup()
                       .addEventListener('popupclose', (e) => {
+                        // eslint-disable-next-line no-console
                         console.log(e.target.remove())
                       })
                     map.setView(

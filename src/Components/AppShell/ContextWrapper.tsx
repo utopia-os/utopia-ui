@@ -28,6 +28,7 @@ export const ContextWrapper = ({ children }) => {
   try {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     location = useLocation()
+    // eslint-disable-next-line no-catch-all/no-catch-all
   } catch (e) {
     location = null
   }

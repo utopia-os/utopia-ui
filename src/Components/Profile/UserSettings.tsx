@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -43,6 +42,9 @@ export function UserSettings() {
         },
       })
       .then(() => navigate('/'))
+      .catch((e) => {
+        throw e
+      })
   }
 
   return (

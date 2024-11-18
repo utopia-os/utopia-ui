@@ -63,6 +63,7 @@ export const ItemViewPopup = forwardRef((props: ItemViewPopupProps, ref: any) =>
       props.item.layer?.onlyOnePerOwner &&
         (await props.item.layer.api?.updateItem!({ id: props.item.id, position: null }))
       success = true
+      // eslint-disable-next-line no-catch-all/no-catch-all
     } catch (error) {
       toast.error(error.toString())
     }

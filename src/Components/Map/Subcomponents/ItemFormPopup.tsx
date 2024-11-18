@@ -70,10 +70,12 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
       try {
         await props.layer.api?.updateItem!({ ...formItem, id: props.item.id })
         success = true
+        // eslint-disable-next-line no-catch-all/no-catch-all
       } catch (error) {
         toast.error(error.toString())
       }
       if (success) {
+        // eslint-disable-next-line no-console
         console.log(props.item)
 
         updateItem({ ...props.item, ...formItem })
@@ -100,6 +102,7 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
             name: formItem.name ? formItem.name : user?.first_name,
           }))
         success = true
+        // eslint-disable-next-line no-catch-all/no-catch-all
       } catch (error) {
         toast.error(error.toString())
       }

@@ -89,6 +89,7 @@ function useSelectPositionManager(): {
           position: null,
         })
         success = true
+        // eslint-disable-next-line no-catch-all/no-catch-all
       } catch (error) {
         toast.error(error.toString())
       }
@@ -113,6 +114,7 @@ function useSelectPositionManager(): {
         position: updatedItem.position,
       })
       success = true
+      // eslint-disable-next-line no-catch-all/no-catch-all
     } catch (error) {
       toast.error(error.toString())
     }
@@ -134,6 +136,7 @@ function useSelectPositionManager(): {
         try {
           await markerClicked.layer?.api?.updateItem!(updatedItem)
           success = true
+          // eslint-disable-next-line no-catch-all/no-catch-all
         } catch (error) {
           toast.error(error.toString())
         }

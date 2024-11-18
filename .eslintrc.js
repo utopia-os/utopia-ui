@@ -25,7 +25,7 @@ module.exports = {
     'import',
     'promise',
     // 'security',
-    // 'no-catch-all',
+    'no-catch-all',
     'react',
     'react-hooks',
   ],
@@ -44,7 +44,7 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
     'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
     'react/react-in-jsx-scope': 'off', // Disable requirement for React import
-    //     'no-catch-all/no-catch-all': 'error',
+    'no-catch-all/no-catch-all': 'error',
     'no-console': 'error',
     'no-debugger': 'error',
     camelcase: 'error',

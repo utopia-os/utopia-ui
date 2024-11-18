@@ -91,6 +91,7 @@ export const OverlayItemsIndexPage = ({
     try {
       await layer?.api?.createItem!({ ...formItem, id: uuid })
       success = true
+      // eslint-disable-next-line no-catch-all/no-catch-all
     } catch (error) {
       toast.error(error.toString())
     }
@@ -108,6 +109,7 @@ export const OverlayItemsIndexPage = ({
     try {
       await layer?.api?.deleteItem!(item.id)
       success = true
+      // eslint-disable-next-line no-catch-all/no-catch-all
     } catch (error) {
       toast.error(error.toString())
     }

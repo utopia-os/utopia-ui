@@ -96,7 +96,7 @@ export default function NavBar({ appName, userType }: { appName: string; userTyp
           </button>
           <div className='tw-flex-1 tw-mr-2'>
             <div
-              className={'tw-flex-1 tw-truncate tw-grid tw-grid-flow-col'}
+              className='tw-flex-1 tw-truncate tw-grid tw-grid-flow-col'
               style={{ maxWidth: nameWidth + 60 }}
             >
               <Link

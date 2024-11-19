@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import ChevronDownIcon from '@heroicons/react/24/outline/ChevronDownIcon'
+import classNames from 'classnames'
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
@@ -42,15 +43,16 @@ function SidebarSubmenu({
           {name}{' '}
         </span>
         <ChevronDownIcon
-          className={
-            'w-5 h-5 mt-1 float-right delay-400 duration-500 transition-all  ' +
-            (isExpanded ? 'rotate-180' : '')
-          }
+          className={classNames('w-5 h-5 mt-1 float-right delay-400 duration-500 transition-all', {
+            'rotate-180': isExpanded,
+          })}
         />
       </div>
 
       {/** Submenu list */}
-      <div className={' w-full data-[te-collapse-show]:!hidden ' + (isExpanded ? '' : 'hidden')}>
+      <div
+        className={classNames('w-full data-[te-collapse-show]:!hidden', { hidden: !isExpanded })}
+      >
         <ul className={'menu menu-compact'}>
           {submenu.map((m, k) => {
             return (

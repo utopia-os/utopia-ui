@@ -19,6 +19,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "../utopia-ui/src/Components/Templates/CardPage.tsx", "../../workspace/utopia-ui/src/Components/Templates/MoonCalendar.tsx", "../../workspace/utopia-ui/src/Components/Templates/ItemIndexPage.tsx"],
+  "include": ["src"], 
   "references": [{ "path": "./tsconfig.node.json" }]
 }

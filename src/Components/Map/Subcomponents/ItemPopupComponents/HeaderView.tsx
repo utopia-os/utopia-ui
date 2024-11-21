@@ -103,6 +103,7 @@ export function HeaderView({
             <div className={`${avatar ? 'tw-ml-2' : ''} tw-overflow-hidden`}>
               <div
                 className={`${big ? 'xl:tw-text-3xl tw-text-2xl' : 'tw-text-xl'} tw-font-semibold tw-truncate`}
+                title={title}
               >
                 {title}
               </div>

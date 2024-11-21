@@ -5,7 +5,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { memo, useEffect } from 'react'
+import { memo } from 'react'
 import Markdown from 'react-markdown'
 import remarkBreaks from 'remark-breaks'
 

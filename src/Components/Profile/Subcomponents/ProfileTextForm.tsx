@@ -8,6 +8,8 @@ import { TextAreaInput } from '#components/Input'
 import { FormState } from '#src/types'
 import { getValue } from '#utils/GetValue'
 
+import { MarkdownHint } from './MarkdownHint'
+
 export const ProfileTextForm = ({
   state,
   setState,
@@ -33,12 +35,15 @@ export const ProfileTextForm = ({
 
   return (
     <div className='tw-h-full tw-flex tw-flex-col tw-mt-4'>
-      <label
-        htmlFor='nextAppointment'
-        className='tw-block tw-text-sm tw-font-medium tw-text-gray-500 tw-mb-1'
-      >
-        {heading || 'Text'}:
-      </label>
+      <div className='tw-flex tw-justify-between tw-items-center'>
+        <label
+          htmlFor='nextAppointment'
+          className='tw-block tw-text-sm tw-font-medium tw-text-gray-500 tw-mb-1'
+        >
+          {heading || 'Text'}:
+        </label>
+        <MarkdownHint />
+      </div>
       <TextAreaInput
         placeholder={'...'}
         defaultValue={getValue(state, field)}

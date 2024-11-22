@@ -44,6 +44,7 @@ export const FormHeader = ({ item, state, setState }) => {
         />
         <TextInput
           placeholder='Subtitle'
+          required={false}
           defaultValue={item?.subname ? item.subname : ''}
           updateFormValue={(v) =>
             setState((prevState) => ({

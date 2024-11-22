@@ -22,6 +22,7 @@ export const ContactInfoForm = ({
         <TextInput
           placeholder='Email'
           type='email'
+          required={false}
           defaultValue={state.contact}
           updateFormValue={(v) =>
             setState((prevState) => ({
@@ -41,6 +42,9 @@ export const ContactInfoForm = ({
         </label>
         <TextInput
           placeholder='Telefonnummer'
+          type='tel'
+          required={false}
+          pattern='^\+?[0-9\s\-]{7,15}$'
           defaultValue={state.telephone}
           updateFormValue={(v) =>
             setState((prevState) => ({

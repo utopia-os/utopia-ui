@@ -6,7 +6,7 @@ export const MarkdownHint = () => {
     <div
       onClick={() => setExpended(true)}
       title='Markdown is supported'
-      className='flex tw-flex-row tw-text-gray-400 tw-cursor-pointer'
+      className='flex tw-flex-row tw-text-gray-400 tw-cursor-pointer tw-items-center'
     >
       <svg
         aria-hidden='true'

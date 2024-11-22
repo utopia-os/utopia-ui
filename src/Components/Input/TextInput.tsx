@@ -13,6 +13,8 @@ type InputTextProps = {
   defaultValue?: string
   placeholder?: string
   autocomplete?: string
+  pattern?: string
+  required?: boolean
   updateFormValue?: (value: string) => void
 }
 
@@ -26,6 +28,8 @@ export function TextInput({
   defaultValue,
   placeholder,
   autocomplete,
+  pattern,
+  required = true,
   updateFormValue,
 }: InputTextProps) {
   const [inputValue, setInputValue] = useState<string>(defaultValue || '')
@@ -50,7 +54,8 @@ export function TextInput({
         </label>
       ) : null}
       <input
-        required
+        required={required}
+        pattern={pattern}
         type={type || 'text'}
         name={dataField}
         value={inputValue}

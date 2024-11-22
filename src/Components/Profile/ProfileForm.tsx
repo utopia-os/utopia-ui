@@ -148,6 +148,7 @@ export function ProfileForm() {
         className='tw-mx-4 tw-mt-4 tw-mb-4 tw-overflow-x-hidden tw-w-[calc(100%-32px)]  md:tw-w-[calc(50%-32px)] tw-max-w-3xl !tw-left-auto tw-top-0 tw-bottom-0'
       >
         <form
+          className='tw-h-full'
           onSubmit={(e) => {
             e.preventDefault()
             void onUpdateItem(

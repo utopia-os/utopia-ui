@@ -31,3 +31,15 @@ npm run dev
 ## Let's Collaborate! 🌱 🌍
 
 Start mapping and growing your community ecosystem together with Utopia Map. Whether you’re fostering decentralized coordination, real-life networking, or creating real-world impact, Utopia Map is ready to support your vision.
+
+[Join us on Telegram](https://t.me/UtopiaMap)
+
+## Support Utopia Map 💚
+
+We are building Utopia Map as a collaborative, community-driven tool for decentralized coordination and real-life networking. To keep this project sustainable and accessible, we need your support!
+
+<a href="https://opencollective.com/utopia-project">
+    <img width="300" src="https://opencollective.com/utopia-project/donate/button@2x.png?color=blue" />
+</a>
+
+By supporting us on OpenCollective, you help us continue development, improve features, and provide a better experience for everyone. Every contribution makes a difference!

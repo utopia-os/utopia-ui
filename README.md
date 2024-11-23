@@ -9,10 +9,10 @@ Utopia Map is made for networks and initiatives  that aim to connect people in r
 ## Key Features
 
 - **Interactive Map**: The core feature is an intuitive geographical map where users can add, edit, and manage items like members, activities, and resources. Each map instance has its own identity, users, and unique configuration.
-- **Customizable Layers**: Items are organized into predefined **Layers**, each with specific icons, colors, texts, and **Map Markers**. This ensures clarity and relevance for different networks.
-- **Dynamic Map Markers**:  Geographic position of item are indicated on the map by adaptive and customizable **Map Markers**
-- **Popups**: Clicking a **Map Marker** reveals a **Popup**—a compact preview of the **Item** with its most relevant information.
-- **Rich Profiles**: Each **Item** has a dedicated **Profile** that showcases all its associated data, making it easier to explore and manage.
+- **Customizable Layers**: Items are organized into predefined Layers, each with specific icons, colors, texts, and Map Markers. This ensures clarity and relevance for different networks.
+- **Dynamic Map Markers**:  Geographic position of item are indicated on the map by adaptive and customizable Map Markers
+- **Popups**: Clicking a Map Marker reveals a Popup — a compact preview of the Item with its most relevant information.
+- **Rich Profiles**: Each Item has a dedicated Profile that showcases all its associated data, making it easier to explore and manage.
 
 ## Deployment Options
 

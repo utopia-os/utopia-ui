@@ -41,5 +41,3 @@ We are building Utopia Map as a collaborative, community-driven tool for decentr
 <a href="https://opencollective.com/utopia-project">
     <img width="300" src="https://opencollective.com/utopia-project/donate/button@2x.png?color=blue" />
 </a>
-
-By supporting us on OpenCollective, you help us continue development, improve features, and provide a better experience for everyone. Every contribution makes a difference!

@@ -24,7 +24,7 @@
         "#root/*": ["./*"]
       }
     },
-    "include": ["src", "types"],
+    "include": ["src"],
     "exclude": ["node_modules", "dist", "example", "rollup.config.mjss"],
     "typeRoots": [
         "./types",

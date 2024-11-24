@@ -22,13 +22,14 @@ import { useItems } from '#components/Map/hooks/useItems'
 import { useLeafletRefs } from '#components/Map/hooks/useLeafletRefs'
 import { useTags } from '#components/Map/hooks/useTags'
 import useWindowDimensions from '#components/Map/hooks/useWindowDimension'
-import { Item } from '#src/types'
 import { decodeTag } from '#utils/FormatTags'
 import { getValue } from '#utils/GetValue'
 import MarkerIconFactory from '#utils/MarkerIconFactory'
 
 import { LocateControl } from './LocateControl'
 import { SidebarControl } from './SidebarControl'
+
+import type { Item } from '#types/Item'
 
 export const SearchControl = () => {
   const windowDimensions = useWindowDimensions()

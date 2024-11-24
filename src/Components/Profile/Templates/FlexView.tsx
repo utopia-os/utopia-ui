@@ -6,7 +6,8 @@ import { ContactInfoView } from '#components/Profile/Subcomponents/ContactInfoVi
 import { GroupSubHeaderView } from '#components/Profile/Subcomponents/GroupSubHeaderView'
 import { ProfileStartEndView } from '#components/Profile/Subcomponents/ProfileStartEndView'
 import { ProfileTextView } from '#components/Profile/Subcomponents/ProfileTextView'
-import { Item } from '#src/types'
+
+import type { Item } from '#types/Item'
 
 const componentMap = {
   groupSubheaders: GroupSubHeaderView,

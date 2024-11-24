@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
@@ -11,9 +10,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useCallback, useReducer, createContext, useContext, useState } from 'react'
 
-import { Item, ItemsApi, Tag } from '#src/types'
 import { getValue } from '#utils/GetValue'
 import { hashTagRegex } from '#utils/HashTagRegex'
+
+import type { Item } from '#types/Item'
+import type { ItemsApi } from '#types/ItemsApi'
+import type { Tag } from '#types/Tag'
 
 type ActionType = { type: 'ADD'; tag: Tag } | { type: 'REMOVE'; id: string }
 

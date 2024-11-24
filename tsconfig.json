@@ -20,10 +20,11 @@
         "#components/*": ["./src/Components/*"],
         "#utils/*": ["./src/Utils/*"],
         "#src/*": ["./src/*"],
+        "#types/*": ["./types/*"],
         "#root/*": ["./*"]
       }
     },
-    "include": ["src"],
+    "include": ["src", "types"],
     "exclude": ["node_modules", "dist", "example", "rollup.config.mjss"],
     "typeRoots": [
         "./types",

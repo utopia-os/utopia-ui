@@ -21,7 +21,6 @@ import { useSelectPosition, useSetSelectPosition } from '#components/Map/hooks/u
 import { useTags } from '#components/Map/hooks/useTags'
 import { HeaderView } from '#components/Map/Subcomponents/ItemPopupComponents/HeaderView'
 import { MapOverlayPage } from '#components/Templates'
-import { Item, ItemsApi, Tag } from '#src/types'
 import { getValue } from '#utils/GetValue'
 
 import { handleDelete, linkItem, unlinkItem } from './itemFunctions'
@@ -29,6 +28,10 @@ import { FlexView } from './Templates/FlexView'
 import { OnepagerView } from './Templates/OnepagerView'
 import { SimpleView } from './Templates/SimpleView'
 import { TabsView } from './Templates/TabsView'
+
+import type { Item } from '#types/Item'
+import type { ItemsApi } from '#types/ItemsApi'
+import type { Tag } from '#types/Tag'
 
 export function ProfileView({ attestationApi }: { attestationApi?: ItemsApi<any> }) {
   const [item, setItem] = useState<Item>()

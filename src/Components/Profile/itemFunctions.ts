@@ -11,10 +11,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { toast } from 'react-toastify'
 
-import { Item } from '#src/types'
 import { encodeTag } from '#utils/FormatTags'
 import { hashTagRegex } from '#utils/HashTagRegex'
 import { randomColor } from '#utils/RandomColor'
+
+import type { Item } from '#types/Item'
 
 // eslint-disable-next-line promise/avoid-new
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))

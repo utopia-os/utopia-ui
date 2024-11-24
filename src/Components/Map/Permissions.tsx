@@ -1,9 +1,11 @@
 import { useEffect } from 'react'
 
 import { useAuth } from '#components/Auth'
-import { ItemsApi, Permission } from '#src/types'
 
 import { useSetPermissionData, useSetPermissionApi, useSetAdminRole } from './hooks/usePermissions'
+
+import type { ItemsApi } from '#types/ItemsApi'
+import type { Permission } from '#types/Permission'
 
 export function Permissions({
   data,

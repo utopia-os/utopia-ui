@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 
-import { Tag } from '#src/types'
 import { decodeTag } from '#utils/FormatTags'
+
+import type { Tag } from '#types/Tag'
 
 export const TagView = ({
   tag,

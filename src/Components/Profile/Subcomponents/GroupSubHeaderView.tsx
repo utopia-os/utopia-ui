@@ -1,6 +1,6 @@
-import { Item } from '#src/types'
-
 import SocialShareBar from './SocialShareBar'
+
+import type { Item } from '#types/Item'
 
 export const GroupSubHeaderView = ({
   item,

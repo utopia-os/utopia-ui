@@ -5,8 +5,9 @@
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 import { useState } from 'react'
 
-import { Item } from '#src/types'
 import { timeAgo } from '#utils/TimeAgo'
+
+import type { Item } from '#types/Item'
 
 export const DateUserInfo = ({ item }: { item: Item }) => {
   const [infoExpanded, setInfoExpanded] = useState<boolean>(false)

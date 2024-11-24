@@ -1,7 +1,9 @@
 import { ContextWrapper } from '#components/AppShell/ContextWrapper'
-import { UtopiaMapProps } from '#src/types'
 
 import { UtopiaMapInner } from './UtopiaMapInner'
+
+import type { UtopiaMapProps } from '#types/UtopiaMapProps'
+
 // eslint-disable-next-line import/no-unassigned-import
 import 'react-toastify/dist/ReactToastify.css'
 

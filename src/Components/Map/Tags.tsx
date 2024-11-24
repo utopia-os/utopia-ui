@@ -1,10 +1,11 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import { ItemsApi, Tag } from '#src/types'
-
 import { useAddFilterTag, useFilterTags, useResetFilterTags } from './hooks/useFilter'
 import { useSetTagData, useSetTagApi, useTags } from './hooks/useTags'
+
+import type { ItemsApi } from '#types/ItemsApi'
+import type { Tag } from '#types/Tag'
 
 export function Tags({ data, api }: { data?: Tag[]; api?: ItemsApi<Tag> }) {
   const setTagData = useSetTagData()

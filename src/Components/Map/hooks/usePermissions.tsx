@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -10,7 +9,12 @@
 import { useCallback, useReducer, createContext, useContext, useState } from 'react'
 
 import { useAuth } from '#components/Auth/useAuth'
-import { Item, ItemsApi, LayerProps, Permission, PermissionAction } from '#src/types'
+
+import type { Item } from '#types/Item'
+import type { ItemsApi } from '#types/ItemsApi'
+import type { LayerProps } from '#types/LayerProps'
+import type { Permission } from '#types/Permission'
+import type { PermissionAction } from '#types/PermissionAction'
 
 type ActionType = { type: 'ADD'; permission: Permission } | { type: 'REMOVE'; id: string }
 
@@ -57,12 +61,10 @@ function usePermissionsManager(initialPermissions: Permission[]): {
 
   const setPermissionApi = useCallback(async (api: ItemsApi<Permission>) => {
     const result = await api.getItems()
-    if (result) {
-      result.map((permission) => {
-        dispatch({ type: 'ADD', permission })
-        return null
-      })
-    }
+    result.map((permission) => {
+      dispatch({ type: 'ADD', permission })
+      return null
+    })
   }, [])
 
   const setPermissionData = useCallback((data: Permission[]) => {

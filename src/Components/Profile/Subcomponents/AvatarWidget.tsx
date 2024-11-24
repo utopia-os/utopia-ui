@@ -1,8 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 import { useState, useCallback, useRef } from 'react'
 import { ReactCrop, centerCrop, makeAspectCrop } from 'react-image-crop'

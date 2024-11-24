@@ -1,5 +1,9 @@
+import commonjs from '@rollup/plugin-commonjs'
+import image from '@rollup/plugin-image'
+import json from '@rollup/plugin-json'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
+import typescript from '@rollup/plugin-typescript'
 import postcss from 'rollup-plugin-postcss'
-import typescript from 'rollup-plugin-typescript2'
 
 export default {
   input: 'src/index.tsx',
@@ -13,26 +17,28 @@ export default {
     },
   ],
   plugins: [
-    postcss({
-      plugins: [],
+    nodeResolve(),
+    commonjs({
+      include: /node_modules/,
+      requireReturnsDefault: 'auto', // <---- this solves default issue
     }),
-    typescript(),
+    json(),
+    postcss(),
+    image(),
+    typescript({
+      compilerOptions: {
+        declaration: true,
+        declarationDir: './dist/types',
+        emitDeclarationOnly: true,
+      },
+    }),
   ],
-  external: [
-    'react',
-    'react-dom',
-    'leaflet',
-    'react-leaflet',
-    'react-toastify',
-    'react-string-replace',
-    'react-toastify/dist/ReactToastify.css',
-    'tw-elements',
-    'react-router-dom',
-    'react-leaflet-cluster',
-    '@tanstack/react-query',
-    'tributejs',
-    'prop-types',
-    'leaflet/dist/leaflet.css',
-    '@heroicons/react/20/solid',
-  ],
+  // Consider to implement the rest of https://github.com/rollup/rollup/issues/4699#issuecomment-2115967396
+  // is required for @tanstack/react-query and react-toastify
+  onwarn: (warning, warn) => {
+    if (warning.code !== 'MODULE_LEVEL_DIRECTIVE') {
+      warn(warning)
+    }
+  },
+  external: ['react/jsx-runtime', 'react'],
 }

@@ -1,4 +1,5 @@
 # Utopia Map 🌍
+[![](https://img.shields.io/opencollective/backers/utopia-project)](https://opencollective.com/utopia-project#section-contributors)  [![Join us on Telegram](https://img.shields.io/badge/Join-Telegram-blue?logo=telegram)](https://t.me/UtopiaMap)
 
 The Utopia Map is a flexible collaborative app for decentralized coordination and real-life networking that can be adapted to the specific requirements of different networks. Its central element is the interactive geographical map, where users can add and manage **Items** in predefined **Layers**.
 

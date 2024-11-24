@@ -1,4 +1,5 @@
-# Utopia UI [![npm version](https://img.shields.io/npm/v/utopia-ui.svg)](https://www.npmjs.com/package/utopia-ui)
+# Utopia UI [![npm version](https://img.shields.io/npm/v/utopia-ui.svg)](https://www.npmjs.com/package/utopia-ui)  ![Build Status](https://img.shields.io/github/actions/workflow/status/utopia-os/utopia-ui/test.build.yml?branch=main) ![License](https://img.shields.io/github/license/utopia-os/utopia-ui)
+
 **UI Framework for Real-Life-Networking-Apps**
 
 *Real change happens in real life when we meet in person and connect as local communities manifesting their ideas with the earth. When we help each other to step out of our bubbles at home and start building common infrastructure to meet human needs in harmony with Mother Earth.*

@@ -50,7 +50,7 @@ export const TabsView = ({
   const appState = useAppState()
   const getUserProfile = (id: string) => {
     return items.find(
-      (i) => i.user_created.id === id && i.layer?.itemType.name === appState.userType,
+      (i) => i.user_created?.id === id && i.layer?.itemType.name === appState.userType,
     )
   }
 

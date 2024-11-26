@@ -28,16 +28,20 @@ npm install
 npm run dev
 ```
 
-## Let's Collaborate! 🌱 🌍
+## Get your Map! 🌱 🌍
 
-Start mapping and growing your community ecosystem together with Utopia Map. Whether you’re fostering decentralized coordination, real-life networking, or creating real-world impact, Utopia Map is ready to support your vision.
+Start mapping and growing your community ecosystem together with your custom map.
 
 [Join us on Telegram](https://t.me/UtopiaMap)
 
 ## Support Utopia Map 💚
 
-We are building Utopia Map as a collaborative, community-driven tool for decentralized coordination and real-life networking. To keep this project sustainable and accessible, we need your support!
+We are building Utopia Map as an free and opensource tool. To keep this project sustainable and accessible, we need financial support as well as Developrs, UX Designer, Community Managers and Content Creators.
+
+[Join us on Telegram](https://t.me/UtopiaMap) and support us on [OpenCollective](https://opencollective.com/utopia-project)
 
 <a href="https://opencollective.com/utopia-project">
-    <img width="300" src="https://opencollective.com/utopia-project/donate/button@2x.png?color=blue" />
+    <img width="250" src="https://opencollective.com/utopia-project/donate/button@2x.png?color=blue" style="margin-bottom:20px;" />
 </a>
+
+

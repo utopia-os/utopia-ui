@@ -7,7 +7,9 @@ import { ContactInfoForm } from '#components/Profile/Subcomponents/ContactInfoFo
 import { GroupSubheaderForm } from '#components/Profile/Subcomponents/GroupSubheaderForm'
 import { ProfileStartEndForm } from '#components/Profile/Subcomponents/ProfileStartEndForm'
 import { ProfileTextForm } from '#components/Profile/Subcomponents/ProfileTextForm'
-import { Item, FormState } from '#src/types'
+
+import type { FormState } from '#types/FormState'
+import type { Item } from '#types/Item'
 
 const componentMap = {
   groupSubheaders: GroupSubheaderForm,

@@ -5,10 +5,11 @@
 import { useEffect, useState } from 'react'
 
 import { TextAreaInput } from '#components/Input'
-import { FormState } from '#src/types'
 import { getValue } from '#utils/GetValue'
 
 import { MarkdownHint } from './MarkdownHint'
+
+import type { FormState } from '#types/FormState'
 
 export const ProfileTextForm = ({
   state,

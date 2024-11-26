@@ -79,7 +79,7 @@ module.exports = {
     'import/no-relative-parent-imports': [
       'error',
       {
-        ignore: ['#[src,root,components,utils]/*'],
+        ignore: ['#[src,types,root,components,utils]/*'],
       },
     ],
     'import/no-self-import': 'error',
@@ -156,6 +156,7 @@ module.exports = {
         'plugin:@typescript-eslint/strict',
       ],
       rules: {
+        '@typescript-eslint/consistent-type-imports': 'error',
         // allow explicitly defined dangling promises
         '@typescript-eslint/no-floating-promises': ['error', { ignoreVoid: true }],
         'no-void': ['error', { allowAsStatement: true }],

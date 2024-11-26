@@ -13,10 +13,12 @@ import { toast } from 'react-toastify'
 
 import { useAppState } from '#components/AppShell/hooks/useAppState'
 import { useItems } from '#components/Map/hooks/useItems'
-import { Item, ItemsApi } from '#src/types'
 
 import { EmojiPicker } from './EmojiPicker'
 import { MapOverlayPage } from './MapOverlayPage'
+
+import type { Item } from '#types/Item'
+import type { ItemsApi } from '#types/ItemsApi'
 
 export const AttestationForm = ({ api }: { api?: ItemsApi<any> }) => {
   const items = useItems()

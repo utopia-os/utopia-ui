@@ -17,9 +17,11 @@ import { TextInput } from '#components/Input/TextInput'
 import { useResetFilterTags } from '#components/Map/hooks/useFilter'
 import { useAddItem, useItems, useRemoveItem, useUpdateItem } from '#components/Map/hooks/useItems'
 import { useAddTag, useTags } from '#components/Map/hooks/useTags'
-import { Geometry, Item, ItemFormPopupProps } from '#src/types'
 import { hashTagRegex } from '#utils/HashTagRegex'
 import { randomColor } from '#utils/RandomColor'
+
+import type { Item } from '#types/Item'
+import type { ItemFormPopupProps } from '#types/ItemFormPopupProps'
 
 export function ItemFormPopup(props: ItemFormPopupProps) {
   const [spinner, setSpinner] = useState(false)
@@ -50,7 +52,7 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
         formItem[input.name] = input.value
       }
     })
-    formItem.position = new Geometry(props.position.lng, props.position.lat)
+    formItem.position = { type: 'Point', coordinates: [props.position.lng, props.position.lat] }
     evt.preventDefault()
     setSpinner(true)
 

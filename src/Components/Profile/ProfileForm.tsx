@@ -14,7 +14,6 @@ import { useLayers } from '#components/Map/hooks/useLayers'
 import { useHasUserPermission } from '#components/Map/hooks/usePermissions'
 import { useAddTag, useGetItemTags, useTags } from '#components/Map/hooks/useTags'
 import { MapOverlayPage } from '#components/Templates'
-import { Item, Tag } from '#src/types'
 import { getValue } from '#utils/GetValue'
 
 import { linkItem, onUpdateItem, unlinkItem } from './itemFunctions'
@@ -23,6 +22,9 @@ import { FlexForm } from './Templates/FlexForm'
 import { OnepagerForm } from './Templates/OnepagerForm'
 import { SimpleForm } from './Templates/SimpleForm'
 import { TabsForm } from './Templates/TabsForm'
+
+import type { Item } from '#types/Item'
+import type { Tag } from '#types/Tag'
 
 export function ProfileForm() {
   const [state, setState] = useState({

@@ -1,5 +1,6 @@
 import { TextInput } from '#components/Input'
-import { Item } from '#src/types'
+
+import type { Item } from '#types/Item'
 
 export const PopupTextInput = ({
   dataField,

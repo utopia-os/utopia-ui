@@ -10,8 +10,9 @@ import { useHasUserPermission } from '#components/Map/hooks/usePermissions'
 import { useGetItemTags } from '#components/Map/hooks/useTags'
 import { HeaderView } from '#components/Map/Subcomponents/ItemPopupComponents/HeaderView'
 import DialogModal from '#components/Templates/DialogModal'
-import { Item } from '#src/types'
 import { getValue } from '#utils/GetValue'
+
+import type { Item } from '#types/Item'
 
 export function ActionButton({
   item,

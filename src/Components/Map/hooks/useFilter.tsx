@@ -7,10 +7,11 @@
 import { useCallback, useReducer, createContext, useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { LayerProps, Tag } from '#src/types'
-
 import { useLayers } from './useLayers'
 import useWindowDimensions from './useWindowDimension'
+
+import type { LayerProps } from '#types/LayerProps'
+import type { Tag } from '#types/Tag'
 
 type ActionType =
   | { type: 'ADD_TAG'; tag: Tag }

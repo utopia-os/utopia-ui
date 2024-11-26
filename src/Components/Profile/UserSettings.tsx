@@ -7,7 +7,8 @@ import { toast } from 'react-toastify'
 import { useAuth } from '#components/Auth'
 import { TextInput } from '#components/Input'
 import { MapOverlayPage } from '#components/Templates'
-import { UserItem } from '#src/types'
+
+import type { UserItem } from '#types/UserItem'
 
 export function UserSettings() {
   const { user, updateUser, loading /* token */ } = useAuth()

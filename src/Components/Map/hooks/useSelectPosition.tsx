@@ -8,14 +8,17 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { LatLng } from 'leaflet'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { Geometry, Item, LayerProps, ItemFormPopupProps } from '#src/types'
-
 import { useUpdateItem } from './useItems'
 import { useHasUserPermission } from './usePermissions'
+
+import type { Item } from '#types/Item'
+import type { ItemFormPopupProps } from '#types/ItemFormPopupProps'
+import type { LayerProps } from '#types/LayerProps'
+import type { Point } from 'geojson'
+import type { LatLng } from 'leaflet'
 
 interface PolygonClickedProps {
   position: LatLng
@@ -67,7 +70,11 @@ function useSelectPositionManager(): {
       }
       if ('text' in selectPosition) {
         const position =
-          mapClicked?.position.lng && new Geometry(mapClicked.position.lng, mapClicked.position.lat)
+          mapClicked?.position.lng &&
+          ({
+            type: 'Point',
+            coordinates: [mapClicked.position.lng, mapClicked.position.lat],
+          } as Point)
         position && itemUpdatePosition({ ...selectPosition, position })
         setSelectPosition(null)
       }

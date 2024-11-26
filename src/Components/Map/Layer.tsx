@@ -7,12 +7,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { Popup } from 'leaflet'
 import { Children, isValidElement, useEffect, useState } from 'react'
 import { Marker, Tooltip, useMap, useMapEvents } from 'react-leaflet'
 import { useLocation } from 'react-router-dom'
 
-import { Item, LayerProps, Tag } from '#src/types'
 import { encodeTag } from '#utils/FormatTags'
 import { getValue } from '#utils/GetValue'
 import { hashTagRegex } from '#utils/HashTagRegex'
@@ -31,6 +29,11 @@ import { useSelectPosition, useSetMarkerClicked } from './hooks/useSelectPositio
 import { useAddTag, useAllTagsLoaded, useGetItemTags, useTags } from './hooks/useTags'
 import { ItemFormPopup } from './Subcomponents/ItemFormPopup'
 import { ItemViewPopup } from './Subcomponents/ItemViewPopup'
+
+import type { Item } from '#types/Item'
+import type { LayerProps } from '#types/LayerProps'
+import type { Tag } from '#types/Tag'
+import type { Popup } from 'leaflet'
 
 export const Layer = ({
   data,

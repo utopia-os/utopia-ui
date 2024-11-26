@@ -3,16 +3,15 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useCallback, useReducer, createContext, useContext, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { Item, LayerProps } from '#src/types'
-
 import { useAddLayer } from './useLayers'
+
+import type { Item } from '#types/Item'
+import type { LayerProps } from '#types/LayerProps'
 
 type ActionType =
   | { type: 'ADD'; item: Item }
@@ -82,13 +81,11 @@ function useItemsManager(initialItems: Item[]): {
         },
       },
     })
-    if (result) {
-      result.map((item) => {
-        dispatch({ type: 'ADD', item: { ...item, layer } })
-        return null
-      })
-      setallItemsLoaded(true)
-    }
+    result.map((item) => {
+      dispatch({ type: 'ADD', item: { ...item, layer } })
+      return null
+    })
+    setallItemsLoaded(true)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

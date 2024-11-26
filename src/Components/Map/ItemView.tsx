@@ -1,7 +1,7 @@
 import { node, string } from 'prop-types'
 import { Children, cloneElement, isValidElement } from 'react'
 
-import { Item } from '#src/types'
+import type { Item } from '#types/Item'
 
 export const ItemView = ({ children, item }: { children?: React.ReactNode; item?: Item }) => {
   return (

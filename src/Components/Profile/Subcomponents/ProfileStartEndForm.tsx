@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import { PopupStartEndInput } from '#components/Map'
-import { Item } from '#src/types'
+
+import type { Item } from '#types/Item'
 
 export const ProfileStartEndForm = ({
   item,

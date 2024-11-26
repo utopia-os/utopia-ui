@@ -15,11 +15,13 @@ import { toast } from 'react-toastify'
 
 import { useRemoveItem, useUpdateItem } from '#components/Map/hooks/useItems'
 import { useSetSelectPosition } from '#components/Map/hooks/useSelectPosition'
-import { Item, ItemFormPopupProps } from '#src/types'
 import { timeAgo } from '#utils/TimeAgo'
 
 import { HeaderView } from './ItemPopupComponents/HeaderView'
 import { TextView } from './ItemPopupComponents/TextView'
+
+import type { Item } from '#types/Item'
+import type { ItemFormPopupProps } from '#types/ItemFormPopupProps'
 
 export interface ItemViewPopupProps {
   item: Item

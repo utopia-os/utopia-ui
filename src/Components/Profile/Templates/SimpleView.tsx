@@ -1,5 +1,6 @@
 import { TextView } from '#components/Map'
-import { Item } from '#src/types'
+
+import type { Item } from '#types/Item'
 
 export const SimpleView = ({ item }: { item: Item }) => {
   return (

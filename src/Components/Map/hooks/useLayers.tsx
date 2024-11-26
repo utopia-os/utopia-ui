@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { useCallback, useReducer, createContext, useContext } from 'react'
 
-import { LayerProps } from '#src/types'
+import type { LayerProps } from '#types/LayerProps'
 
 interface ActionType {
   type: 'ADD LAYER'

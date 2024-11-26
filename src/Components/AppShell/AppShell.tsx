@@ -1,8 +1,8 @@
-import { AssetsApi } from '#src/types'
-
 import { ContextWrapper } from './ContextWrapper'
 import NavBar from './NavBar'
 import { SetAppState } from './SetAppState'
+
+import type { AssetsApi } from '#types/AssetsApi'
 
 export function AppShell({
   appName,

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
-import { Item } from '#src/types'
+import type { Item } from '#types/Item'
 
 export const StartEndView = ({ item }: { item?: Item }) => {
   return (

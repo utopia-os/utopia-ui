@@ -19,12 +19,13 @@ import { Control } from '#components/Map/Subcomponents/Controls/Control'
 import { SearchControl } from '#components/Map/Subcomponents/Controls/SearchControl'
 import { TagsControl } from '#components/Map/Subcomponents/Controls/TagsControl'
 import { PlusButton } from '#components/Profile/Subcomponents/PlusButton'
-import { Item } from '#src/types'
 import { hashTagRegex } from '#utils/HashTagRegex'
 import { randomColor } from '#utils/RandomColor'
 
 import { ItemCard } from './ItemCard'
 import { MapOverlayPage } from './MapOverlayPage'
+
+import type { Item } from '#types/Item'
 
 export const OverlayItemsIndexPage = ({
   url,

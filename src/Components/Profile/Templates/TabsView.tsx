@@ -16,8 +16,10 @@ import { useItems } from '#components/Map/hooks/useItems'
 import { ActionButton } from '#components/Profile/Subcomponents/ActionsButton'
 import { LinkedItemsHeaderView } from '#components/Profile/Subcomponents/LinkedItemsHeaderView'
 import { TagView } from '#components/Templates/TagView'
-import { Item, Tag } from '#src/types'
 import { timeAgo } from '#utils/TimeAgo'
+
+import type { Item } from '#types/Item'
+import type { Tag } from '#types/Tag'
 
 export const TabsView = ({
   attestations,

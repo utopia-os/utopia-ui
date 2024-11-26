@@ -11,11 +11,13 @@ import remarkBreaks from 'remark-breaks'
 
 import { useAddFilterTag } from '#components/Map/hooks/useFilter'
 import { useTags } from '#components/Map/hooks/useTags'
-import { Item, Tag } from '#src/types'
 import { decodeTag } from '#utils/FormatTags'
 import { getValue } from '#utils/GetValue'
 import { hashTagRegex } from '#utils/HashTagRegex'
 import { fixUrls, mailRegex } from '#utils/ReplaceURLs'
+
+import type { Item } from '#types/Item'
+import type { Tag } from '#types/Tag'
 
 export const TextView = ({
   item,

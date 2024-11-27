@@ -33,6 +33,7 @@ jobs:
             docker
             release
             workflow
+            source
             other
           # Configure that a scope must always be provided.
           requireScope: true

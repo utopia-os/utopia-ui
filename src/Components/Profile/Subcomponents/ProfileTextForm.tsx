@@ -18,6 +18,7 @@ export const ProfileTextForm = ({
   heading,
   size,
   hideInputLabel,
+  required,
 }: {
   state: FormState
   setState: React.Dispatch<React.SetStateAction<any>>
@@ -25,6 +26,7 @@ export const ProfileTextForm = ({
   heading: string
   size: string
   hideInputLabel: boolean
+  required?: boolean
 }) => {
   const [field, setField] = useState<string>(dataField || 'text')
 
@@ -57,6 +59,7 @@ export const ProfileTextForm = ({
         labelStyle={hideInputLabel ? 'tw-hidden' : ''}
         containerStyle={size === 'full' ? 'tw-grow tw-h-full' : ''}
         inputStyle={size === 'full' ? 'tw-h-full' : 'tw-h-24'}
+        required={required}
       />
     </div>
   )

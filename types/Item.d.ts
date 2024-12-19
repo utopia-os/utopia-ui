@@ -1,6 +1,7 @@
 import type { ItemsApi } from './ItemsApi'
 import type { LayerProps } from './LayerProps'
 import type { Relation } from './Relation'
+import type { UserItem } from './UserItem'
 import type { Point } from 'geojson'
 
 export interface Item {
@@ -21,6 +22,8 @@ export interface Item {
   subname?: string
   public_edit?: boolean
   slug?: string
+  user_created?: UserItem
+  image?: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any
   /* constructor(

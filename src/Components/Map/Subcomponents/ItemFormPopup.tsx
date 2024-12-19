@@ -4,7 +4,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Children, cloneElement, isValidElement, useEffect, useRef, useState } from 'react'
@@ -113,8 +112,8 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
         if (!props.layer.onlyOnePerOwner || !item) {
           addItem({
             ...formItem,
-            name: formItem.name ? formItem.name : user?.first_name,
-            user_created: user,
+            name: (formItem.name ? formItem.name : user?.first_name) ?? '',
+            user_created: user ?? undefined,
             type: props.layer.itemType,
             id: uuid,
             layer: props.layer,

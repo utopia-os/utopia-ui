@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/require-await */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
@@ -49,7 +48,7 @@ export const AttestationForm = ({ api }: { api?: ItemsApi<any> }) => {
 
   const sendAttestation = async () => {
     const to: any[] = []
-    users?.map((u) => to.push({ directus_users_id: u.user_created.id }))
+    users?.map((u) => to.push({ directus_users_id: u.user_created?.id }))
 
     api?.createItem &&
       toast
@@ -76,7 +75,7 @@ export const AttestationForm = ({ api }: { api?: ItemsApi<any> }) => {
             '/item/' +
               items.find(
                 (i) =>
-                  i.user_created.id === to[0].directus_users_id &&
+                  i.user_created?.id === to[0].directus_users_id &&
                   i.layer?.itemType.name === 'player',
               )?.id +
               '?tab=2',

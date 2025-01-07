@@ -99,7 +99,7 @@ export const OverlayItemsIndexPage = ({
     if (success) {
       toast.success('New item created')
     }
-    addItem({ ...formItem, user_created: user, id: uuid, layer, public_edit: !user })
+    addItem({ ...formItem, user_created: user ?? undefined, id: uuid, layer, public_edit: !user })
     setLoading(false)
     setAddItemPopupType('')
   }

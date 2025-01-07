@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useEffect, useState } from 'react'
 
 import { useAuth } from '#components/Auth'

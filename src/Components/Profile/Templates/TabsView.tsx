@@ -132,7 +132,7 @@ export const TabsView = ({
             <table className='sm:tw-table-sm md:tw-table-md'>
               <tbody>
                 {attestations
-                  .filter((a) => a.to.some((t) => t.directus_users_id === item.user_created.id))
+                  .filter((a) => a.to.some((t) => t.directus_users_id === item.user_created?.id))
                   .sort(
                     (a, b) =>
                       new Date(b.date_created).getTime() - new Date(a.date_created).getTime(),

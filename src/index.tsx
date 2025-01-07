@@ -41,7 +41,8 @@ export { TextInput, TextAreaInput, SelectBox } from './Components/Input'
 
 declare global {
   interface Window {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    my_modal_3: any
+    my_modal_3: {
+      showModal(): void
+    }
   }
 }

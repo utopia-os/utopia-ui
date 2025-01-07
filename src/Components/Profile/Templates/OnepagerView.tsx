@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { TextView } from '#components/Map'
@@ -14,7 +13,7 @@ export const OnepagerView = ({ item }: { item: Item }) => {
         item={item}
         shareBaseUrl={`https://www.wuerdekompass.org/aktivitaeten/gruppensuche/#/gruppe/${item.slug}`}
       />
-      {item.user_created.first_name && <ContactInfoView heading='Du hast Fragen?' item={item} />}
+      {item.user_created?.first_name && <ContactInfoView heading='Du hast Fragen?' item={item} />}
       {/* Description Section */}
       <div className='tw-my-10 tw-mt-2 tw-px-6 tw-text-sm '>
         <TextView rawText={item.text || 'Keine Beschreibung vorhanden'} />

@@ -79,7 +79,7 @@ export function ProfileForm() {
       const layer = layers.find((l) => l.itemType.name === appState.userType)
       setItem({
         id: crypto.randomUUID(),
-        name: user ? user.first_name : '',
+        name: user?.first_name ?? '',
         text: '',
         layer,
         new: true,

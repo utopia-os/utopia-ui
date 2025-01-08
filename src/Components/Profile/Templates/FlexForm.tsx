@@ -1,8 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-
 import { ContactInfoForm } from '#components/Profile/Subcomponents/ContactInfoForm'
 import { GroupSubheaderForm } from '#components/Profile/Subcomponents/GroupSubheaderForm'
 import { ProfileStartEndForm } from '#components/Profile/Subcomponents/ProfileStartEndForm'
@@ -25,12 +20,14 @@ export const FlexForm = ({
   setState,
 }: {
   state: FormState
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setState: React.Dispatch<React.SetStateAction<any>>
   item: Item
 }) => {
   return (
     <div className='tw-mt-6 tw-flex tw-flex-col tw-h-full'>
       {item.layer?.itemType.profileTemplate.map((templateItem) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const TemplateComponent = componentMap[templateItem.collection]
         return TemplateComponent ? (
           <TemplateComponent

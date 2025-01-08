@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-
 import { ContactInfoView } from '#components/Profile/Subcomponents/ContactInfoView'
 import { GroupSubHeaderView } from '#components/Profile/Subcomponents/GroupSubHeaderView'
 import { ProfileStartEndView } from '#components/Profile/Subcomponents/ProfileStartEndView'
@@ -23,6 +19,7 @@ export const FlexView = ({ item }: { item: Item }) => {
   return (
     <div className='tw-h-full tw-overflow-y-auto fade'>
       {item.layer?.itemType.profileTemplate.map((templateItem) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const TemplateComponent = componentMap[templateItem.collection]
         return TemplateComponent ? (
           <TemplateComponent key={templateItem.id} item={item} {...templateItem.item} />

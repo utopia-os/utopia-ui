@@ -123,6 +123,9 @@ and than we create our two `<Layer>` inside of our `<UtopiaMap>` component
     </UtopiaMap>
 
 ```
+## Components
+
+![Utopia UI Components](Components.svg)
 
 ## Map Component
 The map shows various Layers (like places, events, profiles ...) of Items at their respective position whith nice and informative Popup and Profiles.

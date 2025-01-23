@@ -1,12 +1,4 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable @typescript-eslint/prefer-optional-chain */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/require-await */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/restrict-plus-operands */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useRef, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -18,7 +10,7 @@ import { Item, ItemsApi } from '#src/types'
 import { EmojiPicker } from './EmojiPicker'
 import { MapOverlayPage } from './MapOverlayPage'
 
-export const AttestationForm = ({ api }: { api?: ItemsApi<any> }) => {
+export const AttestationForm = ({ api }: { api?: ItemsApi<unknown> }) => {
   const items = useItems()
   const appState = useAppState()
   const [users, setUsers] = useState<Item[]>()

@@ -1,8 +1,8 @@
 # Example 1: Basic Map
 
-With this example we learn how we create a basic React app with a Map component using [utopia-ui](https://github.com/utopia-os/utopia-ui) library.
+In this example we see how we create a basic React app with a Map component using [utopia-ui](https://github.com/utopia-os/utopia-ui) library.
 
-For this tutorial we use Vite to create an empty React app called "utopia-static-map"
+For this example we use Vite to create an empty React app called "utopia-static-map"
 
 ```shell=
 npm create vite@latest utopia-static-map -- --template react

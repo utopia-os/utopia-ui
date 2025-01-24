@@ -1,6 +1,6 @@
 # Tutorial 2: Static Layers
 
-In [Tutorial 1](/j2dJaA3gw) we learnd how we create a basic map app with [utopia-ui](https://github.com/utopia-os/utopia-ui). Now we add some static layer.
+In [Tutorial 1](../1-basic-map) we learnd how we create a basic map app with [utopia-ui](https://github.com/utopia-os/utopia-ui). Now we add some static layer.
 
 First we put some sample data in a new file called `src/sample-data.js`
 
@@ -53,4 +53,10 @@ and than we create our two `<Layer>` inside of our `<UtopiaMap>` component
         markerDefaultColor='#007'
         data={places} />
     </UtopiaMap>
+```
+
+And we see our map with two layers:
+
+```shell=
+npm run dev
 ```

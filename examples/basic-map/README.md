@@ -39,4 +39,4 @@ npm run dev
 
 And can open our first map app in the browser 🙂
 
-In [Tutorial 2](/hSlc27KZ9) we gonna add some static data to our map
+In [Tutorial 2](../static-layers/) we gonna add some static data to our map

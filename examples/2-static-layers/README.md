@@ -4,7 +4,7 @@
 
 First we put some sample data in a new file called `src/sample-data.ts`
 
-```javascript=
+```javascript
 export const places = [{
     "id": 51,
     "name": "Stadtgemüse",
@@ -34,11 +34,11 @@ We want to create two Layers. One we want to call *Places* and the other *Events
 
 we import our sample data to the `src/App.tsx`
 
-```jsx=
+```tsx
 import { events, places } from "./sample-data"
 ```
 and than we create our two `<Layer>` inside of our `<UtopiaMap>` component
-```jsx=
+```tsx
     <UtopiaMap center={[50.6, 15.5]} zoom={5} height='100dvh' width="100dvw">
       <Layer
         name='events'
@@ -57,6 +57,6 @@ and than we create our two `<Layer>` inside of our `<UtopiaMap>` component
 
 And we see our map with two layers:
 
-```shell=
+```shell
 npm run dev
 ```

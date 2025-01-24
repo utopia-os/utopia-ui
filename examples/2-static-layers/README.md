@@ -1,8 +1,8 @@
-# Tutorial 2: Static Layers
+# Example 2: Static Layers
 
-In [Tutorial 1](../1-basic-map) we learnd how we create a basic map app with [utopia-ui](https://github.com/utopia-os/utopia-ui). Now we add some static layer.
+[Example 1](/1-basic-map) shows us how we create a basic map app with [utopia-ui](https://github.com/utopia-os/utopia-ui). Now we add some static layer.
 
-First we put some sample data in a new file called `src/sample-data.js`
+First we put some sample data in a new file called `src/sample-data.ts`
 
 ```javascript=
 export const places = [{
@@ -32,7 +32,7 @@ export const places = [{
 
 We want to create two Layers. One we want to call *Places* and the other *Events*
 
-we import our sample data to the `src/App.jsx`
+we import our sample data to the `src/App.tsx`
 
 ```jsx=
 import { events, places } from "./sample-data"

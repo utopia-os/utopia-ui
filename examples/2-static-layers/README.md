@@ -54,3 +54,9 @@ and than we create our two `<Layer>` inside of our `<UtopiaMap>` component
         data={places} />
     </UtopiaMap>
 ```
+
+And we see our map with two layers:
+
+```shell=
+npm run dev
+```

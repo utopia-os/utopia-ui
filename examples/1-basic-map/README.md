@@ -4,20 +4,20 @@ In this example we see how we create a basic React app with a Map component usin
 
 For this example we use Vite to create an empty React app called "utopia-static-map"
 
-```shell=
+```shell
 npm create vite@latest utopia-static-map -- --template react
 ```
 
 We open our new app in the terminal and install the [utopia-ui](https://github.com/utopia-os/utopia-ui) package
 
-```shell=
+```shell
 cd utopia-static-map
 npm install utopia-ui
 ```
 
 We open our `src/App.tsx` and we replace the content with
 
-```jsx=
+```tsx
 import { UtopiaMap } from "utopia-ui"
 
 function App() {
@@ -33,7 +33,7 @@ export default App
 
 Then we start the development server to check out the result in our browser:
 
-```shell=
+```shell
 npm run dev
 ```
 

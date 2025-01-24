@@ -1,6 +1,6 @@
-# Tutorial 1: Basic Map
+# Example 1: Basic Map
 
-In this tutorial we learn how we create a basic React app with a Map component using [utopia-ui](https://github.com/utopia-os/utopia-ui) library.
+With this example we learn how we create a basic React app with a Map component using [utopia-ui](https://github.com/utopia-os/utopia-ui) library.
 
 For this tutorial we use Vite to create an empty React app called "utopia-static-map"
 
@@ -15,7 +15,7 @@ cd utopia-static-map
 npm install utopia-ui
 ```
 
-We open our `src/App.jsx` and we replace the content with
+We open our `src/App.tsx` and we replace the content with
 
 ```jsx=
 import { UtopiaMap } from "utopia-ui"
@@ -39,4 +39,4 @@ npm run dev
 
 And can open our first map app in the browser 🙂
 
-In [Tutorial 2](../static-layers/) we gonna add some static data to our map
+In [Tutorial 2](../2-static-layers/) we gonna add some static data to our map

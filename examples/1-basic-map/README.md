@@ -5,7 +5,7 @@ In this example we see how we create a basic React app with a Map component usin
 For this example we use Vite to create an empty React app called "utopia-static-map"
 
 ```shell
-npm create vite@latest utopia-static-map -- --template react
+npm create vite@latest utopia-static-map -- --template react-ts
 ```
 
 We open our new app in the terminal and install the [utopia-ui](https://github.com/utopia-os/utopia-ui) package

@@ -1,21 +1,23 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { useState } from 'react'
 
+interface Props {
+  selectedEmoji: string
+  selectedColor: string
+  selectedShape: string
+  setSelectedEmoji: (emoji: string) => void
+  setSelectedColor: (color: string) => void
+  setSelectedShape: (shape: string) => void
+}
+
 export const EmojiPicker = ({
-  // eslint-disable-next-line react/prop-types
   selectedEmoji,
-  // eslint-disable-next-line react/prop-types
   selectedColor,
-  // eslint-disable-next-line react/prop-types
   selectedShape,
-  // eslint-disable-next-line react/prop-types
   setSelectedEmoji,
-  // eslint-disable-next-line react/prop-types
   setSelectedColor,
-  // eslint-disable-next-line react/prop-types
   setSelectedShape,
-}) => {
+}: Props) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const emojis = [
@@ -77,17 +79,17 @@ export const EmojiPicker = ({
     setIsOpen(!isOpen)
   }
 
-  const selectEmoji = (emoji) => {
+  const selectEmoji = (emoji: string) => {
     setSelectedEmoji(emoji)
     setIsOpen(false)
   }
 
-  const selectShape = (shape) => {
+  const selectShape = (shape: string) => {
     setSelectedShape(shape)
     setIsOpen(false)
   }
 
-  const selectColor = (color) => {
+  const selectColor = (color: string) => {
     setSelectedColor(color)
     setIsOpen(false)
   }

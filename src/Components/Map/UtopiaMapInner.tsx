@@ -23,8 +23,6 @@ import MarkerClusterGroup from 'react-leaflet-cluster'
 import { Outlet } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { ItemFormPopupProps, UtopiaMapProps } from '#src/types'
-
 // eslint-disable-next-line import/no-unassigned-import
 import './UtopiaMap.css'
 
@@ -46,6 +44,8 @@ import { TagsControl } from './Subcomponents/Controls/TagsControl'
 import { TextView } from './Subcomponents/ItemPopupComponents/TextView'
 import { SelectPosition } from './Subcomponents/SelectPosition'
 
+import type { ItemFormPopupProps } from '#types/ItemFormPopupProps'
+import type { UtopiaMapProps } from '#types/UtopiaMapProps'
 import type { Feature, Geometry as GeoJSONGeometry } from 'geojson'
 
 const mapDivRef = createRef()

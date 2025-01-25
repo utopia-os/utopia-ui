@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
@@ -7,7 +5,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createContext, useState, useContext, useEffect } from 'react'
 
-import { UserApi, UserItem } from '#src/types'
+import type { UserApi } from '#types/UserApi'
+import type { UserItem } from '#types/UserItem'
 
 interface AuthProviderProps {
   userApi: UserApi
@@ -69,6 +68,7 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
         setLoading(false)
         return me
       } else return undefined
+      // eslint-disable-next-line no-catch-all/no-catch-all
     } catch (error) {
       setLoading(false)
       return undefined
@@ -79,7 +79,7 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
     setLoading(true)
     try {
       const res = await userApi.login(credentials.email, credentials.password)
-      setToken(res.access_token)
+      setToken(res?.access_token)
       return await loadUser()
     } catch (error: any) {
       setLoading(false)

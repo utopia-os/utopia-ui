@@ -16,7 +16,9 @@ const SocialShareBar = ({
       .writeText(url)
       .then(() => {
         toast.success('link copied to clipboard')
+        return null
       })
+      // eslint-disable-next-line promise/prefer-await-to-callbacks
       .catch((error: never) => {
         toast.error('Fehler beim Kopieren des Links: ', error)
       })

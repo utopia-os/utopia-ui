@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { TextView } from '#components/Map'
-import { Item } from '#src/types'
 import { getValue } from '#utils/GetValue'
+
+import type { Item } from '#types/Item'
 
 export const ProfileTextView = ({
   item,

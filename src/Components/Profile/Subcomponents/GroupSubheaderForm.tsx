@@ -4,7 +4,9 @@
 import { useEffect } from 'react'
 
 import ComboBoxInput from '#components/Input/ComboBoxInput'
-import { Item, FormState } from '#src/types'
+
+import type { FormState } from '#types/FormState'
+import type { Item } from '#types/Item'
 
 interface groupType {
   groupTypes_id: {
@@ -30,13 +32,16 @@ export const GroupSubheaderForm = ({
   useEffect(() => {
     if (groupTypes && groupStates) {
       const groupType = groupTypes.find((gt) => gt.groupTypes_id.name === state.group_type)
-      // eslint-disable-next-line no-console
-      console.log(state.group_type)
+      const customImage = !groupTypes.some(
+        (gt) => gt.groupTypes_id.image === state.image || !state.image,
+      )
       setState((prevState) => ({
         ...prevState,
         color: groupType?.groupTypes_id.color || groupTypes[0].groupTypes_id.color,
         marker_icon: groupType?.groupTypes_id.markerIcon || groupTypes[0].groupTypes_id.markerIcon,
-        image: groupType?.groupTypes_id.image || groupTypes[0].groupTypes_id.image,
+        image: customImage
+          ? state.image
+          : groupType?.groupTypes_id.image || groupTypes[0].groupTypes_id.image,
         status: state.status || groupStates[0],
         group_type: state.group_type || groupTypes[0].groupTypes_id.name,
       }))

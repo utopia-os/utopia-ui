@@ -1,11 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useEffect, useState } from 'react'
 
 import { useAuth } from '#components/Auth'
 import { useItems } from '#components/Map/hooks/useItems'
-import { Item } from '#src/types'
 
 import { useQuestsOpen, useSetQuestOpen } from './hooks/useQuests'
+
+import type { Item } from '#types/Item'
 
 export function Quests() {
   const questsOpen = useQuestsOpen()

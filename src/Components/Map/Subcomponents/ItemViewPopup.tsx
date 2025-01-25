@@ -15,11 +15,13 @@ import { toast } from 'react-toastify'
 
 import { useRemoveItem, useUpdateItem } from '#components/Map/hooks/useItems'
 import { useSetSelectPosition } from '#components/Map/hooks/useSelectPosition'
-import { Item, ItemFormPopupProps } from '#src/types'
 import { timeAgo } from '#utils/TimeAgo'
 
 import { HeaderView } from './ItemPopupComponents/HeaderView'
 import { TextView } from './ItemPopupComponents/TextView'
+
+import type { Item } from '#types/Item'
+import type { ItemFormPopupProps } from '#types/ItemFormPopupProps'
 
 export interface ItemViewPopupProps {
   item: Item
@@ -63,6 +65,7 @@ export const ItemViewPopup = forwardRef((props: ItemViewPopupProps, ref: any) =>
       props.item.layer?.onlyOnePerOwner &&
         (await props.item.layer.api?.updateItem!({ id: props.item.id, position: null }))
       success = true
+      // eslint-disable-next-line no-catch-all/no-catch-all
     } catch (error) {
       toast.error(error.toString())
     }

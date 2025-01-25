@@ -9,10 +9,11 @@ import { useNavigate } from 'react-router-dom'
 import { StartEndView, TextView } from '#components/Map'
 import useWindowDimensions from '#components/Map/hooks/useWindowDimension'
 import { HeaderView } from '#components/Map/Subcomponents/ItemPopupComponents/HeaderView'
-import { Item } from '#src/types'
 import { getValue } from '#utils/GetValue'
 
 import { DateUserInfo } from './DateUserInfo'
+
+import type { Item } from '#types/Item'
 
 export const ItemCard = ({
   i,

@@ -4,7 +4,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Children, cloneElement, isValidElement, useEffect, useRef, useState } from 'react'
@@ -17,9 +16,11 @@ import { TextInput } from '#components/Input/TextInput'
 import { useResetFilterTags } from '#components/Map/hooks/useFilter'
 import { useAddItem, useItems, useRemoveItem, useUpdateItem } from '#components/Map/hooks/useItems'
 import { useAddTag, useTags } from '#components/Map/hooks/useTags'
-import { Geometry, Item, ItemFormPopupProps } from '#src/types'
 import { hashTagRegex } from '#utils/HashTagRegex'
 import { randomColor } from '#utils/RandomColor'
+
+import type { Item } from '#types/Item'
+import type { ItemFormPopupProps } from '#types/ItemFormPopupProps'
 
 export function ItemFormPopup(props: ItemFormPopupProps) {
   const [spinner, setSpinner] = useState(false)
@@ -50,7 +51,7 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
         formItem[input.name] = input.value
       }
     })
-    formItem.position = new Geometry(props.position.lng, props.position.lat)
+    formItem.position = { type: 'Point', coordinates: [props.position.lng, props.position.lat] }
     evt.preventDefault()
     setSpinner(true)
 
@@ -70,6 +71,7 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
       try {
         await props.layer.api?.updateItem!({ ...formItem, id: props.item.id })
         success = true
+        // eslint-disable-next-line no-catch-all/no-catch-all
       } catch (error) {
         toast.error(error.toString())
       }
@@ -101,6 +103,7 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
             name: formItem.name ? formItem.name : user?.first_name,
           }))
         success = true
+        // eslint-disable-next-line no-catch-all/no-catch-all
       } catch (error) {
         toast.error(error.toString())
       }
@@ -109,8 +112,8 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
         if (!props.layer.onlyOnePerOwner || !item) {
           addItem({
             ...formItem,
-            name: formItem.name ? formItem.name : user?.first_name,
-            user_created: user,
+            name: (formItem.name ? formItem.name : user?.first_name) ?? '',
+            user_created: user ?? undefined,
             type: props.layer.itemType,
             id: uuid,
             layer: props.layer,

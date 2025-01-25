@@ -15,6 +15,7 @@ type TextAreaProps = {
   inputStyle?: string
   defaultValue: string
   placeholder?: string
+  required?: boolean
   updateFormValue?: (value: string) => void
 }
 
@@ -30,6 +31,7 @@ export function TextAreaInput({
   inputStyle,
   defaultValue,
   placeholder,
+  required = true,
   updateFormValue,
 }: TextAreaProps) {
   const ref = useRef<HTMLTextAreaElement>(null)
@@ -90,7 +92,7 @@ export function TextAreaInput({
         </label>
       ) : null}
       <textarea
-        required
+        required={required}
         ref={ref}
         value={inputValue}
         name={dataField}

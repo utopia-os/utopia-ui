@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 import { useEffect, useState } from 'react'
@@ -8,7 +7,8 @@ import { Link } from 'react-router-dom'
 
 import { useAppState } from '#components/AppShell/hooks/useAppState'
 import { useItems } from '#components/Map/hooks/useItems'
-import { Item } from '#src/types'
+
+import type { Item } from '#types/Item'
 
 export const ContactInfoView = ({ item, heading }: { item: Item; heading: string }) => {
   const appState = useAppState()

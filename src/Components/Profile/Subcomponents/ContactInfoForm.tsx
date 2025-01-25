@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import { TextInput } from '#components/Input'
-import { FormState } from '#src/types'
+
+import type { FormState } from '#types/FormState'
 
 export const ContactInfoForm = ({
   state,
@@ -22,6 +23,7 @@ export const ContactInfoForm = ({
         <TextInput
           placeholder='Email'
           type='email'
+          required={false}
           defaultValue={state.contact}
           updateFormValue={(v) =>
             setState((prevState) => ({
@@ -41,6 +43,9 @@ export const ContactInfoForm = ({
         </label>
         <TextInput
           placeholder='Telefonnummer'
+          type='tel'
+          required={false}
+          pattern='^\+?[0-9\s\-]{7,15}$'
           defaultValue={state.telephone}
           updateFormValue={(v) =>
             setState((prevState) => ({

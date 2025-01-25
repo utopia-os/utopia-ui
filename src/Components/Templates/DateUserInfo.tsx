@@ -1,12 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 import { useState } from 'react'
 
-import { Item } from '#src/types'
 import { timeAgo } from '#utils/TimeAgo'
+
+import type { Item } from '#types/Item'
 
 export const DateUserInfo = ({ item }: { item: Item }) => {
   const [infoExpanded, setInfoExpanded] = useState<boolean>(false)

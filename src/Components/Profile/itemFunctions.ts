@@ -11,11 +11,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { toast } from 'react-toastify'
 
-import { Item } from '#src/types'
 import { encodeTag } from '#utils/FormatTags'
 import { hashTagRegex } from '#utils/HashTagRegex'
 import { randomColor } from '#utils/RandomColor'
 
+import type { Item } from '#types/Item'
+
+// eslint-disable-next-line promise/avoid-new
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export const submitNewItem = async (
@@ -62,6 +64,7 @@ export const submitNewItem = async (
     await layer?.api?.createItem!({ ...formItem, id: uuid, type, parent: item.id })
     await linkItem(uuid)
     success = true
+    // eslint-disable-next-line no-catch-all/no-catch-all
   } catch (error) {
     toast.error(error.toString())
   }
@@ -83,6 +86,7 @@ export const linkItem = async (id: string, item, updateItem) => {
   try {
     await item?.layer?.api?.updateItem!(updatedItem)
     success = true
+    // eslint-disable-next-line no-catch-all/no-catch-all
   } catch (error) {
     toast.error(error.toString())
   }
@@ -100,6 +104,7 @@ export const unlinkItem = async (id: string, item, updateItem) => {
   try {
     await item?.layer?.api?.updateItem!(updatedItem)
     success = true
+    // eslint-disable-next-line no-catch-all/no-catch-all
   } catch (error) {
     toast.error(error.toString())
   }
@@ -123,6 +128,7 @@ export const handleDelete = async (
   try {
     await item.layer?.api?.deleteItem!(item.id)
     success = true
+    // eslint-disable-next-line no-catch-all/no-catch-all
   } catch (error) {
     toast.error(error.toString())
   }
@@ -243,6 +249,7 @@ export const onUpdateItem = async (
         .then(() => {
           setLoading(false)
           navigate(`/item/${item.id}${params && '?' + params}`)
+          return null
         })
   } else {
     item.new = false
@@ -272,6 +279,7 @@ export const onUpdateItem = async (
         .then(() => {
           setLoading(false)
           navigate(`/${params && '?' + params}`)
+          return null
         })
   }
 }

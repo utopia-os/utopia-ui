@@ -15,8 +15,10 @@ import { useNavigate } from 'react-router-dom'
 import { useAppState } from '#components/AppShell/hooks/useAppState'
 import { useHasUserPermission } from '#components/Map/hooks/usePermissions'
 import DialogModal from '#components/Templates/DialogModal'
-import { Item, ItemsApi } from '#src/types'
 import { getValue } from '#utils/GetValue'
+
+import type { Item } from '#types/Item'
+import type { ItemsApi } from '#types/ItemsApi'
 
 export function HeaderView({
   item,
@@ -103,6 +105,7 @@ export function HeaderView({
             <div className={`${avatar ? 'tw-ml-2' : ''} tw-overflow-hidden`}>
               <div
                 className={`${big ? 'xl:tw-text-3xl tw-text-2xl' : 'tw-text-xl'} tw-font-semibold tw-truncate`}
+                title={title}
               >
                 {title}
               </div>

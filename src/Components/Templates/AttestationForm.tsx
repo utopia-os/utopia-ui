@@ -1,14 +1,15 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { useRef, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { useAppState } from '#components/AppShell/hooks/useAppState'
 import { useItems } from '#components/Map/hooks/useItems'
-import { Item, ItemsApi } from '#src/types'
 
 import { EmojiPicker } from './EmojiPicker'
 import { MapOverlayPage } from './MapOverlayPage'
+
+import type { Item } from '#types/Item'
+import type { ItemsApi } from '#types/ItemsApi'
 
 export const AttestationForm = ({ api }: { api?: ItemsApi<unknown> }) => {
   const items = useItems()
@@ -39,7 +40,7 @@ export const AttestationForm = ({ api }: { api?: ItemsApi<unknown> }) => {
 
   const sendAttestation = async () => {
     const to: any[] = []
-    users?.map((u) => to.push({ directus_users_id: u.user_created.id }))
+    users?.map((u) => to.push({ directus_users_id: u.user_created?.id }))
 
     api?.createItem &&
       toast
@@ -66,7 +67,7 @@ export const AttestationForm = ({ api }: { api?: ItemsApi<unknown> }) => {
             '/item/' +
               items.find(
                 (i) =>
-                  i.user_created.id === to[0].directus_users_id &&
+                  i.user_created?.id === to[0].directus_users_id &&
                   i.layer?.itemType.name === 'player',
               )?.id +
               '?tab=2',

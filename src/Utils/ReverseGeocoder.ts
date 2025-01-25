@@ -34,6 +34,7 @@ export async function reverseGeocode(lat: number, lon: number): Promise<string> 
     // Formatiere die Adresse
     const formattedAddress = `${street} ${houseNumber}, ${city}`.trim()
     return formattedAddress || ''
+    // eslint-disable-next-line no-catch-all/no-catch-all
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Error:', error)

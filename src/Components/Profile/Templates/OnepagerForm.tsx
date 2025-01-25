@@ -3,7 +3,9 @@
 import { TextAreaInput } from '#components/Input'
 import { ContactInfoForm } from '#components/Profile/Subcomponents/ContactInfoForm'
 import { GroupSubheaderForm } from '#components/Profile/Subcomponents/GroupSubheaderForm'
-import { FormState, Item } from '#src/types'
+
+import type { FormState } from '#types/FormState'
+import type { Item } from '#types/Item'
 
 export const OnepagerForm = ({
   item,

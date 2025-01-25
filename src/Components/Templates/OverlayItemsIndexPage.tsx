@@ -19,12 +19,13 @@ import { Control } from '#components/Map/Subcomponents/Controls/Control'
 import { SearchControl } from '#components/Map/Subcomponents/Controls/SearchControl'
 import { TagsControl } from '#components/Map/Subcomponents/Controls/TagsControl'
 import { PlusButton } from '#components/Profile/Subcomponents/PlusButton'
-import { Item } from '#src/types'
 import { hashTagRegex } from '#utils/HashTagRegex'
 import { randomColor } from '#utils/RandomColor'
 
 import { ItemCard } from './ItemCard'
 import { MapOverlayPage } from './MapOverlayPage'
+
+import type { Item } from '#types/Item'
 
 export const OverlayItemsIndexPage = ({
   url,
@@ -91,13 +92,14 @@ export const OverlayItemsIndexPage = ({
     try {
       await layer?.api?.createItem!({ ...formItem, id: uuid })
       success = true
+      // eslint-disable-next-line no-catch-all/no-catch-all
     } catch (error) {
       toast.error(error.toString())
     }
     if (success) {
       toast.success('New item created')
     }
-    addItem({ ...formItem, user_created: user, id: uuid, layer, public_edit: !user })
+    addItem({ ...formItem, user_created: user ?? undefined, id: uuid, layer, public_edit: !user })
     setLoading(false)
     setAddItemPopupType('')
   }
@@ -108,6 +110,7 @@ export const OverlayItemsIndexPage = ({
     try {
       await layer?.api?.deleteItem!(item.id)
       success = true
+      // eslint-disable-next-line no-catch-all/no-catch-all
     } catch (error) {
       toast.error(error.toString())
     }

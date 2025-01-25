@@ -12,7 +12,7 @@ module.exports = {
     'plugin:import/recommended',
     'plugin:import/typescript',
     // 'plugin:promise/recommended',
-    // 'plugin:security/recommended-legacy',
+    'plugin:security/recommended-legacy',
     'plugin:react/recommended',
   ],
   parserOptions: {
@@ -23,9 +23,9 @@ module.exports = {
   plugins: [
     '@typescript-eslint',
     'import',
-    // 'promise',
-    // 'security',
-    // 'no-catch-all',
+    'promise',
+    'security',
+    'no-catch-all',
     'react',
     'react-hooks',
   ],
@@ -44,7 +44,7 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
     'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
     'react/react-in-jsx-scope': 'off', // Disable requirement for React import
-    //     'no-catch-all/no-catch-all': 'error',
+    'no-catch-all/no-catch-all': 'error',
     'no-console': 'error',
     'no-debugger': 'error',
     camelcase: 'error',
@@ -79,7 +79,7 @@ module.exports = {
     'import/no-relative-parent-imports': [
       'error',
       {
-        ignore: ['#[src,root,components,utils]/*'],
+        ignore: ['#[src,types,root,components,utils]/*'],
       },
     ],
     'import/no-self-import': 'error',
@@ -122,21 +122,21 @@ module.exports = {
       },
     ],
     'import/prefer-default-export': 'off',
-    //     // promise
-    //     'promise/catch-or-return': 'error',
-    //     'promise/no-return-wrap': 'error',
-    //     'promise/param-names': 'error',
-    //     'promise/always-return': 'error',
-    //     'promise/no-native': 'off',
-    //     'promise/no-nesting': 'warn',
-    //     'promise/no-promise-in-callback': 'warn',
-    //     'promise/no-callback-in-promise': 'warn',
-    //     'promise/avoid-new': 'warn',
-    //     'promise/no-new-statics': 'error',
-    //     'promise/no-return-in-finally': 'warn',
-    //     'promise/valid-params': 'warn',
-    //     'promise/prefer-await-to-callbacks': 'error',
-    //     'promise/no-multiple-resolved': 'error',
+    // promise
+    'promise/catch-or-return': 'error',
+    'promise/no-return-wrap': 'error',
+    'promise/param-names': 'error',
+    'promise/always-return': 'error',
+    'promise/no-native': 'off',
+    'promise/no-nesting': 'warn',
+    'promise/no-promise-in-callback': 'warn',
+    'promise/no-callback-in-promise': 'warn',
+    'promise/avoid-new': 'warn',
+    'promise/no-new-statics': 'error',
+    'promise/no-return-in-finally': 'warn',
+    'promise/valid-params': 'warn',
+    'promise/prefer-await-to-callbacks': 'error',
+    'promise/no-multiple-resolved': 'error',
   },
   overrides: [
     {
@@ -156,6 +156,7 @@ module.exports = {
         'plugin:@typescript-eslint/strict',
       ],
       rules: {
+        '@typescript-eslint/consistent-type-imports': 'error',
         // allow explicitly defined dangling promises
         '@typescript-eslint/no-floating-promises': ['error', { ignoreVoid: true }],
         'no-void': ['error', { allowAsStatement: true }],

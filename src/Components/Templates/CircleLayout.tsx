@@ -25,6 +25,7 @@ export const CircleLayout = ({
         const angle = startAngle + (i / itemCount) * (2 * Math.PI)
         const x = radius * Math.cos(angle)
         const y = radius * Math.sin(angle)
+        // eslint-disable-next-line security/detect-object-injection
         const child = container.children[i] as HTMLElement
         child.style.transform = `translate(${x}px, ${y}px)`
       }

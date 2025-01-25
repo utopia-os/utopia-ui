@@ -70,6 +70,7 @@ export const Autocomplete = ({
         break
       case 'Enter':
         if (filteredSuggestions.length > 0) {
+          // eslint-disable-next-line security/detect-object-injection
           onSelected(filteredSuggestions[heighlightedSuggestion])
           setHeighlightedSuggestion(0)
         }

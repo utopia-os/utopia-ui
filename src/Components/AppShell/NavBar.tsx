@@ -1,14 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/restrict-plus-operands */
-/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import QuestionMarkIcon from '@heroicons/react/24/outline/QuestionMarkCircleIcon'
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
@@ -16,7 +5,8 @@ import { toast } from 'react-toastify'
 
 import { useAuth } from '#components/Auth'
 import { useItems } from '#components/Map/hooks/useItems'
-import { Item } from '#src/types'
+
+import type { Item } from '#types/Item'
 
 export default function NavBar({ appName, userType }: { appName: string; userType: string }) {
   const { isAuthenticated, user, logout } = useAuth()
@@ -30,19 +20,19 @@ export default function NavBar({ appName, userType }: { appName: string; userTyp
       items.find((i) => i.user_created?.id === user.id && i.layer?.itemType.name === userType)
     profile
       ? setUserProfile(profile)
-      : setUserProfile({ id: crypto.randomUUID(), name: user?.first_name, text: '' })
+      : setUserProfile({ id: crypto.randomUUID(), name: user?.first_name ?? '', text: '' })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, items])
 
-  useEffect(() => {}, [userProfile])
+  // useEffect(() => {}, [userProfile])
 
-  const nameRef = useRef<any>(null)
+  const nameRef = useRef<HTMLHeadingElement>(null)
   const [nameWidth, setNameWidth] = useState<number>(0)
   const location = useLocation()
   const [showNav, setShowNav] = useState<boolean>(false)
 
   useEffect(() => {
-    showNav && nameRef && setNameWidth(nameRef.current.scrollWidth)
+    showNav && nameRef.current && setNameWidth(nameRef.current.scrollWidth)
   }, [nameRef, appName, showNav])
 
   useEffect(() => {
@@ -51,8 +41,8 @@ export default function NavBar({ appName, userType }: { appName: string; userTyp
     embedded !== 'true' && setShowNav(true)
   }, [location])
 
-  const onLogout = () => {
-    toast.promise(logout(), {
+  const onLogout = async () => {
+    await toast.promise(logout(), {
       success: {
         render() {
           return 'Bye bye'
@@ -62,7 +52,7 @@ export default function NavBar({ appName, userType }: { appName: string; userTyp
       },
       error: {
         render({ data }) {
-          return `${data}`
+          return JSON.stringify(data)
         },
       },
       pending: 'logging out ..',
@@ -122,7 +112,7 @@ export default function NavBar({ appName, userType }: { appName: string; userTyp
                 to={`${userProfile.id && '/item/' + userProfile.id}`}
                 className='tw-flex tw-items-center'
               >
-                {userProfile?.image && (
+                {userProfile.image && (
                   <div className='tw-avatar'>
                     <div className='tw-w-10 tw-rounded-full'>
                       <img src={'https://api.utopia-lab.org/assets/' + userProfile.image} />
@@ -155,7 +145,7 @@ export default function NavBar({ appName, userType }: { appName: string; userTyp
                   <li>
                     <a
                       onClick={() => {
-                        onLogout()
+                        void onLogout()
                       }}
                     >
                       Logout

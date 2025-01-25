@@ -16,8 +16,10 @@ import { useItems } from '#components/Map/hooks/useItems'
 import { ActionButton } from '#components/Profile/Subcomponents/ActionsButton'
 import { LinkedItemsHeaderView } from '#components/Profile/Subcomponents/LinkedItemsHeaderView'
 import { TagView } from '#components/Templates/TagView'
-import { Item, Tag } from '#src/types'
 import { timeAgo } from '#utils/TimeAgo'
+
+import type { Item } from '#types/Item'
+import type { Tag } from '#types/Tag'
 
 export const TabsView = ({
   attestations,
@@ -50,7 +52,7 @@ export const TabsView = ({
   const appState = useAppState()
   const getUserProfile = (id: string) => {
     return items.find(
-      (i) => i.user_created.id === id && i.layer?.itemType.name === appState.userType,
+      (i) => i.user_created?.id === id && i.layer?.itemType.name === appState.userType,
     )
   }
 
@@ -130,7 +132,7 @@ export const TabsView = ({
             <table className='sm:tw-table-sm md:tw-table-md'>
               <tbody>
                 {attestations
-                  .filter((a) => a.to.some((t) => t.directus_users_id === item.user_created.id))
+                  .filter((a) => a.to.some((t) => t.directus_users_id === item.user_created?.id))
                   .sort(
                     (a, b) =>
                       new Date(b.date_created).getTime() - new Date(a.date_created).getTime(),

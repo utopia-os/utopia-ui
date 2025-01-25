@@ -1,5 +1,6 @@
 import { StartEndView } from '#components/Map'
-import { Item } from '#src/types'
+
+import type { Item } from '#types/Item'
 
 export const ProfileStartEndView = ({ item }: { item: Item }) => {
   return (

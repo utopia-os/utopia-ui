@@ -22,13 +22,14 @@ import { useItems } from '#components/Map/hooks/useItems'
 import { useLeafletRefs } from '#components/Map/hooks/useLeafletRefs'
 import { useTags } from '#components/Map/hooks/useTags'
 import useWindowDimensions from '#components/Map/hooks/useWindowDimension'
-import { Item } from '#src/types'
 import { decodeTag } from '#utils/FormatTags'
 import { getValue } from '#utils/GetValue'
 import MarkerIconFactory from '#utils/MarkerIconFactory'
 
 import { LocateControl } from './LocateControl'
 import { SidebarControl } from './SidebarControl'
+
+import type { Item } from '#types/Item'
 
 export const SearchControl = () => {
   const windowDimensions = useWindowDimensions()
@@ -63,6 +64,7 @@ export const SearchControl = () => {
         try {
           const { data } = await axios.get(`https://photon.komoot.io/api/?q=${value}&limit=5`)
           setGeoResults(data.features)
+          // eslint-disable-next-line no-catch-all/no-catch-all
         } catch (error) {
           // eslint-disable-next-line no-console
           console.log(error)
@@ -331,6 +333,7 @@ export const SearchControl = () => {
 
 function isGeoCoordinate(input) {
   const geokoordinatenRegex =
+    // eslint-disable-next-line security/detect-unsafe-regex
     /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/
   return geokoordinatenRegex.test(input)
 }

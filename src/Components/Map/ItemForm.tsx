@@ -1,7 +1,7 @@
 import { node, string } from 'prop-types'
 import { Children, cloneElement, isValidElement, useEffect } from 'react'
 
-import { Item } from '#src/types'
+import type { Item } from '#types/Item'
 
 export const ItemForm = ({
   children,

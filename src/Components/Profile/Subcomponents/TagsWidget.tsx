@@ -8,9 +8,10 @@ import { useEffect, useState } from 'react'
 
 import { Autocomplete } from '#components/Input/Autocomplete'
 import { useTags } from '#components/Map/hooks/useTags'
-import { Tag } from '#src/types'
 import { decodeTag, encodeTag } from '#utils/FormatTags'
 import { randomColor } from '#utils/RandomColor'
+
+import type { Tag } from '#types/Tag'
 
 // eslint-disable-next-line react/prop-types
 export const TagsWidget = ({ placeholder, containerStyle, defaultTags, onUpdate }) => {

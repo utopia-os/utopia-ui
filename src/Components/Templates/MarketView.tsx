@@ -8,11 +8,12 @@ import { useNavigate } from 'react-router-dom'
 
 import { useItems } from '#components/Map/hooks/useItems'
 import { useTags } from '#components/Map/hooks/useTags'
-import { Tag } from '#src/types'
 import { getValue } from '#utils/GetValue'
 
 import { MapOverlayPage } from './MapOverlayPage'
 import { TagView } from './TagView'
+
+import type { Tag } from '#types/Tag'
 
 function groupAndCount(arr) {
   const grouped = arr.reduce((acc, obj) => {

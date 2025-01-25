@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -8,7 +7,8 @@ import { toast } from 'react-toastify'
 import { useAuth } from '#components/Auth'
 import { TextInput } from '#components/Input'
 import { MapOverlayPage } from '#components/Templates'
-import { UserItem } from '#src/types'
+
+import type { UserItem } from '#types/UserItem'
 
 export function UserSettings() {
   const { user, updateUser, loading /* token */ } = useAuth()
@@ -43,6 +43,9 @@ export function UserSettings() {
         },
       })
       .then(() => navigate('/'))
+      .catch((e) => {
+        throw e
+      })
   }
 
   return (

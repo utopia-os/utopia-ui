@@ -2,16 +2,16 @@
 
 In this example we see how we create a basic React app with a Map component using [utopia-ui](https://github.com/utopia-os/utopia-ui) library.
 
-For this example we use Vite to create an empty React app called "utopia-static-map"
+For this example we use Vite to create an empty React app called "1-static-map"
 
 ```shell
-npm create vite@latest utopia-static-map -- --template react-ts
+npm create vite@latest 1-static-map -- --template react-ts
 ```
 
 We open our new app in the terminal and install the [utopia-ui](https://github.com/utopia-os/utopia-ui) package
 
 ```shell
-cd utopia-static-map
+cd 1-static-map
 npm install utopia-ui
 ```
 
@@ -39,4 +39,4 @@ npm run dev
 
 And can open our first map app in the browser 🙂
 
-In [Tutorial 2](../2-static-layers/) we gonna add some static data to our map
+In [Example 2](../2-static-layers/) we gonna add some static data to our map

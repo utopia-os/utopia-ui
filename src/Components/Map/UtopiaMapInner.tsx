@@ -125,6 +125,7 @@ export function UtopiaMapInner({
         const id = window.location.pathname.split('/')[1]
         // eslint-disable-next-line security/detect-object-injection
         const ref = leafletRefs[id]
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (ref) {
           clusterRef.hasLayer(ref.marker) &&
             clusterRef?.zoomToShowLayer(ref.marker, () => {

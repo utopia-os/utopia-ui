@@ -6,29 +6,24 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import { LatLng } from 'leaflet'
-import {
-  Children,
-  cloneElement,
-  createRef,
-  isValidElement,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
-import { TileLayer, MapContainer, useMapEvents, GeoJSON } from 'react-leaflet'
+import { Children, cloneElement, isValidElement, useEffect, useRef, useState } from 'react'
+import { TileLayer, useMapEvents, GeoJSON, useMap } from 'react-leaflet'
 // eslint-disable-next-line import/no-unassigned-import
 import 'leaflet/dist/leaflet.css'
 import MarkerClusterGroup from 'react-leaflet-cluster'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 // eslint-disable-next-line import/no-unassigned-import
 import './UtopiaMap.css'
 
+import { containsUUID } from '#utils/ContainsUUID'
+import { getValue } from '#utils/GetValue'
+
 import { useClusterRef, useSetClusterRef } from './hooks/useClusterRef'
 import { useAddVisibleLayer } from './hooks/useFilter'
 import { useLayers } from './hooks/useLayers'
+import { useLeafletRefs } from './hooks/useLeafletRefs'
 import {
   useSelectPosition,
   useSetMapClicked,
@@ -48,13 +43,7 @@ import type { ItemFormPopupProps } from '#types/ItemFormPopupProps'
 import type { UtopiaMapProps } from '#types/UtopiaMapProps'
 import type { Feature, Geometry as GeoJSONGeometry } from 'geojson'
 
-const mapDivRef = createRef()
-
 export function UtopiaMapInner({
-  height = '500px',
-  width = '100%',
-  center = [50.6, 9.5],
-  zoom = 10,
   children,
   geo,
   showFilterControl = false,
@@ -62,7 +51,6 @@ export function UtopiaMapInner({
   showLayerControl = true,
   infoText,
 }: UtopiaMapProps) {
-  // Hooks that rely on contexts, called after ContextWrapper is provided
   const selectNewItemPosition = useSelectPosition()
   const setSelectNewItemPosition = useSetSelectPosition()
   const setClusterRef = useSetClusterRef()
@@ -72,6 +60,10 @@ export function UtopiaMapInner({
 
   const layers = useLayers()
   const addVisibleLayer = useAddVisibleLayer()
+  const leafletRefs = useLeafletRefs()
+
+  const location = useLocation()
+  const map = useMap()
 
   useEffect(() => {
     layers.forEach((layer) => addVisibleLayer(layer))
@@ -105,9 +97,63 @@ export function UtopiaMapInner({
     return null
   }
 
+  useMapEvents({
+    popupopen: (e) => {
+      const item = Object.entries(leafletRefs).find((r) => r[1].popup === e.popup)?.[1].item
+      if (window.location.pathname.split('/')[1] !== item?.id) {
+        const params = new URLSearchParams(window.location.search)
+        if (!location.pathname.includes('/item/')) {
+          window.history.pushState(
+            {},
+            '',
+            `/${item?.id}` + `${params.toString() !== '' ? `?${params}` : ''}`,
+          )
+        }
+        let title = ''
+        if (item?.name) title = item.name
+        else if (item?.layer?.itemNameField) title = getValue(item, item.layer.itemNameField)
+        document.title = `${document.title.split('-')[0]} - ${title}`
+      }
+    },
+  })
+
+  const openPopup = () => {
+    if (!containsUUID(window.location.pathname)) {
+      map.closePopup()
+    } else {
+      if (window.location.pathname.split('/')[1]) {
+        const id = window.location.pathname.split('/')[1]
+        // eslint-disable-next-line security/detect-object-injection
+        const ref = leafletRefs[id]
+        if (ref) {
+          clusterRef.hasLayer(ref.marker) &&
+            clusterRef?.zoomToShowLayer(ref.marker, () => {
+              ref.marker.openPopup()
+            })
+          let title = ''
+          if (ref.item.name) title = ref.item.name
+          else if (ref.item.layer?.itemNameField)
+            title = getValue(ref.item.name, ref.item.layer.itemNameField)
+          document.title = `${document.title.split('-')[0]} - ${title}`
+          document
+            .querySelector('meta[property="og:title"]')
+            ?.setAttribute('content', ref.item.name)
+          document
+            .querySelector('meta[property="og:description"]')
+            ?.setAttribute('content', ref.item.text)
+        }
+      }
+    }
+  }
+
+  useEffect(() => {
+    openPopup()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [leafletRefs, location])
+
   const resetMetaTags = () => {
     const params = new URLSearchParams(window.location.search)
-    if (!window.location.pathname.includes('/item/')) {
+    if (!containsUUID(window.location.pathname)) {
       window.history.pushState({}, '', '/' + `${params.toString() !== '' ? `?${params}` : ''}`)
     }
     document.title = document.title.split('-')[0]
@@ -130,62 +176,53 @@ export function UtopiaMapInner({
     <div
       className={`tw-h-full ${selectNewItemPosition != null ? 'crosshair-cursor-enabled' : undefined}`}
     >
-      <MapContainer
-        ref={mapDivRef}
-        style={{ height, width }}
-        center={new LatLng(center[0], center[1])}
-        zoom={zoom}
-        zoomControl={false}
+      <Outlet />
+      <Control position='topLeft' zIndex='1000' absolute>
+        <SearchControl />
+        <TagsControl />
+      </Control>
+      <Control position='bottomLeft' zIndex='999' absolute>
+        {showFilterControl && <FilterControl />}
+        {showLayerControl && <LayerControl />}
+        {showGratitudeControl && <GratitudeControl />}
+      </Control>
+      <TileLayer
         maxZoom={19}
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url='https://tile.osmand.net/hd/{z}/{x}/{y}.png'
+      />
+      <MarkerClusterGroup
+        ref={(r) => setClusterRef(r)}
+        showCoverageOnHover
+        chunkedLoading
+        maxClusterRadius={50}
+        removeOutsideVisibleBounds={false}
       >
-        <Outlet />
-        <Control position='topLeft' zIndex='1000' absolute>
-          <SearchControl />
-          <TagsControl />
-        </Control>
-        <Control position='bottomLeft' zIndex='999' absolute>
-          {showFilterControl && <FilterControl />}
-          {showLayerControl && <LayerControl />}
-          {showGratitudeControl && <GratitudeControl />}
-        </Control>
-        <TileLayer
-          maxZoom={19}
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url='https://tile.osmand.net/hd/{z}/{x}/{y}.png'
-        />
-        <MarkerClusterGroup
-          ref={(r) => setClusterRef(r)}
-          showCoverageOnHover
-          chunkedLoading
-          maxClusterRadius={50}
-          removeOutsideVisibleBounds={false}
-        >
-          {Children.toArray(children).map((child) =>
-            isValidElement<{
-              setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps>>
-              itemFormPopup: ItemFormPopupProps | null
-              clusterRef: React.MutableRefObject<undefined>
-            }>(child)
-              ? cloneElement(child, { setItemFormPopup, itemFormPopup, clusterRef })
-              : child,
-          )}
-        </MarkerClusterGroup>
-        {geo && (
-          <GeoJSON
-            data={geo}
-            onEachFeature={onEachFeature}
-            eventHandlers={{
-              click: (e) => {
-                if (selectNewItemPosition) {
-                  e.layer.closePopup()
-                  setMapClicked({ position: e.latlng, setItemFormPopup })
-                }
-              },
-            }}
-          />
+        {Children.toArray(children).map((child) =>
+          isValidElement<{
+            setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps>>
+            itemFormPopup: ItemFormPopupProps | null
+            clusterRef: React.MutableRefObject<undefined>
+          }>(child)
+            ? cloneElement(child, { setItemFormPopup, itemFormPopup, clusterRef })
+            : child,
         )}
-        <MapEventListener />
-      </MapContainer>
+      </MarkerClusterGroup>
+      {geo && (
+        <GeoJSON
+          data={geo}
+          onEachFeature={onEachFeature}
+          eventHandlers={{
+            click: (e) => {
+              if (selectNewItemPosition) {
+                e.layer.closePopup()
+                setMapClicked({ position: e.latlng, setItemFormPopup })
+              }
+            },
+          }}
+        />
+      )}
+      <MapEventListener />
       <AddButton triggerAction={setSelectNewItemPosition} />
       {selectNewItemPosition != null && (
         <SelectPosition setSelectNewItemPosition={setSelectNewItemPosition} />

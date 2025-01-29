@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
@@ -8,8 +7,7 @@
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Children, isValidElement, useEffect, useState } from 'react'
-import { Marker, Tooltip, useMap, useMapEvents } from 'react-leaflet'
-import { useLocation } from 'react-router-dom'
+import { Marker, Tooltip } from 'react-leaflet'
 
 import { encodeTag } from '#utils/FormatTags'
 import { getValue } from '#utils/GetValue'
@@ -79,8 +77,6 @@ export const Layer = ({
   const addPopup = useAddPopup()
   const leafletRefs = useLeafletRefs()
 
-  const location = useLocation()
-
   const allTagsLoaded = useAllTagsLoaded()
   const allItemsLoaded = useAllItemsLoaded()
 
@@ -91,8 +87,6 @@ export const Layer = ({
   const addTag = useAddTag()
   const [newTagsToAdd, setNewTagsToAdd] = useState<Tag[]>([])
   const [tagsReady, setTagsReady] = useState<boolean>(false)
-
-  const map = useMap()
 
   const isLayerVisible = useIsLayerVisible()
 
@@ -169,64 +163,6 @@ export const Layer = ({
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, api])
-
-  useMapEvents({
-    popupopen: (e) => {
-      const item = Object.entries(leafletRefs).find((r) => r[1].popup === e.popup)?.[1].item
-      if (item?.layer?.name === name && window.location.pathname.split('/')[1] !== item.id) {
-        const params = new URLSearchParams(window.location.search)
-        if (!location.pathname.includes('/item/')) {
-          window.history.pushState(
-            {},
-            '',
-            `/${item.id}` + `${params.toString() !== '' ? `?${params}` : ''}`,
-          )
-        }
-        let title = ''
-        if (item.name) title = item.name
-        else if (item.layer.itemNameField) title = getValue(item, item.layer.itemNameField)
-        document.title = `${document.title.split('-')[0]} - ${title}`
-      }
-    },
-  })
-
-  const openPopup = () => {
-    if (
-      window.location.pathname.split('/').length <= 1 ||
-      window.location.pathname.split('/')[1] === ''
-    ) {
-      map.closePopup()
-    } else {
-      if (window.location.pathname.split('/')[1]) {
-        const id = window.location.pathname.split('/')[1]
-        // eslint-disable-next-line security/detect-object-injection
-        const ref = leafletRefs[id]
-        if (ref?.marker && ref.item.layer?.name === name) {
-          ref.marker &&
-            clusterRef.hasLayer(ref.marker) &&
-            clusterRef?.zoomToShowLayer(ref.marker, () => {
-              ref.marker.openPopup()
-            })
-          let title = ''
-          if (ref.item.name) title = ref.item.name
-          else if (ref.item.layer.itemNameField)
-            title = getValue(ref.item.name, ref.item.layer.itemNameField)
-          document.title = `${document.title.split('-')[0]} - ${title}`
-          document
-            .querySelector('meta[property="og:title"]')
-            ?.setAttribute('content', ref.item.name)
-          document
-            .querySelector('meta[property="og:description"]')
-            ?.setAttribute('content', ref.item.text)
-        }
-      }
-    }
-  }
-
-  useEffect(() => {
-    openPopup()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [leafletRefs, location])
 
   useEffect(() => {
     if (tagsReady) {

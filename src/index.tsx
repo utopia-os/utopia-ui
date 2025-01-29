@@ -19,7 +19,6 @@ export {
 export { AppShell, Content, SideBar, Sitemap } from './Components/AppShell'
 export {
   AuthProvider,
-  useAuth,
   LoginPage,
   SignupPage,
   RequestPasswordPage,

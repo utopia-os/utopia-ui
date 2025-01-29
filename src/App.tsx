@@ -105,13 +105,13 @@ function App() {
                 <Route path='reset-password' element={<RequestPasswordPage resetUrl={map.url + "/set-new-password/"} />} />
                 <Route path='set-new-password' element={<SetNewPasswordPage />} />
                 <Route path="item/*" element={<ProfileView attestationApi={attestationApi} />} />
-                <Route path="edit-item/*" element={<ProfileForm/>} />
+                <Route path="edit-item/*" element={<ProfileForm />} />
                 <Route path="user-settings" element={<UserSettings />} />
                 <Route path="moon-calendar" element={<MoonCalendar />} />
                 <Route path="landingpage" element={<Landingpage />} />
                 <Route path="market" element={<MarketView />} />
-                <Route path="select-user" element={<SelectUser/>} />
-                <Route path="attestation-form" element={<AttestationForm api={attestationApi}/>} />
+                <Route path="select-user" element={<SelectUser />} />
+                <Route path="attestation-form" element={<AttestationForm api={attestationApi} />} />
                 {
                   layers.map((l: any) =>
                     <Route key={l.id} path={l.name} element={<OverlayItemsIndexPage plusButton={l.index_plus_button} layerName={l.name} url={'/item/'} parameterField={'id'} />} />
@@ -134,9 +134,11 @@ function App() {
   )
 
   else return (
-    <div className="flex items-center justify-center h-screen">
-      <span className="loading loading-spinner loading-lg"></span>
-    </div>
+      <div className="outer">
+        <img className="pulse-loader opacity h-[96px]" src="/3markers-globe.svg" />
+        <br/>
+          <span className="loader"></span>
+      </div> 
   )
 }
 

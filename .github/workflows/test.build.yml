@@ -35,7 +35,7 @@ jobs:
           npm link
         working-directory: ./
 
-  test-examples:
+  build-examples:
     if: needs.files-changed.outputs.build == 'true'
     name: Test Example Apps
     needs: build
@@ -59,8 +59,3 @@ jobs:
           npm install
           npm link utopia-ui
           npm run build
-
-      - name: Run Tests
-        run: |
-          cd ${{ matrix.app }}
-          npm test

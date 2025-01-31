@@ -15,11 +15,13 @@ export const ProfileTextView = ({
 }) => {
   return (
     <div className='tw-my-10 tw-mt-2 tw-px-6'>
-      {!(item.data === '' && hideWhenEmpty) && (
+      {/* eslint-disable-next-line security/detect-object-injection */}
+      {!(item[dataField] === '' && hideWhenEmpty) && (
         <h2 className='tw-text-lg tw-font-semibold'>{heading}</h2>
       )}
       <div className='tw-mt-2 tw-text-sm'>
-        <TextView itemId={item.id} rawText={dataField ? item.data : item.text} />
+        {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, security/detect-object-injection */}
+        <TextView itemId={item.id} rawText={dataField ? item[dataField] : item.text} />
       </div>
     </div>
   )

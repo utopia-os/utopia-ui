@@ -9,7 +9,8 @@
   "scripts": {
     "build": "rollup -c",
     "start": "rollup -c -w",
-    "test:lint:eslint": "eslint --ext .ts,.tsx,.js,.jsx,.cjs,.mjs,.json,.yml,.yaml --max-warnings 0 ."
+    "test:lint:eslint": "eslint --ext .ts,.tsx,.js,.jsx,.cjs,.mjs,.json,.yml,.yaml --max-warnings 0 .",
+    "update": "npx npm-check-updates"
   },
   "files": [
     "dist"

@@ -24,8 +24,7 @@ export interface Item {
   slug?: string
   user_created?: UserItem
   image?: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any
+  group_type: string
   /* constructor(
     id: string,
     name: string,

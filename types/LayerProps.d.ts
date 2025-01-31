@@ -2,6 +2,7 @@ import type { Item } from './Item'
 import type { ItemFormPopupProps } from './ItemFormPopupProps'
 import type { ItemsApi } from './ItemsApi'
 import type { ItemType } from './ItemType'
+import type MarkerClusterGroup from 'react-leaflet-cluster'
 
 export interface LayerProps {
   id?: string
@@ -37,6 +38,5 @@ export interface LayerProps {
   item_presets?: Record<string, unknown>
   setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
   itemFormPopup?: ItemFormPopupProps | null
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  clusterRef?: any
+  clusterRef?: React.MutableRefObject<typeof MarkerClusterGroup>[]
 }

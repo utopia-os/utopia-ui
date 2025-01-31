@@ -1,11 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { LatLng } from 'leaflet'
 import {
   Children,
@@ -47,6 +42,7 @@ import { SelectPosition } from './Subcomponents/SelectPosition'
 import type { ItemFormPopupProps } from '#types/ItemFormPopupProps'
 import type { UtopiaMapProps } from '#types/UtopiaMapProps'
 import type { Feature, Geometry as GeoJSONGeometry } from 'geojson'
+import type { MutableRefObject, SetStateAction } from 'react'
 
 const mapDivRef = createRef()
 
@@ -154,7 +150,7 @@ export function UtopiaMapInner({
           url='https://tile.osmand.net/hd/{z}/{x}/{y}.png'
         />
         <MarkerClusterGroup
-          ref={(r) => setClusterRef(r)}
+          ref={(r: SetStateAction<MutableRefObject<typeof MarkerClusterGroup>>) => setClusterRef(r)}
           showCoverageOnHover
           chunkedLoading
           maxClusterRadius={50}
@@ -164,7 +160,7 @@ export function UtopiaMapInner({
             isValidElement<{
               setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps>>
               itemFormPopup: ItemFormPopupProps | null
-              clusterRef: React.MutableRefObject<undefined>
+              clusterRef: React.MutableRefObject<typeof MarkerClusterGroup>
             }>(child)
               ? cloneElement(child, { setItemFormPopup, itemFormPopup, clusterRef })
               : child,

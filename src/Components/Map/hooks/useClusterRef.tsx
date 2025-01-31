@@ -1,23 +1,26 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createContext, useContext, useState } from 'react'
+
+import type MarkerClusterGroup from 'react-leaflet-cluster'
 
 type UseClusterRefManagerResult = ReturnType<typeof useClusterRefManager>
 
+type ClusterRef = React.MutableRefObject<typeof MarkerClusterGroup>
+
 const ClusterRefContext = createContext<UseClusterRefManagerResult>({
-  clusterRef: {} as React.MutableRefObject<undefined>,
+  clusterRef: {} as typeof MarkerClusterGroup,
   setClusterRef: () => {},
 })
 
 function useClusterRefManager(): {
-  clusterRef: any
-  setClusterRef: React.Dispatch<React.SetStateAction<React.MutableRefObject<undefined>>>
+  clusterRef: typeof MarkerClusterGroup
+  setClusterRef: React.Dispatch<
+    React.SetStateAction<React.MutableRefObject<typeof MarkerClusterGroup>>
+  >
 } {
-  const [clusterRef, setClusterRef] = useState<React.MutableRefObject<undefined>>(
-    {} as React.MutableRefObject<undefined>,
-  )
+  const [clusterRef, setClusterRef] = useState<ClusterRef>({} as React.MutableRefObject<undefined>)
 
   return { clusterRef, setClusterRef }
 }
@@ -28,7 +31,7 @@ export const ClusterRefProvider: React.FunctionComponent<{
   <ClusterRefContext.Provider value={useClusterRefManager()}>{children}</ClusterRefContext.Provider>
 )
 
-export const useClusterRef = (): any => {
+export const useClusterRef = (): typeof MarkerClusterGroup => {
   const { clusterRef } = useContext(ClusterRefContext)
   return clusterRef
 }

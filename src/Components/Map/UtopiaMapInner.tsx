@@ -190,7 +190,6 @@ export function UtopiaMapInner({
         url='https://tile.osmand.net/hd/{z}/{x}/{y}.png'
       />
       <MarkerClusterGroup
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
         ref={(r) => setClusterRef(r as any)}
         showCoverageOnHover
         chunkedLoading

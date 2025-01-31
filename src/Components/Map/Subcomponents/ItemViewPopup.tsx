@@ -67,6 +67,7 @@ export const ItemViewPopup = forwardRef((props: ItemViewPopupProps, ref: any) =>
       success = true
       // eslint-disable-next-line no-catch-all/no-catch-all
     } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       toast.error(error.toString())
     }
     if (success) {

@@ -1,11 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Children, isValidElement, useEffect, useState } from 'react'
 import { Marker, Tooltip } from 'react-leaflet'
 
@@ -319,7 +314,7 @@ export const Layer = ({
                   )}
 
                   <Tooltip offset={[0, -38]} direction='top'>
-                    {item.name ? item.name : getValue(item, itemNameField)}
+                    {item.name ? item.name : `${getValue(item, itemNameField)}`}
                   </Tooltip>
                 </Marker>
               )

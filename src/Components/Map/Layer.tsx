@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 import { Children, isValidElement, useEffect, useState } from 'react'
 import { Marker, Tooltip } from 'react-leaflet'
 
 import { encodeTag } from '#utils/FormatTags'
-import { getValue } from '#utils/GetValue'
 import { hashTagRegex } from '#utils/HashTagRegex'
 import MarkerIconFactory from '#utils/MarkerIconFactory'
 import { randomColor } from '#utils/RandomColor'
@@ -41,17 +39,6 @@ export const Layer = ({
   markerDefaultColor2 = 'RGBA(35, 31, 32, 0.2)',
   api,
   itemType,
-  itemNameField = 'name',
-  itemSubnameField,
-  itemTextField = 'text',
-  itemAvatarField,
-  itemColorField,
-  itemOwnerField,
-  itemLatitudeField = 'position.coordinates.1',
-  itemLongitudeField = 'position.coordinates.0',
-  itemTagsField,
-  itemOffersField,
-  itemNeedsField,
   onlyOnePerOwner = false,
   customEditLink,
   customEditParameter,
@@ -104,16 +91,8 @@ export const Layer = ({
         markerDefaultColor2,
         api,
         itemType,
-        itemNameField,
-        itemSubnameField,
-        itemTextField,
-        itemAvatarField,
-        itemColorField,
-        itemOwnerField,
-        itemTagsField,
-        itemOffersField,
-        itemNeedsField,
         onlyOnePerOwner,
+        // Can we just use editCallback for all cases?
         customEditLink,
         customEditParameter,
         // eslint-disable-next-line camelcase
@@ -121,6 +100,7 @@ export const Layer = ({
         listed,
         setItemFormPopup,
         itemFormPopup,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         clusterRef,
       })
     api &&
@@ -137,15 +117,6 @@ export const Layer = ({
         markerDefaultColor2,
         api,
         itemType,
-        itemNameField,
-        itemSubnameField,
-        itemTextField,
-        itemAvatarField,
-        itemColorField,
-        itemOwnerField,
-        itemTagsField,
-        itemOffersField,
-        itemNeedsField,
         onlyOnePerOwner,
         customEditLink,
         customEditParameter,
@@ -154,6 +125,7 @@ export const Layer = ({
         listed,
         setItemFormPopup,
         itemFormPopup,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         clusterRef,
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -195,29 +167,19 @@ export const Layer = ({
               visibleGroupTypes.length === 0,
           )
           .map((item: Item) => {
-            if (getValue(item, itemLongitudeField) && getValue(item, itemLatitudeField)) {
-              // eslint-disable-next-line security/detect-object-injection
-              if (getValue(item, itemTextField)) item[itemTextField] = getValue(item, itemTextField)
-              // eslint-disable-next-line security/detect-object-injection
-              else item[itemTextField] = ''
-
+            if (item.position?.coordinates[0] && item.position?.coordinates[1]) {
               if (item.tags) {
-                // eslint-disable-next-line security/detect-object-injection
-                item[itemTextField] = item[itemTextField] + '\n\n'
+                item.text += '\n\n'
                 item.tags.map((tag) => {
-                  // eslint-disable-next-line security/detect-object-injection
-                  if (!item[itemTextField].includes(`#${encodeTag(tag)}`)) {
-                    // eslint-disable-next-line security/detect-object-injection
-                    return (item[itemTextField] = item[itemTextField] + `#${encodeTag(tag)} `)
+                  if (!item.text.includes(`#${encodeTag(tag)}`)) {
+                    item.text += `#${encodeTag(tag)}`
                   }
-                  // eslint-disable-next-line security/detect-object-injection
-                  return item[itemTextField]
+                  return item.text
                 })
               }
 
               if (allTagsLoaded && allItemsLoaded) {
-                // eslint-disable-next-line security/detect-object-injection
-                item[itemTextField].match(hashTagRegex)?.map((tag) => {
+                item.text.match(hashTagRegex)?.map((tag) => {
                   if (
                     !tags.find(
                       (t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase(),
@@ -240,19 +202,18 @@ export const Layer = ({
 
               const itemTags = getItemTags(item)
 
-              const latitude =
-                itemLatitudeField && item ? getValue(item, itemLatitudeField) : undefined
-              const longitude =
-                itemLongitudeField && item ? getValue(item, itemLongitudeField) : undefined
+              const latitude = item.position.coordinates[1]
+              const longitude = item.position.coordinates[0]
 
               let color1 = markerDefaultColor
               let color2 = markerDefaultColor2
-              if (itemColorField && getValue(item, itemColorField) != null)
-                color1 = getValue(item, itemColorField)
-              else if (itemTags && itemTags[0]) {
+              if (item.color) {
+                color1 = item.color
+              } else if (itemTags && itemTags[0]) {
                 color1 = itemTags[0].color
               }
-              if (itemTags && itemTags[0] && itemColorField) color2 = itemTags[0].color
+              // What is happening here?? Why do we depend on itemColorField?
+              if (itemTags && itemTags[0] && item.layer?.hasColor) color2 = itemTags[0].color
               else if (itemTags && itemTags[1]) {
                 color2 = itemTags[1].color
               }
@@ -279,9 +240,11 @@ export const Layer = ({
                 >
                   {children &&
                   Children.toArray(children).some(
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                     (child) => isValidElement(child) && child.props.__TYPE === 'ItemView',
                   ) ? (
                     Children.toArray(children).map((child) =>
+                      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                       isValidElement(child) && child.props.__TYPE === 'ItemView' ? (
                         <ItemViewPopup
                           ref={(r) => {
@@ -314,7 +277,7 @@ export const Layer = ({
                     </>
                   )}
                   <Tooltip offset={[0, -38]} direction='top'>
-                    {item.name ? item.name : `${getValue(item, itemNameField)}`}
+                    {item.name}
                   </Tooltip>
                 </Marker>
               )
@@ -327,9 +290,11 @@ export const Layer = ({
         itemFormPopup.layer.name === name &&
         (children &&
         Children.toArray(children).some(
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           (child) => isValidElement(child) && child.props.__TYPE === 'ItemForm',
         ) ? (
           Children.toArray(children).map((child) =>
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             isValidElement(child) && child.props.__TYPE === 'ItemForm' ? (
               <ItemFormPopup
                 key={setItemFormPopup?.name}

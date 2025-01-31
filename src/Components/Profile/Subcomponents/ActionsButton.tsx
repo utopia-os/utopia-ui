@@ -10,7 +10,6 @@ import { useHasUserPermission } from '#components/Map/hooks/usePermissions'
 import { useGetItemTags } from '#components/Map/hooks/useTags'
 import { HeaderView } from '#components/Map/Subcomponents/ItemPopupComponents/HeaderView'
 import DialogModal from '#components/Templates/DialogModal'
-import { getValue } from '#utils/GetValue'
 
 import type { Item } from '#types/Item'
 
@@ -20,7 +19,6 @@ export function ActionButton({
   triggerItemSelected,
   existingRelations,
   itemType,
-  colorField,
   collection = 'items',
   customStyle,
 }: {
@@ -28,7 +26,6 @@ export function ActionButton({
   triggerItemSelected?: any
   existingRelations: Item[]
   itemType?: string
-  colorField?: string
   collection?: string
   customStyle?: string
   item: Item
@@ -58,7 +55,7 @@ export function ActionButton({
                   setModalOpen(true)
                 }}
                 style={{
-                  backgroundColor: `${colorField && getValue(item, colorField) ? getValue(item, colorField) : getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item.layer?.markerDefaultColor}`,
+                  backgroundColor: `${(item.color ?? (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color)) ? getItemTags(item)[0].color : item.layer?.markerDefaultColor}`,
                   color: '#fff',
                 }}
               >
@@ -82,7 +79,7 @@ export function ActionButton({
                   triggerAddButton()
                 }}
                 style={{
-                  backgroundColor: `${colorField && getValue(item, colorField) ? getValue(item, colorField) : getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item.layer?.markerDefaultColor}`,
+                  backgroundColor: `${(item.color ?? (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color)) ? getItemTags(item)[0].color : item.layer?.markerDefaultColor}`,
                   color: '#fff',
                 }}
               >

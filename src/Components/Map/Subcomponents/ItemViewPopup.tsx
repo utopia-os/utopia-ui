@@ -104,7 +104,7 @@ export const ItemViewPopup = forwardRef((props: ItemViewPopupProps, ref: any) =>
                 : '',
             )
           ) : (
-            <TextView item={props.item} />
+            <TextView text={props.item.text} itemId={props.item.id} />
           )}
         </div>
         <div className='tw-flex -tw-mb-1 tw-flex-row tw-mr-2 tw-mt-1'>

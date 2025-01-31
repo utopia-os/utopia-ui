@@ -18,7 +18,6 @@ import { toast } from 'react-toastify'
 import './UtopiaMap.css'
 
 import { containsUUID } from '#utils/ContainsUUID'
-import { getValue } from '#utils/GetValue'
 
 import { useClusterRef, useSetClusterRef } from './hooks/useClusterRef'
 import { useAddVisibleLayer } from './hooks/useFilter'
@@ -75,7 +74,8 @@ export function UtopiaMapInner({
     if (!init.current) {
       infoText &&
         setTimeout(() => {
-          toast(<TextView rawText={infoText} />, { autoClose: false })
+          // I don't like this, but it could indicate a functional overload of the component
+          toast(<TextView itemId={''} rawText={infoText} />, { autoClose: false })
         }, 4000)
       init.current = true
     }
@@ -111,7 +111,6 @@ export function UtopiaMapInner({
         }
         let title = ''
         if (item?.name) title = item.name
-        else if (item?.layer?.itemNameField) title = getValue(item, item.layer.itemNameField)
         document.title = `${document.title.split('-')[0]} - ${title}`
       }
     },
@@ -133,8 +132,6 @@ export function UtopiaMapInner({
             })
           let title = ''
           if (ref.item.name) title = ref.item.name
-          else if (ref.item.layer?.itemNameField)
-            title = getValue(ref.item.name, ref.item.layer.itemNameField)
           document.title = `${document.title.split('-')[0]} - ${title}`
           document
             .querySelector('meta[property="og:title"]')

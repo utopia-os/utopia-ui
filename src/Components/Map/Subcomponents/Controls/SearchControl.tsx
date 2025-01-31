@@ -23,7 +23,6 @@ import { useLeafletRefs } from '#components/Map/hooks/useLeafletRefs'
 import { useTags } from '#components/Map/hooks/useTags'
 import useWindowDimensions from '#components/Map/hooks/useWindowDimension'
 import { decodeTag } from '#utils/FormatTags'
-import { getValue } from '#utils/GetValue'
 import MarkerIconFactory from '#utils/MarkerIconFactory'
 
 import { LocateControl } from './LocateControl'
@@ -73,8 +72,6 @@ export const SearchControl = () => {
       searchGeo()
       setItemsResults(
         items.filter((item) => {
-          if (item.layer?.itemNameField) item.name = getValue(item, item.layer.itemNameField)
-          if (item.layer?.itemTextField) item.text = getValue(item, item.layer.itemTextField)
           return (
             value.length > 2 &&
             ((item.layer?.listed && item.name.toLowerCase().includes(value.toLowerCase())) ||

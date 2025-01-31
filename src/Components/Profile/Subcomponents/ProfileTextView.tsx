@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { TextView } from '#components/Map'
-import { getValue } from '#utils/GetValue'
 
 import type { Item } from '#types/Item'
 
@@ -17,11 +15,11 @@ export const ProfileTextView = ({
 }) => {
   return (
     <div className='tw-my-10 tw-mt-2 tw-px-6'>
-      {!(getValue(item, dataField) === '' && hideWhenEmpty) && (
+      {!(item.data === '' && hideWhenEmpty) && (
         <h2 className='tw-text-lg tw-font-semibold'>{heading}</h2>
       )}
       <div className='tw-mt-2 tw-text-sm'>
-        <TextView rawText={dataField ? getValue(item, dataField) : getValue(item, 'text')} />
+        <TextView itemId={item.id} rawText={dataField ? item.data : item.text} />
       </div>
     </div>
   )

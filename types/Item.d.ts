@@ -5,9 +5,7 @@ import type { Relation } from './Relation'
 import type { UserItem } from './UserItem'
 import type { Point } from 'geojson'
 
-interface Special_Find_Name {
-  tags_id: string
-}
+type TagIds = { tags_id: string }[]
 
 export interface Item {
   id: string
@@ -31,8 +29,8 @@ export interface Item {
   user_created?: UserItem
   image?: string
   group_type?: string
-  offers?: Special_Find_Name[]
-  needs?: Special_Find_Name[]
+  offers?: TagIds
+  needs?: TagIds
   status?: string
   color?: string
   markerIcon?: string

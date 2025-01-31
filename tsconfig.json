@@ -2,7 +2,7 @@
     "compilerOptions": {
       "outDir": "dist",
       "module": "esnext",
-      "target": "es5",
+      "target": "ESNext",
       "lib": ["es6", "dom","es2015", "es2016", "es2017", "es2020"],
       "sourceMap": true,
       "allowJs": false,
@@ -16,6 +16,7 @@
       "strictNullChecks": true,
       "noUnusedLocals": false,
       "noUnusedParameters": true,
+      "allowSyntheticDefaultImports": true,
       "paths": {
         "#components/*": ["./src/Components/*"],
         "#utils/*": ["./src/Utils/*"],

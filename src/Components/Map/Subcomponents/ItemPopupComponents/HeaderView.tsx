@@ -15,7 +15,6 @@ import { useNavigate } from 'react-router-dom'
 import { useAppState } from '#components/AppShell/hooks/useAppState'
 import { useHasUserPermission } from '#components/Map/hooks/usePermissions'
 import DialogModal from '#components/Templates/DialogModal'
-import { getValue } from '#utils/GetValue'
 
 import type { Item } from '#types/Item'
 import type { ItemsApi } from '#types/ItemsApi'
@@ -26,9 +25,6 @@ export function HeaderView({
   editCallback,
   deleteCallback,
   setPositionCallback,
-  itemNameField,
-  itemSubnameField,
-  itemAvatarField,
   loading,
   hideMenu = false,
   big = false,
@@ -64,22 +60,11 @@ export function HeaderView({
   }, [item])
 
   const avatar =
-    itemAvatarField && getValue(item, itemAvatarField)
-      ? appState.assetsApi.url +
-        getValue(item, itemAvatarField) +
-        `${big ? '?width=160&heigth=160' : '?width=80&heigth=80'}`
-      : item.layer?.itemAvatarField &&
-        item &&
-        getValue(item, item.layer?.itemAvatarField) &&
-        appState.assetsApi.url +
-          getValue(item, item.layer?.itemAvatarField) +
-          `${big ? '?width=160&heigth=160' : '?width=80&heigth=80'}`
-  const title = itemNameField
-    ? getValue(item, itemNameField)
-    : item.layer?.itemNameField && item && getValue(item, item.layer.itemNameField)
-  const subtitle = itemSubnameField
-    ? getValue(item, itemSubnameField)
-    : item.layer?.itemSubnameField && item && getValue(item, item.layer.itemSubnameField)
+    appState.assetsApi.url +
+    item.avatar +
+    `${big ? '?width=160&heigth=160' : '?width=80&heigth=80'}`
+  const title = item.name
+  const subtitle = item.subname
 
   const [address] = useState<string>('')
 
@@ -168,7 +153,7 @@ export function HeaderView({
                           onClick={(e) =>
                             item.layer?.customEditLink
                               ? navigate(
-                                  `${item.layer.customEditLink}${item.layer.customEditParameter ? `/${getValue(item, item.layer.customEditParameter)}${params && '?' + params}` : ''} `,
+                                  `${item.layer.customEditLink}${item.layer.customEditParameter ? `/${item.id}${params && '?' + params}` : ''} `,
                                 )
                               : editCallback(e)
                           }

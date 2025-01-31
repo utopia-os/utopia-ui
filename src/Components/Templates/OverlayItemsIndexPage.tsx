@@ -30,12 +30,10 @@ import type { Item } from '#types/Item'
 export const OverlayItemsIndexPage = ({
   url,
   layerName,
-  parameterField,
   plusButton = true,
 }: {
   layerName: string
   url: string
-  parameterField: string
   plusButton?: boolean
 }) => {
   const [loading, setLoading] = useState<boolean>(false)
@@ -165,7 +163,6 @@ export const OverlayItemsIndexPage = ({
                       i={i}
                       loading={loading}
                       url={url}
-                      parameterField={parameterField}
                       deleteCallback={() => deleteItem(i)}
                     />
                   </div>

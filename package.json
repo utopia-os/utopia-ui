@@ -10,6 +10,7 @@
     "build": "rollup -c",
     "start": "rollup -c -w",
     "test:lint:eslint": "eslint --ext .ts,.tsx,.js,.jsx,.cjs,.mjs,.json,.yml,.yaml --max-warnings 0 .",
+    "docs:generate": "typedoc src/index.tsx",
     "update": "npx npm-check-updates"
   },
   "files": [
@@ -49,6 +50,7 @@
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-typescript2": "^0.32.1",
     "tailwindcss": "^3.3.1",
+    "typedoc": "^0.27.6",
     "typescript": "^5.7.3"
   },
   "peerDependencies": {

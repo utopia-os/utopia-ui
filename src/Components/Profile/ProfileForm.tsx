@@ -1,8 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -14,7 +11,6 @@ import { useLayers } from '#components/Map/hooks/useLayers'
 import { useHasUserPermission } from '#components/Map/hooks/usePermissions'
 import { useAddTag, useGetItemTags, useTags } from '#components/Map/hooks/useTags'
 import { MapOverlayPage } from '#components/Templates'
-import { getValue } from '#utils/GetValue'
 
 import { linkItem, onUpdateItem, unlinkItem } from './itemFunctions'
 import { FormHeader } from './Subcomponents/FormHeader'
@@ -23,11 +19,12 @@ import { OnepagerForm } from './Templates/OnepagerForm'
 import { SimpleForm } from './Templates/SimpleForm'
 import { TabsForm } from './Templates/TabsForm'
 
+import type { FormState } from '#types/FormState'
 import type { Item } from '#types/Item'
 import type { Tag } from '#types/Tag'
 
 export function ProfileForm() {
-  const [state, setState] = useState({
+  const [state, setState] = useState<FormState>({
     color: '',
     id: '',
     group_type: 'wuerdekompass',
@@ -91,11 +88,9 @@ export function ProfileForm() {
 
   useEffect(() => {
     const newColor =
-      item.layer?.itemColorField && getValue(item, item.layer.itemColorField)
-        ? getValue(item, item.layer.itemColorField)
-        : getItemTags(item) && getItemTags(item)[0]?.color
-          ? getItemTags(item)[0].color
-          : item.layer?.markerDefaultColor
+      (item.color ?? (getItemTags(item) && getItemTags(item)[0]?.color))
+        ? getItemTags(item)[0].color
+        : item.layer?.markerDefaultColor
 
     const offers = (item.offers ?? []).reduce((acc: Tag[], o) => {
       const offer = tags.find((t) => t.id === o.tags_id)
@@ -116,7 +111,7 @@ export function ProfileForm() {
     }, [])
 
     setState({
-      color: newColor,
+      color: newColor ?? '',
       id: item?.id ?? '',
       group_type: item?.group_type ?? '',
       status: item?.status ?? '',
@@ -127,7 +122,8 @@ export function ProfileForm() {
       telephone: item?.telephone ?? '',
       next_appointment: item?.next_appointment ?? '',
       image: item?.image ?? '',
-      marker_icon: item?.marker_icon ?? '',
+      // Do we actually mean marker_icon here?
+      marker_icon: item?.markerIcon ?? '',
       offers,
       needs,
       relations,
@@ -140,7 +136,7 @@ export function ProfileForm() {
   const [template, setTemplate] = useState<string>('')
 
   useEffect(() => {
-    setTemplate(item.layer?.itemType.template || appState.userType)
+    setTemplate(item.layer?.itemType.template ?? appState.userType)
   }, [appState.userType, item])
 
   return (
@@ -198,7 +194,8 @@ export function ProfileForm() {
                 className={loading ? ' tw-loading tw-btn tw-float-right' : 'tw-btn tw-float-right'}
                 type='submit'
                 style={{
-                  backgroundColor: `${item.layer?.itemColorField && getValue(item, item.layer?.itemColorField) ? getValue(item, item.layer?.itemColorField) : getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor}`,
+                  // We could refactor this, it is used several times at different locations
+                  backgroundColor: `${(item.color ?? (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color)) ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor}`,
                   color: '#fff',
                 }}
               >

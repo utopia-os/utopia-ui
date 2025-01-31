@@ -108,9 +108,9 @@ export const TabsView = ({
             <StartEndView item={item}></StartEndView>
           </div>
         )}
-        <TextView item={item} />
+        <TextView text={item.text} itemId={item.id} />
         <div className='tw-h-4'></div>
-        <TextView item={item} itemTextField='contact' />
+        <TextView text={item.contact} itemId={item.id} />
       </div>
       {item.layer?.itemType.questlog && (
         <>
@@ -267,7 +267,7 @@ export const TabsView = ({
                         loading={loading}
                       />
                       <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
-                        <TextView truncate item={i} />
+                        <TextView truncate text={i.text} itemId={item.id} />
                       </div>
                     </div>
                   ))}
@@ -277,7 +277,6 @@ export const TabsView = ({
                     item={item}
                     existingRelations={relations}
                     triggerItemSelected={linkItem}
-                    colorField={item.layer.itemColorField}
                   ></ActionButton>
                 )}
               </div>

@@ -63,7 +63,7 @@ function useSelectPositionManager(): {
       if ('menuIcon' in selectPosition) {
         mapClicked &&
           mapClicked.setItemFormPopup({
-            layer: selectPosition as LayerProps,
+            layer: selectPosition,
             position: mapClicked.position,
           })
         setSelectPosition(null)

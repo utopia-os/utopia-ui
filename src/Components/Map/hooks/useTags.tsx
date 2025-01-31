@@ -5,12 +5,8 @@
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useCallback, useReducer, createContext, useContext, useState } from 'react'
 
-import { getValue } from '#utils/GetValue'
 import { hashTagRegex } from '#utils/HashTagRegex'
 
 import type { Item } from '#types/Item'
@@ -96,8 +92,7 @@ function useTagsManager(initialTags: Tag[]): {
 
   const getItemTags = useCallback(
     (item: Item) => {
-      const text =
-        item.layer?.itemTextField && item ? getValue(item, item.layer.itemTextField) : undefined
+      const text = item.text
       const itemTagStrings = text?.match(hashTagRegex)
       const itemTags: Tag[] = []
       itemTagStrings?.map((tag) => {
@@ -108,18 +103,15 @@ function useTagsManager(initialTags: Tag[]): {
         }
         return null
       })
-      item.layer?.itemOffersField &&
-        getValue(item, item.layer.itemOffersField)?.map((o) => {
-          const offer = tags.find((t) => t.id === o.tags_id)
-          offer && itemTags.push(offer)
-          return null
-        })
-      item.layer?.itemNeedsField &&
-        getValue(item, item.layer.itemNeedsField)?.map((n) => {
-          const need = tags.find((t) => t.id === n.tags_id)
-          need && itemTags.push(need)
-          return null
-        })
+      // Could be refactored as it occurs in multiple places
+      item.offers?.forEach((o) => {
+        const offer = tags.find((t) => t.id === o.tags_id)
+        offer && itemTags.push(offer)
+      })
+      item.needs?.forEach((n) => {
+        const need = tags.find((t) => t.id === n.tags_id)
+        need && itemTags.push(need)
+      })
 
       return itemTags
     },

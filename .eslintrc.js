@@ -28,6 +28,7 @@ module.exports = {
     'no-catch-all',
     'react',
     'react-hooks',
+    'react-refresh',
   ],
   settings: {
     'import/resolver': {

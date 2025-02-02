@@ -5,7 +5,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { HexColorPicker } from 'react-colorful'
 
-// eslint-disable-next-line import/no-unassigned-import
 import './ColorPicker.css'
 import useClickOutside from '#components/Profile/hooks/useClickOutside'
 

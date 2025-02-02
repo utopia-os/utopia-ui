@@ -8,13 +8,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { Children, cloneElement, isValidElement, useEffect, useRef, useState } from 'react'
 import { TileLayer, useMapEvents, GeoJSON, useMap } from 'react-leaflet'
-// eslint-disable-next-line import/no-unassigned-import
 import 'leaflet/dist/leaflet.css'
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import { Outlet, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
-
-// eslint-disable-next-line import/no-unassigned-import
 import './UtopiaMap.css'
 
 import { containsUUID } from '#utils/ContainsUUID'

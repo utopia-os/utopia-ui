@@ -108,7 +108,12 @@ module.exports = {
     'import/no-duplicates': 'error',
     'import/no-named-default': 'error',
     'import/no-namespace': 'error',
-    'import/no-unassigned-import': 'error',
+    'import/no-unassigned-import': [
+      'error',
+      {
+        allow: ['**/*.css'],
+      },
+    ],
     'import/order': [
       'error',
       {

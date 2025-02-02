@@ -9,7 +9,6 @@ import { useEffect, useRef, useState } from 'react'
 import { useMap, useMapEvents } from 'react-leaflet'
 // eslint-disable-next-line import/no-unassigned-import
 import 'leaflet.locatecontrol'
-// eslint-disable-next-line import/no-unassigned-import
 import 'leaflet.locatecontrol/dist/L.Control.Locate.css'
 
 // Converts leaflet.locatecontrol to a React Component

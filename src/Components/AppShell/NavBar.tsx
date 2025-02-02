@@ -62,7 +62,7 @@ export default function NavBar({ appName, userType }: { appName: string; userTyp
   if (showNav) {
     return (
       <>
-        <div className='tw-navbar tw-bg-base-100 tw-z-[10000] tw-shadow-xl tw-relative'>
+        <div className='tw-navbar tw-bg-base-100 tw-z-[9998] tw-shadow-xl tw-relative'>
           <button
             className='tw-btn tw-btn-square tw-btn-ghost'
             data-te-sidenav-toggle-ref

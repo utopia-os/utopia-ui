@@ -134,6 +134,27 @@
     left: 4px;
     width: 24px;
   }
+
+  .shop-icon {
+    position: relative;
+    top: -34px;
+    left: 4px;
+    width: 24px;
+  }
+
+  .plant-icon {
+    position: relative;
+    top: -34px;
+    left: 4px;
+    width: 24px;
+  }
+
+  .circle-dot-icon {
+    position: relative;
+    top: -36px;
+    left: 4px;
+    width: 24px;
+  }
   
   .leaflet-popup-scrolled {
     overflow-x: hidden;

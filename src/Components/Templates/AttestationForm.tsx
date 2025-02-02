@@ -1,11 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable @typescript-eslint/prefer-optional-chain */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/require-await */
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/restrict-plus-operands */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useRef, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -19,7 +11,7 @@ import { MapOverlayPage } from './MapOverlayPage'
 import type { Item } from '#types/Item'
 import type { ItemsApi } from '#types/ItemsApi'
 
-export const AttestationForm = ({ api }: { api?: ItemsApi<any> }) => {
+export const AttestationForm = ({ api }: { api?: ItemsApi<unknown> }) => {
   const items = useItems()
   const appState = useAppState()
   const [users, setUsers] = useState<Item[]>()
@@ -46,10 +38,12 @@ export const AttestationForm = ({ api }: { api?: ItemsApi<any> }) => {
     setInputValue(event.target.value)
   }
 
-  const sendAttestation = async () => {
+  const sendAttestation = () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const to: any[] = []
     users?.map((u) => to.push({ directus_users_id: u.user_created?.id }))
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     api?.createItem &&
       toast
         .promise(
@@ -65,6 +59,7 @@ export const AttestationForm = ({ api }: { api?: ItemsApi<any> }) => {
             success: 'Attestation created',
             error: {
               render({ data }) {
+                // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
                 return `${data}`
               },
             },
@@ -73,8 +68,10 @@ export const AttestationForm = ({ api }: { api?: ItemsApi<any> }) => {
         .then(() =>
           navigate(
             '/item/' +
+              // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
               items.find(
                 (i) =>
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                   i.user_created?.id === to[0].directus_users_id &&
                   i.layer?.itemType.name === 'player',
               )?.id +
@@ -92,29 +89,28 @@ export const AttestationForm = ({ api }: { api?: ItemsApi<any> }) => {
       <div className='tw-text-center tw-text-xl tw-font-bold'>Gratitude</div>
       <div className='tw-text-center tw-text-base tw-text-gray-400'>to</div>
       <div className='tw-flex tw-flex-row tw-justify-center tw-items-center tw-flex-wrap'>
-        {users &&
-          users.map(
-            (u, k) => (
-              <div key={k} className='tw-flex tw-items-center tw-space-x-3 tw-mx-2 tw-my-1'>
-                {u.image ? (
-                  <div className='tw-avatar'>
-                    <div className='tw-mask tw-mask-circle tw-w-8 tw-h-8'>
-                      <img
-                        src={appState.assetsApi.url + u.image + '?width=40&heigth=40'}
-                        alt='Avatar'
-                      />
-                    </div>
+        {users?.map(
+          (u, k) => (
+            <div key={k} className='tw-flex tw-items-center tw-space-x-3 tw-mx-2 tw-my-1'>
+              {u.image ? (
+                <div className='tw-avatar'>
+                  <div className='tw-mask tw-mask-circle tw-w-8 tw-h-8'>
+                    <img
+                      src={appState.assetsApi.url + u.image + '?width=40&heigth=40'}
+                      alt='Avatar'
+                    />
                   </div>
-                ) : (
-                  <div className='tw-mask tw-mask-circle tw-text-xl md:tw-text-2xl tw-bg-slate-200 tw-rounded-full tw-w-8 tw-h-8'></div>
-                )}
-                <div>
-                  <div className='tw-font-bold'>{u.name}</div>
                 </div>
+              ) : (
+                <div className='tw-mask tw-mask-circle tw-text-xl md:tw-text-2xl tw-bg-slate-200 tw-rounded-full tw-w-8 tw-h-8'></div>
+              )}
+              <div>
+                <div className='tw-font-bold'>{u.name}</div>
               </div>
-            ),
-            ', ',
-          )}
+            </div>
+          ),
+          ', ',
+        )}
       </div>
 
       <div className='tw-w-full'>

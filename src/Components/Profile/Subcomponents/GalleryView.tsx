@@ -1,15 +1,11 @@
-/* eslint-disable import/no-unassigned-import */
-/* eslint-disable import/order */
-/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useState } from 'react'
-// eslint-disable-next-line import/no-named-as-default
-import Lightbox from 'yet-another-react-lightbox'
-import 'yet-another-react-lightbox/styles.css'
 import { RowsPhotoAlbum } from 'react-photo-album'
+import ReactLightbox from 'yet-another-react-lightbox'
+import 'yet-another-react-lightbox/styles.css'
 import 'react-photo-album/rows.css'
 
 import { useAppState } from '#components/AppShell/hooks/useAppState'
@@ -35,7 +31,7 @@ export const GalleryView = ({ item }: { item: Item }) => {
         onClick={({ index: current }) => setIndex(current)}
       />
 
-      <Lightbox index={index} slides={images} open={index >= 0} close={() => setIndex(-1)} />
+      <ReactLightbox index={index} slides={images} open={index >= 0} close={() => setIndex(-1)} />
     </div>
   )
 }

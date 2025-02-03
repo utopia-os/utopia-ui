@@ -172,7 +172,7 @@ export const TabsForm = ({
             name='my_tabs_2'
             role='tab'
             className='tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'
-            aria-label='Relations'
+            aria-label='Links'
             checked={activeTab === 7 && true}
             onChange={() => updateActiveTab(7)}
           />

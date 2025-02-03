@@ -1,0 +1,15 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`<TextInput /> > renders properly 1`] = `
+<div
+  class="tw-form-control undefined"
+>
+  <input
+    class="tw-input tw-input-bordered tw-w-full "
+    placeholder=""
+    required=""
+    type="text"
+    value=""
+  />
+</div>
+`;

@@ -6,6 +6,6 @@ import { TextInput } from './TextInput'
 describe('<TextInput />', () => {
   it('renders properly', () => {
     const wrapper = render(<TextInput />)
-    expect(wrapper).toBeTruthy()
+    expect(wrapper.container.firstChild).toMatchSnapshot()
   })
 })

@@ -1,7 +1,9 @@
 name: deploy:docs
 
-# TODO: on master only
-on: push
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   # Build job

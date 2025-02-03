@@ -11,9 +11,7 @@ export default defineConfig({
     coverage: {
       all: true,
       include: ['src/**/*.{js,jsx,ts,tsx}'],
-      exclude: [
-        ...configDefaults.exclude,
-      ],
+      exclude: [...configDefaults.exclude],
       thresholds: {
         lines: 0,
         functions: 67,

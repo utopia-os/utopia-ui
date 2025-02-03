@@ -1,5 +1,28 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`<TextInput /> > labelTitle > sets label 1`] = `
+<div
+  class="tw-form-control undefined"
+>
+  <label
+    class="tw-label"
+  >
+    <span
+      class="tw-label-text tw-text-base-content undefined"
+    >
+      My Title
+    </span>
+  </label>
+  <input
+    class="tw-input tw-input-bordered tw-w-full "
+    placeholder=""
+    required=""
+    type="text"
+    value=""
+  />
+</div>
+`;
+
 exports[`<TextInput /> > renders properly 1`] = `
 <div
   class="tw-form-control undefined"

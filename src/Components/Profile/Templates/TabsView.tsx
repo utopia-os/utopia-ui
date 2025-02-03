@@ -121,7 +121,7 @@ export const TabsView = ({
             className={
               'tw-tab tw-font-bold !tw-ps-2 !tw-pe-2 [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'
             }
-            aria-label={`${item.layer.itemType.icon_as_labels && activeTab !== 2 ? '❤️' : '❤️\u00A0Credibility'}`}
+            aria-label={`${item.layer.itemType.icon_as_labels && activeTab !== 2 ? '❤️' : '❤️\u00A0Trust'}`}
             checked={activeTab === 2 && true}
             onChange={() => updateActiveTab(2)}
           />
@@ -161,7 +161,7 @@ export const TabsView = ({
                                     appState.assetsApi.url +
                                     getUserProfile(a.user_created.id)?.image
                                   }
-                                  alt='Avatar Tailwind CSS Component'
+                                  alt='Avatar'
                                 />
                               </div>
                             </div>
@@ -243,7 +243,7 @@ export const TabsView = ({
             name='my_tabs_2'
             role='tab'
             className='tw-tab tw-font-bold !tw-ps-2 !tw-pe-2 [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'
-            aria-label={`${item.layer.itemType.icon_as_labels && activeTab !== 7 ? '🔗' : '🔗\u00A0Relations'}`}
+            aria-label={`${item.layer.itemType.icon_as_labels && activeTab !== 7 ? '🔗' : '🔗\u00A0Links'}`}
             checked={activeTab === 7 && true}
             onChange={() => updateActiveTab(7)}
           />

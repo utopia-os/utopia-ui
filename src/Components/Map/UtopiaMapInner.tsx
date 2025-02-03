@@ -73,7 +73,7 @@ export function UtopiaMapInner({
       infoText &&
         setTimeout(() => {
           toast(<TextView rawText={infoText} />, { autoClose: false })
-        }, 4000)
+        }, 10000)
       init.current = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

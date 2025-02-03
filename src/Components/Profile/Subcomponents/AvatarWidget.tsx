@@ -6,7 +6,6 @@ import { useState, useCallback, useRef } from 'react'
 import { ReactCrop, centerCrop, makeAspectCrop } from 'react-image-crop'
 
 import { useAppState } from '#components/AppShell/hooks/useAppState'
-// eslint-disable-next-line import/no-unassigned-import
 import 'react-image-crop/dist/ReactCrop.css'
 import DialogModal from '#components/Templates/DialogModal'
 

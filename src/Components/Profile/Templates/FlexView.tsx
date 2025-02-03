@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 
 import { ContactInfoView } from '#components/Profile/Subcomponents/ContactInfoView'
+import { GalleryView } from '#components/Profile/Subcomponents/GalleryView'
 import { GroupSubHeaderView } from '#components/Profile/Subcomponents/GroupSubHeaderView'
 import { ProfileStartEndView } from '#components/Profile/Subcomponents/ProfileStartEndView'
 import { ProfileTextView } from '#components/Profile/Subcomponents/ProfileTextView'
@@ -14,6 +15,7 @@ const componentMap = {
   texts: ProfileTextView,
   contactInfos: ContactInfoView,
   startEnd: ProfileStartEndView,
+  gallery: GalleryView,
   // weitere Komponenten hier
 }
 

@@ -7,7 +7,7 @@ import type { Point } from 'geojson'
 
 type TagIds = { tags_id: string }[]
 
-export interface Item {
+interface BaseItem {
   id: string
   name: string
   text: string
@@ -40,22 +40,6 @@ export interface Item {
   telephone?: string
   next_appointment?: string
   type?: ItemType
-
-  // {
-  // coordinates: [number, number]
-  /* constructor(
-    id: string,
-    name: string,
-    text: string,
-    position: Geometry,
-    layer?: LayerProps,
-    api?: ItemsApi<any>,
-  ) {
-    this.id = id
-    this.name = name
-    this.text = text
-    this.position = position
-    this.layer = layer
-    this.api = api
-  } */
 }
+
+export type Item = BaseItem & Record<string, unknown>

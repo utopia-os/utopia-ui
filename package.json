@@ -6,11 +6,13 @@
   "homepage:": "https://utopia-os.org/",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "type": "module",
   "scripts": {
     "build": "rollup -c",
     "start": "rollup -c -w",
     "test:lint:eslint": "eslint --ext .ts,.tsx,.js,.jsx,.cjs,.mjs,.json,.yml,.yaml --max-warnings 0 .",
-    "test:unit": "vitest"
+    "test:unit": "npm run test:unit:dev -- run --coverage",
+    "test:unit:dev": "vitest"
   },
   "files": [
     "dist"
@@ -27,6 +29,7 @@
     "@types/react-dom": "^18.0.5",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
+    "@vitest/coverage-v8": "^3.0.5",
     "autoprefixer": "^10.4.14",
     "daisyui": "^4.6.1",
     "eslint": "^8.24.0",

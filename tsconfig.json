@@ -17,6 +17,7 @@
       "noUnusedLocals": false,
       "noUnusedParameters": true,
       "allowSyntheticDefaultImports": true,
+      "skipLibCheck": true,
       "paths": {
         "#components/*": ["./src/Components/*"],
         "#utils/*": ["./src/Utils/*"],
@@ -25,10 +26,10 @@
         "#root/*": ["./*"]
       }
     },
-    "include": ["src"],
-    "exclude": ["node_modules", "dist", "example", "rollup.config.mjss"],
-    "typeRoots": [
-        "./types",
-        "./node_modules/@types/"
-      ]
-  }
+  "include": ["src", "vite.config.ts", "setupTest.ts"],
+  "exclude": ["node_modules", "dist", "example", "rollup.config.mjss"],
+  "typeRoots": [
+    "./types",
+    "./node_modules/@types/"
+  ]
+}

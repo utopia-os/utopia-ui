@@ -37,9 +37,6 @@ export function HeaderView({
   editCallback?: any
   deleteCallback?: any
   setPositionCallback?: any
-  itemNameField?: string
-  itemAvatarField?: string
-  itemSubnameField?: string
   loading?: boolean
   hideMenu?: boolean
   big?: boolean
@@ -60,9 +57,7 @@ export function HeaderView({
   }, [item])
 
   const avatar =
-    appState.assetsApi.url +
-    item.avatar +
-    `${big ? '?width=160&heigth=160' : '?width=80&heigth=80'}`
+    appState.assetsApi.url + item.image + `${big ? '?width=160&heigth=160' : '?width=80&heigth=80'}`
   const title = item.name
   const subtitle = item.subname
 

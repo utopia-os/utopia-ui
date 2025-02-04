@@ -75,8 +75,13 @@ export function UtopiaMapInner({
         setTimeout(() => {
           toast(
             <>
-              <PopupButton url={'https://opencollective.com/utopia-project'} text={'Support us'} />
-              <TextView rawText={infoText} />
+              <TextView rawText={'## Do you like this Map?'} />
+              <div>
+                <PopupButton url={'https://opencollective.com/utopia-project'} text={'Donate'} />
+                <TextView
+                  rawText={'Support us building free opensource maps and help us grow 🌱☀️'}
+                />
+              </div>
             </>,
             { autoClose: false },
           )

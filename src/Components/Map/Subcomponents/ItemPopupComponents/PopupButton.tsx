@@ -24,7 +24,7 @@ export const PopupButton = ({
     <Link to={`${url}/${parameterField ? item?.id : ''}?${params}`}>
       <button
         style={{
-          backgroundColor: `${item?.color || (item && getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color) ? getItemTags(item)[0].color : (item?.layer?.markerDefaultColor ?? '#000')}`,
+          backgroundColor: `${item?.color ?? (item && (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : (item?.layer?.markerDefaultColor ?? '#000')))}`,
         }}
         className='tw-btn tw-text-white tw-btn-sm tw-float-right tw-mt-1'
       >

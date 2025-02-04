@@ -33,6 +33,7 @@ import { GratitudeControl } from './Subcomponents/Controls/GratitudeControl'
 import { LayerControl } from './Subcomponents/Controls/LayerControl'
 import { SearchControl } from './Subcomponents/Controls/SearchControl'
 import { TagsControl } from './Subcomponents/Controls/TagsControl'
+import { PopupButton } from './Subcomponents/ItemPopupComponents/PopupButton'
 import { TextView } from './Subcomponents/ItemPopupComponents/TextView'
 import { SelectPosition } from './Subcomponents/SelectPosition'
 
@@ -72,7 +73,13 @@ export function UtopiaMapInner({
     if (!init.current) {
       infoText &&
         setTimeout(() => {
-          toast(<TextView rawText={infoText} />, { autoClose: false })
+          toast(
+            <>
+              <PopupButton url={'https://opencollective.com/utopia-project'} text={'Support us'} />
+              <TextView rawText={infoText} />
+            </>,
+            { autoClose: false },
+          )
         }, 10000)
       init.current = true
     }

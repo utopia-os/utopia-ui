@@ -3,9 +3,17 @@ import type { ItemFormPopupProps } from './ItemFormPopupProps'
 import type { ItemsApi } from './ItemsApi'
 import type { ItemType } from './ItemType'
 
-export interface LayerProps {
+interface LayerParameters {
+  hasAvatar?: boolean
+  hasColor?: boolean
+  hasTags?: boolean
+  hasOffers?: boolean
+  hasNeeds?: boolean
+}
+
+export interface LayerProps<L extends LayerParameters> {
   id?: string
-  data?: Item[]
+  data?: Item<L>[]
   children?: React.ReactNode
   name: string
   menuIcon: string
@@ -15,15 +23,9 @@ export interface LayerProps {
   markerShape: string
   markerDefaultColor: string
   markerDefaultColor2?: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  api?: ItemsApi<any>
-  itemType: ItemType // How does this relate to Item type defined in Item.d.ts?
+  api?: ItemsApi<Item<L>>
+  itemType: ItemType
   // TODO Conditionally type items with .avatar etc.?
-  hasAvatar?: boolean
-  hasColor?: boolean
-  hasTags?: boolean
-  hasOffers?: boolean
-  hasNeeds?: boolean
   onlyOnePerOwner?: boolean
   customEditLink?: string
   customEditParameter?: string

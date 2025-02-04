@@ -1,13 +1,13 @@
 import type { ItemsApi } from './ItemsApi'
 import type { ItemType } from './ItemType'
-import type { LayerProps } from './LayerProps'
+import type { LayerParameters, LayerProps } from './LayerProps'
 import type { Relation } from './Relation'
 import type { UserItem } from './UserItem'
 import type { Point } from 'geojson'
 
 type TagIds = { tags_id: string }[]
 
-export interface Item {
+interface BaseItem<L extends LayerParameters> {
   id: string
   name: string
   text: string
@@ -20,7 +20,7 @@ export interface Item {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   api?: ItemsApi<any>
   tags?: string[]
-  layer?: LayerProps
+  layer?: LayerProps<L>
   relations?: Relation[]
   parent?: string
   subname?: string
@@ -32,30 +32,25 @@ export interface Item {
   offers?: TagIds
   needs?: TagIds
   status?: string
-  color?: string
   markerIcon?: string
-  avatar?: string
   new?: boolean
   contact?: string
   telephone?: string
   next_appointment?: string
   type?: ItemType
-
-  // {
-  // coordinates: [number, number]
-  /* constructor(
-    id: string,
-    name: string,
-    text: string,
-    position: Geometry,
-    layer?: LayerProps,
-    api?: ItemsApi<any>,
-  ) {
-    this.id = id
-    this.name = name
-    this.text = text
-    this.position = position
-    this.layer = layer
-    this.api = api
-  } */
 }
+
+export type Item<L extends LayerParameters> = BaseItem<L> &
+  (L extends { hasAvatar: true }
+    ? {
+        avatar: string
+      }
+    : unknown) &
+  (L extends { hasColor: true }
+    ? {
+        color: string
+      }
+    : unknown) &
+  Record<string, unknown>
+
+type foo = Item<{ hasAvatar: false; hasColor: true }>

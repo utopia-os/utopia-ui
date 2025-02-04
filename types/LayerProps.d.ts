@@ -15,8 +15,7 @@ export interface LayerProps {
   markerShape: string
   markerDefaultColor: string
   markerDefaultColor2?: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  api?: ItemsApi<any>
+  api?: ItemsApi<Item>
   itemType: ItemType
   onlyOnePerOwner?: boolean
   customEditLink?: string

@@ -12,7 +12,7 @@ export interface Item {
   name: string
   text: string
   data?: string
-  position?: Point
+  position?: Point | null
   date_created?: string
   date_updated?: string | null
   start?: string

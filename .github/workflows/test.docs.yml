@@ -50,6 +50,3 @@ jobs:
           npm run docs:generate
           ./scripts/docs-coverage.sh
         working-directory: ./
-
-
-bash -c "COVERAGE=$(sed -nE 's/.*>([0-9]{1,3})%<.*/\1/p' docs/coverage.svg | head -1); echo $COVERAGE;if (( $COVERAGE >= $COVERAGE_REQUIRED )) then exit 0; else echo \"Coverage: $COVERAGE/$COVERAGE_REQUIRED\"; exit 1; fi"

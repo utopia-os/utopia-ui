@@ -1,6 +1,6 @@
 {
   "name": "utopia-ui",
-  "version": "3.0.38",
+  "version": "3.0.39",
   "description": "Reuseable React Components to build mapping apps for real life communities and networks",
   "repository": "https://github.com/utopia-os/utopia-ui",
   "homepage:": "https://utopia-os.org/",
@@ -88,7 +88,6 @@
     "react-string-replace": "^1.1.1",
     "react-toastify": "^9.1.3",
     "remark-breaks": "^4.0.0",
-    "tributejs": "github:coreydales/tribute#Fix-compile-error-T-does-not-satisfy-the-constraint",
     "tw-elements": "^1.0.0",
     "yet-another-react-lightbox": "^3.21.7"
   },

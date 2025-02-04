@@ -3,7 +3,6 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { useEffect, useRef, useState } from 'react'
-import Tribute from 'tributejs'
 
 import { useTags } from '#components/Map/hooks/useTags'
 
@@ -37,9 +36,6 @@ export function TextAreaInput({
   const ref = useRef<HTMLTextAreaElement>(null)
   const [inputValue, setInputValue] = useState<string>(defaultValue)
 
-  // prevent react18 from calling useEffect twice
-  const init = useRef(false)
-
   const tags = useTags()
 
   const values: KeyValue[] = []
@@ -47,30 +43,6 @@ export function TextAreaInput({
   tags.forEach((tag) => {
     values.push({ key: tag.name, value: tag.name, color: tag.color })
   })
-
-  const tribute = new Tribute({
-    containerClass: 'tw-z-3000 tw-bg-base-100 tw-p-2 tw-rounded-lg tw-shadow',
-    selectClass: 'tw-font-bold',
-    trigger: '#',
-    values,
-    menuShowMinLength: 3,
-    noMatchTemplate: () => {
-      return ''
-    },
-    menuItemTemplate: function (item) {
-      return `<span style="color: ${item.original.color}; padding: 5px; border-radius: 3px;">#${item.string}</span>`
-    },
-  })
-
-  useEffect(() => {
-    if (!init.current) {
-      if (ref.current) {
-        tribute.attach(ref.current)
-      }
-      init.current = true
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ref])
 
   useEffect(() => {
     setInputValue(defaultValue)

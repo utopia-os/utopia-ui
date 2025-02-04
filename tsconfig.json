@@ -17,6 +17,7 @@
       "noUnusedLocals": false,
       "noUnusedParameters": true,
       "allowSyntheticDefaultImports": true,
+      "skipLibCheck": true,
       "paths": {
         "#components/*": ["./src/Components/*"],
         "#utils/*": ["./src/Utils/*"],

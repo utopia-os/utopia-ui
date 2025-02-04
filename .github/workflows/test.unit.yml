@@ -30,3 +30,4 @@ jobs:
           node-version-file: './.tool-versions'
       - name: Unit
         run: npm install && npm run test:unit
+        working-directory: ./

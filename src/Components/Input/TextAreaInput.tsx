@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/consistent-indexed-object-style */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
-import { useEffect, useRef, useState } from 'react' 
+import { useEffect, useRef, useState } from 'react'
 
 import { useTags } from '#components/Map/hooks/useTags'
 

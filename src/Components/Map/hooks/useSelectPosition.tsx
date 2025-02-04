@@ -98,6 +98,7 @@ function useSelectPositionManager(): {
         success = true
         // eslint-disable-next-line no-catch-all/no-catch-all
       } catch (error) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         toast.error(error.toString())
       }
       if (success) {
@@ -123,6 +124,7 @@ function useSelectPositionManager(): {
       success = true
       // eslint-disable-next-line no-catch-all/no-catch-all
     } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       toast.error(error.toString())
     }
     if (success) {
@@ -145,6 +147,7 @@ function useSelectPositionManager(): {
           success = true
           // eslint-disable-next-line no-catch-all/no-catch-all
         } catch (error) {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           toast.error(error.toString())
         }
         if (success) {

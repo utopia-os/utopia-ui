@@ -9,7 +9,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useAppState } from '#components/AppShell/hooks/useAppState'
@@ -57,6 +57,12 @@ export function HeaderView({
   const navigate = useNavigate()
   const appState = useAppState()
 
+  const [imageLoaded, setImageLoaded] = useState(false)
+
+  useEffect(() => {
+    setImageLoaded(false)
+  }, [item])
+
   const avatar =
     itemAvatarField && getValue(item, itemAvatarField)
       ? appState.assetsApi.url +
@@ -92,13 +98,21 @@ export function HeaderView({
             {avatar && (
               <div className='tw-avatar'>
                 <div
-                  className={`${big ? 'tw-w-20' : 'tw-w-10'} tw-inline tw-items-center tw-justify-center overflow-hidden`}
+                  className={`${
+                    big ? 'tw-w-20' : 'tw-w-10'
+                  } tw-inline tw-items-center tw-justify-center overflow-hidden`}
                 >
                   <img
                     className={'tw-w-full tw-h-full tw-object-cover tw-rounded-full'}
                     src={avatar}
                     alt={item.name + ' logo'}
+                    onLoad={() => setImageLoaded(true)}
+                    onError={() => setImageLoaded(false)}
+                    style={{ display: imageLoaded ? 'block' : 'none' }}
                   />
+                  {!imageLoaded && (
+                    <div className='tw-w-full tw-h-full tw-bg-gray-200 tw-rounded-full' />
+                  )}
                 </div>
               </div>
             )}

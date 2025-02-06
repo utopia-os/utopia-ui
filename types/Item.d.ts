@@ -7,6 +7,14 @@ import type { Point } from 'geojson'
 
 type TagIds = { tags_id: string }[]
 
+interface GalleryItem {
+  directus_files_id: {
+    id: number
+    width: number
+    height: number
+  }
+}
+
 export interface Item {
   id: string
   name: string
@@ -40,6 +48,7 @@ export interface Item {
   telephone?: string
   next_appointment?: string
   type?: ItemType
+  gallery?: GalleryItem[]
 
   // {
   // coordinates: [number, number]

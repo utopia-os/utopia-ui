@@ -82,6 +82,7 @@ function useItemsManager(initialItems: Item[]): {
       },
     })
     result.map((item) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       dispatch({ type: 'ADD', item: { ...item, layer } })
       return null
     })

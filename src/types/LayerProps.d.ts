@@ -18,7 +18,6 @@ export interface LayerProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   api?: ItemsApi<any>
   itemType: ItemType
-  hasColor?: boolean
   onlyOnePerOwner?: boolean
   customEditLink?: string
   customEditParameter?: string

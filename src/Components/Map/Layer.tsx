@@ -210,12 +210,12 @@ export const Layer = ({
               let color2 = markerDefaultColor2
               if (item.color) {
                 color1 = item.color
-              } else if (itemTags && itemTags[0]) {
+              } else if (itemTags[0]) {
                 color1 = itemTags[0].color
               }
-              // What is happening here?? Why do we depend on itemColorField?
-              if (itemTags && itemTags[0] && item.layer?.hasColor) color2 = itemTags[0].color
-              else if (itemTags && itemTags[1]) {
+              if (itemTags[0] && item.color) {
+                color2 = itemTags[0].color
+              } else if (itemTags[1]) {
                 color2 = itemTags[1].color
               }
               return (

@@ -5,7 +5,7 @@
   "repository": "https://github.com/utopia-os/utopia-ui",
   "homepage:": "https://utopia-os.org/",
   "module": "dist/index.js",
-  "types": "dist/src/index.d.ts",
+  "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
     "build": "rollup -c",

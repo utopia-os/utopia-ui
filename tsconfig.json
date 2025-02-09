@@ -26,7 +26,7 @@
         "#root/*": ["./*"]
       }
     },
-  "include": ["src", "vite.config.ts", "setupTest.ts"],
+  "include": ["src", "vite.config.ts", "setupTest.ts", "types"],
   "exclude": ["node_modules", "dist", "example", "rollup.config.mjss"],
   "typeRoots": [
     "./types",

@@ -5,8 +5,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createContext, useState, useContext, useEffect } from 'react'
 
-import type { UserApi } from '#types/UserApi'
-import type { UserItem } from '#types/UserItem'
+import type { UserApi } from '#src/types/UserApi'
+import type { UserItem } from '#src/types/UserItem'
 
 interface AuthProviderProps {
   userApi: UserApi

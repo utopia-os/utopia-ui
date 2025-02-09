@@ -25,7 +25,7 @@ import { randomColor } from '#utils/RandomColor'
 import { ItemCard } from './ItemCard'
 import { MapOverlayPage } from './MapOverlayPage'
 
-import type { Item } from '#types/Item'
+import type { Item } from '#src/types/Item'
 
 export const OverlayItemsIndexPage = ({
   url,

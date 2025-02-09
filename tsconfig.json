@@ -23,7 +23,7 @@
         "#components/*": ["./src/Components/*"],
         "#utils/*": ["./src/Utils/*"],
         "#src/*": ["./src/*"],
-        "#types/*": ["./types/*"],
+        "#types/*": ["./src/types/*"],
         "#root/*": ["./*"]
       }
     },

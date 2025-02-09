@@ -11,7 +11,7 @@ import { useTags } from '#components/Map/hooks/useTags'
 import { decodeTag, encodeTag } from '#utils/FormatTags'
 import { randomColor } from '#utils/RandomColor'
 
-import type { Tag } from '#types/Tag'
+import type { Tag } from '#src/types/Tag'
 
 // eslint-disable-next-line react/prop-types
 export const TagsWidget = ({ placeholder, containerStyle, defaultTags, onUpdate }) => {

@@ -2,7 +2,7 @@
 import { TextView } from '#components/Map'
 import { getValue } from '#utils/GetValue'
 
-import type { Item } from '#types/Item'
+import type { Item } from '#src/types/Item'
 
 export const ProfileTextView = ({
   item,

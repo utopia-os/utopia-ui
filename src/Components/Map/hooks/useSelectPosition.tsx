@@ -14,9 +14,9 @@ import { toast } from 'react-toastify'
 import { useUpdateItem } from './useItems'
 import { useHasUserPermission } from './usePermissions'
 
-import type { Item } from '#types/Item'
-import type { ItemFormPopupProps } from '#types/ItemFormPopupProps'
-import type { LayerProps } from '#types/LayerProps'
+import type { Item } from '#src/types/Item'
+import type { ItemFormPopupProps } from '#src/types/ItemFormPopupProps'
+import type { LayerProps } from '#src/types/LayerProps'
 import type { Point } from 'geojson'
 import type { LatLng } from 'leaflet'
 

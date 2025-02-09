@@ -37,6 +37,8 @@ export {
 } from './Components/Templates'
 export { TextInput, TextAreaInput, SelectBox } from './Components/Input'
 
+export * from './types'
+
 declare global {
   interface Window {
     my_modal_3: {

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { useHasUserPermission } from '#components/Map/hooks/usePermissions'
 
-import type { LayerProps } from '#types/LayerProps'
+import type { LayerProps } from '#src/types/LayerProps'
 
 export function PlusButton({
   layer,

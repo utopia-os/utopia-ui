@@ -13,7 +13,7 @@ import { getValue } from '#utils/GetValue'
 import { MapOverlayPage } from './MapOverlayPage'
 import { TagView } from './TagView'
 
-import type { Tag } from '#types/Tag'
+import type { Tag } from '#src/types/Tag'
 
 function groupAndCount(arr) {
   const grouped = arr.reduce((acc, obj) => {

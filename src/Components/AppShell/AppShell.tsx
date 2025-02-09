@@ -2,7 +2,7 @@ import { ContextWrapper } from './ContextWrapper'
 import NavBar from './NavBar'
 import { SetAppState } from './SetAppState'
 
-import type { AssetsApi } from '#types/AssetsApi'
+import type { AssetsApi } from '#src/types/AssetsApi'
 
 export function AppShell({
   appName,

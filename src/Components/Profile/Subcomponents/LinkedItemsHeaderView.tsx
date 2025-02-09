@@ -10,7 +10,7 @@ import { useEffect } from 'react'
 import { useAppState } from '#components/AppShell/hooks/useAppState'
 import { getValue } from '#utils/GetValue'
 
-import type { Item } from '#types/Item'
+import type { Item } from '#src/types/Item'
 
 export function LinkedItemsHeaderView({
   item,

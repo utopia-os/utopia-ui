@@ -15,7 +15,7 @@ import { encodeTag } from '#utils/FormatTags'
 import { hashTagRegex } from '#utils/HashTagRegex'
 import { randomColor } from '#utils/RandomColor'
 
-import type { Item } from '#types/Item'
+import type { Item } from '#src/types/Item'
 
 // eslint-disable-next-line promise/avoid-new
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))

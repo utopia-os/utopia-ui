@@ -17,8 +17,8 @@ import { useHasUserPermission } from '#components/Map/hooks/usePermissions'
 import DialogModal from '#components/Templates/DialogModal'
 import { getValue } from '#utils/GetValue'
 
-import type { Item } from '#types/Item'
-import type { ItemsApi } from '#types/ItemsApi'
+import type { Item } from '#src/types/Item'
+import type { ItemsApi } from '#src/types/ItemsApi'
 
 export function HeaderView({
   item,

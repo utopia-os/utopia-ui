@@ -4,7 +4,7 @@ import { TextView } from '#components/Map'
 import { ContactInfoView } from '#components/Profile/Subcomponents/ContactInfoView'
 import { GroupSubHeaderView } from '#components/Profile/Subcomponents/GroupSubHeaderView'
 
-import type { Item } from '#types/Item'
+import type { Item } from '#src/types/Item'
 
 export const OnepagerView = ({ item }: { item: Item }) => {
   return (

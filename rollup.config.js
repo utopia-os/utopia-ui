@@ -10,7 +10,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const aliasConfig = alias({
-  entries: [{ find: '#types', replacement: path.resolve(__dirname, 'types') }],
+  entries: [{ find: '#types', replacement: path.resolve(__dirname, 'src/types') }],
 })
 
 export default [

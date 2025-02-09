@@ -1,6 +1,17 @@
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+import alias from '@rollup/plugin-alias'
+import typescript from '@rollup/plugin-typescript'
 import { dts } from 'rollup-plugin-dts'
 import postcss from 'rollup-plugin-postcss'
-import typescript from 'rollup-plugin-typescript2'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+const aliasConfig = alias({
+  entries: [{ find: '#types', replacement: path.resolve(__dirname, 'types') }],
+})
 
 export default [
   {
@@ -16,10 +27,13 @@ export default [
       },
     ],
     plugins: [
+      aliasConfig,
       postcss({
         plugins: [],
       }),
-      typescript(),
+      typescript({
+        tsconfig: './tsconfig.json',
+      }),
     ],
     external: [
       'react',
@@ -54,8 +68,9 @@ export default [
     ],
   },
   {
-    input: 'types/index.d.ts',
+    input: 'src/index.tsx',
     output: [{ file: 'dist/index.d.ts', format: 'es' }],
-    plugins: [dts()],
+    plugins: [aliasConfig, dts()],
+    external: [/\.css$/],
   },
 ]

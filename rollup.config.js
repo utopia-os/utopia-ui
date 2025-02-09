@@ -7,11 +7,8 @@ export default [
     input: 'src/index.tsx',
     output: [
       {
-        dir: 'dist/',
+        file: 'dist/index.js',
         format: 'esm',
-        exports: 'named',
-        sourcemap: true,
-        strict: false,
       },
     ],
     plugins: [

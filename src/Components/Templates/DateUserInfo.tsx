@@ -5,7 +5,7 @@ import { useState } from 'react'
 
 import { timeAgo } from '#utils/TimeAgo'
 
-import type { Item } from '#types/Item'
+import type { Item } from '#src/types/Item'
 
 export const DateUserInfo = ({ item }: { item: Item }) => {
   const [infoExpanded, setInfoExpanded] = useState<boolean>(false)

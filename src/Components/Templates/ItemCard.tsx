@@ -13,7 +13,7 @@ import { getValue } from '#utils/GetValue'
 
 import { DateUserInfo } from './DateUserInfo'
 
-import type { Item } from '#types/Item'
+import type { Item } from '#src/types/Item'
 
 export const ItemCard = ({
   i,

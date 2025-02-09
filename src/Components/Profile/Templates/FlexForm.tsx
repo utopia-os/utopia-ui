@@ -8,8 +8,8 @@ import { GroupSubheaderForm } from '#components/Profile/Subcomponents/GroupSubhe
 import { ProfileStartEndForm } from '#components/Profile/Subcomponents/ProfileStartEndForm'
 import { ProfileTextForm } from '#components/Profile/Subcomponents/ProfileTextForm'
 
-import type { FormState } from '#types/FormState'
-import type { Item } from '#types/Item'
+import type { FormState } from '#src/types/FormState'
+import type { Item } from '#src/types/Item'
 
 const componentMap = {
   groupSubheaders: GroupSubheaderForm,

@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { useCallback, useState, createContext, useContext } from 'react'
 
-import type { AssetsApi } from '#types/AssetsApi'
+import type { AssetsApi } from '#src/types/AssetsApi'
 
 type UseAssetManagerResult = ReturnType<typeof useAssetsManager>
 

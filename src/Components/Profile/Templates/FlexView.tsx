@@ -8,7 +8,7 @@ import { GroupSubHeaderView } from '#components/Profile/Subcomponents/GroupSubHe
 import { ProfileStartEndView } from '#components/Profile/Subcomponents/ProfileStartEndView'
 import { ProfileTextView } from '#components/Profile/Subcomponents/ProfileTextView'
 
-import type { Item } from '#types/Item'
+import type { Item } from '#src/types/Item'
 
 const componentMap = {
   groupSubheaders: GroupSubHeaderView,

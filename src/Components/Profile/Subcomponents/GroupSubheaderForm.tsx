@@ -5,8 +5,8 @@ import { useEffect } from 'react'
 
 import ComboBoxInput from '#components/Input/ComboBoxInput'
 
-import type { FormState } from '#types/FormState'
-import type { Item } from '#types/Item'
+import type { FormState } from '#src/types/FormState'
+import type { Item } from '#src/types/Item'
 
 interface groupType {
   groupTypes_id: {

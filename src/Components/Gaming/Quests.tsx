@@ -5,7 +5,7 @@ import { useItems } from '#components/Map/hooks/useItems'
 
 import { useQuestsOpen, useSetQuestOpen } from './hooks/useQuests'
 
-import type { Item } from '#types/Item'
+import type { Item } from '#src/types/Item'
 
 export function Quests() {
   const questsOpen = useQuestsOpen()

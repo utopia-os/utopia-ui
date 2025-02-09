@@ -4,8 +4,8 @@ import { useAuth } from '#components/Auth'
 
 import { useSetPermissionData, useSetPermissionApi, useSetAdminRole } from './hooks/usePermissions'
 
-import type { ItemsApi } from '#types/ItemsApi'
-import type { Permission } from '#types/Permission'
+import type { ItemsApi } from '#src/types/ItemsApi'
+import type { Permission } from '#src/types/Permission'
 
 export function Permissions({
   data,

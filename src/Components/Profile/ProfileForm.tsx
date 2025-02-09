@@ -23,8 +23,8 @@ import { OnepagerForm } from './Templates/OnepagerForm'
 import { SimpleForm } from './Templates/SimpleForm'
 import { TabsForm } from './Templates/TabsForm'
 
-import type { Item } from '#types/Item'
-import type { Tag } from '#types/Tag'
+import type { Item } from '#src/types/Item'
+import type { Tag } from '#src/types/Tag'
 
 export function ProfileForm() {
   const [state, setState] = useState({

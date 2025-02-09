@@ -29,7 +29,7 @@ import MarkerIconFactory from '#utils/MarkerIconFactory'
 import { LocateControl } from './LocateControl'
 import { SidebarControl } from './SidebarControl'
 
-import type { Item } from '#types/Item'
+import type { Item } from '#src/types/Item'
 
 export const SearchControl = () => {
   const windowDimensions = useWindowDimensions()

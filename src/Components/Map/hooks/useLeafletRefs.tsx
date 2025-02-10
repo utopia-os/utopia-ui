@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { useCallback, useReducer, createContext, useContext } from 'react'
 
-import type { Item } from '#src/types/Item'
+import type { Item } from '#types/Item'
 import type { Marker, Popup } from 'leaflet'
 
 interface LeafletRef {

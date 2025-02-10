@@ -29,9 +29,9 @@ import { OnepagerView } from './Templates/OnepagerView'
 import { SimpleView } from './Templates/SimpleView'
 import { TabsView } from './Templates/TabsView'
 
-import type { Item } from '#src/types/Item'
-import type { ItemsApi } from '#src/types/ItemsApi'
-import type { Tag } from '#src/types/Tag'
+import type { Item } from '#types/Item'
+import type { ItemsApi } from '#types/ItemsApi'
+import type { Tag } from '#types/Tag'
 
 export function ProfileView({ attestationApi }: { attestationApi?: ItemsApi<any> }) {
   const [item, setItem] = useState<Item>()

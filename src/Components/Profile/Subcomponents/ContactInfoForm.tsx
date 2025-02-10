@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import { TextInput } from '#components/Input'
 
-import type { FormState } from '#src/types/FormState'
+import type { FormState } from '#types/FormState'
 
 export const ContactInfoForm = ({
   state,

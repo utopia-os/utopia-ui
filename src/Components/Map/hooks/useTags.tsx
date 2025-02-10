@@ -13,9 +13,9 @@ import { useCallback, useReducer, createContext, useContext, useState } from 're
 import { getValue } from '#utils/GetValue'
 import { hashTagRegex } from '#utils/HashTagRegex'
 
-import type { Item } from '#src/types/Item'
-import type { ItemsApi } from '#src/types/ItemsApi'
-import type { Tag } from '#src/types/Tag'
+import type { Item } from '#types/Item'
+import type { ItemsApi } from '#types/ItemsApi'
+import type { Tag } from '#types/Tag'
 
 type ActionType = { type: 'ADD'; tag: Tag } | { type: 'REMOVE'; id: string }
 

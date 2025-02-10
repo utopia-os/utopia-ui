@@ -8,8 +8,8 @@ import { useItems } from '#components/Map/hooks/useItems'
 import { EmojiPicker } from './EmojiPicker'
 import { MapOverlayPage } from './MapOverlayPage'
 
-import type { Item } from '#src/types/Item'
-import type { ItemsApi } from '#src/types/ItemsApi'
+import type { Item } from '#types/Item'
+import type { ItemsApi } from '#types/ItemsApi'
 
 export const AttestationForm = ({ api }: { api?: ItemsApi<unknown> }) => {
   const items = useItems()

@@ -36,8 +36,8 @@ import { TagsControl } from './Subcomponents/Controls/TagsControl'
 import { TextView } from './Subcomponents/ItemPopupComponents/TextView'
 import { SelectPosition } from './Subcomponents/SelectPosition'
 
-import type { ItemFormPopupProps } from '#src/types/ItemFormPopupProps'
-import type { UtopiaMapProps } from '#src/types/UtopiaMapProps'
+import type { ItemFormPopupProps } from '#types/ItemFormPopupProps'
+import type { UtopiaMapProps } from '#types/UtopiaMapProps'
 import type { Feature, Geometry as GeoJSONGeometry } from 'geojson'
 
 export function UtopiaMapInner({

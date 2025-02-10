@@ -16,8 +16,8 @@ import { getValue } from '#utils/GetValue'
 import { hashTagRegex } from '#utils/HashTagRegex'
 import { fixUrls, mailRegex } from '#utils/ReplaceURLs'
 
-import type { Item } from '#src/types/Item'
-import type { Tag } from '#src/types/Tag'
+import type { Item } from '#types/Item'
+import type { Tag } from '#types/Tag'
 
 export const TextView = ({
   item,

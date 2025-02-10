@@ -10,8 +10,8 @@ import { useNavigate } from 'react-router-dom'
 import { useLayers } from './useLayers'
 import useWindowDimensions from './useWindowDimension'
 
-import type { LayerProps } from '#src/types/LayerProps'
-import type { Tag } from '#src/types/Tag'
+import type { LayerProps } from '#types/LayerProps'
+import type { Tag } from '#types/Tag'
 
 type ActionType =
   | { type: 'ADD_TAG'; tag: Tag }

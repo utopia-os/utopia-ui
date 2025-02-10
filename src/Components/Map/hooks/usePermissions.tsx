@@ -10,11 +10,11 @@ import { useCallback, useReducer, createContext, useContext, useState } from 're
 
 import { useAuth } from '#components/Auth/useAuth'
 
-import type { Item } from '#src/types/Item'
-import type { ItemsApi } from '#src/types/ItemsApi'
-import type { LayerProps } from '#src/types/LayerProps'
-import type { Permission } from '#src/types/Permission'
-import type { PermissionAction } from '#src/types/PermissionAction'
+import type { Item } from '#types/Item'
+import type { ItemsApi } from '#types/ItemsApi'
+import type { LayerProps } from '#types/LayerProps'
+import type { Permission } from '#types/Permission'
+import type { PermissionAction } from '#types/PermissionAction'
 
 type ActionType = { type: 'ADD'; permission: Permission } | { type: 'REMOVE'; id: string }
 

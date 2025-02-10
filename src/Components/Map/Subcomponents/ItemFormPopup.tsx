@@ -19,8 +19,8 @@ import { useAddTag, useTags } from '#components/Map/hooks/useTags'
 import { hashTagRegex } from '#utils/HashTagRegex'
 import { randomColor } from '#utils/RandomColor'
 
-import type { Item } from '#src/types/Item'
-import type { ItemFormPopupProps } from '#src/types/ItemFormPopupProps'
+import type { Item } from '#types/Item'
+import type { ItemFormPopupProps } from '#types/ItemFormPopupProps'
 
 export function ItemFormPopup(props: ItemFormPopupProps) {
   const [spinner, setSpinner] = useState(false)

@@ -18,8 +18,8 @@ import { LinkedItemsHeaderView } from '#components/Profile/Subcomponents/LinkedI
 import { TagView } from '#components/Templates/TagView'
 import { timeAgo } from '#utils/TimeAgo'
 
-import type { Item } from '#src/types/Item'
-import type { Tag } from '#src/types/Tag'
+import type { Item } from '#types/Item'
+import type { Tag } from '#types/Tag'
 
 export const TabsView = ({
   attestations,

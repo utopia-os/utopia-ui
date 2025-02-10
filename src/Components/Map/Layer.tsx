@@ -28,9 +28,9 @@ import { useAddTag, useAllTagsLoaded, useGetItemTags, useTags } from './hooks/us
 import { ItemFormPopup } from './Subcomponents/ItemFormPopup'
 import { ItemViewPopup } from './Subcomponents/ItemViewPopup'
 
-import type { Item } from '#src/types/Item'
-import type { LayerProps } from '#src/types/LayerProps'
-import type { Tag } from '#src/types/Tag'
+import type { Item } from '#types/Item'
+import type { LayerProps } from '#types/LayerProps'
+import type { Tag } from '#types/Tag'
 import type { Popup } from 'leaflet'
 
 export const Layer = ({

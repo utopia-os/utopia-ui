@@ -88,9 +88,10 @@ export function ProfileForm() {
 
   useEffect(() => {
     const newColor =
-      (item.color ?? (getItemTags(item) && getItemTags(item)[0]?.color))
+      item.color ??
+      (getItemTags(item) && getItemTags(item)[0]?.color
         ? getItemTags(item)[0].color
-        : item.layer?.markerDefaultColor
+        : item.layer?.markerDefaultColor)
 
     const offers = (item.offers ?? []).reduce((acc: Tag[], o) => {
       const offer = tags.find((t) => t.id === o.tags_id)
@@ -195,7 +196,7 @@ export function ProfileForm() {
                 type='submit'
                 style={{
                   // We could refactor this, it is used several times at different locations
-                  backgroundColor: `${(item.color ?? (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color)) ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor}`,
+                  backgroundColor: `${item.color ?? (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor)}`,
                   color: '#fff',
                 }}
               >

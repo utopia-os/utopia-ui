@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import { useAuth } from '#components/Auth'
 import { useItems } from '#components/Map/hooks/useItems'
 
-import type { Item } from '#src/types/Item'
+import type { Item } from '#types/Item'
 
 export default function NavBar({ appName, userType }: { appName: string; userType: string }) {
   const { isAuthenticated, user, logout } = useAuth()

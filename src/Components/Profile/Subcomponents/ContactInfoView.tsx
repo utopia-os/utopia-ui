@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import { useAppState } from '#components/AppShell/hooks/useAppState'
 import { useItems } from '#components/Map/hooks/useItems'
 
-import type { Item } from '#src/types/Item'
+import type { Item } from '#types/Item'
 
 export const ContactInfoView = ({ item, heading }: { item: Item; heading: string }) => {
   const appState = useAppState()

@@ -8,7 +8,7 @@ import { useAuth } from '#components/Auth'
 import { TextInput } from '#components/Input'
 import { MapOverlayPage } from '#components/Templates'
 
-import type { UserItem } from '#src/types/UserItem'
+import type { UserItem } from '#types/UserItem'
 
 export function UserSettings() {
   const { user, updateUser, loading /* token */ } = useAuth()

@@ -10,7 +10,7 @@ import 'react-photo-album/rows.css'
 
 import { useAppState } from '#components/AppShell/hooks/useAppState'
 
-import type { Item } from '#src/types/Item'
+import type { Item } from '#types/Item'
 
 export const GalleryView = ({ item }: { item: Item }) => {
   const [index, setIndex] = useState(-1)

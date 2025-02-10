@@ -5,7 +5,7 @@ import { ContextWrapper } from '#components/AppShell/ContextWrapper'
 
 import { UtopiaMapInner } from './UtopiaMapInner'
 
-import type { UtopiaMapProps } from '#src/types/UtopiaMapProps'
+import type { UtopiaMapProps } from '#types/UtopiaMapProps'
 import 'react-toastify/dist/ReactToastify.css'
 
 function UtopiaMap({

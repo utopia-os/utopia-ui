@@ -12,7 +12,7 @@ import { HeaderView } from '#components/Map/Subcomponents/ItemPopupComponents/He
 import DialogModal from '#components/Templates/DialogModal'
 import { getValue } from '#utils/GetValue'
 
-import type { Item } from '#src/types/Item'
+import type { Item } from '#types/Item'
 
 export function ActionButton({
   item,

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { useGetItemTags } from '#components/Map/hooks/useTags'
 import { getValue } from '#utils/GetValue'
 
-import type { Item } from '#src/types/Item'
+import type { Item } from '#types/Item'
 
 export const PopupButton = ({
   url,

@@ -10,8 +10,8 @@ import { toast } from 'react-toastify'
 
 import { useAddLayer } from './useLayers'
 
-import type { Item } from '#src/types/Item'
-import type { LayerProps } from '#src/types/LayerProps'
+import type { Item } from '#types/Item'
+import type { LayerProps } from '#types/LayerProps'
 
 type ActionType =
   | { type: 'ADD'; item: Item }

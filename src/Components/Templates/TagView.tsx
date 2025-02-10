@@ -2,7 +2,7 @@
 
 import { decodeTag } from '#utils/FormatTags'
 
-import type { Tag } from '#src/types/Tag'
+import type { Tag } from '#types/Tag'
 
 export const TagView = ({
   tag,

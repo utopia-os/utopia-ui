@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 import { TextInput } from '#components/Input'
 
-import type { Item } from '#src/types/Item'
+import type { Item } from '#types/Item'
 
 interface StartEndInputProps {
   item?: Item

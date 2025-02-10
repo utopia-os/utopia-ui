@@ -20,8 +20,8 @@ import { timeAgo } from '#utils/TimeAgo'
 import { HeaderView } from './ItemPopupComponents/HeaderView'
 import { TextView } from './ItemPopupComponents/TextView'
 
-import type { Item } from '#src/types/Item'
-import type { ItemFormPopupProps } from '#src/types/ItemFormPopupProps'
+import type { Item } from '#types/Item'
+import type { ItemFormPopupProps } from '#types/ItemFormPopupProps'
 
 export interface ItemViewPopupProps {
   item: Item

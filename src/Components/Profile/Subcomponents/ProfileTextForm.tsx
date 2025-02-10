@@ -9,7 +9,7 @@ import { getValue } from '#utils/GetValue'
 
 import { MarkdownHint } from './MarkdownHint'
 
-import type { FormState } from '#src/types/FormState'
+import type { FormState } from '#types/FormState'
 
 export const ProfileTextForm = ({
   state,

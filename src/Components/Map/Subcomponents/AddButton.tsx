@@ -57,6 +57,10 @@ export default function AddButton({
                           onClick={() => {
                             triggerAction(layer)
                           }}
+                          onTouchEnd={(e) => {
+                            triggerAction(layer)
+                            e.preventDefault()
+                          }}
                         >
                           <img
                             src={layer.menuIcon}

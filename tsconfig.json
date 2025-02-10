@@ -1,14 +1,15 @@
 {
     "compilerOptions": {
       "outDir": "dist",
+      "declaration": true,
+      "declarationDir": "dist/types", // 🔹 Muss innerhalb von dist/ liegen
+      "emitDeclarationOnly": true, // Nur `.d.ts` generieren, kein JavaScript
       "module": "esnext",
       "target": "ESNext",
       "lib": ["es6", "dom","es2015", "es2016", "es2017", "es2020"],
       "sourceMap": true,
       "allowJs": false,
       "jsx": "react-jsx",
-      "declaration": true,
-      "declarationDir": "./types",
       "moduleResolution": "node",
       "forceConsistentCasingInFileNames": true,
       "noImplicitReturns": true,
@@ -22,7 +23,7 @@
         "#components/*": ["./src/Components/*"],
         "#utils/*": ["./src/Utils/*"],
         "#src/*": ["./src/*"],
-        "#types/*": ["./types/*"],
+        "#types/*": ["./src/types/*"],
         "#root/*": ["./*"]
       }
     },

@@ -42,6 +42,12 @@ export function ActionButton({
     .filter((i) => !existingRelations.some((s) => s.id === i.id))
     .filter((i) => i.id !== item.id)
 
+  const backgroundColor =
+    item.color ??
+    (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color
+      ? getItemTags(item)[0].color
+      : item.layer?.markerDefaultColor)
+
   return (
     <>
       {hasUserPermission(collection, 'update', item) && (
@@ -55,7 +61,7 @@ export function ActionButton({
                   setModalOpen(true)
                 }}
                 style={{
-                  backgroundColor: `${(item.color ?? (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color)) ? getItemTags(item)[0].color : item.layer?.markerDefaultColor}`,
+                  backgroundColor,
                   color: '#fff',
                 }}
               >
@@ -79,7 +85,7 @@ export function ActionButton({
                   triggerAddButton()
                 }}
                 style={{
-                  backgroundColor: `${item.color ?? (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item.layer?.markerDefaultColor)}`,
+                  backgroundColor,
                   color: '#fff',
                 }}
               >

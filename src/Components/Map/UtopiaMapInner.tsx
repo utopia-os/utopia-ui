@@ -147,7 +147,7 @@ export function UtopiaMapInner({
             ?.setAttribute('content', ref.item.name)
           document
             .querySelector('meta[property="og:description"]')
-            ?.setAttribute('content', ref.item.text)
+            ?.setAttribute('content', ref.item.text ?? '')
         }
       }
     }

@@ -18,7 +18,7 @@ interface GalleryItem {
 export interface Item {
   id: string
   name: string
-  text: string
+  text?: string
   data?: string
   position?: Point | null
   date_created?: string

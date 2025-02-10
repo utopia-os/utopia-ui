@@ -172,7 +172,7 @@ export const Layer = ({
               if (item.tags) {
                 item.text += '\n\n'
                 item.tags.map((tag) => {
-                  if (!item.text.includes(`#${encodeTag(tag)}`)) {
+                  if (!item.text?.includes(`#${encodeTag(tag)}`)) {
                     item.text += `#${encodeTag(tag)}`
                   }
                   return item.text
@@ -180,7 +180,7 @@ export const Layer = ({
               }
 
               if (allTagsLoaded && allItemsLoaded) {
-                item.text.match(hashTagRegex)?.map((tag) => {
+                item.text?.match(hashTagRegex)?.map((tag) => {
                   if (
                     !tags.find(
                       (t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase(),

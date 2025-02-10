@@ -79,7 +79,7 @@ export function ActionButton({
                   triggerAddButton()
                 }}
                 style={{
-                  backgroundColor: `${(item.color ?? (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color)) ? getItemTags(item)[0].color : item.layer?.markerDefaultColor}`,
+                  backgroundColor: `${item.color ?? (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item.layer?.markerDefaultColor)}`,
                   color: '#fff',
                 }}
               >

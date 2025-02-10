@@ -4,46 +4,29 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import { useEffect } from 'react'
 
 import { useAppState } from '#components/AppShell/hooks/useAppState'
-import { getValue } from '#utils/GetValue'
 
 import type { Item } from '#types/Item'
 
 export function LinkedItemsHeaderView({
   item,
   unlinkCallback,
-  itemNameField,
-  itemAvatarField,
   loading,
   unlinkPermission,
-  itemSubnameField,
 }: {
   item: Item
   unlinkCallback?: any
-  itemNameField?: string
-  itemAvatarField?: string
-  itemSubnameField?: string
   loading?: boolean
   unlinkPermission: boolean
 }) {
   const appState = useAppState()
 
-  const avatar =
-    itemAvatarField && getValue(item, itemAvatarField)
-      ? appState.assetsApi.url + getValue(item, itemAvatarField)
-      : item.layer?.itemAvatarField &&
-        item &&
-        getValue(item, item.layer?.itemAvatarField) &&
-        appState.assetsApi.url + getValue(item, item.layer?.itemAvatarField)
-  const title = itemNameField
-    ? getValue(item, itemNameField)
-    : item.layer?.itemNameField && item && getValue(item, item.layer.itemNameField)
-  const subtitle = itemSubnameField
-    ? getValue(item, itemSubnameField)
-    : item.layer?.itemSubnameField && item && getValue(item, item.layer.itemSubnameField)
+  const avatar = appState.assetsApi.url + item.image
+  const title = item.name
+  const subtitle = item.subname
 
   useEffect(() => {}, [item])
 

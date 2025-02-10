@@ -18,17 +18,6 @@ export interface LayerProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   api?: ItemsApi<any>
   itemType: ItemType
-  itemNameField?: string
-  itemSubnameField?: string
-  itemTextField?: string
-  itemAvatarField?: string
-  itemColorField?: string
-  itemOwnerField?: string
-  itemTagsField?: string
-  itemLatitudeField?: string
-  itemLongitudeField?: string
-  itemOffersField?: string
-  itemNeedsField?: string
   onlyOnePerOwner?: boolean
   customEditLink?: string
   customEditParameter?: string

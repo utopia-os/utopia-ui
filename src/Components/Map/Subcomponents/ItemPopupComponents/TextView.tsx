@@ -12,41 +12,38 @@ import remarkBreaks from 'remark-breaks'
 import { useAddFilterTag } from '#components/Map/hooks/useFilter'
 import { useTags } from '#components/Map/hooks/useTags'
 import { decodeTag } from '#utils/FormatTags'
-import { getValue } from '#utils/GetValue'
 import { hashTagRegex } from '#utils/HashTagRegex'
 import { fixUrls, mailRegex } from '#utils/ReplaceURLs'
 
-import type { Item } from '#types/Item'
 import type { Tag } from '#types/Tag'
 
 export const TextView = ({
-  item,
+  itemId,
+  text,
   truncate = false,
-  itemTextField,
   rawText,
 }: {
-  item?: Item
+  itemId: string
+  text?: string
   truncate?: boolean
-  itemTextField?: string
   rawText?: string
 }) => {
   const tags = useTags()
   const addFilterTag = useAddFilterTag()
 
-  let text = ''
+  let innerText = ''
   let replacedText = ''
 
   if (rawText) {
-    text = replacedText = rawText
-  } else if (itemTextField && item) {
-    text = getValue(item, itemTextField)
-  } else {
-    text = item?.layer?.itemTextField && item ? getValue(item, item.layer.itemTextField) : ''
+    innerText = replacedText = rawText
+  } else if (text) {
+    innerText = text
   }
 
-  if (item && text && truncate) text = truncateText(removeMarkdownKeepLinksAndParagraphs(text), 100)
+  if (innerText && truncate)
+    innerText = truncateText(removeMarkdownKeepLinksAndParagraphs(innerText), 100)
 
-  if (item && text) replacedText = fixUrls(text)
+  if (innerText) replacedText = fixUrls(innerText)
 
   if (replacedText) {
     replacedText = replacedText.replace(/(?<!\]?\()https?:\/\/[^\s)]+(?!\))/g, (url) => {
@@ -114,16 +111,16 @@ export const TextView = ({
   const CustomHashTagLink = ({
     children,
     tag,
-    item,
+    itemId,
   }: {
     children: string
     tag: Tag
-    item?: Item
+    itemId: string
   }) => {
     return (
       <a
         style={{ color: tag ? tag.color : '#faa', fontWeight: 'bold', cursor: 'pointer' }}
-        key={tag ? tag.name + item?.id : item?.id}
+        key={tag ? tag.name + itemId : itemId}
         onClick={(e) => {
           e.stopPropagation()
           addFilterTag(tag)
@@ -173,7 +170,7 @@ export const TextView = ({
             )
             if (tag)
               return (
-                <CustomHashTagLink tag={tag} item={item}>
+                <CustomHashTagLink tag={tag} itemId={itemId}>
                   {children}
                 </CustomHashTagLink>
               )

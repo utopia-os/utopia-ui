@@ -189,7 +189,7 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
               key={props.position.toString()}
               placeholder='Text'
               dataField='text'
-              defaultValue={props.item ? props.item.text : ''}
+              defaultValue={props.item?.text ?? ''}
               inputStyle='tw-h-40 tw-mt-5'
             />
           </>

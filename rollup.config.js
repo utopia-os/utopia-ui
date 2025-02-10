@@ -2,6 +2,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 import alias from '@rollup/plugin-alias'
+import resolve from '@rollup/plugin-node-resolve'
 import typescript from '@rollup/plugin-typescript'
 import { dts } from 'rollup-plugin-dts'
 import postcss from 'rollup-plugin-postcss'
@@ -20,14 +21,19 @@ export default [
       {
         file: 'dist/index.esm.js',
         format: 'esm',
+        sourcemap: true,
       },
       {
         file: 'dist/index.cjs',
         format: 'cjs',
+        sourcemap: true,
       },
     ],
     plugins: [
       aliasConfig,
+      resolve({
+        extensions: ['.ts', '.tsx'],
+      }),
       postcss({
         plugins: [],
       }),
@@ -65,12 +71,22 @@ export default [
       'react-image-crop/dist/ReactCrop.css',
       'react-colorful',
       'leaflet.locatecontrol/dist/L.Control.Locate.css',
+      'yet-another-react-lightbox',
+      'react-photo-album',
     ],
   },
   {
     input: 'src/index.tsx',
     output: [{ file: 'dist/index.d.ts', format: 'es' }],
-    plugins: [aliasConfig, dts()],
-    external: [/\.css$/],
+    plugins: [
+      aliasConfig,
+      dts({
+        respectExternal: true,
+        compilerOptions: {
+          skipLibCheck: true,
+        },
+      }),
+    ],
+    external: [/\.css$/, /\.d\.ts$/], // ✅ `.d.ts` als extern behandeln
   },
 ]

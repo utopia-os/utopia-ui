@@ -1,4 +1,3 @@
-import { node, string } from 'prop-types'
 import { Children, cloneElement, isValidElement } from 'react'
 
 import type { Item } from '#types/Item'
@@ -8,18 +7,11 @@ export const ItemView = ({ children, item }: { children?: React.ReactNode; item?
     <div>
       {children
         ? Children.toArray(children).map((child) =>
-            isValidElement<{ item: Item }>(child) ? cloneElement(child, { item }) : '',
+            isValidElement<{ item: Item }>(child) ? cloneElement(child, { item }) : null,
           )
-        : ''}
+        : null}
     </div>
   )
 }
 
-ItemView.propTypes = {
-  children: node,
-  __TYPE: string,
-}
-
-ItemView.defaultProps = {
-  __TYPE: 'ItemView',
-}
+ItemView.__TYPE = 'ItemView'

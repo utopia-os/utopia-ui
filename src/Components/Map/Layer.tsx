@@ -32,6 +32,7 @@ import type { Item } from '#types/Item'
 import type { LayerProps } from '#types/LayerProps'
 import type { Tag } from '#types/Tag'
 import type { Popup } from 'leaflet'
+import type { ReactElement, ReactNode } from 'react'
 
 export const Layer = ({
   data,
@@ -284,10 +285,10 @@ export const Layer = ({
                 >
                   {children &&
                   Children.toArray(children).some(
-                    (child) => isValidElement(child) && child.props.__TYPE === 'ItemView',
+                    (child) => isComponentWithType(child) && child.type.__TYPE === 'ItemView',
                   ) ? (
                     Children.toArray(children).map((child) =>
-                      isValidElement(child) && child.props.__TYPE === 'ItemView' ? (
+                      isComponentWithType(child) && child.type.__TYPE === 'ItemView' ? (
                         <ItemViewPopup
                           ref={(r) => {
                             if (!(item.id in leafletRefs && leafletRefs[item.id].popup === r)) {
@@ -300,9 +301,7 @@ export const Layer = ({
                         >
                           {child}
                         </ItemViewPopup>
-                      ) : (
-                        ''
-                      ),
+                      ) : null,
                     )
                   ) : (
                     <>
@@ -318,6 +317,7 @@ export const Layer = ({
                       />
                     </>
                   )}
+
                   <Tooltip offset={[0, -38]} direction='top'>
                     {item.name ? item.name : getValue(item, itemNameField)}
                   </Tooltip>
@@ -332,10 +332,10 @@ export const Layer = ({
         itemFormPopup.layer.name === name &&
         (children &&
         Children.toArray(children).some(
-          (child) => isValidElement(child) && child.props.__TYPE === 'ItemForm',
+          (child) => isComponentWithType(child) && child.type.__TYPE === 'ItemForm',
         ) ? (
           Children.toArray(children).map((child) =>
-            isValidElement(child) && child.props.__TYPE === 'ItemForm' ? (
+            isComponentWithType(child) && child.type.__TYPE === 'ItemForm' ? (
               <ItemFormPopup
                 key={setItemFormPopup?.name}
                 position={itemFormPopup.position}
@@ -361,4 +361,8 @@ export const Layer = ({
         ))}
     </>
   )
+}
+
+function isComponentWithType(node: ReactNode): node is ReactElement & { type: { __TYPE: string } } {
+  return isValidElement(node) && typeof node.type !== 'string' && '__TYPE' in node.type
 }

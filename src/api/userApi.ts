@@ -1,6 +1,6 @@
 import { createUser, passwordRequest, passwordReset, readMe, updateMe} from '@directus/sdk';
 import {  directusClient } from './directus';
-import { UserApi, UserItem } from 'utopia-ui/dist/types';
+import { UserApi, UserItem } from 'utopia-ui';
 
 
 export class userApi implements UserApi {

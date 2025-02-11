@@ -6,12 +6,11 @@ import './App.css'
 import { userApi } from './api/userApi'
 import { assetsApi } from './api/assetsApi'
 import { ModalContent } from './ModalContent'
-import { MoonCalendar } from 'utopia-ui'
 import { Landingpage } from './pages/Landingpage'
 import { useEffect, useState } from 'react'
 import { itemsApi } from './api/itemsApi'
 import { permissionsApi } from './api/permissionsApi'
-import { Tag } from 'utopia-ui/dist/types'
+import { Tag } from 'utopia-ui'
 import { mapApi } from './api/mapApi'
 import { layersApi } from './api/layersApi'
 
@@ -107,7 +106,6 @@ function App() {
                 <Route path="item/*" element={<ProfileView attestationApi={attestationApi} />} />
                 <Route path="edit-item/*" element={<ProfileForm />} />
                 <Route path="user-settings" element={<UserSettings />} />
-                <Route path="moon-calendar" element={<MoonCalendar />} />
                 <Route path="landingpage" element={<Landingpage />} />
                 <Route path="market" element={<MarketView />} />
                 <Route path="select-user" element={<SelectUser />} />

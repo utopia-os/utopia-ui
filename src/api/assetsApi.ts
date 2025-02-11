@@ -1,6 +1,6 @@
 import { uploadFiles } from '@directus/sdk';
 import { directusClient } from './directus';
-import { AssetsApi } from 'utopia-ui/dist/types';
+import { AssetsApi } from 'utopia-ui';
 
 
 export class assetsApi implements AssetsApi{

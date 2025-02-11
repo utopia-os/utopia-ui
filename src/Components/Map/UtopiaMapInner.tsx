@@ -47,7 +47,7 @@ export function UtopiaMapInner({
   showFilterControl = false,
   showGratitudeControl = false,
   showLayerControl = true,
-  infoText,
+  donationWidget,
 }: UtopiaMapProps) {
   const selectNewItemPosition = useSelectPosition()
   const setSelectNewItemPosition = useSetSelectPosition()
@@ -71,21 +71,21 @@ export function UtopiaMapInner({
   const init = useRef(false)
   useEffect(() => {
     if (!init.current) {
-      infoText &&
+      donationWidget &&
         setTimeout(() => {
           toast(
             <>
               <TextView rawText={'## Do you like this Map?'} />
               <div>
-                <PopupButton url={'https://opencollective.com/utopia-project'} text={'Donate'} />
                 <TextView
                   rawText={'Support us building free opensource maps and help us grow 🌱☀️'}
                 />
+                <PopupButton url={'https://opencollective.com/utopia-project'} text={'Donate'} />
               </div>
             </>,
             { autoClose: false },
           )
-        }, 10000)
+        }, 600000)
       init.current = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

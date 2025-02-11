@@ -19,6 +19,7 @@ function UtopiaMap({
   showGratitudeControl = false,
   showLayerControl = true,
   infoText,
+  donationWidget,
 }: UtopiaMapProps) {
   return (
     <ContextWrapper>
@@ -35,6 +36,7 @@ function UtopiaMap({
           showGratitudeControl={showGratitudeControl}
           showLayerControl={showLayerControl}
           infoText={infoText}
+          donationWidget={donationWidget}
         >
           {children}
         </UtopiaMapInner>

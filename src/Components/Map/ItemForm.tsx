@@ -1,4 +1,3 @@
-import { node, string } from 'prop-types'
 import { Children, cloneElement, isValidElement, useEffect } from 'react'
 
 import type { Item } from '#types/Item'
@@ -33,11 +32,4 @@ export const ItemForm = ({
   )
 }
 
-ItemForm.propTypes = {
-  children: node,
-  __TYPE: string,
-}
-
-ItemForm.defaultProps = {
-  __TYPE: 'ItemForm',
-}
+ItemForm.__TYPE = 'ItemForm'

@@ -113,6 +113,7 @@ export const TabsForm = ({
               }
               inputStyle='tw-h-24'
               containerStyle='tw-pt-4'
+              required={false}
             />
           </div>
         </div>

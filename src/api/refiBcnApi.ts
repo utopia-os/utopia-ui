@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ItemsApi } from 'utopia-ui/dist/types';
+import { ItemsApi } from 'utopia-ui';
 
 
 export class refiBcnApi implements ItemsApi<any>{

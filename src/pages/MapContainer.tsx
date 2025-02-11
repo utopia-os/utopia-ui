@@ -1,8 +1,7 @@
-import { UtopiaMap, Layer, ItemView, PopupButton, StartEndView, TextView, ItemForm, PopupStartEndInput, PopupTextAreaInput, PopupTextInput } from 'utopia-ui'
+import { UtopiaMap, Layer, ItemView, PopupButton, StartEndView, TextView, ItemForm, PopupStartEndInput, PopupTextAreaInput, PopupTextInput, LayerProps } from 'utopia-ui'
 import { itemsApi } from '../api/itemsApi';
 import { Place } from '../api/directus';
 import { useEffect, useState } from 'react';
-import { LayerProps } from 'utopia-ui/dist/types';
 
 type layerApi = {
   id: string;
@@ -54,7 +53,7 @@ function MapContainer({ layers, map }: { layers: Array<LayerProps>, map: any }) 
       showFilterControl={map.show_filter_control}
       showLayerControl={map.show_layer_control}
       showGratitudeControl={map.show_gratitude_control}
-      infoText={map.info_text}
+      donationWidget = {map.donation_widget}
     >
       {layers && apis &&
         layers.map(layer =>
@@ -80,7 +79,7 @@ function MapContainer({ layers, map }: { layers: Array<LayerProps>, map: any }) 
                 <StartEndView></StartEndView>
               }
               {layer.itemType.show_profile_button &&
-                <PopupButton url={'/item'} parameterField={'id'} text={'Profile'} colorField={'color'} />
+                <PopupButton url={'/item'} parameterField={'id'} text={'Profile'} />
               }
               {layer.itemType.show_text &&
                 <TextView truncate></TextView>

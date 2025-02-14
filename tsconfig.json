@@ -27,7 +27,7 @@
         "#root/*": ["./*"]
       }
     },
-  "include": ["src", "vite.config.ts", "setupTest.ts", "cypress.config.ts"],
+  "include": ["src", "vite.config.ts", "setupTest.ts", "cypress.config.ts", "cypress/support/commands.ts", "cypress/support/component.ts"],
   "exclude": ["node_modules", "dist", "example", "rollup.config.mjss"],
   "typeRoots": [
     "./types",

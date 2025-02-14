@@ -4,7 +4,6 @@ import { mount } from 'cypress/react'
 import { TextInput } from './TextInput'
 
 describe('<TextInput />', () => {
-
   it('renders with default props', () => {
     mount(<TextInput />)
     cy.get('input').should('have.attr', 'type', 'text')

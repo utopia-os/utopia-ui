@@ -6,6 +6,6 @@ export default defineConfig({
       framework: 'react',
       bundler: 'vite',
     },
-    specPattern: ['**/**/*.cy.{ts,tsx}']
+    specPattern: ['**/**/*.cy.{ts,tsx}'],
   },
-});
+})

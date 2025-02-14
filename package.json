@@ -19,6 +19,7 @@
     "build": "rollup -c",
     "start": "rollup -c -w",
     "test:lint:eslint": "eslint --ext .ts,.tsx,.js,.jsx,.cjs,.mjs,.json,.yml,.yaml --max-warnings 0 .",
+    "test:component": "cypress run --component --browser electron",
     "test:unit": "npm run test:unit:dev -- run --coverage",
     "test:unit:dev": "vitest",
     "docs:generate": "typedoc --plugin typedoc-plugin-coverage src/index.tsx",

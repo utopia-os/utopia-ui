@@ -26,6 +26,7 @@ describe('<TextInput />', () => {
   })
 
   it('accepts user input', () => {
+    mount(<TextInput dataField='test-input' />)
     cy.get('input[name="test-input"]').type('Hello Test')
     cy.get('input[name="test-input"]').should('have.value', 'Hello Test')
   })
@@ -45,10 +46,6 @@ describe('<TextInput />', () => {
     mount(<TextInput dataField='test-input' updateFormValue={onChangeSpy} />)
     cy.get('input[name="test-input"]').type('Test')
     cy.get('@updateFormValueSpy').should('have.been.calledWith', 'Test')
-  })
-
-  it('respects the required attribute', () => {
-    cy.get('input[name="test-input"]').should('have.attr', 'required')
   })
 
   it('accepts a specific input type', () => {

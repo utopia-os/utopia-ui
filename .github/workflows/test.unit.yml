@@ -16,6 +16,8 @@ jobs:
           filters: |
             unit:
               - '**/*'
+              - '!**/*.md'
+          predicate-quantifier: 'every'
 
   unit:
     if: needs.files-changed.outputs.unit == 'true'

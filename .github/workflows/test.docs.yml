@@ -15,7 +15,8 @@ jobs:
         with:
           filters: |
             docs:
-              - '**/*'
+              - '**/*.md'
+              - 'LICENSE'
 
 #  build:
 #    if: needs.files-changed.outputs.frontend == 'true'

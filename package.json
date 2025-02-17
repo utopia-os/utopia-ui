@@ -19,7 +19,6 @@
     "build": "rollup -c",
     "start": "rollup -c -w",
     "test:lint:eslint": "eslint --ext .ts,.tsx,.js,.jsx,.cjs,.mjs,.json,.yml,.yaml --max-warnings 0 .",
-    "test:component": "cypress run --component --browser electron",
     "lint": "npm run test:lint:eslint",
     "lintfix": "npm run test:lint:eslint -- --fix",
     "test:component": "cypress run --component --browser electron",

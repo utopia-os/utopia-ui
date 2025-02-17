@@ -9,13 +9,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useAppState } from '#components/AppShell/hooks/useAppState'
 import { useHasUserPermission } from '#components/Map/hooks/usePermissions'
 import DialogModal from '#components/Templates/DialogModal'
-import { getValue } from '#utils/GetValue'
 
 import type { Item } from '#types/Item'
 import type { ItemsApi } from '#types/ItemsApi'
@@ -26,9 +25,6 @@ export function HeaderView({
   editCallback,
   deleteCallback,
   setPositionCallback,
-  itemNameField,
-  itemSubnameField,
-  itemAvatarField,
   loading,
   hideMenu = false,
   big = false,
@@ -41,9 +37,6 @@ export function HeaderView({
   editCallback?: any
   deleteCallback?: any
   setPositionCallback?: any
-  itemNameField?: string
-  itemAvatarField?: string
-  itemSubnameField?: string
   loading?: boolean
   hideMenu?: boolean
   big?: boolean
@@ -57,23 +50,17 @@ export function HeaderView({
   const navigate = useNavigate()
   const appState = useAppState()
 
+  const [imageLoaded, setImageLoaded] = useState(false)
+
+  useEffect(() => {
+    setImageLoaded(false)
+  }, [item])
+
   const avatar =
-    itemAvatarField && getValue(item, itemAvatarField)
-      ? appState.assetsApi.url +
-        getValue(item, itemAvatarField) +
-        `${big ? '?width=160&heigth=160' : '?width=80&heigth=80'}`
-      : item.layer?.itemAvatarField &&
-        item &&
-        getValue(item, item.layer?.itemAvatarField) &&
-        appState.assetsApi.url +
-          getValue(item, item.layer?.itemAvatarField) +
-          `${big ? '?width=160&heigth=160' : '?width=80&heigth=80'}`
-  const title = itemNameField
-    ? getValue(item, itemNameField)
-    : item.layer?.itemNameField && item && getValue(item, item.layer.itemNameField)
-  const subtitle = itemSubnameField
-    ? getValue(item, itemSubnameField)
-    : item.layer?.itemSubnameField && item && getValue(item, item.layer.itemSubnameField)
+    item.image &&
+    appState.assetsApi.url + item.image + `${big ? '?width=160&heigth=160' : '?width=80&heigth=80'}`
+  const title = item.name
+  const subtitle = item.subname
 
   const [address] = useState<string>('')
 
@@ -92,13 +79,21 @@ export function HeaderView({
             {avatar && (
               <div className='tw-avatar'>
                 <div
-                  className={`${big ? 'tw-w-20' : 'tw-w-10'} tw-inline tw-items-center tw-justify-center overflow-hidden`}
+                  className={`${
+                    big ? 'tw-w-20' : 'tw-w-10'
+                  } tw-inline tw-items-center tw-justify-center overflow-hidden`}
                 >
                   <img
                     className={'tw-w-full tw-h-full tw-object-cover tw-rounded-full'}
                     src={avatar}
                     alt={item.name + ' logo'}
+                    onLoad={() => setImageLoaded(true)}
+                    onError={() => setImageLoaded(false)}
+                    style={{ display: imageLoaded ? 'block' : 'none' }}
                   />
+                  {!imageLoaded && (
+                    <div className='tw-w-full tw-h-full tw-bg-gray-200 tw-rounded-full' />
+                  )}
                 </div>
               </div>
             )}
@@ -154,7 +149,7 @@ export function HeaderView({
                           onClick={(e) =>
                             item.layer?.customEditLink
                               ? navigate(
-                                  `${item.layer.customEditLink}${item.layer.customEditParameter ? `/${getValue(item, item.layer.customEditParameter)}${params && '?' + params}` : ''} `,
+                                  `${item.layer.customEditLink}${item.layer.customEditParameter ? `/${item.id}${params && '?' + params}` : ''} `,
                                 )
                               : editCallback(e)
                           }

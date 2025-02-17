@@ -28,6 +28,34 @@ jobs:
       - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.0.3
         with:
           node-version-file: './.tool-versions'
-      - name: Build
-        run: npm install && npm run build
+      - name: Install Dependencies & Build Library
+        run: |
+          npm install
+          npm run build
+          npm link
         working-directory: ./
+
+  build-examples:
+    if: needs.files-changed.outputs.build == 'true'
+    name: Test Example Apps
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: [examples/1-basic-map, examples/2-static-layers]  # Aktualisierte Pfade der Beispiel-Apps
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set Up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Link Utopia-UI in Example App
+        run: |
+          cd ${{ matrix.app }}
+          npm install
+          npm link utopia-ui
+          npm run build

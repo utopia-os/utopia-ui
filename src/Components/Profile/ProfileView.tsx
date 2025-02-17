@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/await-thenable */
+
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-floating-promises */
+
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { LatLng } from 'leaflet'
@@ -21,7 +21,6 @@ import { useSelectPosition, useSetSelectPosition } from '#components/Map/hooks/u
 import { useTags } from '#components/Map/hooks/useTags'
 import { HeaderView } from '#components/Map/Subcomponents/ItemPopupComponents/HeaderView'
 import { MapOverlayPage } from '#components/Templates'
-import { getValue } from '#utils/GetValue'
 
 import { handleDelete, linkItem, unlinkItem } from './itemFunctions'
 import { FlexView } from './Templates/FlexView'
@@ -32,6 +31,7 @@ import { TabsView } from './Templates/TabsView'
 import type { Item } from '#types/Item'
 import type { ItemsApi } from '#types/ItemsApi'
 import type { Tag } from '#types/Tag'
+import type { Marker } from 'leaflet'
 
 export function ProfileView({ attestationApi }: { attestationApi?: ItemsApi<any> }) {
   const [item, setItem] = useState<Item>()
@@ -88,30 +88,25 @@ export function ProfileView({ attestationApi }: { attestationApi?: ItemsApi<any>
     setNeeds([])
     setRelations([])
 
-    item?.layer?.itemOffersField &&
-      getValue(item, item.layer.itemOffersField)?.map((o) => {
-        const tag = tags.find((t) => t.id === o.tags_id)
-        tag && setOffers((current) => [...current, tag])
-        return null
-      })
-    item?.layer?.itemNeedsField &&
-      getValue(item, item.layer.itemNeedsField)?.map((n) => {
-        const tag = tags.find((t) => t.id === n.tags_id)
-        tag && setNeeds((current) => [...current, tag])
-        return null
-      })
-    item?.relations?.map((r) => {
+    item?.offers?.forEach((o) => {
+      const tag = tags.find((t) => t.id === o.tags_id)
+      tag && setOffers((current) => [...current, tag])
+    })
+    item?.needs?.forEach((n) => {
+      const tag = tags.find((t) => t.id === n.tags_id)
+      tag && setNeeds((current) => [...current, tag])
+    })
+    item?.relations?.forEach((r) => {
       const item = items.find((i) => i.id === r.related_items_id)
       item && setRelations((current) => [...current, item])
-      return null
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item, items])
 
   useEffect(() => {
-    const setMap = async (marker, x) => {
-      await map.setView(
+    const setMap = (marker: Marker, x: number) => {
+      map.setView(
         new LatLng(item?.position?.coordinates[1]!, item?.position?.coordinates[0]! + x / 4),
         undefined,
       )
@@ -164,7 +159,7 @@ export function ProfileView({ attestationApi }: { attestationApi?: ItemsApi<any>
   }, [selectPosition])
 
   useEffect(() => {
-    setTemplate(item?.layer?.itemType.template || appState.userType)
+    setTemplate(item?.layer?.itemType.template ?? appState.userType)
   }, [appState.userType, item])
 
   return (

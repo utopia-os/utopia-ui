@@ -108,9 +108,9 @@ export const TabsView = ({
             <StartEndView item={item}></StartEndView>
           </div>
         )}
-        <TextView item={item} />
+        <TextView text={item.text} itemId={item.id} />
         <div className='tw-h-4'></div>
-        <TextView item={item} itemTextField='contact' />
+        <TextView text={item.contact} itemId={item.id} />
       </div>
       {item.layer?.itemType.questlog && (
         <>
@@ -121,7 +121,7 @@ export const TabsView = ({
             className={
               'tw-tab tw-font-bold !tw-ps-2 !tw-pe-2 [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'
             }
-            aria-label={`${item.layer.itemType.icon_as_labels && activeTab !== 2 ? '❤️' : '❤️\u00A0Credibility'}`}
+            aria-label={`${item.layer.itemType.icon_as_labels && activeTab !== 2 ? '❤️' : '❤️\u00A0Trust'}`}
             checked={activeTab === 2 && true}
             onChange={() => updateActiveTab(2)}
           />
@@ -161,7 +161,7 @@ export const TabsView = ({
                                     appState.assetsApi.url +
                                     getUserProfile(a.user_created.id)?.image
                                   }
-                                  alt='Avatar Tailwind CSS Component'
+                                  alt='Avatar'
                                 />
                               </div>
                             </div>
@@ -243,7 +243,7 @@ export const TabsView = ({
             name='my_tabs_2'
             role='tab'
             className='tw-tab tw-font-bold !tw-ps-2 !tw-pe-2 [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'
-            aria-label={`${item.layer.itemType.icon_as_labels && activeTab !== 7 ? '🔗' : '🔗\u00A0Relations'}`}
+            aria-label={`${item.layer.itemType.icon_as_labels && activeTab !== 7 ? '🔗' : '🔗\u00A0Links'}`}
             checked={activeTab === 7 && true}
             onChange={() => updateActiveTab(7)}
           />
@@ -267,7 +267,7 @@ export const TabsView = ({
                         loading={loading}
                       />
                       <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
-                        <TextView truncate item={i} />
+                        <TextView truncate text={i.text} itemId={item.id} />
                       </div>
                     </div>
                   ))}
@@ -277,7 +277,6 @@ export const TabsView = ({
                     item={item}
                     existingRelations={relations}
                     triggerItemSelected={linkItem}
-                    colorField={item.layer.itemColorField}
                   ></ActionButton>
                 )}
               </div>

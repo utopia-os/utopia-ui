@@ -113,6 +113,7 @@ export const TabsForm = ({
               }
               inputStyle='tw-h-24'
               containerStyle='tw-pt-4'
+              required={false}
             />
           </div>
         </div>
@@ -172,7 +173,7 @@ export const TabsForm = ({
             name='my_tabs_2'
             role='tab'
             className='tw-tab  [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'
-            aria-label='Relations'
+            aria-label='Links'
             checked={activeTab === 7 && true}
             onChange={() => updateActiveTab(7)}
           />
@@ -196,7 +197,7 @@ export const TabsForm = ({
                         loading={loading}
                       />
                       <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
-                        <TextView truncate item={i} />
+                        <TextView truncate itemId={item.id} />
                       </div>
                     </div>
                   ))}
@@ -207,7 +208,6 @@ export const TabsForm = ({
                     item={item}
                     existingRelations={state.relations}
                     triggerItemSelected={(id) => linkItem(id, item, updateItem)}
-                    colorField={item.layer.itemColorField}
                   ></ActionButton>
                 )}
               </div>

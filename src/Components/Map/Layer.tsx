@@ -1,18 +1,9 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/restrict-plus-operands */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Children, isValidElement, useEffect, useState } from 'react'
-import { Marker, Tooltip, useMap, useMapEvents } from 'react-leaflet'
-import { useLocation } from 'react-router-dom'
+import { Marker, Tooltip } from 'react-leaflet'
 
 import { encodeTag } from '#utils/FormatTags'
-import { getValue } from '#utils/GetValue'
 import { hashTagRegex } from '#utils/HashTagRegex'
 import MarkerIconFactory from '#utils/MarkerIconFactory'
 import { randomColor } from '#utils/RandomColor'
@@ -34,6 +25,7 @@ import type { Item } from '#types/Item'
 import type { LayerProps } from '#types/LayerProps'
 import type { Tag } from '#types/Tag'
 import type { Popup } from 'leaflet'
+import type { ReactElement, ReactNode } from 'react'
 
 export const Layer = ({
   data,
@@ -42,23 +34,12 @@ export const Layer = ({
   menuIcon = 'MapPinIcon',
   menuText = 'add new place',
   menuColor = '#2E7D32',
-  markerIcon = 'circle-solid',
+  markerIcon = 'point',
   markerShape = 'circle',
   markerDefaultColor = '#777',
   markerDefaultColor2 = 'RGBA(35, 31, 32, 0.2)',
   api,
   itemType,
-  itemNameField = 'name',
-  itemSubnameField,
-  itemTextField = 'text',
-  itemAvatarField,
-  itemColorField,
-  itemOwnerField,
-  itemLatitudeField = 'position.coordinates.1',
-  itemLongitudeField = 'position.coordinates.0',
-  itemTagsField,
-  itemOffersField,
-  itemNeedsField,
   onlyOnePerOwner = false,
   customEditLink,
   customEditParameter,
@@ -79,8 +60,6 @@ export const Layer = ({
   const addPopup = useAddPopup()
   const leafletRefs = useLeafletRefs()
 
-  const location = useLocation()
-
   const allTagsLoaded = useAllTagsLoaded()
   const allItemsLoaded = useAllItemsLoaded()
 
@@ -91,8 +70,6 @@ export const Layer = ({
   const addTag = useAddTag()
   const [newTagsToAdd, setNewTagsToAdd] = useState<Tag[]>([])
   const [tagsReady, setTagsReady] = useState<boolean>(false)
-
-  const map = useMap()
 
   const isLayerVisible = useIsLayerVisible()
 
@@ -115,16 +92,8 @@ export const Layer = ({
         markerDefaultColor2,
         api,
         itemType,
-        itemNameField,
-        itemSubnameField,
-        itemTextField,
-        itemAvatarField,
-        itemColorField,
-        itemOwnerField,
-        itemTagsField,
-        itemOffersField,
-        itemNeedsField,
         onlyOnePerOwner,
+        // Can we just use editCallback for all cases?
         customEditLink,
         customEditParameter,
         // eslint-disable-next-line camelcase
@@ -132,6 +101,7 @@ export const Layer = ({
         listed,
         setItemFormPopup,
         itemFormPopup,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         clusterRef,
       })
     api &&
@@ -148,15 +118,6 @@ export const Layer = ({
         markerDefaultColor2,
         api,
         itemType,
-        itemNameField,
-        itemSubnameField,
-        itemTextField,
-        itemAvatarField,
-        itemColorField,
-        itemOwnerField,
-        itemTagsField,
-        itemOffersField,
-        itemNeedsField,
         onlyOnePerOwner,
         customEditLink,
         customEditParameter,
@@ -165,68 +126,11 @@ export const Layer = ({
         listed,
         setItemFormPopup,
         itemFormPopup,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         clusterRef,
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, api])
-
-  useMapEvents({
-    popupopen: (e) => {
-      const item = Object.entries(leafletRefs).find((r) => r[1].popup === e.popup)?.[1].item
-      if (item?.layer?.name === name && window.location.pathname.split('/')[1] !== item.id) {
-        const params = new URLSearchParams(window.location.search)
-        if (!location.pathname.includes('/item/')) {
-          window.history.pushState(
-            {},
-            '',
-            `/${item.id}` + `${params.toString() !== '' ? `?${params}` : ''}`,
-          )
-        }
-        let title = ''
-        if (item.name) title = item.name
-        else if (item.layer.itemNameField) title = getValue(item, item.layer.itemNameField)
-        document.title = `${document.title.split('-')[0]} - ${title}`
-      }
-    },
-  })
-
-  const openPopup = () => {
-    if (
-      window.location.pathname.split('/').length <= 1 ||
-      window.location.pathname.split('/')[1] === ''
-    ) {
-      map.closePopup()
-    } else {
-      if (window.location.pathname.split('/')[1]) {
-        const id = window.location.pathname.split('/')[1]
-        // eslint-disable-next-line security/detect-object-injection
-        const ref = leafletRefs[id]
-        if (ref?.marker && ref.item.layer?.name === name) {
-          ref.marker &&
-            clusterRef.hasLayer(ref.marker) &&
-            clusterRef?.zoomToShowLayer(ref.marker, () => {
-              ref.marker.openPopup()
-            })
-          let title = ''
-          if (ref.item.name) title = ref.item.name
-          else if (ref.item.layer.itemNameField)
-            title = getValue(ref.item.name, ref.item.layer.itemNameField)
-          document.title = `${document.title.split('-')[0]} - ${title}`
-          document
-            .querySelector('meta[property="og:title"]')
-            ?.setAttribute('content', ref.item.name)
-          document
-            .querySelector('meta[property="og:description"]')
-            ?.setAttribute('content', ref.item.text)
-        }
-      }
-    }
-  }
-
-  useEffect(() => {
-    openPopup()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [leafletRefs, location])
 
   useEffect(() => {
     if (tagsReady) {
@@ -264,29 +168,19 @@ export const Layer = ({
               visibleGroupTypes.length === 0,
           )
           .map((item: Item) => {
-            if (getValue(item, itemLongitudeField) && getValue(item, itemLatitudeField)) {
-              // eslint-disable-next-line security/detect-object-injection
-              if (getValue(item, itemTextField)) item[itemTextField] = getValue(item, itemTextField)
-              // eslint-disable-next-line security/detect-object-injection
-              else item[itemTextField] = ''
-
+            if (item.position?.coordinates[0] && item.position?.coordinates[1]) {
               if (item.tags) {
-                // eslint-disable-next-line security/detect-object-injection
-                item[itemTextField] = item[itemTextField] + '\n\n'
+                item.text += '\n\n'
                 item.tags.map((tag) => {
-                  // eslint-disable-next-line security/detect-object-injection
-                  if (!item[itemTextField].includes(`#${encodeTag(tag)}`)) {
-                    // eslint-disable-next-line security/detect-object-injection
-                    return (item[itemTextField] = item[itemTextField] + `#${encodeTag(tag)} `)
+                  if (!item.text?.includes(`#${encodeTag(tag)}`)) {
+                    item.text += `#${encodeTag(tag)}`
                   }
-                  // eslint-disable-next-line security/detect-object-injection
-                  return item[itemTextField]
+                  return item.text
                 })
               }
 
               if (allTagsLoaded && allItemsLoaded) {
-                // eslint-disable-next-line security/detect-object-injection
-                item[itemTextField].match(hashTagRegex)?.map((tag) => {
+                item.text?.match(hashTagRegex)?.map((tag) => {
                   if (
                     !tags.find(
                       (t) => t.name.toLocaleLowerCase() === tag.slice(1).toLocaleLowerCase(),
@@ -309,20 +203,19 @@ export const Layer = ({
 
               const itemTags = getItemTags(item)
 
-              const latitude =
-                itemLatitudeField && item ? getValue(item, itemLatitudeField) : undefined
-              const longitude =
-                itemLongitudeField && item ? getValue(item, itemLongitudeField) : undefined
+              const latitude = item.position.coordinates[1]
+              const longitude = item.position.coordinates[0]
 
               let color1 = markerDefaultColor
               let color2 = markerDefaultColor2
-              if (itemColorField && getValue(item, itemColorField) != null)
-                color1 = getValue(item, itemColorField)
-              else if (itemTags && itemTags[0]) {
+              if (item.color) {
+                color1 = item.color
+              } else if (itemTags[0]) {
                 color1 = itemTags[0].color
               }
-              if (itemTags && itemTags[0] && itemColorField) color2 = itemTags[0].color
-              else if (itemTags && itemTags[1]) {
+              if (itemTags[0] && item.color) {
+                color2 = itemTags[0].color
+              } else if (itemTags[1]) {
                 color2 = itemTags[1].color
               }
               return (
@@ -348,10 +241,10 @@ export const Layer = ({
                 >
                   {children &&
                   Children.toArray(children).some(
-                    (child) => isValidElement(child) && child.props.__TYPE === 'ItemView',
+                    (child) => isComponentWithType(child) && child.type.__TYPE === 'ItemView',
                   ) ? (
                     Children.toArray(children).map((child) =>
-                      isValidElement(child) && child.props.__TYPE === 'ItemView' ? (
+                      isComponentWithType(child) && child.type.__TYPE === 'ItemView' ? (
                         <ItemViewPopup
                           ref={(r) => {
                             if (!(item.id in leafletRefs && leafletRefs[item.id].popup === r)) {
@@ -364,9 +257,7 @@ export const Layer = ({
                         >
                           {child}
                         </ItemViewPopup>
-                      ) : (
-                        ''
-                      ),
+                      ) : null,
                     )
                   ) : (
                     <>
@@ -382,8 +273,9 @@ export const Layer = ({
                       />
                     </>
                   )}
+
                   <Tooltip offset={[0, -38]} direction='top'>
-                    {item.name ? item.name : getValue(item, itemNameField)}
+                    {item.name}
                   </Tooltip>
                 </Marker>
               )
@@ -396,10 +288,10 @@ export const Layer = ({
         itemFormPopup.layer.name === name &&
         (children &&
         Children.toArray(children).some(
-          (child) => isValidElement(child) && child.props.__TYPE === 'ItemForm',
+          (child) => isComponentWithType(child) && child.type.__TYPE === 'ItemForm',
         ) ? (
           Children.toArray(children).map((child) =>
-            isValidElement(child) && child.props.__TYPE === 'ItemForm' ? (
+            isComponentWithType(child) && child.type.__TYPE === 'ItemForm' ? (
               <ItemFormPopup
                 key={setItemFormPopup?.name}
                 position={itemFormPopup.position}
@@ -425,4 +317,8 @@ export const Layer = ({
         ))}
     </>
   )
+}
+
+function isComponentWithType(node: ReactNode): node is ReactElement & { type: { __TYPE: string } } {
+  return isValidElement(node) && typeof node.type !== 'string' && '__TYPE' in node.type
 }

@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useCallback, useReducer, createContext, useContext, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -82,6 +82,7 @@ function useItemsManager(initialItems: Item[]): {
       },
     })
     result.map((item) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       dispatch({ type: 'ADD', item: { ...item, layer } })
       return null
     })

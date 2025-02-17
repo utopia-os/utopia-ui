@@ -17,4 +17,6 @@ export interface FormState {
   offers: Tag[]
   needs: Tag[]
   relations: Item[]
+  start: string
+  end: string
 }

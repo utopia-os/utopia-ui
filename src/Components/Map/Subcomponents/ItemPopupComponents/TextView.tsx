@@ -25,7 +25,7 @@ export const TextView = ({
   truncate = false,
   rawText,
 }: {
-  item: Item
+  item?: Item
   itemId: string
   text?: string
   truncate?: boolean

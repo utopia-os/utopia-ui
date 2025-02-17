@@ -22,8 +22,7 @@
     "test:component": "cypress run --component --browser electron",
     "lint": "npm run test:lint:eslint",
     "lintfix": "npm run test:lint:eslint -- --fix",
-
-    "test:component": "cypress run --component --browser electron"
+    "test:component": "cypress run --component --browser electron",
     "test:unit": "npm run test:unit:dev -- run --coverage",
     "test:unit:dev": "vitest",
     "docs:generate": "typedoc --plugin typedoc-plugin-coverage src/index.tsx",

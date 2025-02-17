@@ -15,19 +15,26 @@ import { decodeTag } from '#utils/FormatTags'
 import { hashTagRegex } from '#utils/HashTagRegex'
 import { fixUrls, mailRegex } from '#utils/ReplaceURLs'
 
+import type { Item } from '#types/Item'
 import type { Tag } from '#types/Tag'
 
 export const TextView = ({
+  item,
   itemId,
   text,
   truncate = false,
   rawText,
 }: {
+  item: Item
   itemId: string
   text?: string
   truncate?: boolean
   rawText?: string
 }) => {
+  if (item) {
+    text = item.text
+    itemId = item.id
+  }
   const tags = useTags()
   const addFilterTag = useAddFilterTag()
 

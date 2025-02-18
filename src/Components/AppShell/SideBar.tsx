@@ -1,10 +1,3 @@
-/* eslint-disable @typescript-eslint/consistent-type-definitions */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unnecessary-condition */
-/* eslint-disable @typescript-eslint/restrict-plus-operands */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import ChevronRightIcon from '@heroicons/react/24/outline/ChevronRightIcon'
 import { useRef, useState, useEffect } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
@@ -12,35 +5,42 @@ import { Sidenav, initTE } from 'tw-elements'
 
 import SidebarSubmenu from './SidebarSubmenu'
 
-type route = {
+export interface Route {
   path: string
   icon: JSX.Element
   name: string
-  submenu?: route
+  submenu?: Route[]
   blank?: boolean
+}
+
+interface SidenavType extends HTMLElement {
+  toggleSlim(): void
+  toggle(): void
 }
 
 /**
  * @category AppShell
  */
-export function SideBar({ routes, bottomRoutes }: { routes: route[]; bottomRoutes?: route[] }) {
+export function SideBar({ routes, bottomRoutes }: { routes: Route[]; bottomRoutes?: Route[] }) {
   // prevent react18 from calling useEffect twice
   const init = useRef(false)
 
   const location = useLocation()
 
-  const [instance, setInstance] = useState<any>(null)
+  const [instance, setInstance] = useState<SidenavType>()
   const [slim, setSlim] = useState<boolean>(false)
 
   const toggleSlim = () => {
     setSlim(!slim)
-    instance.toggleSlim()
+    instance?.toggleSlim()
   }
 
   useEffect(() => {
     if (!init.current) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
       initTE({ Sidenav })
-      const instance = Sidenav.getInstance(document.getElementById('sidenav'))
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+      const instance = Sidenav.getInstance(document.getElementById('sidenav')) as SidenavType
       setInstance(instance)
       instance.toggleSlim()
       init.current = true
@@ -86,12 +86,13 @@ export function SideBar({ routes, bottomRoutes }: { routes: route[]; bottomRoute
                   <NavLink
                     end
                     target={route.blank ? '_blank' : '_self'}
-                    to={`${route.path}${params && '?' + params}`}
+                    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                    to={`${route.path}${params && '?' + params.toString()}`}
                     className={({ isActive }) =>
                       `${isActive ? 'tw-font-semibold  tw-bg-base-200 !tw-rounded-none' : 'tw-font-normal !tw-rounded-none'}`
                     }
                     onClick={() => {
-                      if (screen.width < 640 && !slim) instance.toggle()
+                      if (screen.width < 640 && !slim) instance?.toggle()
                     }}
                   >
                     {route.icon}
@@ -139,7 +140,7 @@ export function SideBar({ routes, bottomRoutes }: { routes: route[]; bottomRoute
                           `${isActive ? 'tw-font-semibold  tw-bg-base-200 !tw-rounded-none' : 'tw-font-normal !tw-rounded-none'}`
                         }
                         onClick={() => {
-                          if (screen.width < 640 && !slim) instance.toggle()
+                          if (screen.width < 640 && !slim) instance?.toggle()
                         }}
                       >
                         {route.icon}

@@ -61,18 +61,19 @@ jobs:
         working-directory: ./examples/2-static-layers
 
   lint-example-3-tags:
-   if: needs.files-changed.outputs.lint == 'true'
-   name: Lint Example 3 - Tags
-   needs: files-changed
-   runs-on: ubuntu-latest
-   steps:
-    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.1.7
-     - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.0.3
-       with:
-         node-version-file: './.tool-versions'
-     - name: Lint
-       run: npm install && npm run lint
-       working-directory: ./examples/3-static-layers
+    if: needs.files-changed.outputs.lint == 'true'
+    name: Lint Example 3 - Tags
+    needs: files-changed
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.1.7
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.0.3
+        with:
+          node-version-file: './.tool-versions'
+      - name: Lint
+        run: npm install && npm run lint
+        working-directory: ./examples/3-tags
+
 #  unit:
 #    if: needs.files-changed.outputs.frontend == 'true'
 #    name: Unit - Frontend

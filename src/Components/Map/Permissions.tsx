@@ -7,6 +7,9 @@ import { useSetPermissionData, useSetPermissionApi, useSetAdminRole } from './ho
 import type { ItemsApi } from '#types/ItemsApi'
 import type { Permission } from '#types/Permission'
 
+/**
+ * @category Types
+ */
 export interface PermissionsProps {
   data?: Permission[]
   api?: ItemsApi<Permission>

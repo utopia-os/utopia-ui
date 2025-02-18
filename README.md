@@ -1,4 +1,4 @@
-# Utopia UI [![npm version](https://img.shields.io/npm/v/utopia-ui.svg)](https://www.npmjs.com/package/utopia-ui)  ![Build Status](https://img.shields.io/github/actions/workflow/status/utopia-os/utopia-ui/test.build.yml?branch=main) ![License](https://img.shields.io/github/license/utopia-os/utopia-ui)
+# Utopia UI [![npm version](https://img.shields.io/npm/v/utopia-ui.svg)](https://www.npmjs.com/package/utopia-ui)  ![Build Status](https://img.shields.io/github/actions/workflow/status/utopia-os/utopia-ui/test.build.yml?branch=main) [![Docs Coverage](https://utopia-os.org/utopia-ui/coverage.svg)](https://utopia-os.org/utopia-ui/) ![License](https://img.shields.io/github/license/utopia-os/utopia-ui)
 
 **UI Framework for Real-Life-Networking-Apps**
 
@@ -28,7 +28,9 @@ It is the base of [Utopia Map](https://github.com/utopia-os/utopia-map) and [Uto
 
 1. If you want to use **Utopia UI** in your project, check out [`/exampes`](/examples) to see how to use its components.
 
-2. If you like to contribute to our library, see the [Contribution Guide](/CONTRIBUTING.md) to see how to setup a development environment on your local machine.
+2. If you need more informatuin you can explore [the docs](https://utopia-os.org/utopia-ui/)
+
+3. If you like to contribute to our library, see the [Contribution Guide](/CONTRIBUTING.md) to see how to setup a development environment on your local machine.
 
 ## Components
 

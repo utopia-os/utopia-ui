@@ -7,18 +7,18 @@ import { useSetPermissionData, useSetPermissionApi, useSetAdminRole } from './ho
 import type { ItemsApi } from '#types/ItemsApi'
 import type { Permission } from '#types/Permission'
 
-/**
- * @category Map
- */
-export function Permissions({
-  data,
-  api,
-  adminRole,
-}: {
+export interface PermissionsProps {
   data?: Permission[]
   api?: ItemsApi<Permission>
   adminRole?: string
-}) {
+}
+export type { Permission } from '#types/Permission'
+export type { ItemsApi } from '#types/ItemsApi'
+
+/**
+ * @category Map
+ */
+export function Permissions({ data, api, adminRole }: PermissionsProps) {
   const setPermissionData = useSetPermissionData()
   const setPermissionApi = useSetPermissionApi()
   const setAdminRole = useSetAdminRole()

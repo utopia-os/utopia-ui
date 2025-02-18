@@ -76,7 +76,7 @@ export default [
     ],
   },
   {
-    input: 'src/index.tsx',
+    input: 'dist/types/src/index.d.ts',
     output: [{ file: 'dist/index.d.ts', format: 'es' }],
     plugins: [
       aliasConfig,
@@ -87,6 +87,6 @@ export default [
         },
       }),
     ],
-    external: [/\.css$/, /\.d\.ts$/], // ✅ `.d.ts` als extern behandeln
+    external: [/\.css$/, /\.d\.ts$/],
   },
 ]

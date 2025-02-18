@@ -27,12 +27,15 @@ export const TextView = ({
   text,
   truncate = false,
   rawText,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  itemTextField,
 }: {
   item?: Item
-  itemId: string
+  itemId?: string
   text?: string
   truncate?: boolean
   rawText?: string
+  itemTextField?: string
 }) => {
   if (item) {
     text = item.text

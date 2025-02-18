@@ -33,10 +33,13 @@ import type { Item } from '#types/Item'
 export const OverlayItemsIndexPage = ({
   url,
   layerName,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  parameterField,
   plusButton = true,
 }: {
   layerName: string
   url: string
+  parameterField?: string
   plusButton?: boolean
 }) => {
   const [loading, setLoading] = useState<boolean>(false)

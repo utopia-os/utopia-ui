@@ -42,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        app: [examples/1-basic-map, examples/2-static-layers]  # Aktualisierte Pfade der Beispiel-Apps
+        app: [examples/1-basic-map, examples/2-static-layers, examples/3-tags ]
 
     steps:
       - name: Checkout Repository

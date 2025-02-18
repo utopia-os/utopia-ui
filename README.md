@@ -28,7 +28,7 @@ It is the base of [Utopia Map](https://github.com/utopia-os/utopia-map) and [Uto
 
 1. If you want to use **Utopia UI** in your project, check out [`/exampes`](/examples) to see how to use its components.
 
-2. If you need more informatuin you can explore [the docs](https://utopia-os.org/utopia-ui/)
+2. If you need more information you can explore [the docs](https://utopia-os.org/utopia-ui/)
 
 3. If you like to contribute to our library, see the [Contribution Guide](/CONTRIBUTING.md) to see how to setup a development environment on your local machine.
 

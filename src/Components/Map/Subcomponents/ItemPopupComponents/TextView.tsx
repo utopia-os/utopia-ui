@@ -128,7 +128,7 @@ export const TextView = ({
   }: {
     children: string
     tag: Tag
-    itemId: string
+    itemId?: string
   }) => {
     return (
       <a

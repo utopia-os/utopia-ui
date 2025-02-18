@@ -81,12 +81,11 @@ export default [
     plugins: [
       aliasConfig,
       dts({
-        respectExternal: true,
         compilerOptions: {
           skipLibCheck: true,
         },
       }),
     ],
-    external: [/\.css$/, /\.d\.ts$/],
+    external: [/\.css$/], //, /\.d\.ts$/
   },
 ]

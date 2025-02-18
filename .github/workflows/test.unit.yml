@@ -15,6 +15,7 @@ jobs:
         with:
           filters: |
             unit:
+              - '.github/workflows/**/*'
               - '**/*'
               - '!**/*.md'
           predicate-quantifier: 'every'

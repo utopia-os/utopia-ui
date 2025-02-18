@@ -15,6 +15,7 @@ jobs:
         with:
           filters: |
             docs:
+              - '.github/workflows/**/*'
               - '**/*.md'
               - 'LICENSE'
 

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'

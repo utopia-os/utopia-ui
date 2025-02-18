@@ -1,8 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createContext, useState, useContext, useEffect } from 'react'
 
 import type { UserApi } from '#types/UserApi'
@@ -25,11 +20,11 @@ interface AuthContextProps {
   login: (credentials: AuthCredentials) => Promise<UserItem | undefined>
   register: (credentials: AuthCredentials, userName: string) => Promise<UserItem | undefined>
   loading: boolean
-  logout: () => Promise<any>
-  updateUser: (user: UserItem) => any
-  token: string | null
-  requestPasswordReset: (email: string, reset_url: string) => Promise<any>
-  passwordReset: (token: string, new_password: string) => Promise<any>
+  logout: () => Promise<void>
+  updateUser: (user: UserItem) => Promise<UserItem>
+  token: string | undefined
+  requestPasswordReset: (email: string, reset_url: string) => Promise<void>
+  passwordReset: (token: string, new_password: string) => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextProps>({
@@ -50,12 +45,13 @@ const AuthContext = createContext<AuthContextProps>({
  */
 export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
   const [user, setUser] = useState<UserItem | null>(null)
-  const [token, setToken] = useState<string | null>(null)
+  const [token, setToken] = useState<string>()
   const [loading, setLoading] = useState<boolean>(false)
   const isAuthenticated = !!user
 
   useEffect(() => {
     setLoading(true)
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     loadUser()
     setLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -81,10 +77,10 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
   const login = async (credentials: AuthCredentials): Promise<UserItem | undefined> => {
     setLoading(true)
     try {
-      const res = await userApi.login(credentials.email, credentials.password)
-      setToken(res?.access_token)
+      const user = await userApi.login(credentials.email, credentials.password)
+      setToken(user?.access_token)
       return await loadUser()
-    } catch (error: any) {
+    } catch (error) {
       setLoading(false)
       throw error
     }
@@ -92,13 +88,13 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
 
   const register = async (
     credentials: AuthCredentials,
-    userName,
+    userName: string,
   ): Promise<UserItem | undefined> => {
     setLoading(true)
     try {
       /* const res = */ await userApi.register(credentials.email, credentials.password, userName)
       return await login(credentials)
-    } catch (error: any) {
+    } catch (error) {
       setLoading(false)
       throw error
     }
@@ -108,7 +104,7 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
     try {
       await userApi.logout()
       setUser(null)
-    } catch (error: any) {
+    } catch (error) {
       setLoading(false)
       throw error
     }
@@ -116,37 +112,35 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
 
   const updateUser = async (user: UserItem) => {
     setLoading(true)
-    const { id, ...userRest } = user
-
     try {
-      const res = await userApi.updateUser(userRest)
-      setUser(res as any)
-      loadUser()
+      const updatedUser = await userApi.updateUser(user)
+      setUser(updatedUser)
+      await loadUser()
       setLoading(false)
-      return res as any
-    } catch (error: any) {
+      return updatedUser
+    } catch (error) {
       setLoading(false)
       throw error
     }
   }
 
-  const requestPasswordReset = async (email: string, resetUrl?: string): Promise<any> => {
+  const requestPasswordReset = async (email: string, resetUrl?: string): Promise<void> => {
     setLoading(true)
     try {
       await userApi.requestPasswordReset(email, resetUrl)
       return setLoading(false)
-    } catch (error: any) {
+    } catch (error) {
       setLoading(false)
       throw error
     }
   }
 
-  const passwordReset = async (token: string, newPassword: string): Promise<any> => {
+  const passwordReset = async (token: string, newPassword: string): Promise<void> => {
     setLoading(true)
     try {
       await userApi.passwordReset(token, newPassword)
       return setLoading(false)
-    } catch (error: any) {
+    } catch (error) {
       setLoading(false)
       throw error
     }

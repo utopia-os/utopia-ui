@@ -33,7 +33,6 @@ import type { Item } from '#types/Item'
 export const OverlayItemsIndexPage = ({
   url,
   layerName,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   parameterField,
   plusButton = true,
 }: {
@@ -44,6 +43,8 @@ export const OverlayItemsIndexPage = ({
 }) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [addItemPopupType, setAddItemPopupType] = useState<string>('')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const parameterFieldDummy = parameterField
 
   const tabRef = useRef<HTMLFormElement>(null)
 

@@ -27,7 +27,6 @@ export const TextView = ({
   text,
   truncate = false,
   rawText,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   itemTextField,
 }: {
   item?: Item
@@ -43,6 +42,8 @@ export const TextView = ({
   }
   const tags = useTags()
   const addFilterTag = useAddFilterTag()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const itemTextFieldDummy = itemTextField
 
   let innerText = ''
   let replacedText = ''

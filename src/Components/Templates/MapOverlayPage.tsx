@@ -3,6 +3,9 @@ import { DomEvent } from 'leaflet'
 import { createRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+/**
+ * @category Templates
+ */
 export function MapOverlayPage({
   children,
   className,

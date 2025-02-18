@@ -33,6 +33,9 @@ import type { ItemsApi } from '#types/ItemsApi'
 import type { Tag } from '#types/Tag'
 import type { Marker } from 'leaflet'
 
+/**
+ * @category Profile
+ */
 export function ProfileView({ attestationApi }: { attestationApi?: ItemsApi<any> }) {
   const [item, setItem] = useState<Item>()
   const [updatePermission, setUpdatePermission] = useState<boolean>(false)

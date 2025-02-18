@@ -2,6 +2,9 @@ import { Children, cloneElement, isValidElement } from 'react'
 
 import type { Item } from '#types/Item'
 
+/**
+ * @category Map
+ */
 export const ItemView = ({ children, item }: { children?: React.ReactNode; item?: Item }) => {
   return (
     <div>

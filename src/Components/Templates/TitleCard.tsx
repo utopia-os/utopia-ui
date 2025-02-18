@@ -11,6 +11,9 @@ interface TitleCardProps {
   TopSideButtons?: any
 }
 
+/**
+ * @category Templates
+ */
 export function TitleCard({
   title,
   hideTitle,

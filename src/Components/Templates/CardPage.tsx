@@ -2,6 +2,9 @@ import { Link } from 'react-router-dom'
 
 import { TitleCard } from './TitleCard'
 
+/**
+ * @category Templates
+ */
 export function CardPage({
   title,
   hideTitle,

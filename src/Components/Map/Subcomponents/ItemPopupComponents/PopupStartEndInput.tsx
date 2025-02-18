@@ -10,6 +10,9 @@ interface StartEndInputProps {
   updateEndValue?: (value: string) => void
 }
 
+/**
+ * @category Map
+ */
 export const PopupStartEndInput = ({
   item,
   showLabels = true,

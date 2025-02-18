@@ -8,6 +8,9 @@ import { UtopiaMapInner } from './UtopiaMapInner'
 import type { UtopiaMapProps } from '#types/UtopiaMapProps'
 import 'react-toastify/dist/ReactToastify.css'
 
+/**
+ * @category Map
+ */
 function UtopiaMap({
   height = '500px',
   width = '100%',

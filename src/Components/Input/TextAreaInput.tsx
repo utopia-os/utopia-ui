@@ -22,6 +22,9 @@ interface KeyValue {
   [key: string]: string
 }
 
+/**
+ * @category Input
+ */
 export function TextAreaInput({
   labelTitle,
   dataField,

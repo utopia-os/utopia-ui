@@ -11,6 +11,9 @@ import { MapOverlayPage } from './MapOverlayPage'
 import type { Item } from '#types/Item'
 import type { ItemsApi } from '#types/ItemsApi'
 
+/**
+ * @category Templates
+ */
 export const AttestationForm = ({ api }: { api?: ItemsApi<unknown> }) => {
   const items = useItems()
   const appState = useAppState()

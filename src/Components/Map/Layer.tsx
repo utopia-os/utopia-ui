@@ -27,6 +27,9 @@ import type { Tag } from '#types/Tag'
 import type { Popup } from 'leaflet'
 import type { ReactElement, ReactNode } from 'react'
 
+/**
+ * @category Map
+ */
 export const Layer = ({
   data,
   children,

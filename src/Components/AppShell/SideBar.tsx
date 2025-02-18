@@ -20,6 +20,9 @@ type route = {
   blank?: boolean
 }
 
+/**
+ * @category AppShell
+ */
 export function SideBar({ routes, bottomRoutes }: { routes: route[]; bottomRoutes?: route[] }) {
   // prevent react18 from calling useEffect twice
   const init = useRef(false)

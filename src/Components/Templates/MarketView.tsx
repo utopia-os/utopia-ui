@@ -30,6 +30,9 @@ function groupAndCount(arr) {
   return grouped.sort((a, b) => b.count - a.count)
 }
 
+/**
+ * @category Templates
+ */
 export const MarketView = () => {
   const [offers, setOffers] = useState<Tag[]>([])
   const [needs, setNeeds] = useState<Tag[]>([])

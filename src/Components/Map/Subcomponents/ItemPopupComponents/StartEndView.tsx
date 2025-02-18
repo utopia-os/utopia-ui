@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 import type { Item } from '#types/Item'
 
+/**
+ * @category Map
+ */
 export const StartEndView = ({ item }: { item?: Item }) => {
   return (
     <div className='tw-flex tw-flex-row tw-mb-4 tw-mt-1'>

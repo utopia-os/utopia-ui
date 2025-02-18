@@ -4,6 +4,9 @@ import { SetAppState } from './SetAppState'
 
 import type { AssetsApi } from '#types/AssetsApi'
 
+/**
+ * @category AppShell
+ */
 export function AppShell({
   appName,
   children,

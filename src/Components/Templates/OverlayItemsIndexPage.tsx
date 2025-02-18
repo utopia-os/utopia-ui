@@ -27,6 +27,9 @@ import { MapOverlayPage } from './MapOverlayPage'
 
 import type { Item } from '#types/Item'
 
+/**
+ * @category Templates
+ */
 export const OverlayItemsIndexPage = ({
   url,
   layerName,

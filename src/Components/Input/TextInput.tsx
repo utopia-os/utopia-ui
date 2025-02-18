@@ -18,6 +18,9 @@ type InputTextProps = {
   updateFormValue?: (value: string) => void
 }
 
+/**
+ * @category Input
+ */
 export function TextInput({
   labelTitle,
   labelStyle,

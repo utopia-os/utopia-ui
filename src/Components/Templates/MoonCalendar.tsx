@@ -7,6 +7,9 @@ import { LUNAR_MONTH, getLastNewMoon, getNextNewMoon } from '#utils/Moon'
 import { CircleLayout } from './CircleLayout'
 import { MapOverlayPage } from './MapOverlayPage'
 
+/**
+ * @category Templates
+ */
 export const MoonCalendar = () => {
   const today = startOfToday()
 

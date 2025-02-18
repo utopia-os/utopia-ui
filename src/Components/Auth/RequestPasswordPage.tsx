@@ -9,6 +9,9 @@ import { MapOverlayPage } from '#components/Templates/MapOverlayPage'
 
 import { useAuth } from './useAuth'
 
+/**
+ * @category Auth
+ */
 // eslint-disable-next-line react/prop-types
 export function RequestPasswordPage({ resetUrl }) {
   const [email, setEmail] = useState<string>('')

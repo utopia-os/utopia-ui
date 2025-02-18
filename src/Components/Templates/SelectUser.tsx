@@ -7,6 +7,9 @@ import { useItems } from '#components/Map/hooks/useItems'
 
 import { MapOverlayPage } from './MapOverlayPage'
 
+/**
+ * @category Templates
+ */
 export const SelectUser = () => {
   const appState = useAppState()
   const items = useItems()

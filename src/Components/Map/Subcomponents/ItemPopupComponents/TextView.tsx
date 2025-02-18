@@ -18,6 +18,9 @@ import { fixUrls, mailRegex } from '#utils/ReplaceURLs'
 import type { Item } from '#types/Item'
 import type { Tag } from '#types/Tag'
 
+/**
+ * @category Map
+ */
 export const TextView = ({
   item,
   itemId,

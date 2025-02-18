@@ -45,6 +45,9 @@ const AuthContext = createContext<AuthContextProps>({
   passwordReset: () => Promise.reject(Error('Unimplemented')),
 })
 
+/**
+ * @category Auth
+ */
 export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
   const [user, setUser] = useState<UserItem | null>(null)
   const [token, setToken] = useState<string | null>(null)

@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react'
 
 import { useItems } from '#components/Map/hooks/useItems'
 
+/**
+ * @category AppShell
+ */
 export const Sitemap = ({ url }: { url: string }) => {
   const [sitemap, setSitemap] = useState('')
 

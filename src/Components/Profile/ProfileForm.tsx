@@ -23,6 +23,9 @@ import type { FormState } from '#types/FormState'
 import type { Item } from '#types/Item'
 import type { Tag } from '#types/Tag'
 
+/**
+ * @category Profile
+ */
 export function ProfileForm() {
   const [state, setState] = useState<FormState>({
     color: '',

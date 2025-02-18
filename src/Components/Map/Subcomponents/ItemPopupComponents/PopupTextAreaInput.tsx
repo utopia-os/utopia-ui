@@ -2,6 +2,9 @@ import { TextAreaInput } from '#components/Input'
 
 import type { Item } from '#types/Item'
 
+/**
+ * @category Map
+ */
 export const PopupTextAreaInput = ({
   dataField,
   placeholder,

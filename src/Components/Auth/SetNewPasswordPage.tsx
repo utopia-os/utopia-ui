@@ -8,6 +8,9 @@ import { MapOverlayPage } from '#components/Templates/MapOverlayPage'
 
 import { useAuth } from './useAuth'
 
+/**
+ * @category Auth
+ */
 export function SetNewPasswordPage() {
   const [password, setPassword] = useState<string>('')
 

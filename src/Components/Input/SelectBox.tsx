@@ -17,6 +17,9 @@ type SelectBoxProps = {
   labelDescription?: string
 }
 
+/**
+ * @category Input
+ */
 export function SelectBox(props: SelectBoxProps) {
   const {
     labelTitle,

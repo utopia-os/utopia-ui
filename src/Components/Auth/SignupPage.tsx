@@ -11,6 +11,9 @@ import { MapOverlayPage } from '#components/Templates/MapOverlayPage'
 
 import { useAuth } from './useAuth'
 
+/**
+ * @category Auth
+ */
 export function SignupPage() {
   const [email, setEmail] = useState<string>('')
   const [userName, setUserName] = useState<string>('')

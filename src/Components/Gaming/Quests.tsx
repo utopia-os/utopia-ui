@@ -7,6 +7,9 @@ import { useQuestsOpen, useSetQuestOpen } from './hooks/useQuests'
 
 import type { Item } from '#types/Item'
 
+/**
+ * @category Gaming
+ */
 export function Quests() {
   const questsOpen = useQuestsOpen()
   const setQuestsOpen = useSetQuestOpen()

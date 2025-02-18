@@ -10,6 +10,9 @@ import { MapOverlayPage } from '#components/Templates'
 
 import type { UserItem } from '#types/UserItem'
 
+/**
+ * @category Profile
+ */
 export function UserSettings() {
   const { user, updateUser, loading /* token */ } = useAuth()
 

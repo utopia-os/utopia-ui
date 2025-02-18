@@ -6,6 +6,9 @@ import { useGetItemTags } from '#components/Map/hooks/useTags'
 
 import type { Item } from '#types/Item'
 
+/**
+ * @category Map
+ */
 export const PopupButton = ({
   url,
   parameterField,

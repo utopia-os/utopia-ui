@@ -16,24 +16,9 @@ export const ContactInfoView = ({ item, heading }: { item: Item; heading: string
   const items = useItems()
 
   useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log(
-      'user:',
-      items.find(
-        (i) =>
-          i.user_created?.id === item.user_created?.id &&
-          i.layer?.itemType.name === appState.userType,
-      ),
-    )
-
     setProfileOwner(
-      items.find(
-        (i) =>
-          i.user_created?.id === item.user_created?.id &&
-          i.layer?.itemType.name === appState.userType,
-      ),
+      items.find((i) => i.user_created?.id === item.user_created?.id && i.layer?.userProfileLayer),
     )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item, items])
 
   return (

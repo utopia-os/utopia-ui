@@ -1,5 +1,4 @@
 import type { ItemsApi } from './ItemsApi'
-import type { ItemType } from './ItemType'
 import type { LayerProps } from './LayerProps'
 import type { Relation } from './Relation'
 import type { UserItem } from './UserItem'
@@ -50,7 +49,6 @@ export interface Item {
   contact?: string
   telephone?: string
   next_appointment?: string
-  type?: ItemType
   gallery?: GalleryItem[]
 
   // {

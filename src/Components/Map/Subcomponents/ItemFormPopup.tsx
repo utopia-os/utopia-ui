@@ -86,8 +86,7 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
       map.closePopup()
     } else {
       const item = items.find(
-        (i) =>
-          i.user_created?.id === user?.id && i.layer?.itemType.name === props.layer.itemType.name,
+        (i) => i.user_created?.id === user?.id && i.layer?.id === props.layer.id,
       )
 
       const uuid = crypto.randomUUID()
@@ -114,7 +113,6 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
             ...formItem,
             name: (formItem.name ? formItem.name : user?.first_name) ?? '',
             user_created: user ?? undefined,
-            type: props.layer.itemType,
             id: uuid,
             layer: props.layer,
             public_edit: !user,

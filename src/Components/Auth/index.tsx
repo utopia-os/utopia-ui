@@ -1,4 +1,4 @@
-export * from './useAuth'
+export { AuthProvider, UserApi, UserItem } from './useAuth'
 export { LoginPage } from './LoginPage'
 export { SignupPage } from './SignupPage'
 export { RequestPasswordPage } from './RequestPasswordPage'

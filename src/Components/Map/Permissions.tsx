@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { useAuth } from '#components/Auth'
+import { useAuth } from '#components/Auth/useAuth'
 
 import { useSetPermissionData, useSetPermissionApi, useSetAdminRole } from './hooks/usePermissions'
 

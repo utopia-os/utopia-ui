@@ -32,7 +32,6 @@ jobs:
         run: |
           npm install
           npm run build
-          npm link
         working-directory: ./
 
   build-examples:
@@ -45,17 +44,14 @@ jobs:
         app: [examples/1-basic-map, examples/2-static-layers, examples/3-tags ]
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Set Up Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.1.7
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.0.3
         with:
-          node-version: 18
-
+          node-version-file: './.tool-versions'
       - name: Link Utopia-UI in Example App
         run: |
+          npm install
+          npm run build
           cd ${{ matrix.app }}
           npm install
-          npm link utopia-ui
           npm run build

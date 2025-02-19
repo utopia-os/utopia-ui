@@ -48,7 +48,7 @@ export const Layer = ({
   markerDefaultColor2 = 'RGBA(35, 31, 32, 0.2)',
   api,
   itemType,
-  onlyOnePerOwner = false,
+  userProfileLayer = false,
   customEditLink,
   customEditParameter,
   // eslint-disable-next-line camelcase
@@ -100,7 +100,7 @@ export const Layer = ({
         markerDefaultColor2,
         api,
         itemType,
-        onlyOnePerOwner,
+        userProfileLayer,
         // Can we just use editCallback for all cases?
         customEditLink,
         customEditParameter,
@@ -126,7 +126,7 @@ export const Layer = ({
         markerDefaultColor2,
         api,
         itemType,
-        onlyOnePerOwner,
+        userProfileLayer,
         customEditLink,
         customEditParameter,
         // eslint-disable-next-line camelcase

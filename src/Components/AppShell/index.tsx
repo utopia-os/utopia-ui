@@ -1,4 +1,4 @@
-export { AppShell } from './AppShell'
+export * from './AppShell'
 export { SideBar } from './SideBar'
 export { Content } from './Content'
 export { Sitemap } from './Sitemap'

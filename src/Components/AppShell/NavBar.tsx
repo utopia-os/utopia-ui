@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { useAuth } from '#components/Auth'
+import { useAuth } from '#components/Auth/useAuth'
 import { useItems } from '#components/Map/hooks/useItems'
 
 import type { Item } from '#types/Item'

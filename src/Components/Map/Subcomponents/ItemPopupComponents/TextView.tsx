@@ -27,12 +27,14 @@ export const TextView = ({
   text,
   truncate = false,
   rawText,
+  itemTextField,
 }: {
   item?: Item
-  itemId: string
+  itemId?: string
   text?: string
   truncate?: boolean
   rawText?: string
+  itemTextField?: string
 }) => {
   if (item) {
     text = item.text
@@ -40,6 +42,8 @@ export const TextView = ({
   }
   const tags = useTags()
   const addFilterTag = useAddFilterTag()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const itemTextFieldDummy = itemTextField
 
   let innerText = ''
   let replacedText = ''
@@ -125,7 +129,7 @@ export const TextView = ({
   }: {
     children: string
     tag: Tag
-    itemId: string
+    itemId?: string
   }) => {
     return (
       <a

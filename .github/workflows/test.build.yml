@@ -50,6 +50,8 @@ jobs:
           node-version-file: './.tool-versions'
       - name: Link Utopia-UI in Example App
         run: |
+          npm install
+          npm run build
           cd ${{ matrix.app }}
           npm install
           npm run build

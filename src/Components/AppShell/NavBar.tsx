@@ -8,7 +8,7 @@ import { useItems } from '#components/Map/hooks/useItems'
 
 import type { Item } from '#types/Item'
 
-export default function NavBar({ appName, userType }: { appName: string; userType: string }) {
+export default function NavBar({ appName }: { appName: string }) {
   const { isAuthenticated, user, logout } = useAuth()
 
   const [userProfile, setUserProfile] = useState<Item>({} as Item)

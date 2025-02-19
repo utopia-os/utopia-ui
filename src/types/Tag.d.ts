@@ -1,3 +1,6 @@
+/**
+ * @category Types
+ */
 export interface Tag {
   color: string
   id: string

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { useAuth } from '#components/Auth'
+import { useAuth } from '#components/Auth/useAuth'
 import { useItems } from '#components/Map/hooks/useItems'
 
 import { useQuestsOpen, useSetQuestOpen } from './hooks/useQuests'

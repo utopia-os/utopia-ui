@@ -4,6 +4,8 @@ import { SetAppState } from './SetAppState'
 
 import type { AssetsApi } from '#types/AssetsApi'
 
+export type { AssetsApi } from '#types/AssetsApi'
+
 /**
  * @category AppShell
  */

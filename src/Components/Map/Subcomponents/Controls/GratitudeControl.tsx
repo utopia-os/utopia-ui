@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 
-import { useAuth } from '#components/Auth'
+import { useAuth } from '#components/Auth/useAuth'
 
 export const GratitudeControl = () => {
   const navigate = useNavigate()

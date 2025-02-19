@@ -8,6 +8,9 @@ import { createContext, useState, useContext, useEffect } from 'react'
 import type { UserApi } from '#types/UserApi'
 import type { UserItem } from '#types/UserItem'
 
+export type { UserApi } from '#types/UserApi'
+export type { UserItem } from '#types/UserItem'
+
 interface AuthProviderProps {
   userApi: UserApi
   children?: React.ReactNode

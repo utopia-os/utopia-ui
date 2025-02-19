@@ -15,6 +15,9 @@ interface GalleryItem {
   }
 }
 
+/**
+ * @category Types
+ */
 export interface Item {
   id: string
   name: string

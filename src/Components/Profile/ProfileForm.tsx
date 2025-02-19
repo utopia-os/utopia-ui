@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import { useAppState } from '#components/AppShell/hooks/useAppState'
-import { useAuth } from '#components/Auth'
+import { useAuth } from '#components/Auth/useAuth'
 import { useItems, useUpdateItem, useAddItem } from '#components/Map/hooks/useItems'
 import { useLayers } from '#components/Map/hooks/useLayers'
 import { useHasUserPermission } from '#components/Map/hooks/usePermissions'

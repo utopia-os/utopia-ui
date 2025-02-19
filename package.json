@@ -113,8 +113,8 @@
   "imports": {
     "#components/*": "./src/Components/*",
     "#utils/*": "./src/Utils/*",
+    "#types/*": "./src/types/*",
     "#src/*": "./src/*",
-    "#types/*": "./types/*",
     "#root/*": "./*"
   }
 }

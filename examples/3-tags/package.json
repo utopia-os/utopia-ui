@@ -1,5 +1,5 @@
 {
-  "name": "2-static-layer",
+  "name": "3-tags",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,11 +12,10 @@
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "utopia-ui": "../../"
+    "utopia-ui": "latest"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
-    "@types/geojson": "^7946.0.16",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",

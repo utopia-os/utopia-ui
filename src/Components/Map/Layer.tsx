@@ -27,6 +27,12 @@ import type { Tag } from '#types/Tag'
 import type { Popup } from 'leaflet'
 import type { ReactElement, ReactNode } from 'react'
 
+export type { Point } from 'geojson'
+export type { Item } from '#types/Item'
+export type { LayerProps } from '#types/LayerProps'
+export type { Tag } from '#types/Tag'
+export type { Popup } from 'leaflet'
+
 /**
  * @category Map
  */

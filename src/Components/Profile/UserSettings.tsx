@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { useAuth } from '#components/Auth'
+import { useAuth } from '#components/Auth/useAuth'
 import { TextInput } from '#components/Input'
 import { MapOverlayPage } from '#components/Templates'
 

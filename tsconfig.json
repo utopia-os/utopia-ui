@@ -22,15 +22,15 @@
       "paths": {
         "#components/*": ["./src/Components/*"],
         "#utils/*": ["./src/Utils/*"],
-        "#src/*": ["./src/*"],
         "#types/*": ["./src/types/*"],
+        "#src/*": ["./src/*"],
         "#root/*": ["./*"]
       }
     },
   "include": ["src", "vite.config.ts", "setupTest.ts", "cypress.config.ts", "cypress/support/commands.ts", "cypress/support/component.ts"],
   "exclude": ["node_modules", "dist", "example", "rollup.config.mjss"],
   "typeRoots": [
-    "./types",
+    "./src/types",
     "./node_modules/@types/"
   ]
 }

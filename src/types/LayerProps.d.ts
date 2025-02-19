@@ -3,6 +3,9 @@ import type { ItemFormPopupProps } from './ItemFormPopupProps'
 import type { ItemsApi } from './ItemsApi'
 import type { ItemType } from './ItemType'
 
+/**
+ * @category Types
+ */
 export interface LayerProps {
   id?: string
   data?: Item[]

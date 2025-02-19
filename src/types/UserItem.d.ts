@@ -1,5 +1,8 @@
 import type { Profile } from './Profile'
 
+/**
+ * @category Types
+ */
 export interface UserItem {
   id?: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -1,5 +1,8 @@
 import type { UserItem } from './UserItem'
 
+/**
+ * @category Types
+ */
 export interface UserApi {
   register(email: string, password: string, userName: string): Promise<void>
   login(email: string, password: string): Promise<UserItem | undefined>

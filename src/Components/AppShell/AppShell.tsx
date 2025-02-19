@@ -24,7 +24,7 @@ export function AppShell({
     <ContextWrapper>
       <div className='tw-flex tw-flex-col tw-h-full'>
         <SetAppState assetsApi={assetsApi} userType={userType} />
-        <NavBar userType={userType} appName={appName}></NavBar>
+        <NavBar appName={appName}></NavBar>
         <div id='app-content' className='tw-flex-grow'>
           {children}
         </div>

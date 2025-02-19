@@ -1,3 +1,6 @@
+/**
+ * @category Types
+ */
 export interface ItemsApi<T> {
   getItems(): Promise<T[]>
   getItem?(id: string): Promise<T>

@@ -199,7 +199,7 @@ export function UtopiaMapInner({
         url='https://tile.osmand.net/hd/{z}/{x}/{y}.png'
       />
       <MarkerClusterGroup
-        ref={(r) => setClusterRef(r)}
+        ref={(r) => setClusterRef(r as any)}
         showCoverageOnHover
         chunkedLoading
         maxClusterRadius={50}

@@ -1,4 +1,4 @@
-import { Point } from "geojson";
+import { Point } from "utopia-ui";
 
 export const places = [{
     "id": "062a1176-f7ee-458d-adba-4a0b3b1ce2a0",

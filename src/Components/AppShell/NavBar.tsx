@@ -1,10 +1,10 @@
+import Bars3Icon from '@heroicons/react/24/outline/Bars3Icon'
+import EllipsisVerticalIcon from '@heroicons/react/24/outline/EllipsisVerticalIcon'
 import QuestionMarkIcon from '@heroicons/react/24/outline/QuestionMarkCircleIcon'
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import BurgerMenuSVG from '#assets/burger-menu.svg'
-import MoreMenuSVG from '#assets/more-menu.svg'
 import { useAuth } from '#components/Auth/useAuth'
 import { useItems } from '#components/Map/hooks/useItems'
 
@@ -70,11 +70,7 @@ export default function NavBar({ appName }: { appName: string }) {
             aria-controls='#sidenav'
             aria-haspopup='true'
           >
-            <img
-              src={BurgerMenuSVG}
-              alt='Menu'
-              className='tw-inline-block tw-w-5 tw-h-5 tw-stroke-current'
-            />
+            <Bars3Icon className='tw-inline-block tw-w-5 tw-h-5 tw-stroke-current' />
           </button>
           <div className='tw-flex-1 tw-mr-2'>
             <div
@@ -115,7 +111,7 @@ export default function NavBar({ appName }: { appName: string }) {
               </Link>
               <div className='tw-dropdown tw-dropdown-end'>
                 <label tabIndex={0} className='tw-btn tw-btn-ghost tw-btn-square'>
-                  <img src={MoreMenuSVG} alt='More' className='tw-h-5 tw-w-5' />
+                  <EllipsisVerticalIcon className='tw-h-5 tw-w-5' />
                 </label>
                 <ul
                   tabIndex={0}
@@ -152,7 +148,7 @@ export default function NavBar({ appName }: { appName: string }) {
               </div>
               <div className='tw-dropdown tw-dropdown-end'>
                 <label tabIndex={1} className='tw-btn tw-btn-ghost md:tw-hidden'>
-                  <img src={MoreMenuSVG} alt='More' className='tw-h-5 tw-w-5' />
+                  <EllipsisVerticalIcon className='tw-h-5 tw-w-5' />
                 </label>
                 <ul
                   tabIndex={1}

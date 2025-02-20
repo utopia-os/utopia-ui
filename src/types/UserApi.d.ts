@@ -8,8 +8,8 @@ export interface UserApi {
   login(email: string, password: string): Promise<UserItem | undefined>
   logout(): Promise<void>
   getUser(): Promise<UserItem>
-  getToken(): Promise<string | null>
-  updateUser(user: UserItem): Promise<void>
+  getToken(): Promise<string | undefined>
+  updateUser(user: UserItem): Promise<UserItem>
   requestPasswordReset(email: string, reset_url?: string)
   passwordReset(token: string, new_password: string)
 }

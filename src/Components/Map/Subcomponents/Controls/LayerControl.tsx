@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import LayerSVG from '#assets/layer.svg'
 import { useIsLayerVisible, useToggleVisibleLayer } from '#components/Map/hooks/useFilter'
 import { useLayers } from '#components/Map/hooks/useLayers'
 
@@ -55,20 +56,7 @@ export function LayerControl() {
             setOpen(true)
           }}
         >
-          <svg version='1.1' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'>
-            <path
-              id='svg_1'
-              fill='currentColor'
-              d='m2.75565,11.90727l-1.03852,0.28372c-0.77718,0.38859 -0.77718,1.0138 0,1.4023l7.0156,3.5078c0.77718,0.38859 2.0275,0.38859 2.8047,0l7.0156,-3.5078c0.77718,-0.38859 0.77718,-1.0138 0,-1.4023l-0.63311,-0.48643l-4.67718,2.23624c-1.5452,0.77262 -3.31877,1.58343 -4.86407,0.81081l-5.62302,-2.84434z'
-            />
-            <path
-              id='svg_2'
-              strokeWidth='2'
-              stroke='currentColor'
-              fill='none'
-              d='m11.247,4.30851l6.2349,3.0877c0.69083,0.34211 0.69083,0.89295 0,1.2351l-6.2349,3.0877c-0.69083,0.34211 -1.8031,0.34212 -2.494,0l-6.2349,-3.0877c-0.69083,-0.34211 -0.69083,-0.89295 0,-1.2351l6.2349,-3.0877c0.69083,-0.34211 1.8031,-0.34211 2.494,0z'
-            />
-          </svg>
+          <img src={LayerSVG} alt='Layers' className='tw-h-100 tw-w-100' />
         </div>
       )}
     </div>

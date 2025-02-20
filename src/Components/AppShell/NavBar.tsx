@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
+import BurgerMenuSVG from '#assets/burger-menu.svg'
+import MoreMenuSVG from '#assets/more-menu.svg'
 import { useAuth } from '#components/Auth/useAuth'
 import { useItems } from '#components/Map/hooks/useItems'
 
@@ -68,19 +70,11 @@ export default function NavBar({ appName }: { appName: string }) {
             aria-controls='#sidenav'
             aria-haspopup='true'
           >
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 24 24'
+            <img
+              src={BurgerMenuSVG}
+              alt='Menu'
               className='tw-inline-block tw-w-5 tw-h-5 tw-stroke-current'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth='2'
-                d='M4 6h16M4 12h16M4 18h16'
-              ></path>
-            </svg>
+            />
           </button>
           <div className='tw-flex-1 tw-mr-2'>
             <div
@@ -121,14 +115,7 @@ export default function NavBar({ appName }: { appName: string }) {
               </Link>
               <div className='tw-dropdown tw-dropdown-end'>
                 <label tabIndex={0} className='tw-btn tw-btn-ghost tw-btn-square'>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    className='tw-h-5 tw-w-5'
-                    viewBox='0 0 20 20'
-                    fill='currentColor'
-                  >
-                    <path d='M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z' />
-                  </svg>
+                  <img src={MoreMenuSVG} alt='More' className='tw-h-5 tw-w-5' />
                 </label>
                 <ul
                   tabIndex={0}
@@ -165,14 +152,7 @@ export default function NavBar({ appName }: { appName: string }) {
               </div>
               <div className='tw-dropdown tw-dropdown-end'>
                 <label tabIndex={1} className='tw-btn tw-btn-ghost md:tw-hidden'>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    className='tw-h-5 tw-w-5'
-                    viewBox='0 0 20 20'
-                    fill='currentColor'
-                  >
-                    <path d='M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z' />
-                  </svg>
+                  <img src={MoreMenuSVG} alt='More' className='tw-h-5 tw-w-5' />
                 </label>
                 <ul
                   tabIndex={1}

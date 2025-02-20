@@ -13,7 +13,6 @@ export function AppShell({
   appName,
   children,
   assetsApi,
-  userType,
 }: {
   appName: string
   children: React.ReactNode
@@ -23,7 +22,7 @@ export function AppShell({
   return (
     <ContextWrapper>
       <div className='tw-flex tw-flex-col tw-h-full'>
-        <SetAppState assetsApi={assetsApi} userType={userType} />
+        <SetAppState assetsApi={assetsApi} />
         <NavBar appName={appName}></NavBar>
         <div id='app-content' className='tw-flex-grow'>
           {children}

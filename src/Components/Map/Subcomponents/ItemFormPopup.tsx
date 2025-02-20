@@ -86,17 +86,16 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
       map.closePopup()
     } else {
       const item = items.find(
-        (i) =>
-          i.user_created?.id === user?.id && i.layer?.itemType.name === props.layer.itemType.name,
+        (i) => i.user_created?.id === user?.id && i.layer?.id === props.layer.id,
       )
 
       const uuid = crypto.randomUUID()
       let success = false
       try {
-        props.layer.onlyOnePerOwner &&
+        props.layer.userProfileLayer &&
           item &&
           (await props.layer.api?.updateItem!({ ...formItem, id: item.id }))
-        ;(!props.layer.onlyOnePerOwner || !item) &&
+        ;(!props.layer.userProfileLayer || !item) &&
           (await props.layer.api?.createItem!({
             ...formItem,
             id: uuid,
@@ -108,13 +107,12 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
         toast.error(error.toString())
       }
       if (success) {
-        if (props.layer.onlyOnePerOwner && item) updateItem({ ...item, ...formItem })
-        if (!props.layer.onlyOnePerOwner || !item) {
+        if (props.layer.userProfileLayer && item) updateItem({ ...item, ...formItem })
+        if (!props.layer.userProfileLayer || !item) {
           addItem({
             ...formItem,
             name: (formItem.name ? formItem.name : user?.first_name) ?? '',
             user_created: user ?? undefined,
-            type: props.layer.itemType,
             id: uuid,
             layer: props.layer,
             public_edit: !user,

@@ -273,7 +273,6 @@ export const onUpdateItem = async (
               ...changedItem,
               layer: item.layer,
               user_created: user,
-              type: item.layer?.itemType,
             }),
         )
         .then(() => {

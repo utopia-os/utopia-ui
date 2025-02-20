@@ -8,7 +8,7 @@ import { useItems } from '#components/Map/hooks/useItems'
 
 import type { Item } from '#types/Item'
 
-export default function NavBar({ appName, userType }: { appName: string; userType: string }) {
+export default function NavBar({ appName }: { appName: string }) {
   const { isAuthenticated, user, logout } = useAuth()
 
   const [userProfile, setUserProfile] = useState<Item>({} as Item)
@@ -16,12 +16,10 @@ export default function NavBar({ appName, userType }: { appName: string; userTyp
 
   useEffect(() => {
     const profile =
-      user &&
-      items.find((i) => i.user_created?.id === user.id && i.layer?.itemType.name === userType)
+      user && items.find((i) => i.user_created?.id === user.id && i.layer?.userProfileLayer)
     profile
       ? setUserProfile(profile)
       : setUserProfile({ id: crypto.randomUUID(), name: user?.first_name ?? '', text: '' })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, items])
 
   // useEffect(() => {}, [userProfile])

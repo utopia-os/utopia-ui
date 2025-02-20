@@ -21,7 +21,7 @@ export interface LayerProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   api?: ItemsApi<any>
   itemType: ItemType
-  onlyOnePerOwner?: boolean
+  userProfileLayer?: boolean
   customEditLink?: string
   customEditParameter?: string
   public_edit_items?: boolean

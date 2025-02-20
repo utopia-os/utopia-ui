@@ -88,7 +88,7 @@ function App() {
     <div className="App overflow-x-hidden">
 
       <AuthProvider userApi={new userApi}>
-        <AppShell assetsApi={new assetsApi("https://api.utopia-lab.org/assets/")} appName={map.name} userType={map.user_type.name}>
+        <AppShell assetsApi={new assetsApi("https://api.utopia-lab.org/assets/")} appName={map.name} >
           <Permissions api={permissionsApiInstance} adminRole='8ed0b24e-3320-48cd-8444-bc152304e580'></Permissions>
           {tagsApi && <Tags api={tagsApi}></Tags>}
           <Modal>

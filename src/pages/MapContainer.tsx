@@ -58,6 +58,7 @@ function MapContainer({ layers, map }: { layers: Array<LayerProps>, map: any }) 
       {layers && apis &&
         layers.map(layer =>
           <Layer
+            id={layer.id}
             key={layer.id}
             name={layer.name}
             menuIcon={"https://api.utopia-lab.org/assets/" + layer.menuIcon}
@@ -65,7 +66,7 @@ function MapContainer({ layers, map }: { layers: Array<LayerProps>, map: any }) 
             menuColor={layer.menuColor}
             markerIcon={layer.markerIcon}
             markerShape={layer.markerShape}
-            onlyOnePerOwner={layer.onlyOnePerOwner}
+            userProfileLayer={layer.userProfileLayer}
             markerDefaultColor={layer.menuColor}
             markerDefaultColor2={layer.markerDefaultColor2 ? layer.markerDefaultColor2 : "RGBA(35, 31, 32, 0.2)"}
             itemType={layer.itemType}

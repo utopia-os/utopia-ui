@@ -17,9 +17,7 @@ export const ProfileTextView = ({
 }) => {
   const text = get(item, dataField)
 
-  if (typeof text !== 'string') {
-    throw new Error('ProfileTextView: text is not a string')
-  }
+  const parsedText = typeof text !== 'string' ? '' : text
 
   return (
     <div className='tw-my-10 tw-mt-2 tw-px-6'>
@@ -27,7 +25,7 @@ export const ProfileTextView = ({
         <h2 className='tw-text-lg tw-font-semibold'>{heading}</h2>
       )}
       <div className='tw-mt-2 tw-text-sm'>
-        <TextView itemId={item.id} rawText={text} />
+        <TextView itemId={item.id} rawText={parsedText} />
       </div>
     </div>
   )

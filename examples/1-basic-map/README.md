@@ -39,7 +39,6 @@ To see our **first map app**, we start the development server:
 
 ```shell
 npm run dev
-```  
 
 Now, we can open the project in the browser and explore our interactive map! 😊  
 

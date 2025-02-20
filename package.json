@@ -75,12 +75,14 @@
     "rollup": "^4.34.6",
     "rollup-plugin-dts": "^6.1.1",
     "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-svg": "^2.0.0",
     "tailwindcss": "^3.3.1",
     "typedoc": "^0.27.6",
     "typedoc-plugin-coverage": "^3.4.1",
     "typedoc-plugin-missing-exports": "^3.1.0",
     "typescript": "^5.7.3",
     "vite": "^6.0.11",
+    "vite-plugin-svgr": "^4.3.0",
     "vitest": "^3.0.5"
   },
   "peerDependencies": {
@@ -108,6 +110,7 @@
     "yet-another-react-lightbox": "^3.21.7"
   },
   "imports": {
+    "#assets/*": "./src/assets/*",
     "#components/*": "./src/Components/*",
     "#utils/*": "./src/Utils/*",
     "#types/*": "./src/types/*",

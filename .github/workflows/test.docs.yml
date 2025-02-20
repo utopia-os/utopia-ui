@@ -15,8 +15,8 @@ jobs:
         with:
           filters: |
             docs:
-              - '.github/workflows/**/*'
-              - '**/*'
+              - '**/*.md'
+              - 'LICENSE'
 
 #  build:
 #    if: needs.files-changed.outputs.frontend == 'true'

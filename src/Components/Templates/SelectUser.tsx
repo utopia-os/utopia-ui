@@ -13,7 +13,7 @@ import { MapOverlayPage } from './MapOverlayPage'
 export const SelectUser = () => {
   const appState = useAppState()
   const items = useItems()
-  const users = items.filter((i) => i.layer?.itemType.name === appState.userType)
+  const users = items.filter((i) => i.layer?.userProfileLayer)
 
   const [selectedUsers, setSelectedUsers] = useState<string[]>([])
 

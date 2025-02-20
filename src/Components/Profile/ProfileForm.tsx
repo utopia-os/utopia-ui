@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import { useAppState } from '#components/AppShell/hooks/useAppState'
 import { useAuth } from '#components/Auth/useAuth'
@@ -76,14 +77,19 @@ export function ProfileForm() {
     item && setItem(item)
 
     if (!item) {
-      const layer = layers.find((l) => l.itemType.name === appState.userType)
-      setItem({
-        id: crypto.randomUUID(),
-        name: user?.first_name ?? '',
-        text: '',
-        layer,
-        new: true,
-      })
+      if (items.some((i) => i.user_created?.id === user?.id && i.layer?.userProfileLayer)) {
+        navigate('/')
+        toast.error('Item does not exist')
+      } else {
+        const layer = layers.find((l) => l.userProfileLayer)
+        setItem({
+          id: crypto.randomUUID(),
+          name: user?.first_name ?? '',
+          text: '',
+          layer,
+          new: true,
+        })
+      }
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -8,7 +8,6 @@ We'll use **Vite** to create an empty React app named **"1-static-map"**:
 
 ```shell
 npm create vite@latest 1-static-map -- --template react-ts
-```  
 
 Next, we navigate into our project folder and install the [utopia-ui](https://github.com/utopia-os/utopia-ui) package:  
 

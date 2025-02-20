@@ -29,7 +29,7 @@ export function Quests() {
       items.find(
         (i) =>
           i.user_created?.id === user?.id &&
-          i.layer?.itemType.name === 'user' &&
+          i.layer?.userProfileLayer &&
           i.user_created?.id != null,
       ),
     )

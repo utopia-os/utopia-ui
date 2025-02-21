@@ -5,10 +5,8 @@ import type { Profile } from './Profile'
  */
 export interface UserItem {
   id?: string
-  role?: {
-    id: string
-    name: string
-  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  role?: any
   email?: string
   password?: string
   profile?: Profile

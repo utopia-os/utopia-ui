@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useContext, createContext } from 'react'
 import { BrowserRouter as Router, useLocation } from 'react-router-dom'
@@ -19,8 +18,7 @@ import { AppStateProvider } from './hooks/useAppState'
 // Helper context to determine if the ContextWrapper is already present.
 const ContextCheckContext = createContext(false)
 
-// eslint-disable-next-line react/prop-types
-export const ContextWrapper = ({ children }) => {
+export const ContextWrapper = ({ children }: { children: React.ReactNode }) => {
   const isWrapped = useContext(ContextCheckContext)
 
   // Check if we are already inside a Router

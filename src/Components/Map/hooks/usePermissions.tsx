@@ -1,11 +1,7 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable @typescript-eslint/prefer-optional-chain */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCallback, useReducer, createContext, useContext, useState } from 'react'
 
 import { useAuth } from '#components/Auth/useAuth'
@@ -15,6 +11,7 @@ import type { ItemsApi } from '#types/ItemsApi'
 import type { LayerProps } from '#types/LayerProps'
 import type { Permission } from '#types/Permission'
 import type { PermissionAction } from '#types/PermissionAction'
+import type { PermissionCondition } from '#types/PermissionCondition'
 
 type ActionType = { type: 'ADD'; permission: Permission } | { type: 'REMOVE'; id: string }
 
@@ -22,7 +19,7 @@ type UsePermissionManagerResult = ReturnType<typeof usePermissionsManager>
 
 const PermissionContext = createContext<UsePermissionManagerResult>({
   permissions: [],
-  setPermissionApi: () => {},
+  setPermissionApi: async () => {},
   setPermissionData: () => {},
   setAdminRole: () => {},
   hasUserPermission: () => true,
@@ -30,7 +27,7 @@ const PermissionContext = createContext<UsePermissionManagerResult>({
 
 function usePermissionsManager(initialPermissions: Permission[]): {
   permissions: Permission[]
-  setPermissionApi: (api: ItemsApi<any>) => void
+  setPermissionApi: (api: ItemsApi<Permission>) => Promise<void>
   setPermissionData: (data: Permission[]) => void
   setAdminRole: (adminRole: string) => void
   hasUserPermission: (
@@ -76,7 +73,7 @@ function usePermissionsManager(initialPermissions: Permission[]): {
 
   const hasUserPermission = useCallback(
     (collectionName: string, action: PermissionAction, item?: Item, layer?: LayerProps) => {
-      const evaluateCondition = (condition: any) => {
+      const evaluateCondition = (condition: PermissionCondition) => {
         if (condition.user_created?._eq === '$CURRENT_USER') {
           return item?.user_created?.id === user?.id
         }
@@ -86,27 +83,29 @@ function usePermissionsManager(initialPermissions: Permission[]): {
         return false
       }
 
-      const evaluatePermissions = (permissionConditions: any) => {
-        if (!permissionConditions || !permissionConditions._and) {
+      const evaluatePermissions = (permissionConditions: Permission['permissions']) => {
+        if (!permissionConditions?._and) {
           return true
         }
 
-        return permissionConditions._and.every((andCondition: any) =>
-          andCondition._or
-            ? andCondition._or.some((orCondition: any) => evaluateCondition(orCondition))
+        return permissionConditions._and.every((andCondition: PermissionCondition) =>
+          (andCondition as any)._or
+            ? (andCondition as any)._or.some((orCondition: PermissionCondition) =>
+                evaluateCondition(orCondition),
+              )
             : evaluateCondition(andCondition),
         )
       }
       if (collectionName === 'items' && action === 'create' && layer?.public_edit_items) return true
       // Bedingung für leere Berechtigungen nur, wenn NICHT item und create
       if (permissions.length === 0) return true
-      else if (user && user.role.id === adminRole) return true
+      else if (user && user.role?.id === adminRole) return true
       else {
         return permissions.some(
           (p) =>
             p.action === action &&
             p.collection === collectionName &&
-            ((p.policy?.name === user?.role.name &&
+            ((p.policy?.name === user?.role?.name &&
               (!item || evaluatePermissions(p.permissions))) ||
               (p.policy?.name === '$t:public_label' &&
                 (layer?.public_edit_items || item?.layer?.public_edit_items) &&
@@ -123,7 +122,13 @@ function usePermissionsManager(initialPermissions: Permission[]): {
 export const PermissionsProvider: React.FunctionComponent<{
   initialPermissions: Permission[]
   children?: React.ReactNode
-}> = ({ initialPermissions, children }) => (
+}> = ({
+  initialPermissions,
+  children,
+}: {
+  initialPermissions: Permission[]
+  children?: React.ReactNode
+}) => (
   <PermissionContext.Provider value={usePermissionsManager(initialPermissions)}>
     {children}
   </PermissionContext.Provider>

@@ -2,13 +2,13 @@
 
 exports[`<TextInput /> > labelTitle > sets label 1`] = `
 <div
-  class="tw-form-control undefined"
+  class="tw-form-control "
 >
   <label
     class="tw-label"
   >
     <span
-      class="tw-label-text tw-text-base-content undefined"
+      class="tw-label-text tw-text-base-content "
     >
       My Title
     </span>
@@ -25,7 +25,7 @@ exports[`<TextInput /> > labelTitle > sets label 1`] = `
 
 exports[`<TextInput /> > renders properly 1`] = `
 <div
-  class="tw-form-control undefined"
+  class="tw-form-control "
 >
   <input
     class="tw-input tw-input-bordered tw-w-full "

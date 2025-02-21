@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -19,7 +20,7 @@ type UsePermissionManagerResult = ReturnType<typeof usePermissionsManager>
 
 const PermissionContext = createContext<UsePermissionManagerResult>({
   permissions: [],
-  setPermissionApi: async () => {},
+  setPermissionApi: () => {},
   setPermissionData: () => {},
   setAdminRole: () => {},
   hasUserPermission: () => true,
@@ -27,7 +28,7 @@ const PermissionContext = createContext<UsePermissionManagerResult>({
 
 function usePermissionsManager(initialPermissions: Permission[]): {
   permissions: Permission[]
-  setPermissionApi: (api: ItemsApi<Permission>) => Promise<void>
+  setPermissionApi: (api: ItemsApi<Permission>) => void
   setPermissionData: (data: Permission[]) => void
   setAdminRole: (adminRole: string) => void
   hasUserPermission: (

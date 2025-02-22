@@ -87,5 +87,6 @@ export default [
       }),
     ],
     external: [/\.css$/], //, /\.d\.ts$/
+    watch: false,
   },
 ]

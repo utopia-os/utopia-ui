@@ -1,12 +1,8 @@
-/* eslint-disable @typescript-eslint/consistent-type-definitions */
-/* eslint-disable @typescript-eslint/consistent-indexed-object-style */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { useEffect, useRef, useState } from 'react'
 
 import { useTags } from '#components/Map/hooks/useTags'
 
-type TextAreaProps = {
+interface TextAreaProps {
   labelTitle?: string
   labelStyle?: string
   containerStyle?: string
@@ -18,9 +14,7 @@ type TextAreaProps = {
   updateFormValue?: (value: string) => void
 }
 
-interface KeyValue {
-  [key: string]: string
-}
+type KeyValue = Record<string, string>
 
 /**
  * @category Input
@@ -60,10 +54,12 @@ export function TextAreaInput({
   }
 
   return (
-    <div className={`tw-form-control tw-w-full ${containerStyle || ''}`}>
+    <div className={`tw-form-control tw-w-full ${containerStyle ?? ''}`}>
       {labelTitle ? (
         <label className='tw-label'>
-          <span className={`tw-label-text tw-text-base-content ${labelStyle}`}>{labelTitle}</span>
+          <span className={`tw-label-text tw-text-base-content ${labelStyle ?? ''}`}>
+            {labelTitle}
+          </span>
         </label>
       ) : null}
       <textarea
@@ -71,8 +67,8 @@ export function TextAreaInput({
         ref={ref}
         value={inputValue}
         name={dataField}
-        className={`tw-textarea tw-textarea-bordered tw-w-full tw-leading-5 ${inputStyle || ''}`}
-        placeholder={placeholder || ''}
+        className={`tw-textarea tw-textarea-bordered tw-w-full tw-leading-5 ${inputStyle ?? ''}`}
+        placeholder={placeholder ?? ''}
         onChange={handleChange}
       ></textarea>
     </div>

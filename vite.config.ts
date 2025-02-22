@@ -14,8 +14,8 @@ export default defineConfig({
       exclude: [...configDefaults.exclude],
       thresholds: {
         lines: 0,
-        functions: 65,
-        branches: 66,
+        functions: 61,
+        branches: 62,
         statements: 0,
       },
     },

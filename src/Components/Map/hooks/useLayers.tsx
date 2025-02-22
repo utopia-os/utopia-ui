@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { useCallback, useReducer, createContext, useContext } from 'react'
 
 import type { LayerProps } from '#types/LayerProps'
@@ -13,6 +11,7 @@ type UseItemManagerResult = ReturnType<typeof useLayerManager>
 
 const LayerContext = createContext<UseItemManagerResult>({
   layers: [],
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   addLayer: () => {},
 })
 
@@ -46,7 +45,7 @@ function useLayerManager(initialLayers: LayerProps[]): {
 export const LayersProvider: React.FunctionComponent<{
   initialLayers: LayerProps[]
   children?: React.ReactNode
-}> = ({ initialLayers, children }) => (
+}> = ({ initialLayers, children }: { initialLayers: LayerProps[]; children?: React.ReactNode }) => (
   <LayerContext.Provider value={useLayerManager(initialLayers)}>{children}</LayerContext.Provider>
 )
 

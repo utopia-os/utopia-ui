@@ -35,6 +35,7 @@ export function TextAreaInput({
 
   const tags = useTags()
 
+  // Why this variable? It seems not to be used at all
   const values: KeyValue[] = []
 
   tags.forEach((tag) => {

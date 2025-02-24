@@ -50,11 +50,18 @@
     width: 13px  !important;
   }
 
-  .point-icon, .circle-icon {
+  .point-icon {
     position: relative;
     top: -33px;
     left: 9px;
     width: 14px !important;
+  }
+
+  .circle-icon {
+    position: relative;
+    top: -33px;
+    left: 10px;
+    width: 13px !important;
   }
 
   .fire-icon {

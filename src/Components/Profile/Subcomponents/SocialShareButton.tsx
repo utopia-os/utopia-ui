@@ -5,12 +5,12 @@
 
 import { cloneElement } from 'react'
 
-import FacebookSVG from '#assets/facebook.svg'
-import LinkedinSVG from '#assets/linkedin.svg'
-import TelegramSVG from '#assets/telegram.svg'
-import TwitterSVG from '#assets/twitter.svg'
-import WhatsappSVG from '#assets/whatsapp.svg'
-import XingSVG from '#assets/xing.svg'
+import FacebookSVG from '#assets/share/facebook.svg'
+import LinkedinSVG from '#assets/share/linkedin.svg'
+import TelegramSVG from '#assets/share/telegram.svg'
+import TwitterSVG from '#assets/share/twitter.svg'
+import WhatsappSVG from '#assets/share/whatsapp.svg'
+import XingSVG from '#assets/share/xing.svg'
 
 const platformConfigs = {
   facebook: {

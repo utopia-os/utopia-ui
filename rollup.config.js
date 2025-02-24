@@ -7,6 +7,7 @@ import typescript from '@rollup/plugin-typescript'
 import { dts } from 'rollup-plugin-dts'
 import postcss from 'rollup-plugin-postcss'
 import svg from 'rollup-plugin-svg'
+import commonjs from 'rollup-plugin-commonjs';
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -42,6 +43,12 @@ export default [
         tsconfig: './tsconfig.json',
       }),
       svg({ base64: true }),
+      commonjs({
+        namedExports: {
+          // this is needed for the MarkerIconFactory construct
+          'react-dom/server': ['renderToString'],
+        },
+      }),
     ],
     external: [
       'react',

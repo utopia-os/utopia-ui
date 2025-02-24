@@ -72,7 +72,7 @@ export function FilterControl() {
               setOpen(true)
             }}
           >
-            <FunnelIcon className='size-6' />
+            <FunnelIcon className='size-6 tw-stroke-[2.5]' />
           </div>
         </div>
       )}

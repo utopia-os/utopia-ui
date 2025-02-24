@@ -1,7 +1,7 @@
-import ClipboardDocumentIcon from '@heroicons/react/24/outline/ClipboardDocumentIcon'
 import { toast } from 'react-toastify'
 
 import ChevronSVG from '#assets/chevron.svg'
+import ClipboardSVG from '#assets/share/clipboard.svg'
 
 import SocialShareButton from './SocialShareButton'
 
@@ -58,7 +58,7 @@ const SocialShareBar = ({
           onClick={() => copyLink()}
           title='copy Link'
         >
-          <ClipboardDocumentIcon />
+          <img src={ClipboardSVG} className='tw-w-5' />
         </div>
       )}
     </div>

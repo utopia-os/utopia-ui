@@ -3,10 +3,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 import ArrowUpTrayIcon from '@heroicons/react/24/outline/ArrowUpTrayIcon'
-import UserIcon from '@heroicons/react/24/outline/UserIcon'
 import { useState, useCallback, useRef } from 'react'
 import { ReactCrop, centerCrop, makeAspectCrop } from 'react-image-crop'
 
+import UserSVG from '#assets/user.svg'
 import { useAppState } from '#components/AppShell/hooks/useAppState'
 import 'react-image-crop/dist/ReactCrop.css'
 import DialogModal from '#components/Templates/DialogModal'
@@ -182,10 +182,7 @@ export const AvatarWidget: React.FC<AvatarWidgetProps> = ({ avatar, setAvatar })
             </div>
           ) : (
             <div className='tw-h-20 tw-w-20'>
-              <UserIcon
-                className='tw-w-20 tw-h-20 tw-rounded-full'
-                style={{ backgroundColor: '#eee' }}
-              />
+              <img src={UserSVG} className='tw-rounded-full'></img>
             </div>
           )}
         </label>

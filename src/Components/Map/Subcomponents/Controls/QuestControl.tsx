@@ -1,5 +1,4 @@
-import HandRaisedIcon from '@heroicons/react/24/outline/HandRaisedIcon'
-
+import FistSVG from '#assets/fist.svg'
 import { useQuestsOpen, useSetQuestOpen } from '#components/Gaming/hooks/useQuests'
 
 export function QuestControl() {
@@ -19,7 +18,7 @@ export function QuestControl() {
             className='tw-card-body hover:tw-bg-slate-300 tw-rounded-2xl tw-p-2 tw-h-10 tw-w-10 tw-transition-all tw-duration-300 hover:tw-cursor-pointer'
             onClick={() => setQuestsOpen(true)}
           >
-            <HandRaisedIcon />
+            <img src={FistSVG} alt='Quests' className='tw-h-[2em]' />
           </div>
         </div>
       )}

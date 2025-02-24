@@ -67,7 +67,7 @@ export function ActionButton({
                   color: '#fff',
                 }}
               >
-                <LinkIcon className='tw-h-5 tw-w-5' />
+                <LinkIcon className='tw-h-5 tw-w-5 tw-stroke-[2.5]' />
               </button>
             )}
             {triggerAddButton && (
@@ -82,7 +82,7 @@ export function ActionButton({
                   color: '#fff',
                 }}
               >
-                <PlusIcon className='tw-w-5 tw-h-5' />
+                <PlusIcon className='tw-w-5 tw-h-5 tw-stroke-[2.5]' />
               </button>
             )}
           </div>

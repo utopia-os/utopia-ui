@@ -17,7 +17,7 @@ export const GratitudeControl = () => {
               navigate('/select-user')
             }}
           >
-            <HeartIcon />
+            <HeartIcon className='tw-stroke-[2.5]' />
           </div>
         }
       </div>

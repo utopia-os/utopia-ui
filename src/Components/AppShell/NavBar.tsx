@@ -70,7 +70,7 @@ export default function NavBar({ appName }: { appName: string }) {
             aria-controls='#sidenav'
             aria-haspopup='true'
           >
-            <Bars3Icon className='tw-inline-block tw-w-5 tw-h-5 tw-stroke-current' />
+            <Bars3Icon className='tw-inline-block tw-w-5 tw-h-5' />
           </button>
           <div className='tw-flex-1 tw-mr-2'>
             <div

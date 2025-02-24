@@ -5,7 +5,7 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 
-import EllipsisVerticalIcon from '@heroicons/react/24/outline/EllipsisVerticalIcon'
+import EllipsisVerticalIcon from '@heroicons/react/16/solid/EllipsisVerticalIcon'
 import LinkSlashIcon from '@heroicons/react/24/outline/LinkSlashIcon'
 import { useEffect } from 'react'
 
@@ -74,7 +74,7 @@ export function LinkedItemsHeaderView({
                       {loading ? (
                         <span className='tw-loading tw-loading-spinner tw-loading-sm'></span>
                       ) : (
-                        <LinkSlashIcon className='tw-h-5 tw-w-5' />
+                        <LinkSlashIcon className='tw-h-5 tw-w-5 tw-stroke-[3]' />
                       )}
                     </a>
                   </li>

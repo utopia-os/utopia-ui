@@ -30,7 +30,7 @@ export function PlusButton({
             }}
             style={{ backgroundColor: color, color: '#fff' }}
           >
-            <PlusIcon className='tw-w-5 tw-h-5' />
+            <PlusIcon className='tw-w-5 tw-h-5 tw-stroke-[2.5]' />
           </button>
         </div>
       )}

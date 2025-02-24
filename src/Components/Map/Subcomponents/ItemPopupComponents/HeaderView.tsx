@@ -9,9 +9,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import EllipsisVerticalIcon from '@heroicons/react/24/outline/EllipsisVerticalIcon'
-import PencilIcon from '@heroicons/react/24/outline/PencilIcon'
-import TrashIcon from '@heroicons/react/24/outline/TrashIcon'
+import EllipsisVerticalIcon from '@heroicons/react/16/solid/EllipsisVerticalIcon'
+import PencilIcon from '@heroicons/react/24/solid/PencilIcon'
+import TrashIcon from '@heroicons/react/24/solid/TrashIcon'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 

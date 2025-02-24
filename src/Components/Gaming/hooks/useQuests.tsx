@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { useCallback, useState, createContext, useContext } from 'react'
 
@@ -22,10 +21,15 @@ function useQuestsManager(initialOpen: boolean): {
   return { open, setQuestsOpen }
 }
 
-export const QuestsProvider: React.FunctionComponent<{
+interface QuestProviderProps {
   initialOpen: boolean
   children?: React.ReactNode
-}> = ({ initialOpen, children }) => (
+}
+
+export const QuestsProvider: React.FunctionComponent<QuestProviderProps> = ({
+  initialOpen,
+  children,
+}: QuestProviderProps) => (
   <QuestContext.Provider value={useQuestsManager(initialOpen)}>{children}</QuestContext.Provider>
 )
 

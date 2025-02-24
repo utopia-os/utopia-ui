@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/consistent-type-definitions */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import InformationCircleIcon from '@heroicons/react/24/outline/InformationCircleIcon'
 import { useState } from 'react'
 
-type SelectBoxProps = {
+interface SelectBoxProps {
   labelTitle?: string
   labelStyle?: string
   type?: string
@@ -40,9 +38,9 @@ export function SelectBox(props: SelectBoxProps) {
   }
 
   return (
-    <div className={`tw-inline-block ${containerStyle}`}>
+    <div className={`tw-inline-block ${containerStyle ?? ''}`}>
       {labelTitle ? (
-        <label className={`tw-label  ${labelStyle}`}>
+        <label className={`tw-label  ${labelStyle ?? ''}`}>
           <div className='tw-label-text'>
             {labelTitle}
             {labelDescription && (

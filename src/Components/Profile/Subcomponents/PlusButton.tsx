@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
+import PlusIcon from '@heroicons/react/24/outline/PlusIcon'
+
 import { useHasUserPermission } from '#components/Map/hooks/usePermissions'
 
 import type { LayerProps } from '#types/LayerProps'
@@ -28,16 +30,7 @@ export function PlusButton({
             }}
             style={{ backgroundColor: color, color: '#fff' }}
           >
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 24 24'
-              strokeWidth='2'
-              stroke='currentColor'
-              className='tw-w-5 tw-h-5'
-            >
-              <path strokeLinecap='round' strokeLinejoin='round' d='M12 4.5v15m7.5-7.5h-15' />
-            </svg>
+            <PlusIcon className='tw-w-5 tw-h-5 tw-stroke-[2.5]' />
           </button>
         </div>
       )}

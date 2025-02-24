@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/consistent-type-definitions */
-type ContentProps = {
+interface ContentProps {
   children?: React.ReactNode
 }
 

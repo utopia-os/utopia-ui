@@ -6,6 +6,7 @@ import resolve from '@rollup/plugin-node-resolve'
 import typescript from '@rollup/plugin-typescript'
 import { dts } from 'rollup-plugin-dts'
 import postcss from 'rollup-plugin-postcss'
+import svg from 'rollup-plugin-svg'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -40,6 +41,7 @@ export default [
       typescript({
         tsconfig: './tsconfig.json',
       }),
+      svg({ base64: true }),
     ],
     external: [
       'react',
@@ -87,5 +89,6 @@ export default [
       }),
     ],
     external: [/\.css$/], //, /\.d\.ts$/
+    watch: false,
   },
 ]

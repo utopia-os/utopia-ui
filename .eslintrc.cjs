@@ -80,7 +80,7 @@ module.exports = {
     'import/no-relative-parent-imports': [
       'error',
       {
-        ignore: ['#[src,types,root,components,utils]/*'],
+        ignore: ['#[src,types,root,components,utils,assets]/*'],
       },
     ],
     'import/no-self-import': 'error',

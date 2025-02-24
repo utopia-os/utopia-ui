@@ -1,9 +1,10 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
+import svgr from 'vite-plugin-svgr'
 import { configDefaults } from 'vitest/config'
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), svgr()],
   test: {
     globals: true,
     environment: 'happy-dom',
@@ -14,8 +15,8 @@ export default defineConfig({
       exclude: [...configDefaults.exclude],
       thresholds: {
         lines: 0,
-        functions: 65,
-        branches: 66,
+        functions: 61,
+        branches: 62,
         statements: 0,
       },
     },

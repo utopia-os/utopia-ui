@@ -32,7 +32,6 @@ import { GratitudeControl } from './Subcomponents/Controls/GratitudeControl'
 import { LayerControl } from './Subcomponents/Controls/LayerControl'
 import { SearchControl } from './Subcomponents/Controls/SearchControl'
 import { TagsControl } from './Subcomponents/Controls/TagsControl'
-import { PopupButton } from './Subcomponents/ItemPopupComponents/PopupButton'
 import { TextView } from './Subcomponents/ItemPopupComponents/TextView'
 import { SelectPosition } from './Subcomponents/SelectPosition'
 

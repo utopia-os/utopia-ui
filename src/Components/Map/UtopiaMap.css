@@ -40,56 +40,56 @@
     position: relative;
     top: -35px;
     left: 10px;
-    width: 13px;
+    width: 13px !important;
   }
   
   .user-icon {
     position: relative;
     top: -36px;
     left: 10px;
-    width: 13px;
+    width: 13px  !important;
   }
 
-  .circle-icon {
+  .point-icon, .circle-icon {
     position: relative;
     top: -33px;
-    left: 10px;
-    width: 13px !important;
+    left: 9px;
+    width: 14px !important;
   }
 
   .fire-icon {
     position: relative;
     top: -36px;
     left: 10px;
-    width: 13px;
+    width: 13px  !important;
   }
 
   .tree-icon {
     position: relative;
     top: -38px;
     left: 4px;
-    width: 24px;
+    width: 24px !important;
   }
 
   .music-icon {
     position: relative;
     top: -35px;
     left: 4px;
-    width: 24px;
+    width: 24px !important;
   }
 
   .quest-icon {
     position: relative;
     top: -34px;
     left: 4px;
-    width: 24px;
+    width: 24px !important;
   }
 
   .drum-icon {
     position: relative;
     top: -38px;
     left: 4px;
-    width: 24px;
+    width: 24px !important;
   }
 
   
@@ -97,63 +97,63 @@
     position: relative;
     top: -36.5px;
     left: 4px;
-    width: 24px;
+    width: 24px !important;
   }
 
   .group-icon {
     position: relative;
     top: -37px;
-    left: 4px;
-    width: 24px;
+    left: 5px;
+    width: 22px !important;
   }
 
   .liebevoll-jetzt-icon{
     position: relative;
     top: -35px;
     left: 4px;
-    width: 24px;
+    width: 24px !important;
   }
 
   .staff-snake-icon {
     position: relative;
     top: -35px;
     left: 4px;
-    width: 24px;
+    width: 24px !important;
   }
 
   .flower-icon {
     position: relative;
     top: -35px;
     left: 4px;
-    width: 24px;
+    width: 24px !important;
   }
   
   .network-icon {
     position: relative;
     top: -35px;
     left: 4px;
-    width: 24px;
+    width: 24px !important;
   }
 
   .shop-icon {
     position: relative;
     top: -34px;
     left: 4px;
-    width: 24px;
+    width: 24px !important;
   }
 
   .plant-icon {
     position: relative;
     top: -34px;
     left: 4px;
-    width: 24px;
+    width: 24px !important;
   }
 
   .circle-dot-icon {
     position: relative;
     top: -36px;
     left: 4px;
-    width: 24px;
+    width: 24px !important;
   }
   
   .leaflet-popup-scrolled {

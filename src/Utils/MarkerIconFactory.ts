@@ -130,7 +130,7 @@ const MarkerIconFactory = (
   icon: string,
 ) => {
   return divIcon({
-    html: `${createSvg(shape, markerColor, borderColor)}<img class="${shape}-icon" src="${addIcon(icon)}" alt="x" />`,
+    html: `${createSvg(shape, markerColor, borderColor)}<img class="${icon}-icon" src="${addIcon(icon)}" alt="x" />`,
     iconAnchor: [17, 40],
     popupAnchor: [0, -40],
     iconSize: new Point(40, 46),

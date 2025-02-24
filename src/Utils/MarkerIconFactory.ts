@@ -1,5 +1,4 @@
 import { divIcon, Point } from 'leaflet'
-import { renderToString } from 'react-dom/server'
 
 import CalendarSVG from '#assets/icons/calendar.svg'
 import CannabisSVG from '#assets/icons/cannabis.svg'
@@ -25,43 +24,35 @@ import UserSVG from '#assets/icons/user.svg'
 const createSvg = (shape: string, markerColor: string, borderColor: string) => {
   switch (shape) {
     case 'circle':
-      return (
-        <svg width='32' height='44' viewBox='0 0 35 45' xmlns='http://www.w3.org/2000/svg'>
-          <path
-            d='M17.5 2.746c-8.284 0-15 6.853-15 15.307 0 .963.098 1.902.265 2.816a15.413 15.413 0 002.262 5.684l.134.193 12.295 17.785 12.439-17.863.056-.08a15.422 15.422 0 002.343-6.112c.123-.791.206-1.597.206-2.423 0-8.454-6.716-15.307-15-15.307'
-            fill={markerColor}
+      return `<svg width='32' height='44' viewBox='0 0 35 45' xmlns='http://www.w3.org/2000/svg'>
+          <path 
+            d='M17.5 2.746c-8.284 0-15 6.853-15 15.307 0 .963.098 1.902.265 2.816a15.413 15.413 0 002.262 5.684l.134.193 12.295 17.785 12.439-17.863.056-.08a15.422 15.422 0 002.343-6.112c.123-.791.206-1.597.206-2.423 0-8.454-6.716-15.307-15-15.307' \
+            fill='${markerColor}'
           />
           <path
             d='M17.488 2.748c-8.284 0-15 6.853-15 15.307 0 .963.098 1.902.265 2.816a15.413 15.413 0 002.262 5.684l.134.193 12.295 17.785 12.44-17.863.055-.08a15.422 15.422 0 002.343-6.112c.124-.791.206-1.597.206-2.423 0-8.454-6.716-15.307-15-15.307m0 1.071c7.68 0 13.929 6.386 13.929 14.236 0 .685-.064 1.423-.193 2.258-.325 2.075-1.059 3.99-2.164 5.667l-.055.078-11.557 16.595L6.032 26.14l-.12-.174a14.256 14.256 0 01-2.105-5.29 14.698 14.698 0 01-.247-2.62c0-7.851 6.249-14.237 13.928-14.237'
-            fill="' +
-      borderColor +
-      '"
+            fill='${borderColor}'
             opacity='1'
           />
-        </svg>
-      )
-
+        </svg>`
     case 'square':
-      return (
-        <svg width='33' height='44' viewBox='0 0 35 45' xmlns='http://www.w3.org/2000/svg'>
+      return `<svg width='33' height='44' viewBox='0 0 35 45' xmlns='http://www.w3.org/2000/svg'>
           <path
             d='M28.205 3.217H6.777c-2.367 0-4.286 1.87-4.286 4.179v19.847c0 2.308 1.919 4.179 4.286 4.179h5.357l5.337 13.58 5.377-13.58h5.357c2.366 0 4.285-1.87 4.285-4.179V7.396c0-2.308-1.919-4.179-4.285-4.179'
-            fill={markerColor}
+            fill=${markerColor}
           />
           <g opacity='1' transform='matrix(1.0714 0 0 -1.0714 -233.22 146.783)'>
             <path
               d='M244 134h-20c-2.209 0-4-1.746-4-3.9v-18.525c0-2.154 1.791-3.9 4-3.9h5L233.982 95 239 107.675h5c2.209 0 4 1.746 4 3.9V130.1c0 2.154-1.791 3.9-4 3.9m0-1c1.654 0 3-1.301 3-2.9v-18.525c0-1.599-1.346-2.9-3-2.9h-5.68l-.25-.632-4.084-10.318-4.055 10.316-.249.634H224c-1.654 0-3 1.301-3 2.9V130.1c0 1.599 1.346 2.9 3 2.9h20'
-              fill={borderColor}
+              fill=${borderColor}
             />
           </g>
-        </svg>
-      )
+        </svg>`
     case 'star':
-      return (
-        <svg width='34' height='44' viewBox='0 0 35 45' xmlns='http://www.w3.org/2000/svg'>
+      return `<svg width='34' height='44' viewBox='0 0 35 45' xmlns='http://www.w3.org/2000/svg'>
           <path
             d='M32.92 16.93l-3.525-3.525V8.419a1.983 1.983 0 00-1.983-1.982h-4.985L18.9 2.91a1.984 1.984 0 00-2.803 0l-3.524 3.526H7.588a1.983 1.983 0 00-1.982 1.982v4.986L2.081 16.93a1.982 1.982 0 000 2.803l3.525 3.526v4.984c0 1.096.888 1.983 1.982 1.983h4.986L17.457 45l4.97-14.773h4.985a1.983 1.983 0 001.983-1.983V23.26l3.525-3.526a1.982 1.982 0 000-2.803'
-            fill={markerColor}
+            fill=${markerColor}
           />
           <g opacity='.15' transform='matrix(1.0667 0 0 -1.0667 -347.3 97.26)'>
             <path
@@ -69,11 +60,9 @@ const createSvg = (shape: string, markerColor: string, borderColor: string) => {
               fill='#231f20'
             />
           </g>
-        </svg>
-      )
+        </svg>`
     case 'penta':
-      return (
-        <svg width='33' height='44' viewBox='0 0 35 45' xmlns='http://www.w3.org/2000/svg'>
+      return `<svg width='33' height='44' viewBox='0 0 35 45' xmlns='http://www.w3.org/2000/svg'>
           <path d='M1.872 17.35L9.679 2.993h15.615L33.1 17.35 17.486 44.992z' fill={markerColor} />
           <g opacity='.15' transform='matrix(1.0769 0 0 -1.0769 -272.731 48.23)'>
             <path
@@ -81,63 +70,62 @@ const createSvg = (shape: string, markerColor: string, borderColor: string) => {
               fill='#231f20'
             />
           </g>
-        </svg>
-      )
+        </svg>`
     default:
-      return <></>
+      return ''
   }
 }
 
 const addIcon = (icon: string) => {
   switch (icon) {
     case 'point':
-      return <img src={PointSVG} alt='x' />
+      return PointSVG
     case 'calendar':
-      return <img src={CalendarSVG} alt='x' />
+      return CalendarSVG
     case 'user':
-      return <img src={UserSVG} alt='x' />
+      return UserSVG
     case 'fire':
-      return <img src={FireSVG} alt='x' />
+      return FireSVG
     case 'tree':
-      return <img src={TreeSVG} alt='x' />
+      return TreeSVG
     case 'music':
-      return <img src={MusicSVG} alt='x' />
+      return MusicSVG
     case 'drum':
-      return <img src={DrumSVG} alt='x' />
+      return DrumSVG
     case 'quest':
-      return <img src={QuestSVG} alt='x' />
+      return QuestSVG
     case 'compass':
-      return <img src={CompassSVG} alt='x' />
+      return CompassSVG
     case 'liebevoll.jetzt':
-      return <img src={LiebevollJetztSVG} alt='x' />
+      return LiebevollJetztSVG
     case 'group':
-      return <img src={GroupSVG} alt='x' />
+      return GroupSVG
     case 'puzzle':
-      return <img src={PuzzleSVG} alt='x' />
+      return PuzzleSVG
     case 'staff-snake':
-      return <img src={StaffSnakeSVG} alt='x' />
+      return StaffSnakeSVG
     case 'flower':
-      return <img src={FlowerSVG} alt='x' />
+      return FlowerSVG
     case 'network':
-      return <img src={NetworkSVG} alt='x' />
+      return NetworkSVG
     case 'crosshair':
-      return <img src={CrosshairSVG} alt='x' />
+      return CrosshairSVG
     case 'shop':
-      return <img src={ShopSVG} alt='x' />
+      return ShopSVG
     case 'plant':
-      return <img src={PlantSVG} alt='x' />
+      return PlantSVG
     case 'circle-dot':
-      return <img src={CircleDotSVG} alt='x' />
+      return CircleDotSVG
     case 'cannabis':
-      return <img src={CannabisSVG} alt='x' />
+      return CannabisSVG
     default:
-      return <></>
+      return ''
   }
 }
 
 const MarkerIconFactory = (shape: string, color1: string, color2: string, icon: string) => {
   return divIcon({
-    html: `${renderToString(createSvg(shape, color1, color2))}${renderToString(addIcon(icon))}`,
+    html: `${createSvg(shape, color1, color2)}<img class="${shape}-icon"src="${addIcon(icon)}" alt="x" />`,
     iconAnchor: [17, 40],
     popupAnchor: [0, -40],
     iconSize: new Point(40, 46),

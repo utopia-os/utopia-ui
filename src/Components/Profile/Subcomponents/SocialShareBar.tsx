@@ -1,4 +1,7 @@
+import ClipboardDocumentIcon from '@heroicons/react/24/outline/ClipboardDocumentIcon'
 import { toast } from 'react-toastify'
+
+import ChevronSVG from '#assets/chevron.svg'
 
 import SocialShareButton from './SocialShareButton'
 
@@ -41,14 +44,7 @@ const SocialShareBar = ({
           onClick={() => copyLink()}
           title='share link via email'
         >
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            viewBox='0 0 24 24'
-            fill='white'
-            className='tw-h-4 tw-w-4'
-          >
-            <path d='M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z' />
-          </svg>
+          <img src={ChevronSVG} alt='\/' className='tw-h-4 tw-w-4' />
         </a>
       )}
       {platforms.includes('clipboard') && (
@@ -62,17 +58,7 @@ const SocialShareBar = ({
           onClick={() => copyLink()}
           title='copy Link'
         >
-          <svg
-            stroke='currentColor'
-            fill='currentColor'
-            strokeWidth='0'
-            viewBox='0 0 256 256'
-            height='1.5em'
-            width='1.5em'
-            xmlns='http://www.w3.org/2000/svg'
-          >
-            <path d='M180,64H40A12,12,0,0,0,28,76V216a12,12,0,0,0,12,12H180a12,12,0,0,0,12-12V76A12,12,0,0,0,180,64ZM168,204H52V88H168ZM228,40V180a12,12,0,0,1-24,0V52H76a12,12,0,0,1,0-24H216A12,12,0,0,1,228,40Z'></path>
-          </svg>
+          <ClipboardDocumentIcon />
         </div>
       )}
     </div>

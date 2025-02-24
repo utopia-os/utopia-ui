@@ -123,9 +123,14 @@ const addIcon = (icon: string) => {
   }
 }
 
-const MarkerIconFactory = (shape: string, color1: string, color2: string, icon: string) => {
+const MarkerIconFactory = (
+  shape: string,
+  markerColor: string,
+  borderColor: string,
+  icon: string,
+) => {
   return divIcon({
-    html: `${createSvg(shape, color1, color2)}<img class="${shape}-icon"src="${addIcon(icon)}" alt="x" />`,
+    html: `${createSvg(shape, markerColor, borderColor)}<img class="${shape}-icon"src="${addIcon(icon)}" alt="x" />`,
     iconAnchor: [17, 40],
     popupAnchor: [0, -40],
     iconSize: new Point(40, 46),

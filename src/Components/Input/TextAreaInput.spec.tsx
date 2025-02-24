@@ -5,10 +5,6 @@ import { TagsProvider } from '#components/Map/hooks/useTags'
 
 import { TextAreaInput } from './TextAreaInput'
 
-// import { useTags } from '#components/Map/hooks/useTags'
-
-// vi.mock('#components/Map/hooks/useTags')
-
 describe('<TextAreaInput />', () => {
   let wrapper: ReturnType<typeof render>
 

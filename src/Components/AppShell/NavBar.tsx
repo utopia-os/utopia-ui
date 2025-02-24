@@ -1,5 +1,5 @@
-import Bars3Icon from '@heroicons/react/24/outline/Bars3Icon'
-import EllipsisVerticalIcon from '@heroicons/react/24/outline/EllipsisVerticalIcon'
+import Bars3Icon from '@heroicons/react/16/solid/Bars3Icon'
+import EllipsisVerticalIcon from '@heroicons/react/16/solid/EllipsisVerticalIcon'
 import QuestionMarkIcon from '@heroicons/react/24/outline/QuestionMarkCircleIcon'
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'

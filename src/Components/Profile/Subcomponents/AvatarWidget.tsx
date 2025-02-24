@@ -2,9 +2,11 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
+import ArrowUpTrayIcon from '@heroicons/react/24/outline/ArrowUpTrayIcon'
 import { useState, useCallback, useRef } from 'react'
 import { ReactCrop, centerCrop, makeAspectCrop } from 'react-image-crop'
 
+import UserSVG from '#assets/user.svg'
 import { useAppState } from '#components/AppShell/hooks/useAppState'
 import 'react-image-crop/dist/ReactCrop.css'
 import DialogModal from '#components/Templates/DialogModal'
@@ -169,20 +171,7 @@ export const AvatarWidget: React.FC<AvatarWidgetProps> = ({ avatar, setAvatar })
             onChange={onImageChange}
           />
           <div className='button tw-btn tw-btn-lg tw-btn-circle tw-animate-none'>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 24 24'
-              strokeWidth='1.5'
-              stroke='currentColor'
-              className='tw-w-6 tw-h-6'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5'
-              />
-            </svg>
+            <ArrowUpTrayIcon className='tw-w-6 tw-h-6' />
           </div>
           {avatar ? (
             <div className='tw-h-20 tw-w-20'>
@@ -193,22 +182,7 @@ export const AvatarWidget: React.FC<AvatarWidgetProps> = ({ avatar, setAvatar })
             </div>
           ) : (
             <div className='tw-h-20 tw-w-20'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                version='1.0'
-                viewBox='0 0 150 150'
-                className='tw-w-20 tw-h-20 tw-rounded-full'
-                style={{ backgroundColor: '#eee' }}
-              >
-                <path
-                  fill='#ccc'
-                  d='M 104.68731,56.689353 C 102.19435,80.640493 93.104981,97.26875 74.372196,97.26875 55.639402,97.26875 46.988823,82.308034 44.057005,57.289941 41.623314,34.938838 55.639402,15.800152 74.372196,15.800152 c 18.732785,0 32.451944,18.493971 30.315114,40.889201 z'
-                />
-                <path
-                  fill='#ccc'
-                  d='M 92.5675 89.6048 C 90.79484 93.47893 89.39893 102.4504 94.86478 106.9039 C 103.9375 114.2963 106.7064 116.4723 118.3117 118.9462 C 144.0432 124.4314 141.6492 138.1543 146.5244 149.2206 L 4.268444 149.1023 C 8.472223 138.6518 6.505799 124.7812 32.40051 118.387 C 41.80992 116.0635 45.66513 113.8823 53.58659 107.0158 C 58.52744 102.7329 57.52583 93.99267 56.43084 89.26926 C 52.49275 88.83011 94.1739 88.14054 92.5675 89.6048 z'
-                />
-              </svg>
+              <img src={UserSVG} className='tw-rounded-full'></img>
             </div>
           )}
         </label>

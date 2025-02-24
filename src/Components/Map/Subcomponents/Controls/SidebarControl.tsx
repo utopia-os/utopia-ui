@@ -1,3 +1,5 @@
+import Bars3Icon from '@heroicons/react/16/solid/Bars3Icon'
+
 // Converts leaflet.locatecontrol to a React Component
 export const SidebarControl = () => {
   return (
@@ -11,19 +13,7 @@ export const SidebarControl = () => {
             aria-controls='#sidenav'
             aria-haspopup='true'
           >
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 24 24'
-              className='tw-inline-block tw-w-5 tw-h-5 tw-stroke-current'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth='2'
-                d='M4 6h16M4 12h16M4 18h16'
-              ></path>
-            </svg>
+            <Bars3Icon className='tw-inline-block tw-w-5 tw-h-5' />
           </button>
         </div>
       </div>

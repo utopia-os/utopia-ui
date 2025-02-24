@@ -1,4 +1,4 @@
-<svg version='1.1' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'>
+<svg version='1.1' viewBox='0 0 20 20' stroke-width="2" xmlns='http://www.w3.org/2000/svg'>
     <path
         id='svg_1'
         fill='currentColor'
@@ -6,7 +6,6 @@
     />
     <path
         id='svg_2'
-        strokeWidth='2'
         stroke='currentColor'
         fill='none'
         d='m11.247,4.30851l6.2349,3.0877c0.69083,0.34211 0.69083,0.89295 0,1.2351l-6.2349,3.0877c-0.69083,0.34211 -1.8031,0.34212 -2.494,0l-6.2349,-3.0877c-0.69083,-0.34211 -0.69083,-0.89295 0,-1.2351l6.2349,-3.0877c0.69083,-0.34211 1.8031,-0.34211 2.494,0z'

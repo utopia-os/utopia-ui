@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
-import CalendarIcon from '@heroicons/react/24/outline/CalendarIcon'
+import CalendarIcon from '@heroicons/react/24/solid/CalendarDaysIcon'
 
 import type { Item } from '#types/Item'
 

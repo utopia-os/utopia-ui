@@ -1,4 +1,4 @@
-import Bars3Icon from '@heroicons/react/24/outline/Bars3Icon'
+import Bars3Icon from '@heroicons/react/16/solid/Bars3Icon'
 
 // Converts leaflet.locatecontrol to a React Component
 export const SidebarControl = () => {
@@ -13,7 +13,7 @@ export const SidebarControl = () => {
             aria-controls='#sidenav'
             aria-haspopup='true'
           >
-            <Bars3Icon className='tw-inline-block tw-w-5 tw-h-5 tw-stroke-current' />
+            <Bars3Icon className='tw-inline-block tw-w-5 tw-h-5' />
           </button>
         </div>
       </div>

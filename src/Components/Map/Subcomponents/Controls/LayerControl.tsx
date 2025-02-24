@@ -56,7 +56,7 @@ export function LayerControl() {
             setOpen(true)
           }}
         >
-          <img src={LayerSVG} alt='Layers' className='tw-h-100 tw-w-100' />
+          <img src={LayerSVG} alt='Layers' />
         </div>
       )}
     </div>

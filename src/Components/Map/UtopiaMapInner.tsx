@@ -86,7 +86,7 @@ export function UtopiaMapInner({
             </>,
             { autoClose: false },
           )
-        }, 60000)
+        }, 600000)
       init.current = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

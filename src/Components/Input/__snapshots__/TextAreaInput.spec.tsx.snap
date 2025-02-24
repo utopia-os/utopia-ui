@@ -1,0 +1,34 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`<TextAreaInput /> > labelTitle > sets label 1`] = `
+<div
+  class="tw-form-control tw-w-full "
+>
+  <label
+    class="tw-label"
+  >
+    <span
+      class="tw-label-text tw-text-base-content "
+    >
+      My Title
+    </span>
+  </label>
+  <textarea
+    class="tw-textarea tw-textarea-bordered tw-w-full tw-leading-5 "
+    placeholder=""
+    required=""
+  />
+</div>
+`;
+
+exports[`<TextAreaInput /> > renders properly 1`] = `
+<div
+  class="tw-form-control tw-w-full "
+>
+  <textarea
+    class="tw-textarea tw-textarea-bordered tw-w-full tw-leading-5 "
+    placeholder=""
+    required=""
+  />
+</div>
+`;

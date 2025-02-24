@@ -80,12 +80,14 @@ export function UtopiaMapInner({
                   itemId=''
                   rawText={'Support us building free opensource maps and help us grow 🌱☀️'}
                 />
-                <PopupButton url={'https://opencollective.com/utopia-project'} text={'Donate'} />
+                <a href='https://opencollective.com/utopia-project'>
+                  <div className='tw-btn tw-btn-sm tw-float-right'>Donate</div>
+                </a>
               </div>
             </>,
             { autoClose: false },
           )
-        }, 600000)
+        }, 60000)
       init.current = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

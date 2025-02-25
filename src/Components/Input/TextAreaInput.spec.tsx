@@ -1,8 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 
-import { TagsProvider } from '#components/Map/hooks/useTags'
-
 import { TextAreaInput } from './TextAreaInput'
 
 describe('<TextAreaInput />', () => {
@@ -12,19 +10,7 @@ describe('<TextAreaInput />', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
-    wrapper = render(
-      <TagsProvider
-        initialTags={[
-          {
-            color: '#b3242f',
-            id: '03b41b63-4530-4754-95cf-0abf8f9db476',
-            name: 'Feuer',
-          },
-        ]}
-      >
-        <TextAreaInput defaultValue={''} updateFormValue={updateFormValue} />
-      </TagsProvider>,
-    )
+    wrapper = render(<TextAreaInput defaultValue={''} updateFormValue={updateFormValue} />)
   })
 
   it('renders properly', () => {

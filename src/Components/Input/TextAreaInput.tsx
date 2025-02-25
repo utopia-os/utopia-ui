@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { useTags } from '#components/Map/hooks/useTags'
-
 interface TextAreaProps {
   labelTitle?: string
   labelStyle?: string
@@ -13,8 +11,6 @@ interface TextAreaProps {
   required?: boolean
   updateFormValue?: (value: string) => void
 }
-
-type KeyValue = Record<string, string>
 
 /**
  * @category Input
@@ -32,14 +28,6 @@ export function TextAreaInput({
 }: TextAreaProps) {
   const ref = useRef<HTMLTextAreaElement>(null)
   const [inputValue, setInputValue] = useState<string>(defaultValue)
-
-  const tags = useTags()
-
-  const values: KeyValue[] = []
-
-  tags.forEach((tag) => {
-    values.push({ key: tag.name, value: tag.name, color: tag.color })
-  })
 
   useEffect(() => {
     setInputValue(defaultValue)

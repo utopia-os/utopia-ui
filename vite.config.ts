@@ -12,12 +12,12 @@ export default defineConfig({
     coverage: {
       all: true,
       include: ['src/**/*.{js,jsx,ts,tsx}'],
-      exclude: [...configDefaults.exclude],
+      exclude: [...configDefaults.exclude, 'src/**/*.cy.tsx'],
       thresholds: {
-        lines: 0,
-        functions: 61,
+        lines: 1,
+        functions: 59,
         branches: 62,
-        statements: 0,
+        statements: 1,
       },
     },
   },

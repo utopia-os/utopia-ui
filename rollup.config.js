@@ -40,6 +40,7 @@ export default [
       }),
       typescript({
         tsconfig: './tsconfig.json',
+        noEmitOnError: true,
       }),
       svg({ base64: true }),
     ],

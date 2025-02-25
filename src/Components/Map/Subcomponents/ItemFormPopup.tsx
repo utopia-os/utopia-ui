@@ -53,6 +53,13 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
     })
     formItem.position = { type: 'Point', coordinates: [props.position.lng, props.position.lat] }
     evt.preventDefault()
+
+    const name = formItem.name ? formItem.name : user?.first_name
+    if (!name) {
+      toast.error('Name is must be defined')
+      return
+    }
+
     setSpinner(true)
 
     formItem.text &&
@@ -98,8 +105,8 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
         ;(!props.layer.userProfileLayer || !item) &&
           (await props.layer.api?.createItem!({
             ...formItem,
+            name,
             id: uuid,
-            name: formItem.name ? formItem.name : user?.first_name,
           }))
         success = true
         // eslint-disable-next-line no-catch-all/no-catch-all

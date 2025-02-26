@@ -37,8 +37,8 @@ jobs:
         with:
           style: flat
           source: coverage/coverage-summary.json
-          output: docs/test.svg
-          jsonPath: totals.percent_covered
+          output: docs/test-coverage.svg
+          jsonPath: total.pct
 
       - name: Upload static files as artifact
         id: deployment

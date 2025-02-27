@@ -5,8 +5,8 @@ import { ContextWrapper } from '#components/AppShell/ContextWrapper'
 
 import { UtopiaMapInner } from './UtopiaMapInner'
 
-import type { UtopiaMapProps } from '#types/UtopiaMapProps'
 import 'react-toastify/dist/ReactToastify.css'
+import type { GeoJsonObject } from 'geojson'
 
 /**
  * @category Map
@@ -21,9 +21,19 @@ function UtopiaMap({
   showFilterControl = false,
   showGratitudeControl = false,
   showLayerControl = true,
-  infoText,
   donationWidget,
-}: UtopiaMapProps) {
+}: {
+  height?: string
+  width?: string
+  center?: [number, number]
+  zoom?: number
+  children?: React.ReactNode
+  geo?: GeoJsonObject
+  showFilterControl?: boolean
+  showLayerControl?: boolean
+  showGratitudeControl?: boolean
+  donationWidget?: boolean
+}) {
   return (
     <ContextWrapper>
       <MapContainer
@@ -38,7 +48,6 @@ function UtopiaMap({
           showFilterControl={showFilterControl}
           showGratitudeControl={showGratitudeControl}
           showLayerControl={showLayerControl}
-          infoText={infoText}
           donationWidget={donationWidget}
         >
           {children}

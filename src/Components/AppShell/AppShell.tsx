@@ -17,7 +17,6 @@ export function AppShell({
   appName: string
   children: React.ReactNode
   assetsApi: AssetsApi
-  userType: string
 }) {
   return (
     <ContextWrapper>

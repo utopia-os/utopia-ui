@@ -26,7 +26,7 @@ export function LinkedItemsHeaderView({
 }) {
   const appState = useAppState()
 
-  const avatar = appState.assetsApi.url + item.image
+  const avatar = item.image ? appState.assetsApi.url + item.image : null
   const title = item.name
   const subtitle = item.subname
 

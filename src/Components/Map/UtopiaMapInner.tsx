@@ -32,7 +32,6 @@ import { GratitudeControl } from './Subcomponents/Controls/GratitudeControl'
 import { LayerControl } from './Subcomponents/Controls/LayerControl'
 import { SearchControl } from './Subcomponents/Controls/SearchControl'
 import { TagsControl } from './Subcomponents/Controls/TagsControl'
-import { PopupButton } from './Subcomponents/ItemPopupComponents/PopupButton'
 import { TextView } from './Subcomponents/ItemPopupComponents/TextView'
 import { SelectPosition } from './Subcomponents/SelectPosition'
 
@@ -80,7 +79,9 @@ export function UtopiaMapInner({
                   itemId=''
                   rawText={'Support us building free opensource maps and help us grow 🌱☀️'}
                 />
-                <PopupButton url={'https://opencollective.com/utopia-project'} text={'Donate'} />
+                <a href='https://opencollective.com/utopia-project'>
+                  <div className='tw-btn tw-btn-sm tw-float-right'>Donate</div>
+                </a>
               </div>
             </>,
             { autoClose: false },

@@ -1,4 +1,5 @@
-import './index.css'
+// eslint-disable-next-line import/no-unassigned-import
+import '#assets/css/index'
 
 export * from './Components/Map'
 export * from './Components/AppShell'

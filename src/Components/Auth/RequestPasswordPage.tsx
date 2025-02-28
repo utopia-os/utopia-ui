@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -9,8 +6,10 @@ import { MapOverlayPage } from '#components/Templates/MapOverlayPage'
 
 import { useAuth } from './useAuth'
 
-// eslint-disable-next-line react/prop-types
-export function RequestPasswordPage({ resetUrl }) {
+/**
+ * @category Auth
+ */
+export function RequestPasswordPage({ resetUrl }: { resetUrl: string }) {
   const [email, setEmail] = useState<string>('')
 
   const { requestPasswordReset, loading } = useAuth()
@@ -29,7 +28,7 @@ export function RequestPasswordPage({ resetUrl }) {
       },
       error: {
         render({ data }) {
-          return `${data}`
+          return `${data as string}`
         },
       },
       pending: 'sending email ...',
@@ -53,6 +52,7 @@ export function RequestPasswordPage({ resetUrl }) {
               ? 'tw-btn tw-btn-disabled tw-btn-block tw-btn-primary'
               : 'tw-btn tw-btn-primary tw-btn-block'
           }
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onClick={() => onReset()}
         >
           {loading ? <span className='tw-loading tw-loading-spinner'></span> : 'Send'}

@@ -1,5 +1,8 @@
 import type { Item } from '#types/Item'
 
+/**
+ * @category Map
+ */
 export const PopupCheckboxInput = ({
   dataField,
   label,

@@ -3,6 +3,9 @@ import type { ItemFormPopupProps } from './ItemFormPopupProps'
 import type { ItemsApi } from './ItemsApi'
 import type { ItemType } from './ItemType'
 
+/**
+ * @category Types
+ */
 export interface LayerProps {
   id?: string
   data?: Item[]
@@ -15,21 +18,9 @@ export interface LayerProps {
   markerShape: string
   markerDefaultColor: string
   markerDefaultColor2?: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  api?: ItemsApi<any>
+  api?: ItemsApi<Item>
   itemType: ItemType
-  itemNameField?: string
-  itemSubnameField?: string
-  itemTextField?: string
-  itemAvatarField?: string
-  itemColorField?: string
-  itemOwnerField?: string
-  itemTagsField?: string
-  itemLatitudeField?: string
-  itemLongitudeField?: string
-  itemOffersField?: string
-  itemNeedsField?: string
-  onlyOnePerOwner?: boolean
+  userProfileLayer?: boolean
   customEditLink?: string
   customEditParameter?: string
   public_edit_items?: boolean

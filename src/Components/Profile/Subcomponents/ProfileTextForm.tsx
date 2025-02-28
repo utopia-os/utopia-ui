@@ -5,7 +5,6 @@
 import { useEffect, useState } from 'react'
 
 import { TextAreaInput } from '#components/Input'
-import { getValue } from '#utils/GetValue'
 
 import { MarkdownHint } from './MarkdownHint'
 
@@ -14,6 +13,7 @@ import type { FormState } from '#types/FormState'
 export const ProfileTextForm = ({
   state,
   setState,
+  // Is this really used?
   dataField,
   heading,
   size,
@@ -49,7 +49,8 @@ export const ProfileTextForm = ({
       </div>
       <TextAreaInput
         placeholder={'...'}
-        defaultValue={getValue(state, field)}
+        // eslint-disable-next-line security/detect-object-injection
+        defaultValue={state[field]}
         updateFormValue={(v) =>
           setState((prevState) => ({
             ...prevState,

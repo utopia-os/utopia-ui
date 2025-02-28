@@ -7,10 +7,13 @@ import { useItems } from '#components/Map/hooks/useItems'
 
 import { MapOverlayPage } from './MapOverlayPage'
 
+/**
+ * @category Templates
+ */
 export const SelectUser = () => {
   const appState = useAppState()
   const items = useItems()
-  const users = items.filter((i) => i.layer?.itemType.name === appState.userType)
+  const users = items.filter((i) => i.layer?.userProfileLayer)
 
   const [selectedUsers, setSelectedUsers] = useState<string[]>([])
 

@@ -7,6 +7,9 @@ import { useSetTagData, useSetTagApi, useTags } from './hooks/useTags'
 import type { ItemsApi } from '#types/ItemsApi'
 import type { Tag } from '#types/Tag'
 
+/**
+ * @category Map
+ */
 export function Tags({ data, api }: { data?: Tag[]; api?: ItemsApi<Tag> }) {
   const setTagData = useSetTagData()
   const setTagApi = useSetTagApi()

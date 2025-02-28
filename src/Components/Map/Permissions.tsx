@@ -1,21 +1,27 @@
 import { useEffect } from 'react'
 
-import { useAuth } from '#components/Auth'
+import { useAuth } from '#components/Auth/useAuth'
 
 import { useSetPermissionData, useSetPermissionApi, useSetAdminRole } from './hooks/usePermissions'
 
 import type { ItemsApi } from '#types/ItemsApi'
 import type { Permission } from '#types/Permission'
 
-export function Permissions({
-  data,
-  api,
-  adminRole,
-}: {
+/**
+ * @category Types
+ */
+export interface PermissionsProps {
   data?: Permission[]
   api?: ItemsApi<Permission>
   adminRole?: string
-}) {
+}
+export type { Permission } from '#types/Permission'
+export type { ItemsApi } from '#types/ItemsApi'
+
+/**
+ * @category Map
+ */
+export function Permissions({ data, api, adminRole }: PermissionsProps) {
   const setPermissionData = useSetPermissionData()
   const setPermissionApi = useSetPermissionApi()
   const setAdminRole = useSetAdminRole()

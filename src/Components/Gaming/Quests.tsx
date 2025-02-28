@@ -1,12 +1,16 @@
+import QuestionMarkCircleIcon from '@heroicons/react/24/outline/QuestionMarkCircleIcon'
 import { useEffect, useState } from 'react'
 
-import { useAuth } from '#components/Auth'
+import { useAuth } from '#components/Auth/useAuth'
 import { useItems } from '#components/Map/hooks/useItems'
 
 import { useQuestsOpen, useSetQuestOpen } from './hooks/useQuests'
 
 import type { Item } from '#types/Item'
 
+/**
+ * @category Gaming
+ */
 export function Quests() {
   const questsOpen = useQuestsOpen()
   const setQuestsOpen = useSetQuestOpen()
@@ -26,7 +30,7 @@ export function Quests() {
       items.find(
         (i) =>
           i.user_created?.id === user?.id &&
-          i.layer?.itemType.name === 'user' &&
+          i.layer?.userProfileLayer &&
           i.user_created?.id != null,
       ),
     )
@@ -47,20 +51,7 @@ export function Quests() {
             </div>
             <h2 className='tw-card-title tw-m-auto '>
               Level 1
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
-                strokeWidth={1.5}
-                stroke='#aaa'
-                className='tw-w-5 tw-h-5 tw-cursor-pointer'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  d='M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z'
-                />
-              </svg>
+              <QuestionMarkCircleIcon />
             </h2>
             <ul className='tw-flex-row'>
               <li>

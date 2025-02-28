@@ -1,15 +1,17 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { useAuth } from '#components/Auth'
+import { useAuth } from '#components/Auth/useAuth'
 import { TextInput } from '#components/Input'
 import { MapOverlayPage } from '#components/Templates'
 
 import type { UserItem } from '#types/UserItem'
 
+/**
+ * @category Profile
+ */
 export function UserSettings() {
   const { user, updateUser, loading /* token */ } = useAuth()
 

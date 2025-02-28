@@ -1,8 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-floating-promises */
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -11,6 +6,9 @@ import { MapOverlayPage } from '#components/Templates/MapOverlayPage'
 
 import { useAuth } from './useAuth'
 
+/**
+ * @category Auth
+ */
 export function LoginPage() {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -25,14 +23,14 @@ export function LoginPage() {
       success: {
         render({ data }) {
           navigate('/')
-          return `Hi ${data?.first_name}`
+          return `Hi ${data?.first_name ? data.first_name : 'Traveler'}`
         },
         // other options
         icon: '✌️',
       },
       error: {
         render({ data }) {
-          return `${data}`
+          return `${data as string}`
         },
         autoClose: 10000,
       },
@@ -41,9 +39,10 @@ export function LoginPage() {
   }
 
   useEffect(() => {
-    const keyDownHandler = (event) => {
+    const keyDownHandler = (event: KeyboardEvent) => {
       if (event.key === 'Enter') {
         event.preventDefault()
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
         onLogin()
       }
     }
@@ -83,6 +82,7 @@ export function LoginPage() {
               ? 'tw-btn tw-btn-disabled tw-btn-block tw-btn-primary'
               : 'tw-btn tw-btn-primary tw-btn-block'
           }
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onClick={() => onLogin()}
         >
           {loading ? <span className='tw-loading tw-loading-spinner'></span> : 'Login'}

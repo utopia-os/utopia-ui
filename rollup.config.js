@@ -6,6 +6,7 @@ import resolve from '@rollup/plugin-node-resolve'
 import typescript from '@rollup/plugin-typescript'
 import { dts } from 'rollup-plugin-dts'
 import postcss from 'rollup-plugin-postcss'
+import svg from 'rollup-plugin-svg'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -39,7 +40,9 @@ export default [
       }),
       typescript({
         tsconfig: './tsconfig.json',
+        noEmitOnError: true,
       }),
+      svg({ base64: true }),
     ],
     external: [
       'react',
@@ -76,17 +79,17 @@ export default [
     ],
   },
   {
-    input: 'src/index.tsx',
+    input: 'dist/types/src/index.d.ts',
     output: [{ file: 'dist/index.d.ts', format: 'es' }],
     plugins: [
       aliasConfig,
       dts({
-        respectExternal: true,
         compilerOptions: {
           skipLibCheck: true,
         },
       }),
     ],
-    external: [/\.css$/, /\.d\.ts$/], // ✅ `.d.ts` als extern behandeln
+    external: [/\.css$/], //, /\.d\.ts$/
+    watch: false,
   },
 ]

@@ -2,48 +2,32 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
+import EllipsisVerticalIcon from '@heroicons/react/16/solid/EllipsisVerticalIcon'
+import LinkSlashIcon from '@heroicons/react/24/outline/LinkSlashIcon'
 import { useEffect } from 'react'
 
 import { useAppState } from '#components/AppShell/hooks/useAppState'
-import { getValue } from '#utils/GetValue'
 
 import type { Item } from '#types/Item'
 
 export function LinkedItemsHeaderView({
   item,
   unlinkCallback,
-  itemNameField,
-  itemAvatarField,
   loading,
   unlinkPermission,
-  itemSubnameField,
 }: {
   item: Item
   unlinkCallback?: any
-  itemNameField?: string
-  itemAvatarField?: string
-  itemSubnameField?: string
   loading?: boolean
   unlinkPermission: boolean
 }) {
   const appState = useAppState()
 
-  const avatar =
-    itemAvatarField && getValue(item, itemAvatarField)
-      ? appState.assetsApi.url + getValue(item, itemAvatarField)
-      : item.layer?.itemAvatarField &&
-        item &&
-        getValue(item, item.layer?.itemAvatarField) &&
-        appState.assetsApi.url + getValue(item, item.layer?.itemAvatarField)
-  const title = itemNameField
-    ? getValue(item, itemNameField)
-    : item.layer?.itemNameField && item && getValue(item, item.layer.itemNameField)
-  const subtitle = itemSubnameField
-    ? getValue(item, itemSubnameField)
-    : item.layer?.itemSubnameField && item && getValue(item, item.layer.itemSubnameField)
+  const avatar = item.image ? appState.assetsApi.url + item.image : null
+  const title = item.name
+  const subtitle = item.subname
 
   useEffect(() => {}, [item])
 
@@ -74,14 +58,7 @@ export function LinkedItemsHeaderView({
                 tabIndex={0}
                 className=' tw-btn tw-m-1 tw-leading-3 tw-border-none tw-min-h-0 tw-h-6'
               >
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  className='tw-h-5 tw-w-5'
-                  viewBox='0 0 20 20'
-                  fill='currentColor'
-                >
-                  <path d='M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z' />
-                </svg>
+                <EllipsisVerticalIcon className='tw-h-5 tw-w-5' />
               </label>
               <ul
                 tabIndex={0}
@@ -96,16 +73,7 @@ export function LinkedItemsHeaderView({
                       {loading ? (
                         <span className='tw-loading tw-loading-spinner tw-loading-sm'></span>
                       ) : (
-                        <svg
-                          className='tw-h-5 tw-w-5'
-                          stroke='currentColor'
-                          fill='currentColor'
-                          strokeWidth='0'
-                          viewBox='0 0 512 512'
-                          xmlns='http://www.w3.org/2000/svg'
-                        >
-                          <path d='M304.083 405.907c4.686 4.686 4.686 12.284 0 16.971l-44.674 44.674c-59.263 59.262-155.693 59.266-214.961 0-59.264-59.265-59.264-155.696 0-214.96l44.675-44.675c4.686-4.686 12.284-4.686 16.971 0l39.598 39.598c4.686 4.686 4.686 12.284 0 16.971l-44.675 44.674c-28.072 28.073-28.072 73.75 0 101.823 28.072 28.072 73.75 28.073 101.824 0l44.674-44.674c4.686-4.686 12.284-4.686 16.971 0l39.597 39.598zm-56.568-260.216c4.686 4.686 12.284 4.686 16.971 0l44.674-44.674c28.072-28.075 73.75-28.073 101.824 0 28.072 28.073 28.072 73.75 0 101.823l-44.675 44.674c-4.686 4.686-4.686 12.284 0 16.971l39.598 39.598c4.686 4.686 12.284 4.686 16.971 0l44.675-44.675c59.265-59.265 59.265-155.695 0-214.96-59.266-59.264-155.695-59.264-214.961 0l-44.674 44.674c-4.686 4.686-4.686 12.284 0 16.971l39.597 39.598zm234.828 359.28l22.627-22.627c9.373-9.373 9.373-24.569 0-33.941L63.598 7.029c-9.373-9.373-24.569-9.373-33.941 0L7.029 29.657c-9.373 9.373-9.373 24.569 0 33.941l441.373 441.373c9.373 9.372 24.569 9.372 33.941 0z'></path>
-                        </svg>
+                        <LinkSlashIcon className='tw-h-5 tw-w-5 tw-stroke-[3]' />
                       )}
                     </a>
                   </li>

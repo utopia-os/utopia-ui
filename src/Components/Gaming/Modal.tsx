@@ -1,5 +1,8 @@
 import { useEffect } from 'react'
 
+/**
+ * @category Gaming
+ */
 export function Modal({
   children,
   showOnStartup,

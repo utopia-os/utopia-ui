@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom'
 
 import { useItems } from '#components/Map/hooks/useItems'
 import { useTags } from '#components/Map/hooks/useTags'
-import { getValue } from '#utils/GetValue'
 
 import { MapOverlayPage } from './MapOverlayPage'
 import { TagView } from './TagView'
@@ -31,6 +30,9 @@ function groupAndCount(arr) {
   return grouped.sort((a, b) => b.count - a.count)
 }
 
+/**
+ * @category Templates
+ */
 export const MarketView = () => {
   const [offers, setOffers] = useState<Tag[]>([])
   const [needs, setNeeds] = useState<Tag[]>([])
@@ -42,21 +44,16 @@ export const MarketView = () => {
   useEffect(() => {
     setOffers([])
     setNeeds([])
-    items.map((i) => {
-      i.layer?.itemOffersField &&
-        getValue(i, i.layer.itemOffersField)?.map((o) => {
-          const tag = tags.find((t) => t.id === o.tags_id)
-          tag && setOffers((current) => [...current, tag])
-          return null
-        })
-      i.layer?.itemNeedsField &&
-        getValue(i, i.layer.itemNeedsField)?.map((n) => {
-          const tag = tags.find((t) => t.id === n.tags_id)
-          tag && setNeeds((current) => [...current, tag])
-          return null
-        })
-      return null
-    })
+    for (const item of items) {
+      item.offers?.forEach((o) => {
+        const tag = tags.find((t) => t.id === o.tags_id)
+        tag && setOffers((current) => [...current, tag])
+      })
+      item.needs?.forEach((n) => {
+        const tag = tags.find((t) => t.id === n.tags_id)
+        tag && setNeeds((current) => [...current, tag])
+      })
+    }
     // eslint-disable-next-line no-console
     console.log(offers)
 

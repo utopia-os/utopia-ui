@@ -197,7 +197,7 @@ export const TabsForm = ({
                         loading={loading}
                       />
                       <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
-                        <TextView truncate item={i} />
+                        <TextView truncate itemId={item.id} />
                       </div>
                     </div>
                   ))}
@@ -208,7 +208,6 @@ export const TabsForm = ({
                     item={item}
                     existingRelations={state.relations}
                     triggerItemSelected={(id) => linkItem(id, item, updateItem)}
-                    colorField={item.layer.itemColorField}
                   ></ActionButton>
                 )}
               </div>

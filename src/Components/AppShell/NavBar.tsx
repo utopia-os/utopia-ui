@@ -1,14 +1,16 @@
+import Bars3Icon from '@heroicons/react/16/solid/Bars3Icon'
+import EllipsisVerticalIcon from '@heroicons/react/16/solid/EllipsisVerticalIcon'
 import QuestionMarkIcon from '@heroicons/react/24/outline/QuestionMarkCircleIcon'
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { useAuth } from '#components/Auth'
+import { useAuth } from '#components/Auth/useAuth'
 import { useItems } from '#components/Map/hooks/useItems'
 
 import type { Item } from '#types/Item'
 
-export default function NavBar({ appName, userType }: { appName: string; userType: string }) {
+export default function NavBar({ appName }: { appName: string }) {
   const { isAuthenticated, user, logout } = useAuth()
 
   const [userProfile, setUserProfile] = useState<Item>({} as Item)
@@ -16,12 +18,10 @@ export default function NavBar({ appName, userType }: { appName: string; userTyp
 
   useEffect(() => {
     const profile =
-      user &&
-      items.find((i) => i.user_created?.id === user.id && i.layer?.itemType.name === userType)
+      user && items.find((i) => i.user_created?.id === user.id && i.layer?.userProfileLayer)
     profile
       ? setUserProfile(profile)
       : setUserProfile({ id: crypto.randomUUID(), name: user?.first_name ?? '', text: '' })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, items])
 
   // useEffect(() => {}, [userProfile])
@@ -70,19 +70,7 @@ export default function NavBar({ appName, userType }: { appName: string; userTyp
             aria-controls='#sidenav'
             aria-haspopup='true'
           >
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 24 24'
-              className='tw-inline-block tw-w-5 tw-h-5 tw-stroke-current'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth='2'
-                d='M4 6h16M4 12h16M4 18h16'
-              ></path>
-            </svg>
+            <Bars3Icon className='tw-inline-block tw-w-5 tw-h-5' />
           </button>
           <div className='tw-flex-1 tw-mr-2'>
             <div
@@ -123,14 +111,7 @@ export default function NavBar({ appName, userType }: { appName: string; userTyp
               </Link>
               <div className='tw-dropdown tw-dropdown-end'>
                 <label tabIndex={0} className='tw-btn tw-btn-ghost tw-btn-square'>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    className='tw-h-5 tw-w-5'
-                    viewBox='0 0 20 20'
-                    fill='currentColor'
-                  >
-                    <path d='M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z' />
-                  </svg>
+                  <EllipsisVerticalIcon className='tw-h-5 tw-w-5' />
                 </label>
                 <ul
                   tabIndex={0}
@@ -167,14 +148,7 @@ export default function NavBar({ appName, userType }: { appName: string; userTyp
               </div>
               <div className='tw-dropdown tw-dropdown-end'>
                 <label tabIndex={1} className='tw-btn tw-btn-ghost md:tw-hidden'>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    className='tw-h-5 tw-w-5'
-                    viewBox='0 0 20 20'
-                    fill='currentColor'
-                  >
-                    <path d='M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z' />
-                  </svg>
+                  <EllipsisVerticalIcon className='tw-h-5 tw-w-5' />
                 </label>
                 <ul
                   tabIndex={1}

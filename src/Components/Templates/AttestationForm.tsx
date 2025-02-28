@@ -11,6 +11,9 @@ import { MapOverlayPage } from './MapOverlayPage'
 import type { Item } from '#types/Item'
 import type { ItemsApi } from '#types/ItemsApi'
 
+/**
+ * @category Templates
+ */
 export const AttestationForm = ({ api }: { api?: ItemsApi<unknown> }) => {
   const items = useItems()
   const appState = useAppState()
@@ -73,7 +76,7 @@ export const AttestationForm = ({ api }: { api?: ItemsApi<unknown> }) => {
                 (i) =>
                   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                   i.user_created?.id === to[0].directus_users_id &&
-                  i.layer?.itemType.name === 'player',
+                  i.layer?.userProfileLayer === true,
               )?.id +
               '?tab=2',
           ),

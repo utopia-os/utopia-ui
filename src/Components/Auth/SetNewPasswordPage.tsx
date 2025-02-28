@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -8,6 +6,9 @@ import { MapOverlayPage } from '#components/Templates/MapOverlayPage'
 
 import { useAuth } from './useAuth'
 
+/**
+ * @category Auth
+ */
 export function SetNewPasswordPage() {
   const [password, setPassword] = useState<string>('')
 
@@ -17,8 +18,6 @@ export function SetNewPasswordPage() {
 
   const onReset = async () => {
     const token = window.location.search.split('token=')[1]
-    // eslint-disable-next-line no-console
-    console.log(token)
 
     await toast.promise(passwordReset(token, password), {
       success: {
@@ -29,7 +28,7 @@ export function SetNewPasswordPage() {
       },
       error: {
         render({ data }) {
-          return `${data}`
+          return `${data as string}`
         },
       },
       pending: 'setting password ...',
@@ -52,6 +51,7 @@ export function SetNewPasswordPage() {
               ? 'tw-btn tw-btn-disabled tw-btn-block tw-btn-primary'
               : 'tw-btn tw-btn-primary tw-btn-block'
           }
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onClick={() => onReset()}
         >
           {loading ? <span className='tw-loading tw-loading-spinner'></span> : 'Set'}

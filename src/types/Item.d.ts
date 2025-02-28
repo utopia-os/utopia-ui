@@ -4,11 +4,25 @@ import type { Relation } from './Relation'
 import type { UserItem } from './UserItem'
 import type { Point } from 'geojson'
 
+type TagIds = { tags_id: string }[]
+
+interface GalleryItem {
+  directus_files_id: {
+    id: number
+    width: number
+    height: number
+  }
+}
+
+/**
+ * @category Types
+ */
 export interface Item {
   id: string
   name: string
-  text: string
-  position?: Point
+  text?: string
+  data?: string
+  position?: Point | null
   date_created?: string
   date_updated?: string | null
   start?: string
@@ -24,8 +38,21 @@ export interface Item {
   slug?: string
   user_created?: UserItem
   image?: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any
+  group_type?: string
+  offers?: TagIds
+  needs?: TagIds
+  status?: string
+  color?: string
+  markerIcon?: string
+  avatar?: string
+  new?: boolean
+  contact?: string
+  telephone?: string
+  next_appointment?: string
+  gallery?: GalleryItem[]
+
+  // {
+  // coordinates: [number, number]
   /* constructor(
     id: string,
     name: string,

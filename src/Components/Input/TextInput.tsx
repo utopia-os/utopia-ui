@@ -1,9 +1,6 @@
-/* eslint-disable @typescript-eslint/consistent-type-definitions */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { useEffect, useState } from 'react'
 
-type InputTextProps = {
+interface InputTextProps {
   labelTitle?: string
   labelStyle?: string
   type?: string
@@ -18,6 +15,9 @@ type InputTextProps = {
   updateFormValue?: (value: string) => void
 }
 
+/**
+ * @category Input
+ */
 export function TextInput({
   labelTitle,
   labelStyle,
@@ -32,10 +32,10 @@ export function TextInput({
   required = true,
   updateFormValue,
 }: InputTextProps) {
-  const [inputValue, setInputValue] = useState<string>(defaultValue || '')
+  const [inputValue, setInputValue] = useState<string>(defaultValue ?? '')
 
   useEffect(() => {
-    setInputValue(defaultValue || '')
+    setInputValue(defaultValue ?? '')
   }, [defaultValue])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,22 +47,24 @@ export function TextInput({
   }
 
   return (
-    <div className={`tw-form-control ${containerStyle}`}>
+    <div className={`tw-form-control ${containerStyle ?? ''}`}>
       {labelTitle ? (
         <label className='tw-label'>
-          <span className={`tw-label-text tw-text-base-content ${labelStyle}`}>{labelTitle}</span>
+          <span className={`tw-label-text tw-text-base-content ${labelStyle ?? ''}`}>
+            {labelTitle}
+          </span>
         </label>
       ) : null}
       <input
         required={required}
         pattern={pattern}
-        type={type || 'text'}
+        type={type ?? 'text'}
         name={dataField}
         value={inputValue}
-        placeholder={placeholder || ''}
+        placeholder={placeholder ?? ''}
         autoComplete={autocomplete}
         onChange={handleChange}
-        className={`tw-input tw-input-bordered tw-w-full ${inputStyle || ''}`}
+        className={`tw-input tw-input-bordered tw-w-full ${inputStyle ?? ''}`}
       />
     </div>
   )

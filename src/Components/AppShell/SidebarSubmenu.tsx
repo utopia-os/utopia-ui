@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import ChevronDownIcon from '@heroicons/react/24/outline/ChevronDownIcon'
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+
+import type { Route } from './SideBar'
 
 function SidebarSubmenu({
   submenu,
@@ -14,7 +12,7 @@ function SidebarSubmenu({
   path: string
   icon: JSX.Element
   name: string
-  submenu?: any | undefined
+  submenu?: Route[]
 }) {
   const location = useLocation()
   const [isExpanded, setIsExpanded] = useState(false)
@@ -22,7 +20,7 @@ function SidebarSubmenu({
   /** Open Submenu list if path found in routes, this is for directly loading submenu routes  first time */
   useEffect(() => {
     if (
-      submenu.filter((m) => {
+      submenu?.filter((m) => {
         return m.path === location.pathname
       })[0]
     )
@@ -52,7 +50,7 @@ function SidebarSubmenu({
       {/** Submenu list */}
       <div className={' w-full data-[te-collapse-show]:!hidden ' + (isExpanded ? '' : 'hidden')}>
         <ul className={'menu menu-compact'}>
-          {submenu.map((m, k) => {
+          {submenu?.map((m, k) => {
             return (
               <li key={k}>
                 <Link to={m.path} className=''>

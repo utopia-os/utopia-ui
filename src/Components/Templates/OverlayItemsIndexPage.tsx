@@ -27,6 +27,9 @@ import { MapOverlayPage } from './MapOverlayPage'
 
 import type { Item } from '#types/Item'
 
+/**
+ * @category Templates
+ */
 export const OverlayItemsIndexPage = ({
   url,
   layerName,
@@ -35,11 +38,13 @@ export const OverlayItemsIndexPage = ({
 }: {
   layerName: string
   url: string
-  parameterField: string
+  parameterField?: string
   plusButton?: boolean
 }) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [addItemPopupType, setAddItemPopupType] = useState<string>('')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const parameterFieldDummy = parameterField
 
   const tabRef = useRef<HTMLFormElement>(null)
 
@@ -165,7 +170,6 @@ export const OverlayItemsIndexPage = ({
                       i={i}
                       loading={loading}
                       url={url}
-                      parameterField={parameterField}
                       deleteCallback={() => deleteItem(i)}
                     />
                   </div>

@@ -1,5 +1,5 @@
 {
-  "name": "tutorial-1-basic-map",
+  "name": "1-basic-map",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,7 +12,7 @@
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "utopia-ui": "^3.0.35"
+    "utopia-ui": "../../"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

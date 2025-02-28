@@ -15,7 +15,6 @@ import { toast } from 'react-toastify'
 import './UtopiaMap.css'
 
 import { containsUUID } from '#utils/ContainsUUID'
-import { getValue } from '#utils/GetValue'
 
 import { useClusterRef, useSetClusterRef } from './hooks/useClusterRef'
 import { useAddVisibleLayer } from './hooks/useFilter'
@@ -33,7 +32,6 @@ import { GratitudeControl } from './Subcomponents/Controls/GratitudeControl'
 import { LayerControl } from './Subcomponents/Controls/LayerControl'
 import { SearchControl } from './Subcomponents/Controls/SearchControl'
 import { TagsControl } from './Subcomponents/Controls/TagsControl'
-import { PopupButton } from './Subcomponents/ItemPopupComponents/PopupButton'
 import { TextView } from './Subcomponents/ItemPopupComponents/TextView'
 import { SelectPosition } from './Subcomponents/SelectPosition'
 
@@ -75,12 +73,15 @@ export function UtopiaMapInner({
         setTimeout(() => {
           toast(
             <>
-              <TextView rawText={'## Do you like this Map?'} />
+              <TextView itemId='' rawText={'## Do you like this Map?'} />
               <div>
                 <TextView
+                  itemId=''
                   rawText={'Support us building free opensource maps and help us grow 🌱☀️'}
                 />
-                <PopupButton url={'https://opencollective.com/utopia-project'} text={'Donate'} />
+                <a href='https://opencollective.com/utopia-project'>
+                  <div className='tw-btn tw-btn-sm tw-float-right'>Donate</div>
+                </a>
               </div>
             </>,
             { autoClose: false },
@@ -120,7 +121,6 @@ export function UtopiaMapInner({
         }
         let title = ''
         if (item?.name) title = item.name
-        else if (item?.layer?.itemNameField) title = getValue(item, item.layer.itemNameField)
         document.title = `${document.title.split('-')[0]} - ${title}`
       }
     },
@@ -142,15 +142,13 @@ export function UtopiaMapInner({
             })
           let title = ''
           if (ref.item.name) title = ref.item.name
-          else if (ref.item.layer?.itemNameField)
-            title = getValue(ref.item.name, ref.item.layer.itemNameField)
           document.title = `${document.title.split('-')[0]} - ${title}`
           document
             .querySelector('meta[property="og:title"]')
             ?.setAttribute('content', ref.item.name)
           document
             .querySelector('meta[property="og:description"]')
-            ?.setAttribute('content', ref.item.text)
+            ?.setAttribute('content', ref.item.text ?? '')
         }
       }
     }

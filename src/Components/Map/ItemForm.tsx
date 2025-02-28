@@ -2,6 +2,9 @@ import { Children, cloneElement, isValidElement, useEffect } from 'react'
 
 import type { Item } from '#types/Item'
 
+/**
+ * @category Map
+ */
 export const ItemForm = ({
   children,
   item,

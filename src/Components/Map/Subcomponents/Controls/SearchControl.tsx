@@ -10,6 +10,8 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
+import FlagIcon from '@heroicons/react/24/outline/FlagIcon'
+import MagnifyingGlassIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon'
 import axios from 'axios'
 import { LatLng, LatLngBounds, marker } from 'leaflet'
 import { useEffect, useRef, useState } from 'react'
@@ -23,7 +25,6 @@ import { useLeafletRefs } from '#components/Map/hooks/useLeafletRefs'
 import { useTags } from '#components/Map/hooks/useTags'
 import useWindowDimensions from '#components/Map/hooks/useWindowDimension'
 import { decodeTag } from '#utils/FormatTags'
-import { getValue } from '#utils/GetValue'
 import MarkerIconFactory from '#utils/MarkerIconFactory'
 
 import { LocateControl } from './LocateControl'
@@ -73,12 +74,10 @@ export const SearchControl = () => {
       searchGeo()
       setItemsResults(
         items.filter((item) => {
-          if (item.layer?.itemNameField) item.name = getValue(item, item.layer.itemNameField)
-          if (item.layer?.itemTextField) item.text = getValue(item, item.layer.itemTextField)
           return (
             value.length > 2 &&
             ((item.layer?.listed && item.name.toLowerCase().includes(value.toLowerCase())) ||
-              item.text.toLowerCase().includes(value.toLowerCase()))
+              item.text?.toLowerCase().includes(value.toLowerCase()))
           )
         }),
       )
@@ -237,21 +236,7 @@ export const SearchControl = () => {
                     hide()
                   }}
                 >
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    strokeWidth='1.5'
-                    stroke='currentColor'
-                    className='tw-text-current tw-mr-2 tw-mt-0 tw-w-4'
-                  >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      d='m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z'
-                    />
-                  </svg>
-
+                  <MagnifyingGlassIcon className='tw-text-current tw-mr-2 tw-mt-0 tw-w-4' />
                   <div>
                     <div className='tw-text-sm tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>
                       {geo?.properties.name ? geo?.properties.name : value}
@@ -298,21 +283,7 @@ export const SearchControl = () => {
                     )
                   }}
                 >
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    strokeWidth={1.5}
-                    stroke='currentColor'
-                    className='tw-text-current tw-mr-2 tw-mt-0 tw-w-4'
-                  >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      d='M3 3v1.5M3 21v-6m0 0 2.77-.693a9 9 0 0 1 6.208.682l.108.054a9 9 0 0 0 6.086.71l3.114-.732a48.524 48.524 0 0 1-.005-10.499l-3.11.732a9 9 0 0 1-6.085-.711l-.108-.054a9 9 0 0 0-6.208-.682L3 4.5M3 15V4.5'
-                    />
-                  </svg>
-
+                  <FlagIcon className='tw-text-current tw-mr-2 tw-mt-0 tw-w-4' />
                   <div>
                     <div className='tw-text-sm tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>
                       {value}

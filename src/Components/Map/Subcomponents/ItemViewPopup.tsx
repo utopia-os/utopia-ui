@@ -60,9 +60,9 @@ export const ItemViewPopup = forwardRef((props: ItemViewPopupProps, ref: any) =>
     setLoading(true)
     let success = false
     try {
-      !props.item.layer?.onlyOnePerOwner &&
+      !props.item.layer?.userProfileLayer &&
         (await props.item.layer?.api?.deleteItem!(props.item.id))
-      props.item.layer?.onlyOnePerOwner &&
+      props.item.layer?.userProfileLayer &&
         (await props.item.layer.api?.updateItem!({ id: props.item.id, position: null }))
       success = true
       // eslint-disable-next-line no-catch-all/no-catch-all
@@ -71,8 +71,8 @@ export const ItemViewPopup = forwardRef((props: ItemViewPopupProps, ref: any) =>
       toast.error(error.toString())
     }
     if (success) {
-      !props.item.layer?.onlyOnePerOwner && removeItem(props.item)
-      props.item.layer?.onlyOnePerOwner && updadateItem({ ...props.item, position: undefined })
+      !props.item.layer?.userProfileLayer && removeItem(props.item)
+      props.item.layer?.userProfileLayer && updadateItem({ ...props.item, position: undefined })
       toast.success('Item deleted')
     }
     setLoading(false)
@@ -105,7 +105,7 @@ export const ItemViewPopup = forwardRef((props: ItemViewPopupProps, ref: any) =>
                 : '',
             )
           ) : (
-            <TextView item={props.item} />
+            <TextView text={props.item.text} itemId={props.item.id} />
           )}
         </div>
         <div className='tw-flex -tw-mb-1 tw-flex-row tw-mr-2 tw-mt-1'>

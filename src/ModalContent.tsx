@@ -13,7 +13,7 @@ export function Welcome1({ clickAction1, map }: ChapterProps) {
     return (
         <>{map.custom_text? 
             <>
-            <TextView item={map} itemTextField={'custom_text'}></TextView>
+            <TextView rawText={map.custom_text}></TextView>
             </> : 
             <>
             <h3 className="font-bold text-lg">Welcome to {map?.name || "Utopia Map"}</h3>

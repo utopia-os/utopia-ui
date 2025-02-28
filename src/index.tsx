@@ -1,13 +1,6 @@
-// CSS
-import '#assets/css/tailwind.css'
-import '#assets/css/masonry.css'
-import '#assets/css/toastify.css'
-import '#assets/css/custom-file-upload.css'
-import '#assets/css/misc.css'
-import '#assets/css/icons.css'
-import '#assets/css/leaflet.css'
+// eslint-disable-next-line import/no-unassigned-import
+import './css'
 
-// TSX
 export * from './Components/Map'
 export * from './Components/AppShell'
 export * from './Components/Auth'

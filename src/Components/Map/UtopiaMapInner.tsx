@@ -12,7 +12,6 @@ import 'leaflet/dist/leaflet.css'
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import { Outlet, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import './UtopiaMap.css'
 
 import { containsUUID } from '#utils/ContainsUUID'
 

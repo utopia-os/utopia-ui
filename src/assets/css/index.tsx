@@ -1,7 +1,0 @@
-import './tailwind.css'
-import './masonry.css'
-import './toastify.css'
-import './custom-file-upload.css'
-import './misc.css'
-import './icons.css'
-import './leaflet.css'

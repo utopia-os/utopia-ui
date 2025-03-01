@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import PlusSVG from '#assets/plus.svg'
 import { useLayers } from '#components/Map/hooks/useLayers'
 import { useHasUserPermission } from '#components/Map/hooks/usePermissions'
 
@@ -30,16 +31,7 @@ export default function AddButton({
       {canAddItems() ? (
         <div className='tw-dropdown tw-dropdown-top tw-dropdown-end tw-dropdown-hover tw-z-500 tw-absolute tw-right-4 tw-bottom-4'>
           <label tabIndex={0} className='tw-z-500 tw-btn tw-btn-circle tw-shadow tw-bg-base-100'>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 24 24'
-              strokeWidth='3'
-              stroke='currentColor'
-              className='tw-w-5 tw-h-5'
-            >
-              <path strokeLinecap='round' strokeLinejoin='round' d='M12 4.5v15m7.5-7.5h-15' />
-            </svg>
+            <img src={PlusSVG} alt='Layers' className='tw-h-5 tw-w-5' />
           </label>
           <ul tabIndex={0} className='tw-dropdown-content tw-pr-1 tw-list-none'>
             {layers.map(

@@ -1,8 +1,3 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 const goldenRatioConjugate = 0.618033988749895
 
 export const randomColor = () => {
@@ -53,7 +48,7 @@ function hsvToHex(h: number, s: number, v: number) {
   return rgbToHex(Math.round(r * 255), Math.round(g * 255), Math.round(b * 255))
 }
 
-const rgbToHex = (r, g, b) =>
+const rgbToHex = (r: number, g: number, b: number) =>
   '#' +
   [r, g, b]
     .map((x) => {

@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 
 import EllipsisVerticalIcon from '@heroicons/react/16/solid/EllipsisVerticalIcon'
@@ -26,7 +25,7 @@ export function LinkedItemsHeaderView({
 }) {
   const appState = useAppState()
 
-  const avatar = appState.assetsApi.url + item.image
+  const avatar = item.image ? appState.assetsApi.url + item.image : null
   const title = item.name
   const subtitle = item.subname
 

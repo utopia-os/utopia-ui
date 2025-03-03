@@ -44,9 +44,9 @@ export function SideBar({ routes, bottomRoutes }: { routes: Route[]; bottomRoute
     <nav
       id='sidenav'
       className={`${appState.sideBarOpen ? 'tw-translate-x-0' : '-tw-translate-x-full'}
-          ${appState.sideBarSlim ? 'tw-w-14' : 'tw-w-60'}
+          ${appState.sideBarSlim ? 'tw-w-14' : 'tw-w-48'}
           ${embedded ? 'tw-mt-0 tw-h-[100dvh]' : 'tw-mt-16 tw-h-[calc(100dvh-64px)]'}
-          tw-fixed tw-left-0 tw-transition-all tw-duration-500 tw-top-0 tw-z-[10035] 
+          tw-fixed tw-left-0 tw-transition-all tw-duration-300 tw-top-0 tw-z-[10035] 
           tw-overflow-hidden tw-shadow-xl dark:tw-bg-zinc-800`}
     >
       <div

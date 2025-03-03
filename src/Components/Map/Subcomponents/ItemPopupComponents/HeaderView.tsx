@@ -56,10 +56,6 @@ export function HeaderView({
 
   const [imageLoaded, setImageLoaded] = useState(false)
 
-  useEffect(() => {
-    setImageLoaded(false)
-  }, [item])
-
   const avatar =
     item.image &&
     appState.assetsApi.url + item.image + `${big ? '?width=160&heigth=160' : '?width=80&heigth=80'}`

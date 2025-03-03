@@ -28,6 +28,7 @@ export default defineConfig({
     specPattern: ['**/**/*.cy.{ts,tsx}'],
   },
   e2e: {
+    baseUrl: 'http://localhost:5173',
     chromeWebSecurity: false,
     retries: 0,
     specPattern: 'features/**/*.feature',

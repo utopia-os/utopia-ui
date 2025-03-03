@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Subtitle from '#components/Typography/Subtitle'
 
 interface TitleCardProps {
@@ -8,7 +6,7 @@ interface TitleCardProps {
   children?: React.ReactNode
   topMargin?: string
   className?: string
-  TopSideButtons?: any
+  TopSideButtons?: React.ReactNode
 }
 
 /**
@@ -26,9 +24,9 @@ export function TitleCard({
     <div
       className={
         'tw-card tw-w-full tw-p-6 tw-bg-base-100 tw-shadow-xl tw-h-fit tw-mb-4 ' +
-        (className || '') +
+        (className ?? '') +
         ' ' +
-        (topMargin || 'tw-mt-6')
+        (topMargin ?? 'tw-mt-6')
       }
     >
       {!hideTitle && (

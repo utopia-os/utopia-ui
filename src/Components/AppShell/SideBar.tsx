@@ -1,8 +1,8 @@
 import ChevronRightIcon from '@heroicons/react/24/outline/ChevronRightIcon'
-import { useRef, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
-import { Sidenav, initTE } from 'tw-elements'
 
+import { useAppState, useSetAppState } from './hooks/useAppState'
 import SidebarSubmenu from './SidebarSubmenu'
 
 export interface Route {
@@ -13,39 +13,11 @@ export interface Route {
   blank?: boolean
 }
 
-interface SidenavType extends HTMLElement {
-  toggleSlim(): void
-  toggle(): void
-}
-
 /**
  * @category AppShell
  */
 export function SideBar({ routes, bottomRoutes }: { routes: Route[]; bottomRoutes?: Route[] }) {
-  // prevent react18 from calling useEffect twice
-  const init = useRef(false)
-
   const location = useLocation()
-
-  const [instance, setInstance] = useState<SidenavType>()
-  const [slim, setSlim] = useState<boolean>(false)
-
-  const toggleSlim = () => {
-    setSlim(!slim)
-    instance?.toggleSlim()
-  }
-
-  useEffect(() => {
-    if (!init.current) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-      initTE({ Sidenav })
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-      const instance = Sidenav.getInstance(document.getElementById('sidenav')) as SidenavType
-      setInstance(instance)
-      instance.toggleSlim()
-      init.current = true
-    }
-  }, [])
 
   const [embedded, setEmbedded] = useState<boolean>(true)
 
@@ -57,18 +29,25 @@ export function SideBar({ routes, bottomRoutes }: { routes: Route[]; bottomRoute
 
   const params = new URLSearchParams(window.location.search)
 
+  const appState = useAppState()
+  const setAppState = useSetAppState()
+
+  const toggleSidebarOpen = () => {
+    setAppState({ sideBarOpen: !appState.sideBarOpen })
+  }
+
+  const toggleSidebarSlim = () => {
+    setAppState({ sideBarSlim: !appState.sideBarSlim })
+  }
+
   return (
     <nav
       id='sidenav'
-      className={`group tw-fixed tw-left-0 ${embedded ? 'tw-mt-0 tw-h-[100dvh]' : 'tw-mt-16 tw-h-[calc(100dvh-64px)]'} tw-top-0 tw-z-[10035]  tw--translate-x-full tw-overflow-hidden tw-shadow-xl data-[te-sidenav-slim='true']:tw-hidden data-[te-sidenav-slim-collapsed='true']:tw-w-[56px] data-[te-sidenav-slim='true']:tw-w-[56px] data-[te-sidenav-hidden='false']:tw-translate-x-0 dark:tw-bg-zinc-800 [&[data-te-sidenav-slim-collapsed='true'][data-te-sidenav-slim='false']]:tw-hidden [&[data-te-sidenav-slim-collapsed='true'][data-te-sidenav-slim='true']]:[display:unset]`}
-      data-te-sidenav-init
-      data-te-sidenav-hidden='true'
-      data-te-sidenav-mode='side'
-      data-te-sidenav-slim='true'
-      data-te-sidenav-content='#app-content'
-      data-te-sidenav-slim-collapsed='true'
-      data-te-sidenav-slim-width='56'
-      data-te-sidenav-width='180'
+      className={`${appState.sideBarOpen ? 'tw-translate-x-0' : '-tw-translate-x-full'}
+          ${appState.sideBarSlim ? 'tw-w-14' : 'tw-w-60'}
+          ${embedded ? 'tw-mt-0 tw-h-[100dvh]' : 'tw-mt-16 tw-h-[calc(100dvh-64px)]'}
+          tw-fixed tw-left-0 tw-transition-all tw-duration-500 tw-top-0 tw-z-[10035] 
+          tw-overflow-hidden tw-shadow-xl dark:tw-bg-zinc-800`}
     >
       <div
         className={`tw-flex tw-flex-col  ${embedded ? 'tw-h-full' : 'tw-h-[calc(100dvh-64px)]'}`}
@@ -92,12 +71,12 @@ export function SideBar({ routes, bottomRoutes }: { routes: Route[]; bottomRoute
                       `${isActive ? 'tw-font-semibold  tw-bg-base-200 !tw-rounded-none' : 'tw-font-normal !tw-rounded-none'}`
                     }
                     onClick={() => {
-                      if (screen.width < 640 && !slim) instance?.toggle()
+                      if (screen.width < 640 && !appState.sideBarSlim) toggleSidebarOpen()
                     }}
                   >
                     {route.icon}
                     <span
-                      className="group-[&[data-te-sidenav-slim-collapsed='true']]:data-[te-sidenav-slim='false']:tw-hidden"
+                      className={`${appState.sideBarSlim ? 'tw-hidden' : ''}`}
                       data-te-sidenav-slim='false'
                     >
                       {route.name}
@@ -140,12 +119,12 @@ export function SideBar({ routes, bottomRoutes }: { routes: Route[]; bottomRoute
                           `${isActive ? 'tw-font-semibold  tw-bg-base-200 !tw-rounded-none' : 'tw-font-normal !tw-rounded-none'}`
                         }
                         onClick={() => {
-                          if (screen.width < 640 && !slim) instance?.toggle()
+                          if (screen.width < 640 && !appState.sideBarSlim) toggleSidebarOpen()
                         }}
                       >
                         {route.icon}
                         <span
-                          className="group-[&[data-te-sidenav-slim-collapsed='true']]:data-[te-sidenav-slim='false']:tw-hidden"
+                          className={`${appState.sideBarSlim ? 'tw-hidden' : ''}`}
                           data-te-sidenav-slim='false'
                         >
                           {route.name}
@@ -167,9 +146,9 @@ export function SideBar({ routes, bottomRoutes }: { routes: Route[]; bottomRoute
             <ChevronRightIcon
               className={
                 'tw-w-5 tw-h-5 tw-mb-4 tw-mr-4  tw-cursor-pointer tw-float-right tw-delay-400 tw-duration-500 tw-transition-all ' +
-                (!slim ? 'tw-rotate-180' : '')
+                (!appState.sideBarSlim ? 'tw-rotate-180' : '')
               }
-              onClick={() => toggleSlim()}
+              onClick={() => toggleSidebarSlim()}
             />
           </div>
         </div>

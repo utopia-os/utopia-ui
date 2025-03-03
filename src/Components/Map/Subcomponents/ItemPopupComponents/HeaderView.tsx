@@ -12,7 +12,7 @@
 import EllipsisVerticalIcon from '@heroicons/react/16/solid/EllipsisVerticalIcon'
 import PencilIcon from '@heroicons/react/24/solid/PencilIcon'
 import TrashIcon from '@heroicons/react/24/solid/TrashIcon'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import TargetDotSVG from '#assets/targetDot.svg'

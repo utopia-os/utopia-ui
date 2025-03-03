@@ -12,7 +12,6 @@ import TargetSVG from '#assets/target.svg'
 
 // eslint-disable-next-line import/no-unassigned-import
 import 'leaflet.locatecontrol'
-import 'leaflet.locatecontrol/dist/L.Control.Locate.css'
 
 // Converts leaflet.locatecontrol to a React Component
 export const LocateControl = () => {

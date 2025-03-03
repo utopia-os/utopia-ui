@@ -25,11 +25,12 @@
         "#utils/*": ["./src/Utils/*"],
         "#types/*": ["./src/types/*"],
         "#src/*": ["./src/*"],
-        "#root/*": ["./*"]
+        "#root/*": ["./*"],
+        "@badeball/cypress-cucumber-preprocessor/*": ["./node_modules/@badeball/cypress-cucumber-preprocessor/dist/subpath-entrypoints/*"]
       }
     },
   "include": ["src", "vite.config.ts", "setupTest.ts", "cypress.config.ts", "cypress/support/commands.ts", "cypress/support/component.ts"],
-  "exclude": ["node_modules", "dist", "example", "rollup.config.mjss"],
+  "exclude": ["node_modules", "cypress", "dist", "example", "rollup.config.mjss"],
   "typeRoots": [
     "./src/types",
     "./node_modules/@types/"

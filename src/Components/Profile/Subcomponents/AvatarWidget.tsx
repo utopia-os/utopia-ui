@@ -8,7 +8,6 @@ import { ReactCrop, centerCrop, makeAspectCrop } from 'react-image-crop'
 
 import UserSVG from '#assets/user.svg'
 import { useAppState } from '#components/AppShell/hooks/useAppState'
-import 'react-image-crop/dist/ReactCrop.css'
 import DialogModal from '#components/Templates/DialogModal'
 
 import type { Crop } from 'react-image-crop'

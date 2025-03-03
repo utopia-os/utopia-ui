@@ -12,8 +12,8 @@ export function FilterControl() {
   const [open, setOpen] = useState(false)
 
   const groupTypes = [
-    { text: 'Regional Gruppe', value: 'wuerdekompass' },
-    { text: 'Themen Gruppe', value: 'themenkompass' },
+    { text: 'Regional Gruppe', value: 'Regional-Gruppe' },
+    { text: 'Themen Gruppe', value: 'Themen-Gruppe' },
     { text: 'liebevoll.jetzt', value: 'liebevoll.jetzt' },
   ]
 

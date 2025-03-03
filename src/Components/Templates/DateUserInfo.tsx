@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable @typescript-eslint/no-unnecessary-condition */
-/* eslint-disable @typescript-eslint/prefer-optional-chain */
 import { useState } from 'react'
 
 import { timeAgo } from '#utils/TimeAgo'
@@ -18,7 +15,8 @@ export const DateUserInfo = ({ item }: { item: Item }) => {
         <p
           className={'tw-italic tw-min-h-[21px] !tw-my-0 tw-text-gray-500'}
           onClick={() => setInfoExpanded(false)}
-        >{`${item.date_updated && item.date_updated !== item.date_created ? 'updated' : 'posted'} ${item && item.user_created && item.user_created.first_name ? `by ${item.user_created.first_name}` : ''} ${item.date_updated ? timeAgo(item.date_updated) : timeAgo(item.date_created!)}`}</p>
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        >{`${item.date_updated && item.date_updated !== item.date_created ? 'updated' : 'posted'} ${item.user_created?.first_name ? `by ${item.user_created.first_name}` : ''} ${item.date_updated ? timeAgo(item.date_updated) : timeAgo(item.date_created!)}`}</p>
       ) : (
         <p
           className='!tw-my-0 tw-min-h-[21px] tw-font-bold tw-cursor-pointer tw-text-gray-500'

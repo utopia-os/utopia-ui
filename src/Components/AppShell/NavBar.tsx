@@ -8,6 +8,8 @@ import { toast } from 'react-toastify'
 import { useAuth } from '#components/Auth/useAuth'
 import { useItems } from '#components/Map/hooks/useItems'
 
+import { useAppState } from './hooks/useAppState'
+
 import type { Item } from '#types/Item'
 
 export default function NavBar({ appName }: { appName: string }) {
@@ -24,7 +26,7 @@ export default function NavBar({ appName }: { appName: string }) {
       : setUserProfile({ id: crypto.randomUUID(), name: user?.first_name ?? '', text: '' })
   }, [user, items])
 
-  // useEffect(() => {}, [userProfile])
+  const appState = useAppState()
 
   const nameRef = useRef<HTMLHeadingElement>(null)
   const [nameWidth, setNameWidth] = useState<number>(0)
@@ -103,7 +105,7 @@ export default function NavBar({ appName }: { appName: string }) {
                 {userProfile.image && (
                   <div className='tw-avatar'>
                     <div className='tw-w-10 tw-rounded-full'>
-                      <img src={'https://api.utopia-lab.org/assets/' + userProfile.image} />
+                      <img src={appState.assetsApi.url + userProfile.image} />
                     </div>
                   </div>
                 )}

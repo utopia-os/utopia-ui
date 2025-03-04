@@ -6,14 +6,16 @@ import type { AssetsApi } from '#types/AssetsApi'
 
 interface AppState {
   assetsApi: AssetsApi
-  userType: string
+  sideBarOpen: boolean
+  sideBarSlim: boolean
 }
 
 type UseAppManagerResult = ReturnType<typeof useAppManager>
 
 const initialAppState: AppState = {
   assetsApi: {} as AssetsApi,
-  userType: '',
+  sideBarOpen: false,
+  sideBarSlim: false,
 }
 
 const AppContext = createContext<UseAppManagerResult>({

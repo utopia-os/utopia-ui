@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { useAppState } from '#components/AppShell/hooks/useAppState'
 import { useAuth } from '#components/Auth/useAuth'
 import { useItems, useUpdateItem, useAddItem } from '#components/Map/hooks/useItems'
 import { useLayers } from '#components/Map/hooks/useLayers'
@@ -62,7 +61,6 @@ export function ProfileForm() {
   const hasUserPermission = useHasUserPermission()
   const getItemTags = useGetItemTags()
   const items = useItems()
-  const appState = useAppState()
 
   const [urlParams, setUrlParams] = useState(new URLSearchParams(location.search))
 
@@ -146,8 +144,12 @@ export function ProfileForm() {
   const [template, setTemplate] = useState<string>('')
 
   useEffect(() => {
-    setTemplate(item.layer?.itemType.template ?? appState.userType)
-  }, [appState.userType, item])
+    if (item.layer?.itemType.template) setTemplate(item.layer?.itemType.template)
+    else {
+      const userLayer = layers.find((l) => l.userProfileLayer === true)
+      if (userLayer) setTemplate(userLayer.itemType.template)
+    }
+  }, [item, layers])
 
   return (
     <>

@@ -51,9 +51,7 @@ export const TabsView = ({
   const items = useItems()
   const appState = useAppState()
   const getUserProfile = (id: string) => {
-    return items.find(
-      (i) => i.user_created?.id === id && i.layer?.itemType.name === appState.userType,
-    )
+    return items.find((i) => i.user_created?.id === id && i.layer?.userProfileLayer)
   }
 
   useEffect(() => {
@@ -156,13 +154,15 @@ export const TabsView = ({
                           <div className='flex items-center gap-3'>
                             <div className='tw-avatar'>
                               <div className='tw-mask tw-rounded-full h-8 w-8 tw-mr-2'>
-                                <img
-                                  src={
-                                    appState.assetsApi.url +
-                                    getUserProfile(a.user_created.id)?.image
-                                  }
-                                  alt='Avatar'
-                                />
+                                {getUserProfile(a.user_created.id)?.image && (
+                                  <img
+                                    src={
+                                      appState.assetsApi.url +
+                                      getUserProfile(a.user_created.id)?.image
+                                    }
+                                    alt='Avatar'
+                                  />
+                                )}
                               </div>
                             </div>
                             <div>

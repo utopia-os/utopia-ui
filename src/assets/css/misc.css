@@ -1,0 +1,23 @@
+.fade {
+    mask-image: linear-gradient(180deg, transparent, #000 1%, #000 99%, transparent);
+}
+
+.placeholder-center::placeholder {
+    text-align: center;
+}
+
+input {
+    box-sizing: border-box;
+}
+
+textarea {
+    box-sizing: border-box;
+}
+
+.crosshair-cursor-enabled {
+    cursor: crosshair;
+}
+
+.marker-cluster span {
+    color: #000;
+}

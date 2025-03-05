@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import { RowsPhotoAlbum } from 'react-photo-album'
 import ReactLightbox from 'yet-another-react-lightbox'
-import 'yet-another-react-lightbox/styles.css'
-import 'react-photo-album/rows.css'
 
 import { useAppState } from '#components/AppShell/hooks/useAppState'
 

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { DomEvent } from 'leaflet'
 import { createRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -39,14 +38,14 @@ export function MapOverlayPage({
   }, [overlayRef, backdropRef])
 
   return (
-    <div className={`tw-absolute tw-h-full tw-w-full tw-m-auto ${backdrop && 'tw-z-[2000]'}`}>
+    <div className={`tw-absolute tw-h-full tw-w-full tw-m-auto ${backdrop ? 'tw-z-[2000]' : ''}`}>
       <div
         ref={backdropRef}
-        className={`${backdrop && 'tw-backdrop-brightness-75'} tw-h-full tw-w-full tw-grid tw-place-items-center tw-m-auto`}
+        className={`${backdrop ? 'tw-backdrop-brightness-75' : ''} tw-h-full tw-w-full tw-grid tw-place-items-center tw-m-auto`}
       >
         <div
           ref={overlayRef}
-          className={`${card && 'tw-card tw-card-body'} tw-shadow-xl tw-bg-base-100 tw-p-6 ${className && className} ${!backdrop && 'tw-z-[2000]'} tw-absolute tw-top-0 tw-bottom-0 tw-right-0 tw-left-0 tw-m-auto`}
+          className={`${card ? 'tw-card tw-card-body' : ''} tw-shadow-xl tw-bg-base-100 tw-p-6 ${className ?? ''} ${backdrop ? '' : 'tw-z-[2000]'} tw-absolute tw-top-0 tw-bottom-0 tw-right-0 tw-left-0 tw-m-auto`}
         >
           {children}
           <button

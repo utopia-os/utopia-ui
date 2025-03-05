@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { useState } from 'react'
 
 interface Props {
@@ -110,7 +109,7 @@ export const EmojiPicker = ({
               <button
                 key={emoji}
                 onClick={() => selectEmoji(emoji)}
-                className={`tw-cursor-pointer  tw-text-2xl tw-p-2 hover:tw-bg-base-200 tw-rounded-md ${emoji === selectedEmoji && 'tw-bg-base-300'}`}
+                className={`tw-cursor-pointer  tw-text-2xl tw-p-2 hover:tw-bg-base-200 tw-rounded-md ${emoji === selectedEmoji ? 'tw-bg-base-300' : ''}`}
               >
                 {emoji}
               </button>
@@ -121,7 +120,7 @@ export const EmojiPicker = ({
             {shapes.map((shape) => (
               <div
                 key={shape}
-                className={`tw-cursor-pointer hover:tw-bg-base-200 tw-rounded-md tw-p-2 ${shape === selectedShape && 'tw-bg-base-300'}`}
+                className={`tw-cursor-pointer hover:tw-bg-base-200 tw-rounded-md tw-p-2 ${shape === selectedShape ? 'tw-bg-base-300' : ''}`}
                 onClick={() => selectShape(shape)}
               >
                 <div className={`tw-h-12 tw-mask tw-mask-${shape} tw-bg-neutral-content`}></div>
@@ -133,7 +132,7 @@ export const EmojiPicker = ({
             {colors.map((color) => (
               <div
                 key={color}
-                className={`tw-cursor-pointer hover:tw-bg-base-200 tw-rounded-md tw-p-2 tw-flex tw-justify-center tw-items-center  ${color === selectedColor && 'tw-bg-base-300'}`}
+                className={`tw-cursor-pointer hover:tw-bg-base-200 tw-rounded-md tw-p-2 tw-flex tw-justify-center tw-items-center  ${color === selectedColor ? 'tw-bg-base-300' : ''}`}
                 onClick={() => selectColor(color)}
               >
                 <div className={`tw-h-8 tw-w-8 tw-rounded-full tw-bg-[${color}]`}></div>

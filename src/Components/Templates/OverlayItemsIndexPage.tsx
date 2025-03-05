@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/prefer-optional-chain */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -73,16 +72,16 @@ export const OverlayItemsIndexPage = ({
 
   const layer = layers.find((l) => l.name === layerName)
 
-  const submitNewItem = async (evt: any) => {
+  const submitNewItem = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
     const formItem: Item = {} as Item
-    Array.from(evt.target).forEach((input: HTMLInputElement) => {
+    Array.from(evt.target as any).forEach((input: HTMLInputElement) => {
       if (input.name) {
         formItem[input.name] = input.value
       }
     })
     setLoading(true)
-    formItem.text &&
+    if (formItem.text) {
       formItem.text
         .toLocaleLowerCase()
         .match(hashTagRegex)
@@ -92,6 +91,7 @@ export const OverlayItemsIndexPage = ({
           }
           return null
         })
+    }
     const uuid = crypto.randomUUID()
     let success = false
     try {
@@ -109,7 +109,7 @@ export const OverlayItemsIndexPage = ({
     setAddItemPopupType('')
   }
 
-  const deleteItem = async (item) => {
+  const deleteItem = async (item: Item) => {
     setLoading(true)
     let success = false
     try {

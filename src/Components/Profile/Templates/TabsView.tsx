@@ -51,9 +51,7 @@ export const TabsView = ({
   const items = useItems()
   const appState = useAppState()
   const getUserProfile = (id: string) => {
-    return items.find(
-      (i) => i.user_created?.id === id && i.layer?.itemType.name === appState.userType,
-    )
+    return items.find((i) => i.user_created?.id === id && i.layer?.userProfileLayer)
   }
 
   useEffect(() => {

@@ -8,6 +8,7 @@ We'll use **Vite** to create an empty React app named **"1-static-map"**:
 
 ```shell
 npm create vite@latest 1-static-map -- --template react-ts
+```
 
 Next, we navigate into our project folder and install the [utopia-ui](https://github.com/utopia-os/utopia-ui) package:  
 
@@ -20,7 +21,7 @@ npm install utopia-ui
 
 Now, we open `src/App.tsx` and replace its content with the following:  
 
-```tsx
+```tsxhttp://localhost:5174/
 import { UtopiaMap } from "utopia-ui";
 
 function App() {
@@ -38,7 +39,8 @@ To see our **first map app**, we start the development server:
 
 ```shell
 npm run dev
+```
 
-Now, we can open the project in the browser and explore our interactive map! 😊  
+Now, we can open [localhost:5174](http://localhost:5174/) in the browser and explore our interactive map! 😊  
 
 ➡️ In [Example 2](../2-static-layers/), we'll add **static data** to our map.  

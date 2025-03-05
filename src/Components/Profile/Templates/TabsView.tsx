@@ -150,31 +150,41 @@ export const TabsView = ({
                         </div>
                       </td>
                       <td>
-                        <Link to={'/item/' + getUserProfile(a.user_created.id)?.id}>
-                          <div className='flex items-center gap-3'>
-                            <div className='tw-avatar'>
-                              <div className='tw-mask tw-rounded-full h-8 w-8 tw-mr-2'>
-                                {getUserProfile(a.user_created.id)?.image && (
-                                  <img
-                                    src={
-                                      appState.assetsApi.url +
-                                      getUserProfile(a.user_created.id)?.image
-                                    }
-                                    alt='Avatar'
-                                  />
-                                )}
+                        {getUserProfile(a.user_created.id) ? (
+                          <Link to={'/item/' + getUserProfile(a.user_created.id)?.id}>
+                            <div className='flex items-center gap-3'>
+                              <div className='tw-avatar'>
+                                <div className='tw-mask tw-rounded-full tw-h-8 tw-w-8 tw-mr-2'>
+                                  {getUserProfile(a.user_created.id)?.image && (
+                                    <img
+                                      src={
+                                        appState.assetsApi.url +
+                                        getUserProfile(a.user_created.id)?.image
+                                      }
+                                      alt='Avatar'
+                                    />
+                                  )}
+                                </div>
+                              </div>
+                              <div>
+                                <div className='font-bold'>
+                                  {getUserProfile(a.user_created.id)?.name ??
+                                    a.user_created.first_name}{' '}
+                                </div>
+                                <div className='tw-text-xs opacity-50 tw-text-zinc-500'>
+                                  {timeAgo(a.date_created)}
+                                </div>
                               </div>
                             </div>
-                            <div>
-                              <div className='font-bold'>
-                                {getUserProfile(a.user_created.id)?.name}
-                              </div>
-                              <div className='tw-text-xs opacity-50 tw-text-zinc-500'>
-                                {timeAgo(a.date_created)}
-                              </div>
+                          </Link>
+                        ) : (
+                          <div>
+                            <div className='font-bold'>{a.user_created.first_name} </div>
+                            <div className='tw-text-xs opacity-50 tw-text-zinc-500'>
+                              {timeAgo(a.date_created)}
                             </div>
                           </div>
-                        </Link>
+                        )}
                       </td>
                     </tr>
                   ))}

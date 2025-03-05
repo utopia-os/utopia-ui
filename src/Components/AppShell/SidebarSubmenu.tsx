@@ -32,13 +32,7 @@ function SidebarSubmenu({
     <div className='flex-col'>
       {/** Route header */}
       <div className='w-full' onClick={() => setIsExpanded(!isExpanded)}>
-        {icon}{' '}
-        <span
-          className="group-[&[data-te-sidenav-slim-collapsed='true']]:data-[te-sidenav-slim='false']:hidden"
-          data-te-sidenav-slim='false'
-        >
-          {name}{' '}
-        </span>
+        {icon} <span>{name} </span>
         <ChevronDownIcon
           className={
             'w-5 h-5 mt-1 float-right delay-400 duration-500 transition-all  ' +
@@ -48,7 +42,7 @@ function SidebarSubmenu({
       </div>
 
       {/** Submenu list */}
-      <div className={' w-full data-[te-collapse-show]:!hidden ' + (isExpanded ? '' : 'hidden')}>
+      <div className={' w-full' + (isExpanded ? '' : 'hidden')}>
         <ul className={'menu menu-compact'}>
           {submenu?.map((m, k) => {
             return (

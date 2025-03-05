@@ -12,9 +12,9 @@ import { useEffect, useState } from 'react'
 import { useMap } from 'react-leaflet'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-import { useAppState } from '#components/AppShell/hooks/useAppState'
 import { useClusterRef } from '#components/Map/hooks/useClusterRef'
 import { useItems, useRemoveItem, useUpdateItem } from '#components/Map/hooks/useItems'
+import { useLayers } from '#components/Map/hooks/useLayers'
 import { useLeafletRefs } from '#components/Map/hooks/useLeafletRefs'
 import { useHasUserPermission } from '#components/Map/hooks/usePermissions'
 import { useSelectPosition, useSetSelectPosition } from '#components/Map/hooks/useSelectPosition'
@@ -57,7 +57,7 @@ export function ProfileView({ attestationApi }: { attestationApi?: ItemsApi<any>
   const setSelectPosition = useSetSelectPosition()
   const clusterRef = useClusterRef()
   const leafletRefs = useLeafletRefs()
-  const appState = useAppState()
+  const layers = useLayers()
 
   const [attestations, setAttestations] = useState<any[]>([])
 
@@ -162,8 +162,12 @@ export function ProfileView({ attestationApi }: { attestationApi?: ItemsApi<any>
   }, [selectPosition])
 
   useEffect(() => {
-    setTemplate(item?.layer?.itemType.template ?? appState.userType)
-  }, [appState.userType, item])
+    if (item?.layer?.itemType.template) setTemplate(item.layer.itemType.template)
+    else {
+      const userLayer = layers.find((l) => l.userProfileLayer === true)
+      if (userLayer) setTemplate(userLayer.itemType.template)
+    }
+  }, [item, layers])
 
   return (
     <>

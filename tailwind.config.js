@@ -64,8 +64,8 @@ module.exports = {
       pulseGrow: 'pulseGrow 2s ease-in-out infinite',
     },
   },
-  // eslint-disable-next-line import/no-commonjs, import/extensions
-  plugins: [require('daisyui'), require('tw-elements/dist/plugin.cjs')],
+  // eslint-disable-next-line import/no-commonjs
+  plugins: [require('daisyui')],
   daisyui: {
     themes: [
       'light',

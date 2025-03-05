@@ -23,7 +23,7 @@ export function AppShell({
       <div className='tw-flex tw-flex-col tw-h-full'>
         <SetAppState assetsApi={assetsApi} />
         <NavBar appName={appName}></NavBar>
-        <div id='app-content' className='tw-flex-grow'>
+        <div id='app-content' className='tw-flex'>
           {children}
         </div>
       </div>

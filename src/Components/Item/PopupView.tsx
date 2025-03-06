@@ -11,25 +11,23 @@ import { useItems, useAllItemsLoaded } from '#components/Map/hooks/useItems'
 import { useAddMarker, useAddPopup, useLeafletRefs } from '#components/Map/hooks/useLeafletRefs'
 import { useSetMarkerClicked, useSelectPosition } from '#components/Map/hooks/useSelectPosition'
 import { useGetItemTags, useAllTagsLoaded, useTags } from '#components/Map/hooks/useTags'
+import LayerContext from '#components/Map/LayerContext'
 import { ItemViewPopup } from '#components/Map/Subcomponents/ItemViewPopup'
 import { encodeTag } from '#utils/FormatTags'
 import { hashTagRegex } from '#utils/HashTagRegex'
 import MarkerIconFactory from '#utils/MarkerIconFactory'
 import { randomColor } from '#utils/RandomColor'
 
-import LayerContext from './LayerContext'
 import TemplateItemContext from './TemplateItemContext'
 
 import type { Item } from '#types/Item'
 import type { Tag } from '#types/Tag'
 import type { Popup } from 'leaflet'
 
-// TODO Think about folder structure. This is not for profile, but for card / popup. Both can use the same template components.
-
 /**
- * @category Profile
+ * @category Item
  */
-export const CardView = ({ children }: { children?: React.ReactNode }) => {
+export const PopupView = ({ children }: { children?: React.ReactNode }) => {
   const cardViewContext = useContext(LayerContext)
   const {
     name,
@@ -43,6 +41,7 @@ export const CardView = ({ children }: { children?: React.ReactNode }) => {
   const filterTags = useFilterTags()
 
   const items = useItems()
+
   const getItemTags = useGetItemTags()
   const addMarker = useAddMarker()
   const addPopup = useAddPopup()

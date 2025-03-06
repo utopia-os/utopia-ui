@@ -1,14 +1,14 @@
 import { useContext } from 'react'
 
+import LayerContext from '#components/Map/LayerContext'
 import { ItemFormPopup } from '#components/Map/Subcomponents/ItemFormPopup'
 
-import LayerContext from './LayerContext'
 import TemplateItemContext from './TemplateItemContext'
 
 /**
- * @category Map
+ * @category Item
  */
-export const CardForm = ({ children }: { children?: React.ReactNode }) => {
+export const PopupForm = ({ children }: { children?: React.ReactNode }) => {
   const { itemFormPopup, setItemFormPopup } = useContext(LayerContext)
 
   return (

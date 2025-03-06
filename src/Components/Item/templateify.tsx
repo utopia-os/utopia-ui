@@ -4,7 +4,7 @@ import ItemContext from './TemplateItemContext'
 
 import type { Item } from '#types/Item'
 
-export function Templateify<T extends { item?: Item }>(Component: React.ComponentType<T>) {
+export function templateify<T extends { item?: Item }>(Component: React.ComponentType<T>) {
   const TemplateComponent = (props: T) => {
     const item = useContext(ItemContext)
 

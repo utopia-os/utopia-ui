@@ -1,8 +1,7 @@
 import { useContext } from 'react'
 
-import { PopupButton } from '#components/Map'
+import { PopupButton } from '#components/Map/Subcomponents/ItemPopupComponents'
 
-import { Templateify } from './Templateify'
 import ItemContext from './TemplateItemContext'
 
 import type { JSXElementConstructor } from 'react'
@@ -20,5 +19,3 @@ export const TemplatePopupButton = (props: OmitItem<typeof PopupButton>) => {
 
   return <PopupButton {...props} item={item} />
 }
-
-export const TemplatePopupButton2 = Templateify(PopupButton)

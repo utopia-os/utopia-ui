@@ -2,8 +2,6 @@ import { createContext } from 'react'
 
 import type { ItemFormPopupProps } from '#types/ItemFormPopupProps'
 
-// Where should we define defaults, here or in Layer.tsx?
-
 interface LayerContextType {
   name: string
   markerDefaultColor: string
@@ -16,9 +14,9 @@ interface LayerContextType {
 
 const LayerContext = createContext<LayerContextType>({
   name: '',
-  markerDefaultColor: '#777',
-  markerDefaultColor2: 'RGBA(35, 31, 32, 0.2)',
-  markerShape: 'circle',
+  markerDefaultColor: '',
+  markerDefaultColor2: '',
+  markerShape: '',
   markerIcon: '',
   itemFormPopup: undefined,
   setItemFormPopup: undefined,

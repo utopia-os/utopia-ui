@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
 
-import LayerContext from '#components/Profile/templateComponents/LayerContext'
-
 import { useSetItemsApi, useSetItemsData } from './hooks/useItems'
 import { useAddTag } from './hooks/useTags'
+import LayerContext from './LayerContext'
 
 import type { LayerProps } from '#types/LayerProps'
 import type { Tag } from '#types/Tag'

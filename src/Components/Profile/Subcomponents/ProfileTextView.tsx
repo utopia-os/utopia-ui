@@ -1,6 +1,6 @@
 import { get } from 'radash'
 
-import { TextView } from '#components/Map'
+import { TextView } from '#components/Map/Subcomponents/ItemPopupComponents'
 
 import type { Item } from '#types/Item'
 

@@ -7,14 +7,6 @@ services:
     volumes:
       - ./dist:/srv:ro
 
-#services:
-#  frontend:
-#    image: flashspys/nginx-static
-#    container_name: frontend
-#    ports:
-#      - 8080:80
-#    volumes:
-#      - ./dist:/static
   #backend:
   #  image: directus/directus
   #  container_name: backend

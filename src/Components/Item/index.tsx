@@ -11,7 +11,7 @@ import {
 import { templateify } from './templateify'
 
 export { PopupForm } from './PopupForm'
-export { PopupView as CardView } from './PopupView'
+export { PopupView } from './PopupView'
 
 export const TextView = templateify(PlainTextView)
 export const StartEndView = templateify(PlainStartEndView)

@@ -16,9 +16,10 @@ const ComboBoxInput = ({ id, options, value, onValueChange }: ComboBoxProps) => 
       id={id}
       className='tw-form-select tw-block tw-w-full tw-py-2 tw-px-4 tw-border tw-border-gray-300 rounded-md tw-shadow-sm tw-text-sm focus:tw-outline-none focus:tw-ring-indigo-500 focus:tw-border-indigo-500 sm:tw-text-sm'
       onChange={handleChange}
+      defaultValue={value}
     >
       {options.map((o) => (
-        <option value={o} key={o} selected={o === value}>
+        <option value={o} key={o}>
           {o}
         </option>
       ))}

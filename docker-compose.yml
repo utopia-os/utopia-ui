@@ -7,13 +7,14 @@ services:
     volumes:
       - ./dist:/srv:ro
 
-  #backend:
-  #  image: directus/directus
-  #  container_name: backend
-  #  ports:
-  #    - 8055:8055
-  #  environment:
-  #    - SECRET=SECRET
-  #    - PUBLIC_URL=http://localhost
-  #    - ADMIN_EMAIL=admin@it4c.dev
-  #    - ADMIN_PASSWORD=admin123
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+    ports:
+      - 8055:8055
+    environment:
+      - SECRET=SECRET
+      - PUBLIC_URL=http://localhost
+      - ADMIN_EMAIL=admin@it4c.dev
+      - ADMIN_PASSWORD=admin123

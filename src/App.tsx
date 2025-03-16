@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable import/order */
 /* eslint-disable eqeqeq */
@@ -6,7 +7,6 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable new-cap */
-/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -103,7 +103,7 @@ function App() {
   useEffect(() => {
     if (map && map.name) {
       document.title = map?.name && map.name
-      let link: any = document.querySelector("link[rel~='icon']")!
+      let link: HTMLLinkElement = document.querySelector("link[rel~='icon']")!
       if (!link) {
         link = document.createElement('link')
         link.rel = 'icon'

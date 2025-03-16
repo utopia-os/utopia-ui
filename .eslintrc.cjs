@@ -30,6 +30,8 @@ module.exports = {
     'react-hooks',
     'react-refresh',
   ],
+  // TODO also parse this
+  ignorePatterns: ['vite.config.ts'],
   settings: {
     'import/resolver': {
       typescript: true,

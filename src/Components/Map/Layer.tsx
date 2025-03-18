@@ -35,9 +35,6 @@ export const Layer = ({
   // eslint-disable-next-line camelcase
   public_edit_items,
   listed = true,
-  setItemFormPopup,
-  itemFormPopup,
-  clusterRef,
 }: LayerProps) => {
   const setItemsApi = useSetItemsApi()
   const setItemsData = useSetItemsData()
@@ -68,10 +65,6 @@ export const Layer = ({
         // eslint-disable-next-line camelcase
         public_edit_items,
         listed,
-        setItemFormPopup,
-        itemFormPopup,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        clusterRef,
       })
     api &&
       setItemsApi({
@@ -93,10 +86,6 @@ export const Layer = ({
         // eslint-disable-next-line camelcase
         public_edit_items,
         listed,
-        setItemFormPopup,
-        itemFormPopup,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        clusterRef,
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, api])
@@ -123,8 +112,6 @@ export const Layer = ({
         markerDefaultColor2,
         markerShape,
         markerIcon,
-        itemFormPopup,
-        setItemFormPopup,
       }}
     >
       {children}

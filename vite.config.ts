@@ -15,7 +15,7 @@ export default defineConfig({
       exclude: [...configDefaults.exclude, 'src/**/*.cy.tsx'],
       reporter: ['html', 'json-summary'],
       thresholds: {
-        lines: 1,
+        lines: 2,
         functions: 54,
         branches: 56,
         statements: 1,

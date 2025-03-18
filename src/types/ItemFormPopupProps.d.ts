@@ -7,5 +7,4 @@ export interface ItemFormPopupProps {
   layer: LayerProps
   item?: Item
   children?: React.ReactNode
-  setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
 }

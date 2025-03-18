@@ -1,5 +1,4 @@
 import type { Item } from './Item'
-import type { ItemFormPopupProps } from './ItemFormPopupProps'
 import type { ItemsApi } from './ItemsApi'
 import type { ItemType } from './ItemType'
 
@@ -26,8 +25,4 @@ export interface LayerProps {
   public_edit_items?: boolean
   listed?: boolean
   item_presets?: Record<string, unknown>
-  setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
-  itemFormPopup?: ItemFormPopupProps | null
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  clusterRef?: any
 }

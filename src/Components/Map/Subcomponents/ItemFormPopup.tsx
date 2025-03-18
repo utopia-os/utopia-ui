@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -14,18 +13,22 @@ import { useAuth } from '#components/Auth/useAuth'
 import { TextAreaInput } from '#components/Input/TextAreaInput'
 import { TextInput } from '#components/Input/TextInput'
 import { useResetFilterTags } from '#components/Map/hooks/useFilter'
-import { useAddItem, useItems, useRemoveItem, useUpdateItem } from '#components/Map/hooks/useItems'
+import { useAddItem, useItems, useUpdateItem } from '#components/Map/hooks/useItems'
+import { usePopupForm } from '#components/Map/hooks/usePopupForm'
 import { useAddTag, useTags } from '#components/Map/hooks/useTags'
 import { hashTagRegex } from '#utils/HashTagRegex'
 import { randomColor } from '#utils/RandomColor'
 
 import type { Item } from '#types/Item'
-import type { ItemFormPopupProps } from '#types/ItemFormPopupProps'
 
-export function ItemFormPopup(props: ItemFormPopupProps) {
+interface Props {
+  children?: React.ReactNode
+}
+
+export function ItemFormPopup(props: Props) {
   const [spinner, setSpinner] = useState(false)
 
-  const [popupTitle, setPopupTitle] = useState<string>('')
+  const [, setPopupTitle] = useState<string>('')
 
   const formRef = useRef<HTMLFormElement>(null)
 
@@ -35,8 +38,6 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
   const updateItem = useUpdateItem()
   const items = useItems()
 
-  const removeItem = useRemoveItem()
-
   const tags = useTags()
   const addTag = useAddTag()
 
@@ -44,14 +45,22 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
 
   const { user } = useAuth()
 
+  const { popupForm, setPopupForm } = usePopupForm()
+
   const handleSubmit = async (evt: any) => {
+    if (!popupForm) {
+      throw new Error('Popup form is not defined')
+    }
     const formItem: Item = {} as Item
     Array.from(evt.target).forEach((input: HTMLInputElement) => {
       if (input.name) {
         formItem[input.name] = input.value
       }
     })
-    formItem.position = { type: 'Point', coordinates: [props.position.lng, props.position.lat] }
+    formItem.position = {
+      type: 'Point',
+      coordinates: [popupForm.position.lng, popupForm.position.lat],
+    }
     evt.preventDefault()
 
     const name = formItem.name ? formItem.name : user?.first_name
@@ -126,7 +135,7 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
       setSpinner(false)
       map.closePopup()
     }
-    props.setItemFormPopup!(null)
+    setPopupForm(null)
   }
 
   const resetPopup = () => {

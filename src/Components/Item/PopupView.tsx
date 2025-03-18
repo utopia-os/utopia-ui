@@ -29,14 +29,7 @@ import type { Popup } from 'leaflet'
  */
 export const PopupView = ({ children }: { children?: React.ReactNode }) => {
   const cardViewContext = useContext(LayerContext)
-  const {
-    name,
-    markerDefaultColor,
-    markerDefaultColor2,
-    markerShape,
-    markerIcon,
-    setItemFormPopup,
-  } = cardViewContext
+  const { name, markerDefaultColor, markerDefaultColor2, markerShape, markerIcon } = cardViewContext
 
   const filterTags = useFilterTags()
 
@@ -93,10 +86,6 @@ export const PopupView = ({ children }: { children?: React.ReactNode }) => {
       visibleGroupTypes.length,
     ],
   )
-
-  if (!setItemFormPopup) {
-    throw new Error('setItemFormPopup is not defined')
-  }
 
   return visibleItems.map((item: Item) => {
     if (!(item.position?.coordinates[0] && item.position.coordinates[1])) return null
@@ -170,7 +159,6 @@ export const PopupView = ({ children }: { children?: React.ReactNode }) => {
               }
             }}
             item={item}
-            setItemFormPopup={setItemFormPopup}
           >
             {children}
           </ItemViewPopup>

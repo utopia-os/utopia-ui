@@ -6,7 +6,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import { Children, cloneElement, isValidElement, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { TileLayer, useMapEvents, GeoJSON, useMap } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import { Outlet, useLocation } from 'react-router-dom'
@@ -18,6 +18,7 @@ import { useClusterRef, useSetClusterRef } from './hooks/useClusterRef'
 import { useAddVisibleLayer } from './hooks/useFilter'
 import { useLayers } from './hooks/useLayers'
 import { useLeafletRefs } from './hooks/useLeafletRefs'
+import { usePopupForm } from './hooks/usePopupForm'
 import {
   useSelectPosition,
   useSetMapClicked,
@@ -33,7 +34,6 @@ import { TagsControl } from './Subcomponents/Controls/TagsControl'
 import { TextView } from './Subcomponents/ItemPopupComponents/TextView'
 import { SelectPosition } from './Subcomponents/SelectPosition'
 
-import type { ItemFormPopupProps } from '#types/ItemFormPopupProps'
 import type { UtopiaMapProps } from '#types/UtopiaMapProps'
 import type { Feature, Geometry as GeoJSONGeometry } from 'geojson'
 
@@ -50,7 +50,7 @@ export function UtopiaMapInner({
   const setClusterRef = useSetClusterRef()
   const clusterRef = useClusterRef()
   const setMapClicked = useSetMapClicked()
-  const [itemFormPopup, setItemFormPopup] = useState<ItemFormPopupProps | null>(null)
+  const { popupForm, setPopupForm } = usePopupForm()
 
   const layers = useLayers()
   const addVisibleLayer = useAddVisibleLayer()
@@ -97,7 +97,7 @@ export function UtopiaMapInner({
         // eslint-disable-next-line no-console
         console.log(e.latlng.lat + ',' + e.latlng.lng)
         if (selectNewItemPosition) {
-          setMapClicked({ position: e.latlng, setItemFormPopup })
+          setMapClicked({ position: e.latlng, setItemFormPopup: setPopupForm })
         }
       },
       moveend: () => {},
@@ -204,15 +204,7 @@ export function UtopiaMapInner({
         maxClusterRadius={50}
         removeOutsideVisibleBounds={false}
       >
-        {Children.toArray(children).map((child) =>
-          isValidElement<{
-            setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps>>
-            itemFormPopup: ItemFormPopupProps | null
-            clusterRef: React.MutableRefObject<undefined>
-          }>(child)
-            ? cloneElement(child, { setItemFormPopup, itemFormPopup, clusterRef })
-            : child,
-        )}
+        {children}
       </MarkerClusterGroup>
       {geo && (
         <GeoJSON
@@ -222,7 +214,7 @@ export function UtopiaMapInner({
             click: (e) => {
               if (selectNewItemPosition) {
                 e.layer.closePopup()
-                setMapClicked({ position: e.latlng, setItemFormPopup })
+                setMapClicked({ position: e.latlng, setItemFormPopup: setPopupForm })
               }
             },
           }}

@@ -93,10 +93,6 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
       map.closePopup()
     } else {
       const item = items.find((i) => i.user_created?.id === user?.id && i.layer === props.layer)
-      // eslint-disable-next-line no-console
-      console.log(item)
-      // eslint-disable-next-line no-console
-      console.log(props.layer.id)
 
       const uuid = crypto.randomUUID()
       let success = false

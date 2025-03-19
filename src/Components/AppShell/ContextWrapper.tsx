@@ -67,6 +67,11 @@ export const Wrappers = ({ children }) => {
                             draggable
                             pauseOnHover
                             theme='light'
+                            closeButton={
+                              <button className='tw-btn tw-btn-sm tw-btn-circle tw-btn-ghost tw-absolute tw-right-2 tw-top-2 focus:tw-outline-none'>
+                                ✕
+                              </button>
+                            }
                           />
                           {children}
                         </QuestsProvider>

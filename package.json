@@ -1,6 +1,6 @@
 {
   "name": "utopia-ui",
-  "version": "3.0.76",
+  "version": "3.0.78",
   "description": "Reuseable React Components to build mapping apps for real life communities and networks",
   "repository": "https://github.com/utopia-os/utopia-ui",
   "homepage": "https://utopia-os.org/",
@@ -99,6 +99,7 @@
     "radash": "^12.1.0",
     "react-colorful": "^5.6.1",
     "react-image-crop": "^10.1.8",
+    "react-inlinesvg": "^4.2.0",
     "react-leaflet": "^4.2.1",
     "react-leaflet-cluster": "^2.1.0",
     "react-markdown": "^9.0.1",

@@ -246,7 +246,7 @@ export const SearchControl = () => {
                     hide()
                   }}
                 >
-                  <MagnifyingGlassIcon className='tw-text-current tw-mr-2 tw-mt-0 tw-w-4' />
+                  <MagnifyingGlassIcon className='tw-text-current tw-mr-2 tw-mt-0 tw-w-5' />
                   <div>
                     <div className='tw-text-sm tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>
                       {geo?.properties.name ? geo?.properties.name : value}

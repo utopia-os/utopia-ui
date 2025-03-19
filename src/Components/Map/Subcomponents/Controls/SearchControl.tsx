@@ -15,6 +15,7 @@ import MagnifyingGlassIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon
 import axios from 'axios'
 import { LatLng, LatLngBounds, marker } from 'leaflet'
 import { useEffect, useRef, useState } from 'react'
+import SVG from 'react-inlinesvg'
 import { useMap, useMapEvents } from 'react-leaflet'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -183,10 +184,19 @@ export const SearchControl = () => {
                   }}
                 >
                   <div className='tw-flex tw-flex-row'>
-                    <img
-                      src={item.layer?.menuIcon}
-                      className='tw-text-current tw-w-5 tw-mr-2 tw-mt-0'
-                    />
+                    {item.layer?.menuIcon ? (
+                      <SVG
+                        src={item.layer.menuIcon}
+                        className='tw-text-current tw-w-5 tw-mr-2 tw-mt-0'
+                        preProcessor={(code: string): string => {
+                          code = code.replace(/fill=".*?"/g, 'fill="currentColor"')
+                          code = code.replace(/stroke=".*?"/g, 'stroke="currentColor"')
+                          return code
+                        }}
+                      />
+                    ) : (
+                      <div className='tw-w-5' />
+                    )}
                     <div>
                       <div className='tw-text-sm tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>
                         {item.name}

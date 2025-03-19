@@ -15,8 +15,19 @@ import { TagsProvider } from '#components/Map/hooks/useTags'
 
 import { AppStateProvider } from './hooks/useAppState'
 
+import type { CloseButtonProps } from 'react-toastify'
+
 // Helper context to determine if the ContextWrapper is already present.
 const ContextCheckContext = createContext(false)
+
+const CloseButton = ({ closeToast }: CloseButtonProps) => (
+  <button
+    className='tw-btn tw-btn-sm tw-btn-circle tw-btn-ghost tw-absolute tw-right-2 tw-top-2 focus:tw-outline-none'
+    onClick={closeToast}
+  >
+    ✕
+  </button>
+)
 
 export const ContextWrapper = ({ children }: { children: React.ReactNode }) => {
   const isWrapped = useContext(ContextCheckContext)
@@ -67,11 +78,7 @@ export const Wrappers = ({ children }) => {
                             draggable
                             pauseOnHover
                             theme='light'
-                            closeButton={
-                              <button className='tw-btn tw-btn-sm tw-btn-circle tw-btn-ghost tw-absolute tw-right-2 tw-top-2 focus:tw-outline-none'>
-                                ✕
-                              </button>
-                            }
+                            closeButton={CloseButton}
                           />
                           {children}
                         </QuestsProvider>

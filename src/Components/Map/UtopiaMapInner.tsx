@@ -75,7 +75,9 @@ export function UtopiaMapInner({
               <div>
                 <TextView
                   itemId=''
-                  rawText={'Support us building free opensource maps for communities and help us grow 🌱☀️'}
+                  rawText={
+                    'Support us building free opensource maps for communities and help us grow 🌱☀️'
+                  }
                 />
                 <a href='https://opencollective.com/utopia-project'>
                   <div className='tw-btn  tw-btn-sm tw-float-right tw-btn-primary'>Donate</div>

@@ -64,28 +64,6 @@ module.exports = {
       pulseGrow: 'pulseGrow 2s ease-in-out infinite',
     },
   },
-  // eslint-disable-next-line import/no-commonjs
-  plugins: [require('daisyui')],
-  daisyui: {
-    themes: [
-      'light',
-      'dark',
-      'cupcake',
-      'retro',
-      'cyberpunk',
-      'aqua',
-      {
-        docutopia: {
-          primary: '#8e00ff',
-          secondary: '#00bb7a',
-          accent: '#006aff',
-          neutral: '#231502',
-          'base-content': '#ffad6b',
-          'base-100': '#440844',
-        },
-      },
-    ],
-  },
   prefix: 'tw-',
   // content: ['./src/**/*.{js,jsx,ts,tsx}'],
 }

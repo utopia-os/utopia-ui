@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
 
 import type { Item } from '#types/Item'
 
@@ -165,13 +164,22 @@ export const CrowdfundingView = ({ item }: { item: Item }) => {
         </div>
         <hr></hr>
         <div className='tw-m-4 tw-items-center'>
-          <NavLink to={`https://opencollective.com/${slug}/donate`}>
+          <a href={`https://opencollective.com/${slug}/donate`} target='_blank' rel='noreferrer'>
             <button className='tw-btn tw-btn-sm tw-btn-primary tw-float-right tw-ml-4'>
               Donate
             </button>
-          </NavLink>
+          </a>
           <div className='tw-flex-1 tw-mr-4'>
-            Support {item.name} on <span className='tw-font-bold'>Open&nbsp;Collective</span>
+            Support{' '}
+            <a
+              className='tw-font-bold'
+              href={`https://opencollective.com/${slug}`}
+              target='_blank'
+              rel='noreferrer'
+            >
+              {data.account.name}
+            </a>{' '}
+            on <span className='tw-font-bold'>Open&nbsp;Collective</span>
           </div>
         </div>
       </div>

@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import { ContactInfoForm } from '#components/Profile/Subcomponents/ContactInfoForm'
+import { CrowdfundingForm } from '#components/Profile/Subcomponents/CrowdfundingForm'
 import { GroupSubheaderForm } from '#components/Profile/Subcomponents/GroupSubheaderForm'
 import { ProfileStartEndForm } from '#components/Profile/Subcomponents/ProfileStartEndForm'
 import { ProfileTextForm } from '#components/Profile/Subcomponents/ProfileTextForm'
@@ -14,6 +15,7 @@ const componentMap = {
   texts: ProfileTextForm,
   contactInfos: ContactInfoForm,
   startEnd: ProfileStartEndForm,
+  crowdfundings: CrowdfundingForm,
   // weitere Komponenten hier
 }
 

@@ -19,4 +19,5 @@ export interface FormState {
   relations: Item[]
   start: string
   end: string
+  openCollectiveSlug: string
 }

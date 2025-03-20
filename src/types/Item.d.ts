@@ -50,6 +50,7 @@ export interface Item {
   telephone?: string
   next_appointment?: string
   gallery?: GalleryItem[]
+  openCollectiveSlug?: string
 
   // {
   // coordinates: [number, number]

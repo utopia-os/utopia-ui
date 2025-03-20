@@ -1,24 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
-  safelist: [
-    'tw-mask-squircle',
-    'tw-mask-circle',
-    'tw-mask-hexagon-2',
-    'tw-mask-decagon',
-    'tw-bg-[#FF99C8]',
-    'tw-bg-[#fff0d6]',
-    'tw-bg-[#FCF6BD]',
-    'tw-bg-[#D0F4DE]',
-    'tw-bg-[#A9DEF9]',
-    'tw-bg-[#E4C1F9]',
-    'tw-bg-[#de324c]',
-    'tw-bg-[#f4895f]',
-    'tw-bg-[#f8e16f]',
-    'tw-bg-[#95cf92]',
-    'tw-bg-[#369acc]',
-    'tw-bg-[#9656a2]',
-  ],
   theme: {
     extend: {
       zIndex: {

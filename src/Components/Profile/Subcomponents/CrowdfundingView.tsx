@@ -114,6 +114,8 @@ export const CrowdfundingView = ({ item }: { item: Item }) => {
     }
   }, [slug])
 
+  if (!slug) return null
+
   if (loading)
     return (
       <div className='tw-flex tw-justify-center'>

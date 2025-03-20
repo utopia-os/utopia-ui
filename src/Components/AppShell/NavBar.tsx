@@ -69,9 +69,9 @@ export default function NavBar({ appName }: { appName: string }) {
   if (showNav) {
     return (
       <>
-        <div className='tw:navbar tw:bg-base-100 tw:z-9998 tw:shadow-xl tw:relative'>
+        <div className='tw:navbar tw:bg-base-100 tw:z-9998 tw:shadow-xl tw:relative tw:p-0'>
           <button
-            className='tw:btn tw:btn-square tw:btn-ghost'
+            className='tw:btn tw:btn-square tw:btn-ghost tw:ml-3'
             aria-controls='#sidenav'
             aria-haspopup='true'
             onClick={() => toggleSidebar()}
@@ -101,7 +101,7 @@ export default function NavBar({ appName }: { appName: string }) {
           </div>
 
           {isAuthenticated ? (
-            <div className='tw:flex-none'>
+            <div className='tw:flex tw:mr-2'>
               <Link
                 to={`${userProfile.id && '/item/' + userProfile.id}`}
                 className='tw:flex tw:items-center'
@@ -121,7 +121,7 @@ export default function NavBar({ appName }: { appName: string }) {
                 </label>
                 <ul
                   tabIndex={0}
-                  className='tw:menu tw:menu-compact tw:dropdown-content tw:mt-3 tw:p-2 tw:shadow tw:bg-base-100 tw:rounded-box tw:w-52 tw:z-10000!'
+                  className='tw:menu tw:menu-compact tw:dropdown-content tw:mt-4 tw:p-2 tw:shadow tw:bg-base-100 tw:rounded-box tw:w-52 tw:z-10000!'
                 >
                   <li>
                     <Link to={`${userProfile.id && '/edit-item/' + userProfile.id}`}>Profile</Link>
@@ -142,10 +142,10 @@ export default function NavBar({ appName }: { appName: string }) {
               </div>
             </div>
           ) : (
-            <div>
+            <div className='tw:mr-2 tw:flex tw:items-center'>
               <div className='tw:hidden tw:md:flex'>
                 <Link to={'/login'}>
-                  <div className='tw:btn tw:btn-ghost tw:mr-2'>Login</div>
+                  <div className='tw:self-center tw:btn tw:btn-ghost tw:mr-2'>Login</div>
                 </Link>
 
                 <Link to={'/signup'}>
@@ -158,7 +158,7 @@ export default function NavBar({ appName }: { appName: string }) {
                 </label>
                 <ul
                   tabIndex={1}
-                  className='tw:menu tw:dropdown-content tw:mt-3 tw:p-2 tw:shadow tw:bg-base-100 tw:rounded-box tw:w-52 tw:z-10000!'
+                  className='tw:menu tw:dropdown-content tw:mt-4 tw:p-2 tw:shadow tw:bg-base-100 tw:rounded-box tw:w-52 tw:z-10000!'
                 >
                   <li>
                     <Link to={'/login'}>Login</Link>

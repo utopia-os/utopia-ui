@@ -37,11 +37,11 @@ export const ProfileTextForm = ({
   }, [dataField])
 
   return (
-    <div className='tw-h-full tw-flex tw-flex-col tw-mt-4'>
-      <div className='tw-flex tw-justify-between tw-items-center'>
+    <div className='tw:h-full tw:flex tw:flex-col tw:mt-4'>
+      <div className='tw:flex tw:justify-between tw:items-center'>
         <label
           htmlFor='nextAppointment'
-          className='tw-block tw-text-sm tw-font-medium tw-text-gray-500 tw-mb-1'
+          className='tw:block tw:text-sm tw:font-medium tw:text-gray-500 tw:mb-1'
         >
           {heading || 'Text'}:
         </label>
@@ -57,9 +57,9 @@ export const ProfileTextForm = ({
             [field]: v,
           }))
         }
-        labelStyle={hideInputLabel ? 'tw-hidden' : ''}
-        containerStyle={size === 'full' ? 'tw-grow tw-h-full' : ''}
-        inputStyle={size === 'full' ? 'tw-h-full' : 'tw-h-24'}
+        labelStyle={hideInputLabel ? 'tw:hidden' : ''}
+        containerStyle={size === 'full' ? 'tw:grow tw:h-full' : ''}
+        inputStyle={size === 'full' ? 'tw:h-full' : 'tw:h-24'}
         required={required}
       />
     </div>

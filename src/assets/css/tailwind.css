@@ -1,6 +1,66 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss' prefix(tw);
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark, cupcake;
+};
+
+@theme {
+  --animate-*: initial;
+  --animate-pulse-grow: pulseGrow 2s ease-in-out infinite;
+
+  --z-index-500: 500;
+  --z-index-1000: 1000;
+  --z-index-2000: 2000;
+  --z-index-3000: 3000;
+
+  --min-width-56: 224px;
+  --min-width-64: 240px;
+  --min-width-80: 320px;
+
+  --container-52: 208px;
+  --container-64: 240px;
+  --container-72: 288px;
+
+  --min-height-56: 224px;
+  --min-height-64: 240px;
+  --min-height-80: 320px;
+
+  --font-sans: Helvetica, sans-serif, Roboto;
+
+  --text-map: 13px;
+
+  --leading-map: 1.4em;
+
+  @keyframes pulseGrow {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    80% {
+      transform: scale(1);
+    }
+    90% {
+      transform: scale(0.95);
+    }
+  }
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
 
 .tw-modal {
     z-index: 1200 !important;

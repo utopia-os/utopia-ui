@@ -61,11 +61,11 @@ export const MarketView = () => {
   }, [items])
 
   return (
-    <MapOverlayPage className='tw-rounded-none tw-overflow-y-auto tw-bg-base-200 !tw-p-4'>
-      <div className='tw-grid tw-grid-cols-1 md:tw-grid-cols-2'>
+    <MapOverlayPage className='tw:rounded-none tw:overflow-y-auto tw:bg-base-200 tw:p-4!'>
+      <div className='tw:grid tw:grid-cols-1 tw:md:grid-cols-2'>
         <div>
-          <p className='tw-text-lg tw-font-bold'>Offers</p>
-          <div className='tw-flex tw-flex-wrap'>
+          <p className='tw:text-lg tw:font-bold'>Offers</p>
+          <div className='tw:flex tw:flex-wrap'>
             {groupAndCount(offers).map((o) => (
               <TagView
                 onClick={() => navigate(`/?tags=${o.object.name}`)}
@@ -77,8 +77,8 @@ export const MarketView = () => {
           </div>
         </div>
         <div>
-          <p className='tw-text-lg tw-font-bold'>Needs</p>
-          <div className='tw-flex tw-flex-wrap'>
+          <p className='tw:text-lg tw:font-bold'>Needs</p>
+          <div className='tw:flex tw:flex-wrap'>
             {groupAndCount(needs).map((o) => (
               <TagView
                 onClick={() => navigate(`/?tags=${o.object.name}`)}

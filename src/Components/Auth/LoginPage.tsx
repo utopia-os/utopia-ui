@@ -53,24 +53,24 @@ export function LoginPage() {
   }, [onLogin])
 
   return (
-    <MapOverlayPage backdrop className='tw-max-w-xs tw-h-fit'>
-      <h2 className='tw-text-2xl tw-font-semibold tw-mb-2 tw-text-center'>Login</h2>
+    <MapOverlayPage backdrop className='tw:max-w-xs tw:h-fit'>
+      <h2 className='tw:text-2xl tw:font-semibold tw:mb-2 tw:text-center'>Login</h2>
       <input
         type='email'
         placeholder='E-Mail'
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className='tw-input tw-input-bordered tw-w-full tw-max-w-xs'
+        className='tw-input tw-input-bordered tw:w-full tw:max-w-xs'
       />
       <input
         type='password'
         placeholder='Password'
         onChange={(e) => setPassword(e.target.value)}
-        className='tw-input tw-input-bordered tw-w-full tw-max-w-xs'
+        className='tw-input tw-input-bordered tw:w-full tw:max-w-xs'
       />
-      <div className='tw-text-right tw-text-primary'>
+      <div className='tw:text-right tw:text-primary'>
         <Link to='/reset-password'>
-          <span className='tw-text-sm  tw-inline-block  hover:tw-text-primary hover:tw-underline hover:tw-cursor-pointer tw-transition tw-duration-200'>
+          <span className='tw:text-sm  tw:inline-block  tw:hover:text-primary tw:hover:underline tw:hover:cursor-pointer tw:transition tw:duration-200'>
             Forgot Password?
           </span>
         </Link>

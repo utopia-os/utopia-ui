@@ -43,9 +43,9 @@ export const LocateControl = () => {
 
   return (
     <>
-      <div className='tw-card tw-h-12 tw-w-12 tw-bg-base-100 tw-shadow-xl tw-items-center tw-justify-center  hover:tw-bg-slate-300 hover:tw-cursor-pointer tw-transition-all tw-duration-300 tw-ml-2'>
+      <div className='tw-card tw:h-12 tw:w-12 tw:bg-base-100 tw:shadow-xl tw:items-center tw:justify-center  tw:hover:bg-slate-300 tw:hover:cursor-pointer tw:transition-all tw:duration-300 tw:ml-2'>
         <div
-          className='tw-card-body tw-card tw-p-2 tw-h-10 tw-w-10  '
+          className='tw-card-body tw-card tw:p-2 tw:h-10 tw:w-10  '
           onClick={() => {
             if (active) {
               lc.stop()
@@ -57,11 +57,11 @@ export const LocateControl = () => {
           }}
         >
           {loading ? (
-            <span className='tw-loading tw-loading-spinner tw-loading-md tw-mt-1'></span>
+            <span className='tw-loading tw-loading-spinner tw-loading-md tw:mt-1'></span>
           ) : (
             <SVG
               src={TargetSVG}
-              className='tw-mt-1 tw-p-[1px]'
+              className='tw:mt-1 tw:p-[1px]'
               style={{ fill: `${active ? '#fc8702' : 'currentColor'}` }}
             />
           )}

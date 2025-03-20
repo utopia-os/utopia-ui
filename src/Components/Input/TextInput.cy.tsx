@@ -11,7 +11,7 @@ describe('<TextInput />', () => {
     cy.get('input').should('have.attr', 'required')
     cy.get('input').should('have.class', 'tw-input')
     cy.get('input').should('have.class', 'tw-input-bordered')
-    cy.get('input').should('have.class', 'tw-w-full')
+    cy.get('input').should('have.class', 'tw:w-full')
   })
 
   it('renders with given labelTitle', () => {

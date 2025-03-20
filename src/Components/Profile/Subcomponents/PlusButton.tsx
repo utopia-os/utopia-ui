@@ -21,16 +21,16 @@ export function PlusButton({
   return (
     <>
       {hasUserPermission(collection, 'create', undefined, layer) && (
-        <div className='tw-dropdown tw-dropdown-top tw-dropdown-end tw-dropdown-hover tw-z-3000 tw-absolute tw-right-4 tw-bottom-4'>
+        <div className='tw-dropdown tw-dropdown-top tw-dropdown-end tw-dropdown-hover tw:z-3000 tw:absolute tw:right-4 tw:bottom-4'>
           <button
             tabIndex={0}
-            className='tw-z-500 tw-btn tw-btn-circle tw-shadow'
+            className='tw:z-500 tw-btn tw-btn-circle tw:shadow'
             onClick={() => {
               triggerAction()
             }}
             style={{ backgroundColor: color, color: '#fff' }}
           >
-            <PlusIcon className='tw-w-5 tw-h-5 tw-stroke-[2.5]' />
+            <PlusIcon className='tw:w-5 tw:h-5 tw:stroke-[2.5]' />
           </button>
         </div>
       )}

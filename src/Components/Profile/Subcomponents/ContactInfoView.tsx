@@ -24,33 +24,33 @@ export const ContactInfoView = ({ item, heading }: { item: Item; heading: string
   }, [item, items])
 
   return (
-    <div className='tw-bg-base-200  tw-mb-6 tw-mt-6 tw-p-6'>
-      <h2 className='tw-text-lg tw-font-semibold'>{heading}</h2>
-      <div className='tw-mt-4 tw-flex tw-items-center'>
+    <div className='tw:bg-base-200  tw:mb-6 tw:mt-6 tw:p-6'>
+      <h2 className='tw:text-lg tw:font-semibold'>{heading}</h2>
+      <div className='tw:mt-4 tw:flex tw:items-center'>
         {profileOwner?.image && (
           <ConditionalLink url={'/item/' + profileOwner?.id}>
-            <div className='tw-mr-5 tw-flex tw-items-center tw-justify-center'>
+            <div className='tw:mr-5 tw:flex tw:items-center tw:justify-center'>
               <div className='tw-avatar'>
-                <div className='tw-w-20 tw-h-20 tw-bg-gray-200 rounded-full tw-flex tw-items-center tw-justify-center overflow-hidden'>
+                <div className='tw:w-20 tw:h-20 tw:bg-gray-200 rounded-full tw:flex tw:items-center tw:justify-center overflow-hidden'>
                   <img
                     src={appState.assetsApi.url + profileOwner?.image}
                     alt={profileOwner?.name}
-                    className='tw-w-full tw-h-full tw-object-cover'
+                    className='tw:w-full tw:h-full tw:object-cover'
                   />
                 </div>
               </div>
             </div>
           </ConditionalLink>
         )}
-        <div className='tw-text-sm tw-flex-grow'>
-          <p className='tw-font-semibold'>{profileOwner?.name}</p>
+        <div className='tw:text-sm tw:grow'>
+          <p className='tw:font-semibold'>{profileOwner?.name}</p>
           {item.contact && (
             <p>
               <a
                 href={`mailto:${item.contact}`}
-                className='tw-mt-2 tw-text-green-500 tw-inline-flex tw-items-center'
+                className='tw:mt-2 tw:text-green-500 tw:inline-flex tw:items-center'
               >
-                <EnvelopeIcon className='tw-w-4 tw-h-4 tw-mr-1' />
+                <EnvelopeIcon className='tw:w-4 tw:h-4 tw:mr-1' />
                 {item.contact}
               </a>
             </p>
@@ -59,9 +59,9 @@ export const ContactInfoView = ({ item, heading }: { item: Item; heading: string
             <p>
               <a
                 href={`tel:${item.telephone}`}
-                className='tw-mt-2 tw-text-green-500 tw-inline-flex tw-items-center tw-whitespace-nowrap'
+                className='tw:mt-2 tw:text-green-500 tw:inline-flex tw:items-center tw:whitespace-nowrap'
               >
-                <PhoneIcon className='tw-w-4 tw-h-4 tw-mr-1' />
+                <PhoneIcon className='tw:w-4 tw:h-4 tw:mr-1' />
                 {item.telephone}
               </a>
             </p>

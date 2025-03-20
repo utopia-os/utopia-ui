@@ -71,14 +71,14 @@ const SocialShareButton = ({
       href={finalShareUrl}
       target='_blank'
       rel='noopener noreferrer'
-      className='tw-w-8 tw-h-8 tw-mt-2 tw-rounded-full tw-flex tw-items-center tw-justify-center tw-text-white'
+      className='tw:w-8 tw:h-8 tw:mt-2 tw:rounded-full tw:flex tw:items-center tw:justify-center tw:text-white'
       style={{
         color: 'white',
         backgroundColor: bgColor,
       }}
       title={`share link on ${platform}`}
     >
-      {cloneElement(icon, { className: 'tw-w-4 tw-h-4 tw-fill-current' })}
+      {cloneElement(icon, { className: 'tw:w-4 tw:h-4 tw:fill-current' })}
     </a>
   )
 }

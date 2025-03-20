@@ -166,27 +166,27 @@ export const AvatarWidget: React.FC<AvatarWidgetProps> = ({ avatar, setAvatar })
           <input
             type='file'
             accept='image/*'
-            className='tw-file-input tw-w-full tw-max-w-xs'
+            className='tw-file-input tw:w-full tw:max-w-xs'
             onChange={onImageChange}
           />
-          <div className='button tw-btn tw-btn-lg tw-btn-circle tw-animate-none'>
-            <ArrowUpTrayIcon className='tw-w-6 tw-h-6' />
+          <div className='button tw-btn tw-btn-lg tw-btn-circle tw:animate-none'>
+            <ArrowUpTrayIcon className='tw:w-6 tw:h-6' />
           </div>
           {avatar ? (
-            <div className='tw-h-20 tw-w-20'>
+            <div className='tw:h-20 tw:w-20'>
               <img
                 src={appState.assetsApi.url + avatar}
-                className='tw-h-20 tw-w-20 tw-rounded-full'
+                className='tw:h-20 tw:w-20 tw:rounded-full'
               />
             </div>
           ) : (
-            <div className='tw-h-20 tw-w-20'>
-              <img src={UserSVG} className='tw-rounded-full'></img>
+            <div className='tw:h-20 tw:w-20'>
+              <img src={UserSVG} className='tw:rounded-full'></img>
             </div>
           )}
         </label>
       ) : (
-        <div className='tw-w-20 tw-flex tw-items-center tw-justify-center'>
+        <div className='tw:w-20 tw:flex tw:items-center tw:justify-center'>
           <span className='tw-loading tw-loading-spinner'></span>
         </div>
       )}

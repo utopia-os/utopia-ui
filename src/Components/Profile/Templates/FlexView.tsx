@@ -22,7 +22,7 @@ export const FlexView = ({ item }: { item: Item }) => {
   // eslint-disable-next-line no-console
   console.log(item)
   return (
-    <div className='tw-h-full tw-overflow-y-auto fade'>
+    <div className='tw:h-full tw:overflow-y-auto fade'>
       {item.layer?.itemType.profileTemplate.map(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (templateItem: { collection: string | number; id: Key | null | undefined; item: any }) => {

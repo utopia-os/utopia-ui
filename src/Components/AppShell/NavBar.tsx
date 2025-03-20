@@ -69,59 +69,59 @@ export default function NavBar({ appName }: { appName: string }) {
   if (showNav) {
     return (
       <>
-        <div className='tw-navbar tw-bg-base-100 tw-z-[9998] tw-shadow-xl tw-relative'>
+        <div className='tw-navbar tw:bg-base-100 tw:z-9998 tw:shadow-xl tw:relative'>
           <button
             className='tw-btn tw-btn-square tw-btn-ghost'
             aria-controls='#sidenav'
             aria-haspopup='true'
             onClick={() => toggleSidebar()}
           >
-            <Bars3Icon className='tw-inline-block tw-w-5 tw-h-5' />
+            <Bars3Icon className='tw:inline-block tw:w-5 tw:h-5' />
           </button>
-          <div className='tw-flex-1 tw-mr-2'>
+          <div className='tw:flex-1 tw:mr-2'>
             <div
-              className={'tw-flex-1 tw-truncate tw-grid tw-grid-flow-col'}
+              className={'tw:flex-1 tw:truncate tw:grid tw:grid-flow-col'}
               style={{ maxWidth: nameWidth + 60 }}
             >
               <Link
-                className='tw-btn tw-btn-ghost tw-px-2 tw-normal-case tw-text-xl tw-flex-1 tw-truncate'
+                className='tw-btn tw-btn-ghost tw:px-2 tw:normal-case tw:text-xl tw:flex-1 tw:truncate'
                 to={'/'}
               >
-                <h1 ref={nameRef} className='tw-truncate'>
+                <h1 ref={nameRef} className='tw:truncate'>
                   {appName}
                 </h1>
               </Link>
               <button
-                className='tw-btn tw-px-2  tw-btn-ghost'
+                className='tw-btn tw:px-2  tw-btn-ghost'
                 onClick={() => window.my_modal_3.showModal()}
               >
-                <QuestionMarkIcon className='tw-h-5 tw-w-5' />
+                <QuestionMarkIcon className='tw:h-5 tw:w-5' />
               </button>
             </div>
           </div>
 
           {isAuthenticated ? (
-            <div className='tw-flex-none'>
+            <div className='tw:flex-none'>
               <Link
                 to={`${userProfile.id && '/item/' + userProfile.id}`}
-                className='tw-flex tw-items-center'
+                className='tw:flex tw:items-center'
               >
                 {userProfile.image && (
                   <div className='tw-avatar'>
-                    <div className='tw-w-10 tw-rounded-full'>
+                    <div className='tw:w-10 tw:rounded-full'>
                       <img src={appState.assetsApi.url + userProfile.image} />
                     </div>
                   </div>
                 )}
-                <div className='tw-ml-2 tw-mr-2'>{userProfile.name || user?.first_name}</div>
+                <div className='tw:ml-2 tw:mr-2'>{userProfile.name || user?.first_name}</div>
               </Link>
               <div className='tw-dropdown tw-dropdown-end'>
                 <label tabIndex={0} className='tw-btn tw-btn-ghost tw-btn-square'>
-                  <EllipsisVerticalIcon className='tw-h-5 tw-w-5' />
+                  <EllipsisVerticalIcon className='tw:h-5 tw:w-5' />
                 </label>
                 <ul
                   tabIndex={0}
-                  className='tw-menu tw-menu-compact tw-dropdown-content tw-mt-3 tw-p-2 tw-shadow tw-bg-base-100 tw-rounded-box tw-w-52 !tw-z-[10000]'
+                  className='tw-menu tw-menu-compact tw-dropdown-content tw:mt-3 tw:p-2 tw:shadow tw:bg-base-100 tw:rounded-box tw:w-52 tw:z-10000!'
                 >
                   <li>
                     <Link to={`${userProfile.id && '/edit-item/' + userProfile.id}`}>Profile</Link>
@@ -143,22 +143,22 @@ export default function NavBar({ appName }: { appName: string }) {
             </div>
           ) : (
             <div>
-              <div className='tw-hidden md:tw-flex'>
+              <div className='tw:hidden tw:md:flex'>
                 <Link to={'/login'}>
-                  <div className='tw-btn tw-btn-ghost tw-mr-2'>Login</div>
+                  <div className='tw-btn tw-btn-ghost tw:mr-2'>Login</div>
                 </Link>
 
                 <Link to={'/signup'}>
-                  <div className='tw-btn tw-btn-ghost tw-mr-2'>Sign Up</div>
+                  <div className='tw-btn tw-btn-ghost tw:mr-2'>Sign Up</div>
                 </Link>
               </div>
               <div className='tw-dropdown tw-dropdown-end'>
-                <label tabIndex={1} className='tw-btn tw-btn-ghost md:tw-hidden'>
-                  <EllipsisVerticalIcon className='tw-h-5 tw-w-5' />
+                <label tabIndex={1} className='tw-btn tw-btn-ghost tw:md:hidden'>
+                  <EllipsisVerticalIcon className='tw:h-5 tw:w-5' />
                 </label>
                 <ul
                   tabIndex={1}
-                  className='tw-menu tw-dropdown-content tw-mt-3 tw-p-2 tw-shadow tw-bg-base-100 tw-rounded-box tw-w-52 !tw-z-[10000]'
+                  className='tw-menu tw-dropdown-content tw:mt-3 tw:p-2 tw:shadow tw:bg-base-100 tw:rounded-box tw:w-52 tw:z-10000!'
                 >
                   <li>
                     <Link to={'/login'}>Login</Link>

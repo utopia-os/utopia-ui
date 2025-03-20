@@ -88,16 +88,16 @@ export const AttestationForm = ({ api }: { api?: ItemsApi<unknown> }) => {
   const [selectedColor, setSelectedColor] = useState('#fff0d6')
 
   return (
-    <MapOverlayPage backdrop className='tw-h-fit tw-min-h-56 tw-w-96'>
-      <div className='tw-text-center tw-text-xl tw-font-bold'>Gratitude</div>
-      <div className='tw-text-center tw-text-base tw-text-gray-400'>to</div>
-      <div className='tw-flex tw-flex-row tw-justify-center tw-items-center tw-flex-wrap'>
+    <MapOverlayPage backdrop className='tw:h-fit tw:min-h-56 tw:w-96'>
+      <div className='tw:text-center tw:text-xl tw:font-bold'>Gratitude</div>
+      <div className='tw:text-center tw:text-base tw:text-gray-400'>to</div>
+      <div className='tw:flex tw:flex-row tw:justify-center tw:items-center tw:flex-wrap'>
         {users?.map(
           (u, k) => (
-            <div key={k} className='tw-flex tw-items-center tw-space-x-3 tw-mx-2 tw-my-1'>
+            <div key={k} className='tw:flex tw:items-center tw:space-x-3 tw:mx-2 tw:my-1'>
               {u.image ? (
                 <div className='tw-avatar'>
-                  <div className='tw-mask tw-mask-circle tw-w-8 tw-h-8'>
+                  <div className='tw-mask tw-mask-circle tw:w-8 tw:h-8'>
                     <img
                       src={appState.assetsApi.url + u.image + '?width=40&heigth=40'}
                       alt='Avatar'
@@ -105,10 +105,10 @@ export const AttestationForm = ({ api }: { api?: ItemsApi<unknown> }) => {
                   </div>
                 </div>
               ) : (
-                <div className='tw-mask tw-mask-circle tw-text-xl md:tw-text-2xl tw-bg-slate-200 tw-rounded-full tw-w-8 tw-h-8'></div>
+                <div className='tw-mask tw-mask-circle tw:text-xl tw:md:text-2xl tw:bg-slate-200 tw:rounded-full tw:w-8 tw:h-8'></div>
               )}
               <div>
-                <div className='tw-font-bold'>{u.name}</div>
+                <div className='tw:font-bold'>{u.name}</div>
               </div>
             </div>
           ),
@@ -116,9 +116,9 @@ export const AttestationForm = ({ api }: { api?: ItemsApi<unknown> }) => {
         )}
       </div>
 
-      <div className='tw-w-full'>
-        <div className='tw-flex tw-justify-center tw-items-center'>
-          <div className=' tw-flex tw-justify-center tw-items-center tw-w-28 tw-h-28 tw-m-4'>
+      <div className='tw:w-full'>
+        <div className='tw:flex tw:justify-center tw:items-center'>
+          <div className=' tw:flex tw:justify-center tw:items-center tw:w-28 tw:h-28 tw:m-4'>
             <EmojiPicker
               selectedEmoji={selectedEmoji}
               selectedColor={selectedColor}
@@ -129,19 +129,19 @@ export const AttestationForm = ({ api }: { api?: ItemsApi<unknown> }) => {
             />
           </div>
         </div>
-        <div className='tw-flex tw-justify-center tw-items-center'>
+        <div className='tw:flex tw:justify-center tw:items-center'>
           <input
             ref={inputRef}
             value={inputValue}
             onChange={handleChange}
             type='text'
             placeholder='... and say some words'
-            className='tw-input tw-min-w-0 tw-w-fit tw-resize-none tw-overflow-hidden tw-text-center '
+            className='tw-input tw:min-w-0 tw:w-fit tw:resize-none tw:overflow-hidden tw:text-center '
           />
         </div>
       </div>
-      <div className='tw-w-full tw-grid tw-mt-4'>
-        <button onClick={sendAttestation} className='tw-btn tw-place-self-center tw-px-8'>
+      <div className='tw:w-full tw:grid tw:mt-4'>
+        <button onClick={sendAttestation} className='tw-btn tw:place-self-center tw:px-8'>
           Next
         </button>
       </div>

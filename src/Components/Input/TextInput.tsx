@@ -50,7 +50,7 @@ export function TextInput({
     <div className={`tw-form-control ${containerStyle ?? ''}`}>
       {labelTitle ? (
         <label className='tw-label'>
-          <span className={`tw-label-text tw-text-base-content ${labelStyle ?? ''}`}>
+          <span className={`tw-label-text tw:text-base-content ${labelStyle ?? ''}`}>
             {labelTitle}
           </span>
         </label>
@@ -64,7 +64,7 @@ export function TextInput({
         placeholder={placeholder ?? ''}
         autoComplete={autocomplete}
         onChange={handleChange}
-        className={`tw-input tw-input-bordered tw-w-full ${inputStyle ?? ''}`}
+        className={`tw-input tw-input-bordered tw:w-full ${inputStyle ?? ''}`}
       />
     </div>
   )

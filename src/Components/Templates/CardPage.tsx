@@ -17,9 +17,9 @@ export function CardPage({
   parents?: { name: string; path: string }[]
 }) {
   return (
-    <main className='tw-flex-1 tw-overflow-y-auto tw-overflow-x-hidden tw-pt-2 tw-px-6 tw-min-w-80 tw-flex tw-justify-center'>
-      <div className='tw-w-full xl:tw-max-w-6xl '>
-        <div className='tw-text-sm tw-breadcrumbs'>
+    <main className='tw:flex-1 tw:overflow-y-auto tw:overflow-x-hidden tw:pt-2 tw:px-6 tw:min-w-80 tw:flex tw:justify-center'>
+      <div className='tw:w-full tw:xl:max-w-6xl '>
+        <div className='tw:text-sm tw-breadcrumbs'>
           <ul>
             <li>
               <Link to={'/'}>Home</Link>
@@ -32,7 +32,7 @@ export function CardPage({
             <li>{title}</li>
           </ul>
         </div>
-        <TitleCard hideTitle={hideTitle} title={title} topMargin='tw-my-2' className=' tw-mb-4'>
+        <TitleCard hideTitle={hideTitle} title={title} topMargin='tw:my-2' className=' tw:mb-4'>
           {children}
         </TitleCard>
       </div>

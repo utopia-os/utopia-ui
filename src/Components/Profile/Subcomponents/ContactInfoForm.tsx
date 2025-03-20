@@ -12,11 +12,11 @@ export const ContactInfoForm = ({
   setState: React.Dispatch<React.SetStateAction<any>>
 }) => {
   return (
-    <div className='tw-mt-4 tw-space-y-4'>
+    <div className='tw:mt-4 tw:space-y-4'>
       <div>
         <label
           htmlFor='email'
-          className='tw-block tw-text-sm tw-font-medium tw-text-gray-500 tw-mb-1'
+          className='tw:block tw:text-sm tw:font-medium tw:text-gray-500 tw:mb-1'
         >
           Email-Adresse (Kontakt):
         </label>
@@ -37,7 +37,7 @@ export const ContactInfoForm = ({
       <div>
         <label
           htmlFor='telephone'
-          className='tw-block tw-text-sm tw-font-medium tw-text-gray-500 tw-mb-1'
+          className='tw:block tw:text-sm tw:font-medium tw:text-gray-500 tw:mb-1'
         >
           Telefonnummer (Kontakt):
         </label>

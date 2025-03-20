@@ -27,7 +27,7 @@ export const FlexForm = ({
   item: Item
 }) => {
   return (
-    <div className='tw-mt-6 tw-flex tw-flex-col tw-h-full'>
+    <div className='tw:mt-6 tw:flex tw:flex-col tw:h-full'>
       {item.layer?.itemType.profileTemplate.map((templateItem) => {
         const TemplateComponent = componentMap[templateItem.collection]
         return TemplateComponent ? (

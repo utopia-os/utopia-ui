@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-// eslint-disable-next-line import/no-commonjs
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   safelist: [
@@ -65,5 +64,4 @@ module.exports = {
     },
   },
   prefix: 'tw-',
-  // content: ['./src/**/*.{js,jsx,ts,tsx}'],
 }

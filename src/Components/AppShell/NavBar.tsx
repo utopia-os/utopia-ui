@@ -130,13 +130,14 @@ export default function NavBar({ appName }: { appName: string }) {
                     <Link to={'/user-settings'}>Settings</Link>
                   </li>
                   <li>
-                    <a
+                    <Link
+                      to={'/'}
                       onClick={() => {
                         void onLogout()
                       }}
                     >
                       Logout
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>

@@ -32,7 +32,10 @@ export default function AddButton({
     <>
       {canAddItems() ? (
         <div className='tw:dropdown tw:dropdown-top tw:dropdown-end tw:dropdown-hover tw:z-500 tw:absolute tw:right-4 tw:bottom-4'>
-          <label tabIndex={0} className='tw:z-500 tw:btn tw:btn-circle tw:shadow tw:bg-base-100'>
+          <label
+            tabIndex={0}
+            className='tw:z-500 tw:btn tw:btn-circle tw:btn-lg  tw:shadow tw:bg-base-100'
+          >
             <SVG src={PlusSVG} className='tw:h-5 tw:w-5' />
           </label>
           <ul tabIndex={0} className='tw:dropdown-content tw:pr-1 tw:list-none'>

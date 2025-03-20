@@ -32,7 +32,7 @@ export function LayerControl() {
                   <li key={layer.name}>
                     <label
                       htmlFor={layer.name}
-                      className='tw:label tw:justify-normal tw:pt-1 tw:pb-1'
+                      className='tw:label tw:justify-normal tw:pt-1 tw:pb-1 tw:text-base-content'
                     >
                       <input
                         id={layer.name}

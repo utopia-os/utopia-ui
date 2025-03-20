@@ -1,6 +1,6 @@
 @import 'tailwindcss' prefix(tw);
 @plugin "daisyui" {
-  themes: light --default, dark --prefersdark, cupcake;
+  themes: light --default, dark --prefersdark, cupcake, retro;
 };
 
 @theme {
@@ -62,23 +62,23 @@
   }
 }
 
-.tw-modal {
+.modal {
     z-index: 1200 !important;
 }
 
-.tw-menu li a {
+.menu li a {
     border-radius: 10px;
 }
 
-.tw-modal {
+.modal {
     z-index: 1200 !important;
     max-height: 100dvh;
 }
 
-.tw-modal-box {
+.modal-box {
     max-height: calc(100dvh - 2em);
 }
 
-.tw-tab-content .container {
+.tab-content .container {
     height: 100%;
 }

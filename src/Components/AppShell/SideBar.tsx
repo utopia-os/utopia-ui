@@ -53,7 +53,7 @@ export function SideBar({ routes, bottomRoutes }: { routes: Route[]; bottomRoute
         className={`tw:flex tw:flex-col  ${embedded ? 'tw:h-full' : 'tw:h-[calc(100dvh-64px)]'}`}
       >
         <ul
-          className='tw-menu tw:w-full tw:bg-base-100 tw:text-base-content tw:p-0'
+          className='tw:menu tw:w-full tw:bg-base-100 tw:text-base-content tw:p-0'
           data-te-sidenav-menu-ref
         >
           {routes.map((route, k) => {
@@ -102,7 +102,7 @@ export function SideBar({ routes, bottomRoutes }: { routes: Route[]; bottomRoute
         >
           <div className='tw:w-full'>
             <ul
-              className='tw-menu tw:w-full tw:bg-base-100 tw:text-base-content tw:p-0 tw:mb-0'
+              className='tw:menu tw:w-full tw:bg-base-100 tw:text-base-content tw:p-0 tw:mb-0'
               data-te-sidenav-menu-ref
             >
               {bottomRoutes?.map((route, k) => {

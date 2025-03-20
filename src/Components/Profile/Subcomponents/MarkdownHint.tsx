@@ -10,7 +10,7 @@ export const MarkdownHint = () => {
       title='Markdown is supported'
       className='flex tw:flex-row tw:text-gray-400 tw:cursor-pointer tw:items-center'
     >
-      <img src={MarkdownSVG} alt='Markdown' className='octicon octicon-markdown tw-gray-400' />
+      <img src={MarkdownSVG} alt='Markdown' className='octicon octicon-markdown tw:gray-400' />
       {expended && (
         <a
           href='https://www.markdownguide.org/cheat-sheet/#basic-syntax'

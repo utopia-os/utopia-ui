@@ -32,14 +32,14 @@ export const SelectUser = () => {
                     <input
                       type='checkbox'
                       onChange={() => setSelectedUsers((prev) => [...prev, u.id])}
-                      className='tw-checkbox tw-checkbox-sm'
+                      className='checkbox checkbox-sm'
                     />
                   </td>
                   <td>
                     <div className='tw:flex tw:items-center tw:space-x-3'>
                       {u.image ? (
-                        <div className='tw-avatar'>
-                          <div className='tw-mask tw-mask-circle tw:w-8 tw:h-8'>
+                        <div className='avatar'>
+                          <div className='mask mask-circle tw:w-8 tw:h-8'>
                             <img
                               src={appState.assetsApi.url + u.image + '?width=40&heigth=40'}
                               alt='Avatar'
@@ -47,7 +47,7 @@ export const SelectUser = () => {
                           </div>
                         </div>
                       ) : (
-                        <div className='tw-mask tw-mask-circle tw:text-xl tw:md:text-2xl tw:bg-slate-200 tw:rounded-full tw:w-8 tw:h-8'></div>
+                        <div className='mask mask-circle tw:text-xl tw:md:text-2xl tw:bg-slate-200 tw:rounded-full tw:w-8 tw:h-8'></div>
                       )}
                       <div>
                         <div className='tw:font-bold'>{u.name}</div>
@@ -65,7 +65,7 @@ export const SelectUser = () => {
           className='tw:place-self-center '
           to={'/attestation-form' + '?to=' + selectedUsers.map((u) => u, ',')}
         >
-          <button className='tw-btn tw:px-8'>Next</button>
+          <button className='btn tw:px-8'>Next</button>
         </Link>
       </div>
     </MapOverlayPage>

@@ -24,7 +24,7 @@ export const ItemCard = ({
 
   return (
     <div
-      className='tw:cursor-pointer tw-card tw:border-[1px] tw:border-base-300 tw-card-body tw:shadow-xl tw:bg-base-100 tw:text-base-content tw:p-4 tw:mb-4 tw:h-fit'
+      className='tw:cursor-pointer card tw:border-[1px] tw:border-base-300 card-body tw:shadow-xl tw:bg-base-100 tw:text-base-content tw:p-4 tw:mb-4 tw:h-fit'
       onClick={() => {
         // We could have an onClick callback instead
         const params = new URLSearchParams(window.location.search)

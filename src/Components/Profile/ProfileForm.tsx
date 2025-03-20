@@ -203,7 +203,7 @@ export function ProfileForm() {
 
             <div className='tw:mt-4'>
               <button
-                className={loading ? ' tw-loading tw-btn tw:float-right' : 'tw-btn tw:float-right'}
+                className={loading ? ' tw:loading tw:btn tw:float-right' : 'tw:btn tw:float-right'}
                 type='submit'
                 style={{
                   // We could refactor this, it is used several times at different locations

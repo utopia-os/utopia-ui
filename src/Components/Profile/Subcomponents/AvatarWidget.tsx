@@ -166,10 +166,10 @@ export const AvatarWidget: React.FC<AvatarWidgetProps> = ({ avatar, setAvatar })
           <input
             type='file'
             accept='image/*'
-            className='tw-file-input tw:w-full tw:max-w-xs'
+            className='tw:file-input tw:w-full tw:max-w-xs'
             onChange={onImageChange}
           />
-          <div className='button tw-btn tw-btn-lg tw-btn-circle tw:animate-none'>
+          <div className='button tw:btn tw:btn-lg tw:btn-circle tw:animate-none'>
             <ArrowUpTrayIcon className='tw:w-6 tw:h-6' />
           </div>
           {avatar ? (
@@ -187,7 +187,7 @@ export const AvatarWidget: React.FC<AvatarWidgetProps> = ({ avatar, setAvatar })
         </label>
       ) : (
         <div className='tw:w-20 tw:flex tw:items-center tw:justify-center'>
-          <span className='tw-loading tw-loading-spinner'></span>
+          <span className='tw:loading tw:loading-spinner'></span>
         </div>
       )}
       <DialogModal
@@ -203,7 +203,7 @@ export const AvatarWidget: React.FC<AvatarWidgetProps> = ({ avatar, setAvatar })
           <img src={image} ref={imgRef} onLoad={onImageLoad} />
         </ReactCrop>
         <button
-          className={'tw-btn tw-btn-primary'}
+          className={'tw:btn tw:btn-primary'}
           onClick={() => {
             setCropping(true)
             setCropModalOpen(false)

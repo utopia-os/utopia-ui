@@ -58,7 +58,7 @@ export function ActionButton({
             {triggerItemSelected && (
               <button
                 tabIndex={0}
-                className='tw:z-500 tw-btn tw-btn-circle tw:shadow'
+                className='tw:z-500 tw:btn tw:btn-circle tw:shadow'
                 onClick={() => {
                   setModalOpen(true)
                 }}
@@ -73,7 +73,7 @@ export function ActionButton({
             {triggerAddButton && (
               <button
                 tabIndex={0}
-                className='tw:z-500 tw-btn tw-btn-circle tw:shadow tw:mt-2'
+                className='tw:z-500 tw:btn tw:btn-circle tw:shadow tw:mt-2'
                 onClick={() => {
                   triggerAddButton()
                 }}
@@ -110,7 +110,7 @@ export function ActionButton({
                 .map((i) => (
                   <div
                     key={i.id}
-                    className='tw:cursor-pointer tw-card tw:border-[1px] tw:border-base-300 tw-card-body tw:shadow-xl tw:bg-base-100 tw:text-base-content tw:mx-4 tw:p-4 tw:mb-4 tw:h-fit'
+                    className='tw:cursor-pointer tw:card tw:border-[1px] tw:border-base-300 tw:card-body tw:shadow-xl tw:bg-base-100 tw:text-base-content tw:mx-4 tw:p-4 tw:mb-4 tw:h-fit'
                     onClick={() => {
                       triggerItemSelected(i.id)
                       setModalOpen(false)

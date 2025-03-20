@@ -80,7 +80,7 @@ export function UtopiaMapInner({
                   }
                 />
                 <a href='https://opencollective.com/utopia-project'>
-                  <div className='tw-btn  tw-btn-sm tw:float-right tw-btn-primary'>Donate</div>
+                  <div className='tw:btn  tw:btn-sm tw:float-right tw:btn-primary'>Donate</div>
                 </a>
               </div>
             </>,

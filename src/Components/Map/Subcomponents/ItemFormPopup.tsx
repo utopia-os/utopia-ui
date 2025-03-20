@@ -199,12 +199,12 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
           <button
             className={
               spinner
-                ? 'tw-btn tw-btn-disabled tw:mt-5 tw:place-self-center'
-                : 'tw-btn tw:mt-5 tw:place-self-center'
+                ? 'tw:btn tw:btn-disabled tw:mt-5 tw:place-self-center'
+                : 'tw:btn tw:mt-5 tw:place-self-center'
             }
             type='submit'
           >
-            {spinner ? <span className='tw-loading tw-loading-spinner'></span> : 'Save'}
+            {spinner ? <span className='tw:loading tw:loading-spinner'></span> : 'Save'}
           </button>
         </div>
       </form>

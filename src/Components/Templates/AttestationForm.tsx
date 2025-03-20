@@ -96,8 +96,8 @@ export const AttestationForm = ({ api }: { api?: ItemsApi<unknown> }) => {
           (u, k) => (
             <div key={k} className='tw:flex tw:items-center tw:space-x-3 tw:mx-2 tw:my-1'>
               {u.image ? (
-                <div className='tw-avatar'>
-                  <div className='tw-mask tw-mask-circle tw:w-8 tw:h-8'>
+                <div className='avatar'>
+                  <div className='mask mask-circle tw:w-8 tw:h-8'>
                     <img
                       src={appState.assetsApi.url + u.image + '?width=40&heigth=40'}
                       alt='Avatar'
@@ -105,7 +105,7 @@ export const AttestationForm = ({ api }: { api?: ItemsApi<unknown> }) => {
                   </div>
                 </div>
               ) : (
-                <div className='tw-mask tw-mask-circle tw:text-xl tw:md:text-2xl tw:bg-slate-200 tw:rounded-full tw:w-8 tw:h-8'></div>
+                <div className='mask mask-circle tw:text-xl tw:md:text-2xl tw:bg-slate-200 tw:rounded-full tw:w-8 tw:h-8'></div>
               )}
               <div>
                 <div className='tw:font-bold'>{u.name}</div>
@@ -136,12 +136,12 @@ export const AttestationForm = ({ api }: { api?: ItemsApi<unknown> }) => {
             onChange={handleChange}
             type='text'
             placeholder='... and say some words'
-            className='tw-input tw:min-w-0 tw:w-fit tw:resize-none tw:overflow-hidden tw:text-center '
+            className='input tw:min-w-0 tw:w-fit tw:resize-none tw:overflow-hidden tw:text-center '
           />
         </div>
       </div>
       <div className='tw:w-full tw:grid tw:mt-4'>
-        <button onClick={sendAttestation} className='tw-btn tw:place-self-center tw:px-8'>
+        <button onClick={sendAttestation} className='btn tw:place-self-center tw:px-8'>
           Next
         </button>
       </div>

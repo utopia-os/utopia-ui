@@ -42,10 +42,10 @@ export function TextAreaInput({
   }
 
   return (
-    <div className={`tw-form-control tw:w-full ${containerStyle ?? ''}`}>
+    <div className={`tw:form-control tw:w-full ${containerStyle ?? ''}`}>
       {labelTitle ? (
-        <label className='tw-label'>
-          <span className={`tw-label-text tw:text-base-content ${labelStyle ?? ''}`}>
+        <label className='tw:label'>
+          <span className={`tw:label-text tw:text-base-content ${labelStyle ?? ''}`}>
             {labelTitle}
           </span>
         </label>
@@ -55,7 +55,7 @@ export function TextAreaInput({
         ref={ref}
         value={inputValue}
         name={dataField}
-        className={`tw-textarea tw-textarea-bordered tw:w-full tw:leading-5 ${inputStyle ?? ''}`}
+        className={`tw:textarea tw:textarea-bordered tw:w-full tw:leading-5 ${inputStyle ?? ''}`}
         placeholder={placeholder ?? ''}
         onChange={handleChange}
       ></textarea>

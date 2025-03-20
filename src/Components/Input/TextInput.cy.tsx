@@ -9,8 +9,8 @@ describe('<TextInput />', () => {
     cy.get('input').should('have.attr', 'type', 'text')
     cy.get('input').should('have.attr', 'placeholder', '')
     cy.get('input').should('have.attr', 'required')
-    cy.get('input').should('have.class', 'tw-input')
-    cy.get('input').should('have.class', 'tw-input-bordered')
+    cy.get('input').should('have.class', 'input')
+    cy.get('input').should('have.class', 'input-bordered')
     cy.get('input').should('have.class', 'tw:w-full')
   })
 

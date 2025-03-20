@@ -97,7 +97,7 @@ export const EmojiPicker = ({
     <>
       <div
         onClick={toggleDropdown}
-        className={`tw:cursor-pointer ${selectedEmoji === 'select badge' ? 'tw:text-sm tw:p-9! tw:text-center ' : 'tw:text-6xl'} tw-mask tw-mask-${selectedShape} tw:p-6 tw-bg-[${selectedColor}]`}
+        className={`tw:cursor-pointer ${selectedEmoji === 'select badge' ? 'tw:text-sm tw:p-9! tw:text-center ' : 'tw:text-6xl'} mask mask-${selectedShape} tw:p-6 bg-[${selectedColor}]`}
       >
         {selectedEmoji}
       </div>
@@ -123,7 +123,7 @@ export const EmojiPicker = ({
                 className={`tw:cursor-pointer tw:hover:bg-base-200 tw:rounded-md tw:p-2 ${shape === selectedShape ? 'tw:bg-base-300' : ''}`}
                 onClick={() => selectShape(shape)}
               >
-                <div className={`tw:h-12 tw-mask tw-mask-${shape} tw:bg-neutral-content`}></div>
+                <div className={`tw:h-12 mask mask-${shape} tw:bg-neutral-content`}></div>
               </div>
             ))}
           </div>
@@ -135,7 +135,7 @@ export const EmojiPicker = ({
                 className={`tw:cursor-pointer tw:hover:bg-base-200 tw:rounded-md tw:p-2 tw:flex tw:justify-center tw:items-center  ${color === selectedColor ? 'tw:bg-base-300' : ''}`}
                 onClick={() => selectColor(color)}
               >
-                <div className={`tw:h-8 tw:w-8 tw:rounded-full tw-bg-[${color}]`}></div>
+                <div className={`tw:h-8 tw:w-8 tw:rounded-full bg-[${color}]`}></div>
               </div>
             ))}
           </div>

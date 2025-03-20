@@ -78,7 +78,7 @@ export function HeaderView({
         <div className={'tw:grow tw:max-w-[calc(100%-60px)] }'}>
           <div className='flex items-center'>
             {avatar && (
-              <div className='tw-avatar'>
+              <div className='tw:avatar'>
                 <div
                   className={`${
                     big ? 'tw:w-20' : 'tw:w-10'
@@ -123,16 +123,16 @@ export function HeaderView({
             (hasUserPermission(api?.collectionName!, 'delete', item) ||
               hasUserPermission(api?.collectionName!, 'update', item)) &&
             !hideMenu && (
-              <div className='tw-dropdown tw-dropdown-bottom'>
+              <div className='tw:dropdown tw:dropdown-bottom'>
                 <label
                   tabIndex={0}
-                  className='tw:bg-base-100 tw-btn tw:m-1 tw:leading-3 tw:border-none tw:min-h-0 tw:h-6'
+                  className='tw:bg-base-100 tw:btn tw:m-1 tw:leading-3 tw:border-none tw:min-h-0 tw:h-6'
                 >
                   <EllipsisVerticalIcon className='tw:h-5 tw:w-5' />
                 </label>
                 <ul
                   tabIndex={0}
-                  className='tw-dropdown-content tw-menu tw:p-2 tw:shadow tw:bg-base-100 tw:rounded-box tw:z-1000'
+                  className='tw:dropdown-content tw:menu tw:p-2 tw:shadow tw:bg-base-100 tw:rounded-box tw:z-1000'
                 >
                   {api?.updateItem &&
                     hasUserPermission(api.collectionName!, 'update', item) &&
@@ -170,7 +170,7 @@ export function HeaderView({
                       <li>
                         <a className='tw:cursor-pointer tw:text-error!' onClick={openDeleteModal}>
                           {loading ? (
-                            <span className='tw-loading tw-loading-spinner tw-loading-sm'></span>
+                            <span className='tw:loading tw:loading-spinner tw:loading-sm'></span>
                           ) : (
                             <TrashIcon className='tw:h-5 tw:w-5' />
                           )}
@@ -195,7 +195,7 @@ export function HeaderView({
           <div className='tw:grid'>
             <div className='tw:flex tw:justify-between'>
               <label
-                className='tw-btn tw:mt-4 tw-btn-error'
+                className='tw:btn tw:mt-4 tw:btn-error'
                 onClick={(e) => {
                   deleteCallback(e)
                   setModalOpen(false)
@@ -203,7 +203,7 @@ export function HeaderView({
               >
                 Yes
               </label>
-              <label className='tw-btn tw:mt-4' onClick={() => setModalOpen(false)}>
+              <label className='tw:btn tw:mt-4' onClick={() => setModalOpen(false)}>
                 No
               </label>
             </div>

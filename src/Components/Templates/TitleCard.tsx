@@ -23,7 +23,7 @@ export function TitleCard({
   return (
     <div
       className={
-        'tw-card tw:w-full tw:p-6 tw:bg-base-100 tw:shadow-xl tw:h-fit tw:mb-4 ' +
+        'card tw:w-full tw:p-6 tw:bg-base-100 tw:shadow-xl tw:h-fit tw:mb-4 ' +
         (className ?? '') +
         ' ' +
         (topMargin ?? 'tw:mt-6')
@@ -39,7 +39,7 @@ export function TitleCard({
               <div className='tw:inline-block tw:float-right'>{TopSideButtons}</div>
             )}
           </Subtitle>
-          <div className='tw-divider tw:mt-2'></div>
+          <div className='divider tw:mt-2'></div>
         </>
       )}
 

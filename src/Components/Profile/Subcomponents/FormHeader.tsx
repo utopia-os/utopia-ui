@@ -40,7 +40,7 @@ export const FormHeader = ({ item, state, setState }) => {
               name: v,
             }))
           }
-          containerStyle='tw:grow tw-input-md'
+          containerStyle='tw:grow tw:input-md'
         />
         <TextInput
           placeholder='Subtitle'
@@ -52,7 +52,7 @@ export const FormHeader = ({ item, state, setState }) => {
               subname: v,
             }))
           }
-          containerStyle='tw:grow tw-input-sm tw:px-4 tw:mt-1'
+          containerStyle='tw:grow tw:input-sm tw:px-4 tw:mt-1'
         />
       </div>
     </div>

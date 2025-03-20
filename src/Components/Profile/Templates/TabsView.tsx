@@ -85,13 +85,13 @@ export const TabsView = ({
   }, [location.search])
 
   return (
-    <div role='tablist' className='tw-tabs tw-tabs-lifted tw:mt-2 tw:mb-2 tw:px-6'>
+    <div role='tablist' className='tw:tabs tw:tabs-lifted tw:mt-2 tw:mb-2 tw:px-6'>
       <input
         type='radio'
         name='my_tabs_2'
         role='tab'
         className={
-          'tw-tab tw:font-bold tw:ps-2! tw:pe-2! tw:[--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'
+          'tw:tab tw:font-bold tw:ps-2! tw:pe-2! tw:[--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'
         }
         aria-label={`${item.layer?.itemType.icon_as_labels && activeTab !== 1 ? '📝' : '📝\u00A0Info'}`}
         checked={activeTab === 1 && true}
@@ -99,7 +99,7 @@ export const TabsView = ({
       />
       <div
         role='tabpanel'
-        className='tw-tab-content tw:bg-base-100 tw:rounded-box tw:h-[calc(100dvh-280px)] tw:overflow-y-auto fade tw:pt-2 tw:pb-4 tw:mb-4 tw:overflow-x-hidden'
+        className='tw:tab-content tw:bg-base-100 tw:rounded-box tw:h-[calc(100dvh-280px)] tw:overflow-y-auto fade tw:pt-2 tw:pb-4 tw:mb-4 tw:overflow-x-hidden'
       >
         {item.layer?.itemType.show_start_end && (
           <div className='tw:max-w-xs'>
@@ -117,7 +117,7 @@ export const TabsView = ({
             name='my_tabs_2'
             role='tab'
             className={
-              'tw-tab tw:font-bold tw:ps-2! tw:pe-2! tw:[--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'
+              'tw:tab tw:font-bold tw:ps-2! tw:pe-2! tw:[--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'
             }
             aria-label={`${item.layer.itemType.icon_as_labels && activeTab !== 2 ? '❤️' : '❤️\u00A0Trust'}`}
             checked={activeTab === 2 && true}
@@ -125,9 +125,9 @@ export const TabsView = ({
           />
           <div
             role='tabpanel'
-            className='tw-tab-content tw:bg-base-100 tw:rounded-box tw:h-[calc(100dvh-280px)] tw:overflow-y-auto fade tw:pt-2 tw:pb-4 tw:mb-4 tw:overflow-x-hidden'
+            className='tw:tab-content tw:bg-base-100 tw:rounded-box tw:h-[calc(100dvh-280px)] tw:overflow-y-auto fade tw:pt-2 tw:pb-4 tw:mb-4 tw:overflow-x-hidden'
           >
-            <table className='sm:tw-table-sm md:tw-table-md'>
+            <table className='sm:tw:table-sm md:tw:table-md'>
               <tbody>
                 {attestations
                   .filter((a) => a.to.some((t) => t.directus_users_id === item.user_created?.id))
@@ -139,7 +139,7 @@ export const TabsView = ({
                     <tr key={i}>
                       <td>
                         <div
-                          className={`tw:cursor-pointer tw:text-3xl tw-mask tw-mask-${a.shape} tw:p-3 tw:mr-2 tw:shadow-xl tw-bg-[${a.color}]`}
+                          className={`tw:cursor-pointer tw:text-3xl tw:mask tw:mask-${a.shape} tw:p-3 tw:mr-2 tw:shadow-xl tw:bg-[${a.color}]`}
                         >
                           {a.emoji}
                         </div>
@@ -153,8 +153,8 @@ export const TabsView = ({
                         {getUserProfile(a.user_created.id) ? (
                           <Link to={'/item/' + getUserProfile(a.user_created.id)?.id}>
                             <div className='flex items-center gap-3'>
-                              <div className='tw-avatar'>
-                                <div className='tw-mask tw:rounded-full tw:h-8 tw:w-8 tw:mr-2'>
+                              <div className='tw:avatar'>
+                                <div className='tw:mask tw:rounded-full tw:h-8 tw:w-8 tw:mr-2'>
                                   {getUserProfile(a.user_created.id)?.image && (
                                     <img
                                       src={
@@ -199,14 +199,14 @@ export const TabsView = ({
             type='radio'
             name='my_tabs_2'
             role='tab'
-            className={`tw-tab tw:font-bold tw:ps-2! tw:pe-2! ${!(item.layer.itemType.icon_as_labels && activeTab !== 3) && 'tw:min-w-[10.4em]'} tw:[--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`}
+            className={`tw:tab tw:font-bold tw:ps-2! tw:pe-2! ${!(item.layer.itemType.icon_as_labels && activeTab !== 3) && 'tw:min-w-[10.4em]'} tw:[--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`}
             aria-label={`${item.layer.itemType.icon_as_labels && activeTab !== 3 ? '♻️' : '♻️\u00A0Offers & Needs'}`}
             checked={activeTab === 3 && true}
             onChange={() => updateActiveTab(3)}
           />
           <div
             role='tabpanel'
-            className='tw-tab-content tw:bg-base-100  tw:rounded-box tw:h-[calc(100dvh-268px)] tw:overflow-y-auto fade tw:pt-4 tw:pb-1'
+            className='tw:tab-content tw:bg-base-100  tw:rounded-box tw:h-[calc(100dvh-268px)] tw:overflow-y-auto fade tw:pt-4 tw:pb-1'
           >
             <div className='tw:h-full'>
               <div className='tw:grid tw:grid-cols-1'>
@@ -252,14 +252,14 @@ export const TabsView = ({
             type='radio'
             name='my_tabs_2'
             role='tab'
-            className='tw-tab tw:font-bold tw:ps-2! tw:pe-2! tw:[--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'
+            className='tw:tab tw:font-bold tw:ps-2! tw:pe-2! tw:[--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'
             aria-label={`${item.layer.itemType.icon_as_labels && activeTab !== 7 ? '🔗' : '🔗\u00A0Links'}`}
             checked={activeTab === 7 && true}
             onChange={() => updateActiveTab(7)}
           />
           <div
             role='tabpanel'
-            className='tw-tab-content tw:bg-base-100  tw:rounded-box tw:h-[calc(100dvh-280px)] tw:overflow-y-auto tw:pt-4 tw:pb-1 tw:-mr-4 tw:-mb-4 tw:overflow-x-hidden'
+            className='tw:tab-content tw:bg-base-100  tw:rounded-box tw:h-[calc(100dvh-280px)] tw:overflow-y-auto tw:pt-4 tw:pb-1 tw:-mr-4 tw:-mb-4 tw:overflow-x-hidden'
           >
             <div className='tw:h-full'>
               <div className='tw:grid tw:grid-cols-1 tw:sm:grid-cols-2 tw:md:grid-cols-1 tw:lg:grid-cols-1 tw:xl:grid-cols-1 tw:2xl:grid-cols-2 tw:pb-4'>
@@ -267,7 +267,7 @@ export const TabsView = ({
                   relations.map((i) => (
                     <div
                       key={i.id}
-                      className='tw:cursor-pointer tw-card tw:bg-base-200 tw:border-[1px] tw:border-base-300 tw-card-body tw:shadow-xl tw:text-base-content tw:p-6 tw:mr-4 tw:mb-4'
+                      className='tw:cursor-pointer tw:card tw:bg-base-200 tw:border-[1px] tw:border-base-300 tw:card-body tw:shadow-xl tw:text-base-content tw:p-6 tw:mr-4 tw:mb-4'
                       onClick={() => navigate('/item/' + i.id)}
                     >
                       <LinkedItemsHeaderView

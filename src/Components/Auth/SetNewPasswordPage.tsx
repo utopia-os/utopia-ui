@@ -42,19 +42,19 @@ export function SetNewPasswordPage() {
         type='password'
         placeholder='Password'
         onChange={(e) => setPassword(e.target.value)}
-        className='tw-input tw-input-bordered tw:w-full tw:max-w-xs'
+        className='tw:input tw:input-bordered tw:w-full tw:max-w-xs'
       />
-      <div className='tw-card-actions tw:mt-4'>
+      <div className='tw:card-actions tw:mt-4'>
         <button
           className={
             loading
-              ? 'tw-btn tw-btn-disabled tw-btn-block tw-btn-primary'
-              : 'tw-btn tw-btn-primary tw-btn-block'
+              ? 'tw:btn tw:btn-disabled tw:btn-block tw:btn-primary'
+              : 'tw:btn tw:btn-primary tw:btn-block'
           }
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onClick={() => onReset()}
         >
-          {loading ? <span className='tw-loading tw-loading-spinner'></span> : 'Set'}
+          {loading ? <span className='tw:loading tw:loading-spinner'></span> : 'Set'}
         </button>
       </div>
     </MapOverlayPage>

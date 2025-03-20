@@ -60,13 +60,13 @@ export function LoginPage() {
         placeholder='E-Mail'
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className='tw-input tw-input-bordered tw:w-full tw:max-w-xs'
+        className='tw:input tw:input-bordered tw:w-full tw:max-w-xs'
       />
       <input
         type='password'
         placeholder='Password'
         onChange={(e) => setPassword(e.target.value)}
-        className='tw-input tw-input-bordered tw:w-full tw:max-w-xs'
+        className='tw:input tw:input-bordered tw:w-full tw:max-w-xs'
       />
       <div className='tw:text-right tw:text-primary'>
         <Link to='/reset-password'>
@@ -75,17 +75,17 @@ export function LoginPage() {
           </span>
         </Link>
       </div>
-      <div className='tw-card-actions'>
+      <div className='tw:card-actions'>
         <button
           className={
             loading
-              ? 'tw-btn tw-btn-disabled tw-btn-block tw-btn-primary'
-              : 'tw-btn tw-btn-primary tw-btn-block'
+              ? 'tw:btn tw:btn-disabled tw:btn-block tw:btn-primary'
+              : 'tw:btn tw:btn-primary tw:btn-block'
           }
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onClick={() => onLogin()}
         >
-          {loading ? <span className='tw-loading tw-loading-spinner'></span> : 'Login'}
+          {loading ? <span className='tw:loading tw:loading-spinner'></span> : 'Login'}
         </button>
       </div>
     </MapOverlayPage>

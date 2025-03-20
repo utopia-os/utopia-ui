@@ -2,19 +2,19 @@
 
 exports[`<TextAreaInput /> > labelTitle > sets label 1`] = `
 <div
-  class="tw-form-control tw-w-full "
+  class="form-control w-full "
 >
   <label
-    class="tw-label"
+    class="label"
   >
     <span
-      class="tw-label-text tw-text-base-content "
+      class="label-text text-base-content "
     >
       My Title
     </span>
   </label>
   <textarea
-    class="tw-textarea tw-textarea-bordered tw-w-full tw-leading-5 "
+    class="textarea textarea-bordered w-full leading-5 "
     placeholder=""
     required=""
   />
@@ -23,10 +23,10 @@ exports[`<TextAreaInput /> > labelTitle > sets label 1`] = `
 
 exports[`<TextAreaInput /> > renders properly 1`] = `
 <div
-  class="tw-form-control tw-w-full "
+  class="form-control w-full "
 >
   <textarea
-    class="tw-textarea tw-textarea-bordered tw-w-full tw-leading-5 "
+    class="textarea textarea-bordered w-full leading-5 "
     placeholder=""
     required=""
   />

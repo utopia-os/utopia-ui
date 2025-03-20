@@ -30,7 +30,7 @@ export const ContactInfoView = ({ item, heading }: { item: Item; heading: string
         {profileOwner?.image && (
           <ConditionalLink url={'/item/' + profileOwner?.id}>
             <div className='tw:mr-5 tw:flex tw:items-center tw:justify-center'>
-              <div className='tw-avatar'>
+              <div className='tw:avatar'>
                 <div className='tw:w-20 tw:h-20 tw:bg-gray-200 rounded-full tw:flex tw:items-center tw:justify-center overflow-hidden'>
                   <img
                     src={appState.assetsApi.url + profileOwner?.image}

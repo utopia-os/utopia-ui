@@ -22,7 +22,7 @@ const ContextCheckContext = createContext(false)
 
 const CloseButton = ({ closeToast }: CloseButtonProps) => (
   <button
-    className='tw-btn tw-btn-sm tw-btn-circle tw-btn-ghost tw:absolute tw:right-2 tw:top-2 tw:focus:outline-hidden'
+    className='tw:btn tw:btn-sm tw:btn-circle tw:btn-ghost tw:absolute tw:right-2 tw:top-2 tw:focus:outline-hidden'
     onClick={closeToast}
   >
     ✕

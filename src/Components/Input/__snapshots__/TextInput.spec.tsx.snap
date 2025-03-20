@@ -2,19 +2,19 @@
 
 exports[`<TextInput /> > labelTitle > sets label 1`] = `
 <div
-  class="tw-form-control "
+  class="form-control "
 >
   <label
-    class="tw-label"
+    class="label"
   >
     <span
-      class="tw-label-text tw-text-base-content "
+      class="label-text text-base-content "
     >
       My Title
     </span>
   </label>
   <input
-    class="tw-input tw-input-bordered tw-w-full "
+    class="input input-bordered w-full "
     placeholder=""
     required=""
     type="text"
@@ -25,10 +25,10 @@ exports[`<TextInput /> > labelTitle > sets label 1`] = `
 
 exports[`<TextInput /> > renders properly 1`] = `
 <div
-  class="tw-form-control "
+  class="form-control "
 >
   <input
-    class="tw-input tw-input-bordered tw-w-full "
+    class="input input-bordered w-full "
     placeholder=""
     required=""
     type="text"

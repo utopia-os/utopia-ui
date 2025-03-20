@@ -19,7 +19,7 @@ export function CardPage({
   return (
     <main className='tw:flex-1 tw:overflow-y-auto tw:overflow-x-hidden tw:pt-2 tw:px-6 tw:min-w-80 tw:flex tw:justify-center'>
       <div className='tw:w-full tw:xl:max-w-6xl '>
-        <div className='tw:text-sm tw-breadcrumbs'>
+        <div className='tw:text-sm breadcrumbs'>
           <ul>
             <li>
               <Link to={'/'}>Home</Link>

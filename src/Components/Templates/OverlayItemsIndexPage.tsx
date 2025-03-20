@@ -176,9 +176,9 @@ export const OverlayItemsIndexPage = ({
                 ))}
               {addItemPopupType === 'place' && (
                 <form ref={tabRef} autoComplete='off' onSubmit={(e) => submitNewItem(e)}>
-                  <div className='tw:cursor-pointer tw:break-inside-avoid tw-card tw:border-[1px] tw:border-base-300 tw-card-body tw:shadow-xl tw:bg-base-100 tw:text-base-content tw:p-6 tw:mb-10'>
+                  <div className='tw:cursor-pointer tw:break-inside-avoid card tw:border-[1px] tw:border-base-300 card-body tw:shadow-xl tw:bg-base-100 tw:text-base-content tw:p-6 tw:mb-10'>
                     <label
-                      className='tw-btn tw-btn-sm tw:rounded-2xl tw-btn-circle tw-btn-ghost tw:hover:bg-transparent tw:absolute tw:right-0 tw:top-0 tw:text-gray-600'
+                      className='btn btn-sm tw:rounded-2xl btn-circle btn-ghost tw:hover:bg-transparent tw:absolute tw:right-0 tw:top-0 tw:text-gray-600'
                       onClick={() => setAddItemPopupType('')}
                     >
                       <p className='tw:text-center'>✕</p>
@@ -201,12 +201,12 @@ export const OverlayItemsIndexPage = ({
                       <button
                         className={
                           loading
-                            ? 'tw-btn tw-btn-disabled tw:mt-5 tw:place-self-center'
-                            : 'tw-btn tw:mt-5 tw:place-self-center'
+                            ? 'btn btn-disabled tw:mt-5 tw:place-self-center'
+                            : 'btn tw:mt-5 tw:place-self-center'
                         }
                         type='submit'
                       >
-                        {loading ? <span className='tw-loading tw-loading-spinner'></span> : 'Save'}
+                        {loading ? <span className='loading loading-spinner'></span> : 'Save'}
                       </button>
                     </div>
                   </div>

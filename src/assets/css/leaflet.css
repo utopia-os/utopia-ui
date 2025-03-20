@@ -22,7 +22,7 @@
 .leaflet-popup-content-wrapper, .leaflet-popup-tip{
     background-color: var(--color-base-100);
     color: var(--color-base-content);
-
+    border-radius: var(--radius-box);
 }
 
 .leaflet-tooltip {
@@ -32,7 +32,7 @@
 }
 
 .leaflet-tooltip {
-    border-radius: 1em;
+    border-radius: var(--radius-box);
     transition: opacity 500ms;
     transition-delay: 50ms;
 }

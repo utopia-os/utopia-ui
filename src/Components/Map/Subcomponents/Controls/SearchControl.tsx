@@ -118,7 +118,7 @@ export const SearchControl = () => {
                 placeholder='search ...'
                 autoComplete='off'
                 value={value}
-                className='tw:input tw:input-bordered tw:h-12 tw:grow tw:shadow-xl tw:rounded-lg tw:pr-12 tw:w-69'
+                className='tw:input tw:input-bordered tw:h-12 tw:grow tw:shadow-xl tw:rounded-box tw:pr-12 tw:w-69'
                 ref={searchInput}
                 onChange={(e) => setValue(e.target.value)}
                 onFocus={() => {

@@ -1,6 +1,6 @@
 @import 'tailwindcss' prefix(tw);
 @plugin "daisyui" {
-  themes: light --default, dark --prefersdark, cupcake, retro;
+  themes: light --default, dark --prefersdark, valentine, retro, aqua, cyberpunk, caramellatte, abyss, silk;
 };
 
 @theme {

@@ -100,6 +100,116 @@ export default function NavBar({ appName }: { appName: string }) {
             </div>
           </div>
 
+          <div className='tw:dropdown tw:mr-2'>
+            <div tabIndex={0} role='button' className='tw:btn tw:m-1'>
+              Theme
+              <svg
+                width='12px'
+                height='12px'
+                className='tw:inline-block tw:h-2 tw:w-2 tw:fill-current tw:opacity-60'
+                xmlns='http://www.w3.org/2000/svg'
+                viewBox='0 0 2048 2048'
+              >
+                <path d='M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z'></path>
+              </svg>
+            </div>
+            <ul
+              tabIndex={0}
+              className='tw:dropdown-content tw:bg-base-300 tw:rounded-box tw:z-1 tw:w-52 tw:p-2 tw:shadow-2xl'
+            >
+              <li>
+                <input
+                  type='radio'
+                  name='theme-dropdown'
+                  className='theme-controller tw:btn tw:btn-sm tw:btn-block tw:btn-ghost tw:justify-start'
+                  aria-label='Default'
+                  value='default'
+                />
+              </li>
+              <li>
+                <input
+                  type='radio'
+                  name='theme-dropdown'
+                  className='theme-controller tw:btn tw:btn-sm tw:btn-block tw:btn-ghost tw:justify-start'
+                  aria-label='Dark'
+                  value='dark'
+                />
+              </li>
+              <li>
+                <input
+                  type='radio'
+                  name='theme-dropdown'
+                  className='theme-controller tw:btn tw:btn-sm tw:btn-block tw:btn-ghost tw:justify-start'
+                  aria-label='Light'
+                  value='light'
+                />
+              </li>
+              <li>
+                <input
+                  type='radio'
+                  name='theme-dropdown'
+                  className='theme-controller tw:btn tw:btn-sm tw:btn-block tw:btn-ghost tw:justify-start'
+                  aria-label='Retro'
+                  value='retro'
+                />
+              </li>
+              <li>
+                <input
+                  type='radio'
+                  name='theme-dropdown'
+                  className='theme-controller tw:btn tw:btn-sm tw:btn-block tw:btn-ghost tw:justify-start'
+                  aria-label='Cyberpunk'
+                  value='cyberpunk'
+                />
+              </li>
+              <li>
+                <input
+                  type='radio'
+                  name='theme-dropdown'
+                  className='theme-controller tw:btn tw:btn-sm tw:btn-block tw:btn-ghost tw:justify-start'
+                  aria-label='Valentine'
+                  value='valentine'
+                />
+              </li>
+              <li>
+                <input
+                  type='radio'
+                  name='theme-dropdown'
+                  className='theme-controller tw:btn tw:btn-sm tw:btn-block tw:btn-ghost tw:justify-start'
+                  aria-label='Aqua'
+                  value='aqua'
+                />
+              </li>
+              <li>
+                <input
+                  type='radio'
+                  name='theme-dropdown'
+                  className='theme-controller tw:btn tw:btn-sm tw:btn-block tw:btn-ghost tw:justify-start'
+                  aria-label='Caramellatte'
+                  value='caramellatte'
+                />
+              </li>
+              <li>
+                <input
+                  type='radio'
+                  name='theme-dropdown'
+                  className='theme-controller tw:btn tw:btn-sm tw:btn-block tw:btn-ghost tw:justify-start'
+                  aria-label='Abyss'
+                  value='abyss'
+                />
+              </li>
+              <li>
+                <input
+                  type='radio'
+                  name='theme-dropdown'
+                  className='theme-controller tw:btn tw:btn-sm tw:btn-block tw:btn-ghost tw:justify-start'
+                  aria-label='Silk'
+                  value='silk'
+                />
+              </li>
+            </ul>
+          </div>
+
           {isAuthenticated ? (
             <div className='tw:flex tw:mr-2'>
               <Link
@@ -130,14 +240,13 @@ export default function NavBar({ appName }: { appName: string }) {
                     <Link to={'/user-settings'}>Settings</Link>
                   </li>
                   <li>
-                    <Link
-                      to={'/'}
+                    <a
                       onClick={() => {
                         void onLogout()
                       }}
                     >
                       Logout
-                    </Link>
+                    </a>
                   </li>
                 </ul>
               </div>

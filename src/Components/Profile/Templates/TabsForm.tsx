@@ -53,12 +53,12 @@ export const TabsForm = ({
   }, [location.search])
 
   return (
-    <div role='tablist' className='tw:tabs tw:tabs-lifted tw:mt-3'>
+    <div role='tablist' className='tw:tabs tw:tabs-lift tw:mt-3'>
       <input
         type='radio'
         name='my_tabs_2'
         role='tab'
-        className={'tw:tab  tw:[--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'}
+        className={'tw:tab  '}
         aria-label='Info'
         checked={activeTab === 1 && true}
         onChange={() => updateActiveTab(1)}
@@ -124,9 +124,7 @@ export const TabsForm = ({
             type='radio'
             name='my_tabs_2'
             role='tab'
-            className={
-              'tw:tab tw:min-w-[10em]  tw:[--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'
-            }
+            className={'tw:tab tw:min-w-[10em]  '}
             aria-label='Offers & Needs'
             checked={activeTab === 3 && true}
             onChange={() => updateActiveTab(3)}
@@ -172,7 +170,7 @@ export const TabsForm = ({
             type='radio'
             name='my_tabs_2'
             role='tab'
-            className='tw:tab  tw:[--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'
+            className='tw:tab  '
             aria-label='Links'
             checked={activeTab === 7 && true}
             onChange={() => updateActiveTab(7)}

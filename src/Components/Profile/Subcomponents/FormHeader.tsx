@@ -30,7 +30,7 @@ export const FormHeader = ({ item, state, setState }) => {
         }
         className={'tw:-left-6 tw:top-14 tw:-mr-6'}
       />
-      <div className='tw:grow tw:mr-4'>
+      <div className='tw:grow tw:mr-4 tw:pt-1'>
         <TextInput
           placeholder='Name'
           defaultValue={item?.name ? item.name : ''}
@@ -40,7 +40,8 @@ export const FormHeader = ({ item, state, setState }) => {
               name: v,
             }))
           }
-          containerStyle='tw:grow tw:input-md'
+          containerStyle='tw:grow tw:px-4'
+          inputStyle='tw:input-md'
         />
         <TextInput
           placeholder='Subtitle'
@@ -52,7 +53,8 @@ export const FormHeader = ({ item, state, setState }) => {
               subname: v,
             }))
           }
-          containerStyle='tw:grow tw:input-sm tw:px-4 tw:mt-1'
+          containerStyle='tw:grow tw:px-4 tw:mt-1'
+          inputStyle='tw:input-sm'
         />
       </div>
     </div>

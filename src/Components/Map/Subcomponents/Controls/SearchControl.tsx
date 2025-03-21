@@ -112,13 +112,13 @@ export const SearchControl = () => {
         <div className='tw:w-[calc(100vw-2rem)] tw:max-w-[22rem] '>
           <div className='tw:flex tw:flex-row'>
             {embedded && <SidebarControl />}
-            <div className='tw:relative'>
+            <div className='tw:relative tw:shrink tw:max-w-69 tw:w-full'>
               <input
                 type='text'
                 placeholder='search ...'
                 autoComplete='off'
                 value={value}
-                className='tw:input tw:input-bordered tw:h-12 tw:grow tw:shadow-xl tw:rounded-box tw:pr-12 tw:w-69'
+                className='tw:input tw:input-bordered tw:h-12 tw:grow tw:shadow-xl tw:rounded-box tw:pr-12 tw:w-full'
                 ref={searchInput}
                 onChange={(e) => setValue(e.target.value)}
                 onFocus={() => {

@@ -43,7 +43,7 @@ export const LocateControl = () => {
 
   return (
     <>
-      <div className='tw:card tw:h-12 tw:w-12 tw:bg-base-100 tw:shadow-xl tw:items-center tw:justify-center  tw:hover:bg-slate-300 tw:hover:cursor-pointer tw:transition-all tw:duration-300 tw:ml-2'>
+      <div className='tw:card tw:flex-none tw:h-12 tw:w-12 tw:bg-base-100 tw:shadow-xl tw:items-center tw:justify-center  tw:hover:bg-slate-300 tw:hover:cursor-pointer tw:transition-all tw:duration-300 tw:ml-2'>
         <div
           className='tw:card-body tw:card tw:p-2 tw:h-10 tw:w-10  '
           onClick={() => {

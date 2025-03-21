@@ -78,7 +78,3 @@
 .modal-box {
     max-height: calc(100dvh - 2em);
 }
-
-.tab-content .container {
-    height: 100%;
-}

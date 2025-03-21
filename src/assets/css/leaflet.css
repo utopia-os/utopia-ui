@@ -48,3 +48,8 @@
     background-attachment: fixed;
     background-position: 50% 80%;
 }
+
+.leaflet-popup-close-button span {
+    color: var(--color-base-content);
+    opacity: 50%;
+}

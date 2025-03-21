@@ -57,9 +57,7 @@ export function HeaderView({
 
   const [imageLoaded, setImageLoaded] = useState(false)
 
-  const avatar =
-    item.image &&
-    appState.assetsApi.url + item.image + `${big ? '?width=160&heigth=160' : '?width=80&heigth=80'}`
+  const avatar = item.image && appState.assetsApi.url + item.image + '?width=160&heigth=160'
   const title = item.name
   const subtitle = item.subname
 
@@ -111,7 +109,7 @@ export function HeaderView({
                 </div>
               )}
               {subtitle && !hideSubname && (
-                <div className={`tw:text-xs  tw:text-gray-500 ${truncateSubname && 'tw:truncate'}`}>
+                <div className={`tw:text-xs  tw:opacity-50 ${truncateSubname && 'tw:truncate'}`}>
                   {subtitle}
                 </div>
               )}

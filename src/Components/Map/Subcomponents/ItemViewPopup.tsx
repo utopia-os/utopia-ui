@@ -111,7 +111,7 @@ export const ItemViewPopup = forwardRef((props: ItemViewPopupProps, ref: any) =>
         <div className='tw:flex tw:-mb-1 tw:flex-row tw:mr-2 tw:mt-1'>
           {infoExpanded ? (
             <p
-              className={'tw:italic tw:min-h-[21px] tw:my-0! tw:text-gray-500'}
+              className={'tw:italic tw:min-h-[21px] tw:my-0! tw:opacity-50'}
             >{`${props.item.date_updated && props.item.date_updated !== props.item.date_created ? 'updated' : 'posted'} ${props.item && props.item.user_created && props.item.user_created.first_name ? `by ${props.item.user_created.first_name}` : ''} ${props.item.date_updated ? timeAgo(props.item.date_updated) : timeAgo(props.item.date_created!)}`}</p>
           ) : (
             <p

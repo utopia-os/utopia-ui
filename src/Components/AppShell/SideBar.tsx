@@ -45,17 +45,14 @@ export function SideBar({ routes, bottomRoutes }: { routes: Route[]; bottomRoute
       id='sidenav'
       className={`${appState.sideBarOpen ? 'tw:translate-x-0' : 'tw:-translate-x-full'}
           ${appState.sideBarSlim ? 'tw:w-14' : 'tw:w-48'}
-          ${embedded ? 'tw:mt-0 tw:h-[100dvh]' : 'tw:mt-16 tw:h-[calc(100dvh-64px)]'}
+          ${embedded ? 'tw:mt-5.5 tw:h-[calc(100dvh-22px)]' : 'tw:mt-16 tw:h-[calc(100dvh-64px)]'}
           tw:fixed tw:left-0 tw:transition-all tw:duration-300 tw:top-0 tw:z-10035 
           tw:overflow-hidden tw:shadow-xl tw:dark:bg-zinc-800`}
     >
       <div
         className={`tw:flex tw:flex-col  ${embedded ? 'tw:h-full' : 'tw:h-[calc(100dvh-64px)]'}`}
       >
-        <ul
-          className='tw:menu tw:w-full tw:bg-base-100 tw:text-base-content tw:p-0'
-          data-te-sidenav-menu-ref
-        >
+        <ul className='tw:menu tw:w-full tw:bg-base-100 tw:text-base-content tw:p-0'>
           {routes.map((route, k) => {
             return (
               <li className='' key={k}>
@@ -145,7 +142,7 @@ export function SideBar({ routes, bottomRoutes }: { routes: Route[]; bottomRoute
 
             <ChevronRightIcon
               className={
-                'tw:w-5 tw:h-5 tw:mb-4 tw:mr-4  tw:cursor-pointer tw:float-right tw:delay-400 tw:duration-500 tw:transition-all ' +
+                'tw:w-5 tw:h-5 tw:mb-4 tw:mr-5 tw:mt-2  tw:cursor-pointer tw:float-right tw:delay-400 tw:duration-500 tw:transition-all ' +
                 (!appState.sideBarSlim ? 'tw:rotate-180' : '')
               }
               onClick={() => toggleSidebarSlim()}

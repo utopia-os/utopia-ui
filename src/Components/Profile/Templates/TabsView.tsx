@@ -85,14 +85,12 @@ export const TabsView = ({
   }, [location.search])
 
   return (
-    <div role='tablist' className='tw:tabs tw:tabs-lifted tw:mt-2 tw:mb-2 tw:px-6'>
+    <div role='tablist' className='tw:tabs tw:tabs-lift tw:mt-2 tw:mb-2 tw:px-6'>
       <input
         type='radio'
         name='my_tabs_2'
         role='tab'
-        className={
-          'tw:tab tw:font-bold tw:ps-2! tw:pe-2! tw:[--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'
-        }
+        className={'tw:tab tw:font-bold tw:ps-2! tw:pe-2! '}
         aria-label={`${item.layer?.itemType.icon_as_labels && activeTab !== 1 ? '📝' : '📝\u00A0Info'}`}
         checked={activeTab === 1 && true}
         onChange={() => updateActiveTab(1)}
@@ -116,9 +114,7 @@ export const TabsView = ({
             type='radio'
             name='my_tabs_2'
             role='tab'
-            className={
-              'tw:tab tw:font-bold tw:ps-2! tw:pe-2! tw:[--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'
-            }
+            className={'tw:tab tw:font-bold tw:ps-2! tw:pe-2!'}
             aria-label={`${item.layer.itemType.icon_as_labels && activeTab !== 2 ? '❤️' : '❤️\u00A0Trust'}`}
             checked={activeTab === 2 && true}
             onChange={() => updateActiveTab(2)}
@@ -199,7 +195,7 @@ export const TabsView = ({
             type='radio'
             name='my_tabs_2'
             role='tab'
-            className={`tw:tab tw:font-bold tw:ps-2! tw:pe-2! ${!(item.layer.itemType.icon_as_labels && activeTab !== 3) && 'tw:min-w-[10.4em]'} tw:[--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`}
+            className={`tw:tab tw:font-bold tw:ps-2! tw:pe-2! ${!(item.layer.itemType.icon_as_labels && activeTab !== 3) && 'tw:min-w-[10.4em]'} `}
             aria-label={`${item.layer.itemType.icon_as_labels && activeTab !== 3 ? '♻️' : '♻️\u00A0Offers & Needs'}`}
             checked={activeTab === 3 && true}
             onChange={() => updateActiveTab(3)}
@@ -252,7 +248,7 @@ export const TabsView = ({
             type='radio'
             name='my_tabs_2'
             role='tab'
-            className='tw:tab tw:font-bold tw:ps-2! tw:pe-2! tw:[--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'
+            className='tw:tab tw:font-bold tw:ps-2! tw:pe-2! '
             aria-label={`${item.layer.itemType.icon_as_labels && activeTab !== 7 ? '🔗' : '🔗\u00A0Links'}`}
             checked={activeTab === 7 && true}
             onChange={() => updateActiveTab(7)}

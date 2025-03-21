@@ -12,6 +12,8 @@ import MarkerClusterGroup from 'react-leaflet-cluster'
 import { Outlet, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
+import { useSetAppState } from '#components/AppShell/hooks/useAppState'
+import { useTheme } from '#components/AppShell/hooks/useTheme'
 import { containsUUID } from '#utils/ContainsUUID'
 
 import { useClusterRef, useSetClusterRef } from './hooks/useClusterRef'
@@ -43,6 +45,8 @@ export function UtopiaMapInner({
   showFilterControl = false,
   showGratitudeControl = false,
   showLayerControl = true,
+  showThemeControl = false,
+  defaultTheme = '',
   donationWidget,
 }: UtopiaMapProps) {
   const selectNewItemPosition = useSelectPosition()
@@ -51,6 +55,8 @@ export function UtopiaMapInner({
   const clusterRef = useClusterRef()
   const setMapClicked = useSetMapClicked()
   const [itemFormPopup, setItemFormPopup] = useState<ItemFormPopupProps | null>(null)
+
+  useTheme(defaultTheme)
 
   const layers = useLayers()
   const addVisibleLayer = useAddVisibleLayer()
@@ -63,6 +69,12 @@ export function UtopiaMapInner({
     layers.forEach((layer) => addVisibleLayer(layer))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [layers])
+
+  const setAppState = useSetAppState()
+
+  useEffect(() => {
+    setAppState({ showThemeControl })
+  }, [setAppState, showThemeControl])
 
   const init = useRef(false)
   useEffect(() => {

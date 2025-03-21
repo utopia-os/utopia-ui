@@ -8,16 +8,16 @@ export const MarkdownHint = () => {
     <div
       onClick={() => setExpended(true)}
       title='Markdown is supported'
-      className='flex tw-flex-row tw-text-gray-400 tw-cursor-pointer tw-items-center'
+      className='flex tw:flex-row tw:text-gray-400 tw:cursor-pointer tw:items-center'
     >
-      <img src={MarkdownSVG} alt='Markdown' className='octicon octicon-markdown tw-gray-400' />
+      <img src={MarkdownSVG} alt='Markdown' className='octicon octicon-markdown tw:gray-400' />
       {expended && (
         <a
           href='https://www.markdownguide.org/cheat-sheet/#basic-syntax'
           target='_blank'
           rel='noreferrer'
         >
-          <span className='Button-label tw-ml-1'>Markdown is support</span>{' '}
+          <span className='Button-label tw:ml-1'>Markdown is support</span>{' '}
         </a>
       )}
     </div>

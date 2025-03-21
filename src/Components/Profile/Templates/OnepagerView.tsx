@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import { TextView } from '#components/Map'
+import { TextView } from '#components/Map/Subcomponents/ItemPopupComponents'
 import { ContactInfoView } from '#components/Profile/Subcomponents/ContactInfoView'
 import { GroupSubHeaderView } from '#components/Profile/Subcomponents/GroupSubHeaderView'
 

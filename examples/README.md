@@ -1,6 +1,6 @@
 # Examples
 
-This examples depend on the `/dist` of the root project. You have to run `npm run build` in the roor project before you can run the examples.
+This examples depend on the `/dist` of the root project. You have to run `npm run build` in the root project before you can run the examples.
 
 ## Roadmap
 

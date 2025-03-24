@@ -20,6 +20,8 @@ function UtopiaMap({
   showFilterControl = false,
   showGratitudeControl = false,
   showLayerControl = true,
+  showThemeControl = false,
+  defaultTheme,
   infoText,
   donationWidget,
 }: UtopiaMapProps) {
@@ -39,6 +41,8 @@ function UtopiaMap({
           showLayerControl={showLayerControl}
           infoText={infoText}
           donationWidget={donationWidget}
+          showThemeControl={showThemeControl}
+          defaultTheme={defaultTheme}
         >
           {children}
         </UtopiaMapInner>

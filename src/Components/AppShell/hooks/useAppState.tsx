@@ -8,6 +8,7 @@ interface AppState {
   assetsApi: AssetsApi
   sideBarOpen: boolean
   sideBarSlim: boolean
+  showThemeControl: boolean
 }
 
 type UseAppManagerResult = ReturnType<typeof useAppManager>
@@ -16,6 +17,7 @@ const initialAppState: AppState = {
   assetsApi: {} as AssetsApi,
   sideBarOpen: false,
   sideBarSlim: false,
+  showThemeControl: false,
 }
 
 const AppContext = createContext<UseAppManagerResult>({

@@ -123,7 +123,7 @@ export const TabsView = ({
             role='tabpanel'
             className='tw:tab-content tw:bg-base-100 tw:rounded-box tw:h-[calc(100dvh-280px)] tw:overflow-y-auto fade tw:pt-2 tw:pb-4 tw:mb-4 tw:overflow-x-hidden'
           >
-            <table className='sm:tw:table-sm md:tw:table-md'>
+            <table className='sm:tw:table-sm md:tw:table-md tw:w-full'>
               <tbody>
                 {attestations
                   .filter((a) => a.to.some((t) => t.directus_users_id === item.user_created?.id))
@@ -135,7 +135,9 @@ export const TabsView = ({
                     <tr key={i}>
                       <td>
                         <div
-                          className={`tw:cursor-pointer tw:text-3xl tw:mask tw:mask-${a.shape} tw:p-3 tw:mr-2 tw:shadow-xl tw:bg-[${a.color}]`}
+                          className={`tw:cursor-pointer tw:text-3xl tw:mask ${a.shape === 'squircle' ? 'tw:mask-squircle' : a.shape === 'circle' ? 'tw:mask-circle' : 'tw:mask-hexagon-2'} tw:p-2 tw:my-2 tw:mr-2 tw:shadow-xl`}
+                          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                          style={{ backgroundColor: a.color }}
                         >
                           {a.emoji}
                         </div>

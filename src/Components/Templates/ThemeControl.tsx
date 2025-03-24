@@ -22,8 +22,8 @@ export const ThemeControl = () => {
   useEffect(() => {
     if (theme !== 'default') {
       localStorage.setItem('theme', JSON.stringify(theme))
-      document.documentElement.setAttribute('data-theme', theme)
-    }
+    } else localStorage.removeItem('theme')
+    document.documentElement.setAttribute('data-theme', theme)
   }, [theme])
 
   return (
@@ -42,12 +42,12 @@ export const ThemeControl = () => {
       </div>
       <ul
         tabIndex={0}
-        className='tw:dropdown-content tw:bg-base-300 tw:rounded-box tw:z-1 tw:w-52 tw:p-2 tw:shadow-2xl'
+        className='tw:dropdown-content tw:bg-base-200 tw:rounded-box tw:z-1 tw:w-36 tw:p-2 tw:shadow-2xl'
       >
         {themes.map((t) => (
           <li key={t}>
             <input
-              className={`tw:btn ${theme === t ? 'tw:bg-primary' : ''} tw:btn-sm tw:btn-block tw:btn-ghost tw:justify-start`}
+              className={`tw:btn ${theme === t ? 'tw:bg-base-300' : ''} tw:btn-sm tw:btn-block tw:btn-ghost tw:justify-start`}
               type='radio'
               name='theme'
               value={t}

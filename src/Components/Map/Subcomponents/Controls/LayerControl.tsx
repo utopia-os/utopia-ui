@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import SVG from 'react-inlinesvg'
 
 import LayerSVG from '#assets/layer.svg'
 import { useIsLayerVisible, useToggleVisibleLayer } from '#components/Map/hooks/useFilter'
@@ -56,7 +57,7 @@ export function LayerControl() {
             setOpen(true)
           }}
         >
-          <img src={LayerSVG} alt='Layers' />
+          <SVG src={LayerSVG} />
         </div>
       )}
     </div>

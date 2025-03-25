@@ -12,7 +12,8 @@
 import EllipsisVerticalIcon from '@heroicons/react/16/solid/EllipsisVerticalIcon'
 import PencilIcon from '@heroicons/react/24/solid/PencilIcon'
 import TrashIcon from '@heroicons/react/24/solid/TrashIcon'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+import SVG from 'react-inlinesvg'
 import { useNavigate } from 'react-router-dom'
 
 import TargetDotSVG from '#assets/targetDot.svg'
@@ -55,10 +56,6 @@ export function HeaderView({
   const appState = useAppState()
 
   const [imageLoaded, setImageLoaded] = useState(false)
-
-  useEffect(() => {
-    setImageLoaded(false)
-  }, [item])
 
   const avatar =
     item.image &&
@@ -163,7 +160,7 @@ export function HeaderView({
                           className='!tw-text-base-content tw-cursor-pointer'
                           onClick={setPositionCallback}
                         >
-                          <img src={TargetDotSVG} alt='Position' className='tw-w-5 tw-h-5' />
+                          <SVG src={TargetDotSVG} className='tw-w-5 tw-h-5' />
                         </a>
                       </li>
                     )}

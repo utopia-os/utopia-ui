@@ -83,18 +83,13 @@ export function ItemFormPopup(props: ItemFormPopupProps) {
         toast.error(error.toString())
       }
       if (success) {
-        // eslint-disable-next-line no-console
-        console.log(props.item)
-
         updateItem({ ...props.item, ...formItem })
         toast.success('Item updated')
       }
       setSpinner(false)
       map.closePopup()
     } else {
-      const item = items.find(
-        (i) => i.user_created?.id === user?.id && i.layer?.id === props.layer.id,
-      )
+      const item = items.find((i) => i.user_created?.id === user?.id && i.layer === props.layer)
 
       const uuid = crypto.randomUUID()
       let success = false

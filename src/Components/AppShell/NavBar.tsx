@@ -8,6 +8,8 @@ import { toast } from 'react-toastify'
 import { useAuth } from '#components/Auth/useAuth'
 import { useItems } from '#components/Map/hooks/useItems'
 
+import { useAppState, useSetAppState } from './hooks/useAppState'
+
 import type { Item } from '#types/Item'
 
 export default function NavBar({ appName }: { appName: string }) {
@@ -16,6 +18,13 @@ export default function NavBar({ appName }: { appName: string }) {
   const [userProfile, setUserProfile] = useState<Item>({} as Item)
   const items = useItems()
 
+  const appState = useAppState()
+  const setAppState = useSetAppState()
+
+  const toggleSidebar = () => {
+    setAppState({ sideBarOpen: !appState.sideBarOpen })
+  }
+
   useEffect(() => {
     const profile =
       user && items.find((i) => i.user_created?.id === user.id && i.layer?.userProfileLayer)
@@ -23,8 +32,6 @@ export default function NavBar({ appName }: { appName: string }) {
       ? setUserProfile(profile)
       : setUserProfile({ id: crypto.randomUUID(), name: user?.first_name ?? '', text: '' })
   }, [user, items])
-
-  // useEffect(() => {}, [userProfile])
 
   const nameRef = useRef<HTMLHeadingElement>(null)
   const [nameWidth, setNameWidth] = useState<number>(0)
@@ -65,10 +72,9 @@ export default function NavBar({ appName }: { appName: string }) {
         <div className='tw-navbar tw-bg-base-100 tw-z-[9998] tw-shadow-xl tw-relative'>
           <button
             className='tw-btn tw-btn-square tw-btn-ghost'
-            data-te-sidenav-toggle-ref
-            data-te-target='#sidenav'
             aria-controls='#sidenav'
             aria-haspopup='true'
+            onClick={() => toggleSidebar()}
           >
             <Bars3Icon className='tw-inline-block tw-w-5 tw-h-5' />
           </button>
@@ -103,7 +109,7 @@ export default function NavBar({ appName }: { appName: string }) {
                 {userProfile.image && (
                   <div className='tw-avatar'>
                     <div className='tw-w-10 tw-rounded-full'>
-                      <img src={'https://api.utopia-lab.org/assets/' + userProfile.image} />
+                      <img src={appState.assetsApi.url + userProfile.image} />
                     </div>
                   </div>
                 )}

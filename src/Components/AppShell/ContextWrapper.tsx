@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useContext, createContext } from 'react'
-import { BrowserRouter as Router, useLocation } from 'react-router-dom'
+import { BrowserRouter as Router, useInRouterContext } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 
 import { QuestsProvider } from '#components/Gaming/hooks/useQuests'
@@ -15,49 +15,40 @@ import { TagsProvider } from '#components/Map/hooks/useTags'
 
 import { AppStateProvider } from './hooks/useAppState'
 
+import type { CloseButtonProps } from 'react-toastify'
+
 // Helper context to determine if the ContextWrapper is already present.
 const ContextCheckContext = createContext(false)
+
+const CloseButton = ({ closeToast }: CloseButtonProps) => (
+  <button
+    className='tw-btn tw-btn-sm tw-btn-circle tw-btn-ghost tw-absolute tw-right-2 tw-top-2 focus:tw-outline-none'
+    onClick={closeToast}
+  >
+    ✕
+  </button>
+)
 
 export const ContextWrapper = ({ children }: { children: React.ReactNode }) => {
   const isWrapped = useContext(ContextCheckContext)
 
-  // Check if we are already inside a Router
-  let location
-  try {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    location = useLocation()
-    // eslint-disable-next-line no-catch-all/no-catch-all
-  } catch (e) {
-    location = null
-  }
+  const isInsideRouter = useInRouterContext()
 
-  // Case 1: Only the Router is missing, but ContextWrapper is already provided
-  if (!location && isWrapped) {
-    return <Router>{children}</Router>
-  }
+  let returnValue = children
 
-  // Case 2: Neither Router nor ContextWrapper is present
-  if (!location && !isWrapped) {
-    return (
-      <Router>
-        <ContextCheckContext.Provider value={true}>
-          <Wrappers>{children}</Wrappers>
-        </ContextCheckContext.Provider>
-      </Router>
-    )
-  }
-
-  // Case 3: Only ContextWrapper is missing
-  if (location && !isWrapped) {
-    return (
+  if (!isWrapped) {
+    returnValue = (
       <ContextCheckContext.Provider value={true}>
-        <Wrappers>{children}</Wrappers>
+        <Wrappers>{returnValue}</Wrappers>
       </ContextCheckContext.Provider>
     )
   }
 
-  // Case 4: Both Router and ContextWrapper are already present
-  return children
+  if (!isInsideRouter) {
+    returnValue = <Router>{returnValue}</Router>
+  }
+
+  return returnValue
 }
 
 // eslint-disable-next-line react/prop-types
@@ -87,6 +78,7 @@ export const Wrappers = ({ children }) => {
                             draggable
                             pauseOnHover
                             theme='light'
+                            closeButton={CloseButton}
                           />
                           {children}
                         </QuestsProvider>

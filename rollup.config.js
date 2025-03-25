@@ -76,6 +76,7 @@ export default [
       'leaflet.locatecontrol/dist/L.Control.Locate.css',
       'yet-another-react-lightbox',
       'react-photo-album',
+      'react-inlinesvg',
     ],
   },
   {

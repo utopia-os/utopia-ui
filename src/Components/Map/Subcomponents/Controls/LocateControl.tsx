@@ -6,13 +6,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { control } from 'leaflet'
 import { useEffect, useRef, useState } from 'react'
+import SVG from 'react-inlinesvg'
 import { useMap, useMapEvents } from 'react-leaflet'
 
 import TargetSVG from '#assets/target.svg'
 
 // eslint-disable-next-line import/no-unassigned-import
 import 'leaflet.locatecontrol'
-import 'leaflet.locatecontrol/dist/L.Control.Locate.css'
 
 // Converts leaflet.locatecontrol to a React Component
 export const LocateControl = () => {
@@ -59,9 +59,8 @@ export const LocateControl = () => {
           {loading ? (
             <span className='tw-loading tw-loading-spinner tw-loading-md tw-mt-1'></span>
           ) : (
-            <img
+            <SVG
               src={TargetSVG}
-              alt='x'
               className='tw-mt-1 tw-p-[1px]'
               style={{ fill: `${active ? '#fc8702' : 'currentColor'}` }}
             />

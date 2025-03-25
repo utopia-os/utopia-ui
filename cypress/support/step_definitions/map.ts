@@ -16,7 +16,7 @@ Then('the search input control should be present', () => {
   cy.get('.tw-input').should('be.visible')
 })
 
-Then('the geolocation control should be present', () => {
+Then('the geo location control should be present', () => {
   cy.get('div.tw-card:nth-child(2) > div:nth-child(1)').should('be.visible')
 })
 

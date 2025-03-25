@@ -3,18 +3,9 @@ Feature: Map
   I want to have the leaflet map and its control elements available
   To be able to interact with the map
 
-  Scenario: Map Component
+  Scenario: The map and its control elements are available
     Given I am on the map page
     Then the map component should be present
-
-  Scenario: Search Control
-    Given I am on the map page
-    Then the search input control should be present
-
-  Scenario: Geolocation Control
-    Given I am on the map page
-    Then the geolocation control should be present
-
-  Scenario: Layers Control
-    Given I am on the map page
-    Then the layers control should be present
+    And the search input control should be present
+    And the geo location control should be present
+    And the layers control should be present

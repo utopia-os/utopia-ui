@@ -28,8 +28,8 @@ import type { Popup } from 'leaflet'
  * @category Item
  */
 export const PopupView = ({ children }: { children?: React.ReactNode }) => {
-  const cardViewContext = useContext(LayerContext)
-  const { name, markerDefaultColor, markerDefaultColor2, markerShape, markerIcon } = cardViewContext
+  const layerContext = useContext(LayerContext)
+  const { name, markerDefaultColor, markerDefaultColor2, markerShape, markerIcon } = layerContext
 
   const filterTags = useFilterTags()
 

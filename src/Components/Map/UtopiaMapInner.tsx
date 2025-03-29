@@ -50,7 +50,7 @@ export function UtopiaMapInner({
   const setClusterRef = useSetClusterRef()
   const clusterRef = useClusterRef()
   const setMapClicked = useSetMapClicked()
-  const { popupForm, setPopupForm } = usePopupForm()
+  const { setPopupForm } = usePopupForm()
 
   const layers = useLayers()
   const addVisibleLayer = useAddVisibleLayer()

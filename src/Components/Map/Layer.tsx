@@ -112,6 +112,7 @@ export const Layer = ({
         markerDefaultColor2,
         markerShape,
         markerIcon,
+        menuText,
       }}
     >
       {children}

@@ -6,6 +6,7 @@ interface LayerContextType {
   markerDefaultColor2: string
   markerShape: string
   markerIcon: string
+  menuText: string
 }
 
 const LayerContext = createContext<LayerContextType>({
@@ -14,6 +15,7 @@ const LayerContext = createContext<LayerContextType>({
   markerDefaultColor2: '',
   markerShape: '',
   markerIcon: '',
+  menuText: '',
 })
 
 export default LayerContext

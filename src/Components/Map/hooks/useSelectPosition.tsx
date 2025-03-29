@@ -15,14 +15,14 @@ import { useUpdateItem } from './useItems'
 import { useHasUserPermission } from './usePermissions'
 
 import type { Item } from '#types/Item'
-import type { ItemFormPopupProps } from '#types/ItemFormPopupProps'
+import type { PopupFormState } from '#types/PopupFormState'
 import type { LayerProps } from '#types/LayerProps'
 import type { Point } from 'geojson'
 import type { LatLng } from 'leaflet'
 
 interface PolygonClickedProps {
   position: LatLng
-  setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
+  setItemFormPopup: React.Dispatch<React.SetStateAction<PopupFormState | null>>
 }
 
 type UseSelectPositionManagerResult = ReturnType<typeof useSelectPositionManager>

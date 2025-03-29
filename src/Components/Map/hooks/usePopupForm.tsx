@@ -1,19 +1,19 @@
 import { createContext, useContext, useState } from 'react'
 
-import type { ItemFormPopupProps } from '#types/ItemFormPopupProps'
+import type { PopupFormState } from '#types/PopupFormState'
 
 type UsePopupFormManagerResult = ReturnType<typeof usePopupFormManager>
 
 const PoupFormContext = createContext<UsePopupFormManagerResult>({
-  popupForm: {} as ItemFormPopupProps | null,
+  popupForm: {} as PopupFormState | null,
   setPopupForm: () => {},
 })
 
 function usePopupFormManager(): {
-  popupForm: ItemFormPopupProps | null
-  setPopupForm: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
+  popupForm: PopupFormState | null
+  setPopupForm: React.Dispatch<React.SetStateAction<PopupFormState | null>>
 } {
-  const [popupForm, setPopupForm] = useState<ItemFormPopupProps | null>(null)
+  const [popupForm, setPopupForm] = useState<PopupFormState | null>(null)
 
   return { popupForm, setPopupForm }
 }

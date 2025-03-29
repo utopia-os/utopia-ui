@@ -5,17 +5,19 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { Children, cloneElement, isValidElement, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { Popup as LeafletPopup, useMap } from 'react-leaflet'
 import { toast } from 'react-toastify'
 
 import { useAuth } from '#components/Auth/useAuth'
 import { TextAreaInput } from '#components/Input/TextAreaInput'
 import { TextInput } from '#components/Input/TextInput'
+import TemplateItemContext from '#components/Item/TemplateItemContext'
 import { useResetFilterTags } from '#components/Map/hooks/useFilter'
 import { useAddItem, useItems, useUpdateItem } from '#components/Map/hooks/useItems'
 import { usePopupForm } from '#components/Map/hooks/usePopupForm'
 import { useAddTag, useTags } from '#components/Map/hooks/useTags'
+import LayerContext from '#components/Map/LayerContext'
 import { hashTagRegex } from '#utils/HashTagRegex'
 import { randomColor } from '#utils/RandomColor'
 
@@ -26,9 +28,12 @@ interface Props {
 }
 
 export function ItemFormPopup(props: Props) {
-  const [spinner, setSpinner] = useState(false)
+  const layerContext = useContext(LayerContext)
+  const { menuText } = layerContext
 
-  const [, setPopupTitle] = useState<string>('')
+  const { popupForm, setPopupForm } = usePopupForm()
+
+  const [spinner, setSpinner] = useState(false)
 
   const formRef = useRef<HTMLFormElement>(null)
 
@@ -44,8 +49,6 @@ export function ItemFormPopup(props: Props) {
   const resetFilterTags = useResetFilterTags()
 
   const { user } = useAuth()
-
-  const { popupForm, setPopupForm } = usePopupForm()
 
   const handleSubmit = async (evt: any) => {
     if (!popupForm) {
@@ -82,32 +85,34 @@ export function ItemFormPopup(props: Props) {
           return null
         })
 
-    if (props.item) {
+    if (popupForm.item) {
       let success = false
       try {
-        await props.layer.api?.updateItem!({ ...formItem, id: props.item.id })
+        await popupForm.layer.api?.updateItem!({ ...formItem, id: popupForm.item.id })
         success = true
         // eslint-disable-next-line no-catch-all/no-catch-all
       } catch (error) {
         toast.error(error.toString())
       }
       if (success) {
-        updateItem({ ...props.item, ...formItem })
+        updateItem({ ...popupForm.item, ...formItem })
         toast.success('Item updated')
       }
       setSpinner(false)
       map.closePopup()
     } else {
-      const item = items.find((i) => i.user_created?.id === user?.id && i.layer === props.layer)
+      const item = items.find(
+        (i) => i.user_created?.id === user?.id && i.layer?.id === popupForm.layer.id,
+      )
 
       const uuid = crypto.randomUUID()
       let success = false
       try {
-        props.layer.userProfileLayer &&
+        popupForm.layer.userProfileLayer &&
           item &&
-          (await props.layer.api?.updateItem!({ ...formItem, id: item.id }))
-        ;(!props.layer.userProfileLayer || !item) &&
-          (await props.layer.api?.createItem!({
+          (await popupForm.layer.api?.updateItem!({ ...formItem, id: item.id }))
+        ;(!popupForm.layer.userProfileLayer || !item) &&
+          (await popupForm.layer.api?.createItem!({
             ...formItem,
             name,
             id: uuid,
@@ -118,14 +123,14 @@ export function ItemFormPopup(props: Props) {
         toast.error(error.toString())
       }
       if (success) {
-        if (props.layer.userProfileLayer && item) updateItem({ ...item, ...formItem })
-        if (!props.layer.userProfileLayer || !item) {
+        if (popupForm.layer.userProfileLayer && item) updateItem({ ...item, ...formItem })
+        if (!popupForm.layer.userProfileLayer || !item) {
           addItem({
             ...formItem,
             name: (formItem.name ? formItem.name : user?.first_name) ?? '',
             user_created: user ?? undefined,
             id: uuid,
-            layer: props.layer,
+            layer: popupForm.layer,
             public_edit: !user,
           })
         }
@@ -146,77 +151,74 @@ export function ItemFormPopup(props: Props) {
 
   useEffect(() => {
     resetPopup()
-  }, [props.position])
+  }, [popupForm?.position])
 
   return (
-    <LeafletPopup
-      minWidth={275}
-      maxWidth={275}
-      autoPanPadding={[20, 80]}
-      eventHandlers={{
-        remove: () => {
-          setTimeout(function () {
-            resetPopup()
-          }, 100)
-        },
-      }}
-      position={props.position}
-    >
-      <form ref={formRef} onReset={resetPopup} autoComplete='off' onSubmit={(e) => handleSubmit(e)}>
-        {props.item ? (
-          <div className='tw:h-3'></div>
-        ) : (
-          <div className='tw:flex tw:justify-center'>
-            <b className='tw:text-xl tw:text-center tw:font-bold'>{props.layer.menuText}</b>
+    popupForm && (
+      <LeafletPopup
+        minWidth={275}
+        maxWidth={275}
+        autoPanPadding={[20, 80]}
+        eventHandlers={{
+          remove: () => {
+            setTimeout(function () {
+              resetPopup()
+            }, 100)
+          },
+        }}
+        position={popupForm.position}
+      >
+        <form
+          ref={formRef}
+          onReset={resetPopup}
+          autoComplete='off'
+          onSubmit={(e) => handleSubmit(e)}
+        >
+          {popupForm.item ? (
+            <div className='tw-h-3'></div>
+          ) : (
+            <div className='tw-flex tw-justify-center'>
+              <b className='tw-text-xl tw-text-center tw-font-bold'>{menuText}</b>
+            </div>
+          )}
+
+          {props.children ? (
+            <TemplateItemContext.Provider value={popupForm.item}>
+              {props.children}
+            </TemplateItemContext.Provider>
+          ) : (
+            <>
+              <TextInput
+                type='text'
+                placeholder='Name'
+                dataField='name'
+                defaultValue={popupForm.item ? popupForm.item.name : ''}
+                inputStyle=''
+              />
+              <TextAreaInput
+                key={popupForm.position.toString()}
+                placeholder='Text'
+                dataField='text'
+                defaultValue={popupForm.item?.text ?? ''}
+                inputStyle='tw-h-40 tw-mt-5'
+              />
+            </>
+          )}
+
+          <div className='tw-flex tw-justify-center'>
+            <button
+              className={
+                spinner
+                  ? 'tw-btn tw-btn-disabled tw-mt-5 tw-place-self-center'
+                  : 'tw-btn tw-mt-5 tw-place-self-center'
+              }
+              type='submit'
+            >
+              {spinner ? <span className='tw-loading tw-loading-spinner'></span> : 'Save'}
+            </button>
           </div>
-        )}
-
-        {props.children ? (
-          Children.toArray(props.children).map((child) =>
-            isValidElement<{
-              item: Item
-              test: string
-              setPopupTitle: React.Dispatch<React.SetStateAction<string>>
-            }>(child)
-              ? cloneElement(child, {
-                  item: props.item,
-                  key: props.position.toString(),
-                  setPopupTitle,
-                })
-              : '',
-          )
-        ) : (
-          <>
-            <TextInput
-              type='text'
-              placeholder='Name'
-              dataField='name'
-              defaultValue={props.item ? props.item.name : ''}
-              inputStyle=''
-            />
-            <TextAreaInput
-              key={props.position.toString()}
-              placeholder='Text'
-              dataField='text'
-              defaultValue={props.item?.text ?? ''}
-              inputStyle='tw:h-40 tw:mt-5'
-            />
-          </>
-        )}
-
-        <div className='tw:flex tw:justify-center'>
-          <button
-            className={
-              spinner
-                ? 'tw:btn tw:btn-disabled tw:mt-5 tw:place-self-center'
-                : 'tw:btn tw:mt-5 tw:place-self-center'
-            }
-            type='submit'
-          >
-            {spinner ? <span className='tw:loading tw:loading-spinner'></span> : 'Save'}
-          </button>
-        </div>
-      </form>
-    </LeafletPopup>
+        </form>
+      </LeafletPopup>
+    )
   )
 }

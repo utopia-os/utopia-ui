@@ -44,12 +44,16 @@ export const ItemViewPopup = forwardRef((props: ItemViewPopupProps, ref: any) =>
     event.stopPropagation()
     map.closePopup()
 
+    if (!props.item.layer) {
+      throw new Error('Layer is not defined')
+    }
+
     setPopupForm({
       position: new LatLng(
         props.item.position?.coordinates[1]!,
         props.item.position?.coordinates[0]!,
       ),
-      layer: props.item.layer!,
+      layer: props.item.layer,
       item: props.item,
     })
   }

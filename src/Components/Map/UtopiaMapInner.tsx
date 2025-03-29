@@ -63,15 +63,13 @@ export function UtopiaMapInner({
   const clusterRef = useClusterRef()
   const setMapClicked = useSetMapClicked()
   const { setPopupForm } = usePopupForm()
-
-  useTheme(defaultTheme)
-
   const layers = useLayers()
   const addVisibleLayer = useAddVisibleLayer()
   const leafletRefs = useLeafletRefs()
-
   const location = useLocation()
   const map = useMap()
+
+  useTheme(defaultTheme)
 
   useEffect(() => {
     layers.forEach((layer) => addVisibleLayer(layer))

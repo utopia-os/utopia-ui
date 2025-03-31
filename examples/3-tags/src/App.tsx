@@ -3,7 +3,7 @@ import { events, places, tags } from "./sample-data"
 
 function App() {
   return (
-    <UtopiaMap center={[50.6, 15.5]} zoom={5} height='100dvh' width="100dvw">
+    <UtopiaMap center={[51.0664, 9.9344]} zoom={9} height='100dvh' width="100dvw">
     <Layer
       name='events'
       markerIcon='calendar'

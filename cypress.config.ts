@@ -34,6 +34,8 @@ export default defineConfig({
     specPattern: 'features/**/*.feature',
     supportFile: false,
     video: false,
+    viewportHeight: 1080,
+    viewportWidth: 1920,
     setupNodeEvents,
   },
 })

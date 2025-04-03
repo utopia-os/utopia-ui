@@ -73,4 +73,4 @@ Tags, colors and clusters help to retain the overview.
 
 ---
 
-This project is tested with Browserstack.
+This project is tested with BrowserStack

@@ -46,7 +46,7 @@ Tags, colors and clusters help to retain the overview.
 
  Option         | Type              | Default      | Required   | Description 
  ---            | ---               | ---          | ---        | ---    
- `height`       | `string`          |`'400px'`     |    This project is tested with Browserstack.No      | height of the map           
+ `height`       | `string`          |`'400px'`     |    No      | height of the map           
  `width`        | `string`          |`'100vw'`     |    No      | width of the map
  `center`       | `LatLng`          |`[50.6, 9.5]` |    No      | initial map position           
  `zoom`         | `number`          |`10`          |    No      | initial zoom level

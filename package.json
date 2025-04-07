@@ -22,6 +22,8 @@
     "lint": "npm run test:lint:eslint",
     "lintfix": "npm run test:lint:eslint -- --fix",
     "test:component": "cypress run --component --browser electron",
+    "test:e2e": "cypress run --e2e --browser electron",
+    "test:e2e:gui": "cypress open --e2e --browser electron",
     "test:unit": "npm run test:unit:dev -- run --coverage",
     "test:unit:dev": "vitest",
     "docs:generate": "typedoc --includeVersion --navigation.includeCategories true --plugin typedoc-plugin-missing-exports --plugin typedoc-plugin-coverage src/index.tsx",
@@ -34,6 +36,8 @@
   "author": "Anton Tranelis",
   "license": "GPL-3.0-only",
   "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^22.0.1",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.4",
     "@eslint-community/eslint-plugin-eslint-comments": "^4.4.1",
     "@rollup/plugin-alias": "^5.1.1",
     "@rollup/plugin-node-resolve": "^16.0.0",

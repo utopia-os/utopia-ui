@@ -17,8 +17,8 @@ export const SimpleForm = ({ state, setState }) => {
           text: v,
         }))
       }
-      containerStyle='tw-mt-8 tw-h-full'
-      inputStyle='tw-h-full'
+      containerStyle='tw:mt-8 tw:h-full'
+      inputStyle='tw:h-full'
     />
   )
 }

@@ -21,7 +21,7 @@ export const GalleryView = ({ item }: { item: Item }) => {
   if (!images) throw new Error('GalleryView: images is undefined')
 
   return (
-    <div className='tw-mx-6 tw-mb-6'>
+    <div className='tw:mx-6 tw:mb-6'>
       <RowsPhotoAlbum
         photos={images}
         targetRowHeight={150}

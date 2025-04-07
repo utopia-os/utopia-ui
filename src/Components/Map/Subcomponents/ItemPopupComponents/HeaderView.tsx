@@ -57,9 +57,7 @@ export function HeaderView({
 
   const [imageLoaded, setImageLoaded] = useState(false)
 
-  const avatar =
-    item.image &&
-    appState.assetsApi.url + item.image + `${big ? '?width=160&heigth=160' : '?width=80&heigth=80'}`
+  const avatar = item.image && appState.assetsApi.url + item.image + '?width=160&heigth=160'
   const title = item.name
   const subtitle = item.subname
 
@@ -74,18 +72,18 @@ export function HeaderView({
 
   return (
     <>
-      <div className='tw-flex tw-flex-row'>
-        <div className={'tw-grow tw-max-w-[calc(100%-60px)] }'}>
+      <div className='tw:flex tw:flex-row'>
+        <div className={'tw:grow tw:max-w-[calc(100%-60px)] }'}>
           <div className='flex items-center'>
             {avatar && (
-              <div className='tw-avatar'>
+              <div className='tw:avatar'>
                 <div
                   className={`${
-                    big ? 'tw-w-20' : 'tw-w-10'
-                  } tw-inline tw-items-center tw-justify-center overflow-hidden`}
+                    big ? 'tw:w-20' : 'tw:w-10'
+                  } tw:inline tw:items-center tw:justify-center overflow-hidden`}
                 >
                   <img
-                    className={'tw-w-full tw-h-full tw-object-cover tw-rounded-full'}
+                    className={'tw:w-full tw:h-full tw:object-cover tw:rounded-full'}
                     src={avatar}
                     alt={item.name + ' logo'}
                     onLoad={() => setImageLoaded(true)}
@@ -93,53 +91,53 @@ export function HeaderView({
                     style={{ display: imageLoaded ? 'block' : 'none' }}
                   />
                   {!imageLoaded && (
-                    <div className='tw-w-full tw-h-full tw-bg-gray-200 tw-rounded-full' />
+                    <div className='tw:w-full tw:h-full tw:bg-gray-200 tw:rounded-full' />
                   )}
                 </div>
               </div>
             )}
-            <div className={`${avatar ? 'tw-ml-2' : ''} tw-overflow-hidden`}>
+            <div className={`${avatar ? 'tw:ml-2' : ''} tw:overflow-hidden`}>
               <div
-                className={`${big ? 'xl:tw-text-3xl tw-text-2xl' : 'tw-text-xl'} tw-font-semibold tw-truncate`}
+                className={`${big ? 'tw:xl:text-3xl tw:text-2xl' : 'tw:text-xl'} tw:font-semibold tw:truncate`}
                 title={title}
               >
                 {title}
               </div>
               {showAddress && address && !hideSubname && (
-                <div className={`tw-text-xs  tw-text-gray-500 ${truncateSubname && 'tw-truncate'}`}>
+                <div className={`tw:text-xs  tw:text-gray-500 ${truncateSubname && 'tw:truncate'}`}>
                   {address}
                 </div>
               )}
               {subtitle && !hideSubname && (
-                <div className={`tw-text-xs  tw-text-gray-500 ${truncateSubname && 'tw-truncate'}`}>
+                <div className={`tw:text-xs  tw:opacity-50 ${truncateSubname && 'tw:truncate'}`}>
                   {subtitle}
                 </div>
               )}
             </div>
           </div>
         </div>
-        <div onClick={(e) => e.stopPropagation()} className={`${big ? 'tw-mt-5' : 'tw-mt-1'}`}>
+        <div onClick={(e) => e.stopPropagation()} className={`${big ? 'tw:mt-5' : 'tw:mt-1'}`}>
           {(api?.deleteItem || item.layer?.api?.updateItem) &&
             (hasUserPermission(api?.collectionName!, 'delete', item) ||
               hasUserPermission(api?.collectionName!, 'update', item)) &&
             !hideMenu && (
-              <div className='tw-dropdown tw-dropdown-bottom'>
+              <div className='tw:dropdown tw:dropdown-bottom'>
                 <label
                   tabIndex={0}
-                  className='tw-bg-base-100 tw-btn tw-m-1 tw-leading-3 tw-border-none tw-min-h-0 tw-h-6'
+                  className='tw:bg-base-100 tw:btn tw:m-1 tw:leading-3 tw:border-none tw:min-h-0 tw:h-6'
                 >
-                  <EllipsisVerticalIcon className='tw-h-5 tw-w-5' />
+                  <EllipsisVerticalIcon className='tw:h-5 tw:w-5' />
                 </label>
                 <ul
                   tabIndex={0}
-                  className='tw-dropdown-content tw-menu tw-p-2 tw-shadow tw-bg-base-100 tw-rounded-box tw-z-1000'
+                  className='tw:dropdown-content tw:menu tw:p-2 tw:shadow tw:bg-base-100 tw:rounded-box tw:z-1000'
                 >
                   {api?.updateItem &&
                     hasUserPermission(api.collectionName!, 'update', item) &&
                     editCallback && (
                       <li>
                         <a
-                          className='!tw-text-base-content tw-cursor-pointer'
+                          className='tw:text-base-content! tw:cursor-pointer'
                           onClick={(e) =>
                             item.layer?.customEditLink
                               ? navigate(
@@ -148,7 +146,7 @@ export function HeaderView({
                               : editCallback(e)
                           }
                         >
-                          <PencilIcon className='tw-h-5 tw-w-5' />
+                          <PencilIcon className='tw:h-5 tw:w-5' />
                         </a>
                       </li>
                     )}
@@ -157,10 +155,10 @@ export function HeaderView({
                     setPositionCallback && (
                       <li>
                         <a
-                          className='!tw-text-base-content tw-cursor-pointer'
+                          className='tw:text-base-content! tw:cursor-pointer'
                           onClick={setPositionCallback}
                         >
-                          <SVG src={TargetDotSVG} className='tw-w-5 tw-h-5' />
+                          <SVG src={TargetDotSVG} className='tw:w-5 tw:h-5' />
                         </a>
                       </li>
                     )}
@@ -168,11 +166,11 @@ export function HeaderView({
                     hasUserPermission(api.collectionName!, 'delete', item) &&
                     deleteCallback && (
                       <li>
-                        <a className='tw-cursor-pointer !tw-text-error' onClick={openDeleteModal}>
+                        <a className='tw:cursor-pointer tw:text-error!' onClick={openDeleteModal}>
                           {loading ? (
-                            <span className='tw-loading tw-loading-spinner tw-loading-sm'></span>
+                            <span className='tw:loading tw:loading-spinner tw:loading-sm'></span>
                           ) : (
-                            <TrashIcon className='tw-h-5 tw-w-5' />
+                            <TrashIcon className='tw:h-5 tw:w-5' />
                           )}
                         </a>
                       </li>
@@ -192,10 +190,10 @@ export function HeaderView({
           <span>
             Do you want to delete <b>{item.name}</b>?
           </span>
-          <div className='tw-grid'>
-            <div className='tw-flex tw-justify-between'>
+          <div className='tw:grid'>
+            <div className='tw:flex tw:justify-between'>
               <label
-                className='tw-btn tw-mt-4 tw-btn-error'
+                className='tw:btn tw:mt-4 tw:btn-error'
                 onClick={(e) => {
                   deleteCallback(e)
                   setModalOpen(false)
@@ -203,7 +201,7 @@ export function HeaderView({
               >
                 Yes
               </label>
-              <label className='tw-btn tw-mt-4' onClick={() => setModalOpen(false)}>
+              <label className='tw:btn tw:mt-4' onClick={() => setModalOpen(false)}>
                 No
               </label>
             </div>

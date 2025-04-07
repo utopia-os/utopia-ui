@@ -87,36 +87,36 @@ export const TextView = ({
     })
   }
 
-  const CustomH1 = ({ children }) => <h1 className='tw-text-xl tw-font-bold'>{children}</h1>
+  const CustomH1 = ({ children }) => <h1 className='tw:text-xl tw:font-bold'>{children}</h1>
 
-  const CustomH2 = ({ children }) => <h2 className='tw-text-lg tw-font-bold'>{children}</h2>
+  const CustomH2 = ({ children }) => <h2 className='tw:text-lg tw:font-bold'>{children}</h2>
 
-  const CustomH3 = ({ children }) => <h3 className='tw-text-base tw-font-bold'>{children}</h3>
+  const CustomH3 = ({ children }) => <h3 className='tw:text-base tw:font-bold'>{children}</h3>
 
-  const CustomH4 = ({ children }) => <h4 className='tw-text-base tw-font-bold'>{children}</h4>
+  const CustomH4 = ({ children }) => <h4 className='tw:text-base tw:font-bold'>{children}</h4>
 
-  const CustomH5 = ({ children }) => <h5 className='tw-text-sm tw-font-bold'>{children}</h5>
+  const CustomH5 = ({ children }) => <h5 className='tw:text-sm tw:font-bold'>{children}</h5>
 
-  const CustomH6 = ({ children }) => <h6 className='tw-text-sm tw-font-bold'>{children}</h6>
+  const CustomH6 = ({ children }) => <h6 className='tw:text-sm tw:font-bold'>{children}</h6>
 
-  const CustomParagraph = ({ children }) => <p className='!tw-my-2'>{children}</p>
+  const CustomParagraph = ({ children }) => <p className='tw:my-2!'>{children}</p>
 
   const CustomUnorderdList = ({ children }) => (
-    <ul className='tw-list-disc tw-list-inside'>{children}</ul>
+    <ul className='tw:list-disc tw:list-inside'>{children}</ul>
   )
 
   const CustomOrderdList = ({ children }) => (
-    <ol className='tw-list-decimal tw-list-inside'>{children}</ol>
+    <ol className='tw:list-decimal tw:list-inside'>{children}</ol>
   )
 
-  const CustomHorizontalRow = ({ children }) => <hr className='tw-border-current'>{children}</hr>
+  const CustomHorizontalRow = ({ children }) => <hr className='tw:border-current'>{children}</hr>
   // eslint-disable-next-line react/prop-types
   const CustomImage = ({ alt, src, title }) => (
-    <img className='tw-max-w-full tw-rounded tw-shadow' src={src} alt={alt} title={title} />
+    <img className='tw:max-w-full tw:rounded tw:shadow' src={src} alt={alt} title={title} />
   )
 
   const CustomExternalLink = ({ href, children }) => (
-    <a className='tw-font-bold tw-underline' href={href} target='_blank' rel='noreferrer'>
+    <a className='tw:font-bold tw:underline' href={href} target='_blank' rel='noreferrer'>
       {' '}
       {children}
     </a>
@@ -148,7 +148,7 @@ export const TextView = ({
   // eslint-disable-next-line react/display-name
   const MemoizedVideoEmbed = memo(({ url }: { url: string }) => (
     <iframe
-      className='tw-w-full'
+      className='tw:w-full'
       src={url}
       allow='fullscreen;  picture-in-picture'
       allowFullScreen
@@ -157,7 +157,7 @@ export const TextView = ({
 
   return (
     <Markdown
-      className={'tw-text-map tw-leading-map tw-text-sm'}
+      className={'tw:text-map tw:leading-map tw:text-sm'}
       remarkPlugins={[remarkBreaks]}
       components={{
         p: CustomParagraph,

@@ -1,3 +1,8 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark, valentine, retro, aqua, cyberpunk, caramellatte, abyss, silk;
+}
+
+@theme {
+  --animate-fade: fadeOut 1s ease-in-out;
+}

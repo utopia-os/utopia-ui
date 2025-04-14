@@ -5,7 +5,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { Popup as LeafletPopup, useMap } from 'react-leaflet'
 import { toast } from 'react-toastify'
 
@@ -17,6 +17,7 @@ import { useResetFilterTags } from '#components/Map/hooks/useFilter'
 import { useAddItem, useItems, useUpdateItem } from '#components/Map/hooks/useItems'
 import { usePopupForm } from '#components/Map/hooks/usePopupForm'
 import { useAddTag, useTags } from '#components/Map/hooks/useTags'
+import LayerContext from '#components/Map/LayerContext'
 import { hashTagRegex } from '#utils/HashTagRegex'
 import { randomColor } from '#utils/RandomColor'
 
@@ -27,6 +28,9 @@ interface Props {
 }
 
 export function ItemFormPopup(props: Props) {
+  const layerContext = useContext(LayerContext)
+  const { menuText, name: activeLayerName } = layerContext
+
   const { popupForm, setPopupForm } = usePopupForm()
 
   const [spinner, setSpinner] = useState(false)
@@ -150,7 +154,8 @@ export function ItemFormPopup(props: Props) {
   }, [popupForm?.position])
 
   return (
-    popupForm && (
+    popupForm &&
+    popupForm.layer.name === activeLayerName && (
       <LeafletPopup
         minWidth={275}
         maxWidth={275}
@@ -174,7 +179,7 @@ export function ItemFormPopup(props: Props) {
             <div className='tw-h-3'></div>
           ) : (
             <div className='tw-flex tw-justify-center'>
-              <b className='tw-text-xl tw-text-center tw-font-bold'>{popupForm.layer.menuText}</b>
+              <b className='tw-text-xl tw-text-center tw-font-bold'>{menuText}</b>
             </div>
           )}
 

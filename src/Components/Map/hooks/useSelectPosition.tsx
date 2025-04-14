@@ -15,8 +15,8 @@ import { useUpdateItem } from './useItems'
 import { useHasUserPermission } from './usePermissions'
 
 import type { Item } from '#types/Item'
-import type { PopupFormState } from '#types/PopupFormState'
 import type { LayerProps } from '#types/LayerProps'
+import type { PopupFormState } from '#types/PopupFormState'
 import type { Point } from 'geojson'
 import type { LatLng } from 'leaflet'
 
@@ -60,7 +60,9 @@ function useSelectPositionManager(): {
 
   useEffect(() => {
     if (selectPosition != null) {
+      // selectPosition can be null, Layer or Item
       if ('menuIcon' in selectPosition) {
+        // if selectPosition is a Layer
         mapClicked &&
           mapClicked.setItemFormPopup({
             layer: selectPosition,
@@ -69,6 +71,7 @@ function useSelectPositionManager(): {
         setSelectPosition(null)
       }
       if ('text' in selectPosition) {
+        // if selectPosition is an Item
         const position =
           mapClicked?.position.lng &&
           ({

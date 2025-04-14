@@ -6,7 +6,9 @@ type UsePopupFormManagerResult = ReturnType<typeof usePopupFormManager>
 
 const PoupFormContext = createContext<UsePopupFormManagerResult>({
   popupForm: {} as PopupFormState | null,
-  setPopupForm: () => {},
+  setPopupForm: () => {
+    /* empty function */
+  },
 })
 
 function usePopupFormManager(): {

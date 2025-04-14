@@ -22,7 +22,7 @@ interface Props {
   children?: React.ReactNode
 }
 
-export const ClusterRefProvider: React.FunctionComponent<Props> = ({ children }: Props) => (
+export const PopupFormProvider: React.FunctionComponent<Props> = ({ children }: Props) => (
   <PoupFormContext.Provider value={usePopupFormManager()}>{children}</PoupFormContext.Provider>
 )
 

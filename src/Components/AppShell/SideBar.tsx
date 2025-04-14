@@ -1,5 +1,4 @@
 import ChevronRightIcon from '@heroicons/react/24/outline/ChevronRightIcon'
-import { useState, useEffect } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
 import { useAppState, useSetAppState } from './hooks/useAppState'

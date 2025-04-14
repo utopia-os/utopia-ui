@@ -19,6 +19,7 @@ import SVG from 'react-inlinesvg'
 import { useMap, useMapEvents } from 'react-leaflet'
 import { useLocation, useNavigate } from 'react-router-dom'
 
+import { useAppState } from '#components/AppShell/hooks/useAppState'
 import { useDebounce } from '#components/Map/hooks/useDebounce'
 import { useAddFilterTag } from '#components/Map/hooks/useFilter'
 import { useItems } from '#components/Map/hooks/useItems'
@@ -48,6 +49,7 @@ export const SearchControl = () => {
   const items = useItems()
   const leafletRefs = useLeafletRefs()
   const addFilterTag = useAddFilterTag()
+  const appState = useAppState()
 
   useMapEvents({
     popupopen: () => {
@@ -97,21 +99,13 @@ export const SearchControl = () => {
   }
 
   const searchInput = useRef<HTMLInputElement>(null)
-  const [embedded, setEmbedded] = useState<boolean>(true)
-
-  const location = useLocation()
-  useEffect(() => {
-    const params = new URLSearchParams(location.search)
-    const embedded = params.get('embedded')
-    embedded !== 'true' && setEmbedded(false)
-  }, [location])
 
   return (
     <>
       {!(windowDimensions.height < 500 && popupOpen && hideSuggestions) && (
         <div className='tw-w-[calc(100vw-2rem)] tw-max-w-[22rem] '>
           <div className='tw-flex tw-flex-row'>
-            {embedded && <SidebarControl />}
+            {appState.embedded && <SidebarControl />}
             <div className='tw-relative'>
               <input
                 type='text'

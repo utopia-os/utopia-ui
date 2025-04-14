@@ -2,7 +2,7 @@ import Bars3Icon from '@heroicons/react/16/solid/Bars3Icon'
 import EllipsisVerticalIcon from '@heroicons/react/16/solid/EllipsisVerticalIcon'
 import QuestionMarkIcon from '@heroicons/react/24/outline/QuestionMarkCircleIcon'
 import { useEffect, useRef, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { useAuth } from '#components/Auth/useAuth'
@@ -35,18 +35,10 @@ export default function NavBar({ appName }: { appName: string }) {
 
   const nameRef = useRef<HTMLHeadingElement>(null)
   const [nameWidth, setNameWidth] = useState<number>(0)
-  const location = useLocation()
-  const [showNav, setShowNav] = useState<boolean>(false)
 
   useEffect(() => {
-    showNav && nameRef.current && setNameWidth(nameRef.current.scrollWidth)
-  }, [nameRef, appName, showNav])
-
-  useEffect(() => {
-    const params = new URLSearchParams(location.search)
-    const embedded = params.get('embedded')
-    embedded !== 'true' && setShowNav(true)
-  }, [location])
+    !appState.embedded && nameRef.current && setNameWidth(nameRef.current.scrollWidth)
+  }, [nameRef, appName, appState.embedded])
 
   const onLogout = async () => {
     await toast.promise(logout(), {
@@ -66,7 +58,7 @@ export default function NavBar({ appName }: { appName: string }) {
     })
   }
 
-  if (showNav) {
+  if (!appState.embedded) {
     return (
       <>
         <div className='tw-navbar tw-bg-base-100 tw-z-[9998] tw-shadow-xl tw-relative'>

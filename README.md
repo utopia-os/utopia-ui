@@ -70,3 +70,7 @@ Tags, colors and clusters help to retain the overview.
 <a href="https://opencollective.com/utopia-project">
     <img width="300" src="https://opencollective.com/utopia-project/donate/button@2x.png?color=blue" />
 </a>
+
+---
+
+This project is tested with BrowserStack

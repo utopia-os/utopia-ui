@@ -13,15 +13,17 @@ export function AppShell({
   appName,
   children,
   assetsApi,
+  embedded,
 }: {
   appName: string
   children: React.ReactNode
   assetsApi: AssetsApi
+  embedded?: boolean
 }) {
   return (
     <ContextWrapper>
       <div className='tw-flex tw-flex-col tw-h-full'>
-        <SetAppState assetsApi={assetsApi} />
+        <SetAppState assetsApi={assetsApi} embedded={embedded} />
         <NavBar appName={appName}></NavBar>
         <div id='app-content' className='tw-flex'>
           {children}

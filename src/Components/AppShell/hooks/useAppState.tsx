@@ -9,6 +9,7 @@ interface AppState {
   sideBarOpen: boolean
   sideBarSlim: boolean
   showThemeControl: boolean
+  embedded: boolean
 }
 
 type UseAppManagerResult = ReturnType<typeof useAppManager>
@@ -18,6 +19,7 @@ const initialAppState: AppState = {
   sideBarOpen: false,
   sideBarSlim: false,
   showThemeControl: false,
+  embedded: false,
 }
 
 const AppContext = createContext<UseAppManagerResult>({

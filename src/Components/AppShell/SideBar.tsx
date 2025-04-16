@@ -1,5 +1,4 @@
 import ChevronRightIcon from '@heroicons/react/24/outline/ChevronRightIcon'
-import { useState, useEffect } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
 import { useAppState, useSetAppState } from './hooks/useAppState'
@@ -19,14 +18,6 @@ export interface Route {
 export function SideBar({ routes, bottomRoutes }: { routes: Route[]; bottomRoutes?: Route[] }) {
   const location = useLocation()
 
-  const [embedded, setEmbedded] = useState<boolean>(true)
-
-  useEffect(() => {
-    const params = new URLSearchParams(location.search)
-    const embedded = params.get('embedded')
-    embedded !== 'true' && setEmbedded(false)
-  }, [location])
-
   const params = new URLSearchParams(window.location.search)
 
   const appState = useAppState()
@@ -45,12 +36,12 @@ export function SideBar({ routes, bottomRoutes }: { routes: Route[]; bottomRoute
       id='sidenav'
       className={`${appState.sideBarOpen ? 'tw:translate-x-0' : 'tw:-translate-x-full'}
           ${appState.sideBarSlim ? 'tw:w-14' : 'tw:w-48'}
-          ${embedded ? 'tw:mt-5.5 tw:h-[calc(100dvh-22px)]' : 'tw:mt-16 tw:h-[calc(100dvh-64px)]'}
+          ${appState.embedded  ? 'tw:mt-5.5 tw:h-[calc(100dvh-22px)]' : 'tw:mt-16 tw:h-[calc(100dvh-64px)]'}
           tw:fixed tw:left-0 tw:transition-all tw:duration-300 tw:top-0 tw:z-10035 
           tw:overflow-hidden tw:shadow-xl tw:dark:bg-zinc-800`}
     >
       <div
-        className={`tw:flex tw:flex-col  ${embedded ? 'tw:h-full' : 'tw:h-[calc(100dvh-64px)]'}`}
+        className={`tw:flex tw:flex-col  ${appState.embedded  ? 'tw:h-full' : 'tw:h-[calc(100dvh-64px)]'}`}
       >
         <ul className='tw:menu tw:w-full tw:bg-base-100 tw:text-base-content tw:p-0'>
           {routes.map((route, k) => {

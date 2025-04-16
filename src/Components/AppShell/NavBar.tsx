@@ -1,7 +1,7 @@
 import Bars3Icon from '@heroicons/react/16/solid/Bars3Icon'
 import QuestionMarkIcon from '@heroicons/react/24/outline/QuestionMarkCircleIcon'
 import { useEffect, useRef, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { ThemeControl } from '#components/Templates/ThemeControl'
 
@@ -18,20 +18,12 @@ export default function NavBar({ appName }: { appName: string }) {
 
   const nameRef = useRef<HTMLHeadingElement>(null)
   const [nameWidth, setNameWidth] = useState<number>(0)
-  const location = useLocation()
-  const [showNav, setShowNav] = useState<boolean>(false)
 
   useEffect(() => {
-    showNav && nameRef.current && setNameWidth(nameRef.current.scrollWidth)
-  }, [nameRef, appName, showNav])
+    !appState.embedded && nameRef.current && setNameWidth(nameRef.current.scrollWidth)
+  }, [nameRef, appName, appState.embedded])
 
-  useEffect(() => {
-    const params = new URLSearchParams(location.search)
-    const embedded = params.get('embedded')
-    embedded !== 'true' && setShowNav(true)
-  }, [location])
-
-  if (showNav) {
+  if (!appState.embedded) {
     return (
       <>
         <div className='tw:navbar tw:bg-base-100 tw:z-9998 tw:shadow-xl tw:relative tw:p-0'>

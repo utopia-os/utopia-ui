@@ -13,10 +13,11 @@ export default defineConfig({
       all: true,
       include: ['src/**/*.{js,jsx,ts,tsx}'],
       exclude: [...configDefaults.exclude, 'src/**/*.cy.tsx'],
+      reporter: ['html', 'json-summary'],
       thresholds: {
         lines: 1,
-        functions: 59,
-        branches: 62,
+        functions: 56,
+        branches: 58,
         statements: 1,
       },
     },

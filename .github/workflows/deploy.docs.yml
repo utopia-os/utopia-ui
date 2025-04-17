@@ -19,13 +19,25 @@ jobs:
         run: |
           npm install
           npm run build
-          npm link
         working-directory: ./
 
       - name: Build static files
         id: build
-        run: npm install && npm run docs:generate
+        run: npm run docs:generate
         working-directory: ./
+
+      - name: Generate coverage
+        id: coverage
+        run: npm run test:unit
+
+      - name: Create coverage badges
+        id: coverage-badge
+        uses: jaywcjlove/coverage-badges-cli@main
+        with:
+          style: flat
+          source: coverage/coverage-summary.json
+          output: docs/test-coverage.svg
+          jsonPath: total.lines.pct
 
       - name: Upload static files as artifact
         id: deployment

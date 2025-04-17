@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.tw-modal {
+    z-index: 1200 !important;
+}
+
+.tw-menu li a {
+    border-radius: 10px;
+}
+
+.tw-modal {
+    z-index: 1200 !important;
+    max-height: 100dvh;
+}
+
+.tw-modal-box {
+    max-height: calc(100dvh - 2em);
+}
+
+.tw-tab-content .container {
+    height: 100%;
+}

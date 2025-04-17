@@ -1,8 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unnecessary-condition */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useNavigate } from 'react-router-dom'
 
 import { StartEndView, TextView } from '#components/Map'
@@ -22,7 +17,7 @@ export const ItemCard = ({
   i: Item
   loading: boolean
   url: string
-  deleteCallback: any
+  deleteCallback: (item: Item) => void
 }) => {
   const navigate = useNavigate()
   const windowDimensions = useWindowDimensions()
@@ -34,8 +29,8 @@ export const ItemCard = ({
         // We could have an onClick callback instead
         const params = new URLSearchParams(window.location.search)
         if (windowDimensions.width < 786 && i.position)
-          navigate('/' + i.id + `${params ? `?${params}` : ''}`)
-        else navigate(url + i.id + `${params ? `?${params}` : ''}`)
+          navigate('/' + i.id + `${params.size > 0 ? `?${params.toString()}` : ''}`)
+        else navigate(url + i.id + `${params.size > 0 ? `?${params.toString()}` : ''}`)
       }}
     >
       <HeaderView

@@ -5,7 +5,6 @@ import { ContextWrapper } from '#components/AppShell/ContextWrapper'
 
 import { UtopiaMapInner } from './UtopiaMapInner'
 
-import 'react-toastify/dist/ReactToastify.css'
 import type { GeoJsonObject } from 'geojson'
 
 /**

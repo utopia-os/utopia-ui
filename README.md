@@ -1,4 +1,4 @@
-# Utopia UI [![npm version](https://img.shields.io/npm/v/utopia-ui.svg)](https://www.npmjs.com/package/utopia-ui)  ![Build Status](https://img.shields.io/github/actions/workflow/status/utopia-os/utopia-ui/test.build.yml?branch=main) [![Docs Coverage](https://utopia-os.org/utopia-ui/coverage.svg)](https://utopia-os.org/utopia-ui/) ![License](https://img.shields.io/github/license/utopia-os/utopia-ui)
+# Utopia UI [![npm version](https://img.shields.io/npm/v/utopia-ui.svg)](https://www.npmjs.com/package/utopia-ui)  ![Build Status](https://img.shields.io/github/actions/workflow/status/utopia-os/utopia-ui/test.build.yml?branch=main) ![Test Coverage](https://utopia-os.org/utopia-ui/test-coverage.svg) [![Docs Coverage](https://utopia-os.org/utopia-ui/coverage.svg)](https://utopia-os.org/utopia-ui/) ![License](https://img.shields.io/github/license/utopia-os/utopia-ui)
 
 **UI Framework for Real-Life-Networking-Apps**
 
@@ -70,3 +70,7 @@ Tags, colors and clusters help to retain the overview.
 <a href="https://opencollective.com/utopia-project">
     <img width="300" src="https://opencollective.com/utopia-project/donate/button@2x.png?color=blue" />
 </a>
+
+---
+
+This project is tested with BrowserStack

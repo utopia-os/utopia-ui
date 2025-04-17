@@ -14,10 +14,12 @@ import FlagIcon from '@heroicons/react/24/outline/FlagIcon'
 import MagnifyingGlassIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon'
 import axios from 'axios'
 import { LatLng, LatLngBounds, marker } from 'leaflet'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
+import SVG from 'react-inlinesvg'
 import { useMap, useMapEvents } from 'react-leaflet'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
+import { useAppState } from '#components/AppShell/hooks/useAppState'
 import { useDebounce } from '#components/Map/hooks/useDebounce'
 import { useAddFilterTag } from '#components/Map/hooks/useFilter'
 import { useItems } from '#components/Map/hooks/useItems'
@@ -47,6 +49,7 @@ export const SearchControl = () => {
   const items = useItems()
   const leafletRefs = useLeafletRefs()
   const addFilterTag = useAddFilterTag()
+  const appState = useAppState()
 
   useMapEvents({
     popupopen: () => {
@@ -96,21 +99,13 @@ export const SearchControl = () => {
   }
 
   const searchInput = useRef<HTMLInputElement>(null)
-  const [embedded, setEmbedded] = useState<boolean>(true)
-
-  const location = useLocation()
-  useEffect(() => {
-    const params = new URLSearchParams(location.search)
-    const embedded = params.get('embedded')
-    embedded !== 'true' && setEmbedded(false)
-  }, [location])
 
   return (
     <>
       {!(windowDimensions.height < 500 && popupOpen && hideSuggestions) && (
         <div className='tw-w-[calc(100vw-2rem)] tw-max-w-[22rem] '>
           <div className='tw-flex tw-flex-row'>
-            {embedded && <SidebarControl />}
+            {appState.embedded && <SidebarControl />}
             <div className='tw-relative'>
               <input
                 type='text'
@@ -169,7 +164,7 @@ export const SearchControl = () => {
               {itemsResults.slice(0, 5).map((item) => (
                 <div
                   key={item.id}
-                  className='tw-cursor-pointer hover:tw-font-bold'
+                  className='tw-cursor-pointer hover:tw-font-bold tw-flex tw-flex-row'
                   onClick={() => {
                     const marker = Object.entries(leafletRefs).find((r) => r[1].item === item)?.[1]
                       .marker
@@ -182,18 +177,25 @@ export const SearchControl = () => {
                     }
                   }}
                 >
-                  <div className='tw-flex tw-flex-row'>
-                    <img
-                      src={item.layer?.menuIcon}
-                      className='tw-text-current tw-w-5 tw-mr-2 tw-mt-0'
+                  {item.layer?.menuIcon ? (
+                    <SVG
+                      src={item.layer.menuIcon}
+                      className='tw-text-current tw-mr-2 tw-mt-0 tw-w-5'
+                      preProcessor={(code: string): string => {
+                        code = code.replace(/fill=".*?"/g, 'fill="currentColor"')
+                        code = code.replace(/stroke=".*?"/g, 'stroke="currentColor"')
+                        return code
+                      }}
                     />
-                    <div>
-                      <div className='tw-text-sm tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>
-                        {item.name}
-                      </div>
-                      <div className='tw-text-xs tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>
-                        {item.text}
-                      </div>
+                  ) : (
+                    <div className='tw-w-5' />
+                  )}
+                  <div>
+                    <div className='tw-text-sm tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>
+                      {item.name}
+                    </div>
+                    <div className='tw-text-xs tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>
+                      {item.text}
                     </div>
                   </div>
                 </div>
@@ -236,7 +238,7 @@ export const SearchControl = () => {
                     hide()
                   }}
                 >
-                  <MagnifyingGlassIcon className='tw-text-current tw-mr-2 tw-mt-0 tw-w-4' />
+                  <MagnifyingGlassIcon className='tw-text-current tw-mr-2 tw-mt-0 tw-w-5' />
                   <div>
                     <div className='tw-text-sm tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>
                       {geo?.properties.name ? geo?.properties.name : value}

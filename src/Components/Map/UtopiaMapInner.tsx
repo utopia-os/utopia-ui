@@ -8,11 +8,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { Children, cloneElement, isValidElement, useEffect, useRef, useState } from 'react'
 import { TileLayer, useMapEvents, GeoJSON, useMap } from 'react-leaflet'
-import 'leaflet/dist/leaflet.css'
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import { Outlet, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import './UtopiaMap.css'
 
 import { containsUUID } from '#utils/ContainsUUID'
 
@@ -83,10 +81,12 @@ export function UtopiaMapInner({
               <div>
                 <TextView
                   itemId=''
-                  rawText={'Support us building free opensource maps and help us grow 🌱☀️'}
+                  rawText={
+                    'Support us building free opensource maps for communities and help us grow 🌱☀️'
+                  }
                 />
                 <a href='https://opencollective.com/utopia-project'>
-                  <div className='tw-btn tw-btn-sm tw-float-right'>Donate</div>
+                  <div className='tw-btn  tw-btn-sm tw-float-right tw-btn-primary'>Donate</div>
                 </a>
               </div>
             </>,
@@ -187,9 +187,7 @@ export function UtopiaMapInner({
   }
 
   return (
-    <div
-      className={`tw-h-full ${selectNewItemPosition != null ? 'crosshair-cursor-enabled' : undefined}`}
-    >
+    <div className={`tw-h-full ${selectNewItemPosition != null ? 'crosshair-cursor-enabled' : ''}`}>
       <Outlet />
       <Control position='topLeft' zIndex='1000' absolute>
         <SearchControl />

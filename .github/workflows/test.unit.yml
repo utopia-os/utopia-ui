@@ -17,8 +17,6 @@ jobs:
             unit:
               - '.github/workflows/**/*'
               - '**/*'
-              - '!**/*.md'
-          predicate-quantifier: 'every'
 
   unit:
     if: needs.files-changed.outputs.unit == 'true'

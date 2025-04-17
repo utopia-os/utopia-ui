@@ -97,7 +97,7 @@ export const TabsView = ({
       />
       <div
         role='tabpanel'
-        className='tw:tab-content tw:bg-base-100 tw:rounded-box tw:h-[calc(100dvh-280px)] tw:overflow-y-auto fade tw:pt-2 tw:pb-4 tw:mb-4 tw:overflow-x-hidden'
+        className='tw:tab-content tw:bg-base-100 tw:rounded-box tw:!h-[calc(100dvh-280px)] tw:overflow-y-auto fade tw:pt-2 tw:pb-4 tw:mb-4 tw:overflow-x-hidden'
       >
         {item.layer?.itemType.show_start_end && (
           <div className='tw:max-w-xs'>
@@ -121,7 +121,7 @@ export const TabsView = ({
           />
           <div
             role='tabpanel'
-            className='tw:tab-content tw:bg-base-100 tw:rounded-box tw:h-[calc(100dvh-280px)] tw:overflow-y-auto fade tw:pt-2 tw:pb-4 tw:mb-4 tw:overflow-x-hidden'
+            className='tw:tab-content tw:bg-base-100 tw:rounded-box tw:!h-[calc(100dvh-280px)] tw:overflow-y-auto fade tw:pt-2 tw:pb-4 tw:mb-4 tw:overflow-x-hidden'
           >
             <table className='sm:tw:table-sm md:tw:table-md tw:w-full'>
               <tbody>
@@ -257,7 +257,7 @@ export const TabsView = ({
           />
           <div
             role='tabpanel'
-            className='tw:tab-content tw:bg-base-100  tw:rounded-box tw:h-[calc(100dvh-280px)] tw:overflow-y-auto tw:pt-4 tw:pb-1 tw:-mr-4 tw:-mb-4 tw:overflow-x-hidden'
+            className='tw:tab-content tw:bg-base-100  tw:rounded-box tw:!h-[calc(100dvh-280px)] tw:overflow-y-auto tw:pt-4 tw:pb-1 tw:-mr-4 tw:-mb-4 tw:overflow-x-hidden'
           >
             <div className='tw:h-full'>
               <div className='tw:grid tw:grid-cols-1 tw:sm:grid-cols-2 tw:md:grid-cols-1 tw:lg:grid-cols-1 tw:xl:grid-cols-1 tw:2xl:grid-cols-2 tw:pb-4'>

@@ -24,7 +24,7 @@ export function AppShell({
 }) {
   return (
     <ContextWrapper>
-      <div className='tw-flex tw-flex-col tw-h-full'>
+      <div className='tw:flex tw:flex-col tw:h-full'>
         <SetAppState
           assetsApi={assetsApi}
           embedded={embedded}

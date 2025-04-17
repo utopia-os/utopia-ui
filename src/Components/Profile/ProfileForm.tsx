@@ -203,9 +203,9 @@ export function ProfileForm() {
               ></TabsForm>
             )}
 
-            <div className='tw:mt-4'>
+            <div className='tw:mt-4 tw:flex-none'>
               <button
-                className={loading ? ' tw:loading tw:btn tw:float-right' : 'tw:btn tw:float-right'}
+                className={`${loading ? ' tw:loading tw:btn tw:float-right' : 'tw:btn tw:float-right'}`}
                 type='submit'
                 style={{
                   // We could refactor this, it is used several times at different locations

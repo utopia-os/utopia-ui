@@ -107,7 +107,7 @@ export const TagsWidget = ({ placeholder, containerStyle, defaultTags, onUpdate 
           setFocusInput(false)
         }, 200)
       }}
-      className={`tw:input tw:input-bordered tw:cursor-text ${containerStyle}`}
+      className={`tw:textarea tw:cursor-text ${containerStyle}`}
     >
       <div className='tw:flex tw:flex-wrap tw:h-fit'>
         {defaultTags.map((tag) => (

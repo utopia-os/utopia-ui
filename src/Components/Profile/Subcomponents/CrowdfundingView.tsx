@@ -121,18 +121,18 @@ export const CrowdfundingView = ({ item }: { item: Item }) => {
 
   if (loading)
     return (
-      <div className='tw-flex tw-justify-center'>
-        <span className='tw-loading tw-loading-spinner tw-loading-lg tw-text-neutral-content'></span>
+      <div className='tw:flex tw:justify-center'>
+        <span className='tw:loading tw:loading-spinner tw:loading-lg tw:text-neutral-content'></span>
       </div>
     )
 
   if (error) {
-    return <p className='tw-text-center tw-text-lg tw-text-red-500'>Error: {error}</p>
+    return <p className='tw:text-center tw:text-lg tw:text-red-500'>Error: {error}</p>
   }
 
   if (!data?.account) {
     return (
-      <p className='tw-text-center tw-text-lg tw-text-red-500'>
+      <p className='tw:text-center tw:text-lg tw:text-red-500'>
         No data available for this account.
       </p>
     )
@@ -144,46 +144,46 @@ export const CrowdfundingView = ({ item }: { item: Item }) => {
   const currentBalance = balanceValueInCents
 
   return (
-    <div className='tw-mx-6 tw-mb-6'>
-      <div className='tw-card tw-bg-base-200 tw-w-fit tw-max-w-full tw-shadow'>
-        <div className='tw-stats tw-bg-base-200 tw-stats-horizontal tw-rounded-b-none'>
-          <div className='tw-stat tw-p-3'>
-            <div className='tw-stat-title'>Current Balance</div>
-            <div className='tw-stat-value tw-text-xl lg:tw-text-3xl'>
+    <div className='tw:mx-6 tw:mb-6'>
+      <div className='tw:card tw:bg-base-200 tw:w-fit tw:max-w-full tw:shadow'>
+        <div className='tw:stats tw:bg-base-200 tw:stats-horizontal tw:rounded-b-none'>
+          <div className='tw:stat tw:p-3'>
+            <div className='tw:stat-title'>Current Balance</div>
+            <div className='tw:stat-value tw:text-xl lg:tw:text-3xl'>
               {formatCurrency(currentBalance, currency)}
             </div>
           </div>
-          <div className='tw-stat tw-p-3'>
-            <div className='tw-stat-title'>Received</div>
-            <div className='tw-stat-value tw-text-green-500 tw-text-xl lg:tw-text-3xl'>
+          <div className='tw:stat tw:p-3'>
+            <div className='tw:stat-title'>Received</div>
+            <div className='tw:stat-value tw:text-green-500 tw:text-xl lg:tw:text-3xl'>
               {formatCurrency(stats.totalAmountReceived.valueInCents, currency)}
             </div>
           </div>
-          <div className='tw-stat tw-p-3'>
-            <div className='tw-stat-title'>Spent</div>
-            <div className='tw-stat-value tw-text-red-500 tw-text-xl lg:tw-text-3xl'>
+          <div className='tw:stat tw:p-3'>
+            <div className='tw:stat-title'>Spent</div>
+            <div className='tw:stat-value tw:text-red-500 tw:text-xl lg:tw:text-3xl'>
               {formatCurrency(stats.totalAmountReceived.valueInCents - currentBalance, currency)}
             </div>
           </div>
         </div>
-        <hr></hr>
-        <div className='tw-m-4 tw-items-center'>
+        <hr className='tw:border-1 tw:border-current/10 tw:border-dashed'></hr>
+        <div className='tw:m-4 tw:items-center'>
           <a href={`https://opencollective.com/${slug}/donate`} target='_blank' rel='noreferrer'>
-            <button className='tw-btn tw-btn-sm tw-btn-primary tw-float-right tw-ml-4'>
+            <button className='tw:btn tw:btn-sm tw:btn-primary tw:float-right tw:ml-4'>
               Donate
             </button>
           </a>
-          <div className='tw-flex-1 tw-mr-4'>
+          <div className='tw:flex-1 tw:mr-4'>
             Support{' '}
             <a
-              className='tw-font-bold'
+              className='tw:font-bold'
               href={`https://opencollective.com/${slug}`}
               target='_blank'
               rel='noreferrer'
             >
               {data.account.name}
             </a>{' '}
-            on <span className='tw-font-bold'>Open&nbsp;Collective</span>
+            on <span className='tw:font-bold'>Open&nbsp;Collective</span>
           </div>
         </div>
       </div>

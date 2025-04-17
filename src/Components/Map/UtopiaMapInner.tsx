@@ -193,9 +193,7 @@ export function UtopiaMapInner({
   }
 
   return (
-    <div
-      className={`tw:h-full ${selectNewItemPosition != null ? 'crosshair-cursor-enabled' : ''}`}
-    >
+    <div className={`tw:h-full ${selectNewItemPosition != null ? 'crosshair-cursor-enabled' : ''}`}>
       <Outlet />
       <Control position='topLeft' zIndex='1000' absolute>
         <SearchControl />

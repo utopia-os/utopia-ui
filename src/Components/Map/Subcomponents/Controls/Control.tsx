@@ -26,7 +26,7 @@ export const Control = ({
     <div
       ref={controlContainerRef}
       style={{ zIndex }}
-      className={`${absolute && 'tw-absolute'} tw-z-[999] tw-flex-col ${position === 'topLeft' && 'tw-top-4 tw-left-4'} ${position === 'bottomLeft' && 'tw-bottom-4 tw-left-4'} ${position === 'topRight' && 'tw-bottom-4 tw-right-4'} ${position === 'bottomRight' && 'tw-bottom-4 tw-right-4'}`}
+      className={`${absolute && 'tw:absolute'} tw:z-999 tw:flex-col ${position === 'topLeft' && 'tw:top-4 tw:left-4'} ${position === 'bottomLeft' && 'tw:bottom-4 tw:left-4'} ${position === 'topRight' && 'tw:bottom-4 tw:right-4'} ${position === 'bottomRight' && 'tw:bottom-4 tw:right-4'}`}
     >
       {children}
     </div>

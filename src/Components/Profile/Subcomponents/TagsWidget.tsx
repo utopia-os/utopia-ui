@@ -95,7 +95,7 @@ export const TagsWidget = ({ placeholder, containerStyle, defaultTags, onUpdate 
     onKeyDown,
     onKeyUp,
     onChange,
-    className: 'tw-bg-transparent tw-w-fit tw-mt-5 tw-h-fit',
+    className: 'tw:bg-transparent tw:w-fit tw:mt-5 tw:h-fit',
   }
 
   /* eslint-disable react/prop-types */
@@ -107,18 +107,18 @@ export const TagsWidget = ({ placeholder, containerStyle, defaultTags, onUpdate 
           setFocusInput(false)
         }, 200)
       }}
-      className={`tw-input tw-input-bordered tw-cursor-text ${containerStyle}`}
+      className={`tw:textarea tw:cursor-text ${containerStyle}`}
     >
-      <div className='tw-flex tw-flex-wrap tw-h-fit'>
+      <div className='tw:flex tw:flex-wrap tw:h-fit'>
         {defaultTags.map((tag) => (
           <div
             key={tag.name}
-            className='tw-rounded-2xl tw-text-white tw-p-2 tw-px-4 tw-shadow-xl tw-card tw-mt-3 tw-mr-4'
+            className='tw:rounded-2xl tw:text-white tw:p-2 tw:px-4 tw:shadow-xl tw:card tw:mt-3 tw:mr-4'
             style={{ backgroundColor: tag.color ? tag.color : '#666' }}
           >
-            <div className='tw-card-actions tw-justify-end'>
+            <div className='tw:card-actions tw:justify-end'>
               <label
-                className='tw-btn tw-btn-xs tw-btn-circle tw-absolute tw--right-2 tw--top-2 tw-bg-white tw-text-gray-600'
+                className='tw:btn tw:btn-xs tw:btn-circle tw:absolute tw:-right-2 tw:-top-2 tw:bg-white tw:text-gray-600'
                 onClick={() => deleteTag(tag)}
               >
                 ✕

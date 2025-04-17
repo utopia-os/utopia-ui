@@ -21,10 +21,8 @@ const componentMap = {
 }
 
 export const FlexView = ({ item }: { item: Item }) => {
-  // eslint-disable-next-line no-console
-  console.log(item)
   return (
-    <div className='tw-h-full tw-overflow-y-auto fade'>
+    <div className='tw:h-full tw:overflow-y-auto fade'>
       {item.layer?.itemType.profileTemplate.map(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (templateItem: { collection: string | number; id: Key | null | undefined; item: any }) => {
@@ -32,7 +30,9 @@ export const FlexView = ({ item }: { item: Item }) => {
           return TemplateComponent ? (
             <TemplateComponent key={templateItem.id} item={item} {...templateItem.item} />
           ) : (
-            <div key={templateItem.id}>Component not found</div>
+            <div className='tw:mx-6 tw:mb-6' key={templateItem.id}>
+              {templateItem.collection} view not found
+            </div>
           )
         },
       )}

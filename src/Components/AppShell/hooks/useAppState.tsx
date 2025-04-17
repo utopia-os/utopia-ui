@@ -8,6 +8,7 @@ interface AppState {
   assetsApi: AssetsApi
   sideBarOpen: boolean
   sideBarSlim: boolean
+  showThemeControl: boolean
   embedded: boolean
   openCollectiveApiKey: string
 }
@@ -18,6 +19,7 @@ const initialAppState: AppState = {
   assetsApi: {} as AssetsApi,
   sideBarOpen: false,
   sideBarSlim: false,
+  showThemeControl: false,
   embedded: false,
   openCollectiveApiKey: '',
 }

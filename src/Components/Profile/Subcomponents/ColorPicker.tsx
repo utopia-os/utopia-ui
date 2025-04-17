@@ -38,7 +38,7 @@ export const ColorPicker = ({ color, onChange, className }) => {
       <div className='swatch' style={{ backgroundColor: color }} onClick={() => toggle(true)} />
 
       {isOpen && (
-        <div className='popover tw-z-[10000]' ref={popover}>
+        <div className='popover tw:z-10000' ref={popover}>
           <HexColorPicker color={color} onChange={onChange} onClick={() => toggle(false)} />
         </div>
       )}

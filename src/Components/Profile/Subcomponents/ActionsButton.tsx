@@ -54,11 +54,11 @@ export function ActionButton({
     <>
       {hasUserPermission(collection, 'update', item) && (
         <>
-          <div className={`tw-absolute tw-right-4 tw-bottom-4 tw-flex tw-flex-col ${customStyle}`}>
+          <div className={`tw:absolute tw:right-6 tw:bottom-4 tw:flex tw:flex-col ${customStyle}`}>
             {triggerItemSelected && (
               <button
                 tabIndex={0}
-                className='tw-z-500 tw-btn tw-btn-circle tw-shadow'
+                className='tw:z-500 tw:btn tw:btn-circle tw:shadow'
                 onClick={() => {
                   setModalOpen(true)
                 }}
@@ -67,13 +67,13 @@ export function ActionButton({
                   color: '#fff',
                 }}
               >
-                <LinkIcon className='tw-h-5 tw-w-5 tw-stroke-[2.5]' />
+                <LinkIcon className='tw:h-5 tw:w-5 tw:stroke-[2.5]' />
               </button>
             )}
             {triggerAddButton && (
               <button
                 tabIndex={0}
-                className='tw-z-500 tw-btn tw-btn-circle tw-shadow tw-mt-2'
+                className='tw:z-500 tw:btn tw:btn-circle tw:shadow tw:mt-2'
                 onClick={() => {
                   triggerAddButton()
                 }}
@@ -82,7 +82,7 @@ export function ActionButton({
                   color: '#fff',
                 }}
               >
-                <PlusIcon className='tw-w-5 tw-h-5 tw-stroke-[2.5]' />
+                <PlusIcon className='tw:w-5 tw:h-5 tw:stroke-[2.5]' />
               </button>
             )}
           </div>
@@ -90,17 +90,17 @@ export function ActionButton({
             title={'Select'}
             isOpened={modalOpen}
             onClose={() => setModalOpen(false)}
-            className='tw-w-xl sm:tw-w-2xl tw-min-h-80 tw-bg-base-200'
+            className='tw:w-xl tw:sm:w-2xl tw:min-h-80 tw:bg-base-200'
           >
             <TextInput
               defaultValue=''
               placeholder='🔍 Search'
-              containerStyle='lg:col-span-2 tw-m-4 '
+              containerStyle='lg:col-span-2 tw:m-4 '
               updateFormValue={(val) => {
                 setSearch(val)
               }}
             ></TextInput>
-            <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2'>
+            <div className='tw:grid tw:grid-cols-1 tw:sm:grid-cols-2'>
               {filterdItems
                 .filter((item) => {
                   return search === ''
@@ -110,7 +110,7 @@ export function ActionButton({
                 .map((i) => (
                   <div
                     key={i.id}
-                    className='tw-cursor-pointer tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-mx-4 tw-p-4 tw-mb-4 tw-h-fit'
+                    className='tw:cursor-pointer tw:card tw:border-[1px] tw:border-base-300 tw:card-body tw:shadow-xl tw:bg-base-100 tw:text-base-content tw:mx-4 tw:p-4 tw:mb-4 tw:h-fit'
                     onClick={() => {
                       triggerItemSelected(i.id)
                       setModalOpen(false)

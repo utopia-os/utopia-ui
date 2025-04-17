@@ -103,16 +103,16 @@ export const SearchControl = () => {
   return (
     <>
       {!(windowDimensions.height < 500 && popupOpen && hideSuggestions) && (
-        <div className='tw-w-[calc(100vw-2rem)] tw-max-w-[22rem] '>
-          <div className='tw-flex tw-flex-row'>
+        <div className='tw:w-[calc(100vw-2rem)] tw:max-w-[22rem] '>
+          <div className='tw:flex tw:flex-row'>
             {appState.embedded && <SidebarControl />}
-            <div className='tw-relative'>
+            <div className='tw:relative tw:shrink tw:max-w-69 tw:w-full'>
               <input
                 type='text'
                 placeholder='search ...'
                 autoComplete='off'
                 value={value}
-                className='tw-input tw-input-bordered tw-grow tw-shadow-xl tw-rounded-lg tw-pr-12'
+                className='tw:input tw:input-bordered tw:h-12 tw:grow tw:shadow-xl tw:rounded-box tw:pr-12 tw:w-full'
                 ref={searchInput}
                 onChange={(e) => setValue(e.target.value)}
                 onFocus={() => {
@@ -123,7 +123,7 @@ export const SearchControl = () => {
               />
               {value.length > 0 && (
                 <button
-                  className='tw-btn tw-btn-sm tw-btn-circle tw-absolute tw-right-2 tw-top-2'
+                  className='tw:btn tw:btn-sm tw:btn-circle tw:absolute tw:right-2 tw:top-2'
                   onClick={() => setValue('')}
                 >
                   ✕
@@ -140,13 +140,13 @@ export const SearchControl = () => {
           value.length === 0 ? (
             ''
           ) : (
-            <div className='tw-card tw-card-body tw-bg-base-100 tw-p-4 tw-mt-2 tw-shadow-xl tw-overflow-y-auto tw-max-h-[calc(100dvh-152px)] tw-absolute tw-z-3000'>
+            <div className='tw:card tw:card-body tw:bg-base-100 tw:p-4 tw:mt-2 tw:shadow-xl tw:overflow-y-auto tw:max-h-[calc(100dvh-152px)] tw:absolute tw:z-3000 tw:w-83'>
               {tagsResults.length > 0 && (
-                <div className='tw-flex tw-flex-wrap'>
+                <div className='tw:flex tw:flex-wrap'>
                   {tagsResults.slice(0, 3).map((tag) => (
                     <div
                       key={tag.name}
-                      className='tw-rounded-2xl tw-text-white tw-p-1 tw-px-4 tw-shadow-md tw-card tw-mr-2 tw-mb-2 tw-cursor-pointer'
+                      className='tw:rounded-2xl tw:text-white tw:p-1 tw:px-4 tw:shadow-md tw:card tw:mr-2 tw:mb-2 tw:cursor-pointer'
                       style={{ backgroundColor: tag.color }}
                       onClick={() => {
                         addFilterTag(tag)
@@ -159,12 +159,12 @@ export const SearchControl = () => {
               )}
 
               {itemsResults.length > 0 && tagsResults.length > 0 && (
-                <hr className='tw-opacity-50'></hr>
+                <hr className='tw:opacity-50'></hr>
               )}
               {itemsResults.slice(0, 5).map((item) => (
                 <div
                   key={item.id}
-                  className='tw-cursor-pointer hover:tw-font-bold tw-flex tw-flex-row'
+                  className='tw:cursor-pointer tw:hover:font-bold tw:flex tw:flex-row'
                   onClick={() => {
                     const marker = Object.entries(leafletRefs).find((r) => r[1].item === item)?.[1]
                       .marker
@@ -180,7 +180,7 @@ export const SearchControl = () => {
                   {item.layer?.menuIcon ? (
                     <SVG
                       src={item.layer.menuIcon}
-                      className='tw-text-current tw-mr-2 tw-mt-0 tw-w-5'
+                      className='tw:text-current tw:mr-2 tw:mt-0 tw:w-5'
                       preProcessor={(code: string): string => {
                         code = code.replace(/fill=".*?"/g, 'fill="currentColor"')
                         code = code.replace(/stroke=".*?"/g, 'stroke="currentColor"')
@@ -188,13 +188,13 @@ export const SearchControl = () => {
                       }}
                     />
                   ) : (
-                    <div className='tw-w-5' />
+                    <div className='tw:w-5' />
                   )}
                   <div>
-                    <div className='tw-text-sm tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>
+                    <div className='tw:text-sm tw:overflow-hidden tw:text-ellipsis tw:whitespace-nowrap tw:max-w-[17rem]'>
                       {item.name}
                     </div>
-                    <div className='tw-text-xs tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>
+                    <div className='tw:text-xs tw:overflow-hidden tw:text-ellipsis tw:whitespace-nowrap tw:max-w-[17rem]'>
                       {item.text}
                     </div>
                   </div>
@@ -202,11 +202,11 @@ export const SearchControl = () => {
               ))}
               {Array.from(geoResults).length > 0 &&
                 (itemsResults.length > 0 || tagsResults.length > 0) && (
-                  <hr className='tw-opacity-50'></hr>
+                  <hr className='tw:opacity-50'></hr>
                 )}
               {Array.from(geoResults).map((geo) => (
                 <div
-                  className='tw-flex tw-flex-row hover:tw-font-bold tw-cursor-pointer'
+                  className='tw:flex tw:flex-row tw:hover:font-bold tw:cursor-pointer'
                   key={Math.random()}
                   onClick={() => {
                     searchInput.current?.blur()
@@ -215,7 +215,7 @@ export const SearchControl = () => {
                     })
                       .addTo(map)
                       .bindPopup(
-                        `<h3 class="tw-text-base tw-font-bold">${geo?.properties.name ? geo?.properties.name : value}<h3>${capitalizeFirstLetter(geo?.properties?.osm_value)}`,
+                        `<h3 class="tw:text-base tw:font-bold">${geo?.properties.name ? geo?.properties.name : value}<h3>${capitalizeFirstLetter(geo?.properties?.osm_value)}`,
                       )
                       .openPopup()
                       .addEventListener('popupclose', (e) => {
@@ -238,12 +238,12 @@ export const SearchControl = () => {
                     hide()
                   }}
                 >
-                  <MagnifyingGlassIcon className='tw-text-current tw-mr-2 tw-mt-0 tw-w-5' />
+                  <MagnifyingGlassIcon className='tw:text-current tw:mr-2 tw:mt-0 tw:w-5' />
                   <div>
-                    <div className='tw-text-sm tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>
+                    <div className='tw:text-sm tw:overflow-hidden tw:text-ellipsis tw:whitespace-nowrap tw:max-w-[17rem]'>
                       {geo?.properties.name ? geo?.properties.name : value}
                     </div>
-                    <div className='tw-text-xs tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>
+                    <div className='tw:text-xs tw:overflow-hidden tw:text-ellipsis tw:whitespace-nowrap tw:max-w-[17rem]'>
                       {geo?.properties?.city && `${capitalizeFirstLetter(geo?.properties?.city)}, `}{' '}
                       {geo?.properties?.osm_value &&
                         geo?.properties?.osm_value !== 'yes' &&
@@ -261,7 +261,7 @@ export const SearchControl = () => {
               ))}
               {isGeoCoordinate(value) && (
                 <div
-                  className='tw-flex tw-flex-row hover:tw-font-bold tw-cursor-pointer'
+                  className='tw:flex tw:flex-row tw:hover:font-bold tw:cursor-pointer'
                   onClick={() => {
                     marker(
                       new LatLng(extractCoordinates(value)![0], extractCoordinates(value)![1]),
@@ -271,7 +271,7 @@ export const SearchControl = () => {
                     )
                       .addTo(map)
                       .bindPopup(
-                        `<h3 class="tw-text-base tw-font-bold">${extractCoordinates(value)![0]}, ${extractCoordinates(value)![1]}</h3>`,
+                        `<h3 class="tw:text-base tw:font-bold">${extractCoordinates(value)![0]}, ${extractCoordinates(value)![1]}</h3>`,
                       )
                       .openPopup()
                       .addEventListener('popupclose', (e) => {
@@ -285,12 +285,12 @@ export const SearchControl = () => {
                     )
                   }}
                 >
-                  <FlagIcon className='tw-text-current tw-mr-2 tw-mt-0 tw-w-4' />
+                  <FlagIcon className='tw:text-current tw:mr-2 tw:mt-0 tw:w-4' />
                   <div>
-                    <div className='tw-text-sm tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>
+                    <div className='tw:text-sm tw:overflow-hidden tw:text-ellipsis tw:whitespace-nowrap tw:max-w-[17rem]'>
                       {value}
                     </div>
-                    <div className='tw-text-xs tw-overflow-hidden tw-text-ellipsis tw-whitespace-nowrap tw-max-w-[17rem]'>
+                    <div className='tw:text-xs tw:overflow-hidden tw:text-ellipsis tw:whitespace-nowrap tw:max-w-[17rem]'>
                       {'Coordiante'}
                     </div>
                   </div>

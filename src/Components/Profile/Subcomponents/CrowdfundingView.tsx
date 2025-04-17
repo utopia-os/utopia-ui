@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 
+import { useAppState } from '#components/AppShell/hooks/useAppState'
+
 import type { Item } from '#types/Item'
 
 interface AccountData {
@@ -56,16 +58,6 @@ const GET_TRANSACTIONS = `
   }
 `
 
-const token = '9350b1eecb4c70f2b15d85e32df4d4cf3ea80a1f'
-
-const graphqlClient = axios.create({
-  baseURL: 'https://api.opencollective.com/graphql/v2',
-  headers: {
-    Authorization: `Bearer ${token}`,
-    'Content-Type': 'application/json',
-  },
-})
-
 const formatCurrency = (valueInCents: number, currency: string) => {
   const value = valueInCents / 100
   const options: Intl.NumberFormatOptions = {
@@ -79,6 +71,17 @@ const formatCurrency = (valueInCents: number, currency: string) => {
 export const CrowdfundingView = ({ item }: { item: Item }) => {
   // Hier wird slug aus dem Item extrahiert.
   const slug = item.openCollectiveSlug
+  const appState = useAppState()
+
+  const token = appState.openCollectiveApiKey
+
+  const graphqlClient = axios.create({
+    baseURL: 'https://api.opencollective.com/graphql/v2',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  })
 
   const [data, setData] = useState<AccountData | null>(null)
   const [loading, setLoading] = useState<boolean>(true)

@@ -1,6 +1,6 @@
 {
   "name": "utopia-ui",
-  "version": "3.0.79",
+  "version": "3.0.81",
   "description": "Reuseable React Components to build mapping apps for real life communities and networks",
   "repository": "https://github.com/utopia-os/utopia-ui",
   "homepage": "https://utopia-os.org/",
@@ -24,6 +24,7 @@
     "test:component": "cypress run --component --browser electron",
     "test:unit": "npm run test:unit:dev -- run --coverage",
     "test:unit:dev": "vitest",
+    "test:unit:update": "npm run test:unit:dev -- run --coverage -u",
     "docs:generate": "typedoc --includeVersion --navigation.includeCategories true --plugin typedoc-plugin-missing-exports --plugin typedoc-plugin-coverage src/index.tsx",
     "update": "npx npm-check-updates"
   },

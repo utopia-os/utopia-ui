@@ -114,6 +114,7 @@ export const CrowdfundingView = ({ item }: { item: Item }) => {
     if (slug) {
       void fetchData()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug])
 
   if (!slug) return null

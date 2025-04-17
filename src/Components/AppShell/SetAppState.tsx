@@ -7,9 +7,11 @@ import type { AssetsApi } from '#types/AssetsApi'
 export const SetAppState = ({
   assetsApi,
   embedded,
+  openCollectiveApiKey,
 }: {
   assetsApi: AssetsApi
   embedded?: boolean
+  openCollectiveApiKey?: string
 }) => {
   const setAppState = useSetAppState()
 
@@ -20,6 +22,10 @@ export const SetAppState = ({
   useEffect(() => {
     setAppState({ embedded })
   }, [embedded, setAppState])
+
+  useEffect(() => {
+    setAppState({ openCollectiveApiKey })
+  }, [openCollectiveApiKey, setAppState])
 
   return <></>
 }

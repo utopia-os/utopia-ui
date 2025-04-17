@@ -9,6 +9,7 @@ interface AppState {
   sideBarOpen: boolean
   sideBarSlim: boolean
   embedded: boolean
+  openCollectiveApiKey: string
 }
 
 type UseAppManagerResult = ReturnType<typeof useAppManager>
@@ -18,6 +19,7 @@ const initialAppState: AppState = {
   sideBarOpen: false,
   sideBarSlim: false,
   embedded: false,
+  openCollectiveApiKey: '',
 }
 
 const AppContext = createContext<UseAppManagerResult>({

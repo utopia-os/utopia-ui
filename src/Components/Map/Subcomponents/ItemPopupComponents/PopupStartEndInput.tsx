@@ -3,7 +3,7 @@ import { TextInput } from '#components/Input'
 
 import type { Item } from '#types/Item'
 
-interface StartEndInputProps {
+export interface StartEndInputProps {
   item?: Item
   showLabels?: boolean
   updateStartValue?: (value: string) => void

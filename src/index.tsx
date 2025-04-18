@@ -8,6 +8,7 @@ export * from './Components/Profile'
 export * from './Components/Gaming'
 export * from './Components/Templates'
 export * from './Components/Input'
+export * from './Components/Item'
 
 declare global {
   interface Window {

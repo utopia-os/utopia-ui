@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import { ContactInfoView } from '#components/Profile/Subcomponents/ContactInfoView'
+import { CrowdfundingView } from '#components/Profile/Subcomponents/CrowdfundingView'
 import { GalleryView } from '#components/Profile/Subcomponents/GalleryView'
 import { GroupSubHeaderView } from '#components/Profile/Subcomponents/GroupSubHeaderView'
 import { ProfileStartEndView } from '#components/Profile/Subcomponents/ProfileStartEndView'
@@ -15,6 +16,7 @@ const componentMap = {
   contactInfos: ContactInfoView,
   startEnd: ProfileStartEndView,
   gallery: GalleryView,
+  crowdfundings: CrowdfundingView,
   // weitere Komponenten hier
 }
 

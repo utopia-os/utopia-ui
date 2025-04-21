@@ -196,6 +196,7 @@ export const onUpdateItem = async (
     ...(state.image.length > 10 && { image: state.image }),
     ...(state.offers.length > 0 && { offers: offerUpdates }),
     ...(state.needs.length > 0 && { needs: needsUpdates }),
+    ...(state.openCollectiveSlug && { openCollectiveSlug: state.openCollectiveSlug }),
   }
 
   const offersState: any[] = []

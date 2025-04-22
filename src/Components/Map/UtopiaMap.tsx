@@ -74,9 +74,9 @@ function UtopiaMap({
   /** show the layer control widget (default true) */
   showGratitudeControl?: boolean
   /** show a widget to switch the theme */
-  showThemeControl: boolean
+  showThemeControl?: boolean
   /** the defaut theme */
-  defaultTheme: string
+  defaultTheme?: string
   /** ask to donate to the Utopia Project OpenCollective campaign (default false) */
   donationWidget?: boolean
 }) {

@@ -36,8 +36,7 @@ import { TextView } from './Subcomponents/ItemPopupComponents/TextView'
 import { SelectPosition } from './Subcomponents/SelectPosition'
 
 import type { ItemFormPopupProps } from '#types/ItemFormPopupProps'
-import type { UtopiaMapProps } from '#types/UtopiaMapProps'
-import type { Feature, Geometry as GeoJSONGeometry } from 'geojson'
+import type { Feature, Geometry as GeoJSONGeometry, GeoJsonObject } from 'geojson'
 
 export function UtopiaMapInner({
   children,
@@ -48,7 +47,16 @@ export function UtopiaMapInner({
   showThemeControl = false,
   defaultTheme = '',
   donationWidget,
-}: UtopiaMapProps) {
+}: {
+  children?: React.ReactNode
+  geo?: GeoJsonObject
+  showFilterControl?: boolean
+  showLayerControl?: boolean
+  showGratitudeControl?: boolean
+  donationWidget?: boolean
+  showThemeControl?: boolean
+  defaultTheme?: string
+}) {
   const selectNewItemPosition = useSelectPosition()
   const setSelectNewItemPosition = useSetSelectPosition()
   const setClusterRef = useSetClusterRef()

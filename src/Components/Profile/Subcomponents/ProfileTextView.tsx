@@ -20,11 +20,11 @@ export const ProfileTextView = ({
   const parsedText = typeof text !== 'string' ? '' : text
 
   return (
-    <div className='tw-my-10 tw-mt-2 tw-px-6'>
+    <div className='tw:my-10 tw:mt-2 tw:px-6'>
       {!(text === '' && hideWhenEmpty) && (
-        <h2 className='tw-text-lg tw-font-semibold'>{heading}</h2>
+        <h2 className='tw:text-lg tw:font-semibold'>{heading}</h2>
       )}
-      <div className='tw-mt-2 tw-text-sm'>
+      <div className='tw:mt-2 tw:text-sm'>
         <TextView itemId={item.id} rawText={parsedText} />
       </div>
     </div>

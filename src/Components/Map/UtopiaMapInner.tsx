@@ -12,6 +12,8 @@ import MarkerClusterGroup from 'react-leaflet-cluster'
 import { Outlet, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
+import { useSetAppState } from '#components/AppShell/hooks/useAppState'
+import { useTheme } from '#components/AppShell/hooks/useTheme'
 import { containsUUID } from '#utils/ContainsUUID'
 
 import { useClusterRef, useSetClusterRef } from './hooks/useClusterRef'
@@ -42,6 +44,8 @@ export function UtopiaMapInner({
   showFilterControl = false,
   showGratitudeControl = false,
   showLayerControl = true,
+  showThemeControl = false,
+  defaultTheme = '',
   donationWidget,
 }: {
   children?: React.ReactNode
@@ -50,6 +54,8 @@ export function UtopiaMapInner({
   showLayerControl?: boolean
   showGratitudeControl?: boolean
   donationWidget?: boolean
+  showThemeControl?: boolean
+  defaultTheme?: string
 }) {
   const selectNewItemPosition = useSelectPosition()
   const setSelectNewItemPosition = useSetSelectPosition()
@@ -57,6 +63,8 @@ export function UtopiaMapInner({
   const clusterRef = useClusterRef()
   const setMapClicked = useSetMapClicked()
   const [itemFormPopup, setItemFormPopup] = useState<ItemFormPopupProps | null>(null)
+
+  useTheme(defaultTheme)
 
   const layers = useLayers()
   const addVisibleLayer = useAddVisibleLayer()
@@ -69,6 +77,12 @@ export function UtopiaMapInner({
     layers.forEach((layer) => addVisibleLayer(layer))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [layers])
+
+  const setAppState = useSetAppState()
+
+  useEffect(() => {
+    setAppState({ showThemeControl })
+  }, [setAppState, showThemeControl])
 
   const init = useRef(false)
   useEffect(() => {
@@ -86,7 +100,7 @@ export function UtopiaMapInner({
                   }
                 />
                 <a href='https://opencollective.com/utopia-project'>
-                  <div className='tw-btn  tw-btn-sm tw-float-right tw-btn-primary'>Donate</div>
+                  <div className='tw:btn  tw:btn-sm tw:float-right tw:btn-primary'>Donate</div>
                 </a>
               </div>
             </>,
@@ -187,7 +201,7 @@ export function UtopiaMapInner({
   }
 
   return (
-    <div className={`tw-h-full ${selectNewItemPosition != null ? 'crosshair-cursor-enabled' : ''}`}>
+    <div className={`tw:h-full ${selectNewItemPosition != null ? 'crosshair-cursor-enabled' : ''}`}>
       <Outlet />
       <Control position='topLeft' zIndex='1000' absolute>
         <SearchControl />

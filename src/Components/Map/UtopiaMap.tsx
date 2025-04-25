@@ -51,6 +51,8 @@ function UtopiaMap({
   showFilterControl = false,
   showGratitudeControl = false,
   showLayerControl = true,
+  showThemeControl = false,
+  defaultTheme,
   donationWidget,
 }: {
   /** height of the map (default '500px') */
@@ -71,6 +73,10 @@ function UtopiaMap({
   showLayerControl?: boolean
   /** show the layer control widget (default true) */
   showGratitudeControl?: boolean
+  /** show a widget to switch the theme */
+  showThemeControl?: boolean
+  /** the defaut theme */
+  defaultTheme?: string
   /** ask to donate to the Utopia Project OpenCollective campaign (default false) */
   donationWidget?: boolean
 }) {
@@ -89,6 +95,8 @@ function UtopiaMap({
           showGratitudeControl={showGratitudeControl}
           showLayerControl={showLayerControl}
           donationWidget={donationWidget}
+          showThemeControl={showThemeControl}
+          defaultTheme={defaultTheme}
         >
           {children}
         </UtopiaMapInner>

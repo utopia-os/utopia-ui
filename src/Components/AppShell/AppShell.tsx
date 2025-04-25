@@ -24,14 +24,14 @@ export function AppShell({
 }) {
   return (
     <ContextWrapper>
-      <div className='tw-flex tw-flex-col tw-h-full'>
+      <div className='tw:flex tw:flex-col tw:h-full'>
         <SetAppState
           assetsApi={assetsApi}
           embedded={embedded}
           openCollectiveApiKey={openCollectiveApiKey}
         />
         <NavBar appName={appName}></NavBar>
-        <div id='app-content' className='tw-flex'>
+        <div id='app-content' className='tw:flex'>
           {children}
         </div>
       </div>

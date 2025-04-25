@@ -1,20 +1,20 @@
 :root {
-    --toastify-color-info: theme('colors.info');
-    --toastify-color-success: theme('colors.success');
-    --toastify-color-warning: theme('colors.warning');
-    --toastify-color-error: theme('colors.error');
+    --toastify-color-info: var(--color-info);
+    --toastify-color-success: var(--color-success);
+    --toastify-color-warning: var(--color-warning);
+    --toastify-color-error: var(--color-error);
 }
 
 .Toastify__toast {
-    border-radius: 1rem;
-    --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-    --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
-    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    border-radius: var(--radius-box);
+    --shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --shadow-colored: 0 20px 25px -5px var(--shadow-color), 0 8px 10px -6px var(--shadow-color);
+    box-shadow: var(--ring-offset-shadow, 0 0 #0000), var(--ring-shadow, 0 0 #0000), var(--shadow);
     margin-left: 1rem;
     margin-right: 1rem;
     margin-bottom: 1rem;
-    background-color: theme('colors.base-100');
-    color: theme('colors.base-content');
+    background-color: var(--color-base-100);
+    color: var(--color-base-content);
 }
 
 .Toastify__toast-container {

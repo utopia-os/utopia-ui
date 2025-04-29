@@ -176,10 +176,10 @@ export function ItemFormPopup(props: Props) {
           onSubmit={(e) => handleSubmit(e)}
         >
           {popupForm.item ? (
-            <div className='tw-h-3'></div>
+            <div className='tw:h-3'></div>
           ) : (
-            <div className='tw-flex tw-justify-center'>
-              <b className='tw-text-xl tw-text-center tw-font-bold'>{menuText}</b>
+            <div className='tw:flex tw:justify-center'>
+              <b className='tw:text-xl tw:text-center tw:font-bold'>{menuText}</b>
             </div>
           )}
 
@@ -201,21 +201,21 @@ export function ItemFormPopup(props: Props) {
                 placeholder='Text'
                 dataField='text'
                 defaultValue={popupForm.item?.text ?? ''}
-                inputStyle='tw-h-40 tw-mt-5'
+                inputStyle='tw:h-40 tw:mt-5'
               />
             </>
           )}
 
-          <div className='tw-flex tw-justify-center'>
+          <div className='tw:flex tw:justify-center'>
             <button
               className={
                 spinner
-                  ? 'tw-btn tw-btn-disabled tw-mt-5 tw-place-self-center'
-                  : 'tw-btn tw-mt-5 tw-place-self-center'
+                  ? 'tw:btn tw:btn-disabled tw:mt-5 tw:place-self-center'
+                  : 'tw:btn tw:mt-5 tw:place-self-center'
               }
               type='submit'
             >
-              {spinner ? <span className='tw-loading tw-loading-spinner'></span> : 'Save'}
+              {spinner ? <span className='tw:loading tw:loading-spinner'></span> : 'Save'}
             </button>
           </div>
         </form>

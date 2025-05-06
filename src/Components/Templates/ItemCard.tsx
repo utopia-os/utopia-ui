@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 
-import { StartEndView, TextView } from '#components/Map'
 import useWindowDimensions from '#components/Map/hooks/useWindowDimension'
+import { StartEndView, TextView } from '#components/Map/Subcomponents/ItemPopupComponents'
 import { HeaderView } from '#components/Map/Subcomponents/ItemPopupComponents/HeaderView'
 
 import { DateUserInfo } from './DateUserInfo'

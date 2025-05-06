@@ -25,6 +25,10 @@
     border-radius: var(--radius-box);
 }
 
+.leaflet-popup-tip-container, .leaflet-popup-tip{
+    border-radius: 0;
+}
+
 .leaflet-tooltip {
     background-color: var(--color-base-100);
     color: var(--color-base-content);

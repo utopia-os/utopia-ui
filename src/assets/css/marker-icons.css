@@ -123,3 +123,17 @@
     left: 4px;
     width: 24px;
 }
+
+.suitcase-icon {
+    position: relative;
+    top: -34px;
+    left: 4px;
+    width: 24px;
+}
+
+.offer-icon {
+    position: relative;
+    top: -34.5px;
+    left: 4px;
+    width: 24px;
+}

@@ -22,6 +22,7 @@ import { TabsForm } from './Templates/TabsForm'
 import type { FormState } from '#types/FormState'
 import type { Item } from '#types/Item'
 import type { Tag } from '#types/Tag'
+import type { markerIcon } from '#utils/MarkerIconFactory'
 
 /**
  * @category Profile
@@ -39,7 +40,7 @@ export function ProfileForm() {
     telephone: '',
     next_appointment: '',
     image: '',
-    marker_icon: '',
+    marker_icon: {} as markerIcon,
     offers: [] as Tag[],
     needs: [] as Tag[],
     relations: [] as Item[],
@@ -132,7 +133,7 @@ export function ProfileForm() {
       next_appointment: item?.next_appointment ?? '',
       image: item?.image ?? '',
       // Do we actually mean marker_icon here?
-      marker_icon: item?.markerIcon ?? '',
+      marker_icon: item?.markerIcon,
       offers,
       needs,
       relations,

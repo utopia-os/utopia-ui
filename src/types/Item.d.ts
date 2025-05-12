@@ -1,3 +1,4 @@
+import type { markerIcon } from '#utils/MarkerIconFactory'
 import type { ItemsApi } from './ItemsApi'
 import type { LayerProps } from './LayerProps'
 import type { Relation } from './Relation'
@@ -43,7 +44,7 @@ export interface Item {
   needs?: TagIds
   status?: string
   color?: string
-  markerIcon?: string
+  markerIcon?: markerIcon
   avatar?: string
   new?: boolean
   contact?: string

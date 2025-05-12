@@ -10,6 +10,7 @@ import { ItemsProvider } from '#components/Map/hooks/useItems'
 import { LayersProvider } from '#components/Map/hooks/useLayers'
 import { LeafletRefsProvider } from '#components/Map/hooks/useLeafletRefs'
 import { PermissionsProvider } from '#components/Map/hooks/usePermissions'
+import { PopupFormProvider } from '#components/Map/hooks/usePopupForm'
 import { SelectPositionProvider } from '#components/Map/hooks/useSelectPosition'
 import { TagsProvider } from '#components/Map/hooks/useTags'
 
@@ -66,22 +67,24 @@ export const Wrappers = ({ children }) => {
                   <QueryClientProvider client={queryClient}>
                     <AppStateProvider>
                       <ClusterRefProvider>
-                        <QuestsProvider initialOpen={true}>
-                          <ToastContainer
-                            position='top-right'
-                            autoClose={2000}
-                            hideProgressBar
-                            newestOnTop={false}
-                            closeOnClick
-                            rtl={false}
-                            pauseOnFocusLoss
-                            draggable
-                            pauseOnHover
-                            theme='light'
-                            closeButton={CloseButton}
-                          />
-                          {children}
-                        </QuestsProvider>
+                        <PopupFormProvider>
+                          <QuestsProvider initialOpen={true}>
+                            <ToastContainer
+                              position='top-right'
+                              autoClose={2000}
+                              hideProgressBar
+                              newestOnTop={false}
+                              closeOnClick
+                              rtl={false}
+                              pauseOnFocusLoss
+                              draggable
+                              pauseOnHover
+                              theme='light'
+                              closeButton={CloseButton}
+                            />
+                            {children}
+                          </QuestsProvider>
+                        </PopupFormProvider>
                       </ClusterRefProvider>
                     </AppStateProvider>
                   </QueryClientProvider>

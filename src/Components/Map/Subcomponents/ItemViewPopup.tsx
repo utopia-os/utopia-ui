@@ -8,12 +8,13 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { LatLng } from 'leaflet'
-import { Children, cloneElement, forwardRef, isValidElement, useState } from 'react'
+import { forwardRef, useState } from 'react'
 import { Popup as LeafletPopup, useMap } from 'react-leaflet'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { useRemoveItem, useUpdateItem } from '#components/Map/hooks/useItems'
+import { usePopupForm } from '#components/Map/hooks/usePopupForm'
 import { useSetSelectPosition } from '#components/Map/hooks/useSelectPosition'
 import { timeAgo } from '#utils/TimeAgo'
 
@@ -21,12 +22,10 @@ import { HeaderView } from './ItemPopupComponents/HeaderView'
 import { TextView } from './ItemPopupComponents/TextView'
 
 import type { Item } from '#types/Item'
-import type { ItemFormPopupProps } from '#types/ItemFormPopupProps'
 
 export interface ItemViewPopupProps {
   item: Item
   children?: React.ReactNode
-  setItemFormPopup?: React.Dispatch<React.SetStateAction<ItemFormPopupProps | null>>
 }
 
 // eslint-disable-next-line react/display-name
@@ -37,22 +36,26 @@ export const ItemViewPopup = forwardRef((props: ItemViewPopupProps, ref: any) =>
   const updadateItem = useUpdateItem()
   const navigate = useNavigate()
   const setSelectPosition = useSetSelectPosition()
+  const { setPopupForm } = usePopupForm()
 
   const [infoExpanded, setInfoExpanded] = useState<boolean>(false)
 
   const handleEdit = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation()
     map.closePopup()
-    props.setItemFormPopup &&
-      props.setItemFormPopup({
-        position: new LatLng(
-          props.item.position?.coordinates[1]!,
-          props.item.position?.coordinates[0]!,
-        ),
-        layer: props.item.layer!,
-        item: props.item,
-        setItemFormPopup: props.setItemFormPopup,
-      })
+
+    if (!props.item.layer) {
+      throw new Error('Layer is not defined')
+    }
+
+    setPopupForm({
+      position: new LatLng(
+        props.item.position?.coordinates[1]!,
+        props.item.position?.coordinates[0]!,
+      ),
+      layer: props.item.layer,
+      item: props.item,
+    })
   }
 
   const handleDelete = async (event: React.MouseEvent<HTMLElement>) => {
@@ -98,15 +101,7 @@ export const ItemViewPopup = forwardRef((props: ItemViewPopupProps, ref: any) =>
           loading={loading}
         />
         <div className='tw:overflow-y-auto tw:overflow-x-hidden tw:max-h-64 fade'>
-          {props.children ? (
-            Children.toArray(props.children).map((child) =>
-              isValidElement<{ item: Item; test: string }>(child)
-                ? cloneElement(child, { item: props.item })
-                : '',
-            )
-          ) : (
-            <TextView text={props.item.text} itemId={props.item.id} />
-          )}
+          {props.children ?? <TextView text={props.item.text} itemId={props.item.id} />}
         </div>
         <div className='tw:flex tw:-mb-1 tw:flex-row tw:mr-2 tw:mt-1'>
           {infoExpanded ? (

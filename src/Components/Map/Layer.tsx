@@ -3,6 +3,7 @@
 import { Children, isValidElement, useEffect, useState } from 'react'
 import { Marker, Tooltip } from 'react-leaflet'
 
+import { useAppState } from '#components/AppShell/hooks/useAppState'
 import { encodeTag } from '#utils/FormatTags'
 import { hashTagRegex } from '#utils/HashTagRegex'
 import MarkerIconFactory from '#utils/MarkerIconFactory'
@@ -85,6 +86,8 @@ export const Layer = ({
   const isGroupTypeVisible = useIsGroupTypeVisible()
 
   const visibleGroupTypes = useVisibleGroupType()
+
+  const appState = useAppState()
 
   useEffect(() => {
     data &&
@@ -244,6 +247,7 @@ export const Layer = ({
                     color1,
                     color2,
                     item.markerIcon ? item.markerIcon : markerIcon,
+                    appState.assetsApi.url,
                   )}
                   key={item.id}
                   position={[latitude, longitude]}

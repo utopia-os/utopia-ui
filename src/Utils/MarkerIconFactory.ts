@@ -2,8 +2,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import { divIcon, Point } from 'leaflet'
 
-import { useAppState } from '#components/AppShell/hooks/useAppState'
-
 export interface markerIcon {
   image: string
   size?: number
@@ -12,7 +10,7 @@ export interface markerIcon {
 const createSvg = (shape: string, markerColor: string, borderColor: string) => {
   const svgMap = {
     circle:
-      '<svg width="32" height="44" viewBox="0 0 35 45" xmlns="http://www.w3.org/2000/svg"><path d="M17.5 2.746c-8.284 0-15 6.853-15 15.307 0 .963.098 1.902.265 2.816a15.413 15.413 0 002.262 5.684l.134.193 12.295 17.785 12.439-17.863.056-.08a15.422 15.422 0 002.343-6.112c.123-.791.206-1.597.206-2.423 0-8.454-6.716-15.307-15-15.307" fill="' +
+      '<svg width="33" height="44" viewBox="0 0 35 45" xmlns="http://www.w3.org/2000/svg"><path d="M17.5 2.746c-8.284 0-15 6.853-15 15.307 0 .963.098 1.902.265 2.816a15.413 15.413 0 002.262 5.684l.134.193 12.295 17.785 12.439-17.863.056-.08a15.422 15.422 0 002.343-6.112c.123-.791.206-1.597.206-2.423 0-8.454-6.716-15.307-15-15.307" fill="' +
       markerColor +
       '" /><path d="M17.488 2.748c-8.284 0-15 6.853-15 15.307 0 .963.098 1.902.265 2.816a15.413 15.413 0 002.262 5.684l.134.193 12.295 17.785 12.44-17.863.055-.08a15.422 15.422 0 002.343-6.112c.124-.791.206-1.597.206-2.423 0-8.454-6.716-15.307-15-15.307m0 1.071c7.68 0 13.929 6.386 13.929 14.236 0 .685-.064 1.423-.193 2.258-.325 2.075-1.059 3.99-2.164 5.667l-.055.078-11.557 16.595L6.032 26.14l-.12-.174a14.256 14.256 0 01-2.105-5.29 14.698 14.698 0 01-.247-2.62c0-7.851 6.249-14.237 13.928-14.237" fill="' +
       borderColor +
@@ -36,17 +34,31 @@ const createSvg = (shape: string, markerColor: string, borderColor: string) => {
   return svgMap[shape]
 }
 
-const MarkerIconFactory = (shape: string, color1: string, color2: string, icon: markerIcon) => {
-  const appState = useAppState()
-
-  return divIcon({
-    html: `<div class="svg-container">${createSvg(shape, color1, color2)}<img src="${appState.assetsApi.url + icon.image}"></div>`,
-    iconAnchor: [17, 40],
-    popupAnchor: [0, -40],
-    iconSize: new Point(40, 46),
-    className: 'leaflet-data-marker',
-    shadowAnchor: [0, 0],
-  })
+const MarkerIconFactory = (
+  shape: string,
+  color1: string,
+  color2: string,
+  icon?: markerIcon,
+  assetsURL?: string,
+) => {
+  if (icon && assetsURL)
+    return divIcon({
+      html: `<div class="svg-container">${createSvg(shape, color1, color2)}<img class="overlay-svg" style="width: ${icon.size ? icon.size : '12.5'}px; filter: invert(1) brightness(2);" src="${assetsURL + icon.image}"></div>`,
+      iconAnchor: [17, 40],
+      popupAnchor: [0, -40],
+      iconSize: new Point(40, 46),
+      className: 'leaflet-data-marker',
+      shadowAnchor: [0, 0],
+    })
+  else
+    return divIcon({
+      html: `<div class="svg-container">${createSvg(shape, color1, color2)}<svg fill="#fff" class="overlay-svg" width="13"xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256z"/></svg></div>`,
+      iconAnchor: [17, 40],
+      popupAnchor: [0, -40],
+      iconSize: new Point(40, 46),
+      className: 'leaflet-data-marker',
+      shadowAnchor: [0, 0],
+    })
 }
 
 export default MarkerIconFactory

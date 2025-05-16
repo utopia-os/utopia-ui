@@ -21,8 +21,8 @@ import { TabsForm } from './Templates/TabsForm'
 
 import type { FormState } from '#types/FormState'
 import type { Item } from '#types/Item'
+import type { MarkerIcon } from '#types/MarkerIcon'
 import type { Tag } from '#types/Tag'
-import type { markerIcon } from '#utils/MarkerIconFactory'
 
 /**
  * @category Profile
@@ -40,7 +40,7 @@ export function ProfileForm() {
     telephone: '',
     next_appointment: '',
     image: '',
-    marker_icon: {} as markerIcon,
+    marker_icon: {} as MarkerIcon,
     offers: [] as Tag[],
     needs: [] as Tag[],
     relations: [] as Item[],

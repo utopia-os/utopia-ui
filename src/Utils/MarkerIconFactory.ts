@@ -2,10 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import { divIcon, Point } from 'leaflet'
 
-export interface markerIcon {
-  image: string
-  size?: number
-}
+import type { MarkerIcon } from '#types/MarkerIcon'
 
 const createSvg = (shape: string, markerColor: string, borderColor: string) => {
   const svgMap = {
@@ -38,7 +35,7 @@ const MarkerIconFactory = (
   shape: string,
   color1: string,
   color2: string,
-  icon?: markerIcon,
+  icon?: MarkerIcon,
   assetsURL?: string,
 ) => {
   if (icon && assetsURL)

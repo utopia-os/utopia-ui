@@ -1,6 +1,6 @@
-import type { markerIcon } from '#utils/MarkerIconFactory'
 import type { ItemsApi } from './ItemsApi'
 import type { LayerProps } from './LayerProps'
+import type { MarkerIcon } from './MarkerIcon'
 import type { Relation } from './Relation'
 import type { UserItem } from './UserItem'
 import type { Point } from 'geojson'
@@ -44,7 +44,7 @@ export interface Item {
   needs?: TagIds
   status?: string
   color?: string
-  markerIcon?: markerIcon
+  markerIcon?: MarkerIcon
   avatar?: string
   new?: boolean
   contact?: string

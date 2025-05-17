@@ -12,7 +12,7 @@ interface groupType {
   groupTypes_id: {
     name: string
     color: string
-    image: string
+    image: { id: string }
     markerIcon: string
   }
 }
@@ -30,10 +30,10 @@ export const GroupSubheaderForm = ({
   groupTypes?: groupType[]
 }) => {
   useEffect(() => {
-    if (groupTypes && groupStates) {
+    if (groupTypes && groupStates && state.name !== '') {
       const groupType = groupTypes.find((gt) => gt.groupTypes_id.name === state.group_type)
       const customImage = !groupTypes.some(
-        (gt) => gt.groupTypes_id.image === state.image || !state.image,
+        (gt) => gt.groupTypes_id.image.id === state.image || !state.image,
       )
       setState((prevState) => ({
         ...prevState,
@@ -41,7 +41,7 @@ export const GroupSubheaderForm = ({
         marker_icon: groupType?.groupTypes_id.markerIcon || groupTypes[0].groupTypes_id.markerIcon,
         image: customImage
           ? state.image
-          : groupType?.groupTypes_id.image || groupTypes[0].groupTypes_id.image,
+          : groupType?.groupTypes_id.image.id || groupTypes[0].groupTypes_id.image.id,
         status: state.status || groupStates[0],
         group_type: state.group_type || groupTypes[0].groupTypes_id.name,
       }))

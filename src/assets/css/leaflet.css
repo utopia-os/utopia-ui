@@ -1,4 +1,4 @@
-.leaflet-control-attribution {
+ .leaflet-control-attribution {
     display: none;
 }
 
@@ -57,3 +57,42 @@
     color: var(--color-base-content);
     opacity: 50%;
 }
+
+.leaflet-top {
+    top: 6em
+}
+
+.leaflet-left {
+    left: 0.5em
+}
+
+.leaflet-control-zoom {
+    border-radius: var(--radius-box);
+    color: var(--color-base-content);
+    background-color: var(--color-base-100);
+    width: calc(var(--tw-spacing) * 10);
+    border: 2px solid var(--color-base-300) !important;
+    box-shadow: 0 20px 25px -5px  rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1) !important;
+}
+
+.leaflet-control-zoom-in {
+    border-top-left-radius: var(--radius-box) !important;
+    border-top-right-radius: var(--radius-box) !important;
+    color: var(--color-base-content) !important;
+    background-color: var(--color-base-100) !important;
+    width: calc(var(--tw-spacing) * 9) !important;
+    border-bottom: 1px solid var(--color-base-300) !important;
+    height: calc(var(--tw-spacing) * 9) !important;
+    line-height: 40px !important;
+}
+
+.leaflet-control-zoom-out {
+    border-bottom-left-radius: var(--radius-box) !important;
+    border-bottom-right-radius: var(--radius-box) !important;
+    color: var(--color-base-content) !important;
+    background-color: var(--color-base-100) !important;
+    width: calc(var(--tw-spacing) * 9) !important;
+    height: calc(var(--tw-spacing) * 9) !important;
+    line-height: 40px !important;
+}
+

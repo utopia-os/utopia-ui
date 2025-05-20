@@ -40,7 +40,11 @@ function App() {
     <UtopiaMap center={[50.6, 15.5]} zoom={5} height='100dvh' width="100dvw">
     <Layer
       name='events'
-      markerIcon='calendar'
+      markerIcon={
+        {image: "calendar.svg",
+         size: 14
+        }
+      }
       markerShape='square'
       markerDefaultColor='#700'
       data={events}
@@ -51,7 +55,9 @@ function App() {
       />
     <Layer
       name='places'
-      markerIcon='point'
+      markerIcon={
+        {image: "point.svg"}
+      }
       markerShape='circle'
       markerDefaultColor='#007'
       data={places}

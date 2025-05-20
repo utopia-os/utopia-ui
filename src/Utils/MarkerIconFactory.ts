@@ -38,8 +38,6 @@ const MarkerIconFactory = (
   icon?: MarkerIcon,
   assetsURL?: string,
 ) => {
-  console.log(icon)
-  console.log(assetsURL)
   if (icon)
     return divIcon({
       html: `<div class="svg-container">${createSvg(shape, color1, color2)}<img class="overlay-svg" style="width: ${icon.size ? icon.size : '12.5'}px; filter: invert(1) brightness(2);" src="${`${assetsURL ?? ''}` + icon.image}"></div>`,

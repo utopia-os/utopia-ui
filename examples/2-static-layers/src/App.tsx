@@ -42,7 +42,7 @@ function App() {
       name='events'
       markerIcon={
         {image: "calendar.svg",
-         size: 14
+         size: 13
         }
       }
       markerShape='square'

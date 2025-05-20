@@ -180,7 +180,7 @@ export const SearchControl = () => {
                   {item.layer?.menuIcon ? (
                     <SVG
                       src={item.layer.menuIcon}
-                      className='tw:text-current tw:mr-2 tw:mt-0 tw:w-5'
+                      className='tw:text-current tw:mr-2 tw:mt-0 tw:w-5 tw:h-5'
                       preProcessor={(code: string): string => {
                         code = code.replace(/fill=".*?"/g, 'fill="currentColor"')
                         code = code.replace(/stroke=".*?"/g, 'stroke="currentColor"')

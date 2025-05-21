@@ -2,6 +2,7 @@ import type { Item } from './Item'
 import type { ItemFormPopupProps } from './ItemFormPopupProps'
 import type { ItemsApi } from './ItemsApi'
 import type { ItemType } from './ItemType'
+import type { MarkerIcon } from './MarkerIcon'
 
 /**
  * @category Types
@@ -14,7 +15,7 @@ export interface LayerProps {
   menuIcon: string
   menuColor: string
   menuText: string
-  markerIcon: string
+  markerIcon: MarkerIcon
   markerShape: string
   markerDefaultColor: string
   markerDefaultColor2?: string

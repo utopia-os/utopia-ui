@@ -7,6 +7,7 @@ import typescript from '@rollup/plugin-typescript'
 import { dts } from 'rollup-plugin-dts'
 import postcss from 'rollup-plugin-postcss'
 import svg from 'rollup-plugin-svg'
+import commonjs from '@rollup/plugin-commonjs'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -37,6 +38,10 @@ export default [
       }),
       postcss({
         plugins: [],
+      }),
+      commonjs({
+        include: /node_modules/,
+        requireReturnsDefault: 'auto', // this solves missing default export
       }),
       typescript({
         tsconfig: './tsconfig.json',

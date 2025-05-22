@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 
+import SimpleMDE from 'react-simplemde-editor'
+
 interface TextAreaProps {
   labelTitle?: string
   labelStyle?: string
@@ -26,21 +28,22 @@ export function TextAreaInput({
   required = true,
   updateFormValue,
 }: TextAreaProps) {
-  const ref = useRef<HTMLTextAreaElement>(null)
+  const ref = useRef<HTMLDivElement>(null)
   const [inputValue, setInputValue] = useState<string>(defaultValue)
 
   useEffect(() => {
     setInputValue(defaultValue)
   }, [defaultValue])
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newValue = e.target.value
+  const handleChange = (value: string) => {
+    const newValue = value
     setInputValue(newValue)
     if (updateFormValue) {
       updateFormValue(newValue)
     }
   }
 
+  console.log('required not enforced', required)
   return (
     <div className={`tw:form-control tw:w-full ${containerStyle ?? ''}`}>
       {labelTitle ? (
@@ -50,15 +53,78 @@ export function TextAreaInput({
           </span>
         </label>
       ) : null}
-      <textarea
-        required={required}
+      <SimpleMDE
         ref={ref}
+        id={dataField}
         value={inputValue}
-        name={dataField}
-        className={`tw:textarea tw:textarea-bordered tw:w-full tw:leading-5 ${inputStyle ?? ''}`}
         placeholder={placeholder ?? ''}
         onChange={handleChange}
-      ></textarea>
+        /*
+        options={
+          autoDownloadFontAwesome?: boolean;
+          autofocus?: boolean;
+          autosave?: AutoSaveOptions;
+          autoRefresh?: boolean | { delay: number; };
+          blockStyles?: BlockStyleOptions;
+          element?: HTMLElement;
+          forceSync?: boolean;
+          hideIcons?: ReadonlyArray<ToolbarButton>;
+          indentWithTabs?: boolean;
+          initialValue?: string;
+          insertTexts?: InsertTextOptions;
+          lineNumbers?: boolean;
+          lineWrapping?: boolean;
+          minHeight?: string;
+          maxHeight?: string;
+          parsingConfig?: ParsingOptions;
+          placeholder?: string;
+          previewClass?: string | ReadonlyArray<string>;
+          previewImagesInEditor?: boolean;
+          imagesPreviewHandler?: (src: string) => string,
+          previewRender?: (markdownPlaintext: string, previewElement: HTMLElement) => string | null;
+          promptURLs?: boolean;
+          renderingConfig?: RenderingOptions;
+          shortcuts?: Shortcuts;
+          showIcons?: ReadonlyArray<ToolbarButton>;
+          spellChecker?: boolean | ((options: SpellCheckerOptions) => void);
+          inputStyle?: 'textarea' | 'contenteditable';
+          nativeSpellcheck?: boolean;
+          sideBySideFullscreen?: boolean;
+          status?: boolean | ReadonlyArray<string | StatusBarItem>;
+          styleSelectedText?: boolean;
+          tabSize?: number;
+          toolbar?: boolean | ReadonlyArray<'|' | ToolbarButton | ToolbarIcon | ToolbarDropdownIcon>;
+          toolbarTips?: boolean;
+          toolbarButtonClassPrefix?: string;
+          onToggleFullScreen?: (goingIntoFullScreen: boolean) => void;
+          theme?: string;
+          scrollbarStyle?: string;
+          unorderedListStyle?: '*' | '-' | '+';
+
+          uploadImage?: boolean;
+          imageMaxSize?: number;
+          imageAccept?: string;
+          imageUploadFunction?: (file: File, onSuccess: (url: string) => void, onError: (error: string) => void) => void;
+          imageUploadEndpoint?: string;
+          imagePathAbsolute?: boolean;
+          imageCSRFToken?: string;
+          imageCSRFName?: string;
+          imageCSRFHeader?: boolean;
+          imageTexts?: ImageTextsOptions;
+          imageInputName?: string
+          errorMessages?: ImageErrorTextsOptions;
+          errorCallback?: (errorMessage: string) => void;
+
+          promptTexts?: PromptTexts;
+          syncSideBySidePreviewScroll?: boolean;
+
+          overlayMode?: OverlayModeOptions;
+
+          direction?: 'ltr' | 'rtl';
+        }
+        */
+        className={`tw:textarea tw:textarea-bordered tw:w-full tw:leading-5 ${inputStyle ?? ''}`}
+      />
     </div>
   )
 }

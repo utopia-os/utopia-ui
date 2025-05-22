@@ -13,3 +13,6 @@ import '#assets/css/misc.css'
 import '#assets/css/marker-icons.css'
 import '#assets/css/leaflet.css'
 import '#assets/css/color-picker.css'
+
+// MD Editor
+import 'easymde/dist/easymde.min.css'

@@ -1,6 +1,7 @@
 import { useContext, useMemo, useState } from 'react'
 import { Marker, Tooltip } from 'react-leaflet'
 
+import { useAppState } from '#components/AppShell/hooks/useAppState'
 import {
   useFilterTags,
   useIsLayerVisible,
@@ -32,6 +33,8 @@ export const PopupView = ({ children }: { children?: React.ReactNode }) => {
   const { name, markerDefaultColor, markerDefaultColor2, markerShape, markerIcon } = layerContext
 
   const filterTags = useFilterTags()
+
+  const appState = useAppState()
 
   const items = useItems()
 
@@ -149,7 +152,13 @@ export const PopupView = ({ children }: { children?: React.ReactNode }) => {
               selectPosition && setMarkerClicked(item)
             },
           }}
-          icon={MarkerIconFactory(markerShape, color1, color2, item.markerIcon ?? markerIcon)}
+          icon={MarkerIconFactory(
+            markerShape,
+            color1,
+            color2,
+            item.markerIcon ?? markerIcon,
+            appState.assetsApi.url,
+          )}
           position={[latitude, longitude]}
         >
           <ItemViewPopup

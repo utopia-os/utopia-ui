@@ -1,12 +1,14 @@
 import { createContext } from 'react'
 
+import type { MarkerIcon } from '#types/MarkerIcon'
+
 interface LayerContextType {
   name: string
   markerDefaultColor: string
   markerDefaultColor2: string
   markerShape: string
-  markerIcon: string
   menuText: string
+  markerIcon?: MarkerIcon
 }
 
 const LayerContext = createContext<LayerContextType>({
@@ -14,7 +16,6 @@ const LayerContext = createContext<LayerContextType>({
   markerDefaultColor: '',
   markerDefaultColor2: '',
   markerShape: '',
-  markerIcon: '',
   menuText: '',
 })
 

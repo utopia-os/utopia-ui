@@ -245,7 +245,10 @@ export function UtopiaMapInner({
 
     const params = new URLSearchParams(location.search)
     const urlLayersParam = params.get('layers')
-    if (!urlLayersParam) return
+    if (!urlLayersParam) {
+      initializedRef.current = true
+      return
+    }
 
     const urlLayerNames = urlLayersParam.split(',').filter(Boolean)
 

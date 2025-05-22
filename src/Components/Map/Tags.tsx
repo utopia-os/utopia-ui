@@ -1,8 +1,6 @@
 import { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
 
-import { useAddFilterTag, useFilterTags, useResetFilterTags } from './hooks/useFilter'
-import { useSetTagData, useSetTagApi, useTags } from './hooks/useTags'
+import { useSetTagData, useSetTagApi } from './hooks/useTags'
 
 import type { ItemsApi } from '#types/ItemsApi'
 import type { Tag } from '#types/Tag'

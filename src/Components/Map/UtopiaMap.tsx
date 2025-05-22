@@ -51,6 +51,7 @@ function UtopiaMap({
   showFilterControl = false,
   showGratitudeControl = false,
   showLayerControl = true,
+  showZoomControl = false,
   showThemeControl = false,
   defaultTheme,
   donationWidget,
@@ -74,6 +75,8 @@ function UtopiaMap({
   showLayerControl?: boolean
   /** show the layer control widget (default true) */
   showGratitudeControl?: boolean
+  /** show zoom control widget (default false) */
+  showZoomControl?: boolean
   /** show a widget to switch the theme */
   showThemeControl?: boolean
   /** the defaut theme */
@@ -89,7 +92,7 @@ function UtopiaMap({
         style={{ height, width }}
         center={new LatLng(center[0], center[1])}
         zoom={zoom}
-        zoomControl={false}
+        zoomControl={showZoomControl}
         maxZoom={19}
       >
         <UtopiaMapInner

@@ -13,6 +13,7 @@ export interface UtopiaMapProps {
   showLayerControl?: boolean
   showGratitudeControl?: boolean
   showThemeControl?: boolean
+  showZoomControl?: boolean
   infoText?: string
   donationWidget?: boolean
   defaultTheme?: string

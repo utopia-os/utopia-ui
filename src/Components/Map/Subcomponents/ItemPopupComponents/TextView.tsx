@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
@@ -177,8 +176,6 @@ export const TextView = ({
           }
 
           if (href?.startsWith('#')) {
-            console.log(href.slice(1).toLowerCase())
-            console.log(tags)
             const tag = tags.find(
               (t) => t.name.toLowerCase() === decodeURI(href).slice(1).toLowerCase(),
             )

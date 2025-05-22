@@ -17,4 +17,5 @@ export interface UtopiaMapProps {
   infoText?: string
   donationWidget?: boolean
   defaultTheme?: string
+  expandLayerControl?: boolean
 }

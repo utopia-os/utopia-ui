@@ -7,6 +7,9 @@ import typescript from '@rollup/plugin-typescript'
 import { dts } from 'rollup-plugin-dts'
 import postcss from 'rollup-plugin-postcss'
 import svg from 'rollup-plugin-svg'
+import replace from '@rollup/plugin-replace'
+import commonjs from '@rollup/plugin-commonjs'
+import json from '@rollup/plugin-json'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -32,8 +35,17 @@ export default [
     ],
     plugins: [
       aliasConfig,
+      replace({
+        preventAssignment: true,
+        'process.env.NODE_ENV': JSON.stringify('development'),
+      }),
+      commonjs({
+        include: /node_modules/,
+        requireReturnsDefault: 'auto',
+        babelHelpers: 'bundled',
+      }),
       resolve({
-        extensions: ['.ts', '.tsx'],
+        browser: true,
       }),
       postcss({
         plugins: [],
@@ -43,6 +55,7 @@ export default [
         noEmitOnError: true,
       }),
       svg({ base64: true }),
+      json(),
     ],
     external: [
       'react',

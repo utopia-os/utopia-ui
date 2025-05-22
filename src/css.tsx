@@ -14,3 +14,6 @@ import '#assets/css/marker-icons.css'
 import '#assets/css/leaflet.css'
 import '#assets/css/color-picker.css'
 import '#assets/css/markdown.css'
+
+// Markdown editor
+import '@mdxeditor/editor/style.css'

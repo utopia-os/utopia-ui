@@ -37,6 +37,7 @@
   "devDependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": "^4.4.1",
     "@rollup/plugin-alias": "^5.1.1",
+    "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-typescript": "^12.1.2",
     "@tailwindcss/postcss": "^4.0.14",
@@ -92,6 +93,9 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.17",
+    "@mdxeditor/editor": "^3.32.3",
+    "@rollup/plugin-commonjs": "^28.0.3",
+    "@rollup/plugin-replace": "^6.0.2",
     "@tanstack/react-query": "^5.17.8",
     "axios": "^1.6.5",
     "date-fns": "^3.3.1",
@@ -117,5 +121,8 @@
     "#types/*": "./src/types/*",
     "#src/*": "./src/*",
     "#root/*": "./*"
+  },
+  "overrides": {
+    "static-browser-server": "https://github.com/codesandbox/static-browser-server.git#81103929dd7e2a1937412dc1e4fcfe20bba6aff7"
   }
 }

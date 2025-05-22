@@ -22,9 +22,7 @@ import {
   useAddVisibleLayer,
   useFilterTags,
   useResetFilterTags,
-  useResetVisibleLayers,
   useToggleVisibleLayer,
-  useVisibleLayer,
 } from './hooks/useFilter'
 import { useLayers } from './hooks/useLayers'
 import { useLeafletRefs } from './hooks/useLeafletRefs'
@@ -56,6 +54,7 @@ export function UtopiaMapInner({
   showThemeControl = false,
   defaultTheme = '',
   donationWidget,
+  expandLayerControl,
 }: {
   children?: React.ReactNode
   geo?: GeoJsonObject
@@ -65,6 +64,7 @@ export function UtopiaMapInner({
   donationWidget?: boolean
   showThemeControl?: boolean
   defaultTheme?: string
+  expandLayerControl?: boolean
 }) {
   const selectNewItemPosition = useSelectPosition()
   const setSelectNewItemPosition = useSetSelectPosition()
@@ -272,7 +272,7 @@ export function UtopiaMapInner({
       </Control>
       <Control position='bottomLeft' zIndex='999' absolute>
         {showFilterControl && <FilterControl />}
-        {showLayerControl && <LayerControl />}
+        {showLayerControl && <LayerControl expandLayerControl={expandLayerControl ?? false} />}
         {showGratitudeControl && <GratitudeControl />}
       </Control>
       <TileLayer

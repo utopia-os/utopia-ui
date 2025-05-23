@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-
 import SimpleMDE from 'react-simplemde-editor'
 
 interface TextAreaProps {
@@ -59,6 +58,7 @@ export function TextAreaInput({
         value={inputValue}
         placeholder={placeholder ?? ''}
         onChange={handleChange}
+        options={{ status: false }}
         /*
         options={
           autoDownloadFontAwesome?: boolean;
@@ -123,7 +123,7 @@ export function TextAreaInput({
           direction?: 'ltr' | 'rtl';
         }
         */
-        className={`tw:textarea tw:textarea-bordered tw:w-full tw:leading-5 ${inputStyle ?? ''}`}
+        className={`${inputStyle ?? ''}`}
       />
     </div>
   )

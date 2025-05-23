@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable no-case-declarations */
-import { useCallback, useReducer, createContext, useContext, useState } from 'react'
+import { useCallback, useReducer, createContext, useContext, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useLayers } from './useLayers'
@@ -99,6 +99,28 @@ function useFilterManager(initialTags: Tag[]): {
         throw new Error()
     }
   }, initialLayers)
+
+  const allLayers = useLayers()
+
+  useEffect(() => {
+    if (allLayers.length === 0) return
+
+    const visibleNames = visibleLayers.map((l) => l.name)
+    const allNames = allLayers.map((l) => l.name)
+    const params = new URLSearchParams(location.search)
+
+    const allVisible =
+      visibleNames.length === allNames.length &&
+      visibleNames.every((name) => allNames.includes(name))
+
+    if (allVisible) {
+      params.delete('layers')
+    } else {
+      params.set('layers', visibleNames.join(','))
+    }
+
+    navigate(`${location.pathname}?${params.toString()}`, { replace: true })
+  }, [visibleLayers, allLayers, navigate])
 
   const [visibleGroupTypes, dispatchGroupTypes] = useReducer(
     (state: string[], action: ActionType) => {

@@ -17,7 +17,13 @@ import { useTheme } from '#components/AppShell/hooks/useTheme'
 import { containsUUID } from '#utils/ContainsUUID'
 
 import { useClusterRef, useSetClusterRef } from './hooks/useClusterRef'
-import { useAddVisibleLayer } from './hooks/useFilter'
+import {
+  useAddFilterTag,
+  useAddVisibleLayer,
+  useFilterTags,
+  useResetFilterTags,
+  useToggleVisibleLayer,
+} from './hooks/useFilter'
 import { useLayers } from './hooks/useLayers'
 import { useLeafletRefs } from './hooks/useLeafletRefs'
 import { usePopupForm } from './hooks/usePopupForm'
@@ -26,6 +32,7 @@ import {
   useSetMapClicked,
   useSetSelectPosition,
 } from './hooks/useSelectPosition'
+import { useTags } from './hooks/useTags'
 import AddButton from './Subcomponents/AddButton'
 import { Control } from './Subcomponents/Controls/Control'
 import { FilterControl } from './Subcomponents/Controls/FilterControl'
@@ -47,6 +54,7 @@ export function UtopiaMapInner({
   showThemeControl = false,
   defaultTheme = '',
   donationWidget,
+  expandLayerControl,
 }: {
   children?: React.ReactNode
   geo?: GeoJsonObject
@@ -56,6 +64,7 @@ export function UtopiaMapInner({
   donationWidget?: boolean
   showThemeControl?: boolean
   defaultTheme?: string
+  expandLayerControl?: boolean
 }) {
   const selectNewItemPosition = useSelectPosition()
   const setSelectNewItemPosition = useSetSelectPosition()
@@ -198,6 +207,63 @@ export function UtopiaMapInner({
     }
   }
 
+  const addFilterTag = useAddFilterTag()
+  const resetFilterTags = useResetFilterTags()
+  const tags = useTags()
+  const filterTags = useFilterTags()
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const urlTags = params.get('tags')
+    const decodedTags = urlTags ? decodeURIComponent(urlTags) : ''
+    const decodedTagsArray = decodedTags.split(';').filter(Boolean)
+
+    const urlDiffersFromState =
+      decodedTagsArray.some(
+        (ut) => !filterTags.find((ft) => ut.toLowerCase() === ft.name.toLowerCase()),
+      ) ||
+      filterTags.some(
+        (ft) => !decodedTagsArray.find((ut) => ut.toLowerCase() === ft.name.toLowerCase()),
+      )
+
+    if (urlDiffersFromState) {
+      resetFilterTags()
+      decodedTagsArray.forEach((urlTag) => {
+        const match = tags.find((t) => t.name.toLowerCase() === urlTag.toLowerCase())
+        if (match) addFilterTag(match)
+      })
+    }
+  }, [location, tags, filterTags, addFilterTag, resetFilterTags])
+
+  const toggleVisibleLayer = useToggleVisibleLayer()
+  const allLayers = useLayers()
+
+  const initializedRef = useRef(false)
+
+  useEffect(() => {
+    if (initializedRef.current || allLayers.length === 0) return
+
+    const params = new URLSearchParams(location.search)
+    const urlLayersParam = params.get('layers')
+    if (!urlLayersParam) {
+      initializedRef.current = true
+      return
+    }
+
+    const urlLayerNames = urlLayersParam.split(',').filter(Boolean)
+
+    const layerNamesToHide = allLayers
+      .map((l) => l.name)
+      .filter((name) => !urlLayerNames.includes(name))
+
+    layerNamesToHide.forEach((name) => {
+      const match = allLayers.find((l) => l.name === name)
+      if (match) toggleVisibleLayer(match)
+    })
+
+    initializedRef.current = true
+  }, [location, allLayers, toggleVisibleLayer])
+
   return (
     <div className={`tw:h-full ${selectNewItemPosition != null ? 'crosshair-cursor-enabled' : ''}`}>
       <Outlet />
@@ -207,7 +273,7 @@ export function UtopiaMapInner({
       </Control>
       <Control position='bottomLeft' zIndex='999' absolute>
         {showFilterControl && <FilterControl />}
-        {showLayerControl && <LayerControl />}
+        {showLayerControl && <LayerControl expandLayerControl={expandLayerControl ?? false} />}
         {showGratitudeControl && <GratitudeControl />}
       </Control>
       <TileLayer

@@ -51,9 +51,11 @@ function UtopiaMap({
   showFilterControl = false,
   showGratitudeControl = false,
   showLayerControl = true,
+  showZoomControl = false,
   showThemeControl = false,
   defaultTheme,
   donationWidget,
+  expandLayerControl,
 }: {
   /** height of the map (default '500px') */
   height?: string
@@ -73,12 +75,16 @@ function UtopiaMap({
   showLayerControl?: boolean
   /** show the layer control widget (default true) */
   showGratitudeControl?: boolean
+  /** show zoom control widget (default false) */
+  showZoomControl?: boolean
   /** show a widget to switch the theme */
   showThemeControl?: boolean
   /** the defaut theme */
   defaultTheme?: string
   /** ask to donate to the Utopia Project OpenCollective campaign (default false) */
   donationWidget?: boolean
+  /** open layer control on map initialisation */
+  expandLayerControl?: boolean
 }) {
   return (
     <ContextWrapper>
@@ -86,7 +92,7 @@ function UtopiaMap({
         style={{ height, width }}
         center={new LatLng(center[0], center[1])}
         zoom={zoom}
-        zoomControl={false}
+        zoomControl={showZoomControl}
         maxZoom={19}
       >
         <UtopiaMapInner
@@ -97,6 +103,7 @@ function UtopiaMap({
           donationWidget={donationWidget}
           showThemeControl={showThemeControl}
           defaultTheme={defaultTheme}
+          expandLayerControl={expandLayerControl}
         >
           {children}
         </UtopiaMapInner>

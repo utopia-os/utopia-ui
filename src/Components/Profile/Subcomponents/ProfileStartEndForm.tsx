@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import { PopupStartEndInput } from '#components/Map'
+import { PopupStartEndInput } from '#components/Map/Subcomponents/ItemPopupComponents'
 
 import type { Item } from '#types/Item'
 

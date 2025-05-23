@@ -55,6 +55,7 @@ function UtopiaMap({
   showThemeControl = false,
   defaultTheme,
   donationWidget,
+  expandLayerControl,
 }: {
   /** height of the map (default '500px') */
   height?: string
@@ -82,6 +83,8 @@ function UtopiaMap({
   defaultTheme?: string
   /** ask to donate to the Utopia Project OpenCollective campaign (default false) */
   donationWidget?: boolean
+  /** open layer control on map initialisation */
+  expandLayerControl?: boolean
 }) {
   return (
     <ContextWrapper>
@@ -100,6 +103,7 @@ function UtopiaMap({
           donationWidget={donationWidget}
           showThemeControl={showThemeControl}
           defaultTheme={defaultTheme}
+          expandLayerControl={expandLayerControl}
         >
           {children}
         </UtopiaMapInner>

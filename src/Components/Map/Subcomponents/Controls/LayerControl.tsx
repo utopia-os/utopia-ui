@@ -5,8 +5,8 @@ import LayerSVG from '#assets/layer.svg'
 import { useIsLayerVisible, useToggleVisibleLayer } from '#components/Map/hooks/useFilter'
 import { useLayers } from '#components/Map/hooks/useLayers'
 
-export function LayerControl() {
-  const [open, setOpen] = useState(false)
+export function LayerControl({ expandLayerControl = false }: { expandLayerControl: boolean }) {
+  const [open, setOpen] = useState(expandLayerControl)
 
   const layers = useLayers()
 

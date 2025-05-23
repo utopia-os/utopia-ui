@@ -101,9 +101,7 @@ export function ItemFormPopup(props: Props) {
       setSpinner(false)
       map.closePopup()
     } else {
-      const item = items.find(
-        (i) => i.user_created?.id === user?.id && i.layer?.id === popupForm.layer.id,
-      )
+      const item = items.find((i) => i.user_created?.id === user?.id && i.layer === popupForm.layer)
 
       const uuid = crypto.randomUUID()
       let success = false

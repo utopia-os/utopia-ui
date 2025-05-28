@@ -1,0 +1,31 @@
+@import 'tailwindcss' prefix(tw);
+
+@layer easymde {
+  .EasyMDEContainer h1 {
+    @apply tw:text-4xl;
+    @apply tw:font-bold;
+  }
+  .EasyMDEContainer h2 {
+    @apply tw:text-3xl;
+    @apply tw:font-bold;
+  }
+  .EasyMDEContainer h3 {
+    @apply tw:text-2xl;
+    @apply tw:font-bold;
+  }
+  .EasyMDEContainer h4 {
+    @apply tw:text-xl;
+    @apply tw:font-semibold;
+  }
+  .EasyMDEContainer h5 {
+    @apply tw:text-lg;
+    @apply tw:font-semibold;
+  }
+  .EasyMDEContainer h6 {
+    @apply tw:text-sm;
+    @apply tw:font-semibold;
+  }
+  .EasyMDEContainer a {
+    @apply tw:text-blue-600 tw:underline;
+  }
+}

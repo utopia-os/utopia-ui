@@ -16,3 +16,4 @@ import '#assets/css/color-picker.css'
 
 // MD Editor
 import 'easymde/dist/easymde.min.css'
+import '#assets/css/easymde.css'

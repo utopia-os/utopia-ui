@@ -51,7 +51,6 @@ export function TextAreaInput({
       lineNumbers: false,
       minHeight: '100px',
       forceSync: true,
-      // inputStyle: 'textarea',
       /*
           autoDownloadFontAwesome?: boolean;
           autofocus?: boolean;

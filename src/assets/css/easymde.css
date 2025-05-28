@@ -1,5 +1,7 @@
 @import 'tailwindcss' prefix(tw);
 
+@import 'easymde/dist/easymde.min.css';
+
 @layer easymde {
   .EasyMDEContainer h1 {
     @apply tw:text-4xl;
@@ -27,5 +29,13 @@
   }
   .EasyMDEContainer a {
     @apply tw:text-blue-600 tw:underline;
+  }
+
+  .EasyMDEContainer .fullscreen{
+    background: var(--color-base-100) !important;
+  }
+
+  .EasyMDEContainer button.active, button:hover{
+    background: var(--color-base-100) !important;
   }
 }

@@ -91,6 +91,7 @@ export const TabsForm = ({
             )}
 
             <TextAreaInput
+              labelTitle='About me'
               placeholder='about ...'
               defaultValue={item?.text ? item.text : ''}
               updateFormValue={(v) =>
@@ -99,10 +100,11 @@ export const TabsForm = ({
                   text: v,
                 }))
               }
-              containerStyle='tw:grow'
+              // containerStyle='tw:grow'
               inputStyle={`tw:h-full  ${!item.layer.itemType.show_start_end_input && 'tw:border-t-0 tw:rounded-tl-none'}`}
             />
             <TextAreaInput
+              labelTitle='Contact Info'
               placeholder='contact info ...'
               defaultValue={state.contact || ''}
               updateFormValue={(c) =>
@@ -112,7 +114,8 @@ export const TabsForm = ({
                 }))
               }
               inputStyle=''
-              containerStyle='tw:pt-4 tw:h-24 tw:flex-none'
+              containerStyle='tw:pt-4'
+              // containerStyle='tw:pt-4 tw:h-24 tw:flex-none'
               required={false}
             />
           </div>

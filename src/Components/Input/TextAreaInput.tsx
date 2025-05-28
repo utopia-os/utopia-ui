@@ -1,5 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
-import SimpleMDE from 'react-simplemde-editor'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { SimpleMdeReact } from 'react-simplemde-editor'
+
+import type SimpleMDE from 'easymde'
+import type { InputHTMLAttributes } from 'react'
 
 interface TextAreaProps {
   labelTitle?: string
@@ -42,25 +45,14 @@ export function TextAreaInput({
     }
   }
 
-  console.log('required not enforced', required)
-  return (
-    <div className={`tw:form-control tw:w-full ${containerStyle ?? ''}`}>
-      {labelTitle ? (
-        <label className='tw:label'>
-          <span className={`tw:label-text tw:text-base-content ${labelStyle ?? ''}`}>
-            {labelTitle}
-          </span>
-        </label>
-      ) : null}
-      <SimpleMDE
-        ref={ref}
-        id={dataField}
-        value={inputValue}
-        placeholder={placeholder ?? ''}
-        onChange={handleChange}
-        options={{ status: false }}
-        /*
-        options={
+  const options = useMemo(() => {
+    return {
+      status: false,
+      lineNumbers: false,
+      minHeight: '100px',
+      forceSync: true,
+      // inputStyle: 'textarea',
+      /*
           autoDownloadFontAwesome?: boolean;
           autofocus?: boolean;
           autosave?: AutoSaveOptions;
@@ -72,7 +64,6 @@ export function TextAreaInput({
           indentWithTabs?: boolean;
           initialValue?: string;
           insertTexts?: InsertTextOptions;
-          lineNumbers?: boolean;
           lineWrapping?: boolean;
           minHeight?: string;
           maxHeight?: string;
@@ -121,8 +112,32 @@ export function TextAreaInput({
           overlayMode?: OverlayModeOptions;
 
           direction?: 'ltr' | 'rtl';
+          */
+    } as SimpleMDE.Options
+  }, [])
+
+  return (
+    <div className={`tw:form-control ${containerStyle ?? ''}`}>
+      {labelTitle ? (
+        <label className='tw:label'>
+          <span className={`tw:label-text tw:text-base-content ${labelStyle ?? ''}`}>
+            {labelTitle}
+            {required && !inputValue ? ' (this field is required)' : null}
+          </span>
+        </label>
+      ) : null}
+      <SimpleMdeReact
+        textareaProps={
+          {
+            required,
+          } as InputHTMLAttributes<HTMLTextAreaElement>
         }
-        */
+        ref={ref}
+        id={dataField}
+        value={inputValue}
+        placeholder={placeholder ?? ''}
+        onChange={handleChange}
+        options={options}
         className={`${inputStyle ?? ''}`}
       />
     </div>

@@ -49,7 +49,7 @@ export function TextAreaInput({
     return {
       status: false,
       lineNumbers: false,
-      minHeight: '100px',
+      minHeight: '150px',
       forceSync: true,
       /*
           autoDownloadFontAwesome?: boolean;

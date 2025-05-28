@@ -32,6 +32,7 @@ export function TextAreaInput({
 }: TextAreaProps) {
   const ref = useRef<HTMLDivElement>(null)
   const [inputValue, setInputValue] = useState<string>(defaultValue)
+  const [showToolbar, setShowToolbar] = useState<boolean>(false)
 
   useEffect(() => {
     setInputValue(defaultValue)
@@ -43,6 +44,14 @@ export function TextAreaInput({
     if (updateFormValue) {
       updateFormValue(newValue)
     }
+  }
+
+  const handleFocus = () => {
+    setShowToolbar(true)
+  }
+
+  const handleBlur = () => {
+    setShowToolbar(false)
   }
 
   const options = useMemo(() => {
@@ -136,8 +145,10 @@ export function TextAreaInput({
         value={inputValue}
         placeholder={placeholder ?? ''}
         onChange={handleChange}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         options={options}
-        className={`${inputStyle ?? ''}`}
+        className={`${inputStyle ?? ''} ${showToolbar ? '' : 'hide-toolbar'}`}
       />
     </div>
   )

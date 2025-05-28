@@ -1,8 +1,8 @@
 @import 'tailwindcss' prefix(tw);
 
-@import 'easymde/dist/easymde.min.css';
-
 @layer easymde {
+  @import 'easymde/dist/easymde.min.css';
+
   .EasyMDEContainer h1 {
     @apply tw:text-4xl;
     @apply tw:font-bold;
@@ -37,5 +37,9 @@
 
   .EasyMDEContainer button.active, button:hover{
     background: var(--color-base-100) !important;
+  }
+
+  .hide-toolbar .EasyMDEContainer .editor-toolbar {
+    display: none;
   }
 }

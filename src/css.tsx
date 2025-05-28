@@ -16,3 +16,36 @@ import '#assets/css/color-picker.css'
 
 // MD Editor
 import '#assets/css/easymde.css'
+
+import { dom, library } from '@fortawesome/fontawesome-svg-core'
+import {
+  faBold,
+  faItalic,
+  faHeading,
+  faQuoteLeft,
+  faListUl,
+  faListOl,
+  faLink,
+  faImage,
+  faEye,
+  faColumns,
+  faArrowsAlt,
+  faQuestionCircle,
+} from '@fortawesome/free-solid-svg-icons'
+
+library.add([
+  faBold,
+  faItalic,
+  faHeading,
+  faQuoteLeft,
+  faListUl,
+  faListOl,
+  faLink,
+  faImage,
+  faEye,
+  faColumns,
+  faArrowsAlt,
+  faQuestionCircle,
+])
+
+dom.insertCss()

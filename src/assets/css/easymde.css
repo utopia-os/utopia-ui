@@ -1,41 +1,48 @@
 @import 'tailwindcss' prefix(tw);
 
-@import 'easymde/dist/easymde.min.css';
-
 @layer easymde {
+  @import 'easymde/dist/easymde.min.css';
+
   .EasyMDEContainer h1 {
     @apply tw:text-3xl;
     @apply tw:font-bold;
   }
+
   .EasyMDEContainer h2 {
     @apply tw:text-2xl;
     @apply tw:font-bold;
   }
+
   .EasyMDEContainer h3 {
     @apply tw:text-xl;
     @apply tw:font-bold;
   }
+
   .EasyMDEContainer h4 {
     @apply tw:text-lg;
     @apply tw:font-semibold;
   }
+
   .EasyMDEContainer h5 {
     @apply tw:text-base;
     @apply tw:font-semibold;
   }
+
   .EasyMDEContainer h6 {
     @apply tw:text-sm;
     @apply tw:font-semibold;
   }
+
   .EasyMDEContainer a {
     @apply tw:text-blue-600 tw:underline;
   }
 
-  .EasyMDEContainer .fullscreen{
+  .EasyMDEContainer .fullscreen {
     background: var(--color-base-100) !important;
   }
 
-  .EasyMDEContainer button.active, button:hover{
+  .EasyMDEContainer button.active,
+  button:hover {
     background: var(--color-base-100) !important;
   }
 
@@ -48,5 +55,9 @@
   .editor-preview-side {
     background-color: var(--color-base-100) !important;
     color: var(--color-base-content) !important;
+  }
+
+  .hide-toolbar .EasyMDEContainer .editor-toolbar {
+    display: none;
   }
 }

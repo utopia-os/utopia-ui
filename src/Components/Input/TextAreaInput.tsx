@@ -34,6 +34,7 @@ export function TextAreaInput({
 }: TextAreaProps) {
   const ref = useRef<HTMLDivElement>(null)
   const [inputValue, setInputValue] = useState<string>(defaultValue)
+  const [showToolbar, setShowToolbar] = useState<boolean>(false)
 
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -58,6 +59,17 @@ export function TextAreaInput({
     }
   }
 
+  const handleFocus = () => {
+    setShowToolbar(true)
+  }
+
+  /*
+  // Collides with fullscreen mode
+  const handleBlur = () => {
+    setShowToolbar(false)
+  }
+  */
+
   const options = useMemo(() => {
     return {
       status: false,
@@ -65,6 +77,7 @@ export function TextAreaInput({
       minHeight: size === 'small' ? '100%' : '100%',
       maxHeight: size === 'small' ? '30px' : containerHeight,
       forceSync: true,
+      autoDownloadFontAwesome: true,
       /*
           autoDownloadFontAwesome?: boolean;
           autofocus?: boolean;
@@ -150,8 +163,10 @@ export function TextAreaInput({
         value={inputValue}
         placeholder={placeholder ?? ''}
         onChange={handleChange}
+        onFocus={handleFocus}
+        // onBlur={handleBlur}
         options={options}
-        className={`${inputStyle ?? ''}`}
+        className={`${inputStyle ?? ''} ${showToolbar ? '' : 'hide-toolbar'}`}
       />
     </div>
   )

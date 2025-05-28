@@ -1,13 +1,17 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import SVG from 'react-inlinesvg'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
+import { useAuth } from '#components/Auth/useAuth'
 import { useLayers } from '#components/Map/hooks/useLayers'
-import { AvatarWidget } from '#components/Profile/Subcomponents/AvatarWidget'
 
-import type { LayerProps } from '#src/index'
+import { SetAvatar } from './Steps/SetAvatar'
+import { Signup } from './Steps/Signup'
 
-// Schritt-Komponenten
+import type { LayerProps, UserItem } from '#src/index'
+import type { SignupHandle } from './Steps/Signup'
+
 const Step1 = () => {
   const layers = useLayers()
   return (
@@ -34,67 +38,6 @@ const Step1 = () => {
   )
 }
 
-const Step2 = () => {
-  const [userName, setUserName] = useState<string>('')
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
-  return (
-    <div className='tw:space-y-2'>
-      <h3 className='tw:text-lg tw:font-bold'>Erstelle dir deinen Acount</h3>
-      <p className='tw:my-4'>
-        Werde Teil des Netzwerks und erstelle dir dein Profil und zeige dich auf der Karte!
-      </p>
-      <input
-        type='text'
-        placeholder='Name'
-        value={userName}
-        onChange={(e) => setUserName(e.target.value)}
-        className='tw:input tw:input-bordered tw:w-full tw:max-w-xs'
-      />
-      <input
-        type='email'
-        placeholder='E-Mail'
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className='tw:input tw:input-bordered tw:w-full tw:max-w-xs'
-      />
-      <input
-        type='password'
-        placeholder='Password'
-        onChange={(e) => setPassword(e.target.value)}
-        className='tw:input tw:input-bordered tw:w-full tw:max-w-xs'
-      />
-      <p className='tw:mt-4 tw:mb-8'>
-        Du hast schon einen Account?{' '}
-        <Link
-          className='tw:inline-block tw:hover:text-primary tw:hover:underline tw:hover:cursor-pointer tw:transition tw:duration-200 tw:text-primary'
-          onClick={() => close()}
-          to='/login'
-        >
-          Dann logge dich ein!
-        </Link>
-      </p>
-    </div>
-  )
-}
-
-const Step3 = () => {
-  const [avatar, setAvatar] = useState<string>('')
-  return (
-    <div>
-      <h3 className='tw:text-lg tw:font-bold tw:text-center'>Lade ein Bild von dir hoch</h3>
-      <div className='tw:mt-4 tw:flex tw:justify-center tw:items-center'>
-        <AvatarWidget avatar={avatar} setAvatar={setAvatar} />
-      </div>
-      <div className='tw:mt-4 tw:flex tw:justify-center'>
-        <button className='tw:btn tw:justify-center' onClick={() => setAvatar('')}>
-          Select
-        </button>
-      </div>
-    </div>
-  )
-}
-
 const Step4 = () => (
   <div>
     <h3 className='tw:text-lg tw:font-bold'>Place your Profile on the Map!</h3>
@@ -102,18 +45,111 @@ const Step4 = () => (
   </div>
 )
 
-const stepsTitles = ['Willkommen', 'Account', 'Avatar', 'Marker']
-
 export const Onboarding = () => {
-  const close = () => {
-    navigate('/')
-  }
-
+  const signupRef = useRef<SignupHandle>(null)
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
+  const { isAuthenticated } = useAuth()
+
+  const handleNext = async () => {
+    const currentStep = steps[stepIndex]
+
+    if (loading) return
+
+    if (currentStep.onNext) {
+      try {
+        setLoading(true)
+        const result = await currentStep.onNext()
+
+        if (result) {
+          const user = result as UserItem
+          const successMessage = currentStep.toastSuccess?.message?.replace(
+            '{firstName}',
+            user.first_name ?? 'Traveler',
+          )
+          toast.success(successMessage ?? `Hi ${user.first_name ?? 'Traveler'}`, {
+            icon: currentStep.toastSuccess?.icon ?? '✌️',
+          })
+          setStepIndex((i) => i + 1)
+        }
+        // eslint-disable-next-line no-catch-all/no-catch-all
+      } catch (error) {
+        toast.error(
+          currentStep.toastError?.message ??
+            (error instanceof Error ? error.message : 'Ein Fehler ist aufgetreten'),
+          {
+            autoClose: currentStep.toastError?.autoClose ?? 10000,
+          },
+        )
+      } finally {
+        setLoading(false)
+      }
+    }
+  }
 
   const [stepIndex, setStepIndex] = useState(0)
 
-  const steps = [<Step1 key={1} />, <Step2 key={2} />, <Step3 key={3} />, <Step4 key={4} />]
+  interface StepDefinition {
+    component: JSX.Element
+    onNext?: () => Promise<unknown> | void
+    toastSuccess?: {
+      message?: string
+      icon?: string
+    }
+    toastError?: {
+      message?: string
+      autoClose?: number
+    }
+    loading?: {
+      message?: string
+    }
+  }
+
+  const steps: StepDefinition[] = [
+    {
+      component: <Step1 />,
+      onNext: () => setStepIndex((i) => i + 1),
+    },
+    {
+      component: <Signup ref={signupRef} />,
+      onNext: async () => {
+        return await signupRef.current?.submit()
+      },
+      toastSuccess: {
+        message: 'Hi {firstName}!',
+        icon: '✌️',
+      },
+      toastError: {
+        message: 'Registration failed. Please try again.',
+        autoClose: 8000,
+      },
+      loading: {
+        message: 'Creating your account...',
+      },
+    },
+    {
+      component: <SetAvatar />,
+      onNext: () => setStepIndex((i) => i + 1),
+      toastSuccess: {
+        message: 'Avatar uploaded successfully!',
+        icon: '🖼️',
+      },
+      loading: {
+        message: 'Uploading avatar...',
+      },
+    },
+    {
+      component: <Step4 />,
+      onNext: () => navigate('/'),
+      toastSuccess: {
+        message: 'Welcome to the community!',
+        icon: '🎉',
+      },
+      loading: {
+        message: 'Finalizing your profile...',
+      },
+    },
+  ]
 
   const isLast = stepIndex === steps.length - 1
   const isFirst = stepIndex === 0
@@ -121,7 +157,7 @@ export const Onboarding = () => {
   return (
     <div className='tw:max-w-xl tw:w-full tw:mx-auto tw:p-4'>
       <div>
-        {steps[stepIndex]}
+        {steps[stepIndex].component}
 
         <div className='tw:flex tw:justify-between tw:mt-6'>
           <button
@@ -141,11 +177,15 @@ export const Onboarding = () => {
             ))}
           </div>
           {!isLast ? (
-            <button className='tw:btn tw:btn-primary' onClick={() => setStepIndex((i) => i + 1)}>
-              Next
+            <button
+              className={`tw:btn ${loading ? 'tw:btn-disabled' : 'tw:btn-primary'}`}
+              // eslint-disable-next-line @typescript-eslint/no-misused-promises
+              onClick={handleNext}
+            >
+              {loading ? <span className='tw:loading tw:loading-spinner'></span> : 'Next'}
             </button>
           ) : (
-            <button className='tw:btn tw:btn-success' onClick={() => close()}>
+            <button className='tw:btn tw:btn-success' onClick={close}>
               Close
             </button>
           )}

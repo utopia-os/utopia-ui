@@ -14,7 +14,7 @@ export * from './Components/Onboarding'
 declare global {
   interface Window {
     my_modal_3: {
-      [x: string]: any
+      close(): void
       showModal(): void
     }
   }

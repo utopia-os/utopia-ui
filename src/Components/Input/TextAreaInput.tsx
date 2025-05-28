@@ -50,9 +50,12 @@ export function TextAreaInput({
     setShowToolbar(true)
   }
 
+  /*
+  // Collides with fullscreen mode
   const handleBlur = () => {
     setShowToolbar(false)
   }
+  */
 
   const options = useMemo(() => {
     return {
@@ -147,7 +150,7 @@ export function TextAreaInput({
         placeholder={placeholder ?? ''}
         onChange={handleChange}
         onFocus={handleFocus}
-        onBlur={handleBlur}
+        // onBlur={handleBlur}
         options={options}
         className={`${inputStyle ?? ''} ${showToolbar ? '' : 'hide-toolbar'}`}
       />

@@ -92,6 +92,8 @@
     "react-dom": "^18.2.0"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@heroicons/react": "^2.0.17",
     "@rollup/plugin-commonjs": "^28.0.3",
     "@tanstack/react-query": "^5.17.8",

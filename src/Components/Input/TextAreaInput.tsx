@@ -60,6 +60,7 @@ export function TextAreaInput({
       lineNumbers: false,
       minHeight: '150px',
       forceSync: true,
+      autoDownloadFontAwesome: false,
       /*
           autoDownloadFontAwesome?: boolean;
           autofocus?: boolean;

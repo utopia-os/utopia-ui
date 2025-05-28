@@ -100,7 +100,8 @@ export const TabsForm = ({
                   text: v,
                 }))
               }
-              // containerStyle='tw:grow'
+              size='full'
+              containerStyle='tw:grow'
               inputStyle={`tw:h-full  ${!item.layer.itemType.show_start_end_input && 'tw:border-t-0 tw:rounded-tl-none'}`}
             />
             <TextAreaInput
@@ -115,6 +116,7 @@ export const TabsForm = ({
               }
               inputStyle=''
               containerStyle='tw:pt-4'
+              size='small'
               // containerStyle='tw:pt-4 tw:h-24 tw:flex-none'
               required={false}
             />

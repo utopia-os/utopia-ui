@@ -61,6 +61,7 @@ export const ProfileTextForm = ({
         containerStyle={size === 'full' ? 'tw:grow tw:h-full' : ''}
         inputStyle={size === 'full' ? 'tw:h-full' : 'tw:h-24'}
         required={required}
+        size={size}
       />
     </div>
   )

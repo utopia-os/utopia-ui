@@ -13,6 +13,7 @@ interface TextAreaProps {
   defaultValue: string
   placeholder?: string
   required?: boolean
+  size?: string
   updateFormValue?: (value: string) => void
 }
 
@@ -28,10 +29,22 @@ export function TextAreaInput({
   defaultValue,
   placeholder,
   required = true,
+  size,
   updateFormValue,
 }: TextAreaProps) {
   const ref = useRef<HTMLDivElement>(null)
   const [inputValue, setInputValue] = useState<string>(defaultValue)
+
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  const [containerHeight, setContainerHeight] = useState<string>('100%')
+
+  useEffect(() => {
+    if (containerRef.current) {
+      const height = containerRef.current.offsetHeight
+      setContainerHeight(`${height - 200}px`)
+    }
+  }, [])
 
   useEffect(() => {
     setInputValue(defaultValue)
@@ -49,7 +62,8 @@ export function TextAreaInput({
     return {
       status: false,
       lineNumbers: false,
-      minHeight: '150px',
+      minHeight: size === 'small' ? '100%' : '100%',
+      maxHeight: size === 'small' ? '30px' : containerHeight,
       forceSync: true,
       /*
           autoDownloadFontAwesome?: boolean;
@@ -113,10 +127,10 @@ export function TextAreaInput({
           direction?: 'ltr' | 'rtl';
           */
     } as SimpleMDE.Options
-  }, [])
+  }, [containerHeight, size])
 
   return (
-    <div className={`tw:form-control ${containerStyle ?? ''}`}>
+    <div ref={containerRef} className={`tw:form-control ${containerStyle ?? ''}`}>
       {labelTitle ? (
         <label className='tw:label'>
           <span className={`tw:label-text tw:text-base-content ${labelStyle ?? ''}`}>

@@ -48,4 +48,5 @@ library.add([
   faQuestionCircle,
 ])
 
-dom.insertCss()
+dom.i2svg()
+dom.watch()

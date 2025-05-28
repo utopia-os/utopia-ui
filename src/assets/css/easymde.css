@@ -60,4 +60,8 @@
   .hide-toolbar .EasyMDEContainer .editor-toolbar {
     display: none;
   }
+
+  .EasyMDEContainer .editor-toolbar {
+    padding: 0;
+  }
 }

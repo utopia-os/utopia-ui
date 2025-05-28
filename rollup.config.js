@@ -2,12 +2,12 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 import alias from '@rollup/plugin-alias'
+import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
 import typescript from '@rollup/plugin-typescript'
 import { dts } from 'rollup-plugin-dts'
 import postcss from 'rollup-plugin-postcss'
 import svg from 'rollup-plugin-svg'
-import commonjs from '@rollup/plugin-commonjs'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)

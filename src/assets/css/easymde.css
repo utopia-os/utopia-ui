@@ -84,4 +84,8 @@
   .EasyMDEContainer .fullscreen {
     border-radius: 0;
   }
+
+  .CodeMirror-cursor {
+    border-color: var(--color-base-content) !important;
+  }
 }

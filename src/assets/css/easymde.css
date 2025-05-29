@@ -81,11 +81,40 @@
     padding-bottom: 3px;
   }
 
-  .EasyMDEContainer .fullscreen {
-    border-radius: 0;
+  .EasyMDEContainer .editor-toolbar.fullscreen{
+    margin: 16px;
+    width: calc(100% - 32px);
+    border-color: color-mix(in oklab, var(--color-base-content) 20%, #0000)!important;
+    border-start-start-radius: var(--radius-field) !important;
+    border-start-end-radius: var(--radius-field) !important;
+    border-width: var(--border) !important;
+  }
+
+  .EasyMDEContainer .CodeMirror.CodeMirror-fullscreen.CodeMirror-wrap {
+    margin: 16px;
+    width: calc(100% - 32px);
+    border-color: color-mix(in oklab, var(--color-base-content) 20%, #0000)!important;
+    border-end-start-radius: var(--radius-field) !important;
+    border-end-end-radius: var(--radius-field) !important;
+    border-width: var(--border) !important;
+    border-top-width: 0 !important;
+    border-right-width: var(--border) !important;
+    border-top: var(--border) !important;
   }
 
   .CodeMirror-cursor {
     border-color: var(--color-base-content) !important;
+  }
+
+  .editor-preview-full{
+    background-color: var(--color-base-100) !important;
+  }
+
+  .editor-preview-side{
+    margin: 16px;
+    width: calc(50% - 16px);
+    border-color: color-mix(in oklab, var(--color-base-content) 20%, #0000)!important;
+    border-end-end-radius: var(--radius-field) !important;
+    border-width: var(--border) !important;
   }
 }

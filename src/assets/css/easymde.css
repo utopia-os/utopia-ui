@@ -74,4 +74,14 @@
     border-color: color-mix(in oklab, var(--color-base-content) 20%, #0000)!important;
     border-width: 1px !important;
   }
+
+  .EasyMDEContainer .editor-toolbar {
+    padding: 0;
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+
+  .EasyMDEContainer .fullscreen {
+    border-radius: 0;
+  }
 }

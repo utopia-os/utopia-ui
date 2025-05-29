@@ -79,7 +79,6 @@ export function TextAreaInput({
       maxHeight: size === 'small' ? '50px' : containerHeight,
       forceSync: true,
       autoDownloadFontAwesome: false,
-      nativeSpellcheck: false,
       spellChecker: false,
       /*
           autoDownloadFontAwesome?: boolean;

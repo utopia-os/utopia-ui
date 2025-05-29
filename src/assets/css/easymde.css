@@ -49,7 +49,12 @@
   .CodeMirror {
     background-color: var(--color-base-100) !important;
     color: var(--color-base-content) !important;
-    caret-color: var(--color-base-content) !important;
+    border-color: color-mix(in oklab, var(--color-base-content) 20%, #0000)!important;
+    border-end-start-radius: var(--radius-field) !important;
+    border-end-end-radius: var(--radius-field) !important;
+    border-width: var(--border) !important;
+    border-top-width: 0 !important;
+
   }
 
   .editor-preview-side {
@@ -57,7 +62,16 @@
     color: var(--color-base-content) !important;
   }
 
-  .hide-toolbar .EasyMDEContainer .editor-toolbar {
-    display: none;
+  .editor-toolbar {
+    padding: 3px 10px !important;
+    border-color: color-mix(in oklab, var(--color-base-content) 20%, #0000)!important;
+    border-start-start-radius: var(--radius-field) !important;
+    border-start-end-radius: var(--radius-field) !important;
+    border-width: var(--border) !important;
+  }
+
+  .separator {
+    border-color: color-mix(in oklab, var(--color-base-content) 20%, #0000)!important;
+    border-width: 1px !important;
   }
 }

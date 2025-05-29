@@ -38,14 +38,15 @@ export function TextAreaInput({
 
   const containerRef = useRef<HTMLDivElement>(null)
 
-  const [containerHeight, setContainerHeight] = useState<string>('100%')
+  const [containerHeight, setContainerHeight] = useState<string>('0px')
 
   useEffect(() => {
     if (containerRef.current) {
       const height = containerRef.current.offsetHeight
-      setContainerHeight(`${height - 200}px`)
+      setContainerHeight(`${height - 61}px`)
+      console.log(height)
     }
-  }, [])
+  }, [containerStyle])
 
   useEffect(() => {
     setInputValue(defaultValue)
@@ -75,9 +76,11 @@ export function TextAreaInput({
       status: false,
       lineNumbers: false,
       minHeight: size === 'small' ? '100%' : '100%',
-      maxHeight: size === 'small' ? '30px' : containerHeight,
+      maxHeight: size === 'small' ? '50px' : containerHeight,
       forceSync: true,
       autoDownloadFontAwesome: false,
+      nativeSpellcheck: false,
+      spellChecker: false,
       /*
           autoDownloadFontAwesome?: boolean;
           autofocus?: boolean;

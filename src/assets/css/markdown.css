@@ -1,0 +1,63 @@
+@import 'tailwindcss' prefix(tw);
+
+@layer markdown {
+  .markdown h1 {
+    @apply tw:text-xl;
+    @apply tw:font-bold;
+  }
+
+  .markdown h2 {
+    @apply tw:text-lg;
+    @apply tw:font-bold;
+  }
+
+  .markdown h3, .markdown h4 {
+    @apply tw:text-base;
+    @apply tw:font-bold;
+  }
+
+  .markdown h5, .markdown h6 {
+    @apply tw:text-sm;
+    @apply tw:font-bold;
+  }
+
+  .markdown p {
+    @apply tw:my-2!;
+  }
+
+  .markdown ul {
+    @apply tw:list-disc;
+    @apply tw:list-inside;
+  }
+
+  .markdown ol {
+    @apply tw:list-decimal;
+    @apply tw:list-inside;
+  }
+
+  .markdown hl {
+    @apply tw:border-current;
+  }
+
+  .markdown img {
+    @apply tw:max-w-full;
+    @apply tw:rounded;
+    @apply tw:shadow;
+  }
+
+  .markdown a {
+    @apply tw:font-bold;
+    @apply tw:underline;
+  }
+
+  .markdown .hashtag {
+    color: #faa;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .markdown iframe {
+    @apply tw:w-full;
+  }
+}

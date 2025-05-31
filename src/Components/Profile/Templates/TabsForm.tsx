@@ -9,7 +9,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { TextAreaInput } from '#components/Input'
+import { RichTextEditor } from '#components/Input/RichTextEditor'
 import { useUpdateItem } from '#components/Map/hooks/useItems'
 import { PopupStartEndInput, TextView } from '#components/Map/Subcomponents/ItemPopupComponents'
 import { ActionButton } from '#components/Profile/Subcomponents/ActionsButton'
@@ -90,7 +90,8 @@ export const TabsForm = ({
               ></PopupStartEndInput>
             )}
 
-            <TextAreaInput
+            <RichTextEditor
+              labelTitle='About me'
               placeholder='about ...'
               defaultValue={item?.text ? item.text : ''}
               updateFormValue={(v) =>
@@ -102,7 +103,8 @@ export const TabsForm = ({
               containerStyle='tw:grow'
               inputStyle={`tw:h-full  ${!item.layer.itemType.show_start_end_input && 'tw:border-t-0 tw:rounded-tl-none'}`}
             />
-            <TextAreaInput
+            <RichTextEditor
+              labelTitle='Contact Info'
               placeholder='contact info ...'
               defaultValue={state.contact || ''}
               updateFormValue={(c) =>

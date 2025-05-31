@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react'
 
-import { TextAreaInput } from '#components/Input'
+import { RichTextEditor } from '#components/Input/RichTextEditor'
 
 import { MarkdownHint } from './MarkdownHint'
 
@@ -47,7 +47,7 @@ export const ProfileTextForm = ({
         </label>
         <MarkdownHint />
       </div>
-      <TextAreaInput
+      <RichTextEditor
         placeholder={'...'}
         // eslint-disable-next-line security/detect-object-injection
         defaultValue={state[field]}

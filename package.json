@@ -1,6 +1,6 @@
 {
   "name": "utopia-ui",
-  "version": "3.0.93",
+  "version": "3.0.95",
   "description": "Reuseable React Components to build mapping apps for real life communities and networks",
   "repository": "https://github.com/utopia-os/utopia-ui",
   "homepage": "https://utopia-os.org/",
@@ -12,6 +12,11 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.esm.js",
       "require": "./dist/index.cjs"
+    },
+    "./Profile": {
+      "types": "./dist/Profile.d.ts",
+      "import": "./dist/Profile.esm.js",
+      "require": "./dist/Profile.cjs.js"
     }
   },
   "type": "module",
@@ -42,6 +47,7 @@
     "@tailwindcss/postcss": "^4.0.14",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
+    "@testing-library/user-event": "^14.6.1",
     "@types/geojson": "^7946.0.14",
     "@types/leaflet": "^1.7.11",
     "@types/leaflet.markercluster": "^1.5.5",
@@ -91,10 +97,14 @@
     "react-dom": "^18.2.0"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@heroicons/react": "^2.0.17",
+    "@rollup/plugin-commonjs": "^28.0.3",
     "@tanstack/react-query": "^5.17.8",
     "axios": "^1.6.5",
     "date-fns": "^3.3.1",
+    "easymde": "^2.20.0",
     "leaflet": "^1.9.4",
     "leaflet.locatecontrol": "^0.79.0",
     "radash": "^12.1.0",
@@ -106,6 +116,7 @@
     "react-markdown": "^9.0.1",
     "react-photo-album": "^3.0.2",
     "react-router-dom": "^6.16.0",
+    "react-simplemde-editor": "^5.2.0",
     "react-toastify": "^9.1.3",
     "remark-breaks": "^4.0.0",
     "yet-another-react-lightbox": "^3.21.7"

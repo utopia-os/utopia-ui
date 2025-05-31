@@ -2,6 +2,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 import alias from '@rollup/plugin-alias'
+import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
 import typescript from '@rollup/plugin-typescript'
 import { dts } from 'rollup-plugin-dts'
@@ -17,17 +18,22 @@ const aliasConfig = alias({
 
 export default [
   {
-    input: 'src/index.tsx',
+    input: {
+      index: 'src/index.tsx',
+      Profile: 'src/Components/Profile/index.tsx',
+    },
     output: [
       {
-        file: 'dist/index.esm.js',
+        dir: 'dist/',
         format: 'esm',
         sourcemap: true,
+        entryFileNames: '[name].esm.js',
       },
       {
-        file: 'dist/index.cjs',
+        dir: 'dist/',
         format: 'cjs',
         sourcemap: true,
+        entryFileNames: '[name].cjs.js',
       },
     ],
     plugins: [
@@ -37,6 +43,10 @@ export default [
       }),
       postcss({
         plugins: [],
+      }),
+      commonjs({
+        include: /node_modules/,
+        requireReturnsDefault: 'auto', // this solves missing default export
       }),
       typescript({
         tsconfig: './tsconfig.json',
@@ -78,8 +88,17 @@ export default [
     ],
   },
   {
-    input: 'dist/types/src/index.d.ts',
-    output: [{ file: 'dist/index.d.ts', format: 'es' }],
+    // 1) Zwei benannte Eingänge: "index" und "Profile"
+    input: {
+      index: path.resolve(__dirname, 'dist/types/src/index.d.ts'),
+      Profile: path.resolve(__dirname, 'dist/types/src/Components/Profile/index.d.ts'),
+    },
+    // 2) Gebt statt "file" ein Zielverzeichnis (dir) an, plus entryFileNames
+    output: {
+      dir: path.resolve(__dirname, 'dist'),
+      format: 'es',
+      entryFileNames: '[name].d.ts',
+    },
     plugins: [
       aliasConfig,
       dts({
@@ -88,7 +107,7 @@ export default [
         },
       }),
     ],
-    external: [/\.css$/], //, /\.d\.ts$/
+    external: [/\.css$/],
     watch: false,
   },
 ]

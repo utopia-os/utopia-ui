@@ -12,6 +12,11 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.esm.js",
       "require": "./dist/index.cjs"
+    },
+    "./Profile": {
+      "types": "./dist/Profile.d.ts",
+      "import": "./dist/Profile.esm.js",
+      "require": "./dist/Profile.cjs.js"
     }
   },
   "type": "module",

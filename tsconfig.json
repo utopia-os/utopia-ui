@@ -7,7 +7,7 @@
       "module": "esnext",
       "target": "ESNext",
       "lib": ["es6", "dom","es2015", "es2016", "es2017", "es2020"],
-      "sourceMap": false,
+      "sourceMap": true,
       "allowJs": false,
       "jsx": "react-jsx",
       "moduleResolution": "node",

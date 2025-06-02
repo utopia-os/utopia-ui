@@ -2,8 +2,10 @@ import { MapOverlayPage } from '#components/Templates/MapOverlayPage'
 
 export const LoadingMapOverlay = () => {
   return (
-    <MapOverlayPage>
-      <div className='tw:text-center tw:loading tw:loading-spinner'></div>
+    <MapOverlayPage backdrop className='tw:max-w-xs tw:h-64 tw:bg-transparent' card={false}>
+      <div className='tw:flex tw:justify-center tw:items-center tw:h-full'>
+        <div className='tw:loading tw:loading-spinner tw:loading-xl'></div>
+      </div>
     </MapOverlayPage>
   )
 }

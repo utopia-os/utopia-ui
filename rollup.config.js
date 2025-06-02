@@ -83,12 +83,10 @@ export default [
     ],
   },
   {
-    // 1) Zwei benannte Eingänge: "index" und "Profile"
     input: {
       index: path.resolve(__dirname, 'dist/types/src/index.d.ts'),
       Profile: path.resolve(__dirname, 'dist/types/src/Components/Profile/index.d.ts'),
     },
-    // 2) Gebt statt "file" ein Zielverzeichnis (dir) an, plus entryFileNames
     output: {
       dir: path.resolve(__dirname, 'dist'),
       format: 'es',

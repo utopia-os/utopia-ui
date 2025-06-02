@@ -2,7 +2,7 @@
 
 exports[`<TextAreaInput /> > labelTitle > sets label 1`] = `
 <div
-  class="tw:form-control tw:w-full "
+  class="tw:form-control "
 >
   <label
     class="tw:label"
@@ -11,24 +11,533 @@ exports[`<TextAreaInput /> > labelTitle > sets label 1`] = `
       class="tw:label-text tw:text-base-content "
     >
       My Title
+       (this field is required)
     </span>
   </label>
-  <textarea
-    class="tw:textarea tw:textarea-bordered tw:w-full tw:leading-5 "
-    placeholder=""
-    required=""
-  />
+  <div
+    class=""
+    id="simplemde-editor-3-wrapper"
+  >
+    <textarea
+      id="simplemde-editor-3"
+      placeholder=""
+      required=""
+      style="display: none;"
+    />
+    <div
+      class="EasyMDEContainer"
+      role="application"
+    >
+      <div
+        class="editor-toolbar"
+        role="toolbar"
+      >
+        <button
+          aria-label="Bold"
+          class="bold"
+          title="Bold (Ctrl-B)"
+          type="button"
+        >
+          <i
+            class="fa fa-bold"
+          />
+        </button>
+        <button
+          aria-label="Italic"
+          class="italic"
+          title="Italic (Ctrl-I)"
+          type="button"
+        >
+          <i
+            class="fa fa-italic"
+          />
+        </button>
+        <button
+          aria-label="Heading"
+          class="heading"
+          title="Heading (Ctrl-H)"
+          type="button"
+        >
+          <i
+            class="fa fa-header fa-heading"
+          />
+        </button>
+        <i
+          class="separator"
+        >
+          |
+        </i>
+        <button
+          aria-label="Quote"
+          class="quote"
+          title="Quote (Ctrl-')"
+          type="button"
+        >
+          <i
+            class="fa fa-quote-left"
+          />
+        </button>
+        <button
+          aria-label="Generic List"
+          class="unordered-list"
+          title="Generic List (Ctrl-L)"
+          type="button"
+        >
+          <i
+            class="fa fa-list-ul"
+          />
+        </button>
+        <button
+          aria-label="Numbered List"
+          class="ordered-list"
+          title="Numbered List (Ctrl-Alt-L)"
+          type="button"
+        >
+          <i
+            class="fa fa-list-ol"
+          />
+        </button>
+        <i
+          class="separator"
+        >
+          |
+        </i>
+        <button
+          aria-label="Create Link"
+          class="link"
+          title="Create Link (Ctrl-K)"
+          type="button"
+        >
+          <i
+            class="fa fa-link"
+          />
+        </button>
+        <button
+          aria-label="Insert Image"
+          class="image"
+          title="Insert Image (Ctrl-Alt-I)"
+          type="button"
+        >
+          <i
+            class="fa fa-image"
+          />
+        </button>
+        <i
+          class="separator"
+        >
+          |
+        </i>
+        <button
+          aria-label="Toggle Preview"
+          class="preview no-disable"
+          title="Toggle Preview (Ctrl-P)"
+          type="button"
+        >
+          <i
+            class="fa fa-eye"
+          />
+        </button>
+        <button
+          aria-label="Toggle Side by Side"
+          class="side-by-side no-disable no-mobile"
+          title="Toggle Side by Side (F9)"
+          type="button"
+        >
+          <i
+            class="fa fa-columns"
+          />
+        </button>
+        <button
+          aria-label="Toggle Fullscreen"
+          class="fullscreen no-disable no-mobile"
+          title="Toggle Fullscreen (F11)"
+          type="button"
+        >
+          <i
+            class="fa fa-arrows-alt"
+          />
+        </button>
+        <i
+          class="separator"
+        >
+          |
+        </i>
+        <button
+          aria-label="Markdown Guide"
+          class="guide no-disable"
+          title="Markdown Guide"
+          type="button"
+        >
+          <i
+            class="fa fa-question-circle"
+          />
+        </button>
+      </div>
+      <div
+        class="CodeMirror cm-s-easymde CodeMirror-wrap"
+        translate="no"
+      >
+        <div
+          style="overflow: hidden; position: relative; width: 3px; height: 0px;"
+        >
+          <textarea
+            autocapitalize="off"
+            autocorrect="off"
+            spellcheck="true"
+            style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; min-height: 1em; outline-color: none; outline-style: none; outline-width: initial;"
+          />
+        </div>
+        <div
+          class="CodeMirror-vscrollbar"
+          cm-not-content="true"
+        >
+          <div
+            style="min-width: 1px;"
+          />
+        </div>
+        <div
+          class="CodeMirror-hscrollbar"
+          cm-not-content="true"
+        >
+          <div
+            style="height: 100%; min-height: 1px;"
+          />
+        </div>
+        <div
+          class="CodeMirror-scrollbar-filler"
+          cm-not-content="true"
+        />
+        <div
+          class="CodeMirror-gutter-filler"
+          cm-not-content="true"
+        />
+        <div
+          class="CodeMirror-scroll"
+          style="min-height: 150px;"
+          tabindex="-1"
+        >
+          <div
+            class="CodeMirror-sizer"
+            style="margin-left: 0px;"
+          >
+            <div
+              style="position: relative;"
+            >
+              <div
+                class="CodeMirror-lines"
+                role="presentation"
+              >
+                <div
+                  role="presentation"
+                  style="position: relative; outline-color: none; outline-style: none; outline-width: initial;"
+                >
+                  <div
+                    class="CodeMirror-measure"
+                  >
+                    <pre
+                      class="CodeMirror-line-like"
+                    >
+                      <span>
+                        xxxxxxxxxx
+                      </span>
+                    </pre>
+                  </div>
+                  <div
+                    class="CodeMirror-measure"
+                  />
+                  <div
+                    style="position: relative; z-index: 1;"
+                  />
+                  <div
+                    class="CodeMirror-cursors"
+                  />
+                  <div
+                    class="CodeMirror-code"
+                    role="presentation"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            style="position: absolute; height: 50px; width: 1px;"
+          />
+          <div
+            class="CodeMirror-gutters"
+            style="display: none;"
+          />
+        </div>
+      </div>
+      <div
+        class="editor-preview-side editor-preview"
+      />
+    </div>
+  </div>
 </div>
 `;
 
 exports[`<TextAreaInput /> > renders properly 1`] = `
 <div
-  class="tw:form-control tw:w-full "
+  class="tw:form-control "
 >
-  <textarea
-    class="tw:textarea tw:textarea-bordered tw:w-full tw:leading-5 "
-    placeholder=""
-    required=""
-  />
+  <div
+    class=""
+    id="simplemde-editor-1-wrapper"
+  >
+    <textarea
+      id="simplemde-editor-1"
+      placeholder=""
+      required=""
+      style="display: none;"
+    />
+    <div
+      class="EasyMDEContainer"
+      role="application"
+    >
+      <div
+        class="editor-toolbar"
+        role="toolbar"
+      >
+        <button
+          aria-label="Bold"
+          class="bold"
+          title="Bold (Ctrl-B)"
+          type="button"
+        >
+          <i
+            class="fa fa-bold"
+          />
+        </button>
+        <button
+          aria-label="Italic"
+          class="italic"
+          title="Italic (Ctrl-I)"
+          type="button"
+        >
+          <i
+            class="fa fa-italic"
+          />
+        </button>
+        <button
+          aria-label="Heading"
+          class="heading"
+          title="Heading (Ctrl-H)"
+          type="button"
+        >
+          <i
+            class="fa fa-header fa-heading"
+          />
+        </button>
+        <i
+          class="separator"
+        >
+          |
+        </i>
+        <button
+          aria-label="Quote"
+          class="quote"
+          title="Quote (Ctrl-')"
+          type="button"
+        >
+          <i
+            class="fa fa-quote-left"
+          />
+        </button>
+        <button
+          aria-label="Generic List"
+          class="unordered-list"
+          title="Generic List (Ctrl-L)"
+          type="button"
+        >
+          <i
+            class="fa fa-list-ul"
+          />
+        </button>
+        <button
+          aria-label="Numbered List"
+          class="ordered-list"
+          title="Numbered List (Ctrl-Alt-L)"
+          type="button"
+        >
+          <i
+            class="fa fa-list-ol"
+          />
+        </button>
+        <i
+          class="separator"
+        >
+          |
+        </i>
+        <button
+          aria-label="Create Link"
+          class="link"
+          title="Create Link (Ctrl-K)"
+          type="button"
+        >
+          <i
+            class="fa fa-link"
+          />
+        </button>
+        <button
+          aria-label="Insert Image"
+          class="image"
+          title="Insert Image (Ctrl-Alt-I)"
+          type="button"
+        >
+          <i
+            class="fa fa-image"
+          />
+        </button>
+        <i
+          class="separator"
+        >
+          |
+        </i>
+        <button
+          aria-label="Toggle Preview"
+          class="preview no-disable"
+          title="Toggle Preview (Ctrl-P)"
+          type="button"
+        >
+          <i
+            class="fa fa-eye"
+          />
+        </button>
+        <button
+          aria-label="Toggle Side by Side"
+          class="side-by-side no-disable no-mobile"
+          title="Toggle Side by Side (F9)"
+          type="button"
+        >
+          <i
+            class="fa fa-columns"
+          />
+        </button>
+        <button
+          aria-label="Toggle Fullscreen"
+          class="fullscreen no-disable no-mobile"
+          title="Toggle Fullscreen (F11)"
+          type="button"
+        >
+          <i
+            class="fa fa-arrows-alt"
+          />
+        </button>
+        <i
+          class="separator"
+        >
+          |
+        </i>
+        <button
+          aria-label="Markdown Guide"
+          class="guide no-disable"
+          title="Markdown Guide"
+          type="button"
+        >
+          <i
+            class="fa fa-question-circle"
+          />
+        </button>
+      </div>
+      <div
+        class="CodeMirror cm-s-easymde CodeMirror-wrap"
+        translate="no"
+      >
+        <div
+          style="overflow: hidden; position: relative; width: 3px; height: 0px;"
+        >
+          <textarea
+            autocapitalize="off"
+            autocorrect="off"
+            spellcheck="true"
+            style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; min-height: 1em; outline-color: none; outline-style: none; outline-width: initial;"
+          />
+        </div>
+        <div
+          class="CodeMirror-vscrollbar"
+          cm-not-content="true"
+        >
+          <div
+            style="min-width: 1px;"
+          />
+        </div>
+        <div
+          class="CodeMirror-hscrollbar"
+          cm-not-content="true"
+        >
+          <div
+            style="height: 100%; min-height: 1px;"
+          />
+        </div>
+        <div
+          class="CodeMirror-scrollbar-filler"
+          cm-not-content="true"
+        />
+        <div
+          class="CodeMirror-gutter-filler"
+          cm-not-content="true"
+        />
+        <div
+          class="CodeMirror-scroll"
+          style="min-height: 150px;"
+          tabindex="-1"
+        >
+          <div
+            class="CodeMirror-sizer"
+            style="margin-left: 0px;"
+          >
+            <div
+              style="position: relative;"
+            >
+              <div
+                class="CodeMirror-lines"
+                role="presentation"
+              >
+                <div
+                  role="presentation"
+                  style="position: relative; outline-color: none; outline-style: none; outline-width: initial;"
+                >
+                  <div
+                    class="CodeMirror-measure"
+                  >
+                    <pre
+                      class="CodeMirror-line-like"
+                    >
+                      <span>
+                        xxxxxxxxxx
+                      </span>
+                    </pre>
+                  </div>
+                  <div
+                    class="CodeMirror-measure"
+                  />
+                  <div
+                    style="position: relative; z-index: 1;"
+                  />
+                  <div
+                    class="CodeMirror-cursors"
+                  />
+                  <div
+                    class="CodeMirror-code"
+                    role="presentation"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            style="position: absolute; height: 50px; width: 1px;"
+          />
+          <div
+            class="CodeMirror-gutters"
+            style="display: none;"
+          />
+        </div>
+      </div>
+      <div
+        class="editor-preview-side editor-preview"
+      />
+    </div>
+  </div>
 </div>
 `;

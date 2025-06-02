@@ -1,0 +1,120 @@
+@import 'tailwindcss' prefix(tw);
+
+@layer easymde {
+  @import 'easymde/dist/easymde.min.css';
+
+  .EasyMDEContainer h1 {
+    @apply tw:text-3xl;
+    @apply tw:font-bold;
+  }
+
+  .EasyMDEContainer h2 {
+    @apply tw:text-2xl;
+    @apply tw:font-bold;
+  }
+
+  .EasyMDEContainer h3 {
+    @apply tw:text-xl;
+    @apply tw:font-bold;
+  }
+
+  .EasyMDEContainer h4 {
+    @apply tw:text-lg;
+    @apply tw:font-semibold;
+  }
+
+  .EasyMDEContainer h5 {
+    @apply tw:text-base;
+    @apply tw:font-semibold;
+  }
+
+  .EasyMDEContainer h6 {
+    @apply tw:text-sm;
+    @apply tw:font-semibold;
+  }
+
+  .EasyMDEContainer a {
+    @apply tw:text-blue-600 tw:underline;
+  }
+
+  .EasyMDEContainer .fullscreen {
+    background: var(--color-base-100) !important;
+  }
+
+  .EasyMDEContainer button.active,
+  button:hover {
+    background: var(--color-base-100) !important;
+  }
+
+  .CodeMirror {
+    background-color: var(--color-base-100) !important;
+    color: var(--color-base-content) !important;
+    border-color: color-mix(in oklab, var(--color-base-content) 20%, #0000)!important;
+    border-end-start-radius: var(--radius-field) !important;
+    border-end-end-radius: var(--radius-field) !important;
+    border-width: var(--border) !important;
+    border-top-width: 0 !important;
+
+  }
+
+  .editor-preview-side {
+    background-color: var(--color-base-100) !important;
+    color: var(--color-base-content) !important;
+  }
+
+  .editor-toolbar {
+    padding: 3px 10px !important;
+    border-color: color-mix(in oklab, var(--color-base-content) 20%, #0000)!important;
+    border-start-start-radius: var(--radius-field) !important;
+    border-start-end-radius: var(--radius-field) !important;
+    border-width: var(--border) !important;
+  }
+
+  .separator {
+    border-color: color-mix(in oklab, var(--color-base-content) 20%, #0000)!important;
+    border-width: 1px !important;
+  }
+
+  .EasyMDEContainer .editor-toolbar {
+    padding: 0;
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+
+  .EasyMDEContainer .editor-toolbar.fullscreen{
+    margin: 16px;
+    width: calc(100% - 32px);
+    border-color: color-mix(in oklab, var(--color-base-content) 20%, #0000)!important;
+    border-start-start-radius: var(--radius-field) !important;
+    border-start-end-radius: var(--radius-field) !important;
+    border-width: var(--border) !important;
+  }
+
+  .EasyMDEContainer .CodeMirror.CodeMirror-fullscreen.CodeMirror-wrap {
+    margin: 16px;
+    width: calc(100% - 32px);
+    border-color: color-mix(in oklab, var(--color-base-content) 20%, #0000)!important;
+    border-end-start-radius: var(--radius-field) !important;
+    border-end-end-radius: var(--radius-field) !important;
+    border-width: var(--border) !important;
+    border-top-width: 0 !important;
+    border-right-width: var(--border) !important;
+    border-top: var(--border) !important;
+  }
+
+  .CodeMirror-cursor {
+    border-color: var(--color-base-content) !important;
+  }
+
+  .editor-preview-full{
+    background-color: var(--color-base-100) !important;
+  }
+
+  .editor-preview-side{
+    margin: 16px;
+    width: calc(50% - 16px);
+    border-color: color-mix(in oklab, var(--color-base-content) 20%, #0000)!important;
+    border-end-end-radius: var(--radius-field) !important;
+    border-width: var(--border) !important;
+  }
+}

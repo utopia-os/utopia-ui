@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
+
+import { SimpleEditor } from '#components/tiptap/components/tiptap-templates/simple/simple-editor'
 
 interface TextAreaProps {
   labelTitle?: string
@@ -27,39 +29,33 @@ export function RichTextEditor({
   required = true,
   updateFormValue,
 }: TextAreaProps) {
-  const ref = useRef<HTMLTextAreaElement>(null)
+  console.log(
+    labelTitle,
+    dataField,
+    labelStyle,
+    containerStyle,
+    inputStyle,
+    placeholder,
+    required,
+    updateFormValue,
+  )
+
+  // const ref = useRef<HTMLTextAreaElement>(null)
   const [inputValue, setInputValue] = useState<string>(defaultValue)
 
+  /*
   useEffect(() => {
     setInputValue(defaultValue)
   }, [defaultValue])
+  */
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  /* const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newValue = e.target.value
     setInputValue(newValue)
     if (updateFormValue) {
       updateFormValue(newValue)
     }
-  }
+  } */
 
-  return (
-    <div className={`tw:form-control tw:w-full ${containerStyle ?? ''}`}>
-      {labelTitle ? (
-        <label className='tw:label'>
-          <span className={`tw:label-text tw:text-base-content ${labelStyle ?? ''}`}>
-            {labelTitle}
-          </span>
-        </label>
-      ) : null}
-      <textarea
-        required={required}
-        ref={ref}
-        value={inputValue}
-        name={dataField}
-        className={`tw:textarea tw:textarea-bordered tw:w-full tw:leading-5 ${inputStyle ?? ''}`}
-        placeholder={placeholder ?? ''}
-        onChange={handleChange}
-      ></textarea>
-    </div>
-  )
+  return <SimpleEditor />
 }

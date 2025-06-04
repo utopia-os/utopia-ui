@@ -1,6 +1,6 @@
 {
   "name": "utopia-ui",
-  "version": "3.0.93",
+  "version": "3.0.96",
   "description": "Reuseable React Components to build mapping apps for real life communities and networks",
   "repository": "https://github.com/utopia-os/utopia-ui",
   "homepage": "https://utopia-os.org/",
@@ -12,6 +12,11 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.esm.js",
       "require": "./dist/index.cjs"
+    },
+    "./Profile": {
+      "types": "./dist/Profile.d.ts",
+      "import": "./dist/Profile.esm.js",
+      "require": "./dist/Profile.cjs.js"
     }
   },
   "type": "module",

@@ -45,7 +45,7 @@ export function MapOverlayPage({
       >
         <div
           ref={overlayRef}
-          className={`${card ? 'tw:card tw:card-body' : ''} tw:shadow-xl tw:bg-base-100 tw:p-6 ${className ?? ''} ${backdrop ? '' : 'tw:z-2000'} tw:absolute tw:top-0 tw:bottom-0 tw:right-0 tw:left-0 tw:m-auto`}
+          className={`${card ? 'tw:card tw:card-body tw:shadow-xl' : ''} tw:bg-base-100 tw:p-6 ${className ?? ''} ${backdrop ? '' : 'tw:z-2000'} tw:absolute tw:top-0 tw:bottom-0 tw:right-0 tw:left-0 tw:m-auto`}
         >
           {children}
           <button

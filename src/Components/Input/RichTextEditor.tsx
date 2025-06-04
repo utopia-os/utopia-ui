@@ -6,6 +6,7 @@ import { EditorProvider, useCurrentEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { useState } from 'react'
 import { Markdown } from 'tiptap-markdown'
+import Youtube from '@tiptap/extension-youtube'
 
 import type { EditorEvents } from '@tiptap/react'
 
@@ -14,6 +15,21 @@ const MenuBar = () => {
 
   if (!editor) {
     return null
+  }
+
+  const [height, setHeight] = useState(480)
+  const [width, setWidth] = useState(640)
+
+  const addYoutubeVideo = () => {
+    const url = prompt('Enter YouTube URL')
+
+    if (url) {
+      editor.commands.setYoutubeVideo({
+        src: url,
+        width: Math.max(320, width) || 640,
+        height: Math.max(180, height) || 480,
+      })
+    }
   }
 
   return (
@@ -162,6 +178,29 @@ const MenuBar = () => {
           Purple
         </button>
       </div>
+      <div className='button-group'>
+        <input
+          id='width'
+          type='number'
+          min='320'
+          max='1024'
+          placeholder='width'
+          value={width}
+          onChange={(event) => setWidth(parseInt(event.target.value))}
+        />
+        <input
+          id='height'
+          type='number'
+          min='180'
+          max='720'
+          placeholder='height'
+          value={height}
+          onChange={(event) => setHeight(parseInt(event.target.value))}
+        />
+        <button id='add' onClick={addYoutubeVideo}>
+          Add YouTube video
+        </button>
+      </div>
     </div>
   )
 }
@@ -181,6 +220,10 @@ const extensions = [
   }),
   Markdown,
   Image,
+  Youtube.configure({
+    controls: false,
+    nocookie: true,
+  }),
 ]
 
 interface TextAreaProps {

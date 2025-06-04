@@ -29,7 +29,7 @@
       }
     },
   "include": ["src", "vite.config.ts", "setupTest.ts", "cypress.config.ts", "cypress/support/commands.ts", "cypress/support/component.ts"],
-  "exclude": ["node_modules", "dist", "example", "rollup.config.mjss"],
+  "exclude": ["node_modules", "dist", "example", "rollup.config.mjs"],
   "typeRoots": [
     "./src/types",
     "./node_modules/@types/"

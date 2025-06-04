@@ -1,3 +1,20 @@
+import {
+  MDXEditor,
+  BlockTypeSelect,
+  CreateLink,
+  BoldItalicUnderlineToggles,
+  InsertThematicBreak,
+  ListsToggle,
+  UndoRedo,
+  diffSourcePlugin,
+  headingsPlugin,
+  linkDialogPlugin,
+  linkPlugin,
+  listsPlugin,
+  markdownShortcutPlugin,
+  thematicBreakPlugin,
+  toolbarPlugin,
+} from '@mdxeditor/editor'
 import { useEffect, useRef, useState } from 'react'
 
 interface TextAreaProps {
@@ -41,6 +58,8 @@ export function TextAreaInput({
     }
   }
 
+  const data = 'lorem ipsum'
+
   return (
     <div className={`tw:form-control tw:w-full ${containerStyle ?? ''}`}>
       {labelTitle ? (
@@ -50,6 +69,36 @@ export function TextAreaInput({
           </span>
         </label>
       ) : null}
+      <MDXEditor
+        plugins={[
+          headingsPlugin({ allowedHeadingLevels: [2, 3, 4] }),
+          listsPlugin({}),
+          // quotePlugin(),
+          thematicBreakPlugin(),
+          linkPlugin({}),
+          diffSourcePlugin({
+            diffMarkdown: data,
+            viewMode: 'rich-text',
+          }),
+          linkDialogPlugin(),
+          markdownShortcutPlugin(),
+          toolbarPlugin({
+            toolbarContents: () => (
+              <>
+                <BlockTypeSelect />
+                <ListsToggle />
+                <BoldItalicUnderlineToggles />
+                <CreateLink />
+                <InsertThematicBreak />
+                <UndoRedo />
+              </>
+            ),
+          }),
+        ]}
+        // ref={ref}
+        markdown={data}
+        contentEditableClassName='prose'
+      />
       <textarea
         required={required}
         ref={ref}

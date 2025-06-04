@@ -12,7 +12,14 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const aliasConfig = alias({
-  entries: [{ find: '#types', replacement: path.resolve(__dirname, 'src/types') }],
+  entries: [
+    { find: '#types', replacement: path.resolve(__dirname, 'src/types') },
+    // Patch for attr-accept to fix react-dropzone compatibility issue
+    {
+      find: 'attr-accept',
+      replacement: path.resolve(__dirname, 'patches/react-dropzone/attr-accept.js'),
+    },
+  ],
 })
 
 export default [

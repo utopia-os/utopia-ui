@@ -13,7 +13,7 @@ import DialogModal from '#components/Templates/DialogModal'
 import type { Crop } from 'react-image-crop'
 
 interface AvatarWidgetProps {
-  avatar: string
+  avatar?: string
   setAvatar: React.Dispatch<React.SetStateAction<any>>
 }
 

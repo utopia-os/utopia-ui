@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { useEffect } from 'react'
 
 import ComboBoxInput from '#components/Input/ComboBoxInput'
@@ -24,7 +22,7 @@ export const GroupSubheaderForm = ({
   groupTypes,
 }: {
   state: FormState
-  setState: React.Dispatch<React.SetStateAction<any>>
+  setState: React.Dispatch<React.SetStateAction<FormState>>
   item: Item
   groupStates?: string[]
   groupTypes?: groupType[]

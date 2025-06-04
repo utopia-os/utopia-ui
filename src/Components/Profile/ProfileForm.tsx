@@ -47,6 +47,7 @@ export function ProfileForm() {
     start: '',
     end: '',
     openCollectiveSlug: '',
+    gallery: [],
   })
 
   const [updatePermission, setUpdatePermission] = useState<boolean>(false)
@@ -140,6 +141,7 @@ export function ProfileForm() {
       start: item.start ?? '',
       end: item.end ?? '',
       openCollectiveSlug: item.openCollectiveSlug ?? '',
+      gallery: item.gallery ?? [],
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item, tags, items])

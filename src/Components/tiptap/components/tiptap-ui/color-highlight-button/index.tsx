@@ -1,1 +1,1 @@
-export * from "./color-highlight-button"
+export * from './color-highlight-button'

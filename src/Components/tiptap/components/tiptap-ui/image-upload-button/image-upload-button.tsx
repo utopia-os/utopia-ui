@@ -1,17 +1,17 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { type Editor } from "@tiptap/react"
+import * as React from 'react'
 
 // --- Hooks ---
-import { useTiptapEditor } from "#components/tiptap/hooks/use-tiptap-editor"
+import { ImagePlusIcon } from '#components/tiptap/components/tiptap-icons/image-plus-icon'
+import { Button } from '#components/tiptap/components/tiptap-ui-primitive/button'
+import { useTiptapEditor } from '#components/tiptap/hooks/use-tiptap-editor'
 
 // --- Icons ---
-import { ImagePlusIcon } from "#components/tiptap/components/tiptap-icons/image-plus-icon"
 
 // --- UI Primitives ---
-import type { ButtonProps } from "#components/tiptap/components/tiptap-ui-primitive/button"
-import { Button } from "#components/tiptap/components/tiptap-ui-primitive/button"
+import type { ButtonProps } from '#components/tiptap/components/tiptap-ui-primitive/button'
+import type { Editor } from '@tiptap/react'
 
 export interface ImageUploadButtonProps extends ButtonProps {
   editor?: Editor | null
@@ -19,18 +19,12 @@ export interface ImageUploadButtonProps extends ButtonProps {
   extensionName?: string
 }
 
-export function isImageActive(
-  editor: Editor | null,
-  extensionName: string
-): boolean {
+export function isImageActive(editor: Editor | null, extensionName: string): boolean {
   if (!editor) return false
   return editor.isActive(extensionName)
 }
 
-export function insertImage(
-  editor: Editor | null,
-  extensionName: string
-): boolean {
+export function insertImage(editor: Editor | null, extensionName: string): boolean {
   if (!editor) return false
 
   return editor
@@ -44,8 +38,8 @@ export function insertImage(
 
 export function useImageUploadButton(
   editor: Editor | null,
-  extensionName: string = "imageUpload",
-  disabled: boolean = false
+  extensionName = 'imageUpload',
+  disabled = false,
 ) {
   const isActive = isImageActive(editor, extensionName)
   const handleInsertImage = React.useCallback(() => {
@@ -59,29 +53,22 @@ export function useImageUploadButton(
   }
 }
 
-export const ImageUploadButton = React.forwardRef<
-  HTMLButtonElement,
-  ImageUploadButtonProps
->(
+export const ImageUploadButton = React.forwardRef<HTMLButtonElement, ImageUploadButtonProps>(
   (
     {
       editor: providedEditor,
-      extensionName = "imageUpload",
+      extensionName = 'imageUpload',
       text,
-      className = "",
+      className = '',
       disabled,
       onClick,
       children,
       ...buttonProps
     },
-    ref
+    ref,
   ) => {
     const editor = useTiptapEditor(providedEditor)
-    const { isActive, handleInsertImage } = useImageUploadButton(
-      editor,
-      extensionName,
-      disabled
-    )
+    const { isActive, handleInsertImage } = useImageUploadButton(editor, extensionName, disabled)
 
     const handleClick = React.useCallback(
       (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -91,7 +78,7 @@ export const ImageUploadButton = React.forwardRef<
           handleInsertImage()
         }
       },
-      [onClick, disabled, handleInsertImage]
+      [onClick, disabled, handleInsertImage],
     )
 
     if (!editor || !editor.isEditable) {
@@ -101,29 +88,29 @@ export const ImageUploadButton = React.forwardRef<
     return (
       <Button
         ref={ref}
-        type="button"
+        type='button'
         className={className.trim()}
-        data-style="ghost"
-        data-active-state={isActive ? "on" : "off"}
-        role="button"
+        data-style='ghost'
+        data-active-state={isActive ? 'on' : 'off'}
+        role='button'
         tabIndex={-1}
-        aria-label="Add image"
+        aria-label='Add image'
         aria-pressed={isActive}
-        tooltip="Add image"
+        tooltip='Add image'
         onClick={handleClick}
         {...buttonProps}
       >
         {children || (
           <>
-            <ImagePlusIcon className="tiptap-button-icon" />
-            {text && <span className="tiptap-button-text">{text}</span>}
+            <ImagePlusIcon className='tiptap-button-icon' />
+            {text && <span className='tiptap-button-text'>{text}</span>}
           </>
         )}
       </Button>
     )
-  }
+  },
 )
 
-ImageUploadButton.displayName = "ImageUploadButton"
+ImageUploadButton.displayName = 'ImageUploadButton'
 
 export default ImageUploadButton

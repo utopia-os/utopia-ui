@@ -1,80 +1,78 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { isNodeSelection, type Editor } from "@tiptap/react"
-import type { Node } from "@tiptap/pm/model"
+import { isNodeSelection } from '@tiptap/react'
+import * as React from 'react'
+
+import { Button } from '#components/tiptap/components/tiptap-ui-primitive/button'
+import { useTiptapEditor } from '#components/tiptap/hooks/use-tiptap-editor'
 
 // --- Hooks ---
-import { useTiptapEditor } from "#components/tiptap/hooks/use-tiptap-editor"
 
 // --- Lib ---
-import {
-  findNodePosition,
-  isEmptyNode,
-  isMarkInSchema,
-} from "#components/tiptap/lib/tiptap-utils"
+import { findNodePosition, isEmptyNode, isMarkInSchema } from '#components/tiptap/lib/tiptap-utils'
 
 // --- UI Primitives ---
-import type { ButtonProps } from "#components/tiptap/components/tiptap-ui-primitive/button"
-import { Button } from "#components/tiptap/components/tiptap-ui-primitive/button"
+import type { ButtonProps } from '#components/tiptap/components/tiptap-ui-primitive/button'
+import type { Node } from '@tiptap/pm/model'
+import type { Editor } from '@tiptap/react'
 
 // --- Styles ---
-import "#components/tiptap/components/tiptap-ui/color-highlight-button/color-highlight-button.scss"
+import '#components/tiptap/components/tiptap-ui/color-highlight-button/color-highlight-button.scss'
 
 export const HIGHLIGHT_COLORS = [
   {
-    label: "Default background",
-    value: "var(--tt-bg-color)",
-    border: "var(--tt-bg-color-contrast)",
+    label: 'Default background',
+    value: 'var(--tt-bg-color)',
+    border: 'var(--tt-bg-color-contrast)',
   },
   {
-    label: "Gray background",
-    value: "var(--tt-color-highlight-gray)",
-    border: "var(--tt-color-highlight-gray-contrast)",
+    label: 'Gray background',
+    value: 'var(--tt-color-highlight-gray)',
+    border: 'var(--tt-color-highlight-gray-contrast)',
   },
   {
-    label: "Brown background",
-    value: "var(--tt-color-highlight-brown)",
-    border: "var(--tt-color-highlight-brown-contrast)",
+    label: 'Brown background',
+    value: 'var(--tt-color-highlight-brown)',
+    border: 'var(--tt-color-highlight-brown-contrast)',
   },
   {
-    label: "Orange background",
-    value: "var(--tt-color-highlight-orange)",
-    border: "var(--tt-color-highlight-orange-contrast)",
+    label: 'Orange background',
+    value: 'var(--tt-color-highlight-orange)',
+    border: 'var(--tt-color-highlight-orange-contrast)',
   },
   {
-    label: "Yellow background",
-    value: "var(--tt-color-highlight-yellow)",
-    border: "var(--tt-color-highlight-yellow-contrast)",
+    label: 'Yellow background',
+    value: 'var(--tt-color-highlight-yellow)',
+    border: 'var(--tt-color-highlight-yellow-contrast)',
   },
   {
-    label: "Green background",
-    value: "var(--tt-color-highlight-green)",
-    border: "var(--tt-color-highlight-green-contrast)",
+    label: 'Green background',
+    value: 'var(--tt-color-highlight-green)',
+    border: 'var(--tt-color-highlight-green-contrast)',
   },
   {
-    label: "Blue background",
-    value: "var(--tt-color-highlight-blue)",
-    border: "var(--tt-color-highlight-blue-contrast)",
+    label: 'Blue background',
+    value: 'var(--tt-color-highlight-blue)',
+    border: 'var(--tt-color-highlight-blue-contrast)',
   },
   {
-    label: "Purple background",
-    value: "var(--tt-color-highlight-purple)",
-    border: "var(--tt-color-highlight-purple-contrast)",
+    label: 'Purple background',
+    value: 'var(--tt-color-highlight-purple)',
+    border: 'var(--tt-color-highlight-purple-contrast)',
   },
   {
-    label: "Pink background",
-    value: "var(--tt-color-highlight-pink)",
-    border: "var(--tt-color-highlight-pink-contrast)",
+    label: 'Pink background',
+    value: 'var(--tt-color-highlight-pink)',
+    border: 'var(--tt-color-highlight-pink-contrast)',
   },
   {
-    label: "Red background",
-    value: "var(--tt-color-highlight-red)",
-    border: "var(--tt-color-highlight-red-contrast)",
+    label: 'Red background',
+    value: 'var(--tt-color-highlight-red)',
+    border: 'var(--tt-color-highlight-red-contrast)',
   },
 ]
 
-export interface ColorHighlightButtonProps extends Omit<ButtonProps, "type"> {
+export interface ColorHighlightButtonProps extends Omit<ButtonProps, 'type'> {
   /**
    * The TipTap editor instance.
    */
@@ -113,7 +111,7 @@ export interface ColorHighlightButtonProps extends Omit<ButtonProps, "type"> {
 export function canToggleHighlight(editor: Editor | null): boolean {
   if (!editor) return false
   try {
-    return editor.can().setMark("highlight")
+    return editor.can().setMark('highlight')
   } catch {
     return false
   }
@@ -122,12 +120,9 @@ export function canToggleHighlight(editor: Editor | null): boolean {
 /**
  * Checks if highlight is active in the current selection
  */
-export function isHighlightActive(
-  editor: Editor | null,
-  color: string
-): boolean {
+export function isHighlightActive(editor: Editor | null, color: string): boolean {
   if (!editor) return false
-  return editor.isActive("highlight", { color })
+  return editor.isActive('highlight', { color })
 }
 
 /**
@@ -137,7 +132,7 @@ export function toggleHighlight(
   editor: Editor | null,
   color: string,
   node?: Node | null,
-  nodePos?: number | null
+  nodePos?: number | null,
 ): void {
   if (!editor) return
 
@@ -145,26 +140,23 @@ export function toggleHighlight(
     const chain = editor.chain().focus()
 
     if (isEmptyNode(node)) {
-      chain.toggleMark("highlight", { color }).run()
+      chain.toggleMark('highlight', { color }).run()
     } else if (nodePos !== undefined && nodePos !== null && nodePos !== -1) {
-      chain.setNodeSelection(nodePos).toggleMark("highlight", { color }).run()
+      chain.setNodeSelection(nodePos).toggleMark('highlight', { color }).run()
     } else if (node) {
       const foundPos = findNodePosition({ editor, node })
       if (foundPos) {
-        chain
-          .setNodeSelection(foundPos.pos)
-          .toggleMark("highlight", { color })
-          .run()
+        chain.setNodeSelection(foundPos.pos).toggleMark('highlight', { color }).run()
       } else {
-        chain.toggleMark("highlight", { color }).run()
+        chain.toggleMark('highlight', { color }).run()
       }
     } else {
-      chain.toggleMark("highlight", { color }).run()
+      chain.toggleMark('highlight', { color }).run()
     }
 
-    editor.chain().setMeta("hideDragHandle", true).run()
+    editor.chain().setMeta('hideDragHandle', true).run()
   } catch (error) {
-    console.error("Failed to apply highlight:", error)
+    console.error('Failed to apply highlight:', error)
   }
 }
 
@@ -173,14 +165,12 @@ export function toggleHighlight(
  */
 export function isColorHighlightButtonDisabled(
   editor: Editor | null,
-  userDisabled: boolean = false
+  userDisabled = false,
 ): boolean {
   if (!editor || userDisabled) return true
 
   const isIncompatibleContext =
-    editor.isActive("code") ||
-    editor.isActive("codeBlock") ||
-    editor.isActive("imageUpload")
+    editor.isActive('code') || editor.isActive('codeBlock') || editor.isActive('imageUpload')
 
   return isIncompatibleContext || !canToggleHighlight(editor)
 }
@@ -191,15 +181,12 @@ export function isColorHighlightButtonDisabled(
 export function shouldShowColorHighlightButton(
   editor: Editor | null,
   hideWhenUnavailable: boolean,
-  highlightInSchema: boolean
+  highlightInSchema: boolean,
 ): boolean {
   if (!highlightInSchema || !editor) return false
 
   if (hideWhenUnavailable) {
-    if (
-      isNodeSelection(editor.state.selection) ||
-      !canToggleHighlight(editor)
-    ) {
+    if (isNodeSelection(editor.state.selection) || !canToggleHighlight(editor)) {
       return false
     }
   }
@@ -213,21 +200,16 @@ export function shouldShowColorHighlightButton(
 export function useHighlightState(
   editor: Editor | null,
   color: string,
-  disabled: boolean = false,
-  hideWhenUnavailable: boolean = false
+  disabled = false,
+  hideWhenUnavailable = false,
 ) {
-  const highlightInSchema = isMarkInSchema("highlight", editor)
+  const highlightInSchema = isMarkInSchema('highlight', editor)
   const isDisabled = isColorHighlightButtonDisabled(editor, disabled)
   const isActive = isHighlightActive(editor, color)
 
   const shouldShow = React.useMemo(
-    () =>
-      shouldShowColorHighlightButton(
-        editor,
-        hideWhenUnavailable,
-        highlightInSchema
-      ),
-    [editor, hideWhenUnavailable, highlightInSchema]
+    () => shouldShowColorHighlightButton(editor, hideWhenUnavailable, highlightInSchema),
+    [editor, hideWhenUnavailable, highlightInSchema],
   )
 
   return {
@@ -241,10 +223,7 @@ export function useHighlightState(
 /**
  * ColorHighlightButton component for TipTap editor
  */
-export const ColorHighlightButton = React.forwardRef<
-  HTMLButtonElement,
-  ColorHighlightButtonProps
->(
+export const ColorHighlightButton = React.forwardRef<HTMLButtonElement, ColorHighlightButtonProps>(
   (
     {
       editor: providedEditor,
@@ -253,7 +232,7 @@ export const ColorHighlightButton = React.forwardRef<
       color,
       text,
       hideWhenUnavailable = false,
-      className = "",
+      className = '',
       disabled,
       onClick,
       onApplied,
@@ -261,14 +240,14 @@ export const ColorHighlightButton = React.forwardRef<
       style,
       ...buttonProps
     },
-    ref
+    ref,
   ) => {
     const editor = useTiptapEditor(providedEditor)
     const { isDisabled, isActive, shouldShow } = useHighlightState(
       editor,
       color,
       disabled,
-      hideWhenUnavailable
+      hideWhenUnavailable,
     )
 
     const handleClick = React.useCallback(
@@ -280,16 +259,16 @@ export const ColorHighlightButton = React.forwardRef<
           onApplied?.(color)
         }
       },
-      [color, editor, isDisabled, node, nodePos, onClick, onApplied]
+      [color, editor, isDisabled, node, nodePos, onClick, onApplied],
     )
 
     const buttonStyle = React.useMemo(
       () =>
         ({
           ...style,
-          "--highlight-color": color,
+          '--highlight-color': color,
         }) as React.CSSProperties,
-      [color, style]
+      [color, style],
     )
 
     if (!shouldShow || !editor || !editor.isEditable) {
@@ -298,13 +277,13 @@ export const ColorHighlightButton = React.forwardRef<
 
     return (
       <Button
-        type="button"
+        type='button'
         className={className.trim()}
         disabled={isDisabled}
-        data-style="ghost"
-        data-active-state={isActive ? "on" : "off"}
+        data-style='ghost'
+        data-active-state={isActive ? 'on' : 'off'}
         data-disabled={isDisabled}
-        role="button"
+        role='button'
         tabIndex={-1}
         aria-label={`${color} highlight color`}
         aria-pressed={isActive}
@@ -316,17 +295,17 @@ export const ColorHighlightButton = React.forwardRef<
         {children || (
           <>
             <span
-              className="tiptap-button-highlight"
-              style={{ "--highlight-color": color } as React.CSSProperties}
+              className='tiptap-button-highlight'
+              style={{ '--highlight-color': color } as React.CSSProperties}
             />
-            {text && <span className="tiptap-button-text">{text}</span>}
+            {text && <span className='tiptap-button-text'>{text}</span>}
           </>
         )}
       </Button>
     )
-  }
+  },
 )
 
-ColorHighlightButton.displayName = "ColorHighlightButton"
+ColorHighlightButton.displayName = 'ColorHighlightButton'
 
 export default ColorHighlightButton

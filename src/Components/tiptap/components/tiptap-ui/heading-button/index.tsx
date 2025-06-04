@@ -1,1 +1,1 @@
-export * from "./heading-button"
+export * from './heading-button'

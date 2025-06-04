@@ -1,18 +1,18 @@
-import * as React from "react"
+import * as React from 'react'
+
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "#components/tiptap/components/tiptap-ui-primitive/tooltip"
+} from '#components/tiptap/components/tiptap-ui-primitive/tooltip'
 
-import "#components/tiptap/components/tiptap-ui-primitive/button/button-colors.scss"
-import "#components/tiptap/components/tiptap-ui-primitive/button/button-group.scss"
-import "#components/tiptap/components/tiptap-ui-primitive/button/button.scss"
+import '#components/tiptap/components/tiptap-ui-primitive/button/button-colors.scss'
+import '#components/tiptap/components/tiptap-ui-primitive/button/button-group.scss'
+import '#components/tiptap/components/tiptap-ui-primitive/button/button.scss'
 
 type PlatformShortcuts = Record<string, string>
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string
   showTooltip?: boolean
   tooltip?: React.ReactNode
@@ -20,9 +20,9 @@ export interface ButtonProps
 }
 
 export const MAC_SYMBOLS: PlatformShortcuts = {
-  ctrl: "⌘",
-  alt: "⌥",
-  shift: "⇧",
+  ctrl: '⌘',
+  alt: '⌥',
+  shift: '⇧',
 } as const
 
 export const formatShortcutKey = (key: string, isMac: boolean) => {
@@ -33,21 +33,16 @@ export const formatShortcutKey = (key: string, isMac: boolean) => {
   return key.charAt(0).toUpperCase() + key.slice(1)
 }
 
-export const parseShortcutKeys = (
-  shortcutKeys: string | undefined,
-  isMac: boolean
-) => {
+export const parseShortcutKeys = (shortcutKeys: string | undefined, isMac: boolean) => {
   if (!shortcutKeys) return []
 
   return shortcutKeys
-    .split("-")
+    .split('-')
     .map((key) => key.trim())
     .map((key) => formatShortcutKey(key, isMac))
 }
 
-export const ShortcutDisplay: React.FC<{ shortcuts: string[] }> = ({
-  shortcuts,
-}) => {
+export const ShortcutDisplay: React.FC<{ shortcuts: string[] }> = ({ shortcuts }) => {
   if (shortcuts.length === 0) return null
 
   return (
@@ -65,26 +60,24 @@ export const ShortcutDisplay: React.FC<{ shortcuts: string[] }> = ({
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
-      className = "",
+      className = '',
       children,
       tooltip,
       showTooltip = true,
       shortcutKeys,
-      "aria-label": ariaLabel,
+      'aria-label': ariaLabel,
       ...props
     },
-    ref
+    ref,
   ) => {
     const isMac = React.useMemo(
-      () =>
-        typeof navigator !== "undefined" &&
-        navigator.platform.toLowerCase().includes("mac"),
-      []
+      () => typeof navigator !== 'undefined' && navigator.platform.toLowerCase().includes('mac'),
+      [],
     )
 
     const shortcuts = React.useMemo(
       () => parseShortcutKeys(shortcutKeys, isMac),
-      [shortcutKeys, isMac]
+      [shortcutKeys, isMac],
     )
 
     if (!tooltip || !showTooltip) {
@@ -116,9 +109,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         </TooltipContent>
       </Tooltip>
     )
-  }
+  },
 )
 
-Button.displayName = "Button"
+Button.displayName = 'Button'
 
 export default Button

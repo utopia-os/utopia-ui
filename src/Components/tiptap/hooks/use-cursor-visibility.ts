@@ -1,8 +1,10 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import type { Editor } from "@tiptap/react"
-import { useWindowSize } from "#components/tiptap/hooks/use-window-size"
+import * as React from 'react'
+
+import { useWindowSize } from '#components/tiptap/hooks/use-window-size'
+
+import type { Editor } from '@tiptap/react'
 
 /**
  * Interface defining required parameters for the cursor visibility hook
@@ -25,7 +27,7 @@ export interface CursorVisibilityOptions {
 /**
  * Simplified DOMRect type containing only the essential positioning properties
  */
-export type RectState = Pick<DOMRect, "x" | "y" | "width" | "height">
+export type RectState = Pick<DOMRect, 'x' | 'y' | 'width' | 'height'>
 
 /**
  * Custom hook that ensures the cursor remains visible when typing in a TipTap editor.
@@ -67,11 +69,11 @@ export function useCursorVisibility({
     })
 
     resizeObserver.observe(element)
-    window.addEventListener("scroll", updateRect, { passive: true })
+    window.addEventListener('scroll', updateRect, { passive: true })
 
     return () => {
       resizeObserver.disconnect()
-      window.removeEventListener("scroll", updateRect)
+      window.removeEventListener('scroll', updateRect)
     }
   }, [elementRef, updateRect])
 
@@ -90,8 +92,7 @@ export function useCursorVisibility({
       if (windowHeight < rect.height) {
         if (cursorCoords) {
           // Check if there's enough space between cursor and bottom of window
-          const availableSpace =
-            windowHeight - cursorCoords.top - overlayHeight > 0
+          const availableSpace = windowHeight - cursorCoords.top - overlayHeight > 0
 
           // If not enough space, scroll to position cursor in the middle of viewport
           if (!availableSpace) {
@@ -102,7 +103,7 @@ export function useCursorVisibility({
 
             window.scrollTo({
               top: targetScrollY,
-              behavior: "smooth",
+              behavior: 'smooth',
             })
           }
         }

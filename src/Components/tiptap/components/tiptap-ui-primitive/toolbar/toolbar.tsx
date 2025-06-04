@@ -1,21 +1,22 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { Separator } from "#components/tiptap/components/tiptap-ui-primitive/separator"
-import "#components/tiptap/components/tiptap-ui-primitive/toolbar/toolbar.scss"
+import * as React from 'react'
+
+import { Separator } from '#components/tiptap/components/tiptap-ui-primitive/separator'
+import '#components/tiptap/components/tiptap-ui-primitive/toolbar/toolbar.scss'
 
 type BaseProps = React.HTMLAttributes<HTMLDivElement>
 
 interface ToolbarProps extends BaseProps {
-  variant?: "floating" | "fixed"
+  variant?: 'floating' | 'fixed'
 }
 
 const mergeRefs = <T,>(
-  refs: Array<React.RefObject<T> | React.Ref<T> | null | undefined>
+  refs: (React.RefObject<T> | React.Ref<T> | null | undefined)[],
 ): React.RefCallback<T> => {
   return (value) => {
     refs.forEach((ref) => {
-      if (typeof ref === "function") {
+      if (typeof ref === 'function') {
         ref(value)
       } else if (ref != null) {
         ;(ref as React.MutableRefObject<T | null>).current = value
@@ -26,7 +27,7 @@ const mergeRefs = <T,>(
 
 const useObserveVisibility = (
   ref: React.RefObject<HTMLElement | null>,
-  callback: () => void
+  callback: () => void,
 ): void => {
   React.useEffect(() => {
     const element = ref.current
@@ -57,9 +58,7 @@ const useObserveVisibility = (
   }, [ref, callback])
 }
 
-const useToolbarKeyboardNav = (
-  toolbarRef: React.RefObject<HTMLDivElement | null>
-): void => {
+const useToolbarKeyboardNav = (toolbarRef: React.RefObject<HTMLDivElement | null>): void => {
   React.useEffect(() => {
     const toolbar = toolbarRef.current
     if (!toolbar) return
@@ -67,15 +66,11 @@ const useToolbarKeyboardNav = (
     const getFocusableElements = () =>
       Array.from(
         toolbar.querySelectorAll<HTMLElement>(
-          'button:not([disabled]), [role="button"]:not([disabled]), [tabindex="0"]:not([disabled])'
-        )
+          'button:not([disabled]), [role="button"]:not([disabled]), [tabindex="0"]:not([disabled])',
+        ),
       )
 
-    const navigateToIndex = (
-      e: KeyboardEvent,
-      targetIndex: number,
-      elements: HTMLElement[]
-    ) => {
+    const navigateToIndex = (e: KeyboardEvent, targetIndex: number, elements: HTMLElement[]) => {
       e.preventDefault()
       let nextIndex = targetIndex
 
@@ -98,16 +93,12 @@ const useToolbarKeyboardNav = (
       if (!toolbar.contains(currentElement)) return
 
       const keyActions: Record<string, () => void> = {
-        ArrowRight: () =>
-          navigateToIndex(e, currentIndex + 1, focusableElements),
-        ArrowDown: () =>
-          navigateToIndex(e, currentIndex + 1, focusableElements),
-        ArrowLeft: () =>
-          navigateToIndex(e, currentIndex - 1, focusableElements),
+        ArrowRight: () => navigateToIndex(e, currentIndex + 1, focusableElements),
+        ArrowDown: () => navigateToIndex(e, currentIndex + 1, focusableElements),
+        ArrowLeft: () => navigateToIndex(e, currentIndex - 1, focusableElements),
         ArrowUp: () => navigateToIndex(e, currentIndex - 1, focusableElements),
         Home: () => navigateToIndex(e, 0, focusableElements),
-        End: () =>
-          navigateToIndex(e, focusableElements.length - 1, focusableElements),
+        End: () => navigateToIndex(e, focusableElements.length - 1, focusableElements),
       }
 
       const action = keyActions[e.key]
@@ -119,44 +110,42 @@ const useToolbarKeyboardNav = (
     const handleFocus = (e: FocusEvent) => {
       const target = e.target as HTMLElement
       if (toolbar.contains(target)) {
-        target.setAttribute("data-focus-visible", "true")
+        target.setAttribute('data-focus-visible', 'true')
       }
     }
 
     const handleBlur = (e: FocusEvent) => {
       const target = e.target as HTMLElement
       if (toolbar.contains(target)) {
-        target.removeAttribute("data-focus-visible")
+        target.removeAttribute('data-focus-visible')
       }
     }
 
-    toolbar.addEventListener("keydown", handleKeyDown)
-    toolbar.addEventListener("focus", handleFocus, true)
-    toolbar.addEventListener("blur", handleBlur, true)
+    toolbar.addEventListener('keydown', handleKeyDown)
+    toolbar.addEventListener('focus', handleFocus, true)
+    toolbar.addEventListener('blur', handleBlur, true)
 
     const focusableElements = getFocusableElements()
     focusableElements.forEach((element) => {
-      element.addEventListener("focus", handleFocus)
-      element.addEventListener("blur", handleBlur)
+      element.addEventListener('focus', handleFocus)
+      element.addEventListener('blur', handleBlur)
     })
 
     return () => {
-      toolbar.removeEventListener("keydown", handleKeyDown)
-      toolbar.removeEventListener("focus", handleFocus, true)
-      toolbar.removeEventListener("blur", handleBlur, true)
+      toolbar.removeEventListener('keydown', handleKeyDown)
+      toolbar.removeEventListener('focus', handleFocus, true)
+      toolbar.removeEventListener('blur', handleBlur, true)
 
       const focusableElements = getFocusableElements()
       focusableElements.forEach((element) => {
-        element.removeEventListener("focus", handleFocus)
-        element.removeEventListener("blur", handleBlur)
+        element.removeEventListener('focus', handleFocus)
+        element.removeEventListener('blur', handleBlur)
       })
     }
   }, [toolbarRef])
 }
 
-const useToolbarVisibility = (
-  ref: React.RefObject<HTMLDivElement | null>
-): boolean => {
+const useToolbarVisibility = (ref: React.RefObject<HTMLDivElement | null>): boolean => {
   const [isVisible, setIsVisible] = React.useState(true)
   const isMountedRef = React.useRef(false)
 
@@ -176,7 +165,7 @@ const useToolbarVisibility = (
     // Check if any group has visible children
     const hasVisibleChildren = Array.from(toolbar.children).some((child) => {
       if (!(child instanceof HTMLElement)) return false
-      if (child.getAttribute("role") === "group") {
+      if (child.getAttribute('role') === 'group') {
         return child.children.length > 0
       }
       return false
@@ -189,9 +178,7 @@ const useToolbarVisibility = (
   return isVisible
 }
 
-const useGroupVisibility = (
-  ref: React.RefObject<HTMLDivElement | null>
-): boolean => {
+const useGroupVisibility = (ref: React.RefObject<HTMLDivElement | null>): boolean => {
   const [isVisible, setIsVisible] = React.useState(true)
   const isMountedRef = React.useRef(false)
 
@@ -220,9 +207,7 @@ const useGroupVisibility = (
   return isVisible
 }
 
-const useSeparatorVisibility = (
-  ref: React.RefObject<HTMLDivElement | null>
-): boolean => {
+const useSeparatorVisibility = (ref: React.RefObject<HTMLDivElement | null>): boolean => {
   const [isVisible, setIsVisible] = React.useState(true)
   const isMountedRef = React.useRef(false)
 
@@ -248,11 +233,9 @@ const useSeparatorVisibility = (
     }
 
     const areBothGroups =
-      prevSibling.getAttribute("role") === "group" &&
-      nextSibling.getAttribute("role") === "group"
+      prevSibling.getAttribute('role') === 'group' && nextSibling.getAttribute('role') === 'group'
 
-    const haveBothChildren =
-      prevSibling.children.length > 0 && nextSibling.children.length > 0
+    const haveBothChildren = prevSibling.children.length > 0 && nextSibling.children.length > 0
 
     setIsVisible(areBothGroups && haveBothChildren)
   }, [ref])
@@ -262,7 +245,7 @@ const useSeparatorVisibility = (
 }
 
 export const Toolbar = React.forwardRef<HTMLDivElement, ToolbarProps>(
-  ({ children, className, variant = "fixed", ...props }, ref) => {
+  ({ children, className, variant = 'fixed', ...props }, ref) => {
     const toolbarRef = React.useRef<HTMLDivElement>(null)
     const isVisible = useToolbarVisibility(toolbarRef)
 
@@ -273,19 +256,19 @@ export const Toolbar = React.forwardRef<HTMLDivElement, ToolbarProps>(
     return (
       <div
         ref={mergeRefs([toolbarRef, ref])}
-        role="toolbar"
-        aria-label="toolbar"
+        role='toolbar'
+        aria-label='toolbar'
         data-variant={variant}
-        className={`tiptap-toolbar ${className || ""}`}
+        className={`tiptap-toolbar ${className || ''}`}
         {...props}
       >
         {children}
       </div>
     )
-  }
+  },
 )
 
-Toolbar.displayName = "Toolbar"
+Toolbar.displayName = 'Toolbar'
 
 export const ToolbarGroup = React.forwardRef<HTMLDivElement, BaseProps>(
   ({ children, className, ...props }, ref) => {
@@ -297,34 +280,27 @@ export const ToolbarGroup = React.forwardRef<HTMLDivElement, BaseProps>(
     return (
       <div
         ref={mergeRefs([groupRef, ref])}
-        role="group"
-        className={`tiptap-toolbar-group ${className || ""}`}
+        role='group'
+        className={`tiptap-toolbar-group ${className || ''}`}
         {...props}
       >
         {children}
       </div>
     )
-  }
+  },
 )
 
-ToolbarGroup.displayName = "ToolbarGroup"
+ToolbarGroup.displayName = 'ToolbarGroup'
 
-export const ToolbarSeparator = React.forwardRef<HTMLDivElement, BaseProps>(
-  ({ ...props }, ref) => {
-    const separatorRef = React.useRef<HTMLDivElement>(null)
-    const isVisible = useSeparatorVisibility(separatorRef)
+export const ToolbarSeparator = React.forwardRef<HTMLDivElement, BaseProps>(({ ...props }, ref) => {
+  const separatorRef = React.useRef<HTMLDivElement>(null)
+  const isVisible = useSeparatorVisibility(separatorRef)
 
-    if (!isVisible) return null
+  if (!isVisible) return null
 
-    return (
-      <Separator
-        ref={mergeRefs([separatorRef, ref])}
-        orientation="vertical"
-        decorative
-        {...props}
-      />
-    )
-  }
-)
+  return (
+    <Separator ref={mergeRefs([separatorRef, ref])} orientation='vertical' decorative {...props} />
+  )
+})
 
-ToolbarSeparator.displayName = "ToolbarSeparator"
+ToolbarSeparator.displayName = 'ToolbarSeparator'

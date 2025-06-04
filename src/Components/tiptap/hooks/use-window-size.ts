@@ -1,4 +1,4 @@
-import * as React from "react"
+import { useState, useEffect } from 'react'
 
 interface WindowSizeState {
   width: number
@@ -11,17 +11,17 @@ interface WindowSizeState {
  * @returns Current window dimensions and offsetTop
  */
 export function useWindowSize(): WindowSizeState {
-  const [windowSize, setWindowSize] = React.useState<WindowSizeState>({
+  const [windowSize, setWindowSize] = useState<WindowSizeState>({
     width: 0,
     height: 0,
     offsetTop: 0,
   })
 
-  React.useEffect(() => {
+  useEffect(() => {
     handleResize()
 
     function handleResize() {
-      if (typeof window === "undefined") return
+      if (typeof window === 'undefined') return
 
       const vp = window.visualViewport
       if (!vp) return
@@ -30,11 +30,7 @@ export function useWindowSize(): WindowSizeState {
 
       // Only update state if values have changed
       setWindowSize((state) => {
-        if (
-          width === state.width &&
-          height === state.height &&
-          offsetTop === state.offsetTop
-        ) {
+        if (width === state.width && height === state.height && offsetTop === state.offsetTop) {
           return state
         }
 
@@ -44,14 +40,14 @@ export function useWindowSize(): WindowSizeState {
 
     const visualViewport = window.visualViewport
     if (visualViewport) {
-      visualViewport.addEventListener("resize", handleResize)
-      visualViewport.addEventListener("scroll", handleResize)
+      visualViewport.addEventListener('resize', handleResize)
+      visualViewport.addEventListener('scroll', handleResize)
     }
 
     return () => {
       if (visualViewport) {
-        visualViewport.removeEventListener("resize", handleResize)
-        visualViewport.removeEventListener("scroll", handleResize)
+        visualViewport.removeEventListener('resize', handleResize)
+        visualViewport.removeEventListener('scroll', handleResize)
       }
     }
   }, [])

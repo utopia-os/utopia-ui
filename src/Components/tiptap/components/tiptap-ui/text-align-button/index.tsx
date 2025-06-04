@@ -1,1 +1,1 @@
-export * from "./text-align-button"
+export * from './text-align-button'

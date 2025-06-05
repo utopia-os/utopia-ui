@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 
 import { useAppState } from '#components/AppShell/hooks/useAppState'
@@ -12,7 +13,11 @@ interface Props {
 export const GalleryForm = ({ state, setState }: Props) => {
   const appState = useAppState()
 
+  const [isUploading, setUploading] = useState(false)
+
   const upload = async (acceptedFiles: File[]) => {
+    setUploading(true)
+
     const assets = await Promise.all(
       acceptedFiles.map(async (file) => {
         return appState.assetsApi.upload(file, 'gallery')
@@ -22,10 +27,12 @@ export const GalleryForm = ({ state, setState }: Props) => {
     const newGalleryItems = assets.map((asset) => ({
       directus_files_id: {
         id: asset.id,
-        width: 600, // TODO determine
-        height: 400, // TODO determine
+        width: 600, // TODO map to ids only
+        height: 400,
       },
     }))
+
+    setUploading(false)
 
     setState((prevState) => ({
       ...prevState,
@@ -36,6 +43,9 @@ export const GalleryForm = ({ state, setState }: Props) => {
   const { getRootProps, getInputProps } = useDropzone({
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     onDrop: upload,
+    accept: {
+      'image/jpeg': [],
+    },
   })
 
   const images = state.gallery.map((i, j) => ({
@@ -61,6 +71,8 @@ export const GalleryForm = ({ state, setState }: Props) => {
         <input {...getInputProps()} />
         Drop here
       </div>
+
+      {isUploading && <div className='tw:mt-2 tw:text-gray-500'>Uploading...</div>}
 
       {images.map((image, index) => (
         <div key={index} className='tw:mb-2'>

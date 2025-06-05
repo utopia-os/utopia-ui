@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -200,8 +199,8 @@ export function ProfileForm() {
                 state={state}
                 setState={setState}
                 updatePermission={updatePermission}
-                linkItem={(id) => linkItem(id, item, updateItem)}
-                unlinkItem={(id) => unlinkItem(id, item, updateItem)}
+                linkItem={(id: string) => linkItem(id, item, updateItem)}
+                unlinkItem={(id: string) => unlinkItem(id, item, updateItem)}
                 setUrlParams={setUrlParams}
               ></TabsForm>
             )}

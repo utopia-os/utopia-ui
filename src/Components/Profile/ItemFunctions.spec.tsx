@@ -2,6 +2,8 @@ import { describe, it, expect, vi } from 'vitest'
 
 import { linkItem } from './itemFunctions'
 
+import type { Item } from '#types/Item'
+
 const toastErrorMock: (t: string) => void = vi.fn()
 const toastSuccessMock: (t: string) => void = vi.fn()
 
@@ -14,8 +16,45 @@ vi.mock('react-toastify', () => ({
 
 describe('linkItem', () => {
   const id = 'some-id'
-  let updateApi: () => void = vi.fn()
-  const item = { layer: { api: { updateItem: () => updateApi() } } }
+  let updateApi: (item: Partial<Item>) => Promise<Item> = vi.fn()
+  const item: Item = {
+    layer: {
+      api: {
+        updateItem: (item) => updateApi(item),
+        getItems: vi.fn(),
+      },
+      name: '',
+      menuIcon: '',
+      menuColor: '',
+      menuText: '',
+      markerIcon: {
+        image: '',
+      },
+      markerShape: 'square',
+      markerDefaultColor: '',
+      itemType: {
+        name: 'Test Item Type',
+        show_name_input: true,
+        show_profile_button: false,
+        show_start_end: true,
+        show_start_end_input: true,
+        show_text: true,
+        show_text_input: true,
+        custom_text: 'This is a custom text for the item type.',
+        profileTemplate: [
+          { collection: 'users', id: null, item: {} },
+          { collection: 'posts', id: '123', item: {} },
+        ],
+        offers_and_needs: true,
+        icon_as_labels: {},
+        relations: true,
+        template: 'default',
+        questlog: false,
+      },
+    },
+    id: '',
+    name: '',
+  }
   const updateItem = vi.fn()
 
   beforeEach(() => {

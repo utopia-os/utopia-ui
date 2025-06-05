@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { TextInput } from '#components/Input'
 
 import type { FormState } from '#types/FormState'
@@ -9,7 +7,7 @@ export const CrowdfundingForm = ({
   setState,
 }: {
   state: FormState
-  setState: React.Dispatch<React.SetStateAction<any>>
+  setState: React.Dispatch<React.SetStateAction<FormState>>
 }) => {
   return (
     <div className='tw:mt-4 tw:space-y-4'>

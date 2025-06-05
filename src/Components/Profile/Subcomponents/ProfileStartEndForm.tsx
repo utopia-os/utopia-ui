@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { PopupStartEndInput } from '#components/Map/Subcomponents/ItemPopupComponents'
 
+import type { FormState } from '#types/FormState'
 import type { Item } from '#types/Item'
 
 export const ProfileStartEndForm = ({
@@ -9,7 +8,7 @@ export const ProfileStartEndForm = ({
   setState,
 }: {
   item: Item
-  setState: React.Dispatch<React.SetStateAction<any>>
+  setState: React.Dispatch<React.SetStateAction<FormState>>
 }) => {
   return (
     <PopupStartEndInput

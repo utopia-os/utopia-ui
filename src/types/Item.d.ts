@@ -9,7 +9,7 @@ type TagIds = { tags_id: string }[]
 
 interface GalleryItem {
   directus_files_id: {
-    id: number
+    id: string
     width: number
     height: number
   }

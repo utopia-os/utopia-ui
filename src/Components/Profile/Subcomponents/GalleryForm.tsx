@@ -1,3 +1,6 @@
+import ArrowUpTrayIcon from '@heroicons/react/24/outline/ArrowUpTrayIcon'
+import TrashIcon from '@heroicons/react/24/solid/TrashIcon'
+import imageCompression from 'browser-image-compression'
 import { useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 
@@ -10,34 +13,45 @@ interface Props {
   setState: React.Dispatch<React.SetStateAction<FormState>>
 }
 
+const compressionOptions = {
+  maxSizeMB: 1,
+  maxWidthOrHeight: 1920,
+  useWebWorker: true,
+}
+
 export const GalleryForm = ({ state, setState }: Props) => {
   const appState = useAppState()
 
-  const [isUploading, setUploading] = useState(false)
+  const [uploadingImages, setUploadingImages] = useState<File[]>([])
 
   const upload = async (acceptedFiles: File[]) => {
-    setUploading(true)
+    setUploadingImages((files) => [...files, ...acceptedFiles])
 
-    const assets = await Promise.all(
-      acceptedFiles.map(async (file) => {
-        return appState.assetsApi.upload(file, 'gallery')
-      }),
-    )
+    const uploads = acceptedFiles.map(async (file) => {
+      const compressedFile = await imageCompression(file, compressionOptions)
+      return {
+        asset: await appState.assetsApi.upload(compressedFile, 'gallery'),
+        name: file.name,
+      }
+    })
 
-    const newGalleryItems = assets.map((asset) => ({
-      directus_files_id: {
-        id: asset.id,
-        width: 600, // TODO map to ids only
-        height: 400,
-      },
-    }))
+    for await (const upload of uploads) {
+      setState((prevState) => ({
+        ...prevState,
+        gallery: [
+          ...prevState.gallery,
+          {
+            directus_files_id: {
+              id: upload.asset.id,
+              width: 0,
+              height: 0,
+            },
+          },
+        ],
+      }))
 
-    setUploading(false)
-
-    setState((prevState) => ({
-      ...prevState,
-      gallery: [...prevState.gallery, ...newGalleryItems],
-    }))
+      setUploadingImages((files) => files.filter((f) => f.name !== upload.name))
+    }
   }
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -48,12 +62,17 @@ export const GalleryForm = ({ state, setState }: Props) => {
     },
   })
 
-  const images = state.gallery.map((i, j) => ({
-    src: appState.assetsApi.url + `${i.directus_files_id.id}.jpg`,
-    width: i.directus_files_id.width,
-    height: i.directus_files_id.height,
-    index: j,
-  }))
+  const images = state.gallery
+    .map((image) => ({
+      src: appState.assetsApi.url + `${image.directus_files_id.id}.jpg`,
+      state: 'uploaded',
+    }))
+    .concat(
+      uploadingImages.map((file) => ({
+        src: URL.createObjectURL(file),
+        state: 'uploading',
+      })),
+    )
 
   const removeImage = (index: number) => {
     setState((prevState) => ({
@@ -63,32 +82,38 @@ export const GalleryForm = ({ state, setState }: Props) => {
   }
 
   return (
-    <div className='tw:h-full tw:flex tw:flex-col tw:mt-4'>
-      <div
-        {...getRootProps()}
-        className='tw:cursor-pointer tw:border tw:border-dashed tw:border-gray-300 tw:p-4 tw:rounded-lg'
-      >
-        <input {...getInputProps()} />
-        Drop here
-      </div>
-
-      {isUploading && <div className='tw:mt-2 tw:text-gray-500'>Uploading...</div>}
-
+    <div className='tw:flex tw:flex-wrap tw:gap-4 tw:my-4'>
       {images.map((image, index) => (
-        <div key={index} className='tw:mb-2'>
+        <div key={index} className='tw:relative'>
           <img
             src={image.src}
             alt={`Gallery image ${index + 1}`}
-            className='tw:w-full tw:h-auto tw:rounded-lg'
+            className={`tw:w-60 tw:h-60 tw:object-cover tw:rounded-lg ${
+              image.state === 'uploading' ? 'tw:opacity-50' : ''
+            }`}
           />
-          <button
-            className='tw:mt-2 tw:bg-red-500 tw:text-white tw:px-4 tw:py-2 tw:rounded'
-            onClick={() => removeImage(index)}
-          >
-            Remove
-          </button>
+          {image.state === 'uploading' && (
+            <span className='tw:loading tw:loading-spinner tw:absolute tw:inset-0 tw:m-auto'></span>
+          )}
+          {image.state === 'uploaded' && (
+            <button
+              className='tw:m-2 tw:bg-red-500 tw:text-white tw:p-2 tw:rounded-full tw:absolute tw:top-0 tw:right-0 tw:hover:bg-red-600'
+              onClick={() => removeImage(index)}
+              type='button'
+            >
+              <TrashIcon className='tw:h-5 tw:w-5' />
+            </button>
+          )}
         </div>
       ))}
+
+      <div
+        {...getRootProps()}
+        className='tw:flex tw:center tw:w-60 tw:h-60 tw:cursor-pointer tw:border tw:border-dashed tw:border-gray-300 tw:p-4 tw:rounded-lg'
+      >
+        <input {...getInputProps()} />
+        <ArrowUpTrayIcon className='tw:h-8 tw:w-8 tw:m-auto' />
+      </div>
     </div>
   )
 }

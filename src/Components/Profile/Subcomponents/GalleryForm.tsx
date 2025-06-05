@@ -31,6 +31,10 @@ export const GalleryForm = ({ state, setState }: Props) => {
 
   const upload = async (acceptedFiles: File[]) => {
     setUploadingImages((files) => [...files, ...acceptedFiles])
+    setState((prevState) => ({
+      ...prevState,
+      isUpdatingGallery: true,
+    }))
 
     const uploads = acceptedFiles.map(async (file) => {
       const compressedFile = await imageCompression(file, compressionOptions)
@@ -55,7 +59,18 @@ export const GalleryForm = ({ state, setState }: Props) => {
         ],
       }))
 
-      setUploadingImages((files) => files.filter((f) => f.name !== upload.name))
+      setUploadingImages((files) => {
+        const newFiles = files.filter((f) => f.name !== upload.name)
+
+        if (newFiles.length === 0) {
+          setState((prevState) => ({
+            ...prevState,
+            isUpdatingGallery: false,
+          }))
+        }
+
+        return newFiles
+      })
     }
   }
 

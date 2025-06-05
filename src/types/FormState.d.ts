@@ -22,4 +22,5 @@ export interface FormState {
   end: string
   openCollectiveSlug: string
   gallery: GalleryItem[]
+  isUpdatingGallery: boolean
 }

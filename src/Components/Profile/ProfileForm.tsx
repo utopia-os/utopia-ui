@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
+import classNames from 'classnames'
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -47,6 +48,7 @@ export function ProfileForm() {
     end: '',
     openCollectiveSlug: '',
     gallery: [],
+    isUpdatingGallery: false,
   })
 
   const [updatePermission, setUpdatePermission] = useState<boolean>(false)
@@ -141,6 +143,7 @@ export function ProfileForm() {
       end: item.end ?? '',
       openCollectiveSlug: item.openCollectiveSlug ?? '',
       gallery: item.gallery ?? [],
+      isUpdatingGallery: false,
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item, tags, items])
@@ -207,13 +210,19 @@ export function ProfileForm() {
 
             <div className='tw:mt-4 tw:flex-none'>
               <button
-                className={`${loading ? ' tw:loading tw:btn tw:float-right' : 'tw:btn tw:float-right'}`}
+                className={classNames(
+                  'tw:btn',
+                  'tw:float-right',
+                  { 'tw:loading': loading },
+                  { 'tw:cursor-not-allowed tw:opacity-50': loading || state.isUpdatingGallery },
+                )}
                 type='submit'
                 style={{
                   // We could refactor this, it is used several times at different locations
                   backgroundColor: `${item.color ?? (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor)}`,
                   color: '#fff',
                 }}
+                disabled={loading || state.isUpdatingGallery}
               >
                 Update
               </button>

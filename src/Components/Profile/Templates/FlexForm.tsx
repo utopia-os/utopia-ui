@@ -41,7 +41,7 @@ export const FlexForm = ({
             {...templateItem.item}
           />
         ) : (
-          <div className='tw:mt-2' key={templateItem.id}>
+          <div className='tw:mt-2 tw:flex-none' key={templateItem.id}>
             {templateItem.collection} form not found
           </div>
         )

@@ -100,7 +100,7 @@ export const TabsForm = ({
                   text: v,
                 }))
               }
-              containerStyle='tw:grow'
+              containerStyle='tw:pt-2 tw:grow'
               inputStyle={`tw:h-full  ${!item.layer.itemType.show_start_end_input && 'tw:border-t-0 tw:rounded-tl-none'}`}
             />
             <RichTextEditor
@@ -114,7 +114,7 @@ export const TabsForm = ({
                 }))
               }
               inputStyle=''
-              containerStyle='tw:pt-4 tw:h-32'
+              containerStyle='tw:pt-2 tw:h-36 tw:flex-none'
               required={false}
             />
           </div>

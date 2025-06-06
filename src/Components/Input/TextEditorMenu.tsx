@@ -6,16 +6,12 @@ import H3Icon from '@heroicons/react/24/solid/H3Icon'
 import ItalicIcon from '@heroicons/react/24/solid/ItalicIcon'
 import ListBulletIcon from '@heroicons/react/24/solid/ListBulletIcon'
 import NumberedListIcon from '@heroicons/react/24/solid/NumberedListIcon'
-import { useCurrentEditor, useEditorState } from '@tiptap/react'
+import { Editor, useEditorState } from '@tiptap/react'
 import { FaQuoteLeft } from 'react-icons/fa6'
 import { MdUndo, MdRedo, MdHorizontalRule } from 'react-icons/md'
 
-export const TextEditorMenu = () => {
-  const { editor } = useCurrentEditor()
+export const TextEditorMenu = ({ editor }: { editor: Editor }) => {
 
-  if (!editor) {
-    return null
-  }
 
   const editorState = useEditorState({
     editor,
@@ -63,112 +59,112 @@ export const TextEditorMenu = () => {
     <>
       <ul className='tw:menu tw:menu-horizontal tw:flex-none tw:bg-base-200 tw:rounded-box tw:w-full tw:rounded-b-none'>
         <li>
-          <a
+          <div
             className={`tw:tooltip ${editorState.canUndo ? '' : 'tw:opacity-50'}`}
             data-tip='Undo'
             onClick={() => editor.chain().focus().undo().run()}
           >
             <MdUndo className='tw:w-5 tw:h-5' />
-          </a>
+          </div>
         </li>
         <li>
-          <a
+          <div
             className={`tw:tooltip ${editorState.canRedo ? '' : 'tw:opacity-50'}`}
             data-tip='Redo'
             onClick={() => editor.chain().focus().redo().run()}
           >
             <MdRedo className='tw:w-5 tw:h-5' />
-          </a>
+          </div>
         </li>
         <li>
-          <a
-            className={`tw:tooltip ${editorState.isBold ? 'tw:bg-base-100' : ''}`}
+          <div
+            className={`tw:tooltip ${editorState.isBold ? 'tw:bg-base-content/10' : ''}`}
             data-tip='Bold'
             onClick={() => editor.chain().focus().toggleBold().run()}
           >
             <BoldIcon className='tw:w-5 tw:h-5' />
-          </a>
+          </div>
         </li>
         <li>
-          <a
-            className={`tw:tooltip ${editorState.isItalic ? 'tw:bg-base-100' : ''}`}
+          <div
+            className={`tw:tooltip ${editorState.isItalic ? 'tw:bg-base-content/10' : ''}`}
             data-tip='Italic'
             onClick={() => editor.chain().focus().toggleItalic().run()}
           >
             <ItalicIcon className='tw:w-5 tw:h-5' />
-          </a>
+          </div>
         </li>
         <li>
-          <a
-            className={`tw:tooltip ${editorState.isHeading1 ? 'tw:bg-base-100' : ''}`}
+          <div
+            className={`tw:tooltip ${editorState.isHeading1 ? 'tw:bg-base-content/10' : ''}`}
             data-tip='Heading 1'
             onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
           >
             <H1Icon className='tw:w-5 tw:h-5' />
-          </a>
+          </div>
         </li>
         <li>
-          <a
-            className={`tw:tooltip ${editorState.isHeading2 ? 'tw:bg-base-100' : ''}`}
+          <div
+            className={`tw:tooltip ${editorState.isHeading2 ? 'tw:bg-base-content/10' : ''}`}
             data-tip='Heading 2'
             onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
           >
             <H2Icon className='tw:w-5 tw:h-5' />
-          </a>
+          </div>
         </li>
         <li>
-          <a
-            className={`tw:tooltip ${editorState.isHeading3 ? 'tw:bg-base-100' : ''}`}
+          <div
+            className={`tw:tooltip ${editorState.isHeading3 ? 'tw:bg-base-content/10' : ''}`}
             data-tip='Heading 3'
             onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
           >
             <H3Icon className='tw:w-5 tw:h-5' />
-          </a>
+          </div>
         </li>
         <li>
-          <a
-            className={`tw:tooltip ${editorState.isBulletList ? 'tw:bg-base-100' : ''}`}
+          <div
+            className={`tw:tooltip ${editorState.isBulletList ? 'tw:bg-base-content/10' : ''}`}
             data-tip='List'
             onClick={() => editor.chain().focus().toggleBulletList().run()}
           >
             <ListBulletIcon className='tw:w-5 tw:h-5' />
-          </a>
+          </div>
         </li>
         <li>
-          <a
-            className={`tw:tooltip ${editorState.isOrderedList ? 'tw:bg-base-100' : ''}`}
+          <div
+            className={`tw:tooltip ${editorState.isOrderedList ? 'tw:bg-base-content/10' : ''}`}
             data-tip='List'
             onClick={() => editor.chain().focus().toggleOrderedList().run()}
           >
             <NumberedListIcon className='tw:w-5 tw:h-5' />
-          </a>
+          </div>
         </li>
         <li>
-          <a
-            className={`tw:tooltip ${editorState.isCodeBlock ? 'tw:bg-base-100' : ''}`}
+          <div
+            className={`tw:tooltip ${editorState.isCodeBlock ? 'tw:bg-base-content/10' : ''}`}
             data-tip='Code'
             onClick={() => editor.chain().focus().toggleCodeBlock().run()}
           >
             <CodeBracketIcon className='tw:w-5 tw:h-5' />
-          </a>
+          </div>
         </li>
         <li>
-          <a
-            className={`tw:tooltip ${editorState.isBlockquote ? 'tw:bg-base-100' : ''}`}
+          <div
+            className={`tw:tooltip ${editorState.isBlockquote ? 'tw:bg-base-content/10' : ''}`}
             data-tip='Quote'
             onClick={() => editor.chain().focus().toggleBlockquote().run()}
           >
             <FaQuoteLeft className='tw:w-5 tw:h-5' />
-          </a>
+          </div>
         </li>
         <li>
-          <a
+          <div
             className='tw:tooltip'
             data-tip='Horizontal Line'
             onClick={() => editor.chain().focus().setHorizontalRule().run()}
           >
             <MdHorizontalRule className='tw:w-5 tw:h-5' />
-          </a>
+          </div>
         </li>
       </ul>
       {/**       <div className='control-group tiptap-toolbar'>

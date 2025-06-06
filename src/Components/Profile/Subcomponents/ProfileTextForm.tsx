@@ -38,7 +38,7 @@ export const ProfileTextForm = ({
 
   return (
     <div
-      className={`tw:min-h-32 tw:flex tw:flex-col tw:mt-2 ${size === 'full' ? 'tw:flex-1' : 'tw:h-32 tw:flex-none'}`}
+      className={`tw:min-h-36 tw:max-h-156 tw:flex tw:flex-col tw:mt-2 ${size === 'full' ? 'tw:flex-1' : 'tw:h-36 tw:flex-none'}`}
     >
       <div className='tw:flex tw:justify-between tw:items-center'>
         <label
@@ -60,7 +60,7 @@ export const ProfileTextForm = ({
           }))
         }
         labelStyle={hideInputLabel ? 'tw:hidden' : ''}
-        containerStyle={size === 'full' ? 'tw:flex-1' : 'tw:h-28 tw:flex-none'}
+        containerStyle={size === 'full' ? 'tw:flex-1' : 'tw:h-32 tw:flex-none'}
         required={required}
       />
     </div>

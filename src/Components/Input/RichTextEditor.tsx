@@ -13,7 +13,6 @@ interface RichTextEditorProps {
   labelTitle?: string
   labelStyle?: string
   containerStyle?: string
-  inputStyle?: string
   defaultValue: string
   placeholder?: string
   required?: boolean

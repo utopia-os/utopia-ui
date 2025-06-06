@@ -6,7 +6,6 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable react/prop-types */
-import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { RichTextEditor } from '#components/Input/RichTextEditor'
@@ -15,6 +14,7 @@ import { PopupStartEndInput, TextView } from '#components/Map/Subcomponents/Item
 import { ActionButton } from '#components/Profile/Subcomponents/ActionsButton'
 import { LinkedItemsHeaderView } from '#components/Profile/Subcomponents/LinkedItemsHeaderView'
 import { TagsWidget } from '#components/Profile/Subcomponents/TagsWidget'
+import { Tabs } from '#components/Templates/Tabs'
 
 export const TabsForm = ({
   item,
@@ -26,114 +26,70 @@ export const TabsForm = ({
   loading,
   setUrlParams,
 }) => {
-  const [activeTab, setActiveTab] = useState<number>(1)
-  const navigate = useNavigate()
   const updateItem = useUpdateItem()
-
-  const updateActiveTab = useCallback(
-    (id: number) => {
-      setActiveTab(id)
-
-      const params = new URLSearchParams(window.location.search)
-
-      params.set('tab', `${id}`)
-      const newUrl = location.pathname + '?' + params.toString()
-      window.history.pushState({}, '', newUrl)
-      setUrlParams(params)
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [location.pathname],
-  )
-
-  useEffect(() => {
-    const params = new URLSearchParams(location.search)
-    const urlTab = params.get('tab')
-    setActiveTab(urlTab ? Number(urlTab) : 1)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.search])
+  const navigate = useNavigate()
 
   return (
-    <div className='tw:grow tw:flex tw:flex-col tw:min-h-0'>
-      <div role='tablist' className='tw:tabs tw:flex tw:flex-1 tw:min-h-0 tw:tabs-lift tw:mt-3'>
-        <input
-          type='radio'
-          name='my_tabs_2'
-          role='tab'
-          className={'tw:tab'}
-          aria-label='Info'
-          checked={activeTab === 1 && true}
-          onChange={() => updateActiveTab(1)}
-        />
-        <div
-          role='tabpanel'
-          className='tw:!flex tw:!flex-col tw:tab-content tw:bg-base-100 tw:border-(--fallback-bc,oklch(var(--bc)/0.2)) tw:rounded-box tw:!h-[calc(100%-48px)] tw:min-h-56 tw:border-none'
-        >
-          <div
-            className={`tw:flex tw:flex-col tw:flex-1 tw:min-h-0 ${item.layer.itemType.show_start_end_input && 'tw:pt-4'}`}
-          >
-            {item.layer.itemType.show_start_end_input && (
-              <PopupStartEndInput
-                item={item}
-                showLabels={false}
-                updateEndValue={(e) =>
-                  setState((prevState) => ({
-                    ...prevState,
-                    end: e,
-                  }))
-                }
-                updateStartValue={(s) =>
-                  setState((prevState) => ({
-                    ...prevState,
-                    start: s,
-                  }))
-                }
-              ></PopupStartEndInput>
-            )}
+    <div className='tw:flex tw:flex-col tw:flex-1 tw:min-h-0 tw:mt-4'>
+      <Tabs
+        setUrlParams={setUrlParams}
+        items={[
+          {
+            title: 'Info',
+            component: (
+              <div
+                className={`tw:flex tw:flex-col tw:flex-1 tw:min-h-0 ${item.layer.itemType.show_start_end_input && 'tw:pt-4'}`}
+              >
+                {item.layer.itemType.show_start_end_input && (
+                  <PopupStartEndInput
+                    item={item}
+                    showLabels={true}
+                    updateEndValue={(e) =>
+                      setState((prevState) => ({
+                        ...prevState,
+                        end: e,
+                      }))
+                    }
+                    updateStartValue={(s) =>
+                      setState((prevState) => ({
+                        ...prevState,
+                        start: s,
+                      }))
+                    }
+                  ></PopupStartEndInput>
+                )}
 
-            <RichTextEditor
-              labelTitle='About me'
-              placeholder='about ...'
-              defaultValue={item?.text ? item.text : ''}
-              updateFormValue={(v) =>
-                setState((prevState) => ({
-                  ...prevState,
-                  text: v,
-                }))
-              }
-              containerStyle='tw:pt-2 tw:grow'
-              inputStyle={`tw:h-full  ${!item.layer.itemType.show_start_end_input && 'tw:border-t-0 tw:rounded-tl-none'}`}
-            />
-            <RichTextEditor
-              labelTitle='Contact Info'
-              placeholder='contact info ...'
-              defaultValue={state.contact || ''}
-              updateFormValue={(c) =>
-                setState((prevState) => ({
-                  ...prevState,
-                  contact: c,
-                }))
-              }
-              inputStyle=''
-              containerStyle='tw:pt-2 tw:h-36 tw:flex-none'
-              required={false}
-            />
-          </div>
-        </div>
-        {item.layer?.itemType.offers_and_needs && (
-          <>
-            <input
-              type='radio'
-              name='my_tabs_2'
-              role='tab'
-              className={'tw:tab tw:min-w-[10em]  '}
-              aria-label='Offers & Needs'
-              checked={activeTab === 3 && true}
-              onChange={() => updateActiveTab(3)}
-            />
-            <div
-              role='tabpanel'
-              className='tw:tab-content tw:bg-base-100 tw:border-(--fallback-bc,oklch(var(--bc)/0.2)) tw:rounded-box tw:!h-[calc(100%-48px)] tw:min-h-56 tw:border-none'
-            >
+                <RichTextEditor
+                  labelTitle='About'
+                  placeholder='about ...'
+                  defaultValue={item?.text ? item.text : ''}
+                  updateFormValue={(v) =>
+                    setState((prevState) => ({
+                      ...prevState,
+                      text: v,
+                    }))
+                  }
+                  containerStyle='tw:pt-2 tw:flex-1 tw:min-h-36 tw:max-h-136'
+                />
+                <RichTextEditor
+                  labelTitle='Contact Info'
+                  placeholder='contact info ...'
+                  defaultValue={state.contact || ''}
+                  updateFormValue={(c) =>
+                    setState((prevState) => ({
+                      ...prevState,
+                      contact: c,
+                    }))
+                  }
+                  containerStyle='tw:pt-2 tw:h-36 tw:flex-none'
+                  required={false}
+                />
+              </div>
+            ),
+          },
+          {
+            title: 'Offers & Needs',
+            component: (
               <div className='tw:h-full'>
                 <div className='tw:w-full tw:h-[calc(50%-0.75em)] tw:mb-4'>
                   <TagsWidget
@@ -162,24 +118,11 @@ export const TabsForm = ({
                   />
                 </div>
               </div>
-            </div>
-          </>
-        )}
-        {item.layer?.itemType.relations && (
-          <>
-            <input
-              type='radio'
-              name='my_tabs_2'
-              role='tab'
-              className='tw:tab  '
-              aria-label='Links'
-              checked={activeTab === 7 && true}
-              onChange={() => updateActiveTab(7)}
-            />
-            <div
-              role='tabpanel'
-              className='tw:tab-content tw:rounded-box tw:!h-[calc(100%-48px)] tw:overflow-y-auto tw:pt-4 tw:overflow-x-hidden fade'
-            >
+            ),
+          },
+          {
+            title: 'Links',
+            component: (
               <div className='tw:h-full'>
                 <div className='tw:grid tw:grid-cols-1 tw:sm:grid-cols-2 tw:md:grid-cols-1 tw:lg:grid-cols-1 tw:xl:grid-cols-1 tw:2xl:grid-cols-2 tw:mb-4'>
                   {state.relations &&
@@ -211,10 +154,10 @@ export const TabsForm = ({
                   )}
                 </div>
               </div>
-            </div>
-          </>
-        )}
-      </div>
+            ),
+          },
+        ]}
+      ></Tabs>
     </div>
   )
 }

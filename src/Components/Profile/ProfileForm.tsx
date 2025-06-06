@@ -158,10 +158,10 @@ export function ProfileForm() {
     <>
       <MapOverlayPage
         backdrop
-        className='tw:mx-4 tw:mt-4 tw:mb-4 tw:overflow-x-hidden tw:w-[calc(100%-32px)]  tw:md:w-[calc(50%-32px)] tw:max-w-3xl tw:left-auto! tw:top-0 tw:bottom-0'
+        className='tw:mx-4 tw:mt-4 tw:mb-4 tw:overflow-x-hidden tw:w-[calc(100%-32px)]  tw:md:w-[calc(50%-32px)] tw:max-w-3xl tw:left-auto! tw:top-0 tw:bottom-0 tw:flex tw:flex-col'
       >
         <form
-          className='tw:h-full'
+          className='tw:flex tw:flex-col tw:flex-1 tw:min-h-0'
           onSubmit={(e) => {
             e.preventDefault()
             void onUpdateItem(
@@ -178,7 +178,7 @@ export function ProfileForm() {
             )
           }}
         >
-          <div className='tw:flex tw:flex-col tw:h-full'>
+          <div className='tw:flex tw:flex-col tw:flex-1 tw:min-h-0'>
             <FormHeader item={item} state={state} setState={setState} />
 
             {template === 'onepager' && (

@@ -5,7 +5,7 @@ import TextStyle from '@tiptap/extension-text-style'
 import Youtube from '@tiptap/extension-youtube'
 import { EditorProvider } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Markdown } from 'tiptap-markdown'
 
 import { TextEditorMenu } from './TextEditorMenu'
@@ -30,6 +30,7 @@ const extensions = [
   Youtube.configure({
     controls: false,
     nocookie: true,
+    width: 100,
   }),
 ]
 
@@ -63,9 +64,9 @@ export function RichTextEditor({
   // const ref = useRef<HTMLTextAreaElement>(null)
   const [inputValue, setInputValue] = useState<string>(defaultValue)
 
-  /* useEffect(() => {
+  useEffect(() => {
     setInputValue(defaultValue)
-  }, [defaultValue]) */
+  }, [defaultValue])
 
   console.log(
     labelTitle,
@@ -88,7 +89,9 @@ export function RichTextEditor({
   }
 
   return (
-    <div className={`tw:form-control tw:w-full ${containerStyle ?? ''}`}>
+    <div
+      className={`tw:form-control tw:w-full tw:flex tw:flex-col tw:min-h-0 ${containerStyle ?? ''}`}
+    >
       {labelTitle ? (
         <label className='tw:label'>
           <span className={`tw:label-text tw:text-base-content ${labelStyle ?? ''}`}>
@@ -96,22 +99,21 @@ export function RichTextEditor({
           </span>
         </label>
       ) : null}
-      <EditorProvider
-        slotBefore={
-          <>
-            <br />
-            <TextEditorMenu />
-          </>
-        }
-        extensions={extensions}
-        content={inputValue}
-        onUpdate={handleChange}
-        editorProps={{
-          attributes: {
-            class: 'prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none',
-          },
-        }}
-      ></EditorProvider>
+      <div
+        className={`editor-wrapper tw:border-base-content/20 tw:rounded-box tw:border tw:flex tw:flex-col tw:flex-1 tw:min-h-0`}
+      >
+        <EditorProvider
+          slotBefore={<TextEditorMenu />}
+          extensions={extensions}
+          content={inputValue}
+          onUpdate={handleChange}
+          editorProps={{
+            attributes: {
+              class: `tw:h-full tw:max-h-full tw:p-2 tw:overflow-y-auto`,
+            },
+          }}
+        ></EditorProvider>
+      </div>
     </div>
   )
 }

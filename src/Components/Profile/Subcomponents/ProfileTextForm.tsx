@@ -58,8 +58,8 @@ export const ProfileTextForm = ({
           }))
         }
         labelStyle={hideInputLabel ? 'tw:hidden' : ''}
-        containerStyle={size === 'full' ? 'tw:grow tw:h-full' : ''}
-        inputStyle={size === 'full' ? 'tw:h-full' : 'tw:h-24'}
+        containerStyle={size === 'full' ? 'tw:grow' : 'tw:h-28 tw:flex-none'}
+        inputStyle={size === 'full' ? 'tw:grow' : 'tw:h-28 tw:max-h-28 tw:flex-none'}
         required={required}
       />
     </div>

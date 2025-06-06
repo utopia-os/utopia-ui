@@ -53,23 +53,23 @@ export const TabsForm = ({
   }, [location.search])
 
   return (
-    <div className='tw:grow'>
-      <div role='tablist' className='tw:tabs tw:h-full tw:tabs-lift tw:mt-3'>
+    <div className='tw:grow tw:flex tw:flex-col tw:min-h-0'>
+      <div role='tablist' className='tw:tabs tw:flex tw:flex-1 tw:min-h-0 tw:tabs-lift tw:mt-3'>
         <input
           type='radio'
           name='my_tabs_2'
           role='tab'
-          className={'tw:tab  '}
+          className={'tw:tab'}
           aria-label='Info'
           checked={activeTab === 1 && true}
           onChange={() => updateActiveTab(1)}
         />
         <div
           role='tabpanel'
-          className='tw:tab-content tw:bg-base-100 tw:border-(--fallback-bc,oklch(var(--bc)/0.2)) tw:rounded-box tw:!h-[calc(100%-48px)] tw:min-h-56 tw:border-none'
+          className='tw:!flex tw:!flex-col tw:tab-content tw:bg-base-100 tw:border-(--fallback-bc,oklch(var(--bc)/0.2)) tw:rounded-box tw:!h-[calc(100%-48px)] tw:min-h-56 tw:border-none'
         >
           <div
-            className={`tw:flex tw:flex-col tw:h-full ${item.layer.itemType.show_start_end_input && 'tw:pt-4'}`}
+            className={`tw:flex tw:flex-col tw:flex-1 tw:min-h-0 ${item.layer.itemType.show_start_end_input && 'tw:pt-4'}`}
           >
             {item.layer.itemType.show_start_end_input && (
               <PopupStartEndInput
@@ -114,7 +114,7 @@ export const TabsForm = ({
                 }))
               }
               inputStyle=''
-              containerStyle='tw:pt-4 tw:h-24 tw:flex-none'
+              containerStyle='tw:pt-4 tw:h-32'
               required={false}
             />
           </div>

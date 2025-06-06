@@ -12,3 +12,10 @@
 .tiptap code {
     all: revert;
 }
+
+.editor-wrapper div {
+    min-height: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}

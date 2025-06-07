@@ -69,7 +69,7 @@ export function RichTextEditor({
     onUpdate: handleChange,
     editorProps: {
       attributes: {
-        class: `tw:h-full tw:max-h-full tw:p-2 tw:overflow-y-auto`,
+        class: `tw:h-full markdown tw:max-h-full tw:p-2 tw:overflow-y-auto`,
       },
     },
   })

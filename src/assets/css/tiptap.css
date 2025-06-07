@@ -1,17 +1,4 @@
-.tiptap h1,
-.tiptap h2,
-.tiptap h3,
-.tiptap h4,
-.tiptap h5,
-.tiptap h6,
-.tiptap ul,
-.tiptap ol,
-.tiptap pre,
-.tiptap hr,
-.tiptap blockquote,
-.tiptap code {
-    all: revert;
-}
+
 
 .editor-wrapper div {
     min-height: 0;

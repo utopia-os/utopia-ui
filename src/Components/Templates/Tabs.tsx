@@ -40,7 +40,7 @@ export const Tabs: React.FC<TabsProps> = ({ items, setUrlParams }: TabsProps) =>
 
       navigate(newUrl, { replace: false })
     },
-    [location, navigate],
+    [location.pathname, location.search, navigate, setUrlParams],
   )
 
   return (

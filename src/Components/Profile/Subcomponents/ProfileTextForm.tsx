@@ -43,7 +43,7 @@ export const ProfileTextForm = ({
       <div className='tw:flex tw:justify-between tw:items-center'>
         <label
           htmlFor='nextAppointment'
-          className='tw:block tw:text-sm tw:font-medium tw:text-gray-500 tw:mb-1'
+          className='tw:block tw:text-sm tw:font-medium tw:text-base-content/50 tw:mb-1'
         >
           {heading || 'Text'}:
         </label>

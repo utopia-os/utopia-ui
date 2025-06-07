@@ -178,7 +178,7 @@ export function ProfileForm() {
             )
           }}
         >
-          <div className='tw:flex tw:flex-col tw:flex-1'>
+          <div className='tw:flex tw:flex-col tw:flex-1 pb-4'>
             <FormHeader item={item} state={state} setState={setState} />
 
             {template === 'onepager' && (
@@ -204,7 +204,7 @@ export function ProfileForm() {
               ></TabsForm>
             )}
 
-            <div className='tw:mt-6 tw:flex-none'>
+            <div className='tw:mb-4 tw:mt-6 tw:flex-none'>
               <button
                 className={`${loading ? ' tw:loading tw:btn tw:float-right' : 'tw:btn tw:float-right'}`}
                 type='submit'

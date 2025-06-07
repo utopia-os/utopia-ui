@@ -43,7 +43,7 @@ export const TabsView = ({
   unlinkItem: (id: string) => Promise<void>
 }) => {
   const addFilterTag = useAddFilterTag()
-  const [activeTab, setActiveTab] = useState<number>()
+  const [activeTab, setActiveTab] = useState<number>(0)
   const navigate = useNavigate()
 
   const [addItemPopupType] = useState<string>('')
@@ -80,7 +80,7 @@ export const TabsView = ({
   useEffect(() => {
     const params = new URLSearchParams(location.search)
     const urlTab = params.get('tab')
-    setActiveTab(urlTab ? Number(urlTab) : 1)
+    setActiveTab(urlTab ? Number(urlTab) : 0)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search])
 

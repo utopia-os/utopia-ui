@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Color } from '@tiptap/extension-color'
 import { Image } from '@tiptap/extension-image'
 import { Placeholder } from '@tiptap/extension-placeholder'
@@ -29,11 +32,8 @@ export function RichTextEditor({
   containerStyle,
   defaultValue,
   placeholder,
-  required = true,
   updateFormValue,
 }: RichTextEditorProps) {
-  console.log(placeholder, required)
-
   const handleChange = () => {
     const newValue: string | undefined = editor?.storage.markdown.getMarkdown()
     if (updateFormValue && newValue) {

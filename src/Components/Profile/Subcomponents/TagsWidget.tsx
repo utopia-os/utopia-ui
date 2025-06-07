@@ -33,6 +33,9 @@ export const TagsWidget = ({ placeholder, containerStyle, defaultTags, onUpdate 
   }
 
   const onKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+    }
     const { key } = e
     const trimmedInput = input.trim()
 
@@ -42,7 +45,6 @@ export const TagsWidget = ({ placeholder, containerStyle, defaultTags, onUpdate 
       // eslint-disable-next-line react/prop-types
       !defaultTags.some((tag) => tag.name.toLocaleLowerCase() === trimmedInput.toLocaleLowerCase())
     ) {
-      e.preventDefault()
       const newTag = tags.find((t) => t.name === trimmedInput.toLocaleLowerCase())
       newTag && onUpdate([...currentTags, newTag])
       !newTag &&

@@ -1,63 +1,63 @@
 @import 'tailwindcss' prefix(tw);
 
 @layer markdown {
-  .markdown h1 {
-    @apply tw:text-xl;
-    @apply tw:font-bold;
-  }
+  .markdown {
+    h1 {
+      @apply tw:my-4 tw:text-2xl tw:font-bold;
+    }
 
-  .markdown h2 {
-    @apply tw:text-lg;
-    @apply tw:font-bold;
-  }
+    h2 {
+      @apply tw:my-3 tw:text-xl tw:font-bold;
+    }
 
-  .markdown h3, .markdown h4 {
-    @apply tw:text-base;
-    @apply tw:font-bold;
-  }
+    h3, h4 {
+      @apply tw:my-2 tw:text-lg tw:font-bold;
+    }
 
-  .markdown h5, .markdown h6 {
-    @apply tw:text-sm;
-    @apply tw:font-bold;
-  }
+    h5, h6 {
+      @apply tw:my-2 tw:text-base tw:font-bold;
+    }
 
-  .markdown p {
-    @apply tw:my-2!;
-  }
+    p {
+      @apply tw:my-1 tw:leading-relaxed;
+    }
 
-  .markdown ul {
-    @apply tw:list-disc;
-    @apply tw:list-inside;
-  }
+    ul, ol {
+      @apply tw:pl-6 tw:my-2;
+    }
 
-  .markdown ol {
-    @apply tw:list-decimal;
-    @apply tw:list-inside;
-  }
+    ul li {
+      @apply tw:list-disc tw:list-outside;
+    }
 
-  .markdown hl {
-    @apply tw:border-current;
-  }
+    ol li {
+      @apply tw:list-decimal tw:list-outside;
+    }
 
-  .markdown img {
-    @apply tw:max-w-full;
-    @apply tw:rounded;
-    @apply tw:shadow;
-  }
+    li > p {
+      @apply tw:inline-block tw:my-0;
+    }
 
-  .markdown a {
-    @apply tw:font-bold;
-    @apply tw:underline;
-  }
+    hr {
+      @apply tw:my-4 tw:border-current;
+    }
 
-  .markdown .hashtag {
-    color: #faa;
-    font-weight: bold;
-    cursor: pointer;
-    text-decoration: none;
-  }
+    img {
+      @apply tw:max-w-full tw:rounded tw:shadow;
+    }
 
-  .markdown iframe {
-    @apply tw:w-full;
+    a {
+      @apply tw:font-bold tw:underline;
+    }
+
+    iframe {
+      @apply tw:w-full tw:aspect-video;
+    }
+
+    .hashtag {
+      @apply tw:font-bold tw:cursor-pointer;
+      color: #faa;
+      text-decoration: none;
+    }
   }
 }

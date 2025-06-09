@@ -24,17 +24,14 @@ const compressionOptions = {
 export const GalleryForm = ({ state, setState }: Props) => {
   const appState = useAppState()
 
-  const [uploadingImages, setUploadingImages] = useState<File[]>([])
-
   const [imageSelectedToDelete, setImageSelectedToDelete] = useState<number | null>(null)
 
   const closeModal = () => setImageSelectedToDelete(null)
 
   const upload = async (acceptedFiles: File[]) => {
-    setUploadingImages((files) => [...files, ...acceptedFiles])
     setState((prevState) => ({
       ...prevState,
-      isUpdatingGallery: true,
+      uploadingImages: [...prevState.uploadingImages, ...acceptedFiles],
     }))
 
     const uploads = acceptedFiles.map(async (file) => {
@@ -51,6 +48,7 @@ export const GalleryForm = ({ state, setState }: Props) => {
     for await (const upload of uploads) {
       setState((prevState) => ({
         ...prevState,
+        uploadingImages: prevState.uploadingImages.filter((f) => f.name !== upload.name),
         gallery: [
           ...prevState.gallery,
           {
@@ -62,19 +60,6 @@ export const GalleryForm = ({ state, setState }: Props) => {
           },
         ],
       }))
-
-      setUploadingImages((files) => {
-        const newFiles = files.filter((f) => f.name !== upload.name)
-
-        if (newFiles.length === 0) {
-          setState((prevState) => ({
-            ...prevState,
-            isUpdatingGallery: false,
-          }))
-        }
-
-        return newFiles
-      })
     }
   }
 
@@ -92,7 +77,7 @@ export const GalleryForm = ({ state, setState }: Props) => {
       state: 'uploaded',
     }))
     .concat(
-      uploadingImages.map((file) => ({
+      state.uploadingImages.map((file) => ({
         src: URL.createObjectURL(file),
         state: 'uploading',
       })),

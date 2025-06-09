@@ -48,7 +48,7 @@ export function ProfileForm() {
     end: '',
     openCollectiveSlug: '',
     gallery: [],
-    isUpdatingGallery: false,
+    uploadingImages: [],
   })
 
   const [updatePermission, setUpdatePermission] = useState<boolean>(false)
@@ -143,7 +143,7 @@ export function ProfileForm() {
       end: item.end ?? '',
       openCollectiveSlug: item.openCollectiveSlug ?? '',
       gallery: item.gallery ?? [],
-      isUpdatingGallery: false,
+      uploadingImages: [],
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item, tags, items])
@@ -157,6 +157,8 @@ export function ProfileForm() {
       if (userLayer) setTemplate(userLayer.itemType.template)
     }
   }, [item, layers])
+
+  const isUpdatingGallery = state.uploadingImages.length > 0
 
   return (
     <>
@@ -214,7 +216,7 @@ export function ProfileForm() {
                   'tw:btn',
                   'tw:float-right',
                   { 'tw:loading': loading },
-                  { 'tw:cursor-not-allowed tw:opacity-50': loading || state.isUpdatingGallery },
+                  { 'tw:cursor-not-allowed tw:opacity-50': loading || isUpdatingGallery },
                 )}
                 type='submit'
                 style={{
@@ -222,7 +224,7 @@ export function ProfileForm() {
                   backgroundColor: `${item.color ?? (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor)}`,
                   color: '#fff',
                 }}
-                disabled={loading || state.isUpdatingGallery}
+                disabled={loading || isUpdatingGallery}
               >
                 Update
               </button>

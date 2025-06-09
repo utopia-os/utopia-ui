@@ -21,6 +21,7 @@ import { TabsForm } from './Templates/TabsForm'
 
 import type { FormState } from '#types/FormState'
 import type { Item } from '#types/Item'
+import type { MarkerIcon } from '#types/MarkerIcon'
 import type { Tag } from '#types/Tag'
 
 /**
@@ -39,12 +40,13 @@ export function ProfileForm() {
     telephone: '',
     next_appointment: '',
     image: '',
-    marker_icon: '',
+    marker_icon: {} as MarkerIcon,
     offers: [] as Tag[],
     needs: [] as Tag[],
     relations: [] as Item[],
     start: '',
     end: '',
+    openCollectiveSlug: '',
   })
 
   const [updatePermission, setUpdatePermission] = useState<boolean>(false)
@@ -131,12 +133,13 @@ export function ProfileForm() {
       next_appointment: item?.next_appointment ?? '',
       image: item?.image ?? '',
       // Do we actually mean marker_icon here?
-      marker_icon: item?.markerIcon ?? '',
+      marker_icon: item?.markerIcon,
       offers,
       needs,
       relations,
       start: item.start ?? '',
       end: item.end ?? '',
+      openCollectiveSlug: item.openCollectiveSlug ?? '',
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item, tags, items])
@@ -155,10 +158,10 @@ export function ProfileForm() {
     <>
       <MapOverlayPage
         backdrop
-        className='tw-mx-4 tw-mt-4 tw-mb-4 tw-overflow-x-hidden tw-w-[calc(100%-32px)]  md:tw-w-[calc(50%-32px)] tw-max-w-3xl !tw-left-auto tw-top-0 tw-bottom-0'
+        className='tw:mx-4 tw:mt-4 tw:mb-4 tw:overflow-x-hidden tw:w-[calc(100%-32px)]  tw:md:w-[calc(50%-32px)] tw:max-w-3xl tw:left-auto! tw:top-0 tw:bottom-0'
       >
         <form
-          className='tw-h-full'
+          className='tw:h-full'
           onSubmit={(e) => {
             e.preventDefault()
             void onUpdateItem(
@@ -175,7 +178,7 @@ export function ProfileForm() {
             )
           }}
         >
-          <div className='tw-flex tw-flex-col tw-h-full'>
+          <div className='tw:flex tw:flex-col tw:h-full'>
             <FormHeader item={item} state={state} setState={setState} />
 
             {template === 'onepager' && (
@@ -201,9 +204,9 @@ export function ProfileForm() {
               ></TabsForm>
             )}
 
-            <div className='tw-mt-4'>
+            <div className='tw:mt-4 tw:flex-none'>
               <button
-                className={loading ? ' tw-loading tw-btn tw-float-right' : 'tw-btn tw-float-right'}
+                className={`${loading ? ' tw:loading tw:btn tw:float-right' : 'tw:btn tw:float-right'}`}
                 type='submit'
                 style={{
                   // We could refactor this, it is used several times at different locations

@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react'
 
-import { TextAreaInput } from '#components/Input'
+import { RichTextEditor } from '#components/Input/RichTextEditor'
 
 import { MarkdownHint } from './MarkdownHint'
 
@@ -37,17 +37,17 @@ export const ProfileTextForm = ({
   }, [dataField])
 
   return (
-    <div className='tw-h-full tw-flex tw-flex-col tw-mt-4'>
-      <div className='tw-flex tw-justify-between tw-items-center'>
+    <div className='tw:h-full tw:flex tw:flex-col tw:mt-4'>
+      <div className='tw:flex tw:justify-between tw:items-center'>
         <label
           htmlFor='nextAppointment'
-          className='tw-block tw-text-sm tw-font-medium tw-text-gray-500 tw-mb-1'
+          className='tw:block tw:text-sm tw:font-medium tw:text-gray-500 tw:mb-1'
         >
           {heading || 'Text'}:
         </label>
         <MarkdownHint />
       </div>
-      <TextAreaInput
+      <RichTextEditor
         placeholder={'...'}
         // eslint-disable-next-line security/detect-object-injection
         defaultValue={state[field]}
@@ -57,9 +57,9 @@ export const ProfileTextForm = ({
             [field]: v,
           }))
         }
-        labelStyle={hideInputLabel ? 'tw-hidden' : ''}
-        containerStyle={size === 'full' ? 'tw-grow tw-h-full' : ''}
-        inputStyle={size === 'full' ? 'tw-h-full' : 'tw-h-24'}
+        labelStyle={hideInputLabel ? 'tw:hidden' : ''}
+        containerStyle={size === 'full' ? 'tw:grow tw:h-full' : ''}
+        inputStyle={size === 'full' ? 'tw:h-full' : 'tw:h-24'}
         required={required}
       />
     </div>

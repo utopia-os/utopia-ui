@@ -9,7 +9,6 @@ import { toast } from 'react-toastify'
 
 import { useAuth } from '#components/Auth/useAuth'
 import { TextInput, TextAreaInput } from '#components/Input'
-import { PopupStartEndInput } from '#components/Map'
 import { useFilterTags } from '#components/Map/hooks/useFilter'
 import { useAddItem, useItems, useRemoveItem } from '#components/Map/hooks/useItems'
 import { useLayers } from '#components/Map/hooks/useLayers'
@@ -17,6 +16,7 @@ import { useAddTag, useGetItemTags, useTags } from '#components/Map/hooks/useTag
 import { Control } from '#components/Map/Subcomponents/Controls/Control'
 import { SearchControl } from '#components/Map/Subcomponents/Controls/SearchControl'
 import { TagsControl } from '#components/Map/Subcomponents/Controls/TagsControl'
+import { PopupStartEndInput } from '#components/Map/Subcomponents/ItemPopupComponents'
 import { PlusButton } from '#components/Profile/Subcomponents/PlusButton'
 import { hashTagRegex } from '#utils/HashTagRegex'
 import { randomColor } from '#utils/RandomColor'
@@ -128,16 +128,16 @@ export const OverlayItemsIndexPage = ({
 
   return (
     <>
-      <MapOverlayPage className='tw-rounded-none tw-overflow-y-auto tw-bg-base-200 !tw-p-4'>
-        <div className='tw-flex tw-flex-col tw-h-full'>
-          <div className='tw-flex-none'>
+      <MapOverlayPage className='tw:rounded-none tw:overflow-y-auto tw:bg-base-200 tw:p-4!'>
+        <div className='tw:flex tw:flex-col tw:h-full'>
+          <div className='tw:flex-none'>
             <Control position='topLeft' zIndex='1000' absolute={false}>
               <SearchControl />
               <TagsControl />
             </Control>
           </div>
-          <div className='tw-overflow-scroll fade tw-flex-1'>
-            <div className='tw-columns-1 md:tw-columns-2 lg:tw-columns-3 2xl:tw-columns-4 tw-gap-6 tw-pt-4'>
+          <div className='tw:overflow-scroll fade tw:flex-1'>
+            <div className='tw:columns-1 tw:md:columns-2 tw:lg:columns-3 tw:2xl:columns-4 tw:gap-6 tw:pt-4'>
               {items
                 .filter((i) => i.layer?.name === layerName)
                 .filter((item) =>
@@ -165,7 +165,7 @@ export const OverlayItemsIndexPage = ({
                   return dateB - dateA // Subtracts milliseconds which are numbers
                 })
                 .map((i, k) => (
-                  <div key={k} className='tw-break-inside-avoid tw-mb-6'>
+                  <div key={k} className='tw:break-inside-avoid tw:mb-6'>
                     <ItemCard
                       i={i}
                       loading={loading}
@@ -176,12 +176,12 @@ export const OverlayItemsIndexPage = ({
                 ))}
               {addItemPopupType === 'place' && (
                 <form ref={tabRef} autoComplete='off' onSubmit={(e) => submitNewItem(e)}>
-                  <div className='tw-cursor-pointer tw-break-inside-avoid tw-card tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-bg-base-100 tw-text-base-content tw-p-6 tw-mb-10'>
+                  <div className='tw:cursor-pointer tw:break-inside-avoid card tw:border-[1px] tw:border-base-300 card-body tw:shadow-xl tw:bg-base-100 tw:text-base-content tw:p-6 tw:mb-10'>
                     <label
-                      className='tw-btn tw-btn-sm tw-rounded-2xl tw-btn-circle tw-btn-ghost hover:tw-bg-transparent tw-absolute tw-right-0 tw-top-0 tw-text-gray-600'
+                      className='btn btn-sm tw:rounded-2xl btn-circle btn-ghost tw:hover:bg-transparent tw:absolute tw:right-0 tw:top-0 tw:text-gray-600'
                       onClick={() => setAddItemPopupType('')}
                     >
-                      <p className='tw-text-center'>✕</p>
+                      <p className='tw:text-center'>✕</p>
                     </label>
                     <TextInput
                       type='text'
@@ -195,18 +195,18 @@ export const OverlayItemsIndexPage = ({
                       placeholder='Text'
                       dataField='text'
                       defaultValue={''}
-                      inputStyle='tw-h-40 tw-mt-5'
+                      inputStyle='tw:h-40 tw:mt-5'
                     />
-                    <div className='tw-flex tw-justify-center'>
+                    <div className='tw:flex tw:justify-center'>
                       <button
                         className={
                           loading
-                            ? 'tw-btn tw-btn-disabled tw-mt-5 tw-place-self-center'
-                            : 'tw-btn tw-mt-5 tw-place-self-center'
+                            ? 'btn btn-disabled tw:mt-5 tw:place-self-center'
+                            : 'btn tw:mt-5 tw:place-self-center'
                         }
                         type='submit'
                       >
-                        {loading ? <span className='tw-loading tw-loading-spinner'></span> : 'Save'}
+                        {loading ? <span className='loading loading-spinner'></span> : 'Save'}
                       </button>
                     </div>
                   </div>

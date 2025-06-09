@@ -6,23 +6,33 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import { Children, cloneElement, isValidElement, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { TileLayer, useMapEvents, GeoJSON, useMap } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import { Outlet, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
+import { useSetAppState } from '#components/AppShell/hooks/useAppState'
+import { useTheme } from '#components/AppShell/hooks/useTheme'
 import { containsUUID } from '#utils/ContainsUUID'
 
 import { useClusterRef, useSetClusterRef } from './hooks/useClusterRef'
-import { useAddVisibleLayer } from './hooks/useFilter'
+import {
+  useAddFilterTag,
+  useAddVisibleLayer,
+  useFilterTags,
+  useResetFilterTags,
+  useToggleVisibleLayer,
+} from './hooks/useFilter'
 import { useLayers } from './hooks/useLayers'
 import { useLeafletRefs } from './hooks/useLeafletRefs'
+import { usePopupForm } from './hooks/usePopupForm'
 import {
   useSelectPosition,
   useSetMapClicked,
   useSetSelectPosition,
 } from './hooks/useSelectPosition'
+import { useTags } from './hooks/useTags'
 import AddButton from './Subcomponents/AddButton'
 import { Control } from './Subcomponents/Controls/Control'
 import { FilterControl } from './Subcomponents/Controls/FilterControl'
@@ -33,9 +43,7 @@ import { TagsControl } from './Subcomponents/Controls/TagsControl'
 import { TextView } from './Subcomponents/ItemPopupComponents/TextView'
 import { SelectPosition } from './Subcomponents/SelectPosition'
 
-import type { ItemFormPopupProps } from '#types/ItemFormPopupProps'
-import type { UtopiaMapProps } from '#types/UtopiaMapProps'
-import type { Feature, Geometry as GeoJSONGeometry } from 'geojson'
+import type { Feature, Geometry as GeoJSONGeometry, GeoJsonObject } from 'geojson'
 
 export function UtopiaMapInner({
   children,
@@ -43,26 +51,45 @@ export function UtopiaMapInner({
   showFilterControl = false,
   showGratitudeControl = false,
   showLayerControl = true,
+  showThemeControl = false,
+  defaultTheme = '',
   donationWidget,
-}: UtopiaMapProps) {
+  expandLayerControl,
+}: {
+  children?: React.ReactNode
+  geo?: GeoJsonObject
+  showFilterControl?: boolean
+  showLayerControl?: boolean
+  showGratitudeControl?: boolean
+  donationWidget?: boolean
+  showThemeControl?: boolean
+  defaultTheme?: string
+  expandLayerControl?: boolean
+}) {
   const selectNewItemPosition = useSelectPosition()
   const setSelectNewItemPosition = useSetSelectPosition()
   const setClusterRef = useSetClusterRef()
   const clusterRef = useClusterRef()
   const setMapClicked = useSetMapClicked()
-  const [itemFormPopup, setItemFormPopup] = useState<ItemFormPopupProps | null>(null)
-
+  const { setPopupForm } = usePopupForm()
   const layers = useLayers()
   const addVisibleLayer = useAddVisibleLayer()
   const leafletRefs = useLeafletRefs()
-
   const location = useLocation()
   const map = useMap()
+
+  useTheme(defaultTheme)
 
   useEffect(() => {
     layers.forEach((layer) => addVisibleLayer(layer))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [layers])
+
+  const setAppState = useSetAppState()
+
+  useEffect(() => {
+    setAppState({ showThemeControl })
+  }, [setAppState, showThemeControl])
 
   const init = useRef(false)
   useEffect(() => {
@@ -80,7 +107,7 @@ export function UtopiaMapInner({
                   }
                 />
                 <a href='https://opencollective.com/utopia-project'>
-                  <div className='tw-btn  tw-btn-sm tw-float-right tw-btn-primary'>Donate</div>
+                  <div className='tw:btn  tw:btn-sm tw:float-right tw:btn-primary'>Donate</div>
                 </a>
               </div>
             </>,
@@ -99,7 +126,7 @@ export function UtopiaMapInner({
         // eslint-disable-next-line no-console
         console.log(e.latlng.lat + ',' + e.latlng.lng)
         if (selectNewItemPosition) {
-          setMapClicked({ position: e.latlng, setItemFormPopup })
+          setMapClicked({ position: e.latlng, setItemFormPopup: setPopupForm })
         }
       },
       moveend: () => {},
@@ -180,10 +207,65 @@ export function UtopiaMapInner({
     }
   }
 
+  const addFilterTag = useAddFilterTag()
+  const resetFilterTags = useResetFilterTags()
+  const tags = useTags()
+  const filterTags = useFilterTags()
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const urlTags = params.get('tags')
+    const decodedTags = urlTags ? decodeURIComponent(urlTags) : ''
+    const decodedTagsArray = decodedTags.split(';').filter(Boolean)
+
+    const urlDiffersFromState =
+      decodedTagsArray.some(
+        (ut) => !filterTags.find((ft) => ut.toLowerCase() === ft.name.toLowerCase()),
+      ) ||
+      filterTags.some(
+        (ft) => !decodedTagsArray.find((ut) => ut.toLowerCase() === ft.name.toLowerCase()),
+      )
+
+    if (urlDiffersFromState) {
+      resetFilterTags()
+      decodedTagsArray.forEach((urlTag) => {
+        const match = tags.find((t) => t.name.toLowerCase() === urlTag.toLowerCase())
+        if (match) addFilterTag(match)
+      })
+    }
+  }, [location, tags, filterTags, addFilterTag, resetFilterTags])
+
+  const toggleVisibleLayer = useToggleVisibleLayer()
+  const allLayers = useLayers()
+
+  const initializedRef = useRef(false)
+
+  useEffect(() => {
+    if (initializedRef.current || allLayers.length === 0) return
+
+    const params = new URLSearchParams(location.search)
+    const urlLayersParam = params.get('layers')
+    if (!urlLayersParam) {
+      initializedRef.current = true
+      return
+    }
+
+    const urlLayerNames = urlLayersParam.split(',').filter(Boolean)
+
+    const layerNamesToHide = allLayers
+      .map((l) => l.name)
+      .filter((name) => !urlLayerNames.includes(name))
+
+    layerNamesToHide.forEach((name) => {
+      const match = allLayers.find((l) => l.name === name)
+      if (match) toggleVisibleLayer(match)
+    })
+
+    initializedRef.current = true
+  }, [location, allLayers, toggleVisibleLayer])
+
   return (
-    <div
-      className={`tw-h-full ${selectNewItemPosition != null ? 'crosshair-cursor-enabled' : undefined}`}
-    >
+    <div className={`tw:h-full ${selectNewItemPosition != null ? 'crosshair-cursor-enabled' : ''}`}>
       <Outlet />
       <Control position='topLeft' zIndex='1000' absolute>
         <SearchControl />
@@ -191,7 +273,7 @@ export function UtopiaMapInner({
       </Control>
       <Control position='bottomLeft' zIndex='999' absolute>
         {showFilterControl && <FilterControl />}
-        {showLayerControl && <LayerControl />}
+        {showLayerControl && <LayerControl expandLayerControl={expandLayerControl ?? false} />}
         {showGratitudeControl && <GratitudeControl />}
       </Control>
       <TileLayer
@@ -206,15 +288,7 @@ export function UtopiaMapInner({
         maxClusterRadius={50}
         removeOutsideVisibleBounds={false}
       >
-        {Children.toArray(children).map((child) =>
-          isValidElement<{
-            setItemFormPopup: React.Dispatch<React.SetStateAction<ItemFormPopupProps>>
-            itemFormPopup: ItemFormPopupProps | null
-            clusterRef: React.MutableRefObject<undefined>
-          }>(child)
-            ? cloneElement(child, { setItemFormPopup, itemFormPopup, clusterRef })
-            : child,
-        )}
+        {children}
       </MarkerClusterGroup>
       {geo && (
         <GeoJSON
@@ -224,7 +298,7 @@ export function UtopiaMapInner({
             click: (e) => {
               if (selectNewItemPosition) {
                 e.layer.closePopup()
-                setMapClicked({ position: e.latlng, setItemFormPopup })
+                setMapClicked({ position: e.latlng, setItemFormPopup: setPopupForm })
               }
             },
           }}

@@ -10,9 +10,9 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { useAppState } from '#components/AppShell/hooks/useAppState'
-import { StartEndView, TextView } from '#components/Map'
 import { useAddFilterTag } from '#components/Map/hooks/useFilter'
 import { useItems } from '#components/Map/hooks/useItems'
+import { StartEndView, TextView } from '#components/Map/Subcomponents/ItemPopupComponents'
 import { ActionButton } from '#components/Profile/Subcomponents/ActionsButton'
 import { LinkedItemsHeaderView } from '#components/Profile/Subcomponents/LinkedItemsHeaderView'
 import { TagView } from '#components/Templates/TagView'
@@ -85,29 +85,27 @@ export const TabsView = ({
   }, [location.search])
 
   return (
-    <div role='tablist' className='tw-tabs tw-tabs-lifted tw-mt-2 tw-mb-2 tw-px-6'>
+    <div role='tablist' className='tw:tabs tw:tabs-lift tw:mt-2 tw:mb-2 tw:px-6'>
       <input
         type='radio'
         name='my_tabs_2'
         role='tab'
-        className={
-          'tw-tab tw-font-bold !tw-ps-2 !tw-pe-2 [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'
-        }
+        className={'tw:tab tw:font-bold tw:ps-2! tw:pe-2! '}
         aria-label={`${item.layer?.itemType.icon_as_labels && activeTab !== 1 ? '📝' : '📝\u00A0Info'}`}
         checked={activeTab === 1 && true}
         onChange={() => updateActiveTab(1)}
       />
       <div
         role='tabpanel'
-        className='tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-4 tw-mb-4 tw-overflow-x-hidden'
+        className='tw:tab-content tw:bg-base-100 tw:rounded-box tw:!h-[calc(100dvh-280px)] tw:overflow-y-auto fade tw:pt-2 tw:pb-4 tw:mb-4 tw:overflow-x-hidden'
       >
         {item.layer?.itemType.show_start_end && (
-          <div className='tw-max-w-xs'>
+          <div className='tw:max-w-xs'>
             <StartEndView item={item}></StartEndView>
           </div>
         )}
         <TextView text={item.text} itemId={item.id} />
-        <div className='tw-h-4'></div>
+        <div className='tw:h-4'></div>
         <TextView text={item.contact} itemId={item.id} />
       </div>
       {item.layer?.itemType.questlog && (
@@ -116,18 +114,16 @@ export const TabsView = ({
             type='radio'
             name='my_tabs_2'
             role='tab'
-            className={
-              'tw-tab tw-font-bold !tw-ps-2 !tw-pe-2 [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'
-            }
+            className={'tw:tab tw:font-bold tw:ps-2! tw:pe-2!'}
             aria-label={`${item.layer.itemType.icon_as_labels && activeTab !== 2 ? '❤️' : '❤️\u00A0Trust'}`}
             checked={activeTab === 2 && true}
             onChange={() => updateActiveTab(2)}
           />
           <div
             role='tabpanel'
-            className='tw-tab-content tw-bg-base-100 tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto fade tw-pt-2 tw-pb-4 tw-mb-4 tw-overflow-x-hidden'
+            className='tw:tab-content tw:bg-base-100 tw:rounded-box tw:!h-[calc(100dvh-280px)] tw:overflow-y-auto fade tw:pt-2 tw:pb-4 tw:mb-4 tw:overflow-x-hidden'
           >
-            <table className='sm:tw-table-sm md:tw-table-md'>
+            <table className='sm:tw:table-sm md:tw:table-md tw:w-full'>
               <tbody>
                 {attestations
                   .filter((a) => a.to.some((t) => t.directus_users_id === item.user_created?.id))
@@ -139,13 +135,15 @@ export const TabsView = ({
                     <tr key={i}>
                       <td>
                         <div
-                          className={`tw-cursor-pointer tw-text-3xl tw-mask tw-mask-${a.shape} tw-p-3 tw-mr-2 tw-shadow-xl tw-bg-[${a.color}]`}
+                          className={`tw:cursor-pointer tw:text-3xl tw:mask ${a.shape === 'squircle' ? 'tw:mask-squircle' : a.shape === 'circle' ? 'tw:mask-circle' : 'tw:mask-hexagon-2'} tw:p-2 tw:my-2 tw:mr-2 tw:shadow-xl`}
+                          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                          style={{ backgroundColor: a.color }}
                         >
                           {a.emoji}
                         </div>
                       </td>
                       <td>
-                        <div className='tw-mr-2'>
+                        <div className='tw:mr-2'>
                           <i>{a.text}</i>
                         </div>
                       </td>
@@ -153,8 +151,8 @@ export const TabsView = ({
                         {getUserProfile(a.user_created.id) ? (
                           <Link to={'/item/' + getUserProfile(a.user_created.id)?.id}>
                             <div className='flex items-center gap-3'>
-                              <div className='tw-avatar'>
-                                <div className='tw-mask tw-rounded-full tw-h-8 tw-w-8 tw-mr-2'>
+                              <div className='tw:avatar'>
+                                <div className='tw:mask tw:rounded-full tw:h-8 tw:w-8 tw:mr-2'>
                                   {getUserProfile(a.user_created.id)?.image && (
                                     <img
                                       src={
@@ -171,7 +169,7 @@ export const TabsView = ({
                                   {getUserProfile(a.user_created.id)?.name ??
                                     a.user_created.first_name}{' '}
                                 </div>
-                                <div className='tw-text-xs opacity-50 tw-text-zinc-500'>
+                                <div className='tw:text-xs opacity-50 tw:text-zinc-500'>
                                   {timeAgo(a.date_created)}
                                 </div>
                               </div>
@@ -180,7 +178,7 @@ export const TabsView = ({
                         ) : (
                           <div>
                             <div className='font-bold'>{a.user_created.first_name} </div>
-                            <div className='tw-text-xs opacity-50 tw-text-zinc-500'>
+                            <div className='tw:text-xs opacity-50 tw:text-zinc-500'>
                               {timeAgo(a.date_created)}
                             </div>
                           </div>
@@ -199,21 +197,21 @@ export const TabsView = ({
             type='radio'
             name='my_tabs_2'
             role='tab'
-            className={`tw-tab tw-font-bold !tw-ps-2 !tw-pe-2 ${!(item.layer.itemType.icon_as_labels && activeTab !== 3) && 'tw-min-w-[10.4em]'} [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]`}
+            className={`tw:tab tw:font-bold tw:ps-2! tw:pe-2! ${!(item.layer.itemType.icon_as_labels && activeTab !== 3) && 'tw:min-w-[10.4em]'} `}
             aria-label={`${item.layer.itemType.icon_as_labels && activeTab !== 3 ? '♻️' : '♻️\u00A0Offers & Needs'}`}
             checked={activeTab === 3 && true}
             onChange={() => updateActiveTab(3)}
           />
           <div
             role='tabpanel'
-            className='tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-268px)] tw-overflow-y-auto fade tw-pt-4 tw-pb-1'
+            className='tw:tab-content tw:bg-base-100  tw:rounded-box tw:h-[calc(100dvh-268px)] tw:overflow-y-auto fade tw:pt-4 tw:pb-1'
           >
-            <div className='tw-h-full'>
-              <div className='tw-grid tw-grid-cols-1'>
+            <div className='tw:h-full'>
+              <div className='tw:grid tw:grid-cols-1'>
                 {offers.length > 0 ? (
-                  <div className='tw-col-span-1'>
-                    <h3 className='-tw-mb-2'>Offers</h3>
-                    <div className='tw-flex tw-flex-wrap tw-mb-4'>
+                  <div className='tw:col-span-1'>
+                    <h3 className='tw:-mb-2'>Offers</h3>
+                    <div className='tw:flex tw:flex-wrap tw:mb-4'>
                       {offers.map((o) => (
                         <TagView
                           key={o.id}
@@ -229,9 +227,9 @@ export const TabsView = ({
                   ''
                 )}
                 {needs.length > 0 ? (
-                  <div className='tw-col-span-1'>
-                    <h3 className='-tw-mb-2 tw-col-span-1'>Needs</h3>
-                    <div className='tw-flex tw-flex-wrap  tw-mb-4'>
+                  <div className='tw:col-span-1'>
+                    <h3 className='tw:-mb-2 tw:col-span-1'>Needs</h3>
+                    <div className='tw:flex tw:flex-wrap  tw:mb-4'>
                       {needs.map((n) => (
                         <TagView key={n.id} tag={n} onClick={() => addFilterTag(n)} />
                       ))}
@@ -252,22 +250,22 @@ export const TabsView = ({
             type='radio'
             name='my_tabs_2'
             role='tab'
-            className='tw-tab tw-font-bold !tw-ps-2 !tw-pe-2 [--tab-border-color:var(--fallback-bc,oklch(var(--bc)/0.2))]'
+            className='tw:tab tw:font-bold tw:ps-2! tw:pe-2! '
             aria-label={`${item.layer.itemType.icon_as_labels && activeTab !== 7 ? '🔗' : '🔗\u00A0Links'}`}
             checked={activeTab === 7 && true}
             onChange={() => updateActiveTab(7)}
           />
           <div
             role='tabpanel'
-            className='tw-tab-content tw-bg-base-100  tw-rounded-box tw-h-[calc(100dvh-280px)] tw-overflow-y-auto tw-pt-4 tw-pb-1 -tw-mr-4 -tw-mb-4 tw-overflow-x-hidden'
+            className='tw:tab-content tw:bg-base-100  tw:rounded-box tw:!h-[calc(100dvh-280px)] tw:overflow-y-auto tw:pt-4 tw:pb-1 tw:-mr-4 tw:-mb-4 tw:overflow-x-hidden'
           >
-            <div className='tw-h-full'>
-              <div className='tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-1 lg:tw-grid-cols-1 xl:tw-grid-cols-1 2xl:tw-grid-cols-2 tw-pb-4'>
+            <div className='tw:h-full'>
+              <div className='tw:grid tw:grid-cols-1 tw:sm:grid-cols-2 tw:md:grid-cols-1 tw:lg:grid-cols-1 tw:xl:grid-cols-1 tw:2xl:grid-cols-2 tw:pb-4'>
                 {relations &&
                   relations.map((i) => (
                     <div
                       key={i.id}
-                      className='tw-cursor-pointer tw-card tw-bg-base-200 tw-border-[1px] tw-border-base-300 tw-card-body tw-shadow-xl tw-text-base-content tw-p-6 tw-mr-4 tw-mb-4'
+                      className='tw:cursor-pointer tw:card tw:bg-base-200 tw:border-[1px] tw:border-base-300 tw:card-body tw:shadow-xl tw:text-base-content tw:p-6 tw:mr-4 tw:mb-4'
                       onClick={() => navigate('/item/' + i.id)}
                     >
                       <LinkedItemsHeaderView
@@ -276,7 +274,7 @@ export const TabsView = ({
                         unlinkCallback={unlinkItem}
                         loading={loading}
                       />
-                      <div className='tw-overflow-y-auto tw-overflow-x-hidden tw-max-h-64 fade'>
+                      <div className='tw:overflow-y-auto tw:overflow-x-hidden tw:max-h-64 fade'>
                         <TextView truncate text={i.text} itemId={item.id} />
                       </div>
                     </div>

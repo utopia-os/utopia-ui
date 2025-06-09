@@ -17,17 +17,22 @@ const aliasConfig = alias({
 
 export default [
   {
-    input: 'src/index.tsx',
+    input: {
+      index: 'src/index.tsx',
+      Profile: 'src/Components/Profile/index.tsx',
+    },
     output: [
       {
-        file: 'dist/index.esm.js',
+        dir: 'dist/',
         format: 'esm',
         sourcemap: true,
+        entryFileNames: '[name].esm.js',
       },
       {
-        file: 'dist/index.cjs',
+        dir: 'dist/',
         format: 'cjs',
         sourcemap: true,
+        entryFileNames: '[name].cjs.js',
       },
     ],
     plugins: [
@@ -55,11 +60,9 @@ export default [
       'react-toastify',
       'react-string-replace',
       'react-toastify/dist/ReactToastify.css',
-      'tw-elements',
       'react-router-dom',
       'react-leaflet-cluster',
       '@tanstack/react-query',
-      'tributejs',
       'prop-types',
       'leaflet/dist/leaflet.css',
       '@heroicons/react/20/solid',
@@ -80,8 +83,15 @@ export default [
     ],
   },
   {
-    input: 'dist/types/src/index.d.ts',
-    output: [{ file: 'dist/index.d.ts', format: 'es' }],
+    input: {
+      index: path.resolve(__dirname, 'dist/types/src/index.d.ts'),
+      Profile: path.resolve(__dirname, 'dist/types/src/Components/Profile/index.d.ts'),
+    },
+    output: {
+      dir: path.resolve(__dirname, 'dist'),
+      format: 'es',
+      entryFileNames: '[name].d.ts',
+    },
     plugins: [
       aliasConfig,
       dts({
@@ -90,7 +100,7 @@ export default [
         },
       }),
     ],
-    external: [/\.css$/], //, /\.d\.ts$/
+    external: [/\.css$/],
     watch: false,
   },
 ]

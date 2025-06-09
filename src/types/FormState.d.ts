@@ -1,3 +1,4 @@
+import type { markerIcon } from '#utils/MarkerIconFactory'
 import type { Item } from './Item'
 import type { Tag } from './Tag'
 
@@ -13,10 +14,11 @@ export interface FormState {
   telephone: string
   next_appointment: string
   image: string
-  marker_icon: string
+  marker_icon: markerIcon | undefined
   offers: Tag[]
   needs: Tag[]
   relations: Item[]
   start: string
   end: string
+  openCollectiveSlug: string
 }

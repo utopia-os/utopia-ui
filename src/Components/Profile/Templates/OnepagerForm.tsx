@@ -17,14 +17,14 @@ export const OnepagerForm = ({
   item: Item
 }) => {
   return (
-    <div className='tw-space-y-6 tw-mt-6'>
+    <div className='tw:space-y-6 tw:mt-6'>
       <GroupSubheaderForm state={state} setState={setState} item={item}></GroupSubheaderForm>
       <ContactInfoForm state={state} setState={setState}></ContactInfoForm>
 
       <div>
         <label
           htmlFor='description'
-          className='tw-block tw-text-sm tw-font-medium tw-text-gray-500 tw-mb-1'
+          className='tw:block tw:text-sm tw:font-medium tw:text-gray-500 tw:mb-1'
         >
           Gruppenbeschreibung:
         </label>
@@ -37,7 +37,7 @@ export const OnepagerForm = ({
               text: v,
             }))
           }
-          inputStyle='tw-h-48'
+          inputStyle='tw:h-48'
         />
       </div>
     </div>

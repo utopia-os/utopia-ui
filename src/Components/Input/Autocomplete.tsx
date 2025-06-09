@@ -91,9 +91,10 @@ export const Autocomplete = ({
         onChange={(e) => handleChange(e)}
         tabIndex='-1'
         onKeyDown={handleKeyDown}
+        className='tw:border-none tw:focus:outline-none tw:focus:ring-0 tw:mt-5'
       />
       <ul
-        className={`tw-absolute tw-z-[4000] ${filteredSuggestions.length > 0 && 'tw-bg-base-100 tw-rounded-xl tw-p-2'}`}
+        className={`tw:absolute tw:z-4000 ${filteredSuggestions.length > 0 && 'tw:bg-base-100 tw:rounded-xl tw:p-2'}`}
       >
         {filteredSuggestions.map((suggestion, index) => (
           <li key={index} onClick={() => handleSuggestionClick(suggestion)}>

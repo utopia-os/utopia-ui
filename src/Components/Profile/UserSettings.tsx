@@ -53,11 +53,11 @@ export function UserSettings() {
   return (
     <MapOverlayPage
       backdrop
-      className='tw-mx-4 tw-mt-4 tw-max-h-[calc(100dvh-96px)] tw-h-fit md:tw-w-[calc(50%-32px)] tw-w-[calc(100%-32px)] tw-max-w-xl !tw-left-auto tw-top-0 tw-bottom-0'
+      className='tw:mx-4 tw:mt-4 tw:max-h-[calc(100dvh-96px)] tw:h-fit tw:md:w-[calc(50%-32px)] tw:w-[calc(100%-32px)] tw:max-w-xl tw:left-auto! tw:top-0 tw:bottom-0'
     >
-      <div className={'tw-text-xl tw-font-semibold'}>Settings</div>
-      <div className='tw-divider tw-mt-2'></div>
-      <div className='tw-grid tw-grid-cols-1 tw-gap-6'>
+      <div className={'tw:text-xl tw:font-semibold'}>Settings</div>
+      <div className='tw:divider tw:mt-2'></div>
+      <div className='tw:grid tw:grid-cols-1 tw:gap-6'>
         <TextInput
           type='email'
           placeholder='new E-Mail'
@@ -76,12 +76,12 @@ export function UserSettings() {
         {/* <ToogleInput updateType="syncData" labelTitle="Sync Data" defaultValue={true} updateFormValue={updateFormValue}/> */}
       </div>
 
-      <div className='tw-mt-8'>
+      <div className='tw:mt-8'>
         <button
           className={
             loading
-              ? ' tw-loading tw-btn-disabled tw-btn tw-btn-primary tw-float-right'
-              : 'tw-btn tw-btn-primary tw-float-right'
+              ? ' tw:loading tw:btn-disabled tw:btn tw:btn-primary tw:float-right'
+              : 'tw:btn tw:btn-primary tw:float-right'
           }
           onClick={() => onUpdateUser()}
         >

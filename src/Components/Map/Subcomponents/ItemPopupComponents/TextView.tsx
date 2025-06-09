@@ -1,11 +1,9 @@
-/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { memo } from 'react'
 import Markdown from 'react-markdown'
 import remarkBreaks from 'remark-breaks'
 
@@ -27,14 +25,12 @@ export const TextView = ({
   text,
   truncate = false,
   rawText,
-  itemTextField,
 }: {
   item?: Item
   itemId?: string
   text?: string
   truncate?: boolean
   rawText?: string
-  itemTextField?: string
 }) => {
   if (item) {
     text = item.text
@@ -42,8 +38,6 @@ export const TextView = ({
   }
   const tags = useTags()
   const addFilterTag = useAddFilterTag()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const itemTextFieldDummy = itemTextField
 
   let innerText = ''
   let replacedText = ''
@@ -87,53 +81,15 @@ export const TextView = ({
     })
   }
 
-  const CustomH1 = ({ children }) => <h1 className='tw-text-xl tw-font-bold'>{children}</h1>
-
-  const CustomH2 = ({ children }) => <h2 className='tw-text-lg tw-font-bold'>{children}</h2>
-
-  const CustomH3 = ({ children }) => <h3 className='tw-text-base tw-font-bold'>{children}</h3>
-
-  const CustomH4 = ({ children }) => <h4 className='tw-text-base tw-font-bold'>{children}</h4>
-
-  const CustomH5 = ({ children }) => <h5 className='tw-text-sm tw-font-bold'>{children}</h5>
-
-  const CustomH6 = ({ children }) => <h6 className='tw-text-sm tw-font-bold'>{children}</h6>
-
-  const CustomParagraph = ({ children }) => <p className='!tw-my-2'>{children}</p>
-
-  const CustomUnorderdList = ({ children }) => (
-    <ul className='tw-list-disc tw-list-inside'>{children}</ul>
-  )
-
-  const CustomOrderdList = ({ children }) => (
-    <ol className='tw-list-decimal tw-list-inside'>{children}</ol>
-  )
-
-  const CustomHorizontalRow = ({ children }) => <hr className='tw-border-current'>{children}</hr>
-  // eslint-disable-next-line react/prop-types
-  const CustomImage = ({ alt, src, title }) => (
-    <img className='tw-max-w-full tw-rounded tw-shadow' src={src} alt={alt} title={title} />
-  )
-
-  const CustomExternalLink = ({ href, children }) => (
-    <a className='tw-font-bold tw-underline' href={href} target='_blank' rel='noreferrer'>
-      {' '}
-      {children}
-    </a>
-  )
-
-  const CustomHashTagLink = ({
-    children,
-    tag,
-    itemId,
-  }: {
-    children: string
-    tag: Tag
-    itemId?: string
-  }) => {
+  const HashTag = ({ children, tag, itemId }: { children: string; tag: Tag; itemId?: string }) => {
     return (
       <a
-        style={{ color: tag ? tag.color : '#faa', fontWeight: 'bold', cursor: 'pointer' }}
+        className='hashtag'
+        style={
+          tag && {
+            color: tag.color,
+          }
+        }
         key={tag ? tag.name + itemId : itemId}
         onClick={(e) => {
           e.stopPropagation()
@@ -145,64 +101,48 @@ export const TextView = ({
     )
   }
 
-  // eslint-disable-next-line react/display-name
-  const MemoizedVideoEmbed = memo(({ url }: { url: string }) => (
-    <iframe
-      className='tw-w-full'
-      src={url}
-      allow='fullscreen;  picture-in-picture'
-      allowFullScreen
-    />
-  ))
+  const Link = ({ href, children }: { href: string; children: string }) => {
+    // Youtube
+    if (href.startsWith('https://www.youtube.com/watch?v=')) {
+      const videoId = href?.split('v=')[1].split('&')[0]
+      const youtubeEmbedUrl = `https://www.youtube-nocookie.com/embed/${videoId}`
+
+      return (
+        <iframe src={youtubeEmbedUrl} allow='fullscreen;  picture-in-picture' allowFullScreen />
+      )
+    }
+
+    // Rumble
+    if (href.startsWith('https://rumble.com/embed/')) {
+      return <iframe src={href} allow='fullscreen;  picture-in-picture' allowFullScreen />
+    }
+
+    // HashTag
+    if (href.startsWith('#')) {
+      const tag = tags.find((t) => t.name.toLowerCase() === decodeURI(href).slice(1).toLowerCase())
+      if (tag)
+        return (
+          <HashTag tag={tag} itemId={itemId}>
+            {children}
+          </HashTag>
+        )
+      else return children
+    }
+
+    // Default: Link
+    return (
+      <a href={href} target='_blank' rel='noreferrer'>
+        {children}
+      </a>
+    )
+  }
 
   return (
     <Markdown
-      className={'tw-text-map tw-leading-map tw-text-sm'}
+      className={'markdown tw:text-map tw:leading-map tw:text-sm'}
       remarkPlugins={[remarkBreaks]}
       components={{
-        p: CustomParagraph,
-        a: ({ href, children }: { href: string; children: string }) => {
-          const isYouTubeVideo = href?.startsWith('https://www.youtube.com/watch?v=')
-
-          const isRumbleVideo = href?.startsWith('https://rumble.com/embed/')
-
-          if (isYouTubeVideo) {
-            const videoId = href?.split('v=')[1].split('&')[0]
-            const youtubeEmbedUrl = `https://www.youtube-nocookie.com/embed/${videoId}`
-
-            return <MemoizedVideoEmbed url={youtubeEmbedUrl}></MemoizedVideoEmbed>
-          }
-          if (isRumbleVideo) {
-            return <MemoizedVideoEmbed url={href}></MemoizedVideoEmbed>
-          }
-
-          if (href?.startsWith('#')) {
-            console.log(href.slice(1).toLowerCase())
-            console.log(tags)
-            const tag = tags.find(
-              (t) => t.name.toLowerCase() === decodeURI(href).slice(1).toLowerCase(),
-            )
-            if (tag)
-              return (
-                <CustomHashTagLink tag={tag} itemId={itemId}>
-                  {children}
-                </CustomHashTagLink>
-              )
-            else return children
-          } else {
-            return <CustomExternalLink href={href}>{children}</CustomExternalLink>
-          }
-        },
-        ul: CustomUnorderdList,
-        ol: CustomOrderdList,
-        img: CustomImage,
-        hr: CustomHorizontalRow,
-        h1: CustomH1,
-        h2: CustomH2,
-        h3: CustomH3,
-        h4: CustomH4,
-        h5: CustomH5,
-        h6: CustomH6,
+        a: Link,
       }}
     >
       {replacedText}

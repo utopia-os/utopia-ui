@@ -6,6 +6,7 @@ import { useDropzone } from 'react-dropzone'
 
 import { useAppState } from '#components/AppShell/hooks/useAppState'
 import DialogModal from '#components/Templates/DialogModal'
+import { getImageDimensions } from '#utils/getImageDimensions'
 
 import type { FormState } from '#types/FormState'
 
@@ -38,8 +39,11 @@ export const GalleryForm = ({ state, setState }: Props) => {
 
     const uploads = acceptedFiles.map(async (file) => {
       const compressedFile = await imageCompression(file, compressionOptions)
+      const { width, height } = await getImageDimensions(compressedFile)
       return {
-        asset: await appState.assetsApi.upload(compressedFile, 'gallery'),
+        width,
+        height,
+        asset: await appState.assetsApi.upload(compressedFile, file.name),
         name: file.name,
       }
     })
@@ -52,8 +56,8 @@ export const GalleryForm = ({ state, setState }: Props) => {
           {
             directus_files_id: {
               id: upload.asset.id,
-              width: 0,
-              height: 0,
+              width: upload.width,
+              height: upload.height,
             },
           },
         ],

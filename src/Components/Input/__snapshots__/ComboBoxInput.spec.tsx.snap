@@ -2,7 +2,7 @@
 
 exports[`<ComboBoxInput /> > renders properly 1`] = `
 <select
-  class="tw:select"
+  class="tw:select tw:w-full"
 >
   <option
     value="Option 1"

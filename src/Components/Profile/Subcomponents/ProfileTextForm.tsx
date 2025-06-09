@@ -18,7 +18,6 @@ export const ProfileTextForm = ({
   heading,
   size,
   hideInputLabel,
-  required,
 }: {
   state: FormState
   setState: React.Dispatch<React.SetStateAction<any>>
@@ -26,7 +25,6 @@ export const ProfileTextForm = ({
   heading: string
   size: string
   hideInputLabel: boolean
-  required?: boolean
 }) => {
   const [field, setField] = useState<string>(dataField || 'text')
 
@@ -38,7 +36,7 @@ export const ProfileTextForm = ({
 
   return (
     <div
-      className={`tw:min-h-36 tw:max-h-156 tw:flex tw:flex-col tw:mt-2 ${size === 'full' ? 'tw:flex-1' : 'tw:h-36 tw:flex-none'}`}
+      className={`tw:max-h-124 tw:md:max-h-full tw:flex tw:flex-col tw:mt-2 ${size === 'full' ? 'tw:flex-1 tw:min-h-42' : 'tw:h-28 tw:flex-none'}`}
     >
       <div className='tw:flex tw:justify-between tw:items-center'>
         <label
@@ -59,9 +57,9 @@ export const ProfileTextForm = ({
             [field]: v,
           }))
         }
+        showMenu={size === 'full'}
         labelStyle={hideInputLabel ? 'tw:hidden' : ''}
-        containerStyle={size === 'full' ? 'tw:flex-1' : 'tw:h-32 tw:flex-none'}
-        required={required}
+        containerStyle={size === 'full' ? 'tw:flex-1' : 'tw:h-24 tw:flex-none'}
       />
     </div>
   )

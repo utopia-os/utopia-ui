@@ -3,9 +3,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Color } from '@tiptap/extension-color'
 import { Image } from '@tiptap/extension-image'
-import { Placeholder } from '@tiptap/extension-placeholder'
-import { Youtube } from '@tiptap/extension-youtube'
 import { Link } from '@tiptap/extension-link'
+import { Placeholder } from '@tiptap/extension-placeholder'
 import { EditorContent, useEditor } from '@tiptap/react'
 import { StarterKit } from '@tiptap/starter-kit'
 import { useEffect } from 'react'
@@ -19,8 +18,7 @@ interface RichTextEditorProps {
   containerStyle?: string
   defaultValue: string
   placeholder?: string
-  required?: boolean
-  size?: string
+  showMenu?: boolean
   updateFormValue?: (value: string) => void
 }
 
@@ -33,10 +31,14 @@ export function RichTextEditor({
   containerStyle,
   defaultValue,
   placeholder,
+  showMenu = true,
   updateFormValue,
 }: RichTextEditorProps) {
   const handleChange = () => {
-    const newValue: string | undefined = editor?.storage.markdown.getMarkdown()
+    let newValue: string | undefined = editor?.storage.markdown.getMarkdown()
+
+    const regex = /!\[.*?\]\(.*?\)/g
+    newValue = newValue?.replace(regex, (match: string) => match + '\n\n')
     if (updateFormValue && newValue) {
       updateFormValue(newValue)
     }
@@ -55,13 +57,13 @@ export function RichTextEditor({
           keepAttributes: false,
         },
       }),
-      Markdown,
+      Markdown.configure({
+        linkify: true,
+        transformCopiedText: true,
+        transformPastedText: true,
+      }),
       Image,
       Link,
-      Youtube.configure({
-        controls: false,
-        nocookie: true,
-      }),
       Placeholder.configure({
         placeholder,
         emptyEditorClass: 'is-editor-empty',
@@ -98,7 +100,7 @@ export function RichTextEditor({
       >
         {editor ? (
           <>
-            <TextEditorMenu editor={editor} />
+            {showMenu ? <TextEditorMenu editor={editor} /> : null}
             <EditorContent editor={editor} />
           </>
         ) : null}

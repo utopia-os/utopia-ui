@@ -85,7 +85,7 @@ export const TabsForm = ({
                     }))
                   }
                   containerStyle='tw:pt-2 tw:h-36 tw:flex-none'
-                  required={false}
+                  showMenu={false}
                 />
               </div>
             ),

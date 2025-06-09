@@ -13,7 +13,7 @@ const ComboBoxInput = ({ id, options, value, onValueChange }: ComboBoxProps) => 
   return (
     <select
       id={id}
-      className='tw:select'
+      className='tw:select tw:w-full'
       onChange={handleChange}
       value={value} // ← hier controlled statt defaultValue
     >

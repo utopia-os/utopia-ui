@@ -26,9 +26,9 @@ export const GalleryForm = ({ state, setState }: Props) => {
 
   const [uploadingImages, setUploadingImages] = useState<File[]>([])
 
-  const [deleteModalImage, setDeleteModalImage] = useState<number | null>(null)
+  const [imageSelectedToDelete, setImageSelectedToDelete] = useState<number | null>(null)
 
-  const closeModal = () => setDeleteModalImage(null)
+  const closeModal = () => setImageSelectedToDelete(null)
 
   const upload = async (acceptedFiles: File[]) => {
     setUploadingImages((files) => [...files, ...acceptedFiles])
@@ -123,7 +123,7 @@ export const GalleryForm = ({ state, setState }: Props) => {
             {image.state === 'uploaded' && (
               <button
                 className='tw:m-2 tw:bg-red-500 tw:text-white tw:p-2 tw:rounded-full tw:absolute tw:top-0 tw:right-0 tw:hover:bg-red-600'
-                onClick={() => setDeleteModalImage(index)}
+                onClick={() => setImageSelectedToDelete(index)}
                 type='button'
               >
                 <TrashIcon className='tw:h-5 tw:w-5' />
@@ -141,7 +141,7 @@ export const GalleryForm = ({ state, setState }: Props) => {
         </div>
       </div>
       <DialogModal
-        isOpened={!!deleteModalImage}
+        isOpened={!!imageSelectedToDelete}
         title='Are you sure?'
         showCloseButton={false}
         onClose={closeModal}
@@ -153,7 +153,7 @@ export const GalleryForm = ({ state, setState }: Props) => {
               <label
                 className='tw:btn tw:mt-4 tw:btn-error'
                 onClick={() => {
-                  deleteModalImage && removeImage(deleteModalImage)
+                  imageSelectedToDelete && removeImage(imageSelectedToDelete)
                   closeModal()
                 }}
               >

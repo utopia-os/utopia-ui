@@ -141,7 +141,7 @@ export const GalleryForm = ({ state, setState }: Props) => {
         </div>
       </div>
       <DialogModal
-        isOpened={!!imageSelectedToDelete}
+        isOpened={imageSelectedToDelete !== null}
         title='Are you sure?'
         showCloseButton={false}
         onClose={closeModal}

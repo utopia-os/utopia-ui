@@ -4,33 +4,35 @@
 
 function attrAccept(file, acceptedFiles) {
   if (file && acceptedFiles) {
-    var acceptedFilesArray = Array.isArray(acceptedFiles) ? acceptedFiles : acceptedFiles.split(',');
+    const acceptedFilesArray = Array.isArray(acceptedFiles)
+      ? acceptedFiles
+      : acceptedFiles.split(',')
 
     if (acceptedFilesArray.length === 0) {
-      return true;
+      return true
     }
 
-    var fileName = file.name || '';
-    var mimeType = (file.type || '').toLowerCase();
-    var baseMimeType = mimeType.replace(/\/.*$/, '');
+    const fileName = file.name || ''
+    const mimeType = (file.type || '').toLowerCase()
+    const baseMimeType = mimeType.replace(/\/.*$/, '')
 
     return acceptedFilesArray.some(function (type) {
-      var validType = type.trim().toLowerCase();
+      const validType = type.trim().toLowerCase()
 
       if (validType.charAt(0) === '.') {
-        return fileName.toLowerCase().endsWith(validType);
+        return fileName.toLowerCase().endsWith(validType)
       } else if (validType.endsWith('/*')) {
         // This is something like a image/* mime type
-        return baseMimeType === validType.replace(/\/.*$/, '');
+        return baseMimeType === validType.replace(/\/.*$/, '')
       }
 
-      return mimeType === validType;
-    });
+      return mimeType === validType
+    })
   }
 
-  return true;
+  return true
 }
 
 // Export as both default and named export to support different import styles
-export default attrAccept;
-export { attrAccept };
+export default attrAccept
+export { attrAccept }

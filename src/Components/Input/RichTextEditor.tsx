@@ -5,6 +5,7 @@ import { Color } from '@tiptap/extension-color'
 import { Image } from '@tiptap/extension-image'
 import { Placeholder } from '@tiptap/extension-placeholder'
 import { Youtube } from '@tiptap/extension-youtube'
+import { Link } from '@tiptap/extension-link'
 import { EditorContent, useEditor } from '@tiptap/react'
 import { StarterKit } from '@tiptap/starter-kit'
 import { useEffect } from 'react'
@@ -56,6 +57,7 @@ export function RichTextEditor({
       }),
       Markdown,
       Image,
+      Link,
       Youtube.configure({
         controls: false,
         nocookie: true,

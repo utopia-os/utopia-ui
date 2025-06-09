@@ -99,8 +99,10 @@
   "dependencies": {
     "@heroicons/react": "^2.0.17",
     "@tanstack/react-query": "^5.17.8",
+    "@tiptap/extension-bubble-menu": "^2.14.0",
     "@tiptap/extension-color": "^2.12.0",
-    "@tiptap/extension-image": "^2.12.0",
+    "@tiptap/extension-image": "^2.14.0",
+    "@tiptap/extension-link": "^2.14.0",
     "@tiptap/extension-placeholder": "^2.14.0",
     "@tiptap/extension-youtube": "^2.12.0",
     "@tiptap/pm": "^2.12.0",

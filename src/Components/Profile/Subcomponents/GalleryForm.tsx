@@ -1,8 +1,8 @@
-import ArrowUpTrayIcon from '@heroicons/react/24/outline/ArrowUpTrayIcon'
 import TrashIcon from '@heroicons/react/24/solid/TrashIcon'
 import imageCompression from 'browser-image-compression'
 import { useState } from 'react'
 import { useDropzone } from 'react-dropzone'
+import { BiSolidImage } from 'react-icons/bi'
 
 import { useAppState } from '#components/AppShell/hooks/useAppState'
 import DialogModal from '#components/Templates/DialogModal'
@@ -92,13 +92,13 @@ export const GalleryForm = ({ state, setState }: Props) => {
 
   return (
     <>
-      <div className='tw:flex tw:flex-wrap tw:gap-4 tw:my-4'>
+      <div className='tw:grid tw:grid-cols-2 tw:@md:grid-cols-3 tw:@lg:grid-cols-4 tw:gap-4 tw:my-4'>
         {images.map((image, index) => (
           <div key={index} className='tw:relative'>
             <img
               src={image.src}
               alt={`Gallery image ${index + 1}`}
-              className={`tw:w-60 tw:h-60 tw:object-cover tw:rounded-lg ${
+              className={`tw:w-full tw:h-full tw:object-cover tw:rounded-lg ${
                 image.state === 'uploading' ? 'tw:opacity-50' : ''
               }`}
             />
@@ -107,7 +107,7 @@ export const GalleryForm = ({ state, setState }: Props) => {
             )}
             {image.state === 'uploaded' && (
               <button
-                className='tw:m-2 tw:bg-red-500 tw:text-white tw:p-2 tw:rounded-full tw:absolute tw:top-0 tw:right-0 tw:hover:bg-red-600'
+                className='tw:m-2 tw:bg-red-500 tw:text-white tw:p-2 tw:rounded-full tw:absolute tw:top-0 tw:right-0 tw:hover:bg-red-600 tw:cursor-pointer'
                 onClick={() => setImageSelectedToDelete(index)}
                 type='button'
               >
@@ -119,10 +119,13 @@ export const GalleryForm = ({ state, setState }: Props) => {
 
         <div
           {...getRootProps()}
-          className='tw:flex tw:center tw:w-60 tw:h-60 tw:cursor-pointer tw:border tw:border-dashed tw:border-gray-300 tw:p-4 tw:rounded-lg'
+          className='custom-file-upload tw:flex tw:flex-col tw:items-center tw:justify-center tw:text-base-content/50 tw:w-full tw:h-full tw:cursor-pointer tw:border tw:border-dashed tw:border-gray-300 tw:p-4 tw:rounded-lg tw:bg-base-200'
         >
           <input {...getInputProps()} />
-          <ArrowUpTrayIcon className='tw:h-8 tw:w-8 tw:m-auto' />
+          <div>
+            <BiSolidImage className='tw:h-16 tw:w-16 tw:m-auto tw:mb-2' />
+            <span className='tw:text-center'>Upload Image</span>
+          </div>
         </div>
       </div>
       <DialogModal
@@ -138,7 +141,9 @@ export const GalleryForm = ({ state, setState }: Props) => {
               <label
                 className='tw:btn tw:mt-4 tw:btn-error'
                 onClick={() => {
-                  imageSelectedToDelete && removeImage(imageSelectedToDelete)
+                  if (imageSelectedToDelete !== null) {
+                    removeImage(imageSelectedToDelete)
+                  }
                   closeModal()
                 }}
               >

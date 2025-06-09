@@ -119,7 +119,7 @@ export const GalleryForm = ({ state, setState }: Props) => {
 
         <div
           {...getRootProps()}
-          className='custom-file-upload tw:flex tw:flex-col tw:items-center tw:justify-center tw:text-base-content/50 tw:w-full tw:h-full tw:cursor-pointer tw:border tw:border-dashed tw:border-gray-300 tw:p-4 tw:rounded-lg tw:bg-base-200'
+          className='tw:flex tw:flex-col tw:items-center tw:justify-center tw:text-base-content/50 tw:w-full tw:h-full tw:cursor-pointer tw:card tw:card-body tw:border tw:border-current/50 tw:border-dashed tw:bg-base-200'
         >
           <input {...getInputProps()} />
           <div>

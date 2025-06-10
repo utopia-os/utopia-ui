@@ -1,3 +1,5 @@
+/* Currently this test suite is skipped due to the need for a browser environment. We could set
+ up a headless browser test environment in the future, e.g. https://vitest.dev/guide/browser/ */
 import { readFileSync } from 'node:fs'
 import path from 'node:path'
 
@@ -11,8 +13,6 @@ const testImages = testImagePaths.map((imagePath) =>
   // eslint-disable-next-line security/detect-non-literal-fs-filename
   readFileSync(path.join(__dirname, '../../', imagePath)),
 )
-
-// vi.spyOn(global, 'FileReader').mockImplementation((fileReader: FileReader) => fileReader)
 
 describe('getImageDimensions', () => {
   it.skip('returns the correct dimensions for a valid image file', async () => {

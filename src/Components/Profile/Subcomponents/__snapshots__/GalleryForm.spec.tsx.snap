@@ -94,7 +94,7 @@ exports[`GalleryForm > with previous images > renders 1`] = `
         <span
           class="tw:text-center"
         >
-          Upload Image
+          Upload Image
         </span>
       </div>
     </div>
@@ -174,7 +174,7 @@ exports[`GalleryForm > with uploading images > renders 1`] = `
         <span
           class="tw:text-center"
         >
-          Upload Image
+          Upload Image
         </span>
       </div>
     </div>
@@ -218,7 +218,7 @@ exports[`GalleryForm > without previous images > renders 1`] = `
         <span
           class="tw:text-center"
         >
-          Upload Image
+          Upload Image
         </span>
       </div>
     </div>

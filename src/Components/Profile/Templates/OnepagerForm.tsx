@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { TextAreaInput } from '#components/Input'
 import { ContactInfoForm } from '#components/Profile/Subcomponents/ContactInfoForm'
 import { GroupSubheaderForm } from '#components/Profile/Subcomponents/GroupSubheaderForm'
@@ -13,7 +11,7 @@ export const OnepagerForm = ({
   setState,
 }: {
   state: FormState
-  setState: React.Dispatch<React.SetStateAction<any>>
+  setState: React.Dispatch<React.SetStateAction<FormState>>
   item: Item
 }) => {
   return (

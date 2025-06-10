@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
+import classNames from 'classnames'
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -46,6 +46,8 @@ export function ProfileForm() {
     start: '',
     end: '',
     openCollectiveSlug: '',
+    gallery: [],
+    uploadingImages: [],
   })
 
   const [updatePermission, setUpdatePermission] = useState<boolean>(false)
@@ -132,6 +134,8 @@ export function ProfileForm() {
       start: item.start ?? '',
       end: item.end ?? '',
       openCollectiveSlug: item.openCollectiveSlug ?? '',
+      gallery: item.gallery ?? [],
+      uploadingImages: [],
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item, tags, items])
@@ -146,6 +150,8 @@ export function ProfileForm() {
       if (userLayer) setTemplate(userLayer.itemType.template)
     }
   }, [item, layers])
+
+  const isUpdatingGallery = state.uploadingImages.length > 0
 
   return (
     <>
@@ -192,15 +198,20 @@ export function ProfileForm() {
                   state={state}
                   setState={setState}
                   updatePermission={updatePermission}
-                  linkItem={(id) => linkItem(id, item, updateItem)}
-                  unlinkItem={(id) => unlinkItem(id, item, updateItem)}
+                  linkItem={(id: string) => linkItem(id, item, updateItem)}
+                  unlinkItem={(id: string) => unlinkItem(id, item, updateItem)}
                   setUrlParams={setUrlParams}
                 ></TabsForm>
               )}
 
               <div className='tw:mb-4 tw:mt-6 tw:flex-none'>
                 <button
-                  className={`${loading ? ' tw:loading tw:btn tw:float-right' : 'tw:btn tw:float-right'}`}
+                  className={classNames(
+                    'tw:btn',
+                    'tw:float-right',
+                    { 'tw:loading': loading },
+                    { 'tw:cursor-not-allowed tw:opacity-50': loading || isUpdatingGallery },
+                  )}
                   type='submit'
                   style={{
                     // We could refactor this, it is used several times at different locations

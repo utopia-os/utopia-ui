@@ -1,14 +1,20 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable react/prop-types */
+
 import { TextInput } from '#components/Input'
 
 import { AvatarWidget } from './AvatarWidget'
 import { ColorPicker } from './ColorPicker'
 
-export const FormHeader = ({ item, state, setState }) => {
+import type { FormState } from '#types/FormState'
+import type { Item } from '#types/Item'
+
+interface Props {
+  item: Item
+  state: Partial<FormState>
+  setState: React.Dispatch<React.SetStateAction<Partial<FormState>>>
+}
+
+export const FormHeader = ({ item, state, setState }: Props) => {
   return (
     <div className='tw:flex-none'>
       <div className='tw:flex'>
@@ -34,7 +40,7 @@ export const FormHeader = ({ item, state, setState }) => {
         <div className='tw:grow tw:mr-4 tw:pt-1'>
           <TextInput
             placeholder='Name'
-            defaultValue={item?.name ? item.name : ''}
+            defaultValue={item.name ? item.name : ''}
             updateFormValue={(v) =>
               setState((prevState) => ({
                 ...prevState,
@@ -47,7 +53,7 @@ export const FormHeader = ({ item, state, setState }) => {
           <TextInput
             placeholder='Subtitle'
             required={false}
-            defaultValue={item?.subname ? item.subname : ''}
+            defaultValue={item.subname ? item.subname : ''}
             updateFormValue={(v) =>
               setState((prevState) => ({
                 ...prevState,

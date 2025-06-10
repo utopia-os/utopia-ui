@@ -3,7 +3,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
 
 import { useAuth } from '#components/Auth/useAuth'
 import { useItems, useUpdateItem, useAddItem } from '#components/Map/hooks/useItems'

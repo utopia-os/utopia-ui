@@ -193,7 +193,7 @@ export const onUpdateItem = async (
     telephone: state.telephone,
     ...(state.end && { end: state.end }),
     ...(state.start && { start: state.start }),
-    ...(state.marker_icon && { markerIcon: state.marker_icon }),
+    ...(state.marker_icon && { markerIcon: state.marker_icon.id }),
     next_appointment: state.next_appointment,
     ...(state.image.length > 10 && { image: state.image }),
     ...(state.offers.length > 0 && { offers: offerUpdates }),
@@ -249,7 +249,7 @@ export const onUpdateItem = async (
           },
         })
         .catch(setLoading(false))
-        .then(() => item && updateItem({ ...item, ...changedItem }))
+        .then(() => item && updateItem({ ...item, ...changedItem, markerIcon: state.marker_icon }))
         .then(() => {
           setLoading(false)
           navigate(`/item/${item.id}${params && '?' + params}`)

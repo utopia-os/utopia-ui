@@ -3,24 +3,25 @@
 exports[`GalleryForm > with previous images > renders 1`] = `
 <div>
   <div
-    class="tw:flex tw:flex-wrap tw:gap-4 tw:my-4"
+    class="tw:grid tw:grid-cols-2 tw:@md:grid-cols-3 tw:@lg:grid-cols-4 tw:gap-4 tw:my-4"
   >
     <div
       class="tw:relative"
     >
       <img
         alt="Gallery image 1"
-        class="tw:w-60 tw:h-60 tw:object-cover tw:rounded-lg "
+        class="tw:w-full tw:h-full tw:object-cover tw:rounded-lg "
         src="undefined1.jpg"
       />
       <button
-        class="tw:m-2 tw:bg-red-500 tw:text-white tw:p-2 tw:rounded-full tw:absolute tw:top-0 tw:right-0 tw:hover:bg-red-600"
+        class="tw:m-2 tw:bg-red-500 tw:text-white tw:p-2 tw:rounded-full tw:absolute tw:top-0 tw:right-0 tw:hover:bg-red-600 tw:cursor-pointer"
         type="button"
       >
         <svg
           aria-hidden="true"
           class="tw:h-5 tw:w-5"
           data-slot="icon"
+          data-testid="trash"
           fill="currentColor"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
@@ -38,17 +39,18 @@ exports[`GalleryForm > with previous images > renders 1`] = `
     >
       <img
         alt="Gallery image 2"
-        class="tw:w-60 tw:h-60 tw:object-cover tw:rounded-lg "
+        class="tw:w-full tw:h-full tw:object-cover tw:rounded-lg "
         src="undefined2.jpg"
       />
       <button
-        class="tw:m-2 tw:bg-red-500 tw:text-white tw:p-2 tw:rounded-full tw:absolute tw:top-0 tw:right-0 tw:hover:bg-red-600"
+        class="tw:m-2 tw:bg-red-500 tw:text-white tw:p-2 tw:rounded-full tw:absolute tw:top-0 tw:right-0 tw:hover:bg-red-600 tw:cursor-pointer"
         type="button"
       >
         <svg
           aria-hidden="true"
           class="tw:h-5 tw:w-5"
           data-slot="icon"
+          data-testid="trash"
           fill="currentColor"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +64,7 @@ exports[`GalleryForm > with previous images > renders 1`] = `
       </button>
     </div>
     <div
-      class="tw:flex tw:center tw:w-60 tw:h-60 tw:cursor-pointer tw:border tw:border-dashed tw:border-gray-300 tw:p-4 tw:rounded-lg"
+      class="tw:flex tw:flex-col tw:items-center tw:justify-center tw:text-base-content/50 tw:w-full tw:h-full tw:cursor-pointer tw:card tw:card-body tw:border tw:border-current/50 tw:border-dashed tw:bg-base-200"
       role="presentation"
       tabindex="0"
     >
@@ -74,22 +76,27 @@ exports[`GalleryForm > with previous images > renders 1`] = `
         tabindex="-1"
         type="file"
       />
-      <svg
-        aria-hidden="true"
-        class="tw:h-8 tw:w-8 tw:m-auto"
-        data-slot="icon"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
+      <div>
+        <svg
+          class="tw:h-16 tw:w-16 tw:m-auto tw:mb-2"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M19.999 4h-16c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zm-13.5 3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm5.5 10h-7l4-5 1.5 2 3-4 5.5 7h-7z"
+          />
+        </svg>
+        <span
+          class="tw:text-center"
+        >
+          Upload Image
+        </span>
+      </div>
     </div>
   </div>
 </div>
@@ -98,15 +105,15 @@ exports[`GalleryForm > with previous images > renders 1`] = `
 exports[`GalleryForm > with uploading images > renders 1`] = `
 <div>
   <div
-    class="tw:flex tw:flex-wrap tw:gap-4 tw:my-4"
+    class="tw:grid tw:grid-cols-2 tw:@md:grid-cols-3 tw:@lg:grid-cols-4 tw:gap-4 tw:my-4"
   >
     <div
       class="tw:relative"
     >
       <img
         alt="Gallery image 1"
-        class="tw:w-60 tw:h-60 tw:object-cover tw:rounded-lg tw:opacity-50"
-        src="blob:nodedata:ce8d6df7-ec41-40a0-b77b-eebfdcd76e47"
+        class="tw:w-full tw:h-full tw:object-cover tw:rounded-lg tw:opacity-50"
+        src="blob:nodedata:0367ec51-1221-473c-8913-4c6ad0aa1e60"
       />
       <span
         class="tw:loading tw:loading-spinner tw:absolute tw:inset-0 tw:m-auto"
@@ -117,8 +124,8 @@ exports[`GalleryForm > with uploading images > renders 1`] = `
     >
       <img
         alt="Gallery image 2"
-        class="tw:w-60 tw:h-60 tw:object-cover tw:rounded-lg tw:opacity-50"
-        src="blob:nodedata:d65c4061-dc86-40ee-a1da-7e783a6db3ce"
+        class="tw:w-full tw:h-full tw:object-cover tw:rounded-lg tw:opacity-50"
+        src="blob:nodedata:a37cf0d3-d78f-48ec-b7b6-8b7f865e1b97"
       />
       <span
         class="tw:loading tw:loading-spinner tw:absolute tw:inset-0 tw:m-auto"
@@ -129,15 +136,15 @@ exports[`GalleryForm > with uploading images > renders 1`] = `
     >
       <img
         alt="Gallery image 3"
-        class="tw:w-60 tw:h-60 tw:object-cover tw:rounded-lg tw:opacity-50"
-        src="blob:nodedata:c989c354-4d76-40f2-91d5-476399d52f64"
+        class="tw:w-full tw:h-full tw:object-cover tw:rounded-lg tw:opacity-50"
+        src="blob:nodedata:17392be8-95f6-4194-b425-19f2aa18d325"
       />
       <span
         class="tw:loading tw:loading-spinner tw:absolute tw:inset-0 tw:m-auto"
       />
     </div>
     <div
-      class="tw:flex tw:center tw:w-60 tw:h-60 tw:cursor-pointer tw:border tw:border-dashed tw:border-gray-300 tw:p-4 tw:rounded-lg"
+      class="tw:flex tw:flex-col tw:items-center tw:justify-center tw:text-base-content/50 tw:w-full tw:h-full tw:cursor-pointer tw:card tw:card-body tw:border tw:border-current/50 tw:border-dashed tw:bg-base-200"
       role="presentation"
       tabindex="0"
     >
@@ -149,22 +156,27 @@ exports[`GalleryForm > with uploading images > renders 1`] = `
         tabindex="-1"
         type="file"
       />
-      <svg
-        aria-hidden="true"
-        class="tw:h-8 tw:w-8 tw:m-auto"
-        data-slot="icon"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
+      <div>
+        <svg
+          class="tw:h-16 tw:w-16 tw:m-auto tw:mb-2"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M19.999 4h-16c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zm-13.5 3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm5.5 10h-7l4-5 1.5 2 3-4 5.5 7h-7z"
+          />
+        </svg>
+        <span
+          class="tw:text-center"
+        >
+          Upload Image
+        </span>
+      </div>
     </div>
   </div>
 </div>
@@ -173,10 +185,10 @@ exports[`GalleryForm > with uploading images > renders 1`] = `
 exports[`GalleryForm > without previous images > renders 1`] = `
 <div>
   <div
-    class="tw:flex tw:flex-wrap tw:gap-4 tw:my-4"
+    class="tw:grid tw:grid-cols-2 tw:@md:grid-cols-3 tw:@lg:grid-cols-4 tw:gap-4 tw:my-4"
   >
     <div
-      class="tw:flex tw:center tw:w-60 tw:h-60 tw:cursor-pointer tw:border tw:border-dashed tw:border-gray-300 tw:p-4 tw:rounded-lg"
+      class="tw:flex tw:flex-col tw:items-center tw:justify-center tw:text-base-content/50 tw:w-full tw:h-full tw:cursor-pointer tw:card tw:card-body tw:border tw:border-current/50 tw:border-dashed tw:bg-base-200"
       role="presentation"
       tabindex="0"
     >
@@ -188,22 +200,27 @@ exports[`GalleryForm > without previous images > renders 1`] = `
         tabindex="-1"
         type="file"
       />
-      <svg
-        aria-hidden="true"
-        class="tw:h-8 tw:w-8 tw:m-auto"
-        data-slot="icon"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
+      <div>
+        <svg
+          class="tw:h-16 tw:w-16 tw:m-auto tw:mb-2"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M19.999 4h-16c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zm-13.5 3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm5.5 10h-7l4-5 1.5 2 3-4 5.5 7h-7z"
+          />
+        </svg>
+        <span
+          class="tw:text-center"
+        >
+          Upload Image
+        </span>
+      </div>
     </div>
   </div>
 </div>

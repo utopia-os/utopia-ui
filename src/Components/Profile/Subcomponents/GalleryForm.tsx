@@ -111,7 +111,7 @@ export const GalleryForm = ({ state, setState }: Props) => {
                 onClick={() => setImageSelectedToDelete(index)}
                 type='button'
               >
-                <TrashIcon className='tw:h-5 tw:w-5' />
+                <TrashIcon className='tw:h-5 tw:w-5' data-testid='trash' />
               </button>
             )}
           </div>

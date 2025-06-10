@@ -83,11 +83,17 @@ describe('GalleryForm', () => {
       expect(wrapper.container).toMatchSnapshot()
     })
 
-    it('can delete an image', () => {
+    it('can open and close delete modal', () => {
       Wrapper({ gallery })
-      const deleteButton = screen.getByTestId('delete-image-1')
+      const deleteButton = screen.getAllByTestId('trash')[0]
       expect(deleteButton).toBeInTheDocument()
       fireEvent.click(deleteButton)
+      const confirmationText = screen.getByText('Do you want to delete this image?')
+      expect(confirmationText).toBeInTheDocument()
+      const confirmButton = screen.getByText('Yes')
+      expect(confirmButton).toBeInTheDocument()
+      fireEvent.click(confirmButton)
+      expect(confirmationText).not.toBeInTheDocument()
     })
   })
 

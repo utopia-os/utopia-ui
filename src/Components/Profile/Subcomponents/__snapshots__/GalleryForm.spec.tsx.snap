@@ -113,7 +113,7 @@ exports[`GalleryForm > with uploading images > renders 1`] = `
       <img
         alt="Gallery image 1"
         class="tw:w-full tw:h-full tw:object-cover tw:rounded-lg tw:opacity-50"
-        src="blob:nodedata:0367ec51-1221-473c-8913-4c6ad0aa1e60"
+        src="blob-url-placeholder"
       />
       <span
         class="tw:loading tw:loading-spinner tw:absolute tw:inset-0 tw:m-auto"
@@ -125,7 +125,7 @@ exports[`GalleryForm > with uploading images > renders 1`] = `
       <img
         alt="Gallery image 2"
         class="tw:w-full tw:h-full tw:object-cover tw:rounded-lg tw:opacity-50"
-        src="blob:nodedata:a37cf0d3-d78f-48ec-b7b6-8b7f865e1b97"
+        src="blob-url-placeholder"
       />
       <span
         class="tw:loading tw:loading-spinner tw:absolute tw:inset-0 tw:m-auto"
@@ -137,7 +137,7 @@ exports[`GalleryForm > with uploading images > renders 1`] = `
       <img
         alt="Gallery image 3"
         class="tw:w-full tw:h-full tw:object-cover tw:rounded-lg tw:opacity-50"
-        src="blob:nodedata:17392be8-95f6-4194-b425-19f2aa18d325"
+        src="blob-url-placeholder"
       />
       <span
         class="tw:loading tw:loading-spinner tw:absolute tw:inset-0 tw:m-auto"

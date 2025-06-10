@@ -105,6 +105,11 @@ describe('GalleryForm', () => {
             new File([image], `test-image-${index + 1}.jpg`, { type: 'image/jpeg' }),
         ),
       })
+      wrapper.container.querySelectorAll('img').forEach((img) => {
+        expect(img.src).toMatch(/blob:/) // Ensure the image is a blob URL
+        // Replace random blob URL for consistent snapshots
+        img.src = 'blob-url-placeholder'
+      })
       expect(wrapper.container).toMatchSnapshot()
     })
   })

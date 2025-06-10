@@ -56,6 +56,7 @@ export const GalleryForm = ({ state, setState }: Props) => {
               id: upload.asset.id,
               width: upload.width,
               height: upload.height,
+              type: upload.name.split('.').pop() === 'png' ? 'image/png' : 'image/jpeg',
             },
           },
         ],
@@ -68,6 +69,7 @@ export const GalleryForm = ({ state, setState }: Props) => {
     onDrop: upload,
     accept: {
       'image/jpeg': [],
+      'image/png': [],
     },
   })
 

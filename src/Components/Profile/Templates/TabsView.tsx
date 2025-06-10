@@ -43,7 +43,7 @@ export const TabsView = ({
   unlinkItem: (id: string) => Promise<void>
 }) => {
   const addFilterTag = useAddFilterTag()
-  const [activeTab, setActiveTab] = useState<number>()
+  const [activeTab, setActiveTab] = useState<number>(0)
   const navigate = useNavigate()
 
   const [addItemPopupType] = useState<string>('')
@@ -80,7 +80,7 @@ export const TabsView = ({
   useEffect(() => {
     const params = new URLSearchParams(location.search)
     const urlTab = params.get('tab')
-    setActiveTab(urlTab ? Number(urlTab) : 1)
+    setActiveTab(urlTab ? Number(urlTab) : 0)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search])
 
@@ -91,9 +91,9 @@ export const TabsView = ({
         name='my_tabs_2'
         role='tab'
         className={'tw:tab tw:font-bold tw:ps-2! tw:pe-2! '}
-        aria-label={`${item.layer?.itemType.icon_as_labels && activeTab !== 1 ? '📝' : '📝\u00A0Info'}`}
-        checked={activeTab === 1 && true}
-        onChange={() => updateActiveTab(1)}
+        aria-label={`${item.layer?.itemType.icon_as_labels && activeTab !== 0 ? '📝' : '📝\u00A0Info'}`}
+        checked={activeTab === 0 && true}
+        onChange={() => updateActiveTab(0)}
       />
       <div
         role='tabpanel'
@@ -115,9 +115,9 @@ export const TabsView = ({
             name='my_tabs_2'
             role='tab'
             className={'tw:tab tw:font-bold tw:ps-2! tw:pe-2!'}
-            aria-label={`${item.layer.itemType.icon_as_labels && activeTab !== 2 ? '❤️' : '❤️\u00A0Trust'}`}
-            checked={activeTab === 2 && true}
-            onChange={() => updateActiveTab(2)}
+            aria-label={`${item.layer.itemType.icon_as_labels && activeTab !== 3 ? '❤️' : '❤️\u00A0Trust'}`}
+            checked={activeTab === 3 && true}
+            onChange={() => updateActiveTab(3)}
           />
           <div
             role='tabpanel'
@@ -197,10 +197,10 @@ export const TabsView = ({
             type='radio'
             name='my_tabs_2'
             role='tab'
-            className={`tw:tab tw:font-bold tw:ps-2! tw:pe-2! ${!(item.layer.itemType.icon_as_labels && activeTab !== 3) && 'tw:min-w-[10.4em]'} `}
-            aria-label={`${item.layer.itemType.icon_as_labels && activeTab !== 3 ? '♻️' : '♻️\u00A0Offers & Needs'}`}
-            checked={activeTab === 3 && true}
-            onChange={() => updateActiveTab(3)}
+            className={`tw:tab tw:font-bold tw:ps-2! tw:pe-2! ${!(item.layer.itemType.icon_as_labels && activeTab !== 1) && 'tw:min-w-[10.4em]'} `}
+            aria-label={`${item.layer.itemType.icon_as_labels && activeTab !== 1 ? '♻️' : '♻️\u00A0Offers & Needs'}`}
+            checked={activeTab === 1 && true}
+            onChange={() => updateActiveTab(1)}
           />
           <div
             role='tabpanel'
@@ -251,9 +251,9 @@ export const TabsView = ({
             name='my_tabs_2'
             role='tab'
             className='tw:tab tw:font-bold tw:ps-2! tw:pe-2! '
-            aria-label={`${item.layer.itemType.icon_as_labels && activeTab !== 7 ? '🔗' : '🔗\u00A0Links'}`}
-            checked={activeTab === 7 && true}
-            onChange={() => updateActiveTab(7)}
+            aria-label={`${item.layer.itemType.icon_as_labels && activeTab !== 2 ? '🔗' : '🔗\u00A0Links'}`}
+            checked={activeTab === 2 && true}
+            onChange={() => updateActiveTab(2)}
           />
           <div
             role='tabpanel'

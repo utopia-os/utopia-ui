@@ -10,7 +10,7 @@ export const ContactInfoForm = ({
   setState: React.Dispatch<React.SetStateAction<FormState>>
 }) => {
   return (
-    <div className='tw:mt-4 tw:space-y-4'>
+    <div className='tw:mt-2 tw:space-y-2'>
       <div>
         <label
           htmlFor='email'

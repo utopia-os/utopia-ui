@@ -1,15 +1,24 @@
-import { useEffect, useRef, useState } from 'react'
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { Color } from '@tiptap/extension-color'
+import { Image } from '@tiptap/extension-image'
+import { Link } from '@tiptap/extension-link'
+import { Placeholder } from '@tiptap/extension-placeholder'
+import { EditorContent, useEditor } from '@tiptap/react'
+import { StarterKit } from '@tiptap/starter-kit'
+import { useEffect } from 'react'
+import { Markdown } from 'tiptap-markdown'
 
-interface TextAreaProps {
+import { TextEditorMenu } from './TextEditorMenu'
+
+interface RichTextEditorProps {
   labelTitle?: string
   labelStyle?: string
   containerStyle?: string
-  dataField?: string
-  inputStyle?: string
   defaultValue: string
   placeholder?: string
-  required?: boolean
-  size?: string
+  showMenu?: boolean
   updateFormValue?: (value: string) => void
 }
 
@@ -18,48 +27,84 @@ interface TextAreaProps {
  */
 export function RichTextEditor({
   labelTitle,
-  dataField,
   labelStyle,
   containerStyle,
-  inputStyle,
   defaultValue,
   placeholder,
-  required = true,
+  showMenu = true,
   updateFormValue,
-}: TextAreaProps) {
-  const ref = useRef<HTMLTextAreaElement>(null)
-  const [inputValue, setInputValue] = useState<string>(defaultValue)
+}: RichTextEditorProps) {
+  const handleChange = () => {
+    let newValue: string | undefined = editor?.storage.markdown.getMarkdown()
 
-  useEffect(() => {
-    setInputValue(defaultValue)
-  }, [defaultValue])
-
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newValue = e.target.value
-    setInputValue(newValue)
-    if (updateFormValue) {
+    const regex = /!\[.*?\]\(.*?\)/g
+    newValue = newValue?.replace(regex, (match: string) => match + '\n\n')
+    if (updateFormValue && newValue) {
       updateFormValue(newValue)
     }
   }
 
+  const editor = useEditor({
+    extensions: [
+      Color.configure({ types: ['textStyle', 'listItem'] }),
+      StarterKit.configure({
+        bulletList: {
+          keepMarks: true,
+          keepAttributes: false,
+        },
+        orderedList: {
+          keepMarks: true,
+          keepAttributes: false,
+        },
+      }),
+      Markdown.configure({
+        linkify: true,
+        transformCopiedText: true,
+        transformPastedText: true,
+      }),
+      Image,
+      Link,
+      Placeholder.configure({
+        placeholder,
+        emptyEditorClass: 'is-editor-empty',
+      }),
+    ],
+    content: defaultValue,
+    onUpdate: handleChange,
+    editorProps: {
+      attributes: {
+        class: `tw:h-full markdown tw:max-h-full tw:p-2 tw:overflow-y-auto`,
+      },
+    },
+  })
+
+  useEffect(() => {
+    if (editor?.storage.markdown.getMarkdown() === '' || !editor?.storage.markdown.getMarkdown()) {
+      editor?.commands.setContent(defaultValue)
+    }
+  }, [defaultValue, editor])
+
   return (
-    <div className={`tw:form-control tw:w-full ${containerStyle ?? ''}`}>
+    <div
+      className={`tw:form-control tw:w-full tw:flex tw:flex-col tw:min-h-0 ${containerStyle ?? ''}`}
+    >
       {labelTitle ? (
-        <label className='tw:label'>
+        <label className='tw:label tw:pb-1'>
           <span className={`tw:label-text tw:text-base-content ${labelStyle ?? ''}`}>
             {labelTitle}
           </span>
         </label>
       ) : null}
-      <textarea
-        required={required}
-        ref={ref}
-        value={inputValue}
-        name={dataField}
-        className={`tw:textarea tw:textarea-bordered tw:w-full tw:leading-5 ${inputStyle ?? ''}`}
-        placeholder={placeholder ?? ''}
-        onChange={handleChange}
-      ></textarea>
+      <div
+        className={`editor-wrapper tw:border-base-content/20 tw:rounded-box tw:border tw:flex tw:flex-col tw:flex-1 tw:min-h-0`}
+      >
+        {editor ? (
+          <>
+            {showMenu ? <TextEditorMenu editor={editor} /> : null}
+            <EditorContent editor={editor} />
+          </>
+        ) : null}
+      </div>
     </div>
   )
 }

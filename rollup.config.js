@@ -49,6 +49,10 @@ export default [
       resolve({
         extensions: ['.ts', '.tsx'],
       }),
+      commonjs({
+        include: /node_modules/,
+        requireReturnsDefault: 'auto',
+      }),
       postcss({
         plugins: [],
       }),

@@ -124,7 +124,7 @@ export const GalleryForm = ({ state, setState }: Props) => {
           <input {...getInputProps()} data-testid='gallery-upload-input' />
           <div>
             <BiSolidImage className='tw:h-16 tw:w-16 tw:m-auto tw:mb-2' />
-            <span className='tw:text-center'>Upload Image</span>
+            <span className='tw:text-center'>Upload&nbsp;Image</span>
           </div>
         </div>
       </div>

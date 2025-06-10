@@ -10,16 +10,16 @@ export const getImageDimensions = (
       const fileReader = new FileReader()
 
       fileReader.onload = () => {
-        const img = new Image()
+        try {
+          const img = new Image()
 
-        img.onload = function () {
-          resolve({
-            width: img.width,
-            height: img.height,
-          })
+          img.onload = () => resolve({ width: img.width, height: img.height })
+
+          img.src = fileReader.result as string // is the data URL because called with readAsDataURL
+        } catch (error) {
+          reject(error)
+          throw new Error('Error loading image')
         }
-
-        img.src = fileReader.result as string // is the data URL because called with readAsDataURL
       }
 
       fileReader.readAsDataURL(file)

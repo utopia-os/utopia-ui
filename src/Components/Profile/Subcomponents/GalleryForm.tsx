@@ -121,7 +121,7 @@ export const GalleryForm = ({ state, setState }: Props) => {
           {...getRootProps()}
           className='tw:flex tw:flex-col tw:items-center tw:justify-center tw:text-base-content/50 tw:w-full tw:h-full tw:cursor-pointer tw:card tw:card-body tw:border tw:border-current/50 tw:border-dashed tw:bg-base-200'
         >
-          <input {...getInputProps()} />
+          <input {...getInputProps()} data-testid='gallery-upload-input' />
           <div>
             <BiSolidImage className='tw:h-16 tw:w-16 tw:m-auto tw:mb-2' />
             <span className='tw:text-center'>Upload Image</span>

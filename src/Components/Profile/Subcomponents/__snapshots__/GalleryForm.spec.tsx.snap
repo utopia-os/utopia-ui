@@ -1,0 +1,210 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GalleryForm > with previous images > renders 1`] = `
+<div>
+  <div
+    class="tw:flex tw:flex-wrap tw:gap-4 tw:my-4"
+  >
+    <div
+      class="tw:relative"
+    >
+      <img
+        alt="Gallery image 1"
+        class="tw:w-60 tw:h-60 tw:object-cover tw:rounded-lg "
+        src="undefined1.jpg"
+      />
+      <button
+        class="tw:m-2 tw:bg-red-500 tw:text-white tw:p-2 tw:rounded-full tw:absolute tw:top-0 tw:right-0 tw:hover:bg-red-600"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="tw:h-5 tw:w-5"
+          data-slot="icon"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+            fill-rule="evenodd"
+          />
+        </svg>
+      </button>
+    </div>
+    <div
+      class="tw:relative"
+    >
+      <img
+        alt="Gallery image 2"
+        class="tw:w-60 tw:h-60 tw:object-cover tw:rounded-lg "
+        src="undefined2.jpg"
+      />
+      <button
+        class="tw:m-2 tw:bg-red-500 tw:text-white tw:p-2 tw:rounded-full tw:absolute tw:top-0 tw:right-0 tw:hover:bg-red-600"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="tw:h-5 tw:w-5"
+          data-slot="icon"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+            fill-rule="evenodd"
+          />
+        </svg>
+      </button>
+    </div>
+    <div
+      class="tw:flex tw:center tw:w-60 tw:h-60 tw:cursor-pointer tw:border tw:border-dashed tw:border-gray-300 tw:p-4 tw:rounded-lg"
+      role="presentation"
+      tabindex="0"
+    >
+      <input
+        accept="image/jpeg"
+        data-testid="gallery-upload-input"
+        multiple=""
+        style="border: 0px; clip: rect(0, 0, 0, 0); clip-path: inset(50%); height: 1px; margin: 0px -1px -1px 0px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap;"
+        tabindex="-1"
+        type="file"
+      />
+      <svg
+        aria-hidden="true"
+        class="tw:h-8 tw:w-8 tw:m-auto"
+        data-slot="icon"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`GalleryForm > with uploading images > renders 1`] = `
+<div>
+  <div
+    class="tw:flex tw:flex-wrap tw:gap-4 tw:my-4"
+  >
+    <div
+      class="tw:relative"
+    >
+      <img
+        alt="Gallery image 1"
+        class="tw:w-60 tw:h-60 tw:object-cover tw:rounded-lg tw:opacity-50"
+        src="blob:nodedata:ce8d6df7-ec41-40a0-b77b-eebfdcd76e47"
+      />
+      <span
+        class="tw:loading tw:loading-spinner tw:absolute tw:inset-0 tw:m-auto"
+      />
+    </div>
+    <div
+      class="tw:relative"
+    >
+      <img
+        alt="Gallery image 2"
+        class="tw:w-60 tw:h-60 tw:object-cover tw:rounded-lg tw:opacity-50"
+        src="blob:nodedata:d65c4061-dc86-40ee-a1da-7e783a6db3ce"
+      />
+      <span
+        class="tw:loading tw:loading-spinner tw:absolute tw:inset-0 tw:m-auto"
+      />
+    </div>
+    <div
+      class="tw:relative"
+    >
+      <img
+        alt="Gallery image 3"
+        class="tw:w-60 tw:h-60 tw:object-cover tw:rounded-lg tw:opacity-50"
+        src="blob:nodedata:c989c354-4d76-40f2-91d5-476399d52f64"
+      />
+      <span
+        class="tw:loading tw:loading-spinner tw:absolute tw:inset-0 tw:m-auto"
+      />
+    </div>
+    <div
+      class="tw:flex tw:center tw:w-60 tw:h-60 tw:cursor-pointer tw:border tw:border-dashed tw:border-gray-300 tw:p-4 tw:rounded-lg"
+      role="presentation"
+      tabindex="0"
+    >
+      <input
+        accept="image/jpeg"
+        data-testid="gallery-upload-input"
+        multiple=""
+        style="border: 0px; clip: rect(0, 0, 0, 0); clip-path: inset(50%); height: 1px; margin: 0px -1px -1px 0px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap;"
+        tabindex="-1"
+        type="file"
+      />
+      <svg
+        aria-hidden="true"
+        class="tw:h-8 tw:w-8 tw:m-auto"
+        data-slot="icon"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`GalleryForm > without previous images > renders 1`] = `
+<div>
+  <div
+    class="tw:flex tw:flex-wrap tw:gap-4 tw:my-4"
+  >
+    <div
+      class="tw:flex tw:center tw:w-60 tw:h-60 tw:cursor-pointer tw:border tw:border-dashed tw:border-gray-300 tw:p-4 tw:rounded-lg"
+      role="presentation"
+      tabindex="0"
+    >
+      <input
+        accept="image/jpeg"
+        data-testid="gallery-upload-input"
+        multiple=""
+        style="border: 0px; clip: rect(0, 0, 0, 0); clip-path: inset(50%); height: 1px; margin: 0px -1px -1px 0px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap;"
+        tabindex="-1"
+        type="file"
+      />
+      <svg
+        aria-hidden="true"
+        class="tw:h-8 tw:w-8 tw:m-auto"
+        data-slot="icon"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </div>
+  </div>
+</div>
+`;

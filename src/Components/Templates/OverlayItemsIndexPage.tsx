@@ -33,15 +33,13 @@ export const OverlayItemsIndexPage = ({
   url,
   layerName,
   parameterField,
-  plusButton = true,
 }: {
   layerName: string
   url: string
   parameterField?: string
-  plusButton?: boolean
 }) => {
   const [loading, setLoading] = useState<boolean>(false)
-  const [addItemPopupType, setAddItemPopupType] = useState<string>('')
+  const [addItemPopupOpen, setAddItemPopupOpen] = useState<boolean>(false)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const parameterFieldDummy = parameterField
 
@@ -52,12 +50,10 @@ export const OverlayItemsIndexPage = ({
   }
 
   useEffect(() => {
-    scroll()
-  }, [addItemPopupType])
-
-  useEffect(() => {
-    setAddItemPopupType('')
-  }, [layerName])
+    if (addItemPopupOpen) {
+      scroll()
+    }
+  }, [addItemPopupOpen])
 
   const tags = useTags()
   const addTag = useAddTag()
@@ -106,7 +102,7 @@ export const OverlayItemsIndexPage = ({
     }
     addItem({ ...formItem, user_created: user ?? undefined, id: uuid, layer, public_edit: !user })
     setLoading(false)
-    setAddItemPopupType('')
+    setAddItemPopupOpen(false)
   }
 
   const deleteItem = async (item: Item) => {
@@ -174,15 +170,18 @@ export const OverlayItemsIndexPage = ({
                     />
                   </div>
                 ))}
-              {addItemPopupType === 'place' && (
+              {addItemPopupOpen && (
                 <form ref={tabRef} autoComplete='off' onSubmit={(e) => submitNewItem(e)}>
                   <div className='tw:cursor-pointer tw:break-inside-avoid card tw:border-[1px] tw:border-base-300 card-body tw:shadow-xl tw:bg-base-100 tw:text-base-content tw:p-6 tw:mb-10'>
                     <label
-                      className='btn btn-sm tw:rounded-2xl btn-circle btn-ghost tw:hover:bg-transparent tw:absolute tw:right-0 tw:top-0 tw:text-gray-600'
-                      onClick={() => setAddItemPopupType('')}
+                      className='tw:btn tw:btn-sm tw:rounded-2xl tw:btn-circle tw:btn-ghost tw:hover:bg-transparent tw:absolute tw:right-0 tw:top-0 tw:text-gray-600'
+                      onClick={() => setAddItemPopupOpen(false)}
                     >
                       <p className='tw:text-center'>✕</p>
                     </label>
+                    <div className='tw:flex tw:justify-center tw:mb-4'>
+                      <b className='tw:text-xl tw:text-center tw:font-bold'>{layer?.menuText}</b>
+                    </div>
                     <TextInput
                       type='text'
                       placeholder='Name'
@@ -190,13 +189,9 @@ export const OverlayItemsIndexPage = ({
                       defaultValue={''}
                       inputStyle=''
                     />
-                    {layer?.itemType.show_start_end_input && <PopupStartEndInput />}
-                    <TextAreaInput
-                      placeholder='Text'
-                      dataField='text'
-                      defaultValue={''}
-                      inputStyle='tw:h-40 tw:mt-5'
-                    />
+                    {layer?.itemType.show_start_end_input && (
+                      <PopupStartEndInput containerStyle='tw:mt-3' showLabels={false} />
+                    )}
                     <div className='tw:flex tw:justify-center'>
                       <button
                         className={
@@ -217,11 +212,11 @@ export const OverlayItemsIndexPage = ({
         </div>
       </MapOverlayPage>
 
-      {plusButton && (
+      {!layer?.userProfileLayer && (
         <PlusButton
           layer={layer}
           triggerAction={() => {
-            setAddItemPopupType('place')
+            setAddItemPopupOpen(true)
             scroll()
           }}
           color={'#777'}

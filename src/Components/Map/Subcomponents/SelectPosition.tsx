@@ -1,5 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-export const SelectPosition = ({ setSelectNewItemPosition }: { setSelectNewItemPosition }) => {
+import type { Item } from '#types/Item'
+import type { LayerProps } from '#types/LayerProps'
+
+export const SelectPosition = ({
+  setSelectNewItemPosition,
+  selectNewItemPosition,
+}: {
+  setSelectNewItemPosition: React.Dispatch<React.SetStateAction<Item | LayerProps | null>>
+  selectNewItemPosition?: Item | LayerProps | null
+}) => {
   return (
     <div className='tw:animate-pulseGrow tw:button tw:z-1000 tw:absolute tw:right-5 tw:top-4 tw:drop-shadow-md'>
       <label
@@ -12,7 +20,14 @@ export const SelectPosition = ({ setSelectNewItemPosition }: { setSelectNewItemP
       </label>
       <div className='tw:alert tw:bg-base-100 tw:text-base-content'>
         <div>
-          <span className='tw:text-lg'>Select position on the map!</span>
+          {selectNewItemPosition && 'text' in selectNewItemPosition && (
+            <span className='tw:text-lg'>
+              Select new position of <b>{selectNewItemPosition.name}</b> on the map!
+            </span>
+          )}
+          {selectNewItemPosition && 'menuIcon' in selectNewItemPosition && (
+            <span className='tw:text-lg'>Select position on the map!</span>
+          )}
         </div>
       </div>
     </div>

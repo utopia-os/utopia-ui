@@ -44,7 +44,6 @@ export default [
       },
     ],
     plugins: [
-      commonjs(),
       aliasConfig,
       resolve({
         extensions: ['.ts', '.tsx'],

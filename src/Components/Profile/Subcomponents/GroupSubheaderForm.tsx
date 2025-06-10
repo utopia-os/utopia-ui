@@ -51,7 +51,7 @@ export const GroupSubheaderForm = ({
   }, [state.group_type, groupTypes])
 
   return (
-    <div className='tw:grid tw:grid-cols-1 tw:md:grid-cols-2 tw:gap-6'>
+    <div className='tw:grid tw:grid-cols-1 tw:@sm:grid-cols-2 tw:gap-2'>
       <div>
         <label
           htmlFor='status'

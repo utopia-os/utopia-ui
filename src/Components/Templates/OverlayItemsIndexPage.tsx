@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { useAuth } from '#components/Auth/useAuth'
-import { TextInput, TextAreaInput } from '#components/Input'
+import { TextInput } from '#components/Input'
 import { useFilterTags } from '#components/Map/hooks/useFilter'
 import { useAddItem, useItems, useRemoveItem } from '#components/Map/hooks/useItems'
 import { useLayers } from '#components/Map/hooks/useLayers'

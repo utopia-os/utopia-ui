@@ -1,5 +1,5 @@
 import type { markerIcon } from '#utils/MarkerIconFactory'
-import type { Item } from './Item'
+import type { GalleryItem, Item } from './Item'
 import type { Tag } from './Tag'
 
 export interface FormState {
@@ -21,4 +21,6 @@ export interface FormState {
   start: string
   end: string
   openCollectiveSlug: string
+  gallery: GalleryItem[]
+  uploadingImages: File[]
 }

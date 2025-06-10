@@ -42,6 +42,7 @@ export const GalleryForm = ({ state, setState }: Props) => {
         height,
         asset: await appState.assetsApi.upload(compressedFile, file.name),
         name: file.name,
+        type: file.type,
       }
     })
 
@@ -56,7 +57,7 @@ export const GalleryForm = ({ state, setState }: Props) => {
               id: upload.asset.id,
               width: upload.width,
               height: upload.height,
-              type: upload.name.split('.').pop() === 'png' ? 'image/png' : 'image/jpeg',
+              type: upload.type,
             },
           },
         ],

@@ -11,12 +11,20 @@ const extensionMap = new Map([
   ['image/png', '.png'],
 ])
 
+const getExtension = (type: string) => {
+  const extension = extensionMap.get(type)
+
+  if (extension) return extension
+
+  throw new Error(`Unsupported file type: ${type}`)
+}
+
 export const GalleryView = ({ item }: { item: Item }) => {
   const [index, setIndex] = useState(-1)
   const appState = useAppState()
   const images =
     item.gallery?.map(({ directus_files_id: { id, type, width, height } }, index) => ({
-      src: `${appState.assetsApi.url}${id}${extensionMap.get(type) ?? ''}`,
+      src: `${appState.assetsApi.url}${id}${getExtension(type)}`,
       width,
       height,
       index,

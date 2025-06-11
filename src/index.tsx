@@ -8,10 +8,12 @@ export * from './Components/Gaming'
 export * from './Components/Templates'
 export * from './Components/Input'
 export * from './Components/Item'
+export * from './Components/Onboarding'
 
 declare global {
   interface Window {
     my_modal_3: {
+      close(): void
       showModal(): void
     }
   }

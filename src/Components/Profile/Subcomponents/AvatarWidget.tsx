@@ -169,7 +169,7 @@ export const AvatarWidget: React.FC<AvatarWidgetProps> = ({ avatar, setAvatar })
             className='tw:file-input tw:w-full tw:max-w-xs'
             onChange={onImageChange}
           />
-          <div className='button tw:btn tw:btn-lg tw:btn-circle tw:animate-none'>
+          <div className='button tw:mt-2 tw:ml-2 tw:btn tw:btn-lg tw:btn-circle tw:animate-none'>
             <ArrowUpTrayIcon className='tw:w-6 tw:h-6' />
           </div>
           {avatar ? (

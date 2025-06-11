@@ -12,6 +12,7 @@ interface GalleryItem {
     id: string
     width: number
     height: number
+    type: string
   }
 }
 

@@ -69,7 +69,7 @@ exports[`GalleryForm > with previous images > renders 1`] = `
       tabindex="0"
     >
       <input
-        accept="image/jpeg"
+        accept="image/jpeg,image/png"
         data-testid="gallery-upload-input"
         multiple=""
         style="border: 0px; clip: rect(0, 0, 0, 0); clip-path: inset(50%); height: 1px; margin: 0px -1px -1px 0px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap;"
@@ -149,7 +149,7 @@ exports[`GalleryForm > with uploading images > renders 1`] = `
       tabindex="0"
     >
       <input
-        accept="image/jpeg"
+        accept="image/jpeg,image/png"
         data-testid="gallery-upload-input"
         multiple=""
         style="border: 0px; clip: rect(0, 0, 0, 0); clip-path: inset(50%); height: 1px; margin: 0px -1px -1px 0px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap;"
@@ -193,7 +193,7 @@ exports[`GalleryForm > without previous images > renders 1`] = `
       tabindex="0"
     >
       <input
-        accept="image/jpeg"
+        accept="image/jpeg,image/png"
         data-testid="gallery-upload-input"
         multiple=""
         style="border: 0px; clip: rect(0, 0, 0, 0); clip-path: inset(50%); height: 1px; margin: 0px -1px -1px 0px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap;"

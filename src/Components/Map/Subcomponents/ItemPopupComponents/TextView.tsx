@@ -54,18 +54,7 @@ export const TextView = ({
   if (innerText) replacedText = fixUrls(innerText)
 
   if (replacedText) {
-    replacedText = replacedText.replace(/(?<!\]?\()(?<!<)https?:\/\/[^\s)]+(?!\))(?!>)/g, (url) => {
-      let shortUrl = url
-
-      if (url.match('^https://')) {
-        shortUrl = url.split('https://')[1]
-      }
-
-      if (url.match('^http://')) {
-        shortUrl = url.split('http://')[1]
-      }
-
-      return `[${shortUrl}](${url})`
+    replacedText = replacedText.replace(/(?<!\]?\()(?<!<)https?:\/\/[^\s)]+(?!\))(?!>)/g, (url) => `[${url.replace(/https?:\/\/w{3}\./gi,'')}](${url})`
     })
   }
 

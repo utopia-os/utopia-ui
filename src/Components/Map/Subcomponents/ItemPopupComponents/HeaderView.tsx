@@ -137,7 +137,8 @@ export function HeaderView({
                     editCallback && (
                       <li>
                         <a
-                          className='tw:text-base-content! tw:cursor-pointer'
+                          className='tw:text-base-content! tw:tooltip tw:tooltip-right tw:cursor-pointer'
+                          data-tip='Edit'
                           onClick={(e) =>
                             item.layer?.customEditLink
                               ? navigate(
@@ -155,7 +156,8 @@ export function HeaderView({
                     setPositionCallback && (
                       <li>
                         <a
-                          className='tw:text-base-content! tw:cursor-pointer'
+                          className='tw:text-base-content! tw:tooltip tw:tooltip-right tw:cursor-pointer'
+                          data-tip='Set position'
                           onClick={setPositionCallback}
                         >
                           <SVG src={TargetDotSVG} className='tw:w-5 tw:h-5' />
@@ -166,7 +168,11 @@ export function HeaderView({
                     hasUserPermission(api.collectionName!, 'delete', item) &&
                     deleteCallback && (
                       <li>
-                        <a className='tw:cursor-pointer tw:text-error!' onClick={openDeleteModal}>
+                        <a
+                          className='tw:text-error! tw:tooltip tw:tooltip-right tw:cursor-pointer'
+                          data-tip='Delete'
+                          onClick={openDeleteModal}
+                        >
                           {loading ? (
                             <span className='tw:loading tw:loading-spinner tw:loading-sm'></span>
                           ) : (

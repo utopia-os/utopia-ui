@@ -54,6 +54,13 @@ export const TextView = ({
   if (innerText) replacedText = fixUrls(innerText)
 
   if (replacedText) {
+    replacedText = replacedText.replace(
+      /(?<!\]?\()(?<!<)https?:\/\/[^\s)]+(?!\))(?!>)/g,
+      (url) => `[${url.replace(/https?:\/\/w{3}\./gi, '')}](${url})`,
+    )
+  }
+
+  if (replacedText) {
     replacedText = replacedText.replace(mailRegex, (url) => {
       return `[${url}](mailto:${url})`
     })

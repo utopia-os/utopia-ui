@@ -9,6 +9,7 @@ export interface StartEndInputProps {
   labelStyle?: string
   updateStartValue?: (value: string) => void
   updateEndValue?: (value: string) => void
+  containerStyle?: string
 }
 
 /**
@@ -20,9 +21,10 @@ export const PopupStartEndInput = ({
   labelStyle,
   updateStartValue,
   updateEndValue,
+  containerStyle,
 }: StartEndInputProps) => {
   return (
-    <div className='tw:grid tw:grid-cols-2 tw:gap-2'>
+    <div className={`tw:grid tw:grid-cols-2 tw:gap-2 ${containerStyle ?? ''}`}>
       <TextInput
         type='date'
         placeholder='start'

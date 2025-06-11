@@ -67,6 +67,7 @@ describe('GalleryForm', () => {
           id: '1',
           width: 800,
           height: 600,
+          type: 'image/jpeg',
         },
       },
       {
@@ -74,6 +75,7 @@ describe('GalleryForm', () => {
           id: '2',
           width: 1024,
           height: 768,
+          type: 'image/jpeg',
         },
       },
     ]

@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import { ContactInfoForm } from '#components/Profile/Subcomponents/ContactInfoForm'
 import { CrowdfundingForm } from '#components/Profile/Subcomponents/CrowdfundingForm'
+import { GalleryForm } from '#components/Profile/Subcomponents/GalleryForm'
 import { GroupSubheaderForm } from '#components/Profile/Subcomponents/GroupSubheaderForm'
 import { ProfileStartEndForm } from '#components/Profile/Subcomponents/ProfileStartEndForm'
 import { ProfileTextForm } from '#components/Profile/Subcomponents/ProfileTextForm'
@@ -16,6 +16,7 @@ const componentMap = {
   contactInfos: ContactInfoForm,
   startEnd: ProfileStartEndForm,
   crowdfundings: CrowdfundingForm,
+  gallery: GalleryForm,
   // weitere Komponenten hier
 }
 
@@ -25,11 +26,11 @@ export const FlexForm = ({
   setState,
 }: {
   state: FormState
-  setState: React.Dispatch<React.SetStateAction<any>>
+  setState: React.Dispatch<React.SetStateAction<FormState>>
   item: Item
 }) => {
   return (
-    <div className='tw:mt-6 tw:flex tw:flex-col tw:h-full'>
+    <div className='tw:mt-6 tw:flex tw:flex-col tw:flex-1 tw:min-h-0'>
       {item.layer?.itemType.profileTemplate.map((templateItem) => {
         const TemplateComponent = componentMap[templateItem.collection]
         return TemplateComponent ? (
@@ -41,7 +42,7 @@ export const FlexForm = ({
             {...templateItem.item}
           />
         ) : (
-          <div className='tw:mt-2' key={templateItem.id}>
+          <div className='tw:mt-2 tw:flex-none' key={templateItem.id}>
             {templateItem.collection} form not found
           </div>
         )

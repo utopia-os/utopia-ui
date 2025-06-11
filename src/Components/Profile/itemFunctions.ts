@@ -15,6 +15,7 @@ import { encodeTag } from '#utils/FormatTags'
 import { hashTagRegex } from '#utils/HashTagRegex'
 import { randomColor } from '#utils/RandomColor'
 
+import type { FormState } from '#types/FormState'
 import type { Item } from '#types/Item'
 
 // eslint-disable-next-line promise/avoid-new
@@ -77,8 +78,8 @@ export const submitNewItem = async (
   setAddItemPopupType('')
 }
 
-export const linkItem = async (id: string, item, updateItem) => {
-  const newRelations = item.relations || []
+export const linkItem = async (id: string, item: Item, updateItem) => {
+  const newRelations = item.relations ?? []
   newRelations?.push({ items_id: item.id, related_items_id: id })
   const updatedItem = { id: item.id, relations: newRelations }
 
@@ -96,7 +97,7 @@ export const linkItem = async (id: string, item, updateItem) => {
   }
 }
 
-export const unlinkItem = async (id: string, item, updateItem) => {
+export const unlinkItem = async (id: string, item: Item, updateItem) => {
   const newRelations = item.relations?.filter((r) => r.related_items_id !== id)
   const updatedItem = { id: item.id, relations: newRelations }
 
@@ -116,7 +117,7 @@ export const unlinkItem = async (id: string, item, updateItem) => {
 
 export const handleDelete = async (
   event: React.MouseEvent<HTMLElement>,
-  item,
+  item: Item,
   setLoading,
   removeItem,
   map,
@@ -144,8 +145,8 @@ export const handleDelete = async (
 }
 
 export const onUpdateItem = async (
-  state,
-  item,
+  state: FormState,
+  item: Item,
   tags,
   addTag,
   setLoading,
@@ -159,19 +160,20 @@ export const onUpdateItem = async (
 
   const offerUpdates: any[] = []
   // check for new offers
-  await state.offers?.map((o) => {
+  state.offers?.map((o) => {
     const existingOffer = item?.offers?.find((t) => t.tags_id === o.id)
-    existingOffer && offerUpdates.push(existingOffer.id)
-    if (!existingOffer && !tags.some((t) => t.id === o.id)) addTag({ ...o, offer_or_need: true })
+    existingOffer && offerUpdates.push(existingOffer.tags_id)
+    if (!existingOffer && !tags.some((t: { id: string }) => t.id === o.id))
+      addTag({ ...o, offer_or_need: true })
     !existingOffer && offerUpdates.push({ items_id: item?.id, tags_id: o.id })
     return null
   })
 
   const needsUpdates: any[] = []
 
-  await state.needs?.map((n) => {
+  state.needs?.map((n) => {
     const existingNeed = item?.needs?.find((t) => t.tags_id === n.id)
-    existingNeed && needsUpdates.push(existingNeed.id)
+    existingNeed && needsUpdates.push(existingNeed.tags_id)
     !existingNeed && needsUpdates.push({ items_id: item?.id, tags_id: n.id })
     !existingNeed && !tags.some((t) => t.id === n.id) && addTag({ ...n, offer_or_need: true })
     return null
@@ -191,12 +193,13 @@ export const onUpdateItem = async (
     telephone: state.telephone,
     ...(state.end && { end: state.end }),
     ...(state.start && { start: state.start }),
-    ...(state.marker_icon && { markerIcon: state.marker_icon }),
+    ...(state.marker_icon && { markerIcon: state.marker_icon.id }),
     next_appointment: state.next_appointment,
     ...(state.image.length > 10 && { image: state.image }),
     ...(state.offers.length > 0 && { offers: offerUpdates }),
     ...(state.needs.length > 0 && { needs: needsUpdates }),
     ...(state.openCollectiveSlug && { openCollectiveSlug: state.openCollectiveSlug }),
+    gallery: state.gallery,
   }
 
   const offersState: any[] = []
@@ -216,7 +219,7 @@ export const onUpdateItem = async (
 
   setLoading(true)
 
-  await state.text
+  state.text
     .toLocaleLowerCase()
     .match(hashTagRegex)
     ?.map((tag) => {
@@ -234,7 +237,7 @@ export const onUpdateItem = async (
   await sleep(200)
 
   if (!item.new) {
-    item?.layer?.api?.updateItem &&
+    await (item?.layer?.api?.updateItem &&
       toast
         .promise(item?.layer?.api?.updateItem(changedItem), {
           pending: 'updating Item  ...',
@@ -246,15 +249,15 @@ export const onUpdateItem = async (
           },
         })
         .catch(setLoading(false))
-        .then(() => item && updateItem({ ...item, ...changedItem }))
+        .then(() => item && updateItem({ ...item, ...changedItem, markerIcon: state.marker_icon }))
         .then(() => {
           setLoading(false)
           navigate(`/item/${item.id}${params && '?' + params}`)
           return null
-        })
+        }))
   } else {
     item.new = false
-    item.layer?.api?.createItem &&
+    await (item.layer?.api?.createItem &&
       toast
         .promise(item.layer?.api?.createItem(changedItem), {
           pending: 'updating Item  ...',
@@ -280,6 +283,6 @@ export const onUpdateItem = async (
           setLoading(false)
           navigate(`/${params && '?' + params}`)
           return null
-        })
+        }))
   }
 }

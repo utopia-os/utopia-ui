@@ -1,0 +1,63 @@
+@import 'tailwindcss' prefix(tw);
+
+@layer markdown {
+  .markdown {
+    h1 {
+      @apply tw:my-4 tw:text-2xl tw:font-bold;
+    }
+
+    h2 {
+      @apply tw:my-3 tw:text-xl tw:font-bold;
+    }
+
+    h3, h4 {
+      @apply tw:my-2 tw:text-lg tw:font-bold;
+    }
+
+    h5, h6 {
+      @apply tw:my-2 tw:text-base tw:font-bold;
+    }
+
+    p {
+      @apply tw:my-1 tw:leading-relaxed;
+    }
+
+    ul, ol {
+      @apply tw:pl-6 tw:my-2;
+    }
+
+    ul li {
+      @apply tw:list-disc tw:list-outside;
+    }
+
+    ol li {
+      @apply tw:list-decimal tw:list-outside;
+    }
+
+    li > p {
+      @apply tw:inline-block tw:my-0;
+    }
+
+    hr {
+      @apply tw:my-4 tw:border-current;
+    }
+
+    img {
+      @apply tw:max-w-full tw:rounded tw:shadow;
+    }
+
+    a {
+      @apply tw:font-bold tw:underline;
+    }
+
+    iframe {
+      @apply tw:w-full tw:aspect-video;
+    }
+
+    .hashtag {
+      @apply tw:font-bold tw:cursor-pointer;
+      color: #faa;
+      text-decoration: none;
+    }
+  }
+}

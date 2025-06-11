@@ -14,5 +14,5 @@ input[type="file"] {
     transition: .5s ease;
     opacity: 0;
     position: absolute;
-    transform: translate(8px, 8px);
+    transform: translate(16px, 16px);
 }

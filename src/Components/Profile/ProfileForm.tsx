@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
+import classNames from 'classnames'
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
 
 import { useAuth } from '#components/Auth/useAuth'
 import { useItems, useUpdateItem, useAddItem } from '#components/Map/hooks/useItems'
@@ -47,11 +46,13 @@ export function ProfileForm() {
     start: '',
     end: '',
     openCollectiveSlug: '',
+    gallery: [],
+    uploadingImages: [],
   })
 
   const [updatePermission, setUpdatePermission] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
-  const [item, setItem] = useState<Item>({} as Item)
+  const [item, setItem] = useState<Item>()
   const { user } = useAuth()
   const updateItem = useUpdateItem()
   const addItem = useAddItem()
@@ -72,30 +73,23 @@ export function ProfileForm() {
 
   useEffect(() => {
     const itemId = location.pathname.split('/')[2]
-
-    const item = items.find((i) => i.id === itemId)
-    item && setItem(item)
-
-    if (!item) {
-      if (items.some((i) => i.user_created?.id === user?.id && i.layer?.userProfileLayer)) {
-        navigate('/')
-        toast.error('Item does not exist')
-      } else {
-        const layer = layers.find((l) => l.userProfileLayer)
-        setItem({
-          id: crypto.randomUUID(),
-          name: user?.first_name ?? '',
-          text: '',
-          layer,
-          new: true,
-        })
-      }
+    if (itemId === 'new') {
+      const layer = layers.find((l) => l.userProfileLayer)
+      setItem({
+        id: crypto.randomUUID(),
+        name: user?.first_name ?? '',
+        text: '',
+        layer,
+        new: true,
+      })
+    } else {
+      const item = items.find((i) => i.id === itemId)
+      if (item) setItem(item)
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items])
+  }, [items, location.pathname, layers, user?.first_name])
 
   useEffect(() => {
+    if (!item) return
     const newColor =
       item.color ??
       (getItemTags(item) && getItemTags(item)[0]?.color
@@ -140,6 +134,8 @@ export function ProfileForm() {
       start: item.start ?? '',
       end: item.end ?? '',
       openCollectiveSlug: item.openCollectiveSlug ?? '',
+      gallery: item.gallery ?? [],
+      uploadingImages: [],
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item, tags, items])
@@ -147,6 +143,7 @@ export function ProfileForm() {
   const [template, setTemplate] = useState<string>('')
 
   useEffect(() => {
+    if (!item) return
     if (item.layer?.itemType.template) setTemplate(item.layer?.itemType.template)
     else {
       const userLayer = layers.find((l) => l.userProfileLayer === true)
@@ -154,71 +151,84 @@ export function ProfileForm() {
     }
   }, [item, layers])
 
+  const isUpdatingGallery = state.uploadingImages.length > 0
+
   return (
     <>
       <MapOverlayPage
         backdrop
-        className='tw:mx-4 tw:mt-4 tw:mb-4 tw:overflow-x-hidden tw:w-[calc(100%-32px)]  tw:md:w-[calc(50%-32px)] tw:max-w-3xl tw:left-auto! tw:top-0 tw:bottom-0'
+        className='tw:mx-4 tw:mt-4 tw:mb-4 tw:@container tw:overflow-x-hidden tw:w-[calc(100%-32px)]  tw:md:w-[calc(50%-32px)] tw:max-w-3xl tw:left-auto! tw:top-0 tw:bottom-0 tw:flex tw:flex-col'
       >
-        <form
-          className='tw:h-full'
-          onSubmit={(e) => {
-            e.preventDefault()
-            void onUpdateItem(
-              state,
-              item,
-              tags,
-              addTag,
-              setLoading,
-              navigate,
-              updateItem,
-              addItem,
-              user,
-              urlParams,
-            )
-          }}
-        >
-          <div className='tw:flex tw:flex-col tw:h-full'>
-            <FormHeader item={item} state={state} setState={setState} />
+        {item ? (
+          <form
+            className='tw:flex tw:flex-col tw:flex-1 tw:min-h-0'
+            onSubmit={(e) => {
+              e.preventDefault()
+              void onUpdateItem(
+                state,
+                item,
+                tags,
+                addTag,
+                setLoading,
+                navigate,
+                updateItem,
+                addItem,
+                user,
+                urlParams,
+              )
+            }}
+          >
+            <div className='tw:flex tw:flex-col tw:flex-1 pb-4'>
+              <FormHeader item={item} state={state} setState={setState} />
 
-            {template === 'onepager' && (
-              <OnepagerForm item={item} state={state} setState={setState}></OnepagerForm>
-            )}
+              {template === 'onepager' && (
+                <OnepagerForm item={item} state={state} setState={setState}></OnepagerForm>
+              )}
 
-            {template === 'simple' && <SimpleForm state={state} setState={setState}></SimpleForm>}
+              {template === 'simple' && <SimpleForm state={state} setState={setState}></SimpleForm>}
 
-            {template === 'flex' && (
-              <FlexForm item={item} state={state} setState={setState}></FlexForm>
-            )}
+              {template === 'flex' && (
+                <FlexForm item={item} state={state} setState={setState}></FlexForm>
+              )}
 
-            {template === 'tabs' && (
-              <TabsForm
-                loading={loading}
-                item={item}
-                state={state}
-                setState={setState}
-                updatePermission={updatePermission}
-                linkItem={(id) => linkItem(id, item, updateItem)}
-                unlinkItem={(id) => unlinkItem(id, item, updateItem)}
-                setUrlParams={setUrlParams}
-              ></TabsForm>
-            )}
+              {template === 'tabs' && (
+                <TabsForm
+                  loading={loading}
+                  item={item}
+                  state={state}
+                  setState={setState}
+                  updatePermission={updatePermission}
+                  linkItem={(id: string) => linkItem(id, item, updateItem)}
+                  unlinkItem={(id: string) => unlinkItem(id, item, updateItem)}
+                  setUrlParams={setUrlParams}
+                ></TabsForm>
+              )}
 
-            <div className='tw:mt-4 tw:flex-none'>
-              <button
-                className={`${loading ? ' tw:loading tw:btn tw:float-right' : 'tw:btn tw:float-right'}`}
-                type='submit'
-                style={{
-                  // We could refactor this, it is used several times at different locations
-                  backgroundColor: `${item.color ?? (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor)}`,
-                  color: '#fff',
-                }}
-              >
-                Update
-              </button>
+              <div className='tw:mb-4 tw:mt-6 tw:flex-none'>
+                <button
+                  className={classNames(
+                    'tw:btn',
+                    'tw:float-right',
+                    { 'tw:loading': loading },
+                    { 'tw:cursor-not-allowed tw:opacity-50': loading || isUpdatingGallery },
+                  )}
+                  type='submit'
+                  style={{
+                    // We could refactor this, it is used several times at different locations
+                    backgroundColor: `${item.color ?? (getItemTags(item) && getItemTags(item)[0] && getItemTags(item)[0].color ? getItemTags(item)[0].color : item?.layer?.markerDefaultColor)}`,
+                    color: '#fff',
+                  }}
+                >
+                  Update
+                </button>
+              </div>
             </div>
+          </form>
+        ) : (
+          <div className='tw:h-full tw:flex tw:flex-col tw:items-center tw:justify-center'>
+            <div className='tw:loading tw:loading-spinner'></div>
           </div>
-        </form>
+        )}
       </MapOverlayPage>
     </>
   )

@@ -22,7 +22,7 @@ export const UserControl = () => {
       user && items.find((i) => i.user_created?.id === user.id && i.layer?.userProfileLayer)
     profile
       ? setUserProfile(profile)
-      : setUserProfile({ id: crypto.randomUUID(), name: user?.first_name ?? '', text: '' })
+      : setUserProfile({ id: 'new', name: user?.first_name ?? '', text: '' })
   }, [user, items])
 
   const onLogout = async () => {

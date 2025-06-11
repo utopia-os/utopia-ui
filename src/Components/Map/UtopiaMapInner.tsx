@@ -307,7 +307,10 @@ export function UtopiaMapInner({
       <MapEventListener />
       <AddButton triggerAction={setSelectNewItemPosition} />
       {selectNewItemPosition != null && (
-        <SelectPosition setSelectNewItemPosition={setSelectNewItemPosition} />
+        <SelectPosition
+          selectNewItemPosition={selectNewItemPosition}
+          setSelectNewItemPosition={setSelectNewItemPosition}
+        />
       )}
     </div>
   )

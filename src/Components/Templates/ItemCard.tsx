@@ -1,5 +1,7 @@
+import { useMap } from 'react-leaflet'
 import { useNavigate } from 'react-router-dom'
 
+import { useSetSelectPosition } from '#components/Map/hooks/useSelectPosition'
 import useWindowDimensions from '#components/Map/hooks/useWindowDimension'
 import { StartEndView, TextView } from '#components/Map/Subcomponents/ItemPopupComponents'
 import { HeaderView } from '#components/Map/Subcomponents/ItemPopupComponents/HeaderView'
@@ -21,6 +23,8 @@ export const ItemCard = ({
 }) => {
   const navigate = useNavigate()
   const windowDimensions = useWindowDimensions()
+  const map = useMap()
+  const setSelectPosition = useSetSelectPosition()
 
   return (
     <div
@@ -38,6 +42,11 @@ export const ItemCard = ({
         item={i}
         api={i.layer?.api}
         editCallback={() => navigate('/edit-item/' + i.id)}
+        setPositionCallback={() => {
+          map.closePopup()
+          setSelectPosition(i)
+          navigate('/')
+        }}
         deleteCallback={() => deleteCallback(i)}
       ></HeaderView>
       <div className='tw:overflow-y-auto tw:overflow-x-hidden tw:max-h-64 fade'>

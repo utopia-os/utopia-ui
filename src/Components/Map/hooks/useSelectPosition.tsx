@@ -5,8 +5,7 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 /* eslint-disable @typescript-eslint/await-thenable */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
+
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { createContext, useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -87,6 +86,7 @@ function useSelectPositionManager(): {
   }, [mapClicked])
 
   const itemUpdateParent = async (updatedItem: Item) => {
+    const toastId = toast.loading('Adding item to ' + markerClicked?.name)
     if (
       markerClicked?.layer?.api?.collectionName &&
       hasUserPermission(markerClicked.layer.api.collectionName, 'update', markerClicked)
@@ -99,40 +99,57 @@ function useSelectPositionManager(): {
           position: null,
         })
         success = true
-        // eslint-disable-next-line no-catch-all/no-catch-all
-      } catch (error) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        toast.error(error.toString())
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          toast.update(toastId, { render: error.message, type: 'error' })
+        } else if (typeof error === 'string') {
+          toast.update(toastId, { render: error, type: 'error' })
+        } else {
+          throw error
+        }
       }
       if (success) {
         await updateItem({ ...updatedItem, parent: updatedItem.parent, position: undefined })
         await linkItem(updatedItem.id)
-        toast.success('Item position updated')
+        toast.update(toastId, {
+          render: 'Item position updated',
+          type: 'success',
+          isLoading: false,
+        })
         setSelectPosition(null)
         setMarkerClicked(null)
       }
     } else {
       setSelectPosition(null)
-      toast.error("you don't have permission to add items to " + markerClicked?.name)
+      toast.update(toastId, {
+        render: "you don't have permission to add items to " + markerClicked?.name,
+        type: 'error',
+        isLoading: false,
+      })
     }
   }
 
   const itemUpdatePosition = async (updatedItem: Item) => {
     let success = false
+    const toastId = toast.loading('Updating item position')
     try {
       await updatedItem.layer?.api?.updateItem!({
         id: updatedItem.id,
         position: updatedItem.position,
       })
       success = true
-      // eslint-disable-next-line no-catch-all/no-catch-all
-    } catch (error) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      toast.error(error.toString())
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.update(toastId, { render: error.message, type: 'error', isLoading: false })
+      } else if (typeof error === 'string') {
+        toast.update(toastId, { render: error, type: 'error', isLoading: false })
+      } else {
+        throw error
+      }
     }
     if (success) {
       updateItem(updatedItem)
-      toast.success('Item position updated')
+      toast.update(toastId, { render: 'Item position updated', type: 'success', isLoading: false })
     }
   }
 
@@ -145,17 +162,22 @@ function useSelectPositionManager(): {
         const updatedItem = { id: markerClicked.id, relations: newRelations }
 
         let success = false
+        const toastId = toast.loading('Linking item')
         try {
           await markerClicked.layer?.api?.updateItem!(updatedItem)
           success = true
-          // eslint-disable-next-line no-catch-all/no-catch-all
-        } catch (error) {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-          toast.error(error.toString())
+        } catch (error: unknown) {
+          if (error instanceof Error) {
+            toast.update(toastId, { render: error.message, type: 'error', isLoading: false })
+          } else if (typeof error === 'string') {
+            toast.update(toastId, { render: error, type: 'error', isLoading: false })
+          } else {
+            throw error
+          }
         }
         if (success) {
           updateItem({ ...markerClicked, relations: newRelations })
-          toast.success('Item linked')
+          toast.update(toastId, { render: 'Item linked', type: 'success', isLoading: false })
         }
       }
     }

@@ -1,0 +1,41 @@
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.App {
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+#app-content {
+  height: 100%;
+}
+
+.fadeable-div {
+  transition: opacity 1000ms ease;
+  opacity: 1;
+}
+
+.div-hidden {
+  opacity: 0;
+}
+
+.movable-div {
+  transition: transform 600ms ease;
+  transform: translateX(0);
+}
+
+.move-out-right {
+  transform: translateX(100vw);
+  /* Verschiebt das Div um die Breite des Viewports */
+}
+
+
+.move-out-left {
+  transform: translateX(-100vw);
+  /* Verschiebt das Div um die Breite des Viewports */
+}

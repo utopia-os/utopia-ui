@@ -1,0 +1,58 @@
+name: build:lib
+
+on: push
+
+jobs:
+  files-changed:
+    name: Detect File Changes - build -lib
+    runs-on: ubuntu-latest
+    outputs:
+      build: ${{ steps.filter.outputs.build }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.1.7
+      - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
+        id: filter
+        with:
+          filters: |
+            build:
+              - '.github/workflows/**/*'
+              - 'lib/**/*'
+
+  build:
+    if: needs.files-changed.outputs.build == 'true'
+    name: Build
+    needs: files-changed
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.1.7
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.0.3
+        with:
+          node-version-file: '.tool-versions'
+      - name: Install Dependencies & Build Library
+        run: |
+          npm install
+          npm run build
+        working-directory: lib/
+
+  build-examples:
+    if: needs.files-changed.outputs.build == 'true'
+    name: Test Example Apps
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: [examples/1-basic-map, examples/2-static-layers, examples/3-tags ]
+
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.1.7
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.0.3
+        with:
+          node-version-file: '.tool-versions'
+      - name: Link Utopia-UI in Example App
+        run: |
+          npm install
+          npm run build
+          cd ${{ matrix.app }}
+          npm install
+          npm run build
+        working-directory: lib/

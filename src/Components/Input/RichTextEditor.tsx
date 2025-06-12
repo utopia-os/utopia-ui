@@ -5,6 +5,12 @@ import { Color } from '@tiptap/extension-color'
 import { Image } from '@tiptap/extension-image'
 import { Link } from '@tiptap/extension-link'
 import { Placeholder } from '@tiptap/extension-placeholder'
+import { Table } from '@tiptap/extension-table'
+import { TableCell } from '@tiptap/extension-table-cell'
+import { TableHeader } from '@tiptap/extension-table-header'
+import { TableRow } from '@tiptap/extension-table-row'
+import { TaskItem } from '@tiptap/extension-task-item'
+import { TaskList } from '@tiptap/extension-task-list'
 import { EditorContent, useEditor } from '@tiptap/react'
 import { StarterKit } from '@tiptap/starter-kit'
 import { useEffect } from 'react'
@@ -62,6 +68,14 @@ export function RichTextEditor({
         transformCopiedText: true,
         transformPastedText: true,
       }),
+      Table.configure({
+        resizable: true,
+      }),
+      TableCell,
+      TableHeader,
+      TableRow,
+      TaskList,
+      TaskItem,
       Image,
       Link,
       Placeholder.configure({

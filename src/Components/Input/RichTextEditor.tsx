@@ -13,10 +13,15 @@ import { TaskItem } from '@tiptap/extension-task-item'
 import { TaskList } from '@tiptap/extension-task-list'
 import { EditorContent, useEditor } from '@tiptap/react'
 import { StarterKit } from '@tiptap/starter-kit'
+import { MarkdownSerializer } from 'prosemirror-markdown'
 import { useEffect } from 'react'
 import { Markdown } from 'tiptap-markdown'
 
 import { TextEditorMenu } from './TextEditorMenu'
+
+import type { Editor } from '@tiptap/react'
+import type { MarkdownSerializerState } from 'prosemirror-markdown'
+import type { Node as ProseMirrorNode } from 'prosemirror-model'
 
 interface RichTextEditorProps {
   labelTitle?: string
@@ -27,6 +32,20 @@ interface RichTextEditorProps {
   showMenu?: boolean
   updateFormValue?: (value: string) => void
 }
+
+interface ImageAttrs {
+  src: string
+  alt?: string
+  title?: string
+  style?: string
+}
+
+type NodeSerializerFn = (
+  state: MarkdownSerializerState,
+  node: ProseMirrorNode,
+  parent: ProseMirrorNode,
+  index: number,
+) => void
 
 /**
  * @category Input
@@ -41,12 +60,15 @@ export function RichTextEditor({
   updateFormValue,
 }: RichTextEditorProps) {
   const handleChange = () => {
-    let newValue: string | undefined = editor?.storage.markdown.getMarkdown()
-
-    const regex = /!\[.*?\]\(.*?\)/g
-    newValue = newValue?.replace(regex, (match: string) => match + '\n\n')
-    if (updateFormValue && newValue) {
-      updateFormValue(newValue)
+    if (editor) {
+      let newValue: string | undefined = getStyledMarkdown(editor)
+        ? getStyledMarkdown(editor)
+        : undefined
+      const regex = /!\[.*?\]\(.*?\)/g
+      newValue = newValue?.replace(regex, (match: string) => match + '\n\n')
+      if (updateFormValue && newValue) {
+        updateFormValue(newValue)
+      }
     }
   }
 
@@ -64,6 +86,7 @@ export function RichTextEditor({
         },
       }),
       Markdown.configure({
+        html: true,
         linkify: true,
         transformCopiedText: true,
         transformPastedText: true,
@@ -76,7 +99,7 @@ export function RichTextEditor({
       TableRow,
       TaskList,
       TaskItem,
-      Image,
+      CustomImage,
       Link,
       Placeholder.configure({
         placeholder,
@@ -121,4 +144,64 @@ export function RichTextEditor({
       </div>
     </div>
   )
+}
+
+const CustomImage = Image.extend({
+  addAttributes() {
+    return {
+      // alle Standard-Attribute (src, alt, title) behalten
+      ...this.parent?.(),
+      // das style-Attribut zulassen und weiterreichen
+      style: {
+        default: null,
+        parseHTML: (element) => element.getAttribute('style'),
+        renderHTML: (attributes) => {
+          if (!attributes.style) {
+            return {}
+          }
+          return { style: attributes.style }
+        },
+      },
+      // optional: Breite und Höhe separat behandeln
+      width: {
+        default: null,
+        parseHTML: (element) => element.getAttribute('width'),
+        renderHTML: (attrs) => (attrs.width ? { width: attrs.width } : {}),
+      },
+      height: {
+        default: null,
+        parseHTML: (element) => element.getAttribute('height'),
+        renderHTML: (attrs) => (attrs.height ? { height: attrs.height } : {}),
+      },
+    }
+  },
+})
+
+export function getStyledMarkdown(editor: Editor): string {
+  // Den internen Serializer sauber casten
+  const { serializer } = editor.storage.markdown as { serializer: MarkdownSerializer }
+
+  // Die Basis-Nodes/Marks zum Überschreiben herausziehen
+  const baseNodes = serializer.nodes as Record<string, NodeSerializerFn>
+  const marks = serializer.marks
+
+  // Unsere Image-Funktion mit korrekter Signatur
+  const customImage: NodeSerializerFn = (state, node) => {
+    const { src, alt, title, style } = node.attrs as ImageAttrs
+
+    // Per String-Konkatenation, damit kein ESLint-Fehler mehr kommt
+    let tag = '<img src="' + src + '"'
+    if (alt) tag += ' alt="' + alt + '"'
+    if (title) tag += ' title="' + title + '"'
+    if (style) tag += ' style="' + style + '"'
+    tag += ' />'
+
+    state.write(tag)
+  }
+
+  // Den neuen Serializer bauen – alle Nodes übernehmen, nur `image` ersetzen
+  const customSerializer = new MarkdownSerializer({ ...baseNodes, image: customImage }, marks)
+
+  // Fertig: das gesamte Dokument serialisieren
+  return customSerializer.serialize(editor.state.doc)
 }

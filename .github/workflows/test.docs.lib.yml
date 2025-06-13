@@ -1,10 +1,10 @@
-name: test:docs
+name: test:docs:lib
 
 on: push
 
 jobs:
   files-changed:
-    name: Detect File Changes - docs
+    name: Detect File Changes - docs - lib
     runs-on: ubuntu-latest
     outputs:
       docs: ${{ steps.filter.outputs.docs }}
@@ -16,7 +16,7 @@ jobs:
           filters: |
             docs:
               - '.github/workflows/**/*'
-              - '**/*.md'
+              - 'lib/**/*.md'
               - 'LICENSE'
 
 #  build:
@@ -35,7 +35,7 @@ jobs:
 
   docs:
     if: needs.files-changed.outputs.docs == 'true'
-    name: Docs
+    name: Docs - lib
     needs: files-changed
     runs-on: ubuntu-latest
     env:
@@ -44,10 +44,10 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.1.7
       - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.0.3
         with:
-          node-version-file: './.tool-versions'
+          node-version-file: '.tool-versions'
       - name: Docs
         run: |
           npm install
           npm run docs:generate
           ./scripts/docs-coverage.sh
-        working-directory: ./
+        working-directory: lib/

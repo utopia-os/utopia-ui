@@ -1,4 +1,4 @@
-name: deploy:docs
+name: deploy:docs:lib
 
 on:
   push:
@@ -14,36 +14,37 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.1.7
       - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.0.3
         with:
-          node-version-file: './.tool-versions'
+          node-version-file: '.tool-versions'
       - name: Install Dependencies & Build Library
         run: |
           npm install
           npm run build
-        working-directory: ./
+        working-directory: lib/
 
       - name: Build static files
         id: build
         run: npm run docs:generate
-        working-directory: ./
+        working-directory: lib/
 
       - name: Generate coverage
         id: coverage
         run: npm run test:unit
+        working-directory: lib/
 
       - name: Create coverage badges
         id: coverage-badge
         uses: jaywcjlove/coverage-badges-cli@main
         with:
           style: flat
-          source: coverage/coverage-summary.json
-          output: docs/test-coverage.svg
+          source: lib/coverage/coverage-summary.json
+          output: lib/docs/test-coverage.svg
           jsonPath: total.lines.pct
 
       - name: Upload static files as artifact
         id: deployment
         uses: actions/upload-pages-artifact@v3.0.1
         with:
-          path: docs/
+          path: lib/docs/
 
   # Deploy job
   deploy:

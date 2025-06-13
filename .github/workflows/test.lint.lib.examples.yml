@@ -1,4 +1,4 @@
-name: test:lint
+name: test::examples:lib
 
 on: push
 
@@ -16,7 +16,7 @@ jobs:
           filters: |
             lint:
               - '.github/workflows/**/*'
-              - '**/*'
+              - 'lib/**/*'
 
 #  build:
 #    if: needs.files-changed.outputs.frontend == 'true'
@@ -32,19 +32,47 @@ jobs:
 #        run: npm install && npm run build
 #        working-directory: ./frontend
 
-  lint:
+  lint-example-1-basic-map:
     if: needs.files-changed.outputs.lint == 'true'
-    name: Lint
+    name: Lint Example 1 - Basic Map
     needs: files-changed
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.1.7
       - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.0.3
         with:
-          node-version-file: './.tool-versions'
+          node-version-file: '.tool-versions'
       - name: Lint
-        run: npm install && npm run test:lint:eslint
-        working-directory: ./
+        run: npm install && npm run lint
+        working-directory: lib/examples/1-basic-map
+
+  lint-example-2-static-layers:
+    if: needs.files-changed.outputs.lint == 'true'
+    name: Lint Example 2 - Static Layers
+    needs: files-changed
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.1.7
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.0.3
+        with:
+          node-version-file: '.tool-versions'
+      - name: Lint
+        run: npm install && npm run lint
+        working-directory: lib/examples/2-static-layers
+
+  lint-example-3-tags:
+    if: needs.files-changed.outputs.lint == 'true'
+    name: Lint Example 3 - Tags
+    needs: files-changed
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.1.7
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.0.3
+        with:
+          node-version-file: '.tool-versions'
+      - name: Lint
+        run: npm install && npm run lint
+        working-directory: lib/examples/3-tags
 
 #  unit:
 #    if: needs.files-changed.outputs.frontend == 'true'

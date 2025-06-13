@@ -1,10 +1,10 @@
-name: test:unit
+name: test:unit:lib
 
 on: push
 
 jobs:
   files-changed:
-    name: Detect File Changes - unit
+    name: Detect File Changes - unit - lib
     runs-on: ubuntu-latest
     outputs:
       unit: ${{ steps.filter.outputs.unit }}
@@ -16,18 +16,18 @@ jobs:
           filters: |
             unit:
               - '.github/workflows/**/*'
-              - '**/*'
+              - 'lib/**/*'
 
   unit:
     if: needs.files-changed.outputs.unit == 'true'
-    name: Unit
+    name: Unit - lib
     needs: files-changed
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.1.7
       - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.0.3
         with:
-          node-version-file: './.tool-versions'
+          node-version-file: '.tool-versions'
       - name: Unit
         run: npm install && npm run test:unit
-        working-directory: ./
+        working-directory: lib/

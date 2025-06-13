@@ -29,11 +29,13 @@ jobs:
           # Configure which scopes are allowed (newline delimited).
           # Append a scope for each service here
           scopes: |
+            backend
+            frontend
+            lib
             docu
             docker
             release
             workflow
-            source
             other
           # Configure that a scope must always be provided.
           requireScope: true

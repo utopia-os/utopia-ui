@@ -216,7 +216,7 @@ const sanitizeSchema = {
     ...defaultSchema.attributes,
     img: [
       // alle bisherigen Attribute, plus 'style'
-      ...(defaultSchema.attributes?.img || []),
+      ...(defaultSchema.attributes?.img ?? []),
       'style',
     ],
   },

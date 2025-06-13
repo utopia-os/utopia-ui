@@ -20,7 +20,7 @@ export function Welcome1({ clickAction1, map }: ChapterProps) {
           <TextView rawText={map.custom_text}></TextView>
         </>
       ) : (
-        <div className="relative">
+        <div className='relative'>
           <h3 className='font-bold text-lg'>Welcome to {map?.name || 'Utopia Map'}</h3>
           <img
             className='float-right w-32 m-2'

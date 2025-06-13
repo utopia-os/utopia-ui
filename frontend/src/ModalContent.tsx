@@ -18,8 +18,8 @@ export function Welcome1({ clickAction1, map }: ChapterProps) {
           <TextView rawText={map.custom_text}></TextView>
         </>
       ) : (
-        <>
-          <h3 className='tw:font-bold tw:text-lg'>Welcome to {map?.name || 'Utopia Map'}</h3>
+        <div className='tw:relative'>
+          <h3 className='tw:text-xl tw:font-bold'>Welcome to {map?.name || 'Utopia Map'}</h3>
           <img
             className='tw:float-right tw:w-32 tw:m-2'
             src={'https://api.utopia-lab.org/assets/' + map.logo}
@@ -39,7 +39,7 @@ export function Welcome1({ clickAction1, map }: ChapterProps) {
               Close
             </label>
           </div>
-        </>
+        </div>
       )}
     </>
   )

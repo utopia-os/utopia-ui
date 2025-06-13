@@ -120,17 +120,14 @@ export const TextView = ({
 
     // 4) Interne Links auf gleiche Base-URL
     if (href.startsWith(origin)) {
-      // z.B. href="https://karte.menschlichwirtschaften.de/info" → to="/info"
       const to = href.slice(origin.length) || '/'
       return <RouterLink to={to}>{children}</RouterLink>
     }
 
-    // 5) Relative Links ohne Origin (z.B. "/info" oder "info" → zu RouterLink machen)
     if (href.startsWith('/')) {
       return <RouterLink to={href}>{children}</RouterLink>
     }
 
-    // Default: Link
     return (
       <a href={href} target='_blank' rel='noreferrer'>
         {children}

@@ -60,15 +60,16 @@ export function RichTextEditor({
   updateFormValue,
 }: RichTextEditorProps) {
   const handleChange = () => {
-    if (editor) {
-      let newValue: string | undefined = getStyledMarkdown(editor)
-        ? getStyledMarkdown(editor)
-        : undefined
-      const regex = /!\[.*?\]\(.*?\)/g
-      newValue = newValue?.replace(regex, (match: string) => match + '\n\n')
-      if (updateFormValue && newValue) {
-        updateFormValue(newValue)
-      }
+    if (!editor) return
+
+    let newValue = getStyledMarkdown(editor)
+    // matcht entweder Markdown-Images *oder* HTML-<img>–Tags
+    const regex = /(!\[.*?\]\(.*?\)|<img\b[^>]*?\/?>)/gi
+
+    newValue = newValue.replace(regex, (match) => match + '\n\n')
+
+    if (updateFormValue && newValue) {
+      updateFormValue(newValue)
     }
   }
 
@@ -149,9 +150,7 @@ export function RichTextEditor({
 const CustomImage = Image.extend({
   addAttributes() {
     return {
-      // alle Standard-Attribute (src, alt, title) behalten
       ...this.parent?.(),
-      // das style-Attribut zulassen und weiterreichen
       style: {
         default: null,
         parseHTML: (element) => element.getAttribute('style'),
@@ -162,7 +161,6 @@ const CustomImage = Image.extend({
           return { style: attributes.style }
         },
       },
-      // optional: Breite und Höhe separat behandeln
       width: {
         default: null,
         parseHTML: (element) => element.getAttribute('width'),
@@ -178,18 +176,14 @@ const CustomImage = Image.extend({
 })
 
 export function getStyledMarkdown(editor: Editor): string {
-  // Den internen Serializer sauber casten
   const { serializer } = editor.storage.markdown as { serializer: MarkdownSerializer }
 
-  // Die Basis-Nodes/Marks zum Überschreiben herausziehen
   const baseNodes = serializer.nodes as Record<string, NodeSerializerFn>
   const marks = serializer.marks
 
-  // Unsere Image-Funktion mit korrekter Signatur
   const customImage: NodeSerializerFn = (state, node) => {
     const { src, alt, title, style } = node.attrs as ImageAttrs
 
-    // Per String-Konkatenation, damit kein ESLint-Fehler mehr kommt
     let tag = '<img src="' + src + '"'
     if (alt) tag += ' alt="' + alt + '"'
     if (title) tag += ' title="' + title + '"'
@@ -199,9 +193,7 @@ export function getStyledMarkdown(editor: Editor): string {
     state.write(tag)
   }
 
-  // Den neuen Serializer bauen – alle Nodes übernehmen, nur `image` ersetzen
   const customSerializer = new MarkdownSerializer({ ...baseNodes, image: customImage }, marks)
 
-  // Fertig: das gesamte Dokument serialisieren
   return customSerializer.serialize(editor.state.doc)
 }

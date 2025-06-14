@@ -10,6 +10,7 @@ import rehypeRaw from 'rehype-raw'
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize'
 import remarkBreaks from 'remark-breaks'
 import remarkGfm from 'remark-gfm'
+import { visit } from 'unist-util-visit'
 
 import { useAddFilterTag } from '#components/Map/hooks/useFilter'
 import { useTags } from '#components/Map/hooks/useTags'
@@ -210,14 +211,57 @@ function truncateText(text, limit) {
   return truncated.trim()
 }
 
-const sanitizeSchema = {
+export const sanitizeSchema = {
   ...defaultSchema,
+
+  tagNames: [...(defaultSchema.tagNames ?? []), 'div', 'iframe'],
   attributes: {
     ...defaultSchema.attributes,
-    img: [
-      // alle bisherigen Attribute, plus 'style'
-      ...(defaultSchema.attributes?.img ?? []),
-      'style',
+    div: [...(defaultSchema.attributes?.div ?? []), 'data-youtube-video'],
+    iframe: [
+      ...(defaultSchema.attributes?.iframe ?? []),
+      'src',
+      'width',
+      'height',
+      'allowfullscreen',
+      'autoplay',
+      'disablekbcontrols',
+      'enableiframeapi',
+      'endtime',
+      'ivloadpolicy',
+      'loop',
+      'modestbranding',
+      'origin',
+      'playlist',
+      'rel',
+      'start',
     ],
+    img: [...(defaultSchema.attributes?.img ?? []), 'style'],
   },
+
+  protocols: {
+    ...defaultSchema.protocols,
+    src: [...(defaultSchema.protocols?.src ?? []), 'https'],
+  },
+}
+
+export function rehypeFilterYouTubeIframes() {
+  return (tree: any) => {
+    visit(tree, 'element', (node) => {
+      if (node.tagName === 'iframe') {
+        const src = String(node.properties?.src || '')
+        // Nur echte YouTube-Embed-URLs zulassen
+        if (
+          !/^https:\/\/(?:www\.)?(?:youtube\.com|youtube-nocookie\.com)\/embed\/[A-Za-z0-9_-]+(?:\?.*)?$/.test(
+            src,
+          )
+        ) {
+          // ersetze es durch einen leeren div
+          node.tagName = 'div'
+          node.properties = {}
+          node.children = []
+        }
+      }
+    })
+  }
 }

@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { log } from 'node:console'
+
 import { Color } from '@tiptap/extension-color'
 import { Image } from '@tiptap/extension-image'
 import { Link } from '@tiptap/extension-link'
@@ -11,7 +13,14 @@ import { TableHeader } from '@tiptap/extension-table-header'
 import { TableRow } from '@tiptap/extension-table-row'
 import { TaskItem } from '@tiptap/extension-task-item'
 import { TaskList } from '@tiptap/extension-task-list'
-import { EditorContent, useEditor } from '@tiptap/react'
+import { Youtube } from '@tiptap/extension-youtube'
+import {
+  EditorContent,
+  useEditor,
+  nodePasteRule,
+  nodeInputRule,
+  mergeAttributes,
+} from '@tiptap/react'
 import { StarterKit } from '@tiptap/starter-kit'
 import { MarkdownSerializer } from 'prosemirror-markdown'
 import { useEffect } from 'react'
@@ -76,6 +85,10 @@ export function RichTextEditor({
   const editor = useEditor({
     extensions: [
       Color.configure({ types: ['textStyle', 'listItem'] }),
+      CustomYoutube.configure({
+        nocookie: true,
+        allowFullscreen: true,
+      }),
       StarterKit.configure({
         bulletList: {
           keepMarks: true,
@@ -177,23 +190,98 @@ const CustomImage = Image.extend({
 
 export function getStyledMarkdown(editor: Editor): string {
   const { serializer } = editor.storage.markdown as { serializer: MarkdownSerializer }
-
   const baseNodes = serializer.nodes as Record<string, NodeSerializerFn>
   const marks = serializer.marks
-
   const customImage: NodeSerializerFn = (state, node) => {
     const { src, alt, title, style } = node.attrs as ImageAttrs
-
     let tag = '<img src="' + src + '"'
     if (alt) tag += ' alt="' + alt + '"'
     if (title) tag += ' title="' + title + '"'
     if (style) tag += ' style="' + style + '"'
     tag += ' />'
-
     state.write(tag)
   }
 
-  const customSerializer = new MarkdownSerializer({ ...baseNodes, image: customImage }, marks)
+  const customYoutube: NodeSerializerFn = (state, node) => {
+    const { src } = node.attrs as { src: string }
+
+    const match = src.match(
+      /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/,
+    )
+    const videoId = match?.[1]
+    const nocookieUrl = `https://www.youtube-nocookie.com/embed/${videoId}`
+
+    let tag = '<div class="tw:w-full tw:aspect-video tw:overflow-hidden">'
+    tag += `<iframe src="${nocookieUrl}" allowfullscreen class="tw-w-full tw-h-full" loading="lazy"></iframe>`
+    tag += '</div>'
+    state.write(tag)
+  }
+
+  const customSerializer = new MarkdownSerializer(
+    {
+      ...baseNodes,
+      image: customImage,
+      youtube: customYoutube,
+    },
+    marks,
+  )
 
   return customSerializer.serialize(editor.state.doc)
 }
+
+const CustomYoutube = Youtube.extend({
+  addPasteRules() {
+    return [
+      nodePasteRule({
+        find: youtubePasteRegex,
+        type: this.type,
+        getAttributes: (match) => {
+          return { src: match[1] }
+        },
+      }),
+    ]
+  },
+  addInputRules() {
+    return [
+      nodeInputRule({
+        find: youtubeInputRegex,
+        type: this.type,
+        getAttributes: (match) => {
+          return { src: match[1] }
+        },
+      }),
+    ]
+  },
+  renderHTML({ HTMLAttributes }) {
+    const otherAttrs = { ...HTMLAttributes } as Record<string, string | number>
+    const originalSrc = otherAttrs.src as string
+    const match = originalSrc.match(
+      /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/,
+    )
+    const videoId = match?.[1]
+    const nocookieUrl = `https://www.youtube-nocookie.com/embed/${videoId}`
+
+    delete otherAttrs.width
+    delete otherAttrs.height
+
+    const iframeAttrs = {
+      ...otherAttrs,
+      src: nocookieUrl,
+      allowfullscreen: '',
+      class: 'tw-w-full tw-h-full',
+      loading: 'lazy',
+    }
+
+    return [
+      'div',
+      { class: 'tw:w-full tw:aspect-video tw:overflow-hidden' },
+      ['iframe', iframeAttrs],
+    ]
+  },
+})
+
+const youtubePasteRegex =
+  /(https?:\/\/(?:www\.)?youtube\.com\/watch\?v=[\w-]+|https?:\/\/youtu\.be\/[\w-]+)/g
+
+const youtubeInputRegex =
+  /(https?:\/\/(?:www\.)?youtube\.com\/watch\?v=[\w-]+|https?:\/\/youtu\.be\/[\w-]+)$/

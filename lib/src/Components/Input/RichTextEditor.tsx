@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { log } from 'node:console'
-
 import { Color } from '@tiptap/extension-color'
 import { Image } from '@tiptap/extension-image'
 import { Link } from '@tiptap/extension-link'
@@ -209,12 +207,14 @@ export function getStyledMarkdown(editor: Editor): string {
       /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/,
     )
     const videoId = match?.[1]
-    const nocookieUrl = `https://www.youtube-nocookie.com/embed/${videoId}`
+    if (videoId) {
+      const nocookieUrl = `https://www.youtube-nocookie.com/embed/${videoId}`
 
-    let tag = '<div class="tw:w-full tw:aspect-video tw:overflow-hidden">'
-    tag += `<iframe src="${nocookieUrl}" allowfullscreen class="tw-w-full tw-h-full" loading="lazy"></iframe>`
-    tag += '</div>'
-    state.write(tag)
+      let tag = '<div class="tw:w-full tw:aspect-video tw:overflow-hidden">'
+      tag += `<iframe src="${nocookieUrl}" allowfullscreen class="tw-w-full tw-h-full" loading="lazy"></iframe>`
+      tag += '</div>'
+      state.write(tag)
+    }
   }
 
   const customSerializer = new MarkdownSerializer(
@@ -258,16 +258,12 @@ const CustomYoutube = Youtube.extend({
         tag: 'iframe[src*="/embed/"]',
         priority: 1000,
         getAttrs: (dom) => {
-          const src = (dom as HTMLIFrameElement).getAttribute('src') || ''
-          console.log(src)
+          const src = (dom as HTMLIFrameElement).getAttribute('src') ?? ''
           const match = src.match(/\/embed\/([A-Za-z0-9_-]{11})/)
-          console.log(match)
           if (!match) {
             return false
           }
           const videoId = match[1]
-          console.log(videoId)
-          // immer auf nocookie normieren
           return {
             src: `https://www.youtube-nocookie.com/embed/${videoId}`,
           }

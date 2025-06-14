@@ -20,7 +20,7 @@ import { fixUrls, mailRegex } from '#utils/ReplaceURLs'
 
 import type { Item } from '#types/Item'
 import type { Tag } from '#types/Tag'
-import type { Root, Element } from 'hast'
+import type { Root } from 'hast'
 
 /**
  * @category Map

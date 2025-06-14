@@ -20,6 +20,7 @@ import { fixUrls, mailRegex } from '#utils/ReplaceURLs'
 
 import type { Item } from '#types/Item'
 import type { Tag } from '#types/Tag'
+import type { Root, Element } from 'hast'
 
 /**
  * @category Map
@@ -246,20 +247,25 @@ export const sanitizeSchema = {
 }
 
 export function rehypeFilterYouTubeIframes() {
-  return (tree: any) => {
+  return (tree: Root) => {
     visit(tree, 'element', (node) => {
-      if (node.tagName === 'iframe') {
-        const src = String(node.properties?.src || '')
+      // node ist hier typischerweise ein HAST-Element
+      const el = node
+
+      if (el.tagName === 'iframe') {
+        const src = String(el.properties?.src ?? '')
+
         // Nur echte YouTube-Embed-URLs zulassen
         if (
+          // eslint-disable-next-line security/detect-unsafe-regex
           !/^https:\/\/(?:www\.)?(?:youtube\.com|youtube-nocookie\.com)\/embed\/[A-Za-z0-9_-]+(?:\?.*)?$/.test(
             src,
           )
         ) {
           // ersetze es durch einen leeren div
-          node.tagName = 'div'
-          node.properties = {}
-          node.children = []
+          el.tagName = 'div'
+          el.properties = {}
+          el.children = []
         }
       }
     })

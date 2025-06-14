@@ -252,29 +252,43 @@ const CustomYoutube = Youtube.extend({
       }),
     ]
   },
+  parseHTML() {
+    return [
+      {
+        tag: 'iframe[src*="/embed/"]',
+        priority: 1000,
+        getAttrs: (dom) => {
+          const src = (dom as HTMLIFrameElement).getAttribute('src') || ''
+          console.log(src)
+          const match = src.match(/\/embed\/([A-Za-z0-9_-]{11})/)
+          console.log(match)
+          if (!match) {
+            return false
+          }
+          const videoId = match[1]
+          console.log(videoId)
+          // immer auf nocookie normieren
+          return {
+            src: `https://www.youtube-nocookie.com/embed/${videoId}`,
+          }
+        },
+      },
+    ]
+  },
   renderHTML({ HTMLAttributes }) {
-    const otherAttrs = { ...HTMLAttributes } as Record<string, string | number>
-    const originalSrc = otherAttrs.src as string
-    const match = originalSrc.match(
-      /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/,
-    )
-    const videoId = match?.[1]
-    const nocookieUrl = `https://www.youtube-nocookie.com/embed/${videoId}`
-
-    delete otherAttrs.width
-    delete otherAttrs.height
-
-    const iframeAttrs = {
-      ...otherAttrs,
-      src: nocookieUrl,
+    // feste Breiten/Höhen raus
+    const { ...attrs } = HTMLAttributes
+    delete attrs.width
+    delete attrs.height
+    const iframeAttrs = mergeAttributes(attrs, {
       allowfullscreen: '',
-      class: 'tw-w-full tw-h-full',
       loading: 'lazy',
-    }
+      class: 'tw-w-full tw-h-full',
+    })
 
     return [
       'div',
-      { class: 'tw:w-full tw:aspect-video tw:overflow-hidden' },
+      { class: 'tw:w-full tw-aspect-video tw-overflow-hidden' },
       ['iframe', iframeAttrs],
     ]
   },

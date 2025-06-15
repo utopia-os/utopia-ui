@@ -1,4 +1,52 @@
+/* Basic editor styles */
+.tiptap {
+  :first-child {
+    margin-top: 0;
+  }
 
+  .mention {
+    background-color: var(--purple-light);
+    border-radius: 0.4rem;
+    box-decoration-break: clone;
+    color: var(--purple);
+    padding: 0.1rem 0.3rem;
+    &::after {
+      content: "\200B";
+    }
+  }
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+  background: var(--color-base-100);
+  border: 1px solid var(--color-base-200);
+  border-radius: 0.7rem;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  overflow: auto;
+  padding: 0.4rem;
+  position: relative;
+
+  button {
+    align-items: center;
+    background-color: transparent;
+    display: flex;
+    gap: 0.25rem;
+    text-align: left;
+    width: 100%;
+
+    &:hover,
+    &:hover.is-selected {
+      background-color: var(--color-base-200);
+    }
+
+    &.is-selected {
+      background-color: var(--color-base-200);
+    }
+  }
+}
 
 .editor-wrapper div {
     min-height: 0;

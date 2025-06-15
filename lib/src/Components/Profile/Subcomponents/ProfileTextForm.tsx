@@ -4,7 +4,7 @@
 
 import { useEffect, useState } from 'react'
 
-import { RichTextEditor } from '#components/Input/RichTextEditor'
+import { RichTextEditor } from '#components/Input/RichTextEditor/RichTextEditor'
 
 import { MarkdownHint } from './MarkdownHint'
 

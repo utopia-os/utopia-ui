@@ -68,15 +68,8 @@ export function RichTextEditor({
 }: RichTextEditorProps) {
   const handleChange = () => {
     if (!editor) return
-
-    let newValue = getStyledMarkdown(editor)
-    // matcht entweder Markdown-Images *oder* HTML-<img>–Tags
-    const regex = /(!\[.*?\]\(.*?\)|<img\b[^>]*?\/?>)/gi
-
-    newValue = newValue.replace(regex, (match) => match + '\n\n')
-
-    if (updateFormValue && newValue) {
-      updateFormValue(newValue)
+    if (updateFormValue) {
+      updateFormValue(getStyledMarkdown(editor))
     }
   }
 
@@ -197,6 +190,7 @@ export function getStyledMarkdown(editor: Editor): string {
     if (title) tag += ' title="' + title + '"'
     if (style) tag += ' style="' + style + '"'
     tag += ' />'
+    tag += '\n\n'
     state.write(tag)
   }
 
@@ -204,7 +198,7 @@ export function getStyledMarkdown(editor: Editor): string {
     const { src } = node.attrs as { src: string }
 
     const match = src.match(
-      /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/,
+      /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/|youtube-nocookie\.com\/embed\/)([A-Za-z0-9_-]{11})/,
     )
     const videoId = match?.[1]
     if (videoId) {
@@ -213,6 +207,7 @@ export function getStyledMarkdown(editor: Editor): string {
       let tag = '<div class="tw:w-full tw:aspect-video tw:overflow-hidden">'
       tag += `<iframe src="${nocookieUrl}" allowfullscreen class="tw-w-full tw-h-full" loading="lazy"></iframe>`
       tag += '</div>'
+      tag += '\n\n'
       state.write(tag)
     }
   }
@@ -236,7 +231,7 @@ const CustomYoutube = Youtube.extend({
         find: youtubePasteRegex,
         type: this.type,
         getAttributes: (match) => {
-          return { src: match[1] }
+          return { src: `https://www.youtube-nocookie.com/embed/${match[2]}` }
         },
       }),
     ]
@@ -247,7 +242,7 @@ const CustomYoutube = Youtube.extend({
         find: youtubeInputRegex,
         type: this.type,
         getAttributes: (match) => {
-          return { src: match[1] }
+          return { src: `https://www.youtube-nocookie.com/embed/${match[2]}` }
         },
       }),
     ]
@@ -291,7 +286,6 @@ const CustomYoutube = Youtube.extend({
 })
 
 const youtubePasteRegex =
-  /(https?:\/\/(?:www\.)?youtube\.com\/watch\?v=[\w-]+|https?:\/\/youtu\.be\/[\w-]+)/g
-
+/(https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/))([A-Za-z0-9_-]{11})(?:\?.*)?/g
 const youtubeInputRegex =
-  /(https?:\/\/(?:www\.)?youtube\.com\/watch\?v=[\w-]+|https?:\/\/youtu\.be\/[\w-]+)$/
+  /(https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/))([A-Za-z0-9_-]{11})(?:\?.*)?$/

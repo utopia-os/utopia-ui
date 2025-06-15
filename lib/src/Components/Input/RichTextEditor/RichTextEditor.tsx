@@ -4,6 +4,7 @@
 import { Color } from '@tiptap/extension-color'
 import { Image } from '@tiptap/extension-image'
 import { Link } from '@tiptap/extension-link'
+import { Mention } from '@tiptap/extension-mention'
 import { Placeholder } from '@tiptap/extension-placeholder'
 import { Table } from '@tiptap/extension-table'
 import { TableCell } from '@tiptap/extension-table-cell'
@@ -12,18 +13,13 @@ import { TableRow } from '@tiptap/extension-table-row'
 import { TaskItem } from '@tiptap/extension-task-item'
 import { TaskList } from '@tiptap/extension-task-list'
 import { Youtube } from '@tiptap/extension-youtube'
-import {
-  EditorContent,
-  useEditor,
-  nodePasteRule,
-  nodeInputRule,
-  mergeAttributes,
-} from '@tiptap/react'
+import { EditorContent, useEditor } from '@tiptap/react'
 import { StarterKit } from '@tiptap/starter-kit'
 import { MarkdownSerializer } from 'prosemirror-markdown'
 import { useEffect } from 'react'
 import { Markdown } from 'tiptap-markdown'
 
+import { suggestion } from './suggestion'
 import { TextEditorMenu } from './TextEditorMenu'
 
 import type { Editor } from '@tiptap/react'
@@ -76,9 +72,13 @@ export function RichTextEditor({
   const editor = useEditor({
     extensions: [
       Color.configure({ types: ['textStyle', 'listItem'] }),
-      CustomYoutube.configure({
+      Youtube.configure({
         nocookie: true,
         allowFullscreen: true,
+        addPasteHandler: true,
+        height: undefined,
+        width: undefined,
+        modestBranding: true,
       }),
       StarterKit.configure({
         bulletList: {
@@ -109,6 +109,12 @@ export function RichTextEditor({
       Placeholder.configure({
         placeholder,
         emptyEditorClass: 'is-editor-empty',
+      }),
+      Mention.configure({
+        HTMLAttributes: {
+          class: 'mention',
+        },
+        suggestion,
       }),
     ],
     content: defaultValue,
@@ -194,98 +200,13 @@ export function getStyledMarkdown(editor: Editor): string {
     state.write(tag)
   }
 
-  const customYoutube: NodeSerializerFn = (state, node) => {
-    const { src } = node.attrs as { src: string }
-
-    const match = src.match(
-      /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/|youtube-nocookie\.com\/embed\/)([A-Za-z0-9_-]{11})/,
-    )
-    const videoId = match?.[1]
-    if (videoId) {
-      const nocookieUrl = `https://www.youtube-nocookie.com/embed/${videoId}`
-
-      let tag = '<div class="tw:w-full tw:aspect-video tw:overflow-hidden">'
-      tag += `<iframe src="${nocookieUrl}" allowfullscreen class="tw-w-full tw-h-full" loading="lazy"></iframe>`
-      tag += '</div>'
-      tag += '\n\n'
-      state.write(tag)
-    }
-  }
-
   const customSerializer = new MarkdownSerializer(
     {
       ...baseNodes,
       image: customImage,
-      youtube: customYoutube,
     },
     marks,
   )
 
   return customSerializer.serialize(editor.state.doc)
 }
-
-const CustomYoutube = Youtube.extend({
-  addPasteRules() {
-    return [
-      nodePasteRule({
-        find: youtubePasteRegex,
-        type: this.type,
-        getAttributes: (match) => {
-          return { src: `https://www.youtube-nocookie.com/embed/${match[2]}` }
-        },
-      }),
-    ]
-  },
-  addInputRules() {
-    return [
-      nodeInputRule({
-        find: youtubeInputRegex,
-        type: this.type,
-        getAttributes: (match) => {
-          return { src: `https://www.youtube-nocookie.com/embed/${match[2]}` }
-        },
-      }),
-    ]
-  },
-  parseHTML() {
-    return [
-      {
-        tag: 'iframe[src*="/embed/"]',
-        priority: 1000,
-        getAttrs: (dom) => {
-          const src = (dom as HTMLIFrameElement).getAttribute('src') ?? ''
-          const match = src.match(/\/embed\/([A-Za-z0-9_-]{11})/)
-          if (!match) {
-            return false
-          }
-          const videoId = match[1]
-          return {
-            src: `https://www.youtube-nocookie.com/embed/${videoId}`,
-          }
-        },
-      },
-    ]
-  },
-  renderHTML({ HTMLAttributes }) {
-    // feste Breiten/Höhen raus
-    const { ...attrs } = HTMLAttributes
-    delete attrs.width
-    delete attrs.height
-    const iframeAttrs = mergeAttributes(attrs, {
-      allowfullscreen: '',
-      loading: 'lazy',
-      class: 'tw-w-full tw-h-full',
-    })
-
-    return [
-      'div',
-      { class: 'tw:w-full tw-aspect-video tw-overflow-hidden' },
-      ['iframe', iframeAttrs],
-    ]
-  },
-})
-
-const youtubePasteRegex =
-/(https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/))([A-Za-z0-9_-]{11})(?:\?.*)?/g
-const youtubeInputRegex =
-  /(https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/))([A-Za-z0-9_-]{11})(?:\?.*)?$/

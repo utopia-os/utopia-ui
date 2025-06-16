@@ -165,13 +165,6 @@ function removeMarkdownKeepParagraphs(text: string): string {
       // 4) Code-Fences und Inline-Code entfernen
       .replace(/```[\s\S]*?```/g, '')
       .replace(/`([^`]+)`/g, '$1')
-      // 5) Fett/Italic löschen
-      .replace(/(\*\*|__)(.*?)\1/g, '$2')
-      .replace(/(\*|_)(.*?)\1/g, '$2')
-      // 6) Überschriften-Hashes entfernen
-      .replace(/^#{1,6}\s+(.*)$/gm, '$1')
-      // 7) Listen-Marker entfernen (-, *, +, 1., 2., …)
-      .replace(/^\s*([-+*]|\d+\.)\s+/gm, '')
       // 8) Tabellen-Pipes entfernen
       .replace(/^\|(.+)\|$/gm, '$1')
       .replace(/^\s*\|[-\s|]+\|$/gm, '')
@@ -230,7 +223,6 @@ export const sanitizeSchema = {
       'enableiframeapi',
       'endtime',
       'ivloadpolicy',
-      'loop',
       'modestbranding',
       'origin',
       'playlist',

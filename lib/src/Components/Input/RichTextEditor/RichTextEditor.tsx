@@ -1,10 +1,9 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Color } from '@tiptap/extension-color'
-import { Image } from '@tiptap/extension-image'
 import { Link } from '@tiptap/extension-link'
-import { Mention } from '@tiptap/extension-mention'
 import { Placeholder } from '@tiptap/extension-placeholder'
 import { Table } from '@tiptap/extension-table'
 import { TableCell } from '@tiptap/extension-table-cell'
@@ -13,13 +12,18 @@ import { TableRow } from '@tiptap/extension-table-row'
 import { TaskItem } from '@tiptap/extension-task-item'
 import { TaskList } from '@tiptap/extension-task-list'
 import { Youtube } from '@tiptap/extension-youtube'
-import { EditorContent, useEditor } from '@tiptap/react'
+import { EditorContent, mergeAttributes, useEditor } from '@tiptap/react'
 import { StarterKit } from '@tiptap/starter-kit'
 import { MarkdownSerializer } from 'prosemirror-markdown'
 import { useEffect } from 'react'
 import { Markdown } from 'tiptap-markdown'
 
-import { suggestion } from './suggestion'
+import { useTags } from '#components/Map/hooks/useTags'
+
+import { CustomHeading } from './Extensions/CustomHeading'
+import { CustomImage } from './Extensions/CustomImage'
+import { HashtagMention } from './Extensions/HashtagMention'
+import { suggestion } from './Extensions/suggestion'
 import { TextEditorMenu } from './TextEditorMenu'
 
 import type { Editor } from '@tiptap/react'
@@ -63,11 +67,15 @@ export function RichTextEditor({
   updateFormValue,
 }: RichTextEditorProps) {
   const handleChange = () => {
-    if (!editor) return
     if (updateFormValue) {
-      updateFormValue(getStyledMarkdown(editor))
+      if (editor) {
+        console.log(getStyledMarkdown(editor))
+        updateFormValue(getStyledMarkdown(editor))
+      }
     }
   }
+
+  const tags = useTags()
 
   const editor = useEditor({
     extensions: [
@@ -89,6 +97,29 @@ export function RichTextEditor({
           keepMarks: true,
           keepAttributes: false,
         },
+        heading: false,
+      }),
+      HashtagMention.configure({
+        HTMLAttributes: { class: 'mention' },
+        renderHTML: ({ node, options }) => {
+          return [
+            'span',
+            mergeAttributes(options.HTMLAttributes, {
+              'data-id': node.attrs.id,
+            }),
+            `#${node.attrs.id}`,
+          ]
+        },
+        suggestion: {
+          char: '#',
+          items: ({ query }) => {
+            return tags
+              .map((tag) => tag.name)
+              .filter((tag) => tag.toLowerCase().startsWith(query.toLowerCase()))
+              .slice(0, 5)
+          },
+          ...suggestion,
+        },
       }),
       Markdown.configure({
         html: true,
@@ -106,15 +137,10 @@ export function RichTextEditor({
       TaskItem,
       CustomImage,
       Link,
+      CustomHeading,
       Placeholder.configure({
         placeholder,
         emptyEditorClass: 'is-editor-empty',
-      }),
-      Mention.configure({
-        HTMLAttributes: {
-          class: 'mention',
-        },
-        suggestion,
       }),
     ],
     content: defaultValue,
@@ -156,34 +182,6 @@ export function RichTextEditor({
     </div>
   )
 }
-
-const CustomImage = Image.extend({
-  addAttributes() {
-    return {
-      ...this.parent?.(),
-      style: {
-        default: null,
-        parseHTML: (element) => element.getAttribute('style'),
-        renderHTML: (attributes) => {
-          if (!attributes.style) {
-            return {}
-          }
-          return { style: attributes.style }
-        },
-      },
-      width: {
-        default: null,
-        parseHTML: (element) => element.getAttribute('width'),
-        renderHTML: (attrs) => (attrs.width ? { width: attrs.width } : {}),
-      },
-      height: {
-        default: null,
-        parseHTML: (element) => element.getAttribute('height'),
-        renderHTML: (attrs) => (attrs.height ? { height: attrs.height } : {}),
-      },
-    }
-  },
-})
 
 export function getStyledMarkdown(editor: Editor): string {
   const { serializer } = editor.storage.markdown as { serializer: MarkdownSerializer }

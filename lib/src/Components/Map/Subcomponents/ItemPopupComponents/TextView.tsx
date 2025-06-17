@@ -4,13 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import Markdown from 'react-markdown'
 import { Link as RouterLink } from 'react-router-dom'
-import rehypeRaw from 'rehype-raw'
-import rehypeSanitize, { defaultSchema } from 'rehype-sanitize'
-import remarkBreaks from 'remark-breaks'
-import remarkGfm from 'remark-gfm'
-import { visit } from 'unist-util-visit'
 
 import { RichTextEditor } from '#components/Input/RichTextEditor/RichTextEditor'
 import { useAddFilterTag } from '#components/Map/hooks/useFilter'
@@ -21,7 +15,6 @@ import { fixUrls, mailRegex } from '#utils/ReplaceURLs'
 
 import type { Item } from '#types/Item'
 import type { Tag } from '#types/Tag'
-import type { Root } from 'hast'
 
 /**
  * @category Map
@@ -64,12 +57,6 @@ export const TextView = ({
   if (replacedText) {
     replacedText = replacedText.replace(mailRegex, (url) => {
       return `[${url}](mailto:${url})`
-    })
-  }
-
-  if (replacedText) {
-    replacedText = replacedText.replace(hashTagRegex, (match) => {
-      return `[${match}](${match})`
     })
   }
 
@@ -191,63 +178,4 @@ function truncateText(text, limit) {
   }
 
   return truncated.trim()
-}
-
-export const sanitizeSchema = {
-  ...defaultSchema,
-
-  tagNames: [...(defaultSchema.tagNames ?? []), 'div', 'iframe'],
-  attributes: {
-    ...defaultSchema.attributes,
-    div: [...(defaultSchema.attributes?.div ?? []), 'data-youtube-video'],
-    iframe: [
-      ...(defaultSchema.attributes?.iframe ?? []),
-      'src',
-      'width',
-      'height',
-      'allowfullscreen',
-      'autoplay',
-      'disablekbcontrols',
-      'enableiframeapi',
-      'endtime',
-      'ivloadpolicy',
-      'modestbranding',
-      'origin',
-      'playlist',
-      'rel',
-      'start',
-    ],
-    img: [...(defaultSchema.attributes?.img ?? []), 'style'],
-  },
-
-  protocols: {
-    ...defaultSchema.protocols,
-    src: [...(defaultSchema.protocols?.src ?? []), 'https'],
-  },
-}
-
-export function rehypeFilterYouTubeIframes() {
-  return (tree: Root) => {
-    visit(tree, 'element', (node) => {
-      // node ist hier typischerweise ein HAST-Element
-      const el = node
-
-      if (el.tagName === 'iframe') {
-        const src = String(el.properties?.src ?? '')
-
-        // Nur echte YouTube-Embed-URLs zulassen
-        if (
-          // eslint-disable-next-line security/detect-unsafe-regex
-          !/^https:\/\/(?:www\.)?(?:youtube\.com|youtube-nocookie\.com)\/embed\/[A-Za-z0-9_-]+(?:\?.*)?$/.test(
-            src,
-          )
-        ) {
-          // ersetze es durch einen leeren div
-          el.tagName = 'div'
-          el.properties = {}
-          el.children = []
-        }
-      }
-    })
-  }
 }

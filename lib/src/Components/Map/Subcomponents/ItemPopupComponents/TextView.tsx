@@ -1,45 +1,31 @@
-/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { Link as RouterLink } from 'react-router-dom'
 
 import { RichTextEditor } from '#components/Input/RichTextEditor/RichTextEditor'
-import { useAddFilterTag } from '#components/Map/hooks/useFilter'
-import { useTags } from '#components/Map/hooks/useTags'
-import { decodeTag } from '#utils/FormatTags'
-import { hashTagRegex } from '#utils/HashTagRegex'
 import { fixUrls, mailRegex } from '#utils/ReplaceURLs'
 
 import type { Item } from '#types/Item'
-import type { Tag } from '#types/Tag'
 
 /**
  * @category Map
  */
 export const TextView = ({
   item,
-  itemId,
   text,
   truncate = false,
   rawText,
 }: {
   item?: Item
-  itemId?: string
   text?: string
   truncate?: boolean
   rawText?: string
 }) => {
   if (item) {
     text = item.text
-    itemId = item.id
   }
-  const tags = useTags()
-  const addFilterTag = useAddFilterTag()
-
-  const origin = window.location.origin
 
   let innerText = ''
   let replacedText = ''
@@ -58,71 +44,6 @@ export const TextView = ({
     replacedText = replacedText.replace(mailRegex, (url) => {
       return `[${url}](mailto:${url})`
     })
-  }
-
-  const HashTag = ({ children, tag, itemId }: { children: string; tag: Tag; itemId?: string }) => {
-    return (
-      <a
-        className='hashtag'
-        style={
-          tag && {
-            color: tag.color,
-          }
-        }
-        key={tag ? tag.name + itemId : itemId}
-        onClick={(e) => {
-          e.stopPropagation()
-          addFilterTag(tag)
-        }}
-      >
-        {decodeTag(children)}
-      </a>
-    )
-  }
-
-  const Link = ({ href, children }: { href: string; children: string }) => {
-    // Youtube
-    if (href.startsWith('https://www.youtube.com/watch?v=')) {
-      const videoId = href?.split('v=')[1].split('&')[0]
-      const youtubeEmbedUrl = `https://www.youtube-nocookie.com/embed/${videoId}`
-
-      return (
-        <iframe src={youtubeEmbedUrl} allow='fullscreen;  picture-in-picture' allowFullScreen />
-      )
-    }
-
-    // Rumble
-    if (href.startsWith('https://rumble.com/embed/')) {
-      return <iframe src={href} allow='fullscreen;  picture-in-picture' allowFullScreen />
-    }
-
-    // HashTag
-    if (href.startsWith('#')) {
-      const tag = tags.find((t) => t.name.toLowerCase() === decodeURI(href).slice(1).toLowerCase())
-      if (tag)
-        return (
-          <HashTag tag={tag} itemId={itemId}>
-            {children}
-          </HashTag>
-        )
-      else return children
-    }
-
-    // 4) Interne Links auf gleiche Base-URL
-    if (href.startsWith(origin)) {
-      const to = href.slice(origin.length) || '/'
-      return <RouterLink to={to}>{children}</RouterLink>
-    }
-
-    if (href.startsWith('/')) {
-      return <RouterLink to={href}>{children}</RouterLink>
-    }
-
-    return (
-      <a href={href} target='_blank' rel='noreferrer'>
-        {children}
-      </a>
-    )
   }
 
   return <RichTextEditor defaultValue={replacedText} readOnly={true} />

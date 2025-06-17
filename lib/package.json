@@ -124,6 +124,7 @@
     "browser-image-compression": "^2.0.2",
     "classnames": "^2.5.1",
     "date-fns": "^3.3.1",
+    "html-truncate": "^1.2.2",
     "leaflet": "^1.9.4",
     "leaflet.locatecontrol": "^0.79.0",
     "prosemirror-markdown": "^1.13.2",
@@ -139,10 +140,10 @@
     "react-photo-album": "^3.0.2",
     "react-router-dom": "^6.23.0",
     "react-toastify": "^9.1.3",
+    "remark-parse": "^11.0.0",
     "tippy.js": "^6.3.7",
     "tiptap-markdown": "^0.8.10",
     "unified": "^11.0.5",
-    "remark-parse": "^11.0.0",
     "yet-another-react-lightbox": "^3.21.7"
   },
   "imports": {

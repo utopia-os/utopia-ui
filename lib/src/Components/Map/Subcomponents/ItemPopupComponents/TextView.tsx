@@ -12,6 +12,7 @@ import remarkBreaks from 'remark-breaks'
 import remarkGfm from 'remark-gfm'
 import { visit } from 'unist-util-visit'
 
+import { RichTextEditor } from '#components/Input/RichTextEditor/RichTextEditor'
 import { useAddFilterTag } from '#components/Map/hooks/useFilter'
 import { useTags } from '#components/Map/hooks/useTags'
 import { decodeTag } from '#utils/FormatTags'
@@ -137,20 +138,7 @@ export const TextView = ({
     )
   }
 
-  return (
-    <div translate='no'>
-      <Markdown
-        className={'markdown tw:text-map tw:leading-map tw:text-sm'}
-        remarkPlugins={[remarkBreaks, remarkGfm]}
-        rehypePlugins={[rehypeRaw, [rehypeSanitize, sanitizeSchema]]}
-        components={{
-          a: Link,
-        }}
-      >
-        {replacedText}
-      </Markdown>
-    </div>
-  )
+  return <RichTextEditor defaultValue={replacedText} readOnly={true} />
 }
 
 function removeMarkdownKeepParagraphs(text: string): string {

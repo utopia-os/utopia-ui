@@ -37,6 +37,7 @@ interface RichTextEditorProps {
   defaultValue: string
   placeholder?: string
   showMenu?: boolean
+  readOnly?: boolean
   updateFormValue?: (value: string) => void
 }
 
@@ -64,12 +65,12 @@ export function RichTextEditor({
   defaultValue,
   placeholder,
   showMenu = true,
+  readOnly = false,
   updateFormValue,
 }: RichTextEditorProps) {
   const handleChange = () => {
     if (updateFormValue) {
       if (editor) {
-        console.log(getStyledMarkdown(editor))
         updateFormValue(getStyledMarkdown(editor))
       }
     }
@@ -78,6 +79,7 @@ export function RichTextEditor({
   const tags = useTags()
 
   const editor = useEditor({
+    editable: !readOnly,
     extensions: [
       Color.configure({ types: ['textStyle', 'listItem'] }),
       Youtube.configure({
@@ -147,7 +149,7 @@ export function RichTextEditor({
     onUpdate: handleChange,
     editorProps: {
       attributes: {
-        class: `tw:h-full markdown tw:max-h-full tw:p-2 tw:overflow-y-auto`,
+        class: `tw:h-full markdown tw:max-h-full ${readOnly ? `` : `tw:p-2`} tw:overflow-y-auto tw:overflow-x-hidden`,
       },
     },
   })
@@ -170,12 +172,12 @@ export function RichTextEditor({
         </label>
       ) : null}
       <div
-        className={`editor-wrapper tw:border-base-content/20 tw:rounded-box tw:border tw:flex tw:flex-col tw:flex-1 tw:min-h-0`}
+        className={`${readOnly ? `` : `editor-wrapper tw:border-base-content/20 tw:rounded-box tw:border`} tw:flex tw:flex-col tw:flex-1 tw:min-h-0`}
       >
         {editor ? (
           <>
-            {showMenu ? <TextEditorMenu editor={editor} /> : null}
-            <EditorContent editor={editor} />
+            {showMenu && !readOnly ? <TextEditorMenu editor={editor} /> : null}
+            <EditorContent editor={editor}/>
           </>
         ) : null}
       </div>

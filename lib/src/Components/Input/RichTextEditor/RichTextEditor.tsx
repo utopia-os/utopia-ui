@@ -177,7 +177,7 @@ export function RichTextEditor({
         {editor ? (
           <>
             {showMenu && !readOnly ? <TextEditorMenu editor={editor} /> : null}
-            <EditorContent editor={editor}/>
+            <EditorContent editor={editor} />
           </>
         ) : null}
       </div>

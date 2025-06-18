@@ -199,7 +199,9 @@ export const onUpdateItem = async (
     ...(state.offers.length > 0 && { offers: offerUpdates }),
     ...(state.needs.length > 0 && { needs: needsUpdates }),
     ...(state.openCollectiveSlug && { openCollectiveSlug: state.openCollectiveSlug }),
-    gallery: state.gallery,
+    gallery: state.gallery.map((i) => ({
+      directus_files_id: i.directus_files_id.id,
+    })),
   }
 
   const offersState: any[] = []
@@ -249,7 +251,16 @@ export const onUpdateItem = async (
           },
         })
         .catch(setLoading(false))
-        .then(() => item && updateItem({ ...item, ...changedItem, markerIcon: state.marker_icon }))
+        .then(
+          () =>
+            item &&
+            updateItem({
+              ...item,
+              ...changedItem,
+              markerIcon: state.marker_icon,
+              gallery: state.gallery,
+            }),
+        )
         .then(() => {
           setLoading(false)
           navigate(`/item/${item.id}${params && '?' + params}`)

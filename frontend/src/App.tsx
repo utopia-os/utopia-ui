@@ -230,7 +230,6 @@ function App() {
                       path={l.name}
                       element={
                         <OverlayItemsIndexPage
-                          plusButton={l.index_plus_button}
                           layerName={l.name}
                           url={'/item/'}
                           parameterField={'id'}

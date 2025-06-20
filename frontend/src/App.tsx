@@ -51,6 +51,24 @@ import { Landingpage } from './pages/Landingpage'
 import MapContainer from './pages/MapContainer'
 import { getBottomRoutes, routes } from './routes/sidebar'
 
+const ProfileForm = lazy(() =>
+  import('utopia-ui/Profile').then((mod) => ({
+    default: mod.ProfileForm,
+  })),
+)
+
+const ProfileView = lazy(() =>
+  import('utopia-ui/Profile').then((mod) => ({
+    default: mod.ProfileView,
+  })),
+)
+
+const UserSettings = lazy(() =>
+  import('utopia-ui/Profile').then((mod) => ({
+    default: mod.UserSettings,
+  })),
+)
+
 function App() {
   const [permissionsApiInstance, setPermissionsApiInstance] = useState<permissionsApi>()
   const [tagsApi, setTagsApi] = useState<itemsApi<Tag>>()
@@ -133,24 +151,6 @@ function App() {
 
   const currentUrl = window.location.href
   const bottomRoutes = getBottomRoutes(currentUrl)
-
-  const ProfileForm = lazy(() =>
-    import('utopia-ui/Profile').then((mod) => ({
-      default: mod.ProfileForm,
-    })),
-  )
-
-  const ProfileView = lazy(() =>
-    import('utopia-ui/Profile').then((mod) => ({
-      default: mod.ProfileView,
-    })),
-  )
-
-  const UserSettings = lazy(() =>
-    import('utopia-ui/Profile').then((mod) => ({
-      default: mod.UserSettings,
-    })),
-  )
 
   if (map && layers)
     return (

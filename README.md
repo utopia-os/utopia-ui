@@ -115,20 +115,138 @@ cd backend
 docker-compose up
 ```
 
-## Get your Map! 🌱 🌍
+## 📁 Project Structure
+
+```
+utopia-map/
+├── frontend/          # React application
+│   ├── src/
+│   │   ├── api/      # API integration layer
+│   │   ├── pages/    # Page components
+│   │   └── routes/   # Routing configuration
+│   └── public/       # Static assets
+├── lib/              # Utopia UI component library
+│   ├── src/
+│   │   ├── Components/   # Reusable components
+│   │   │   ├── AppShell/ # App layout components
+│   │   │   ├── Auth/     # Authentication components
+│   │   │   ├── Gaming/   # Quest system
+│   │   │   ├── Input/    # Form components
+│   │   │   ├── Item/     # Item management
+│   │   │   ├── Map/      # Map components
+│   │   │   ├── Profile/  # Profile components
+│   │   │   └── Templates/# UI templates
+│   │   ├── Utils/    # Utility functions
+│   │   └── types/    # TypeScript definitions
+│   └── examples/     # Example implementations
+└── backend/          # Directus backend
+    ├── directus-config/  # Configuration files
+    └── extensions/       # Custom extensions
+```
+
+## 💻 Development
+
+### Available Scripts
+
+#### Frontend
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run preview      # Preview production build
+npm run test:lint:eslint  # Run linting
+```
+
+#### Component Library
+```bash
+npm run start        # Watch mode
+npm run build        # Build library
+npm run test:unit    # Run unit tests
+npm run test:component  # Run component tests
+npm run lint         # Run linting
+npm run docs:generate   # Generate documentation
+```
+
+### Code Quality
+- **ESLint** & **Prettier** for code formatting
+- **TypeScript** strict mode enabled
+- Comprehensive test coverage with Vitest and Cypress
+- Documentation with TypeDoc
+
+## 🌐 Deployment Options
+
+### SaaS
+A hosted solution with regular updates and support for easy onboarding and maintenance.
+
+### Self-Hosted
+Deploy on your own infrastructure to retain full control and customization:
+
+1. **Frontend**: Can be deployed to any static hosting service (Netlify, Vercel, etc.)
+2. **Backend**: Deploy Directus using Docker or any Node.js hosting
+3. **Environment Variables**: Configure API endpoints and authentication
+
+## 📚 Examples
+
+The library includes three example implementations in `/lib/examples/`:
+
+1. **Basic Map** - Simple map implementation
+2. **Static Layers** - Map with predefined layers
+3. **Tags** - Implementation with tagging system
+
+## 🎮 Component Library Features
+
+### Map Components
+- Interactive map with Leaflet
+- Clustered markers
+- Custom marker icons
+- Layer management
+- Search functionality
+- Location controls
+
+### UI Components
+- Responsive app shell
+- Modal system
+- Form inputs with validation
+- Rich text editor
+- Image upload with compression
+- Date/time pickers
+
+### Profile System
+- Multiple profile templates (Simple, Onepager, Tabs, Flex)
+- Gallery management
+- Social sharing
+- Relation management
+- Crowdfunding integration
+
+## 🌱 Get your Map!
 
 Start mapping and growing your community ecosystem together with your custom map.
 
 [Join us on Telegram](https://t.me/UtopiaMap)
 
-## Support Utopia Map 💚
+## 💚 Support Utopia Map
 
-We are building Utopia Map as an free and opensource tool. To keep this project sustainable and accessible, we need financial support as well as Developrs, UX Designer, Community Managers and Content Creators.
+We are building Utopia Map as a free and open-source tool. To keep this project sustainable and accessible, we need financial support as well as Developers, UX Designers, Community Managers and Content Creators.
+
+### How to Contribute
+
+- **Code**: Submit pull requests with improvements
+- **Documentation**: Help improve our docs
+- **Translation**: Help translate the interface
+- **Testing**: Report bugs and test new features
+- **Design**: Contribute UI/UX improvements
 
 [Join us on Telegram](https://t.me/UtopiaMap) and support us on [OpenCollective](https://opencollective.com/utopia-project)
 
 <a href="https://opencollective.com/utopia-project">
     <img width="250" src="https://opencollective.com/utopia-project/donate/button@2x.png?color=blue" style="margin-bottom:20px;" />
 </a>
+
+## 📄 License
+
+This project is licensed under the terms specified in the LICENSE file.
+
+## 🙏 Acknowledgments
+
+Utopia Map is built with and depends on many amazing open-source projects. Special thanks to all contributors and supporters who make this project possible.
 
 

@@ -25,7 +25,7 @@ Utopia Map consists of three main parts:
 A React-based single-page application that provides the user interface for the map and all its features.
 
 ### 2. Component Library (`/lib` - published as `utopia-ui`)
-A reusable React component library (v3.0.106) that contains all the UI components needed to build mapping applications.
+A reusable React component library that contains all the UI components needed to build mapping applications.
 
 ### 3. Backend (`/backend`)
 A Directus-powered backend that handles data management, user authentication, and API services.

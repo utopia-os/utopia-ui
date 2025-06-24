@@ -8,19 +8,6 @@
 
 *It can work with any backend or p2p database and any kind of data structure.*
 
-## 📋 Table of Contents
-
-- [Mission](#mission)
-- [Features](#features)
-- [Installation](#installation)
-- [Getting Started](#getting-started)
-- [Components](#components)
-- [Examples](#examples)
-- [API Reference](#api-reference)
-- [Development](#development)
-- [Contributing](#contributing)
-- [Support](#support)
-
 ## 🎯 Mission 
 
 Utopia UI's mission is to provide open source building blocks to create beautiful applications with a focus on real life impact, local communities and gamification. 

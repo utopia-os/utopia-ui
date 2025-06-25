@@ -20,6 +20,7 @@ import {
   Content,
   AuthProvider,
   Modal,
+  InvitePage,
   LoginPage,
   SignupPage,
   Quests,
@@ -50,6 +51,7 @@ import { ModalContent } from './ModalContent'
 import { Landingpage } from './pages/Landingpage'
 import MapContainer from './pages/MapContainer'
 import { getBottomRoutes, routes } from './routes/sidebar'
+import { InviteApi } from './api/InviteApi'
 
 const ProfileForm = lazy(() =>
   import('utopia-ui/Profile').then((mod) => ({
@@ -68,6 +70,8 @@ const UserSettings = lazy(() =>
     default: mod.UserSettings,
   })),
 )
+
+const inviteApi = new InviteApi()
 
 function App() {
   const [permissionsApiInstance, setPermissionsApiInstance] = useState<permissionsApi>()
@@ -155,7 +159,7 @@ function App() {
   if (map && layers)
     return (
       <div className='App overflow-x-hidden'>
-        <AuthProvider userApi={new userApi()}>
+        <AuthProvider userApi={new userApi()} inviteApi={inviteApi}>
           <AppShell
             assetsApi={new assetsApi('https://api.utopia-lab.org/assets/')}
             appName={map.name}
@@ -175,7 +179,7 @@ function App() {
               <Quests />
               <Routes>
                 <Route path='/*' element={<MapContainer map={map} layers={layers} />}>
-                  <Route path='invite' element={<InvitePage />} />
+                  <Route path='invite/:id' element={<InvitePage inviteApi={inviteApi} />} />
                   <Route path='login' element={<LoginPage />} />
                   <Route path='signup' element={<SignupPage />} />
                   <Route

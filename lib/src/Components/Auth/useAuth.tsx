@@ -1,5 +1,6 @@
-import { createContext, useState, useContext, useEffect } from 'react'
+import { createContext, useState, useContext, useEffect, useCallback } from 'react'
 
+import type { InviteApi } from '#types/InviteApi'
 import type { UserApi } from '#types/UserApi'
 import type { UserItem } from '#types/UserItem'
 
@@ -8,6 +9,7 @@ export type { UserItem } from '#types/UserItem'
 
 interface AuthProviderProps {
   userApi: UserApi
+  inviteApi: InviteApi
   children?: React.ReactNode
 }
 
@@ -46,21 +48,13 @@ const AuthContext = createContext<AuthContextProps>({
 /**
  * @category Auth
  */
-export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
+export const AuthProvider = ({ userApi, inviteApi, children }: AuthProviderProps) => {
   const [user, setUser] = useState<UserItem | null>(null)
   const [token, setToken] = useState<string>()
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(true)
   const isAuthenticated = !!user
 
-  useEffect(() => {
-    setLoading(true)
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    loadUser()
-    setLoading(false)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  async function loadUser(): Promise<UserItem | undefined> {
+  const loadUser: () => Promise<UserItem | undefined> = useCallback(async () => {
     try {
       const token = await userApi.getToken()
       setToken(token)
@@ -75,13 +69,23 @@ export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
       setLoading(false)
       return undefined
     }
-  }
+  }, [userApi])
+
+  useEffect(() => {
+    void loadUser()
+  }, [loadUser])
 
   const login = async (credentials: AuthCredentials): Promise<UserItem | undefined> => {
     setLoading(true)
     try {
       const user = await userApi.login(credentials.email, credentials.password)
       setToken(user?.access_token)
+      const inviteCode = localStorage.getItem('inviteCode')
+      if (inviteCode) {
+        // If an invite code is stored, redeem it
+        await inviteApi.redeemInvite(inviteCode)
+        localStorage.removeItem('inviteCode') // Clear invite code after redeeming
+      }
       return await loadUser()
     } catch (error) {
       setLoading(false)

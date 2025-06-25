@@ -1,14 +1,16 @@
 import { config } from '@/config'
 
-interface InvitingProfileResponse {
-  id: string
-}
+type InvitingProfileResponse = [
+  {
+    item: string
+  },
+]
 
-export class inviteApi {
-  async getInvitingProfileId(inviteId: string): Promise<string | null> {
+export class InviteApi {
+  async validateInvite(inviteId: string): Promise<string | null> {
     try {
       const response = await fetch(
-        `${config.apiUrl}/flows/trigger/${config.validateInviteFlowId}/${inviteId}`,
+        `${config.apiUrl}/flows/trigger/${config.validateInviteFlowId}?secret=${inviteId}`,
         {
           method: 'GET',
           mode: 'cors',
@@ -18,13 +20,11 @@ export class inviteApi {
         },
       )
 
-      if (!response.ok) {
-        return null
-      }
+      if (!response.ok) return null
 
       const data = (await response.json()) as InvitingProfileResponse
 
-      return data.id
+      return data[0].item
     } catch (error: unknown) {
       // eslint-disable-next-line no-console
       console.error('Error fetching inviting profile:', error)
@@ -36,16 +36,11 @@ export class inviteApi {
     }
   }
 
-  async validateInvite(inviteId: string): Promise<boolean> {
-    const invitingProfileId = await this.getInvitingProfileId(inviteId)
-
-    return invitingProfileId !== null
-  }
-
-  async redeemInvite(inviteId: string): Promise<boolean> {
+  async redeemInvite(inviteId: string): Promise<string | null> {
     try {
       const response = await fetch(
-        `${config.apiUrl}/flows/trigger/${config.redeemInviteFlowId}/${inviteId}`,
+        // `${config.apiUrl}/flows/trigger/${config.redeemInviteFlowId}?secret=${inviteId}`,
+        `${config.apiUrl}/flows/trigger/${config.validateInviteFlowId}?secret=${inviteId}`,
         {
           method: 'GET',
           mode: 'cors',
@@ -55,7 +50,11 @@ export class inviteApi {
         },
       )
 
-      return response.ok
+      if (!response.ok) return null
+
+      const data = (await response.json()) as InvitingProfileResponse
+
+      return data[0].item
     } catch (error: unknown) {
       // eslint-disable-next-line no-console
       console.error('Error fetching inviting profile:', error)

@@ -16,6 +16,10 @@ interface GalleryItem {
   }
 }
 
+interface ItemSecret {
+  secret: string
+}
+
 /**
  * @category Types
  */
@@ -53,6 +57,7 @@ export interface Item {
   next_appointment?: string
   gallery?: GalleryItem[]
   openCollectiveSlug?: string
+  secrets?: ItemSecret[]
 
   // {
   // coordinates: [number, number]

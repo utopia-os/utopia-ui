@@ -1,11 +1,12 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import tailwindcss from '@tailwindcss/vite';
-import fs from 'fs';
-import path from 'path';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+import tsConfigPaths from 'vite-tsconfig-paths'
+import fs from 'fs'
+import path from 'path'
 
 // __dirname-Ersatz für ESModules
-const __dirname = path.dirname(new URL(import.meta.url).pathname);
+const __dirname = path.dirname(new URL(import.meta.url).pathname)
 
 export default defineConfig({
   server: {
@@ -18,18 +19,12 @@ export default defineConfig({
      * },
      */
   },
-  plugins: [
-    react(),
-    tailwindcss(),
-  ],
+  plugins: [react(), tailwindcss(), tsConfigPaths()],
   build: {
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (
-            id.includes('node_modules/utopia-ui/dist/Profile') &&
-            /\.(esm|cjs)\.js$/.test(id)
-          ) {
+          if (id.includes('node_modules/utopia-ui/dist/Profile') && /\.(esm|cjs)\.js$/.test(id)) {
             return 'profile-form'
           }
 
@@ -40,8 +35,8 @@ export default defineConfig({
           if (id.includes('node_modules/')) {
             return 'vendor'
           }
-        }
-      }
-    }
-  }
-});
+        },
+      },
+    },
+  },
+})

@@ -28,18 +28,17 @@ export function InvitePage({ inviteApi }: Props) {
       const invitingProfileId = await inviteApi.redeemInvite(id)
       if (invitingProfileId) {
         toast.success('Invite redeemed successfully!')
-        navigate(`/item/${id}`)
+        navigate(`/item/${invitingProfileId}`)
       } else {
         toast.error('Failed to redeem invite')
+        navigate('/')
       }
-      navigate('/')
     }
 
     if (isLoadingAuthentication) return
 
     if (isAuthenticated) {
       void redeemInvite()
-      navigate('/')
     } else {
       // Save invite code in local storage
       localStorage.setItem('inviteCode', id)

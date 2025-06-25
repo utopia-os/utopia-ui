@@ -1,4 +1,5 @@
 import { createContext, useState, useContext, useEffect, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import type { InviteApi } from '#types/InviteApi'
 import type { UserApi } from '#types/UserApi'
@@ -49,6 +50,7 @@ const AuthContext = createContext<AuthContextProps>({
  * @category Auth
  */
 export const AuthProvider = ({ userApi, inviteApi, children }: AuthProviderProps) => {
+  const navigate = useNavigate()
   const [user, setUser] = useState<UserItem | null>(null)
   const [token, setToken] = useState<string>()
   const [loading, setLoading] = useState<boolean>(true)
@@ -80,13 +82,17 @@ export const AuthProvider = ({ userApi, inviteApi, children }: AuthProviderProps
     try {
       const user = await userApi.login(credentials.email, credentials.password)
       setToken(user?.access_token)
+      const fullUser = await loadUser()
       const inviteCode = localStorage.getItem('inviteCode')
       if (inviteCode) {
         // If an invite code is stored, redeem it
-        await inviteApi.redeemInvite(inviteCode)
+        const invitingProfileId = await inviteApi.redeemInvite(inviteCode)
         localStorage.removeItem('inviteCode') // Clear invite code after redeeming
+        if (invitingProfileId) {
+          navigate(`/item/${invitingProfileId}`)
+        }
       }
-      return await loadUser()
+      return fullUser
     } catch (error) {
       setLoading(false)
       throw error

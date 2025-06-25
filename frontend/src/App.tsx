@@ -52,6 +52,7 @@ import { Landingpage } from './pages/Landingpage'
 import MapContainer from './pages/MapContainer'
 import { getBottomRoutes, routes } from './routes/sidebar'
 import { InviteApi } from './api/InviteApi'
+import { config } from '@/config'
 
 const ProfileForm = lazy(() =>
   import('utopia-ui/Profile').then((mod) => ({
@@ -164,7 +165,7 @@ function App() {
             assetsApi={new assetsApi('https://api.utopia-lab.org/assets/')}
             appName={map.name}
             embedded={embedded}
-            openCollectiveApiKey={import.meta.env.VITE_OPEN_COLLECTIVE_API_KEY}
+            openCollectiveApiKey={config.openCollectiveApiKey}
           >
             <Permissions
               api={permissionsApiInstance}
@@ -180,7 +181,7 @@ function App() {
               <Routes>
                 <Route path='/*' element={<MapContainer map={map} layers={layers} />}>
                   <Route path='invite/:id' element={<InvitePage inviteApi={inviteApi} />} />
-                  <Route path='login' element={<LoginPage />} />
+                  <Route path='login' element={<LoginPage inviteApi={inviteApi} />} />
                   <Route path='signup' element={<SignupPage />} />
                   <Route
                     path='reset-password'

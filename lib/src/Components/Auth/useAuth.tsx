@@ -1,5 +1,4 @@
 import { createContext, useState, useContext, useEffect, useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import type { InviteApi } from '#types/InviteApi'
 import type { UserApi } from '#types/UserApi'
@@ -22,6 +21,7 @@ interface AuthCredentials {
 
 interface AuthContextProps {
   isAuthenticated: boolean
+  isInitialized: boolean
   user: UserItem | null
   login: (credentials: AuthCredentials) => Promise<UserItem | undefined>
   register: (credentials: AuthCredentials, userName: string) => Promise<UserItem | undefined>
@@ -35,6 +35,7 @@ interface AuthContextProps {
 
 const AuthContext = createContext<AuthContextProps>({
   isAuthenticated: false,
+  isInitialized: false,
   user: null,
   login: () => Promise.reject(Error('Unimplemented')),
   register: () => Promise.reject(Error('Unimplemented')),
@@ -49,11 +50,11 @@ const AuthContext = createContext<AuthContextProps>({
 /**
  * @category Auth
  */
-export const AuthProvider = ({ userApi, inviteApi, children }: AuthProviderProps) => {
-  const navigate = useNavigate()
+export const AuthProvider = ({ userApi, children }: AuthProviderProps) => {
   const [user, setUser] = useState<UserItem | null>(null)
   const [token, setToken] = useState<string>()
-  const [loading, setLoading] = useState<boolean>(true)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [isInitialized, setIsInitialized] = useState<boolean>(false)
   const isAuthenticated = !!user
 
   const loadUser: () => Promise<UserItem | undefined> = useCallback(async () => {
@@ -65,11 +66,15 @@ export const AuthProvider = ({ userApi, inviteApi, children }: AuthProviderProps
         setUser(me)
         setLoading(false)
         return me
-      } else return undefined
+      } else {
+        return undefined
+      }
       // eslint-disable-next-line no-catch-all/no-catch-all
     } catch (error) {
       setLoading(false)
       return undefined
+    } finally {
+      setIsInitialized(true)
     }
   }, [userApi])
 
@@ -83,15 +88,7 @@ export const AuthProvider = ({ userApi, inviteApi, children }: AuthProviderProps
       const user = await userApi.login(credentials.email, credentials.password)
       setToken(user?.access_token)
       const fullUser = await loadUser()
-      const inviteCode = localStorage.getItem('inviteCode')
-      if (inviteCode) {
-        // If an invite code is stored, redeem it
-        const invitingProfileId = await inviteApi.redeemInvite(inviteCode)
-        localStorage.removeItem('inviteCode') // Clear invite code after redeeming
-        if (invitingProfileId) {
-          navigate(`/item/${invitingProfileId}`)
-        }
-      }
+
       return fullUser
     } catch (error) {
       setLoading(false)
@@ -163,6 +160,7 @@ export const AuthProvider = ({ userApi, inviteApi, children }: AuthProviderProps
     <AuthContext.Provider
       value={{
         isAuthenticated,
+        isInitialized,
         user,
         login,
         register,

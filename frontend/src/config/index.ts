@@ -4,4 +4,5 @@ export const config = {
     import.meta.env.VITE_VALIDATE_INVITE_FLOW_ID ?? '01d61db0-25aa-4bfa-bc24-c6a8f208a455',
   ),
   redeemInviteFlowId: String(import.meta.env.VITE_REDEEM_INVITE_FLOW_ID ?? 'todo'),
+  openCollectiveApiKey: String(import.meta.env.VITE_OPEN_COLLECTIVE_API_KEY ?? ''),
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
@@ -6,10 +6,16 @@ import { MapOverlayPage } from '#components/Templates/MapOverlayPage'
 
 import { useAuth } from './useAuth'
 
+import type { InviteApi } from '#types/InviteApi'
+
+interface Props {
+  inviteApi: InviteApi
+}
+
 /**
  * @category Auth
  */
-export function LoginPage() {
+export function LoginPage({ inviteApi }: Props) {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
 
@@ -17,12 +23,26 @@ export function LoginPage() {
 
   const navigate = useNavigate()
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const onLogin = async () => {
+  const handleSuccess = useCallback(async () => {
+    const inviteCode = localStorage.getItem('inviteCode')
+    let invitingProfileId: string | null = null
+    if (inviteCode) {
+      // If an invite code is stored, redeem it
+      invitingProfileId = await inviteApi.redeemInvite(inviteCode)
+      localStorage.removeItem('inviteCode') // Clear invite code after redeeming
+    }
+    if (invitingProfileId) {
+      navigate(`/item/${invitingProfileId}`)
+    } else {
+      navigate('/')
+    }
+  }, [inviteApi, navigate])
+
+  const onLogin = useCallback(async () => {
     await toast.promise(login({ email, password }), {
       success: {
         render({ data }) {
-          navigate('/')
+          void handleSuccess()
           return `Hi ${data?.first_name ? data.first_name : 'Traveler'}`
         },
         // other options
@@ -36,7 +56,7 @@ export function LoginPage() {
       },
       pending: 'logging in ...',
     })
-  }
+  }, [email, handleSuccess, login, password])
 
   useEffect(() => {
     const keyDownHandler = (event: KeyboardEvent) => {

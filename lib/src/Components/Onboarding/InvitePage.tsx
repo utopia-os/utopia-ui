@@ -15,7 +15,7 @@ interface Props {
  * @category Onboarding
  */
 export function InvitePage({ inviteApi }: Props) {
-  const { isAuthenticated, loading: isLoadingAuthentication } = useAuth()
+  const { isAuthenticated, isInitialized: isAuthenticationInitialized } = useAuth()
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
 
@@ -35,7 +35,7 @@ export function InvitePage({ inviteApi }: Props) {
       }
     }
 
-    if (isLoadingAuthentication) return
+    if (!isAuthenticationInitialized) return
 
     if (isAuthenticated) {
       void redeemInvite()
@@ -46,7 +46,7 @@ export function InvitePage({ inviteApi }: Props) {
       // Redirect to login page
       navigate('/login')
     }
-  }, [id, isAuthenticated, inviteApi, navigate, isLoadingAuthentication])
+  }, [id, isAuthenticated, inviteApi, navigate, isAuthenticationInitialized])
 
   return (
     <MapOverlayPage backdrop className='tw:max-w-xs tw:h-fit'>

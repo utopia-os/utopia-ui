@@ -175,6 +175,7 @@ function App() {
               <Quests />
               <Routes>
                 <Route path='/*' element={<MapContainer map={map} layers={layers} />}>
+                  <Route path='invite' element={<InvitePage />} />
                   <Route path='login' element={<LoginPage />} />
                   <Route path='signup' element={<SignupPage />} />
                   <Route

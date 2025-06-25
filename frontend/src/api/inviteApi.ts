@@ -39,8 +39,7 @@ export class InviteApi {
   async redeemInvite(inviteId: string): Promise<string | null> {
     try {
       const response = await fetch(
-        // `${config.apiUrl}/flows/trigger/${config.redeemInviteFlowId}?secret=${inviteId}`,
-        `${config.apiUrl}/flows/trigger/${config.validateInviteFlowId}?secret=${inviteId}`,
+        `${config.apiUrl}/flows/trigger/${config.redeemInviteFlowId}?secret=${inviteId}`,
         {
           method: 'GET',
           mode: 'cors',

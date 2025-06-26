@@ -124,11 +124,11 @@ function MapContainer({ layers, map }: { layers: LayerProps[]; map: any }) {
                   <PopupStartEndInput showLabels={false}></PopupStartEndInput>
                 )}
                 {layer.itemType.show_text_input && (
-                  <div className='mt-4'>
+                  <div className='tw:mt-4'>
                     <PopupTextAreaInput
                       dataField='text'
                       placeholder={'Text ...'}
-                      style='tw-h-40'
+                      style='tw:h-40'
                     ></PopupTextAreaInput>
                   </div>
                 )}
@@ -136,7 +136,7 @@ function MapContainer({ layers, map }: { layers: LayerProps[]; map: any }) {
                   // layer.public_edit_items && <PopupCheckboxInput dataField={'public_edit'} label={'public edit'}/>
                 }
                 {layer.itemType.custom_text && (
-                  <div className='flex justify-center'>
+                  <div className='tw:flex tw:justify-center'>
                     <p>{layer.itemType.custom_text}</p>
                   </div>
                 )}

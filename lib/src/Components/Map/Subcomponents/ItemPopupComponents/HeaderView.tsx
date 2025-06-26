@@ -74,7 +74,7 @@ export function HeaderView({
     <>
       <div className='tw:flex tw:flex-row'>
         <div className={'tw:grow tw:max-w-[calc(100%-60px)] }'}>
-          <div className='flex items-center'>
+          <div className='tw:flex tw:items-center'>
             {avatar && (
               <div className='tw:avatar'>
                 <div

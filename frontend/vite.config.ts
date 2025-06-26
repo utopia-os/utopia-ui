@@ -22,26 +22,10 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (
-            id.includes('node_modules/utopia-ui/dist/Profile') &&
-            /\.(esm|cjs)\.js$/.test(id)
-          ) {
-            return 'profile-form'
-          }
-
-          if (id.includes('node_modules/utopia-ui/')) {
-            return 'utopia-ui-vendor'
-          }
-
-          if (id.includes('node_modules/')) {
-            return 'vendor'
-          }
-        }
-      }
+  resolve: {
+    alias: {
+      'utopia-ui': path.resolve(__dirname, '../lib/src'),
+      
     }
   }
 });

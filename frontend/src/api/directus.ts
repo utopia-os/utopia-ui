@@ -51,11 +51,6 @@ interface CustomUserFields {
   position: Point
 }
 
-interface ItemSecret {
-  secret: string
-  item: string
-}
-
 export interface MyCollections {
   places: Place[]
   events: Event[]
@@ -63,7 +58,6 @@ export interface MyCollections {
   tags: Tag[]
   projects: Project[]
   directus_users: CustomUserFields[]
-  item_secrets: ItemSecret[]
   items: Item[]
   team: any[]
   features: any[]

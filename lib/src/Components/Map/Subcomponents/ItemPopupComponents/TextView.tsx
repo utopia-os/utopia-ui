@@ -129,7 +129,7 @@ export const TextView = ({
   }
 
   return (
-    <div translate="no"> 
+    <div translate='no'>
       <Markdown
         className={'markdown tw:text-map tw:leading-map tw:text-sm'}
         remarkPlugins={[remarkBreaks]}

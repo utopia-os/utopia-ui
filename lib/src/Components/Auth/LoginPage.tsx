@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
+import { useMyProfile } from '#components/Map/hooks/useMyProfile'
 import { MapOverlayPage } from '#components/Templates/MapOverlayPage'
 
 import { useAuth } from './useAuth'
@@ -21,22 +22,36 @@ export function LoginPage({ inviteApi }: Props) {
 
   const { login, loading } = useAuth()
 
+  const myProfile = useMyProfile()
+
   const navigate = useNavigate()
+
+  const redeemInvite = useCallback(
+    async (inviteCode: string): Promise<string | null> => {
+      if (!myProfile) {
+        toast.error('Could not find your profile to redeem the invite.')
+        return null
+      }
+
+      const invitingProfileId = await inviteApi.redeemInvite(inviteCode, myProfile.id)
+      localStorage.removeItem('inviteCode') // Clear invite code after redeeming
+      return invitingProfileId
+    },
+    [inviteApi, myProfile],
+  )
 
   const handleSuccess = useCallback(async () => {
     const inviteCode = localStorage.getItem('inviteCode')
     let invitingProfileId: string | null = null
     if (inviteCode) {
-      // If an invite code is stored, redeem it
-      invitingProfileId = await inviteApi.redeemInvite(inviteCode)
-      localStorage.removeItem('inviteCode') // Clear invite code after redeeming
+      invitingProfileId = await redeemInvite(inviteCode)
     }
     if (invitingProfileId) {
       navigate(`/item/${invitingProfileId}`)
     } else {
       navigate('/')
     }
-  }, [inviteApi, navigate])
+  }, [navigate, redeemInvite])
 
   const onLogin = useCallback(async () => {
     await toast.promise(login({ email, password }), {

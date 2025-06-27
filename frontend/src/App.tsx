@@ -46,7 +46,7 @@ import { itemsApi } from './api/itemsApi'
 import { layersApi } from './api/layersApi'
 import { mapApi } from './api/mapApi'
 import { permissionsApi } from './api/permissionsApi'
-import { userApi } from './api/userApi'
+import { UserApi } from './api/userApi'
 import { ModalContent } from './ModalContent'
 import { Landingpage } from './pages/Landingpage'
 import MapContainer from './pages/MapContainer'
@@ -72,7 +72,8 @@ const UserSettings = lazy(() =>
   })),
 )
 
-const inviteApi = new InviteApi()
+const userApi = new UserApi()
+const inviteApi = new InviteApi(userApi)
 
 function App() {
   const [permissionsApiInstance, setPermissionsApiInstance] = useState<permissionsApi>()
@@ -160,7 +161,7 @@ function App() {
   if (map && layers)
     return (
       <div className='App overflow-x-hidden'>
-        <AuthProvider userApi={new userApi()} inviteApi={inviteApi}>
+        <AuthProvider userApi={userApi} inviteApi={inviteApi}>
           <AppShell
             assetsApi={new assetsApi('https://api.utopia-lab.org/assets/')}
             appName={map.name}

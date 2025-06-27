@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { useAuth } from '#components/Auth/useAuth'
+import { useMyProfile } from '#components/Map/hooks/useMyProfile'
 import { MapOverlayPage } from '#components/Templates/MapOverlayPage'
 
 import type { InviteApi } from '#types/InviteApi'
@@ -19,13 +20,21 @@ export function InvitePage({ inviteApi }: Props) {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
 
+  const myProfile = useMyProfile()
+
   if (!id) throw new Error('Invite ID is required')
 
   useEffect(() => {
     async function redeemInvite() {
       if (!id) throw new Error('Invite ID is required')
 
-      const invitingProfileId = await inviteApi.redeemInvite(id)
+      if (!myProfile) {
+        toast.error('Could not find your profile to redeem the invite.')
+        return
+      }
+
+      const invitingProfileId = await inviteApi.redeemInvite(id, myProfile.id)
+
       if (invitingProfileId) {
         toast.success('Invite redeemed successfully!')
         navigate(`/item/${invitingProfileId}`)
@@ -46,7 +55,7 @@ export function InvitePage({ inviteApi }: Props) {
       // Redirect to login page
       navigate('/login')
     }
-  }, [id, isAuthenticated, inviteApi, navigate, isAuthenticationInitialized])
+  }, [id, isAuthenticated, inviteApi, navigate, isAuthenticationInitialized, myProfile])
 
   return (
     <MapOverlayPage backdrop className='tw:max-w-xs tw:h-fit'>

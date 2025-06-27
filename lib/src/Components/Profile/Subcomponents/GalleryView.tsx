@@ -23,12 +23,19 @@ export const GalleryView = ({ item }: { item: Item }) => {
   const [index, setIndex] = useState(-1)
   const appState = useAppState()
   const images =
-    item.gallery?.map(({ directus_files_id: { id, type, width, height } }, index) => ({
-      src: `${appState.assetsApi.url}${id}${getExtension(type)}`,
-      width,
-      height,
-      index,
-    })) ?? []
+    item.gallery?.flatMap((g, index) => {
+      const file = g.directus_files_id
+      if (typeof file === 'string') return []
+      const { id, type, width, height } = file
+      return [
+        {
+          src: `${appState.assetsApi.url}${id}${getExtension(type)}`,
+          width,
+          height,
+          index,
+        },
+      ]
+    }) ?? []
 
   if (images.length > 0)
     return (

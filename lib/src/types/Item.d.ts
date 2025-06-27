@@ -8,12 +8,14 @@ import type { Point } from 'geojson'
 type TagIds = { tags_id: string }[]
 
 interface GalleryItem {
-  directus_files_id: {
-    id: string
-    width: number
-    height: number
-    type: string
-  }
+  directus_files_id:
+    | {
+        id: string
+        width: number
+        height: number
+        type: string
+      }
+    | string
 }
 
 /**

@@ -1,4 +1,3 @@
-/* eslint-disable import/default */
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-named-as-default-member */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */

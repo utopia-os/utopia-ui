@@ -1,6 +1,8 @@
 import { MapIcon } from '@heroicons/react/24/outline'
 import { SVG } from 'utopia-ui'
 
+import type { Route } from '#components/AppShell/SideBar'
+
 export const routes = [
   {
     path: '/',
@@ -43,7 +45,7 @@ export const getBottomRoutes = (currentUrl: string) => {
   const url = new URL(currentUrl)
   const isEmbedded = url.searchParams.get('embedded') === 'true'
 
-  const bottomRoutes = [
+  const bottomRoutes: Route[] = [
     // Other routes can be added here
   ]
 

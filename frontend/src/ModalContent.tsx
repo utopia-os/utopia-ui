@@ -7,8 +7,7 @@ import { useEffect, useState } from 'react'
 import { TextView } from 'utopia-ui'
 
 interface ChapterProps {
-  clickAction1?: () => void
-  clickAction2?: () => void
+  clickAction1: () => void
   map?: any
 }
 

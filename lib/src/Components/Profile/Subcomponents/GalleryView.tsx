@@ -25,9 +25,7 @@ export const GalleryView = ({ item }: { item: Item }) => {
   const images =
     item.gallery?.flatMap((g, index) => {
       const file = g.directus_files_id
-      // if it's just a string, skip it
       if (typeof file === 'string') return []
-      // otherwise it's the object you want
       const { id, type, width, height } = file
       return [
         {

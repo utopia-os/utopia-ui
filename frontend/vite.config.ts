@@ -25,7 +25,12 @@ export default defineConfig({
   resolve: {
     alias: {
       'utopia-ui': path.resolve(__dirname, '../lib/src'),
-      
+      '#components': path.resolve(__dirname, '../lib/src/Components'),
+      '#utils':      path.resolve(__dirname, '../lib/src/Utils'),
+      '#types':      path.resolve(__dirname, '../lib/src/types'),
+      '#assets':     path.resolve(__dirname, '../lib/src/assets'),
+      '#src':        path.resolve(__dirname, '../lib/src'),
+      '#root':       path.resolve(__dirname, '../lib'),
     }
   }
 });

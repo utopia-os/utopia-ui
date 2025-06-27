@@ -76,7 +76,9 @@ export const GalleryForm = ({ state, setState }: Props) => {
 
   const images = state.gallery
     .map((image) => ({
-      src: appState.assetsApi.url + `${image.directus_files_id.id}.jpg`,
+      src:
+        typeof image.directus_files_id !== 'string' &&
+        appState.assetsApi.url + `${image.directus_files_id.id}.jpg`,
       state: 'uploaded',
     }))
     .concat(

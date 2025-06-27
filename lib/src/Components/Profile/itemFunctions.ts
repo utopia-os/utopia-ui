@@ -200,7 +200,7 @@ export const onUpdateItem = async (
     ...(state.needs.length > 0 && { needs: needsUpdates }),
     ...(state.openCollectiveSlug && { openCollectiveSlug: state.openCollectiveSlug }),
     gallery: state.gallery.map((i) => ({
-      directus_files_id: i.directus_files_id.id,
+      directus_files_id: typeof i.directus_files_id !== 'string' && i.directus_files_id.id,
     })),
   }
 

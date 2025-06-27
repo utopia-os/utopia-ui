@@ -13,8 +13,12 @@
     "noFallthroughCasesInSwitch": true,
     "paths": {
       "utopia-ui": ["../lib/src"],
-      "utopia-ui/types": ["../lib/src/types"],
-      "utopia-ui/types/*": ["../lib/src/types/*"]
+      "#components/*": ["../lib/src/Components/*"],
+      "#utils/*":      ["../lib/src/Utils/*"],
+      "#types/*":      ["../lib/src/types/*"],
+      "#assets/*":     ["../lib/src/assets/*"],
+      "#src/*":        ["../lib/src/*"],
+      "#root/*":       ["../lib/*"]
     }
   },
   "include": ["src"], 

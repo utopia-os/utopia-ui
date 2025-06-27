@@ -23,6 +23,7 @@ export default defineConfig({
     tailwindcss(),
   ],
   resolve: {
+    dedupe: ['react', 'react-dom', 'react-router-dom'],
     alias: {
       'utopia-ui': path.resolve(__dirname, '../lib/src'),
       '#components': path.resolve(__dirname, '../lib/src/Components'),

@@ -7,6 +7,7 @@ import { GroupSubHeaderView } from '#components/Profile/Subcomponents/GroupSubHe
 import { InviteLinkView } from '#components/Profile/Subcomponents/InviteLinkView'
 import { ProfileStartEndView } from '#components/Profile/Subcomponents/ProfileStartEndView'
 import { ProfileTextView } from '#components/Profile/Subcomponents/ProfileTextView'
+import { RelationsView } from '#components/Profile/Subcomponents/RelationsView'
 
 import type { Item } from '#types/Item'
 import type { Key } from 'react'
@@ -19,6 +20,7 @@ const componentMap = {
   gallery: GalleryView,
   crowdfundings: CrowdfundingView,
   inviteLinks: InviteLinkView,
+  relations: RelationsView,
   // weitere Komponenten hier
 }
 

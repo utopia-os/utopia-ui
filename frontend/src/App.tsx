@@ -240,7 +240,7 @@ function App() {
   else
     return (
       <div className='outer'>
-        <img className='pulse-loader tw:opacity h-[96px]' src='/3markers-globe.svg' />
+        <img className='pulse-loader tw-h-[96px]' src='/3markers-globe.svg' />
         <br />
         <span className='tw:loader'></span>
       </div>

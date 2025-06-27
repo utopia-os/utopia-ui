@@ -36,5 +36,29 @@ export default defineConfig({
   },
   build: {
     sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: (id) => {
+          if (id.includes('lib/src')) {
+            return 'utopia-ui'
+          }
+          if (id.includes('node_modules')) {
+            if (id.includes('react')) {
+              return 'react';
+            }
+            if (id.includes('tiptap')) {
+              return 'tiptap';
+            }
+            if (id.includes('leaflet')) {
+              return 'leaflet';
+            }
+            if (id.includes('lib/node_modules')) {
+              return 'utopia-ui-vendor'
+            }
+            else return 'vendor';
+          }
+        }
+      },
+    },
   },
 });

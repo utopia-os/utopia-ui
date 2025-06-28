@@ -1,5 +1,7 @@
-export { AuthProvider, UserApi, UserItem } from './useAuth'
+export { AuthProvider } from './useAuth'
 export { LoginPage } from './LoginPage'
 export { SignupPage } from './SignupPage'
 export { RequestPasswordPage } from './RequestPasswordPage'
 export { SetNewPasswordPage } from './SetNewPasswordPage'
+export type { UserItem } from '#types/UserItem'
+export type { UserApi } from '#types/UserApi'

@@ -1,6 +1,8 @@
 import { MapIcon } from '@heroicons/react/24/outline'
 import { SVG } from 'utopia-ui'
 
+import type { Route } from '#components/AppShell/SideBar'
+
 export const routes = [
   {
     path: '/',
@@ -43,7 +45,7 @@ export const getBottomRoutes = (currentUrl: string) => {
   const url = new URL(currentUrl)
   const isEmbedded = url.searchParams.get('embedded') === 'true'
 
-  const bottomRoutes = [
+  const bottomRoutes: Route[] = [
     // Other routes can be added here
   ]
 
@@ -51,13 +53,13 @@ export const getBottomRoutes = (currentUrl: string) => {
     bottomRoutes.push(
       {
         path: 'https://github.com/utopia-os/utopia-ui', // url
-        icon: <SVG src='/github.svg' className='w-6 h-6' />,
+        icon: <SVG src='/github.svg' className='tw:w-6 tw:h-6' />,
         name: 'GitHub', // name that appear in Sidebar
         blank: true,
       },
       {
         path: 'https://opencollective.com/utopia-project', // url
-        icon: <SVG src='/opencollective.svg' className='w-6 h-6' />,
+        icon: <SVG src='/opencollective.svg' className='tw:w-6 tw:h-6' />,
         name: 'Open Collective', // name that appear in Sidebar
         blank: true,
       },

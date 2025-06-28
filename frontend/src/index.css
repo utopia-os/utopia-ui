@@ -6,3 +6,6 @@
 @theme {
   --animate-fade: fadeOut 1s ease-in-out;
 }
+
+@import 'tailwindcss'  prefix(tw);
+@source '../../lib/src/';

@@ -76,7 +76,9 @@ export const GalleryForm = ({ state, setState }: Props) => {
 
   const images = state.gallery
     .map((image) => ({
-      src: appState.assetsApi.url + `${image.directus_files_id.id}.jpg`,
+      src:
+        typeof image.directus_files_id !== 'string' &&
+        appState.assetsApi.url + `${image.directus_files_id.id}.jpg`,
       state: 'uploaded',
     }))
     .concat(
@@ -99,7 +101,7 @@ export const GalleryForm = ({ state, setState }: Props) => {
         {images.map((image, index) => (
           <div key={index} className='tw:relative'>
             <img
-              src={image.src}
+              src={image.src || undefined}
               alt={`Gallery image ${index + 1}`}
               className={`tw:w-full tw:h-full tw:object-cover tw:rounded-lg ${
                 image.state === 'uploading' ? 'tw:opacity-50' : ''

@@ -33,12 +33,15 @@ import {
   MarketView,
   SVG,
   LoadingMapOverlay,
+  ProfileView,
+  ProfileForm,
+  UserSettings,
 } from 'utopia-ui'
 
 import { Route, Routes } from 'react-router-dom'
 
 import './App.css'
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 
 import { assetsApi } from './api/assetsApi'
 import { itemsApi } from './api/itemsApi'
@@ -50,24 +53,6 @@ import { ModalContent } from './ModalContent'
 import { Landingpage } from './pages/Landingpage'
 import MapContainer from './pages/MapContainer'
 import { getBottomRoutes, routes } from './routes/sidebar'
-
-const ProfileForm = lazy(() =>
-  import('utopia-ui/Profile').then((mod) => ({
-    default: mod.ProfileForm,
-  })),
-)
-
-const ProfileView = lazy(() =>
-  import('utopia-ui/Profile').then((mod) => ({
-    default: mod.ProfileView,
-  })),
-)
-
-const UserSettings = lazy(() =>
-  import('utopia-ui/Profile').then((mod) => ({
-    default: mod.UserSettings,
-  })),
-)
 
 function App() {
   const [permissionsApiInstance, setPermissionsApiInstance] = useState<permissionsApi>()
@@ -123,7 +108,7 @@ function App() {
           icon: (
             <SVG
               src={'https://api.utopia-lab.org/assets/' + l.indexIcon}
-              className='w-6 h-6'
+              className='tw:w-6 tw:h-6'
               preProcessor={(code: string) =>
                 code.replace(/stroke=".*?"/g, 'stroke="currentColor"')
               }
@@ -154,7 +139,7 @@ function App() {
 
   if (map && layers)
     return (
-      <div className='App overflow-x-hidden'>
+      <div className='App tw:overflow-x-hidden'>
         <AuthProvider userApi={new userApi()}>
           <AppShell
             assetsApi={new assetsApi('https://api.utopia-lab.org/assets/')}
@@ -246,18 +231,18 @@ function App() {
     )
   else if (map == 'null' && !loading)
     return (
-      <div className='flex items-center justify-center h-screen'>
+      <div className='tw:flex tw:items-center tw:justify-center tw:h-screen'>
         <div>
-          <p className='text-xl font-semibold'>This map does not exist</p>
+          <p className='tw:text-xl tw:font-semibold'>This map does not exist</p>
         </div>
       </div>
     )
   else
     return (
       <div className='outer'>
-        <img className='pulse-loader opacity h-[96px]' src='/3markers-globe.svg' />
+        <img className='pulse-loader tw-h-[96px]' src='/3markers-globe.svg' />
         <br />
-        <span className='loader'></span>
+        <span className='tw:loader'></span>
       </div>
     )
 }

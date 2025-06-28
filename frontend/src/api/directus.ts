@@ -6,6 +6,7 @@ import { createDirectus, rest, authentication } from '@directus/sdk'
 
 import type { AuthenticationData, AuthenticationStorage } from '@directus/sdk'
 import type { Point } from 'geojson'
+import type { Item } from 'utopia-ui'
 
 export interface Place {
   id: string
@@ -57,6 +58,10 @@ export interface MyCollections {
   tags: Tag[]
   projects: Project[]
   directus_users: CustomUserFields[]
+  items: Item[]
+  team: any[]
+  features: any[]
+  attestations: any[]
 }
 
 export const authLocalStorage = (mainKey = 'directus_storage') =>

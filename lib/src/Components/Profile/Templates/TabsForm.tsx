@@ -8,7 +8,7 @@
 /* eslint-disable react/prop-types */
 import { useNavigate } from 'react-router-dom'
 
-import { RichTextEditor } from '#components/Input/RichTextEditor'
+import { RichTextEditor } from '#components/Input/RichTextEditor/RichTextEditor'
 import { useUpdateItem } from '#components/Map/hooks/useItems'
 import { PopupStartEndInput, TextView } from '#components/Map/Subcomponents/ItemPopupComponents'
 import { ActionButton } from '#components/Profile/Subcomponents/ActionsButton'
@@ -142,7 +142,7 @@ export const TabsForm = ({
                           loading={loading}
                         />
                         <div className='tw:overflow-y-auto tw:overflow-x-hidden tw:max-h-64 fade'>
-                          <TextView truncate itemId={item.id} />
+                          <TextView truncate />
                         </div>
                       </div>
                     ))}

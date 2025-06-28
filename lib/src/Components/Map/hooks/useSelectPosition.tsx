@@ -140,16 +140,26 @@ function useSelectPositionManager(): {
       success = true
     } catch (error: unknown) {
       if (error instanceof Error) {
-        toast.update(toastId, { render: error.message, type: 'error', isLoading: false })
+        toast.update(toastId, {
+          render: error.message,
+          type: 'error',
+          isLoading: false,
+          autoClose: 5000,
+        })
       } else if (typeof error === 'string') {
-        toast.update(toastId, { render: error, type: 'error', isLoading: false })
+        toast.update(toastId, { render: error, type: 'error', isLoading: false, autoClose: 5000 })
       } else {
         throw error
       }
     }
     if (success) {
       updateItem(updatedItem)
-      toast.update(toastId, { render: 'Item position updated', type: 'success', isLoading: false })
+      toast.update(toastId, {
+        render: 'Item position updated',
+        type: 'success',
+        isLoading: false,
+        autoClose: 5000,
+      })
     }
   }
 

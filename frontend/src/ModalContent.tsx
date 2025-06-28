@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { TextView } from 'utopia-ui'
 
 interface ChapterProps {
@@ -45,12 +46,11 @@ export function Welcome1({ clickAction1, map }: ChapterProps) {
   )
 }
 
-const close = () => {
-  const myModal = document.getElementById('my_modal_3') as HTMLDialogElement
-  myModal.close()
-}
-
 export const ModalContent = ({ map }: { map: any }) => {
+  const navigate = useNavigate()
+  const close = () => {
+    navigate('/')
+  }
   useEffect(() => {
     const myModal = document.getElementById('my_modal_3') as HTMLDialogElement
     if (map.info_open) {

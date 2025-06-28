@@ -71,7 +71,6 @@ export function RichTextEditor({
   const handleChange = () => {
     if (updateFormValue) {
       if (editor) {
-        console.log(getStyledMarkdown(editor))
         updateFormValue(getStyledMarkdown(editor))
       }
     }

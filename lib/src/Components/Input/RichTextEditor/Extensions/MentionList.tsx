@@ -16,6 +16,7 @@ export const MentionList = forwardRef<MentionListHandle, MentionListProps>(funct
   const [selectedIndex, setSelectedIndex] = useState<number>(0)
 
   const selectItem = (index: number) => {
+    // eslint-disable-next-line security/detect-object-injection
     const item = items[index]
     if (item) {
       command({ id: item })

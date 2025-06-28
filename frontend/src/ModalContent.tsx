@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-
 import { useEffect, useState } from 'react'
 import { TextView } from 'utopia-ui'
 

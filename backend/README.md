@@ -1,4 +1,4 @@
-In order to pull data from your locally running backend (see [docker-compose](../docker-compose.yml)) to your local harddrive, you can run the following command
+In order to pull data from your locally running backend (see [docker-compose](../app/docker-compose.yml)) to your local harddrive, you can run the following command
 
 ```
 npx directus-sync pull \

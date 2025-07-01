@@ -30,7 +30,7 @@ jobs:
           # Append a scope for each service here
           scopes: |
             backend
-            frontend
+            app
             lib
             docu
             docker

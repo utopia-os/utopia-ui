@@ -1,10 +1,10 @@
-name: test:lint:frontend
+name: test:lint:app
 
 on: push
 
 jobs:
   files-changed:
-    name: Detect File Changes - lint - frontend
+    name: Detect File Changes - lint - app
     runs-on: ubuntu-latest
     outputs:
       lint: ${{ steps.filter.outputs.lint }}
@@ -16,11 +16,11 @@ jobs:
           filters: |
             lint:
               - '.github/workflows/**/*'
-              - 'frontend/**/*'
+              - 'app/**/*'
 
   lint:
     if: needs.files-changed.outputs.lint == 'true'
-    name: Lint - frontend
+    name: Lint - app
     needs: files-changed
     runs-on: ubuntu-latest
     steps:
@@ -30,4 +30,4 @@ jobs:
           node-version-file: '.tool-versions'
       - name: Lint
         run: npm install && npm run test:lint:eslint
-        working-directory: frontend/
+        working-directory: app/

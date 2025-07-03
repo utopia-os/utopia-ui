@@ -20,7 +20,7 @@ export const SelectPosition = ({
       </label>
       <div className='tw:alert tw:bg-base-100 tw:text-base-content'>
         <div>
-          {selectNewItemPosition && 'text' in selectNewItemPosition && (
+          {selectNewItemPosition && 'layer' in selectNewItemPosition && (
             <span className='tw:text-lg'>
               Select new position of <b>{selectNewItemPosition.name}</b> on the map!
             </span>

@@ -69,7 +69,7 @@ function useSelectPositionManager(): {
           })
         setSelectPosition(null)
       }
-      if ('text' in selectPosition) {
+      if ('layer' in selectPosition) {
         // if selectPosition is an Item
         const position =
           mapClicked?.position.lng &&

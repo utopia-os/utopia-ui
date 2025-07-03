@@ -37,7 +37,7 @@ jobs:
   build-examples:
     if: needs.files-changed.outputs.build == 'true'
     name: Test Example Apps
-    needs: build
+    needs: [build, files-changed]
     runs-on: ubuntu-latest
     strategy:
       matrix:

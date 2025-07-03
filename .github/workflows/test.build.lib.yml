@@ -1,6 +1,9 @@
 name: build:lib
 
-on: push
+on:
+  pull_request:
+    branches:
+      - main
 
 jobs:
   files-changed:

@@ -13,11 +13,9 @@ import type { FormState } from '#types/FormState'
 export const ProfileTextForm = ({
   state,
   setState,
-  // Is this really used?
   dataField,
   heading,
   size,
-  hideInputLabel,
 }: {
   state: FormState
   setState: React.Dispatch<React.SetStateAction<FormState>>
@@ -53,7 +51,6 @@ export const ProfileTextForm = ({
           }))
         }
         showMenu={size === 'full'}
-        labelStyle={hideInputLabel ? 'tw:hidden' : ''}
         containerStyle={size === 'full' ? 'tw:flex-1' : 'tw:h-24 tw:flex-none'}
       />
     </div>

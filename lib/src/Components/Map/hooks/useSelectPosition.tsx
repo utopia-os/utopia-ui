@@ -69,7 +69,7 @@ function useSelectPositionManager(): {
           })
         setSelectPosition(null)
       }
-      if ('text' in selectPosition) {
+      if ('layer' in selectPosition) {
         // if selectPosition is an Item
         const position =
           mapClicked?.position.lng &&
@@ -101,9 +101,9 @@ function useSelectPositionManager(): {
         success = true
       } catch (error: unknown) {
         if (error instanceof Error) {
-          toast.update(toastId, { render: error.message, type: 'error' })
+          toast.update(toastId, { render: error.message, type: 'error', autoClose: 5000 })
         } else if (typeof error === 'string') {
-          toast.update(toastId, { render: error, type: 'error' })
+          toast.update(toastId, { render: error, type: 'error', autoClose: 5000 })
         } else {
           throw error
         }
@@ -115,6 +115,7 @@ function useSelectPositionManager(): {
           render: 'Item position updated',
           type: 'success',
           isLoading: false,
+          autoClose: 5000,
         })
         setSelectPosition(null)
         setMarkerClicked(null)
@@ -125,6 +126,8 @@ function useSelectPositionManager(): {
         render: "you don't have permission to add items to " + markerClicked?.name,
         type: 'error',
         isLoading: false,
+        autoClose: 5000,
+        closeButton: true,
       })
     }
   }
@@ -145,9 +148,16 @@ function useSelectPositionManager(): {
           type: 'error',
           isLoading: false,
           autoClose: 5000,
+          closeButton: true,
         })
       } else if (typeof error === 'string') {
-        toast.update(toastId, { render: error, type: 'error', isLoading: false, autoClose: 5000 })
+        toast.update(toastId, {
+          render: error,
+          type: 'error',
+          isLoading: false,
+          autoClose: 5000,
+          closeButton: true,
+        })
       } else {
         throw error
       }
@@ -159,6 +169,7 @@ function useSelectPositionManager(): {
         type: 'success',
         isLoading: false,
         autoClose: 5000,
+        closeButton: true,
       })
     }
   }
@@ -178,16 +189,34 @@ function useSelectPositionManager(): {
           success = true
         } catch (error: unknown) {
           if (error instanceof Error) {
-            toast.update(toastId, { render: error.message, type: 'error', isLoading: false })
+            toast.update(toastId, {
+              render: error.message,
+              type: 'error',
+              isLoading: false,
+              autoClose: 5000,
+              closeButton: true,
+            })
           } else if (typeof error === 'string') {
-            toast.update(toastId, { render: error, type: 'error', isLoading: false })
+            toast.update(toastId, {
+              render: error,
+              type: 'error',
+              isLoading: false,
+              autoClose: 5000,
+              closeButton: true,
+            })
           } else {
             throw error
           }
         }
         if (success) {
           updateItem({ ...markerClicked, relations: newRelations })
-          toast.update(toastId, { render: 'Item linked', type: 'success', isLoading: false })
+          toast.update(toastId, {
+            render: 'Item linked',
+            type: 'success',
+            isLoading: false,
+            autoClose: 5000,
+            closeButton: true,
+          })
         }
       }
     }

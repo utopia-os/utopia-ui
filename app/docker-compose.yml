@@ -38,7 +38,7 @@ services:
   backend:
     container_name: backend
     build:
-      context: ./backend
+      context: ../backend
     depends_on:
       database:
         condition: service_healthy

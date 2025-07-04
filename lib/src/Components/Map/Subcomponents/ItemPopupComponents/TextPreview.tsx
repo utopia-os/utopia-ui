@@ -1,47 +1,62 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+import truncate from 'markdown-truncate'
+import Markdown from 'react-markdown'
+import rehypeRaw from 'rehype-raw'
+import remarkBreaks from 'remark-breaks'
+import remarkGfm from 'remark-gfm'
+
 import { useAddFilterTag } from '#components/Map/hooks/useFilter'
 import { useTags } from '#components/Map/hooks/useTags'
 import { decodeTag } from '#utils/FormatTags'
 
 import type { Item } from '#types/Item'
-import type { Tag } from '#types/Tag'
 
-const MAX_CHARS = 100
-
-/**
- * @category Map
- */
 export const TextPreview = ({ item }: { item: Item }) => {
-  const tags = useTags()
+  if (!item.text) return null
+  // Text auf ~100 Zeichen stutzen (inkl. Ellipse „…“)
+  const previewRaw = truncate(item.text, { limit: 100, ellipsis: true }) as string
 
-  if (!item.text) return ''
-  const s = item.text
-    .replace(/`([^`]+)`/g, '$1')
-    .replace(/<\/?[^>]+>/g, '') // übrige HTML
-    .replace(/!\[.*?\]\(.*?\)/g, '') // Remove images
-    .replace(/(`{1,3})(.*?)\1/g, '$2') // Remove inline code
-    .replace(/(\*{1,2}|_{1,2})(.*?)\1/g, '$2') // Remove bold and italic
-    .replace(/(#+)\s+(.*)/g, '$2') // Remove headers
-    .replace(/>\s+(.*)/g, '$1') // Remove blockquotes
-    .replace(/^\s*\n/gm, '\n') // Preserve empty lines
-    .replace(/(\r\n|\n|\r)/gm, '\n') // Preserve line breaks
+  const withExtraHashes = previewRaw.replace(
+    /^(#{1,6})\s/gm,
+    (_match: string, hashes: string): string => `${hashes}## `,
+  )
 
-  return s
+  return (
+    <div className='markdown'>
+      <Markdown
+        remarkPlugins={[remarkBreaks, remarkGfm]}
+        rehypePlugins={[rehypeRaw]}
+        components={{ span: Span }}
+      >
+        {withExtraHashes}
+      </Markdown>
+    </div>
+  )
 }
 
-const HashTag = ({ children, tag, itemId }: { children: string; tag: Tag; itemId?: string }) => {
+export const HashTag = ({ tag }: { tag: string }) => {
+  const tags = useTags()
+  const t = tags.find((t) => t.name === tag.slice(1))
   const addFilterTag = useAddFilterTag()
-
+  if (!t) return <span>{tag}</span>
   return (
     <a
       className='hashtag'
-      style={{ color: tag.color }}
-      key={`${tag.name}-${itemId ?? ''}`}
+      style={{ color: t.color }}
+      key={`${t.name}`}
       onClick={(e) => {
         e.stopPropagation()
-        addFilterTag(tag)
+        addFilterTag(t)
       }}
     >
-      {decodeTag(children)}
+      {decodeTag(tag)}
     </a>
   )
+}
+
+export const Span = (node) => {
+  if (node['data-type'] === 'mention') {
+    return <HashTag tag={node.children} />
+  }
+  return <span {...node}>{node.children}</span>
 }

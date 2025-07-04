@@ -36,6 +36,11 @@ It is the base of [Utopia Map](https://github.com/utopia-os/utopia-map) and [Uto
 
 ![Utopia UI Components](Components.svg)
 
+### TextPreview
+
+The `TextPreview` component now accepts an optional `maxChars` property to limit the
+displayed text length. The default value is `100` characters.
+
 ## Map Component
 The map shows various Layers (like places, events, profiles ...) of Items at their respective position whith nice and informative Popup and Profiles.
 

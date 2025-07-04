@@ -1,9 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import truncate from 'markdown-truncate'
+import htmlTruncate from 'html-truncate'
 import Markdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
 import remarkBreaks from 'remark-breaks'
 import remarkGfm from 'remark-gfm'
+import remarkParse from 'remark-parse'
+import remarkRehype from 'remark-rehype'
+import rehypeStringify from 'rehype-stringify'
+import { unified } from 'unified'
 
 import { useAddFilterTag } from '#components/Map/hooks/useFilter'
 import { useTags } from '#components/Map/hooks/useTags'
@@ -13,13 +17,28 @@ import type { Item } from '#types/Item'
 
 export const TextPreview = ({ item }: { item: Item }) => {
   if (!item.text) return null
-  // Text auf ~100 Zeichen stutzen (inkl. Ellipse „…“)
-  const previewRaw = truncate(item.text, { limit: 100, ellipsis: true }) as string
+  // Convert Markdown to HTML and truncate with awareness of markup
+  const html = unified()
+    .use(remarkParse)
+    .use(remarkGfm)
+    .use(remarkBreaks)
+    .use(remarkRehype, { allowDangerousHtml: true })
+    .use(rehypeRaw)
+    .use(rehypeStringify, { allowDangerousHtml: true })
+    .processSync(item.text)
+    .toString()
 
-  const withExtraHashes = previewRaw.replace(
-    /^(#{1,6})\s/gm,
-    (_match: string, hashes: string): string => `${hashes}## `,
-  )
+  // decrease heading levels similar to previous Markdown manipulation
+  const withSmallHeadings = html.replace(/<(\/?)h([1-6])/g, (_m, slash, level) => {
+    const newLevel = Math.min(6, Number(level) + 2)
+    return `<${slash}h${newLevel}`
+  })
+
+  // Text auf ~100 Zeichen stutzen (inkl. Ellipse „…“)
+  const previewRaw = htmlTruncate(withSmallHeadings, 100, {
+    ellipsis: '…',
+    reserveLastWord: true,
+  })
 
   return (
     <div className='markdown'>
@@ -28,7 +47,7 @@ export const TextPreview = ({ item }: { item: Item }) => {
         rehypePlugins={[rehypeRaw]}
         components={{ span: Span }}
       >
-        {withExtraHashes}
+        {previewRaw}
       </Markdown>
     </div>
   )

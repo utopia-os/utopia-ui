@@ -23,6 +23,7 @@ It is the base of [Utopia Map](https://github.com/utopia-os/utopia-map) and [Uto
 * User authentification API-Interface
 * Customizable Profiles for users and other items
 * App shell with navigation bar and sidebar
+* HTML-aware text previews that preserve mentions when content is shortened
 
 ## Getting Started
 

@@ -40,7 +40,7 @@ jobs:
   build-examples:
     if: needs.files-changed.outputs.build == 'true'
     name: Test Example Apps
-    needs: [build, files-changed]
+    needs: [files-changed, build]
     runs-on: ubuntu-latest
     strategy:
       matrix:

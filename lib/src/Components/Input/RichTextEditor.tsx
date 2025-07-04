@@ -10,6 +10,7 @@ import { StarterKit } from '@tiptap/starter-kit'
 import { useEffect } from 'react'
 import { Markdown } from 'tiptap-markdown'
 
+import { InputLabel } from './InputLabel'
 import { TextEditorMenu } from './TextEditorMenu'
 
 interface RichTextEditorProps {
@@ -27,7 +28,6 @@ interface RichTextEditorProps {
  */
 export function RichTextEditor({
   labelTitle,
-  labelStyle,
   containerStyle,
   defaultValue,
   placeholder,
@@ -88,13 +88,7 @@ export function RichTextEditor({
     <div
       className={`tw:form-control tw:w-full tw:flex tw:flex-col tw:min-h-0 ${containerStyle ?? ''}`}
     >
-      {labelTitle ? (
-        <label className='tw:label tw:pb-1'>
-          <span className={`tw:label-text tw:text-base-content ${labelStyle ?? ''}`}>
-            {labelTitle}
-          </span>
-        </label>
-      ) : null}
+      {labelTitle ? <InputLabel label={labelTitle} /> : null}
       <div
         className={`editor-wrapper tw:border-base-content/20 tw:rounded-box tw:border tw:flex tw:flex-col tw:flex-1 tw:min-h-0`}
       >

@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 
-import type { Item } from '#types/Item'
 import { TextPreview } from './TextPreview'
+
+import type { Item } from '#types/Item'
 
 export const LazyTextPreview = ({ item }: { item: Item }) => {
   const [visible, setVisible] = useState(false)
@@ -18,5 +19,15 @@ export const LazyTextPreview = ({ item }: { item: Item }) => {
     return () => observer.disconnect()
   }, [])
 
-  return <div ref={ref}>{visible ? <TextPreview item={item} /> : <div style={{ height: '4rem' }} />}</div>
+  return (
+    <div ref={ref}>
+      {visible ? (
+        <TextPreview item={item} />
+      ) : (
+        <div className='tw:flex tw:justify-center '>
+          <div className='tw:loading tw:spinner tw:h-8 tw:opacity-50' />
+        </div>
+      )}
+    </div>
+  )
 }

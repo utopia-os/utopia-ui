@@ -34,12 +34,15 @@ import {
   MarketView,
   SVG,
   LoadingMapOverlay,
+  ProfileForm,
+  ProfileView,
+  UserSettings,
 } from 'utopia-ui'
 
 import { Route, Routes } from 'react-router-dom'
 
 import './App.css'
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 
 import { assetsApi } from './api/assetsApi'
 import { itemsApi } from './api/itemsApi'
@@ -53,24 +56,6 @@ import MapContainer from './pages/MapContainer'
 import { getBottomRoutes, routes } from './routes/sidebar'
 import { InviteApi } from './api/InviteApi'
 import { config } from '@/config'
-
-const ProfileForm = lazy(() =>
-  import('utopia-ui/Profile').then((mod) => ({
-    default: mod.ProfileForm,
-  })),
-)
-
-const ProfileView = lazy(() =>
-  import('utopia-ui/Profile').then((mod) => ({
-    default: mod.ProfileView,
-  })),
-)
-
-const UserSettings = lazy(() =>
-  import('utopia-ui/Profile').then((mod) => ({
-    default: mod.UserSettings,
-  })),
-)
 
 const userApi = new UserApi()
 const inviteApi = new InviteApi(userApi)

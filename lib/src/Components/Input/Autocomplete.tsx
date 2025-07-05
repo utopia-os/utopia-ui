@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -34,8 +33,6 @@ export const Autocomplete = ({
   }, [setFocus])
 
   const inputRef = useRef<HTMLInputElement>()
-
-  const getSuggestionValue = (suggestion) => suggestion.name
 
   const getSuggestions = (value) => {
     const inputValue = value.trim().toLowerCase()

@@ -32,7 +32,6 @@ import type { Item } from '#types/Item'
 export const OverlayItemsIndexPage = ({
   url,
   layerName,
-  parameterField,
 }: {
   layerName: string
   url: string
@@ -40,8 +39,6 @@ export const OverlayItemsIndexPage = ({
 }) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [addItemPopupOpen, setAddItemPopupOpen] = useState<boolean>(false)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const parameterFieldDummy = parameterField
 
   const tabRef = useRef<HTMLFormElement>(null)
 

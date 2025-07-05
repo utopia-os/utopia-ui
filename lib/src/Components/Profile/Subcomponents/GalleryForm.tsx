@@ -5,6 +5,7 @@ import { useDropzone } from 'react-dropzone'
 import { BiSolidImage } from 'react-icons/bi'
 
 import { useAppState } from '#components/AppShell/hooks/useAppState'
+import { InputLabel } from '#components/Input/InputLabel'
 import DialogModal from '#components/Templates/DialogModal'
 import { getImageDimensions } from '#utils/getImageDimensions'
 
@@ -13,6 +14,7 @@ import type { FormState } from '#types/FormState'
 interface Props {
   state: FormState
   setState: React.Dispatch<React.SetStateAction<FormState>>
+  hideInputLabel?: boolean
 }
 
 const compressionOptions = {
@@ -21,7 +23,7 @@ const compressionOptions = {
   useWebWorker: true,
 }
 
-export const GalleryForm = ({ state, setState }: Props) => {
+export const GalleryForm = ({ state, setState, hideInputLabel = false }: Props) => {
   const appState = useAppState()
 
   const [imageSelectedToDelete, setImageSelectedToDelete] = useState<number | null>(null)
@@ -76,7 +78,9 @@ export const GalleryForm = ({ state, setState }: Props) => {
 
   const images = state.gallery
     .map((image) => ({
-      src: appState.assetsApi.url + `${image.directus_files_id.id}.jpg`,
+      src:
+        typeof image.directus_files_id !== 'string' &&
+        appState.assetsApi.url + `${image.directus_files_id.id}.jpg`,
       state: 'uploaded',
     }))
     .concat(
@@ -94,12 +98,13 @@ export const GalleryForm = ({ state, setState }: Props) => {
   }
 
   return (
-    <>
-      <div className='tw:grid tw:grid-cols-2 tw:@md:grid-cols-3 tw:@lg:grid-cols-4 tw:gap-4 tw:my-4'>
+    <div className='tw:mt-3'>
+      {!hideInputLabel && <InputLabel label='Media' />}
+      <div className='tw:grid tw:grid-cols-2 tw:@md:grid-cols-3 tw:@lg:grid-cols-4 tw:gap-4'>
         {images.map((image, index) => (
           <div key={index} className='tw:relative'>
             <img
-              src={image.src}
+              src={image.src || undefined}
               alt={`Gallery image ${index + 1}`}
               className={`tw:w-full tw:h-full tw:object-cover tw:rounded-lg ${
                 image.state === 'uploading' ? 'tw:opacity-50' : ''
@@ -159,6 +164,6 @@ export const GalleryForm = ({ state, setState }: Props) => {
           </div>
         </div>
       </DialogModal>
-    </>
+    </div>
   )
 }

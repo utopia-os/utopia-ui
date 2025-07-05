@@ -129,15 +129,17 @@ export const TextView = ({
   }
 
   return (
-    <Markdown
-      className={'markdown tw:text-map tw:leading-map tw:text-sm'}
-      remarkPlugins={[remarkBreaks]}
-      components={{
-        a: Link,
-      }}
-    >
-      {replacedText}
-    </Markdown>
+    <div translate='no'>
+      <Markdown
+        className={'markdown tw:text-map tw:leading-map tw:text-sm'}
+        remarkPlugins={[remarkBreaks]}
+        components={{
+          a: Link,
+        }}
+      >
+        {replacedText}
+      </Markdown>
+    </div>
   )
 }
 

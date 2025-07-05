@@ -129,7 +129,7 @@ function App() {
           icon: (
             <SVG
               src={'https://api.utopia-lab.org/assets/' + l.indexIcon}
-              className='w-6 h-6'
+              className='tw:w-6 tw:h-6'
               preProcessor={(code: string) =>
                 code.replace(/stroke=".*?"/g, 'stroke="currentColor"')
               }
@@ -160,7 +160,7 @@ function App() {
 
   if (map && layers)
     return (
-      <div className='App overflow-x-hidden'>
+      <div className='App tw:overflow-x-hidden'>
         <AuthProvider userApi={userApi} inviteApi={inviteApi}>
           <AppShell
             assetsApi={new assetsApi('https://api.utopia-lab.org/assets/')}
@@ -253,18 +253,18 @@ function App() {
     )
   else if (map == 'null' && !loading)
     return (
-      <div className='flex items-center justify-center h-screen'>
+      <div className='tw:flex tw:items-center tw:justify-center tw:h-screen'>
         <div>
-          <p className='text-xl font-semibold'>This map does not exist</p>
+          <p className='tw:text-xl tw:font-semibold'>This map does not exist</p>
         </div>
       </div>
     )
   else
     return (
       <div className='outer'>
-        <img className='pulse-loader opacity h-[96px]' src='/3markers-globe.svg' />
+        <img className='pulse-loader tw-h-[96px]' src='/3markers-globe.svg' />
         <br />
-        <span className='loader'></span>
+        <span className='tw:loader'></span>
       </div>
     )
 }

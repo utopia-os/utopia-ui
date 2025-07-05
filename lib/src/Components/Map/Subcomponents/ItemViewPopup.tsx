@@ -100,7 +100,7 @@ export const ItemViewPopup = forwardRef((props: ItemViewPopupProps, ref: any) =>
           }}
           loading={loading}
         />
-        <div className='tw:overflow-y-auto tw:overflow-x-hidden tw:max-h-64 fade'>
+        <div className='tw:overflow-hidden tw:max-h-64 fade'>
           {props.children ?? <TextView text={props.item.text} itemId={props.item.id} />}
         </div>
         <div className='tw:flex tw:-mb-1 tw:flex-row tw:mr-2 tw:mt-1'>

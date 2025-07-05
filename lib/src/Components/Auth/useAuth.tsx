@@ -4,9 +4,6 @@ import type { InviteApi } from '#types/InviteApi'
 import type { UserApi } from '#types/UserApi'
 import type { UserItem } from '#types/UserItem'
 
-export type { UserApi } from '#types/UserApi'
-export type { UserItem } from '#types/UserItem'
-
 interface AuthProviderProps {
   userApi: UserApi
   inviteApi: InviteApi

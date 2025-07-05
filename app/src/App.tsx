@@ -54,7 +54,6 @@ import { ModalContent } from './ModalContent'
 import { Landingpage } from './pages/Landingpage'
 import MapContainer from './pages/MapContainer'
 import { getBottomRoutes, routes } from './routes/sidebar'
-import { InviteApi } from './api/InviteApi'
 import { config } from '@/config'
 
 const userApi = new UserApi()

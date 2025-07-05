@@ -1,6 +1,7 @@
-import type { UserApi } from 'utopia-ui'
-
+/* @eslint-disable-next-line import/no-relative-parent-imports */
 import { config } from '@/config'
+
+import type { UserApi } from 'utopia-ui'
 
 type InvitingProfileResponse = [
   {

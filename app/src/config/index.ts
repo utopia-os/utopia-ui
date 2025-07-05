@@ -8,3 +8,5 @@ export const config = {
   ),
   openCollectiveApiKey: String(import.meta.env.VITE_OPEN_COLLECTIVE_API_KEY ?? ''),
 }
+
+export type Config = typeof config
